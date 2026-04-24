@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Full-Stack Course",
-  description: "Your personalized 30-day journey to AI full-stack engineering",
+  title: "AI for Engineers",
+  description: "A hands-on AI course for working full-stack engineers. Build real intuition for LLMs, embeddings, RAG, and agents — then ship production-quality AI features.",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
               <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
                 <Link href="/" className="font-bold text-lg tracking-tight">
-                  <span className="text-indigo-600 dark:text-indigo-400">AI</span> Course
+                  <span className="text-indigo-600 dark:text-indigo-400">AI</span> for Engineers
                 </Link>
                 <HeaderStats />
               </nav>
@@ -45,9 +45,6 @@ export default function RootLayout({
             <main className="flex-1 max-w-4xl w-full mx-auto px-6 py-10">
               {children}
             </main>
-            <footer className="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500">
-              Built with Next.js · Your personal AI engineering journey
-            </footer>
           </TokeyProvider>
         </ProgressProvider>
       </body>

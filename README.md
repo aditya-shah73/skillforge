@@ -1,4 +1,4 @@
-# AI Course for Full-Stack Engineers
+# AI for Engineers
 
 An interactive, browser-based course that takes a working full-stack engineer (Java / Spring / React / GraphQL) from zero ML background to shipping production AI features — with agents, RAG, evals, and the rest of the modern stack.
 

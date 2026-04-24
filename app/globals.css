@@ -1,21 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #fafafa;
+  --foreground: #0a0a0a;
 }
 
+/*
+ * Theme: we want a near-black dark mode, not blue-tinted.
+ * Tailwind's `slate` palette has a slight blue cast. Remap every `slate-*`
+ * utility used across the codebase to Tailwind's neutral `zinc` palette so
+ * we don't have to rewrite hundreds of className references.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-slate-50:  #fafafa;
+  --color-slate-100: #f4f4f5;
+  --color-slate-200: #e4e4e7;
+  --color-slate-300: #d4d4d8;
+  --color-slate-400: #a1a1aa;
+  --color-slate-500: #71717a;
+  --color-slate-600: #52525b;
+  --color-slate-700: #3f3f46;
+  --color-slate-800: #27272a;
+  --color-slate-900: #18181b;
+  --color-slate-950: #09090b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #020617;
-    --foreground: #f1f5f9;
+    --background: #09090b;
+    --foreground: #fafafa;
   }
 }
 
@@ -112,7 +130,7 @@ body {
 }
 
 .prose-custom code {
-  background-color: rgb(241 245 249);
+  background-color: #f4f4f5; /* zinc-100 */
   padding: 0.15rem 0.35rem;
   border-radius: 0.25rem;
   font-size: 0.9em;
@@ -121,13 +139,13 @@ body {
 
 @media (prefers-color-scheme: dark) {
   .prose-custom code {
-    background-color: rgb(30 41 59);
+    background-color: #27272a; /* zinc-800 */
   }
 }
 
 .prose-custom pre {
-  background-color: rgb(15 23 42);
-  color: rgb(226 232 240);
+  background-color: #18181b; /* zinc-900 */
+  color: #e4e4e7; /* zinc-200 */
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
