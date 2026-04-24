@@ -73,7 +73,7 @@ export default function WelcomeModule() {
       <section>
         <h2>How the course works</h2>
         <p>
-          The syllabus is <strong>26 modules across 7 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
+          The syllabus is <strong>28 modules across 7 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
         </p>
         <ol>
           <li><strong>Analogy</strong> — the intuition, before any math</li>
@@ -101,15 +101,15 @@ export default function WelcomeModule() {
           Budget ranges are listed per module, but roughly:
         </p>
         <ul>
-          <li><strong>Phase 1 (ML &amp; AI Foundations):</strong> ~12–15 hours</li>
+          <li><strong>Phase 1 (ML &amp; AI Foundations):</strong> ~15–22 hours</li>
           <li><strong>Phase 2 (API &amp; Backend):</strong> ~8–10 hours</li>
           <li><strong>Phase 3 (Vector Search &amp; RAG):</strong> ~8 hours</li>
           <li><strong>Phase 4 (Frontend AI):</strong> ~5 hours</li>
           <li><strong>Phase 5 (Agents):</strong> ~6 hours</li>
-          <li><strong>Phase 6 (Production &amp; Capstone):</strong> ~6 hours</li>
+          <li><strong>Phase 6 (Production &amp; Capstone):</strong> ~7–8 hours</li>
         </ul>
         <p>
-          Total: ~45–55 hours of focused work. The &quot;30-day&quot; framing is for people doing ~1.5 hours a day. Go faster or slower — the modules don&apos;t know.
+          Total: ~50–60 hours of focused work. The &quot;30-day&quot; framing is for people doing ~1.5–2 hours a day. Go faster or slower — the modules don&apos;t know.
         </p>
       </section>
 
@@ -128,7 +128,7 @@ export default function WelcomeModule() {
         <ol>
           <li><strong>Actually do the projects.</strong> Reading Java code that someone else wrote is not the same as writing it. The from-scratch ML code in Phase 1 feels tedious but <em>builds the mental model</em> that makes everything else click.</li>
           <li><strong>Don&apos;t skip the worked examples.</strong> When a module says &quot;compute this by hand&quot; — pull out paper and do it. Five minutes of arithmetic beats an hour of re-reading theory.</li>
-          <li><strong>Ship the capstone.</strong> Module 25 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
+          <li><strong>Ship the capstone.</strong> Module 27 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
         </ol>
       </section>
 

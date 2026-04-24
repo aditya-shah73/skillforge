@@ -314,7 +314,7 @@ public class SafeChatService {
 
         // Fluent Spring AI call: system + user messages → model → text reply.
         // .call() is synchronous; for streaming you'd use .stream() instead
-        // (covered in Module 11: Streaming with SSE).
+        // (covered in Module 12: Streaming with SSE).
         return chatClient.prompt()
             .system(systemPrompt)
             .user(userMessage)
@@ -327,7 +327,7 @@ public class SafeChatService {
      *
      * Naïve version: chop 10% off the end each iteration. Real production
      * code would instead rank chunks by relevance (using embeddings — see
-     * Module 13) and drop the least useful ones first. That's the 'R' in RAG.
+     * Module 14) and drop the least useful ones first. That's the 'R' in RAG.
      */
     private String truncateToFit(String text, int tokenBudget) {
         while (tokenCounter.estimate(text) > tokenBudget && text.length() > 0) {
