@@ -11,6 +11,7 @@ export type Module = {
 };
 
 export const PHASES = [
+  { number: 0, name: "Orientation", color: "from-slate-500 to-slate-400" },
   { number: 1, name: "ML & AI Foundations", color: "from-rose-500 to-orange-500" },
   { number: 2, name: "API & Backend Integration", color: "from-amber-500 to-yellow-500" },
   { number: 3, name: "Vector Search & RAG", color: "from-emerald-500 to-green-500" },
@@ -20,10 +21,13 @@ export const PHASES = [
 ];
 
 export const MODULES: Module[] = [
+  // Phase 0
+  { slug: "welcome", number: 0, phase: "Orientation", phaseNumber: 0, title: "Welcome — what this course is (and isn't)", subtitle: "How the course works, who it's for, and how to get the most out of it", duration: "~5 min", project: "No project — just read", status: "available" },
+
   // Phase 1
   { slug: "tokenization", number: 1, phase: "ML & AI Foundations", phaseNumber: 1, title: "Tokenization", subtitle: "Why the AI charges you by the tokwhat?", duration: "15 min intro", project: "Tokenizer playground (built into this module)", status: "available" },
-  { slug: "ml-basics", number: 2, phase: "ML & AI Foundations", phaseNumber: 1, title: "Supervised learning foundations", subtitle: "Problem types, features, labels, loss — deep, with worked examples", duration: "~3h", project: "Linear regression from scratch in Java (part 1: model + MSE)", status: "available" },
-  { slug: "ml-training", number: 3, phase: "ML & AI Foundations", phaseNumber: 1, title: "How models actually learn", subtitle: "Gradient descent, LR tuning, overfitting, evaluation metrics", duration: "~3h", project: "Linear regression from scratch in Java (part 2: training loop + eval)", status: "available" },
+  { slug: "ml-basics", number: 2, phase: "ML & AI Foundations", phaseNumber: 1, title: "Supervised learning foundations", subtitle: "Problem types, features, labels, loss — deep, with worked examples", duration: "~1.5–2.5h", project: "Linear regression from scratch in Java (part 1: model + MSE)", status: "available" },
+  { slug: "ml-training", number: 3, phase: "ML & AI Foundations", phaseNumber: 1, title: "How models actually learn", subtitle: "Gradient descent, LR tuning, overfitting, evaluation metrics", duration: "~2.5–3h", project: "Linear regression from scratch in Java (part 2: training loop + eval)", status: "available" },
   { slug: "neural-networks", number: 4, phase: "ML & AI Foundations", phaseNumber: 1, title: "Neural networks", subtitle: "Layers, activations, backprop — from intuition up", duration: "~2h", project: "Tiny digit classifier in Java", status: "coming-soon" },
   { slug: "transformers", number: 5, phase: "ML & AI Foundations", phaseNumber: 1, title: "Transformers & attention", subtitle: "The architecture that ate the ML world", duration: "~2h", project: "Attention visualizer in React", status: "coming-soon" },
   { slug: "embeddings-intro", number: 6, phase: "ML & AI Foundations", phaseNumber: 1, title: "Embeddings: numbers become geometry", subtitle: "Tokens, training, fine-tuning, RLHF", duration: "~1.5h", project: "Tokenizer cost dashboard", status: "coming-soon" },

@@ -1229,7 +1229,7 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
       {/* ================================================================= */}
       {/* PART 6: THE JAVA PROJECT                                            */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="ml-basics" id="java-project" title="Project: linear regression in Java" xp={35} celebration="You built a real ML component. In 2b we'll add the training loop.">
+      <Checkpoint moduleSlug="ml-basics" id="java-project" title="Project: linear regression in Java" xp={35} celebration="You built a real ML component. In 2b we'll add the training loop." manual manualLabel="I built it — mark done">
       <section>
         <h2>Part 6: Project — linear regression from scratch in Java</h2>
 

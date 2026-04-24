@@ -94,7 +94,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     let gained = amount;
     let comboMultiplier = 1;
     setProgress((p) => {
-      const multiplier = p.combo >= 3 ? 1.5 : p.combo >= 5 ? 2 : 1;
+      const multiplier = p.combo >= 5 ? 2 : p.combo >= 3 ? 1.5 : 1;
       const speedBonus = opts?.speed ? 5 : 0;
       gained = Math.round(amount * multiplier) + speedBonus;
       comboMultiplier = multiplier;

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import { useProgress, useSound } from "@/lib/progress";
 import { useTokey } from "@/components/Tokey";
+import { useCheckpointRegistration } from "@/components/Checkpoint";
 
 export type QuizOption = {
   label: string;
@@ -43,6 +44,8 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   const { addXp, incrementCombo, resetCombo, combo, hardcoreMode } = useProgress();
   const { play } = useSound();
   const { say } = useTokey();
+  const checkpoint = useCheckpointRegistration();
+  const quizId = useId();
 
   const answered = selected !== null && options[selected]?.correct;
   // In hardcore mode, any wrong answer locks the quiz
@@ -51,6 +54,23 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   useEffect(() => {
     startedAt.current = Date.now();
   }, []);
+
+  // Register with parent Checkpoint (if any) so it knows to gate on this quiz.
+  useEffect(() => {
+    if (!checkpoint) return;
+    checkpoint.register(quizId);
+    return () => checkpoint.unregister(quizId);
+  }, [checkpoint, quizId]);
+
+  // Report "resolved" upward once the quiz is done.
+  // In normal mode this means answered correctly.
+  // In hardcore mode, a locked wrong answer also counts as resolved (one shot, done).
+  // Either way the user has engaged — the checkpoint is no longer gated on scrolling past.
+  useEffect(() => {
+    if (locked && checkpoint) {
+      checkpoint.markCorrect(quizId);
+    }
+  }, [locked, checkpoint, quizId]);
 
   function handleClick(i: number) {
     if (locked) return;

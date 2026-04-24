@@ -7,25 +7,55 @@ export default function Home() {
     modules: MODULES.filter((m) => m.phaseNumber === phase.number),
   }));
 
+  const availableCount = MODULES.filter((m) => m.status === "available").length;
+  const totalModules = MODULES.length;
+
   return (
     <div>
       <section className="mb-12">
         <div className="inline-block px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-4">
-          30-day roadmap
+          Self-paced · {totalModules} modules · {availableCount} ready today
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
           Become an <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">AI full-stack</span> engineer
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-          A hands-on course tailored for a Java/React/GraphQL engineer. 23 modules across 6 phases, each with interactive explanations, live demos, quizzes, and a portfolio-worthy project.
+          A hands-on course for working full-stack engineers. Build real intuition for how LLMs, embeddings, RAG, and agents actually work — then ship production-quality AI features on top of your existing stack.
         </p>
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="/modules/tokenization"
+            href="/modules/welcome"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
           >
-            Start with Module 1 →
+            Start here → 5-min intro
           </Link>
+          <Link
+            href="/modules/tokenization"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 font-medium text-sm transition"
+          >
+            Skip to Module 1
+          </Link>
+        </div>
+      </section>
+
+      <section className="mb-12 grid sm:grid-cols-2 gap-4">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900">
+          <h3 className="font-semibold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Prerequisites</h3>
+          <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300 m-0 pl-5 list-disc">
+            <li>Working knowledge of <strong>Java / Spring Boot</strong></li>
+            <li>Comfortable with <strong>React</strong> and REST or GraphQL</li>
+            <li>No prior ML experience required — we build up from zero</li>
+            <li>An <strong>Anthropic API key</strong> (from Phase 2 onward, ~$5–10 budget)</li>
+          </ul>
+        </div>
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900">
+          <h3 className="font-semibold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">What you&apos;ll get</h3>
+          <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300 m-0 pl-5 list-disc">
+            <li>Intuition for how LLMs &amp; transformers actually work</li>
+            <li>Linear regression + a tiny neural net, from scratch in Java</li>
+            <li>Production RAG pipeline with Spring AI + pgvector</li>
+            <li>Agents, evals, guardrails — and a portfolio capstone</li>
+          </ul>
         </div>
       </section>
 
@@ -37,7 +67,7 @@ export default function Home() {
                 Phase {phase.number}
               </div>
               <h2 className="text-xl font-bold">{phase.name}</h2>
-              <div className="text-xs text-slate-500">{phase.modules.length} modules</div>
+              <div className="text-xs text-slate-500">{phase.modules.length} {phase.modules.length === 1 ? "module" : "modules"}</div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {phase.modules.map((m) => {

@@ -1118,7 +1118,7 @@ is the expensive part.`}
       {/* ================================================================= */}
       {/* PART 5: JAVA PROJECT — TRAINING LOOP                               */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="ml-training" id="java-project" title="Java project: training loop" xp={40} celebration="Your Java code just TRAINED ITSELF. You are now an ML engineer.">
+      <Checkpoint moduleSlug="ml-training" id="java-project" title="Java project: training loop" xp={40} celebration="Your Java code just TRAINED ITSELF. You are now an ML engineer." manual manualLabel="I built it — mark done">
       <section>
         <h2>Part 5: Project — your Java linear regression actually trains now</h2>
 
