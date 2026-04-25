@@ -219,7 +219,7 @@ export default function MLBasicsModule() {
               detail: <>If you see <code>(x, y)</code> pairs → supervised. If you see just <code>x</code> and words like <code>KMeans</code> / <code>cosine_similarity</code> → unsupervised. If you see <code>env.step(action)</code> or <code>reward</code> → reinforcement.</>,
             },
             {
-              takeaway: "The rest of this module is about supervised learning — it&apos;s where 90% of production ML lives.",
+              takeaway: "The rest of this module is about supervised learning — it's where 90% of production ML lives.",
               detail: <>Once you understand supervised learning well, the other two become easy extensions: unsupervised = supervised without labels; RL = supervised with delayed, noisy labels (rewards).</>,
             },
           ]}
@@ -440,7 +440,7 @@ export default function MLBasicsModule() {
               detail: <>A CTR predictor outputs a number in [0, 1], but that number is &quot;P(click)&quot; — a probability over two classes (click / no-click). Loss is cross-entropy, not MSE. The output <em>looks</em> continuous but the target is categorical.</>,
             },
             {
-              takeaway: "Pinning down &quot;regression or classification?&quot; is the first thing you do on any new ML problem.",
+              takeaway: 'Pinning down "regression or classification?" is the first thing you do on any new ML problem.',
               detail: <>Before you pick a model, before you touch data — you answer this question. It determines every other design choice, so getting it wrong wastes weeks.</>,
             },
           ]}
@@ -1214,11 +1214,11 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
               detail: <>Smooth near zero (nice gradients), linear for big errors (resists outliers). Most production regression code reaches for this when things get noisy.</>,
             },
             {
-              takeaway: "Cross-entropy is the classification loss. It&apos;s −log(p_correct).",
+              takeaway: "Cross-entropy is the classification loss. It's −log(p_correct).",
               detail: <>The model outputs a probability for the correct class; cross-entropy is −log of that. Close to 0 when the model is right and confident; blows up when it&apos;s confidently wrong. Every LLM on earth is trained by minimizing this, token by token.</>,
             },
             {
-              takeaway: "Match the loss to the problem. Wrong loss = model can&apos;t learn.",
+              takeaway: "Match the loss to the problem. Wrong loss = model can't learn.",
               detail: <>MSE for regression, cross-entropy for classification. MSE on classification probabilities barely punishes confident-wrong, so the model never gets the right signal to fix itself. This is a common rookie mistake.</>,
             },
           ]}
@@ -1758,12 +1758,20 @@ public class HousePriceService {
           <p className="text-sm opacity-90 mb-4">
             You can predict and measure loss — but you&apos;ve been finding weights by hand. Time to automate it. Gradient descent, learning-rate tuning, the full training loop, overfitting and how to fight it, and evaluation metrics (RMSE, R², accuracy, precision, recall, F1). You&apos;ll finish the Java project by adding the training loop that learns <code>w</code> and <code>b</code> automatically.
           </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
-          >
-            ← Back to all modules
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/modules/ml-training"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
+            >
+              Start Module 3 →
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition"
+            >
+              ← All modules
+            </Link>
+          </div>
         </div>
       </footer>
     </article>

@@ -168,7 +168,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           { takeaway: "Token IDs are labels, not measurements.", detail: <>Integer IDs like 7453 for <code>cat</code> only identify a slot in a vocabulary — arithmetic on them is meaningless.</> },
           { takeaway: "Embeddings give every token a vector so similarity has room to exist.", detail: <>Two words can agree on some dimensions and disagree on others. That&apos;s the whole point.</> },
           { takeaway: "The numbers are learned, not designed.", detail: <>Training on billions of words produces the arrangement that makes prediction easiest. Meaning emerges as a byproduct.</> },
-          { takeaway: "Directions carry meaning; individual dimensions usually don&apos;t.", detail: <>&quot;king − man + woman ≈ queen&quot; works because the <em>gender direction</em> is consistent across the space — even though no single axis is &quot;gender.&quot;</> },
+          { takeaway: "Directions carry meaning; individual dimensions usually don't.", detail: <>&quot;king − man + woman ≈ queen&quot; works because the <em>gender direction</em> is consistent across the space — even though no single axis is &quot;gender.&quot;</> },
         ]}
       />
       </Checkpoint>

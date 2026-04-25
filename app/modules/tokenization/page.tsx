@@ -436,16 +436,24 @@ public class SafeChatService {
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
         <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-6">
           <div className="text-xs font-semibold uppercase tracking-wider mb-2 opacity-80">Up next</div>
-          <h3 className="text-xl font-bold mb-2">Module 2: How machines learn</h3>
+          <h3 className="text-xl font-bold mb-2">Module 2: Supervised learning foundations</h3>
           <p className="text-sm opacity-90 mb-4">
             Now that you know what a token IS, we&apos;ll look at how the model learns what to DO with them. We&apos;ll cover regression, loss functions, and gradient descent — using intuition, not heavy math.
           </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
-          >
-            ← Back to all modules
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/modules/ml-basics"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
+            >
+              Start Module 2 →
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition"
+            >
+              ← All modules
+            </Link>
+          </div>
         </div>
       </footer>
     </article>

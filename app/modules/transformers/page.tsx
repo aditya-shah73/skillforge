@@ -286,7 +286,7 @@ V = X · W_V    shape = (5 × 3)`}
           title="Part 2 recap"
           gist="Every token plays three roles — asker (Q), advertiser (K), and content-bearer (V) — via three learned projections."
           points={[
-            { takeaway: "Query / Key / Value = 'what I&apos;m looking for' / 'what I am' / 'what I&apos;ll give you.'", detail: <>The filing-cabinet metaphor: query walks in with a question, keys advertise tabs, values are the folder contents pulled out in proportion to match.</> },
+            { takeaway: "Query / Key / Value = 'what I’m looking for' / 'what I am' / 'what I’ll give you.'", detail: <>The filing-cabinet metaphor: query walks in with a question, keys advertise tabs, values are the folder contents pulled out in proportion to match.</> },
             { takeaway: "In self-attention, Q, K, V are all derived from the same input sequence.", detail: <>Q = X · W_Q, K = X · W_K, V = X · W_V. Three different learned matrices, same input. Every token ends up with its own q, k, v vectors.</> },
             { takeaway: "d_k is the internal attention dimension; it can differ from d_model.", detail: <>Convention in multi-head attention is d_k = d_model / num_heads. Building from scratch, you pick it.</> },
             { takeaway: "Attention is 'learned routing' — which tokens influence which, decided per example.", detail: <>No hard-coded connections. The Q·Kᵀ matrix is different for every input, because Q and K depend on the input.</> },

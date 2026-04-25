@@ -565,16 +565,21 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       {/* NEXT PHASE                                                         */}
       {/* ================================================================= */}
       <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
-        <h3 className="mt-0 mb-2">Phase 1 complete → on to Phase 2</h3>
+        <h3 className="mt-0 mb-2">Phase 1 complete → Phase 2 incoming</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Everything from here on in assumes the pipeline you just traced. Module 9 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking — but now you actually know what those tokens are.
+          Everything from here on in assumes the pipeline you just traced. Phase 2 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking — but now you actually know what those tokens are.
         </p>
-        <Link
-          href="/modules/api-fundamentals"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
-        >
-          Start Module 9 — Claude API fundamentals →
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-200/60 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-200 font-medium text-sm">
+            Module 9 — Claude API fundamentals · coming soon
+          </span>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-200 font-medium text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition"
+          >
+            ← All modules
+          </Link>
+        </div>
       </section>
     </article>
   );

@@ -1614,6 +1614,22 @@ b -= learningRate * gradB;`}
         </div>
       </section>
       </Checkpoint>
+
+      <footer className="not-prose mt-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-6">
+        <div className="text-xs uppercase tracking-wider opacity-80 mb-1">Up next</div>
+        <h3 className="text-xl font-bold mb-2">Module 4: Neural networks</h3>
+        <p className="text-sm opacity-90 mb-4">
+          More weights, arranged in layers, with nonlinearities in between. Same outer training loop you just wrote — backprop just routes the gradient through every layer.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/modules/neural-networks" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition">
+            Start Module 4 →
+          </Link>
+          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition">
+            ← All modules
+          </Link>
+        </div>
+      </footer>
     </article>
   );
 }

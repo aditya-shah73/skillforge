@@ -149,7 +149,7 @@ export default function PromptEngineeringModule() {
         title="Part 1 recap: a prompt is context assembly"
         gist="A prompt is not a command — it's the document-prefix the model is going to continue. Everything you send becomes one token sequence."
         points={[
-          { takeaway: "The model computes &quot;what comes next in a document like this.&quot;", detail: <>It&apos;s not obeying instructions — it&apos;s doing pattern-continuation over the tokens you provide.</> },
+          { takeaway: 'The model computes "what comes next in a document like this."', detail: <>It&apos;s not obeying instructions — it&apos;s doing pattern-continuation over the tokens you provide.</> },
           { takeaway: "System + messages are flattened into one sequence.", detail: <>Role markers are just special tokens inside a single stream. That&apos;s why later turns can override earlier ones.</> },
           { takeaway: "Every token in the context influences the output.", detail: <>Stale messages, typos, earlier mistakes — all of it shapes the continuation.</> },
           { takeaway: "Debug by asking what prefix would plausibly lead here.", detail: <>When an answer is weird, look for what in the input made that the likeliest next-token path.</> },
@@ -277,7 +277,7 @@ Output: { "allowed": false, "reasons": ["UPDATE without WHERE clause"] }
           { takeaway: "Be operational, not aspirational.", detail: <>&quot;If X, reply exactly Y&quot; is enforceable. &quot;Be helpful&quot; is not.</> },
           { takeaway: "Use the four-section pattern.", detail: <>Identity → Task &amp; scope → Output format → Edge cases. Short beats exhaustive.</> },
           { takeaway: "XML tags structure long prompts.", detail: <>Wrap <code>&lt;role&gt;</code>, <code>&lt;rules&gt;</code>, <code>&lt;output_format&gt;</code>, <code>&lt;examples&gt;</code> — Claude was trained on this shape.</> },
-          { takeaway: "Tag user-supplied data and say it&apos;s data.", detail: <>Prevents the model from treating embedded text as new instructions — a first line of defense against prompt injection (Module 25).</> },
+          { takeaway: "Tag user-supplied data and say it's data.", detail: <>Prevents the model from treating embedded text as new instructions — a first line of defense against prompt injection (Module 25).</> },
         ]}
       />
       </Checkpoint>
@@ -383,7 +383,7 @@ ITEMS:`}</pre>
         gist="Three to five concrete examples lock format, tone, and edge-case handling more reliably than any paragraph of instructions."
         points={[
           { takeaway: "3–5 examples is the sweet spot.", detail: <>Fewer than 2 is weak; more than 5 rarely earns its tokens.</> },
-          { takeaway: "Examples &gt; instructions when they conflict.", detail: <>If your instructions say JSON but examples are YAML, you&apos;ll get YAML.</> },
+          { takeaway: "Examples > instructions when they conflict.", detail: <>If your instructions say JSON but examples are YAML, you&apos;ll get YAML.</> },
           { takeaway: "Spend examples on the boundaries.", detail: <>Hard, ambiguous, or commonly-confused cases. Easy ones don&apos;t need a demonstration.</> },
           { takeaway: "Examples amplify whatever pattern is in them.", detail: <>If every &quot;owner&quot; is Alice, the model learns &quot;owner = Alice.&quot; Rotate names, balance classes.</> },
         ]}
@@ -478,7 +478,7 @@ ITEMS:`}</pre>
           { takeaway: "Each reasoning token is extra compute.", detail: <>Written reasoning becomes input for the next forward pass — that&apos;s the mechanism. Not &quot;concentration.&quot;</> },
           { takeaway: "Great for multi-step math, logic, debugging, planning.", detail: <>Anything that benefits from breaking the problem into subproblems.</> },
           { takeaway: "Wasted on classification, lookup, short creative writing.", detail: <>If the answer is a single token anyway, CoT just triples your bill.</> },
-          { takeaway: "Reasoning isn&apos;t a correctness proof.", detail: <>Confident-looking chains still land on wrong answers. For high-stakes outputs, verify independently.</> },
+          { takeaway: "Reasoning isn't a correctness proof.", detail: <>Confident-looking chains still land on wrong answers. For high-stakes outputs, verify independently.</> },
         ]}
       />
       </Checkpoint>
@@ -601,7 +601,7 @@ Output:`}</CodeBlock>
         gist="Getting schema-faithful JSON in production takes specific instructions, prefill or tool-use, and a defensive parser with one retry — not magic prompts."
         points={[
           { takeaway: "Be brutally specific about format.", detail: <>&quot;Return ONLY a valid JSON object. No prefix, no suffix, no fences.&quot; Every word there is earning its keep.</> },
-          { takeaway: "Prefill the assistant&apos;s reply.", detail: <>Starting the assistant turn with <code>&#123;</code> makes conversational preambles impossible.</> },
+          { takeaway: "Prefill the assistant's reply.", detail: <>Starting the assistant turn with <code>&#123;</code> makes conversational preambles impossible.</> },
           { takeaway: "Tool-use is the 100% guarantee.", detail: <>When schema compliance is critical, use provider tool-use / function-calling (Module 11). The output is constrained by the API.</> },
           { takeaway: "Parse defensively, retry once.", detail: <>Strip fences, extract the outermost <code>&#123;...&#125;</code>, return Optional. Retry on miss with a firmer reminder. &gt;99% in practice.</> },
         ]}
