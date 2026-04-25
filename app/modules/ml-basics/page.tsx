@@ -587,7 +587,7 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
 
         <Callout variant="insight" title="For LLMs, the equivalent is the prompt">
           <p className="m-0">
-            You&apos;re not designing features for a regression anymore — but you <em>are</em> choosing what context to give the model. The prompt, the system message, the retrieved documents, the tool definitions — that&apos;s all &quot;feature engineering for LLMs.&quot; Same principle: great inputs &gt; fancy model.
+            You&apos;re not designing features for a regression anymore — but you <em>are</em>{" "}choosing what context to give the model. The prompt, the system message, the retrieved documents, the tool definitions — that&apos;s all &quot;feature engineering for LLMs.&quot; Same principle: great inputs &gt; fancy model.
           </p>
         </Callout>
 
