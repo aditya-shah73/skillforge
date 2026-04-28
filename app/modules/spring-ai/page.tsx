@@ -495,10 +495,10 @@ JSON response following this format without deviation.
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.client.advisor.api.AdvisedRequest;
+import org.springframework.ai.chat.client.ChatClientRequest;
+import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisor;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisorChain;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -513,17 +513,17 @@ public class LoggingAdvisor implements CallAdvisor {
     @Override public String getName() { return "LoggingAdvisor"; }
 
     @Override
-    public ChatResponse adviseCall(AdvisedRequest request, CallAdvisorChain chain) {
+    public ChatClientResponse adviseCall(ChatClientRequest request, CallAdvisorChain chain) {
         long start = System.currentTimeMillis();
 
         // Pass the request down the chain. Whatever's after us (including the
         // actual API call) runs here. This is the around-the-call hook.
-        ChatResponse response = chain.nextCall(request);
+        ChatClientResponse response = chain.nextCall(request);
 
         long elapsed = System.currentTimeMillis() - start;
         // Pull usage out of the response metadata. Spring AI normalizes this
         // across providers — works the same for Anthropic, OpenAI, etc.
-        var usage = response.getMetadata().getUsage();
+        var usage = response.chatResponse().getMetadata().getUsage();
         log.info("LLM call took {}ms · in={} tokens · out={} tokens",
             elapsed, usage.getPromptTokens(), usage.getCompletionTokens());
 
@@ -674,7 +674,8 @@ import org.springframework.context.annotation.Configuration;
 public class MemoryConfig {
 
     // In-memory store. For production, swap to JdbcChatMemoryRepository
-    // and add the spring-ai-starter-jdbc dep — same interface, different bean.
+    // and add spring-ai-starter-model-chat-memory-repository-jdbc — same
+    // interface, different bean.
     @Bean
     public ChatMemoryRepository chatMemoryRepository() {
         return new InMemoryChatMemoryRepository();
@@ -697,10 +698,10 @@ public class MemoryConfig {
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.chat.client.advisor.api.AdvisedRequest;
+import org.springframework.ai.chat.client.ChatClientRequest;
+import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisor;
 import org.springframework.ai.chat.client.advisor.api.CallAdvisorChain;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Component;
 
 // @Component = Spring picks this up by component scan and registers a singleton.
@@ -716,16 +717,16 @@ public class LoggingAdvisor implements CallAdvisor {
     @Override public String getName() { return "LoggingAdvisor"; }
 
     @Override
-    public ChatResponse adviseCall(AdvisedRequest request, CallAdvisorChain chain) {
+    public ChatClientResponse adviseCall(ChatClientRequest request, CallAdvisorChain chain) {
         long start = System.currentTimeMillis();
 
         // chain.nextCall(request) runs everything downstream of us — including
         // the actual HTTP call to Anthropic — and returns when it's done.
         // This is the "around" hook: we get to see request and response.
-        ChatResponse response = chain.nextCall(request);
+        ChatClientResponse response = chain.nextCall(request);
 
         long elapsed = System.currentTimeMillis() - start;
-        var usage = response.getMetadata().getUsage();
+        var usage = response.chatResponse().getMetadata().getUsage();
         // Token usage gives us a read on cost without needing to hit a billing API.
         // Multiply by current model rates if you want a per-call dollar estimate.
         log.info("→ {}ms · in={} · out={} tokens",

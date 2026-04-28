@@ -205,8 +205,6 @@ provided you set it up right.`}</CodeBlock>
         <CodeBlock lang="java" caption="Wiring cache_control onto the system prompt">{`import org.springframework.ai.anthropic.AnthropicChatOptions;
 import org.springframework.ai.anthropic.api.AnthropicApi;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.SystemMessage;
-import java.util.Map;
 
 @Service
 public class SupportService {
@@ -219,12 +217,9 @@ public class SupportService {
   private final ChatClient chat;
 
   public SupportService(ChatClient.Builder builder) {
-    SystemMessage cachedSystem = new SystemMessage(SYSTEM_TEXT);
-    cachedSystem.getMetadata().put(
-        AnthropicApi.CACHE_CONTROL,
-        Map.of("type", "ephemeral")    // 5-min cache; "ephemeral_1h" for 1h tier
-    );
-
+    // cacheTtl on the default options applies cache_control to the
+    // system prompt block automatically. MINUTES_5 is the standard tier;
+    // HOURS_1 is the longer/more-expensive tier.
     this.chat = builder
         .defaultSystem(SYSTEM_TEXT)
         .defaultOptions(AnthropicChatOptions.builder()
@@ -249,17 +244,16 @@ public class SupportService {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Caching tool definitions</h3>
         <p>
-          For Module 11&apos;s assistant pattern, the tool definitions can dwarf the system prompt. They&apos;re sent on every call. They almost never change. Perfect cache candidate. Spring AI lets you opt the tool block into caching via the Anthropic options:
+          For Module 11&apos;s assistant pattern, the tool definitions can dwarf the system prompt. They&apos;re sent on every call. They almost never change. Perfect cache candidate. The same <code>cacheTtl</code> options apply when tools are attached — Spring AI&apos;s Anthropic adapter writes <code>cache_control</code> onto the long, stable blocks (system prompt and tool definitions) so a single cached prefix covers both:
         </p>
 
         <CodeBlock lang="java">{`AnthropicChatOptions opts = AnthropicChatOptions.builder()
     .cacheTtl(AnthropicApi.CacheTtl.MINUTES_5)
-    .cacheTools(true)               // include tool definitions in cache
     .build();
 
 chatClient.prompt()
     .user(question)
-    .tools(graphTools)
+    .tools(graphTools)              // tool defs sent every call — cached prefix covers them
     .options(opts)
     .call()
     .content();`}</CodeBlock>
@@ -661,7 +655,7 @@ public class DashboardController {
 </head>
 <body>
   <h1>LLM cost dashboard</h1>
-  <p>Click <b>Ask</b> repeatedly. Watch cache reads grow and \\$/call drop after the first call.</p>
+  <p>Click <b>Ask</b> repeatedly. Watch cache reads grow and $/call drop after the first call.</p>
   <input id="q" value="How do I reset my password?" size="50">
   <button id="ask">Ask</button>
   <button id="ask10">Ask × 10</button>
@@ -689,7 +683,7 @@ public class DashboardController {
         ["Cache write tokens",    s.cacheWriteTokens],
         ["Cache read tokens",     s.cacheReadTokens],
         ["Total spend (USD)",     "$" + s.totalUsd.toFixed(4)],
-        ["Avg \\$ per call",       "$" + (s.calls ? (s.totalUsd / s.calls) : 0).toFixed(5)],
+        ["Avg $ per call",        "$" + (s.calls ? (s.totalUsd / s.calls) : 0).toFixed(5)],
         ["Cache hit ratio",       (s.cacheHitRatio * 100).toFixed(1) + "%"],
       ];
       $("stats").innerHTML = rows.map(
@@ -731,7 +725,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
           </ul>
         </Callout>
 
-        <Checkpoint moduleSlug="prompt-caching" id="project" title="Ship the dashboard" xp={50} manual manualLabel="Cache hits incoming">
+        <Checkpoint moduleSlug="prompt-caching" id="project" title="Project: cost dashboard" xp={50} manual manualLabel="Cache hits incoming">
           <p>
             Run a sustained burst of asks. Watch the cache hit ratio asymptote toward something like 90%+ as cache reads dominate. This is exactly the instrumentation you need in production: when somebody silently breaks the cache, your hit ratio dashboard tells you within minutes instead of via a finance ticket weeks later.
           </p>
@@ -802,7 +796,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
           xp={20}
         />
 
-        <Checkpoint moduleSlug="prompt-caching" id="final" title="Phase 2 complete" xp={60} celebration="Phase 2 complete! You shipped five Spring Boot AI projects. +60 XP">
+        <Checkpoint moduleSlug="prompt-caching" id="final" title="Final quiz" xp={60} celebration="Phase 2 complete! You shipped five Spring Boot AI projects. +60 XP">
           <p>
             That&apos;s Phase 2 done. You can now: hit the Anthropic API directly (Module 9), use Spring AI for memory and structured output (Module 10), expose your code to the model via tool use (Module 11), stream responses end-to-end (Module 12), and run all of it within sane cost bounds (Module 13). Phase 3 takes everything you built and adds <strong>retrieval</strong> — vector search, embeddings at scale, and full RAG pipelines in Spring Boot.
           </p>
@@ -811,7 +805,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
 
       <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/modules/streaming" className="text-indigo-600 hover:underline">← Module 12: Streaming</Link>
-        <Link href="/" className="text-indigo-600 hover:underline">All modules →</Link>
+        <Link href="/modules/embeddings-deep" className="text-indigo-600 hover:underline">Module 14: Embeddings deep dive →</Link>
       </div>
     </article>
   );

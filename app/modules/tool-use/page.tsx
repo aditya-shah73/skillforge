@@ -25,8 +25,8 @@ sequenceDiagram
     participant App as Your Spring app
     participant Claude
     participant Tool as findUserByEmail()
-    App->>Claude: Find user alice@acme.com,<br/>here are tools you can call
-    Claude-->>App: tool_use:<br/>findUserByEmail(email=alice@acme.com)
+    App->>Claude: Find user alice@acme.com (with tool list)
+    Claude-->>App: tool_use findUserByEmail(email=alice@acme.com)
     App->>Tool: invoke method
     Tool-->>App: id 42, name Alice, plan pro
     App->>Claude: tool_result with that data
@@ -598,12 +598,12 @@ Bye.`}</CodeBlock>
           <ul className="list-disc pl-6 space-y-2 mt-2">
             <li><strong>&quot;No qualifying bean of type ChatClient.Builder&quot;</strong> — your <code>pom.xml</code> is missing <code>spring-ai-starter-model-anthropic</code>. Re-check the dependency.</li>
             <li><strong>Model never calls a tool, just makes things up</strong> — your tool descriptions are too vague. Beef them up; add example values.</li>
-            <li><strong>Loop runs ~5 tool calls and aborts</strong> — Spring AI&apos;s default max iterations kicked in. Either your tool returns nonsense (check what it returns by logging), or the question genuinely needs &gt;5 tool calls (raise the cap with <code>spring.ai.chat.client.tool.execution.max-iterations</code>).</li>
+            <li><strong>Loop runs a handful of tool calls and aborts</strong> — Spring AI&apos;s tool-execution loop has a built-in iteration cap to prevent runaway loops. Either your tool returns nonsense (check what it returns by logging), or the question genuinely needs more steps. Raise the cap by configuring a custom <code>ToolCallingManager</code> bean with a higher <code>maxIterations</code> value and wiring it into your <code>ChatClient.Builder</code>.</li>
             <li><strong>Tool runs but model says &quot;I don&apos;t have access&quot;</strong> — usually means the tool returned <code>null</code> or threw silently. Check stdout; consider returning an explicit error string.</li>
           </ul>
         </Callout>
 
-        <Checkpoint moduleSlug="tool-use" id="project" title="Ship the assistant" xp={50} manual manualLabel="I built it and it works">
+        <Checkpoint moduleSlug="tool-use" id="project" title="Project: GraphQL-aware assistant" xp={50} manual manualLabel="I built it and it works">
           <p>
             Run a couple of multi-step questions through it. Watch how the model chains tool calls — &quot;who owns data-platform and what infra issues exist&quot; needs <code>listProjects</code> then <code>findIssuesByLabel</code>. If you can answer real ops questions about your fake company through plain English, you have built the foundation of every &quot;copilot&quot; product on the market.
           </p>
