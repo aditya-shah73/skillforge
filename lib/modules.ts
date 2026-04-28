@@ -42,7 +42,7 @@ export const MODULES: Module[] = [
   { slug: "prompt-caching", number: 13, phase: "API & Backend Integration", phaseNumber: 2, title: "Prompt caching & cost", subtitle: "Running LLMs at production scale", duration: "~1.5h", project: "Cost dashboard", status: "available" },
 
   // Phase 3
-  { slug: "embeddings-deep", number: 14, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Geometry, cosine similarity, models", duration: "~2h", project: "Semantic bookmark search", status: "coming-soon" },
+  { slug: "embeddings-deep", number: 14, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Production embeddings: models, dimensions, cost, the curse", duration: "~2h", project: "Semantic bookmark search", status: "available" },
   { slug: "pgvector", number: 15, phase: "Vector Search & RAG", phaseNumber: 3, title: "Vector DBs & pgvector", subtitle: "HNSW vs IVFFlat, indexing, Postgres integration", duration: "~2h", project: "Duplicate issue detector", status: "coming-soon" },
   { slug: "rag-architecture", number: 16, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG architecture", subtitle: "Chunking, retrieval, context assembly", duration: "~2h", project: "Doc chunking lab", status: "coming-soon" },
   { slug: "rag-spring", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "coming-soon" },
