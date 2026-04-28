@@ -410,6 +410,46 @@ ITEMS:`}</pre>
           </p>
         </div>
 
+        <h3>Concrete example — same question, two prompts</h3>
+        <p>
+          Take a classic CoT benchmark question. Watch what changes between &quot;just answer&quot; and &quot;think first, then answer&quot;:
+        </p>
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="p-4 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
+            <div className="text-xs uppercase tracking-wider text-rose-700 dark:text-rose-400 font-bold mb-2">Naive prompt</div>
+            <div className="text-sm font-mono whitespace-pre-wrap mb-3">{`Roger has 5 tennis balls.
+He buys 2 more cans, with 3
+balls per can. How many
+balls does he have now?
+
+Answer:`}</div>
+            <div className="text-xs uppercase tracking-wider opacity-70 mb-1">Model output</div>
+            <div className="text-sm font-mono">11 ✗</div>
+            <p className="text-xs mt-2 m-0 opacity-70">
+              Smaller models often skip a step (e.g. 5 + 2×3 → forget to multiply, or 5 + 2 + 3). One forward pass to commit, no room to verify.
+            </p>
+          </div>
+          <div className="p-4 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/40 dark:bg-emerald-950/30">
+            <div className="text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold mb-2">CoT prompt</div>
+            <div className="text-sm font-mono whitespace-pre-wrap mb-3">{`Roger has 5 tennis balls.
+He buys 2 more cans, with 3
+balls per can. How many
+balls does he have now?
+
+Let's think step by step.`}</div>
+            <div className="text-xs uppercase tracking-wider opacity-70 mb-1">Model output</div>
+            <div className="text-sm font-mono whitespace-pre-wrap">{`2 cans × 3 balls = 6 new balls.
+5 + 6 = 11.
+Answer: 11. ✓`}</div>
+            <p className="text-xs mt-2 m-0 opacity-70">
+              Each intermediate line is now context for the next forward pass. The model effectively gets 3 passes of compute instead of 1.
+            </p>
+          </div>
+        </div>
+        <p className="text-sm opacity-80">
+          On the GSM8K math benchmark, this single phrase took PaLM-540B from ~17% to ~57% accuracy — same weights, same model, just a different prompt. That&apos;s the entire pitch for CoT in one number.
+        </p>
+
         <h3>Why it works</h3>
         <ul>
           <li>Each reasoning token becomes <em>input context</em> for the next token&apos;s forward pass. The model gets more compute per problem.</li>

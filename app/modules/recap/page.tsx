@@ -317,6 +317,9 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         <p>
           You&apos;re left with one score per token in the vocabulary — <strong>logits</strong>. These aren&apos;t probabilities yet.
         </p>
+        <p className="text-sm opacity-80">
+          <em>Etymology aside:</em> &quot;logit&quot; comes from <em>log-odds</em> (the logarithm of an odds ratio) — a real-numbered score on (−∞, +∞). Softmax is what turns log-odds into probabilities on [0, 1]. So &quot;logits&quot; literally means &quot;the things that, when softmaxed, become probabilities.&quot;
+        </p>
 
         <h3>Softmax turns logits into a probability distribution</h3>
         <p>You met softmax in Module 4 (output layer of the digit classifier). Exactly the same formula:</p>
@@ -337,6 +340,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           <li><strong>Greedy (temperature = 0):</strong> always pick the argmax. Deterministic. Can be robotic.</li>
           <li><strong>Temperature sampling:</strong> divide logits by <code>T</code> before softmax. <code>T &lt; 1</code> sharpens (more predictable), <code>T &gt; 1</code> flattens (more creative, more risk of nonsense).</li>
           <li><strong>Top-p / nucleus:</strong> restrict to the smallest set of tokens whose total probability exceeds <code>p</code> (e.g. 0.9), then sample from just those. Cuts off the long tail of nonsense without being overly rigid.</li>
+          <li><strong>Beam search:</strong> instead of committing to one token at each step, keep the top-<code>k</code> partial sequences (&quot;beams&quot;) and expand each. At the end, return the highest-scoring full sequence. Common in translation and summarization, where a globally fluent output beats a locally greedy one. Rare in modern chat decoders — it tends to produce bland, repetitive text and doesn&apos;t mix well with sampling.</li>
         </ul>
 
         <p>The math behind temperature is one line:</p>
