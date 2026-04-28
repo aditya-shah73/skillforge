@@ -668,7 +668,7 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
           With multiple features it generalizes cleanly. If we have <code>d</code> features, we have <code>d</code> weights:
         </p>
 
-        <CodeBlock lang="plain">{`ŷ = w₁·x₁ + w₂·x₂ + ... + wₐ·xₐ + b
+        <CodeBlock lang="plain">{`ŷ = w₁·x₁ + w₂·x₂ + ... + w_d·x_d + b
 
 For a house with features [size, bedrooms, age]:
 
@@ -1104,6 +1104,7 @@ Where:
         </div>
 
         <Quiz
+          kind="Loss-shape thinking"
           question="Model A has MSE = 1.0, Model B has MSE = 1.0 on the same data. Model A had many small errors; Model B had mostly zero errors but a few huge ones. Which observation is correct?"
           options={[
             { label: "They're equivalent — same MSE means same quality", explanation: "Same MSE says they average the same squared-error, but the error distribution matters. And if you switch loss, the ranking can flip." },
@@ -1114,6 +1115,7 @@ Where:
         />
 
         <Quiz
+          kind="Cross-entropy intuition"
           question="You're training a binary spam classifier. Your current model outputs probability 0.02 for a true-spam email (so it's confidently saying 'not spam'). What does cross-entropy loss do with that?"
           options={[
             { label: "Assigns a small loss, since 0.02 is close to 0", explanation: "The TRUE label is 1 (spam). The model said 0.02 for spam. It's confidently wrong on the true class." },
@@ -1150,10 +1152,10 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
               <p>Three loss functions in Java. Plain arithmetic — no libraries.</p>
               <CodeBlock lang="java">{`public final class Losses {
 
-    // Convention used throughout the course: (y, yHat) — labels first, predictions
-    // second — matches PyTorch's loss_fn(y_pred, y_true) is the OPPOSITE of what
-    // we use here, so be careful when porting. We chose (y, yHat) because it
-    // reads left-to-right as "ground truth, then your guess at it."
+    // Convention used throughout the course: (y, yHat) — labels first,
+    // predictions second. Note that PyTorch's loss_fn(y_pred, y_true) uses
+    // the OPPOSITE order, so be careful when porting. We chose (y, yHat)
+    // because it reads left-to-right as "ground truth, then your guess at it."
 
     /** Mean squared error. Regression. Smooth, punishes big errors. */
     public static double mse(double[] y, double[] yHat) {
@@ -1234,7 +1236,7 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
       {/* ================================================================= */}
       {/* PART 6: THE JAVA PROJECT                                            */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="ml-basics" id="java-project" title="Project: linear regression in Java" xp={35} celebration="You built a real ML component. In 2b we'll add the training loop." manual manualLabel="I built it — mark done">
+      <Checkpoint moduleSlug="ml-basics" id="java-project" title="Project: linear regression in Java" xp={35} celebration="You built a real ML component. In Module 3 we'll add the training loop." manual manualLabel="I built it — mark done">
       <section>
         <h2>Part 6: Project — linear regression from scratch in Java</h2>
 
@@ -1265,7 +1267,7 @@ touch LinearRegression.java Metrics.java HouseDemo.java
 javac *.java
 java HouseDemo
 
-# Expected: a 10-row table of predictions + MSE ≈ 54, RMSE ≈ 7.3`}</CodeBlock>
+# Expected: a 10-row table of predictions + MSE ≈ 75, RMSE ≈ 8.7`}</CodeBlock>
         </Callout>
 
         <h4>File 1 of 3: the model</h4>
@@ -1321,7 +1323,7 @@ public final class LinearRegression {
         return sum;
     }
 
-    // Package-private accessors — the trainer (coming in 2b) will
+    // Package-private accessors — the trainer (coming in Module 3) will
     // need to read and write these during gradient descent.
     double[] weights() { return w; }
     double bias()      { return b; }
@@ -1387,7 +1389,7 @@ public class HouseDemo {
     public static void main(String[] args) {
         // ── Construct the model with the weights we eyeballed earlier.
         // These were the "winning" values from the interactive demo.
-        // In 2b we'll let the trainer find these itself.
+        // In Module 3 we'll let the trainer find these itself.
         LinearRegression model = new LinearRegression(
             new double[] { 46.0 },   // slope: ~$46k per 1000 sqft
              90.0                    // intercept: base price
@@ -1422,8 +1424,8 @@ public class HouseDemo {
   1 |   2.1  |    180 |  186.6 |   +6.6
   2 |   2.8  |    210 |  218.8 |   +8.8
   ...
-MSE  ≈ 40–100
-RMSE ≈  6–10  (off by ~$6–10k on average)`}</CodeBlock>
+MSE  ≈ 75
+RMSE ≈ 8.7  (off by ~$8–9k on average)`}</CodeBlock>
 
         <p>
           Those small residuals are exactly what &quot;real data&quot; looks like — the relationship isn&apos;t perfectly linear, and even the best line leaves some loss on the table.
@@ -1656,7 +1658,7 @@ public class HousePriceService {
       <Checkpoint moduleSlug="ml-basics" id="final" title="Final quiz" xp={40} celebration="Module 2 done. You've earned the 'foundations' badge. Module 3 is waiting.">
       <section>
         <h2>🎯 Final quiz</h2>
-        <p>Seven questions. Get 6+ and you&apos;re ready for 2b.</p>
+        <p>Seven questions. Get 6+ and you&apos;re ready for Module 3.</p>
 
         <Quiz
           kind="Q1 of 7"
