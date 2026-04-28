@@ -654,9 +654,12 @@ T → ∞:   all logits get squashed toward equality
           Everything from here on in assumes the pipeline you just traced. Phase 2 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking — but now you actually know what those tokens are.
         </p>
         <div className="flex flex-wrap gap-3">
-          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-200/60 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-200 font-medium text-sm">
-            Module 9 — Claude API fundamentals · coming soon
-          </span>
+          <Link
+            href="/modules/api-fundamentals"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-medium text-sm hover:bg-indigo-700 transition"
+          >
+            Module 9 — Claude API fundamentals →
+          </Link>
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-200 font-medium text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition"

@@ -35,7 +35,7 @@ export const MODULES: Module[] = [
   { slug: "recap", number: 8, phase: "ML & AI Foundations", phaseNumber: 1, title: "Putting it all together", subtitle: "Trace a real LLM request through every concept from Modules 1–7", duration: "~1–1.5h", project: "Annotated end-to-end request walkthrough", status: "available" },
 
   // Phase 2
-  { slug: "api-fundamentals", number: 9, phase: "API & Backend Integration", phaseNumber: 2, title: "Claude API fundamentals", subtitle: "Auth, models, parameters — from zero to first request", duration: "~1.5h", project: "AI code reviewer CLI", status: "coming-soon" },
+  { slug: "api-fundamentals", number: 9, phase: "API & Backend Integration", phaseNumber: 2, title: "Claude API fundamentals", subtitle: "Auth, models, parameters — from zero to first request", duration: "~1.5h", project: "AI code reviewer CLI", status: "available" },
   { slug: "spring-ai", number: 10, phase: "API & Backend Integration", phaseNumber: 2, title: "Spring AI integration", subtitle: "The Spring-native way to call LLMs", duration: "~2h", project: "Personal journal assistant", status: "coming-soon" },
   { slug: "tool-use", number: 11, phase: "API & Backend Integration", phaseNumber: 2, title: "Tool use & function calling", subtitle: "Let the LLM call your GraphQL resolvers", duration: "~2h", project: "GraphQL-aware assistant", status: "coming-soon" },
   { slug: "streaming", number: 12, phase: "API & Backend Integration", phaseNumber: 2, title: "Streaming with SSE", subtitle: "Token-by-token from Spring Boot to React", duration: "~1.5h", project: "Live story generator", status: "coming-soon" },
