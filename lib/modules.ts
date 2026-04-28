@@ -36,10 +36,10 @@ export const MODULES: Module[] = [
 
   // Phase 2
   { slug: "api-fundamentals", number: 9, phase: "API & Backend Integration", phaseNumber: 2, title: "Claude API fundamentals", subtitle: "Auth, models, parameters — from zero to first request", duration: "~1.5h", project: "AI code reviewer CLI", status: "available" },
-  { slug: "spring-ai", number: 10, phase: "API & Backend Integration", phaseNumber: 2, title: "Spring AI integration", subtitle: "The Spring-native way to call LLMs", duration: "~2h", project: "Personal journal assistant", status: "coming-soon" },
-  { slug: "tool-use", number: 11, phase: "API & Backend Integration", phaseNumber: 2, title: "Tool use & function calling", subtitle: "Let the LLM call your GraphQL resolvers", duration: "~2h", project: "GraphQL-aware assistant", status: "coming-soon" },
-  { slug: "streaming", number: 12, phase: "API & Backend Integration", phaseNumber: 2, title: "Streaming with SSE", subtitle: "Token-by-token from Spring Boot to React", duration: "~1.5h", project: "Live story generator", status: "coming-soon" },
-  { slug: "prompt-caching", number: 13, phase: "API & Backend Integration", phaseNumber: 2, title: "Prompt caching & cost", subtitle: "Running LLMs at production scale", duration: "~1.5h", project: "Cost dashboard", status: "coming-soon" },
+  { slug: "spring-ai", number: 10, phase: "API & Backend Integration", phaseNumber: 2, title: "Spring AI integration", subtitle: "The Spring-native way to call LLMs", duration: "~2h", project: "Personal journal assistant", status: "available" },
+  { slug: "tool-use", number: 11, phase: "API & Backend Integration", phaseNumber: 2, title: "Tool use & function calling", subtitle: "Let the LLM call your GraphQL resolvers", duration: "~2h", project: "GraphQL-aware assistant", status: "available" },
+  { slug: "streaming", number: 12, phase: "API & Backend Integration", phaseNumber: 2, title: "Streaming with SSE", subtitle: "Token-by-token from Spring Boot to React", duration: "~1.5h", project: "Live story generator", status: "available" },
+  { slug: "prompt-caching", number: 13, phase: "API & Backend Integration", phaseNumber: 2, title: "Prompt caching & cost", subtitle: "Running LLMs at production scale", duration: "~1.5h", project: "Cost dashboard", status: "available" },
 
   // Phase 3
   { slug: "embeddings-deep", number: 14, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Geometry, cosine similarity, models", duration: "~2h", project: "Semantic bookmark search", status: "coming-soon" },
