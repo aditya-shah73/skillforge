@@ -13,6 +13,7 @@ const CHECKPOINTS = [
   { id: "qkv", title: "Queries, keys, values: the filing-cabinet metaphor" },
   { id: "scaled-dot-product", title: "Scaled dot-product attention, end to end" },
   { id: "multi-head", title: "Multi-head: attention in parallel perspectives" },
+  { id: "positional", title: "Positional encoding: putting order back in" },
   { id: "transformer-block", title: "The transformer block" },
   { id: "java-project", title: "Project: scaled dot-product attention in Java" },
   { id: "final", title: "Final quiz" },
@@ -70,6 +71,12 @@ export default function TransformersModule() {
       <Checkpoint moduleSlug="transformers" id="why-attention" title="Why attention was invented" xp={20} celebration="You understand what problem transformers were built to solve. Everything below is variations on this.">
       <section>
         <h2>Part 1: Why attention was invented</h2>
+
+        <Callout variant="info" title="Where Module 4 leaves off, and why we need something new">
+          <p className="m-0">
+            Module 4&apos;s MLP can take a fixed-size input vector (784 pixels) and produce a fixed-size output (10 digit scores). What it <em>can&apos;t</em> do is process a variable-length sequence — &quot;Why is String immutable?&quot; vs an entire RAG document — and let every token influence every other token. Attention is the operation that fills that gap. The MLP isn&apos;t going away (you&apos;ll see it inside every transformer block, doing the same widen-then-project trick you built); it just gets a sequence-aware partner. <strong>Attention mixes across positions; the MLP transforms at each position.</strong> That one line is the whole module in miniature.
+          </p>
+        </Callout>
 
         <h3>The problem: long sentences break sequential models</h3>
         <p>
@@ -674,11 +681,91 @@ W_O is a learned output-projection matrix.`}
       </Checkpoint>
 
       {/* ================================================================= */}
-      {/* PART 5: TRANSFORMER BLOCK                                          */}
+      {/* PART 5a: POSITIONAL ENCODING                                        */}
+      {/* ================================================================= */}
+      <Checkpoint moduleSlug="transformers" id="positional" title="Positional encoding" xp={15} celebration="You spotted attention's blind spot — and saw the fix every modern LLM uses.">
+      <section>
+        <h2>Part 5: putting order back in — positional encoding</h2>
+
+        <p>
+          Here&apos;s a property of attention you may not have noticed yet: <strong>it doesn&apos;t care about order</strong>.
+          Run attention on <code>[the, cat, sat]</code> and on <code>[sat, the, cat]</code> and — assuming the same Q/K/V values — you get the
+          <em> same set of output vectors</em>, just permuted. Attention is <strong>permutation-invariant</strong>: shuffle the inputs, you shuffle the outputs identically.
+        </p>
+
+        <p>
+          But of course order matters. <em>&quot;Dog bites man&quot;</em> and <em>&quot;Man bites dog&quot;</em> are different sentences with different meanings.
+          So somewhere we have to inject <strong>where</strong> each token sits in the sequence, before attention runs.
+          That&apos;s the job of <strong>positional encoding</strong>.
+        </p>
+
+        <h3>The fix: add a per-position vector</h3>
+
+        <p>
+          The original transformer paper used the simplest possible thing: pre-compute a fixed vector <code>p_i</code> for each position <code>i</code>, and add it to that token&apos;s embedding before the first attention layer:
+        </p>
+
+        <CodeBlock lang="plain">
+{`x_i = embedding(token_i) + p_i
+
+where p_i is a fixed (non-learned) vector that depends only on the integer i.`}
+        </CodeBlock>
+
+        <p>
+          That&apos;s it. The model now sees a vector that encodes both <em>what</em> the token is and <em>where</em> it sits.
+          Attention still does its permutation-invariant math — but the <em>inputs</em> are no longer interchangeable, because position got baked in.
+        </p>
+
+        <h3>Sinusoidal positions — what the original paper used</h3>
+
+        <p>
+          The original choice was a clever sinusoid:
+        </p>
+
+        <CodeBlock lang="plain">
+{`p_i[2k]     = sin(i / 10000^(2k / d_model))
+p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
+        </CodeBlock>
+
+        <p>
+          Each dimension oscillates at a different frequency. Low-index dims wiggle slowly (encoding coarse position); high-index dims wiggle fast (encoding fine position).
+          Why <em>this</em> shape? Two nice properties: it generalizes to sequences longer than ever seen at training time, and the dot product <code>p_i · p_j</code> depends only on the offset <code>j − i</code> — so &quot;distance between positions&quot; is something attention can pick up cleanly.
+        </p>
+
+        <Callout variant="insight" title="Modern LLMs use RoPE, not sinusoidal addition">
+          <p className="m-0">
+            Newer models (LLaMA, Claude, GPT-NeoX, most of 2023+) use <strong>Rotary Position Embedding (RoPE)</strong>. Instead of <em>adding</em> a position vector to the embedding, RoPE <em>rotates</em> the Q and K vectors by a position-dependent angle inside each attention head. The intuition stays the same — &quot;tell the model where each token is&quot; — but the mechanism plays nicer with long context. You don&apos;t need the math; you do need to know that &quot;positional encoding&quot; is the umbrella term and RoPE is the modern flavor.
+          </p>
+        </Callout>
+
+        <Quiz
+          question="Why does attention need positional encoding at all?"
+          options={[
+            { label: "Because softmax doesn't normalize correctly without it.", explanation: "Softmax is unrelated. Softmax just turns scores into a probability distribution; position is a separate concern." },
+            { label: "Because attention is permutation-invariant — without position info, 'dog bites man' and 'man bites dog' would produce the same set of output vectors.", correct: true, explanation: "Right. Attention treats its inputs as a set, not a sequence. To recover sequence semantics, you have to inject position somewhere — usually by adding (sinusoidal) or rotating (RoPE) a per-position signal into the token vectors before attention runs." },
+            { label: "Because the Q, K, V projections lose dimensionality.", explanation: "The projections are linear maps; they don't lose order information because there was none to begin with — that's the point." },
+            { label: "Because residual connections require it.", explanation: "Residuals are unrelated to positional encoding. They solve gradient flow, not order awareness." },
+          ]}
+        />
+
+        <PartRecap
+          title="Positional encoding recap"
+          gist="Attention is permutation-invariant; positional encoding injects 'where' into each token before attention sees it."
+          points={[
+            { takeaway: "Attention treats inputs as a set, not a sequence.", detail: <>Without positional info, the model literally cannot tell &quot;dog bites man&quot; from &quot;man bites dog&quot;.</> },
+            { takeaway: "Sinusoidal positions: add a fixed per-position vector to each embedding.", detail: <>Different frequencies per dimension. Generalizes to longer sequences than seen during training.</> },
+            { takeaway: "RoPE is the modern default.", detail: <>Rotates Q and K by a position-dependent angle inside each head. Same purpose, different mechanism, plays nicely with long context.</> },
+          ]}
+        />
+      </section>
+      </Checkpoint>
+
+      {/* ================================================================= */}
+      {/* PART 6: TRANSFORMER BLOCK                                          */}
       {/* ================================================================= */}
       <Checkpoint moduleSlug="transformers" id="transformer-block" title="The transformer block" xp={20} celebration="You can draw a transformer block from memory. You understand every component.">
       <section>
-        <h2>Part 5: The transformer block — what surrounds attention</h2>
+        <h2>Part 6: The transformer block — what surrounds attention</h2>
 
         <p>
           Attention is the headliner, but a transformer &quot;block&quot; has a few other pieces — each solving a specific training problem.
@@ -810,7 +897,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         />
 
         <PartRecap
-          title="Part 5 recap"
+          title="Part 6 recap"
           gist="A transformer block = LayerNorm + Attention + Residual + LayerNorm + FFN + Residual. Stack N of them."
           points={[
             { takeaway: "Residual connections (x + SubLayer(x)) make deep stacks trainable.", detail: <>They give gradients a direct highway backward, avoiding the vanishing-gradient problem that haunted deep MLPs.</> },

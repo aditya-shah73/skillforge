@@ -74,6 +74,12 @@ export default function MLTrainingModule() {
       <section>
         <h2>Part 1: Gradient descent — how models actually learn</h2>
 
+        <Callout variant="info" title="Picking up exactly where Module 2 left off">
+          <p className="m-0">
+            Module 2 ended with a model that can <em>predict</em> (linear regression), a loss that can <em>score</em> the predictions (MSE), and a metric that can <em>tell us how good those predictions are</em> on held-out data. What we never answered: <strong>where do the weights actually come from?</strong> In Module 2 we hand-eyeballed slope and intercept off the LineFitDemo. That obviously doesn&apos;t scale. This module is the missing middle — the algorithm that takes <em>any</em> initial guess at the weights and walks them downhill on the loss surface until they&apos;re good. It&apos;s the same loop whether you&apos;re fitting 2 weights for house prices or 175 billion for GPT-3.
+          </p>
+        </Callout>
+
         <h3>Start with an analogy: lost in a fog on a mountainside</h3>
         <p>
           You&apos;re on a mountain, thick fog, and you need to get to the valley. You can&apos;t see more than a meter in any direction.

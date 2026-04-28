@@ -471,7 +471,7 @@ export default function MLBasicsModule() {
           If you studied by memorizing the training problems exactly, you&apos;d ace training but bomb the test. That&apos;s <strong>overfitting</strong> — and it&apos;s why we split our data. (Deep-dive on overfitting is in Module 3.)
         </p>
 
-        <h3>The five-part anatomy</h3>
+        <h3>The six-part anatomy</h3>
 
         <div className="grid sm:grid-cols-2 gap-3 my-5 not-prose">
           <AnatomyCard n={1} title="Features (X)" color="rose">
@@ -1150,41 +1150,46 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
               <p>Three loss functions in Java. Plain arithmetic — no libraries.</p>
               <CodeBlock lang="java">{`public final class Losses {
 
+    // Convention used throughout the course: (y, yHat) — labels first, predictions
+    // second — matches PyTorch's loss_fn(y_pred, y_true) is the OPPOSITE of what
+    // we use here, so be careful when porting. We chose (y, yHat) because it
+    // reads left-to-right as "ground truth, then your guess at it."
+
     /** Mean squared error. Regression. Smooth, punishes big errors. */
-    public static double mse(double[] yPred, double[] yTrue) {
-        check(yPred, yTrue);
+    public static double mse(double[] y, double[] yHat) {
+        check(y, yHat);
         double sum = 0.0;
-        for (int i = 0; i < yPred.length; i++) {
-            double err = yPred[i] - yTrue[i];
+        for (int i = 0; i < y.length; i++) {
+            double err = yHat[i] - y[i];
             sum += err * err;
         }
-        return sum / yPred.length;
+        return sum / y.length;
     }
 
     /** Mean absolute error. Regression. Robust to outliers. */
-    public static double mae(double[] yPred, double[] yTrue) {
-        check(yPred, yTrue);
+    public static double mae(double[] y, double[] yHat) {
+        check(y, yHat);
         double sum = 0.0;
-        for (int i = 0; i < yPred.length; i++) {
-            sum += Math.abs(yPred[i] - yTrue[i]);
+        for (int i = 0; i < y.length; i++) {
+            sum += Math.abs(yHat[i] - y[i]);
         }
-        return sum / yPred.length;
+        return sum / y.length;
     }
 
     /**
      * Binary cross-entropy. Classification.
-     * yTrue[i] ∈ {0, 1}; yPred[i] ∈ (0, 1) = predicted P(class = 1).
+     * y[i] ∈ {0, 1}; yHat[i] ∈ (0, 1) = predicted P(class = 1).
      */
-    public static double binaryCrossEntropy(double[] yPred, double[] yTrue) {
-        check(yPred, yTrue);
+    public static double binaryCrossEntropy(double[] y, double[] yHat) {
+        check(y, yHat);
         double sum = 0.0;
         double eps = 1e-9;                      // avoid log(0) blowing up
-        for (int i = 0; i < yPred.length; i++) {
-            double p = Math.min(Math.max(yPred[i], eps), 1 - eps);
-            sum += -(yTrue[i] * Math.log(p)
-                   + (1 - yTrue[i]) * Math.log(1 - p));
+        for (int i = 0; i < y.length; i++) {
+            double p = Math.min(Math.max(yHat[i], eps), 1 - eps);
+            sum += -(y[i] * Math.log(p)
+                   + (1 - y[i]) * Math.log(1 - p));
         }
-        return sum / yPred.length;
+        return sum / y.length;
     }
 
     private static void check(double[] a, double[] b) {
@@ -1332,28 +1337,32 @@ public final class LinearRegression {
     /**
      * Mean squared error across a batch of predictions.
      *
+     * Convention: (y, yHat) — ground-truth labels first, predictions second.
+     * Same order we'll use everywhere else in the course (Module 3 trainer,
+     * Module 4 backprop). Read it as "compare y to your guess yHat."
+     *
      * Useful for:
      *   - evaluating a trained model on a test set
      *   - during training (the thing gradient descent minimizes)
      *
      * Formula:  (1/n) · Σᵢ (ŷᵢ − yᵢ)²
      */
-    public static double mse(double[] yPred, double[] yTrue) {
-        if (yPred.length != yTrue.length) {
+    public static double mse(double[] y, double[] yHat) {
+        if (y.length != yHat.length) {
             throw new IllegalArgumentException(
-                "yPred and yTrue must have same length");
+                "y and yHat must have same length");
         }
         double sumSq = 0.0;
-        for (int i = 0; i < yPred.length; i++) {
-            double err = yPred[i] - yTrue[i];
+        for (int i = 0; i < y.length; i++) {
+            double err = yHat[i] - y[i];
             sumSq += err * err;    // square the error
         }
-        return sumSq / yPred.length;
+        return sumSq / y.length;
     }
 
     /** RMSE — same units as y, easier to interpret than MSE. */
-    public static double rmse(double[] yPred, double[] yTrue) {
-        return Math.sqrt(mse(yPred, yTrue));
+    public static double rmse(double[] y, double[] yHat) {
+        return Math.sqrt(mse(y, yHat));
     }
 }`}</CodeBlock>
 
@@ -1398,8 +1407,8 @@ public class HouseDemo {
                 i, SIZE[i][0], PRICE[i], preds[i], preds[i] - PRICE[i]);
         }
 
-        double mse  = Metrics.mse(preds, PRICE);
-        double rmse = Metrics.rmse(preds, PRICE);
+        double mse  = Metrics.mse(PRICE, preds);
+        double rmse = Metrics.rmse(PRICE, preds);
         System.out.printf("%nMSE  = %.2f%n", mse);
         System.out.printf("RMSE = %.2f  (off by ~$%.0fk on average)%n", rmse, rmse);
     }
@@ -1470,38 +1479,38 @@ RMSE ≈  6–10  (off by ~$6–10k on average)`}</CodeBlock>
 
         <CodeExercise
           title="Exercise 2: implement mse()"
-          prompt={<p className="m-0">Given two arrays <code>yPred</code> and <code>yTrue</code> of equal length, return the mean squared error: <code>(1/n) · Σ (yPredᵢ − yTrueᵢ)²</code>. Throw if the lengths don&apos;t match.</p>}
+          prompt={<p className="m-0">Given two arrays <code>y</code> (ground truth) and <code>yHat</code> (predictions) of equal length, return the mean squared error: <code>(1/n) · Σ (yHatᵢ − yᵢ)²</code>. Throw if the lengths don&apos;t match. We&apos;re sticking to the (y, yHat) convention — labels first — for the whole course.</p>}
           stub={`public final class Metrics {
     private Metrics() {}
 
-    /** Mean squared error: (1/n) · Σ (yPred[i] - yTrue[i])² */
-    public static double mse(double[] yPred, double[] yTrue) {
+    /** Mean squared error: (1/n) · Σ (yHat[i] - y[i])² */
+    public static double mse(double[] y, double[] yHat) {
         // TODO 1: validate same length
         // TODO 2: sum up the squared errors
         // TODO 3: divide by n and return
         return 0.0;
     }
 
-    public static double rmse(double[] yPred, double[] yTrue) {
-        return Math.sqrt(mse(yPred, yTrue));
+    public static double rmse(double[] y, double[] yHat) {
+        return Math.sqrt(mse(y, yHat));
     }
 }`}
           hints={[
-            "Accumulator starts at 0. For each i, compute (yPred[i] - yTrue[i]), square it, add to the accumulator.",
+            "Accumulator starts at 0. For each i, compute (yHat[i] - y[i]), square it, add to the accumulator.",
             "Squaring in Java: either err*err or Math.pow(err, 2). The first is faster and reads fine.",
-            "Don't forget to divide by yPred.length at the end — it's 'mean' squared error.",
+            "Don't forget to divide by y.length at the end — it's 'mean' squared error.",
           ]}
-          solution={`public static double mse(double[] yPred, double[] yTrue) {
-    if (yPred.length != yTrue.length) {
+          solution={`public static double mse(double[] y, double[] yHat) {
+    if (y.length != yHat.length) {
         throw new IllegalArgumentException(
-            "yPred and yTrue must have same length");
+            "y and yHat must have same length");
     }
     double sumSq = 0.0;
-    for (int i = 0; i < yPred.length; i++) {
-        double err = yPred[i] - yTrue[i];
+    for (int i = 0; i < y.length; i++) {
+        double err = yHat[i] - y[i];
         sumSq += err * err;
     }
-    return sumSq / yPred.length;
+    return sumSq / y.length;
 }`}
         />
 

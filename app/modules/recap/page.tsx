@@ -234,6 +234,12 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 // W_out: [d_model,     4 · d_model] project back`}</CodeBlock>
         <p>This is literally <em>the MLP from Module 4</em>, applied in parallel at every token position, inside every block.</p>
 
+        <Callout variant="info" title="Wait — GELU? I built ReLU in Module 4">
+          <p className="m-0">
+            Modern transformers use <strong>GELU</strong> (Gaussian Error Linear Unit) — think of it as a smooth ReLU with no kink at zero. Same dead-zone-for-negatives, dead-simple-for-positives shape; just differentiable everywhere. Every intuition you built around ReLU (sparsity, vanishing gradients in deep stacks, dying-neuron risk) carries over. Module 4&apos;s ReLU MLP <em>is</em> the FFN — the activation just got a smoother cousin in production.
+          </p>
+        </Callout>
+
         <h3>Residuals + LayerNorm — to keep training stable</h3>
         <p>
           Each sub-layer&apos;s output is <em>added</em> to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks — direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
@@ -332,6 +338,18 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           <li><strong>Temperature sampling:</strong> divide logits by <code>T</code> before softmax. <code>T &lt; 1</code> sharpens (more predictable), <code>T &gt; 1</code> flattens (more creative, more risk of nonsense).</li>
           <li><strong>Top-p / nucleus:</strong> restrict to the smallest set of tokens whose total probability exceeds <code>p</code> (e.g. 0.9), then sample from just those. Cuts off the long tail of nonsense without being overly rigid.</li>
         </ul>
+
+        <p>The math behind temperature is one line:</p>
+        <CodeBlock lang="plain">{`p_T[i] = exp(logits[i] / T) / Σ_j exp(logits[j] / T)
+
+T → 0:   division blows up the gap between top and second logit
+         → softmax becomes near one-hot → argmax (greedy decoding)
+T = 1:   plain softmax — the model's "natural" distribution
+T → ∞:   all logits get squashed toward equality
+         → softmax becomes uniform → totally random tokens`}</CodeBlock>
+        <p>
+          That&apos;s why <code>T = 0.7</code> is a popular middle ground for chat: sharper than the raw distribution (so the model commits) but not deterministic (so it has some range). The same softmax-of-logits formula you saw in Module 4&apos;s digit classifier — just with a knob to scale logits before the softmax.
+        </p>
         <p>
           In practice Claude&apos;s API exposes <code>temperature</code> and <code>top_p</code> as parameters. Picking them is a prompt-engineering concern (Module 7) with a statistical foundation (softmax of Module 4).
         </p>
@@ -466,96 +484,6 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
             { label: "Module 4 — Neural networks (the MLP you built)", correct: true, explanation: "Every transformer block's FFN is literally a two-layer MLP — the architecture you implemented from scratch in Module 4's digit classifier. That's why Module 4 was a prerequisite for Module 5." },
             { label: "Module 5 — Transformers", explanation: "Module 5 introduced the attention half of the block; the FFN half reuses Module 4's MLP." },
             { label: "Module 6 — Embeddings", explanation: "Embeddings are the lookup layer, not the FFN." },
-          ]}
-        />
-      </section>
-      </Checkpoint>
-
-      {/* ================================================================= */}
-      {/* PHASE 1 FINAL                                                      */}
-      {/* ================================================================= */}
-      <Checkpoint moduleSlug="recap" id="final" title="Phase 1 final quiz" xp={40} celebration="Phase 1 complete. You've got the model-side intuition every Phase-2-and-beyond chapter assumes. Let's ship things.">
-      <section>
-        <h2>Phase 1 final — one last integrated quiz</h2>
-        <p>Eight questions across the whole phase. Pass it and Phase 1 is behind you.</p>
-
-        <Quiz
-          question="Your 'prompt' in the API body ultimately gets consumed by the model as..."
-          options={[
-            { label: "A structured object with separate channels for system/user/assistant." },
-            { label: "One long tokenized sequence with role-marker special tokens between sections.", correct: true, explanation: "Everything flattens into one token sequence — 'role' is just special delimiter tokens." },
-            { label: "A SQL-like query interpreted by a parser." },
-            { label: "Raw bytes (not tokenized)." },
-          ]}
-        />
-
-        <Quiz
-          question="You double the length of a prompt. Approximate cost change in attention compute for that prompt?"
-          options={[
-            { label: "Unchanged — attention is O(1)." },
-            { label: "~2× — linear in sequence length." },
-            { label: "~4× — quadratic in sequence length.", correct: true, explanation: "Attention is O(n²) in sequence length; double n → 4× the attention compute." },
-            { label: "~8× — cubic." },
-          ]}
-        />
-
-        <Quiz
-          question="'king − man + woman ≈ queen' works because..."
-          options={[
-            { label: "Embedding models hard-code royal/gender relations." },
-            { label: "Training on text arranges vectors so that stable semantic directions (gender, tense, plural) emerge as consistent offsets.", correct: true, explanation: "Semantic directions emerge from training; nobody designed them. Whichever arrangement best predicts text wins." },
-            { label: "Queen, king, man, and woman share a prefix in BPE." },
-            { label: "Cosine similarity is commutative." },
-          ]}
-        />
-
-        <Quiz
-          question="Gradient descent is the algorithm that..."
-          options={[
-            { label: "Runs at inference time to generate each token." },
-            { label: "Chooses the next token from the softmax distribution." },
-            { label: "Adjusts the model's weights during training, in the direction that reduces loss.", correct: true, explanation: "Training only. Inference doesn't change weights." },
-            { label: "Computes attention scores." },
-          ]}
-        />
-
-        <Quiz
-          question="Which pair of ideas describes a single transformer block?"
-          options={[
-            { label: "Tokenization + Embedding." },
-            { label: "Multi-head attention + feed-forward network (MLP), each wrapped in LayerNorm + residual.", correct: true, explanation: "The canonical block: MHA → LN → residual, then FFN → LN → residual." },
-            { label: "Cross-entropy loss + gradient descent." },
-            { label: "Softmax + top-p sampling." },
-          ]}
-        />
-
-        <Quiz
-          question="Few-shot examples in a prompt affect model behavior by..."
-          options={[
-            { label: "Updating the model's weights in-place." },
-            { label: "Living in the input context, so the model's attention over them steers the next-token distribution — no weight updates.", correct: true, explanation: "In-context learning is an attention effect, not a weight update." },
-            { label: "Being sent to a separate 'learning' endpoint before generation." },
-            { label: "Triggering a retraining pass." },
-          ]}
-        />
-
-        <Quiz
-          question="Cosine similarity ≈ 0.99 between two chunk embeddings most likely means..."
-          options={[
-            { label: "The two chunks are near-identical in meaning (or literally the same text).", correct: true, explanation: "0.99 is the very top of the cosine range — almost always duplicated or near-duplicated content." },
-            { label: "They're opposites." },
-            { label: "Nothing — 0.99 is typical for any two random sentences." },
-            { label: "Something's broken — cosine maxes at 0.5 for text." },
-          ]}
-        />
-
-        <Quiz
-          question="Asked to explain Claude's response time 'why is it fast after the first token?', the best one-line answer is:"
-          options={[
-            { label: "The model runs on quantum hardware." },
-            { label: "KV caching: keys and values from earlier positions are stored, so each new token only does one position's worth of work through the stack.", correct: true, explanation: "KV cache converts per-token decode from O(n) to O(1) work over the prior context." },
-            { label: "The network switches to a smaller model after the first token." },
-            { label: "Streaming is an illusion — the full response is computed up front." },
           ]}
         />
       </section>

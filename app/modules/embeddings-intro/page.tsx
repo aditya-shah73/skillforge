@@ -529,7 +529,7 @@ static List<Document> topK(double[] query, List<Document> corpus, int k) {
 d2 = [0.9, 0.436]   "puppy"
 d3 = [0.0, 1.0]     "banana"
 d4 = [-0.707, 0.707] "sadness"`}</CodeBlock>
-                <p>All four vectors have length 1 (check: d2 is √(0.81 + 0.19) = 1). They live on the unit circle.</p>
+                <p>All four vectors have length 1 (check: d2 is √(0.9² + 0.436²) = √(0.81 + 0.190) ≈ √1.000 = 1). They live on the unit circle.</p>
               </>
             ),
           },

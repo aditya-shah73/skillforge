@@ -1298,7 +1298,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
           options={[
             { label: "The gradient is zero everywhere, so nothing moves.", explanation: "The gradient isn't zero — bias gradients in particular are non-zero. But the weight gradients have a subtler problem." },
             { label: "Every neuron in a layer receives the same gradient, so they update identically and stay identical forever.", correct: true, explanation: "Exactly. With zero weights, all neurons in a layer produce the same output and receive the same incoming gradient. They move in lockstep. The 'neurons' are effectively one neuron. Symmetry must be broken with random init." },
-            { label: "ReLU saves you because it's non-linear.", explanation: "ReLU doesn't help here — all inputs to ReLU are 0 (since weights are 0 and biases are 0), so all outputs are 0, all derivatives are 0 (well, at z=0 technically either), and symmetry is total." },
+            { label: "ReLU saves you because it's non-linear.", explanation: "ReLU doesn't help here — all inputs to ReLU are 0 (since weights are 0 and biases are 0), so all outputs are 0, all derivatives are 0 (at z=0 either choice of subgradient works in practice), and symmetry is total." },
             { label: "The learning rate fixes it automatically.", explanation: "Multiplying zero by anything is still zero-ish. LR can't escape the symmetry." },
           ]}
         />

@@ -312,11 +312,19 @@ public class SafeChatService {
             context = truncateToFit(context, contextBudget);
         }
 
+        // Assemble the system message with grounding context appended.
+        // Convention: system prompt holds the persistent instruction, and
+        // we glue the (possibly truncated) context after it with a clear
+        // delimiter so the model knows where instructions end and grounding
+        // begins. The user message stays untouched.
+        String systemWithContext = systemPrompt
+            + "\\n\\n---\\nGrounding context:\\n" + context;
+
         // Fluent Spring AI call: system + user messages → model → text reply.
         // .call() is synchronous; for streaming you'd use .stream() instead
         // (covered in Module 12: Streaming with SSE).
         return chatClient.prompt()
-            .system(systemPrompt)
+            .system(systemWithContext)
             .user(userMessage)
             .call()
             .content();
