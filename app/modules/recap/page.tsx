@@ -562,6 +562,158 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       </Checkpoint>
 
       {/* ================================================================= */}
+      {/* PHASE 1 FINAL QUIZ — progressive difficulty                        */}
+      {/* ================================================================= */}
+      <Checkpoint
+        moduleSlug="recap"
+        id="final"
+        title="Phase 1 final quiz"
+        xp={80}
+        celebration="Phase 1 mastered. 🏆 You've earned the 'Pipeline Whisperer' badge — you can read any LLM stack."
+      >
+        <section>
+          <h2 className="flex items-center gap-2">
+            <span>🏆</span> Phase 1 Final — progressive difficulty
+          </h2>
+          <p>
+            Eight questions. They get harder as you go. Each one is auto-graded — pick an answer and you&apos;ll see whether
+            you got it, plus an explanation of what every option meant (so you can also see what you would&apos;ve missed
+            on the wrong ones). No outside notes. If you fly through all eight, you&apos;ve genuinely internalized Phase 1.
+          </p>
+
+          <Callout variant="info" title="How this works">
+            <p className="m-0 text-sm">
+              The quiz widget reveals the explanation as soon as you click. Don&apos;t click an option you&apos;re not
+              committed to — once locked, that&apos;s your answer. Wrong answers reset your combo streak; correct
+              answers within 10 seconds grant a speed bonus. Aim for an 8-streak.
+            </p>
+          </Callout>
+
+          {/* ---------- LEVEL 1 — recall ---------- */}
+          <h3 className="mt-8">Level 1 · Recall (Modules 1–2)</h3>
+
+          <Quiz
+            kind="Q1 · Easy"
+            xp={10}
+            question="A model's vocabulary is ~50,000 tokens. Roughly how many bytes does the embedding lookup table cost if each token is a 4096-dim float32 vector?"
+            options={[
+              { label: "~200 KB", explanation: "Off by ~1000×. 50K × 4096 × 4 bytes is ~800 MB, not KB." },
+              { label: "~80 MB", explanation: "Off by 10×. 50K × 4096 × 4 = 819,200,000 bytes ≈ 800 MB." },
+              { label: "~800 MB", correct: true, explanation: "Right. 50,000 × 4096 × 4 bytes ≈ 800 MB. The embedding table alone is the size of a small model. This is why 'just store an extra row per new token' is expensive." },
+              { label: "~8 GB", explanation: "Off by 10× the other way. You're probably squaring the dim instead of multiplying." },
+            ]}
+          />
+
+          <Quiz
+            kind="Q2 · Easy"
+            xp={10}
+            question="In supervised learning, what is ŷ?"
+            options={[
+              { label: "The ground-truth label from the dataset.", explanation: "That's y (no hat). ŷ is the model's guess at y, not y itself." },
+              { label: "The model's prediction for a given input.", correct: true, explanation: "Exactly. y-hat is the model's output; the loss measures the gap between ŷ and y." },
+              { label: "The gradient of the loss with respect to the weights.", explanation: "That's ∇L or dL/dw. ŷ is a prediction, not a derivative." },
+              { label: "A regularization term added to the loss.", explanation: "Regularization is usually written λ·R(w). ŷ has nothing to do with regularization." },
+            ]}
+          />
+
+          {/* ---------- LEVEL 2 — apply ---------- */}
+          <h3 className="mt-10">Level 2 · Application (Modules 3–4)</h3>
+
+          <Quiz
+            kind="Q3 · Medium"
+            xp={15}
+            question="Your training loss keeps going down but validation loss starts rising after epoch 8. Which fix is LEAST appropriate as a first move?"
+            options={[
+              { label: "Add dropout or weight decay.", explanation: "Reasonable — both directly attack overfitting." },
+              { label: "Stop training earlier (early stopping at epoch 8).", explanation: "Reasonable — early stopping is the canonical fix for this exact curve." },
+              { label: "Increase the learning rate so it converges faster.", correct: true, explanation: "Wrong move. Higher LR doesn't fix overfitting; it makes the model bounce around or diverge. Overfitting is a capacity/regularization problem, not a step-size problem." },
+              { label: "Get more training data or augment what you have.", explanation: "Reasonable — more data is the most reliable cure for overfitting." },
+            ]}
+          />
+
+          <Quiz
+            kind="Q4 · Medium"
+            xp={15}
+            question="A 3-layer MLP with ReLU has 1024-dim hidden layers. You replace ReLU with sigmoid everywhere and training stalls. Most likely cause:"
+            options={[
+              { label: "Sigmoid is non-differentiable, so backprop fails.", explanation: "Sigmoid is perfectly differentiable. That's not the issue." },
+              { label: "Vanishing gradients — sigmoid's derivative maxes at 0.25, so 3 layers compress the gradient to ≤ 0.015× and weights barely update.", correct: true, explanation: "Right. Each sigmoid layer multiplies the gradient by ≤ 0.25 (and usually much less). Stack a few layers and the gradient that reaches early weights is essentially zero — this is the classic vanishing-gradient story that motivated ReLU." },
+              { label: "Sigmoid outputs are unbounded, causing exploding activations.", explanation: "Sigmoid outputs are bounded in (0,1). Exploding activations are the opposite problem and are not the issue here." },
+              { label: "Sigmoid requires a different loss function.", explanation: "Loss choice is independent of hidden activation — you'd still use cross-entropy or MSE on the output, not the hidden layer." },
+            ]}
+          />
+
+          {/* ---------- LEVEL 3 — synthesis ---------- */}
+          <h3 className="mt-10">Level 3 · Synthesis (Modules 5–6)</h3>
+
+          <Quiz
+            kind="Q5 · Hard"
+            xp={20}
+            question="In scaled dot-product attention, why divide by √d_k before the softmax?"
+            options={[
+              { label: "It's a normalization convention with no real effect — could be skipped.", explanation: "It has a very real effect on training stability. Skipping it breaks deep transformers." },
+              { label: "It keeps the variance of q·k roughly constant as d_k grows, preventing softmax saturation where one logit dominates and gradients vanish.", correct: true, explanation: "Right. q·k is a sum of d_k products of unit-variance terms, so its variance is ~d_k. Without √d_k scaling, larger d_k makes the largest logit blow up, softmax becomes near one-hot, and gradients on all other positions vanish. Dividing by √d_k restores ~unit variance." },
+              { label: "It accounts for the bias term in the linear projection.", explanation: "There's no bias term being corrected here. Q, K, V are typically projected without explicit per-head biases anyway." },
+              { label: "It's required for masking to work correctly.", explanation: "Masking adds −∞ to forbidden positions before softmax — totally orthogonal to the √d_k scaling." },
+            ]}
+          />
+
+          <Quiz
+            kind="Q6 · Hard"
+            xp={20}
+            question="You build a RAG system. Two chunks have cosine similarity 0.94 to the query, but only one is actually relevant. The other is a near-duplicate of the query phrasing on an unrelated topic. What's the principled fix?"
+            options={[
+              { label: "Lower the similarity threshold so fewer false positives sneak in.", explanation: "Both chunks are at 0.94 — lowering the threshold doesn't separate them. You'd lose true positives at the same rate." },
+              { label: "Switch from cosine to Euclidean distance.", explanation: "On normalized embeddings, cosine and Euclidean are monotonically related — you'd get the same ranking." },
+              { label: "Use a stronger embedding model OR add a re-ranker (cross-encoder) over the top-k retrieved chunks.", correct: true, explanation: "Right. Bi-encoder cosine retrieval is fast but imprecise — it confuses surface phrasing with semantic relevance. A cross-encoder re-ranker scores (query, chunk) jointly and resolves exactly this case. Better embeddings is the other principled answer." },
+              { label: "Hash the chunks and dedupe by hash.", explanation: "These aren't literal duplicates — they're semantically similar in surface phrasing only. Hashing wouldn't catch it." },
+            ]}
+          />
+
+          {/* ---------- LEVEL 4 — boss ---------- */}
+          <h3 className="mt-10">Level 4 · Boss (Modules 7–8, end-to-end)</h3>
+
+          <Quiz
+            kind="Q7 · Boss"
+            xp={25}
+            question="A user reports that a Claude prompt that worked yesterday now hits the context limit. Nothing in the prompt changed. What is the MOST LIKELY explanation, given everything you learned in Phase 1?"
+            options={[
+              { label: "The model silently switched its tokenizer to one with a smaller vocab.", explanation: "Tokenizers don't silently change between calls within the same model version. Possible across model upgrades but rare; not the most likely cause." },
+              { label: "Some tool result, retrieved chunk, or system prompt grew (e.g. larger RAG payload, longer history) — the prompt the USER wrote is the same, but the prompt the MODEL sees is bigger.", correct: true, explanation: "Right. From Module 7+8: 'the prompt' is the entire assembled context — system prompt + tools + retrieved docs + history + user message. When users say 'my prompt is the same,' what changed is almost always one of the other context pieces: a longer chat history, a bigger retrieved chunk, an expanded tool schema. The user message is just the visible tip." },
+              { label: "Claude's context window shrank.", explanation: "Context windows don't shrink between calls. Possible across model versions but documented; not silent." },
+              { label: "The temperature was raised, which makes prompts longer.", explanation: "Temperature affects sampling, not prompt length. They're unrelated." },
+            ]}
+          />
+
+          <Quiz
+            kind="Q8 · Final boss"
+            xp={30}
+            question="You're asked: 'why does Claude generate the second token faster than the first?' Pick the explanation that is CORRECT, COMPLETE, and uses Phase 1 vocabulary precisely."
+            options={[
+              { label: "Because the model is smaller after the first token — Claude switches to a distilled model for follow-on tokens.", explanation: "False. Same model throughout. There's no model swap mid-generation." },
+              { label: "Because the network already 'understands' the prompt after the first token, so it doesn't have to re-read it.", explanation: "Directionally true but vague. 'Understands' isn't a mechanism, and it misses the actual cache mechanic." },
+              { label: "Because of KV caching: during prefill, attention computes K and V projections for every prompt token (O(n²) work). During decode, those K/V tensors are reused from cache, so each new token only computes Q·K^T against the cache and one new K, V — O(n) work per token instead of O(n²).", correct: true, explanation: "This is the right answer with the right vocabulary: prefill vs decode, K/V projections, the cache, and the complexity drop from O(n²) per step to O(n). If you can articulate this from memory, you've genuinely earned the 'Phase 1 complete' badge." },
+              { label: "Because streaming returns a partial response while the rest still computes in the background.", explanation: "Streaming is the *transport* (SSE) — it doesn't change how fast tokens are generated. The speed-up comes from the KV cache, not from the wire protocol." },
+            ]}
+          />
+
+          {/* ---------- WRAP ---------- */}
+          <div className="not-prose mt-10 rounded-2xl border-2 border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-2xl">🎓</span>
+              <h3 className="font-bold text-lg m-0">If you got 7 or 8 right…</h3>
+            </div>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+              You can describe the entire Phase 1 stack — tokens, weights, training, neural networks, attention, embeddings, prompt assembly, decode loop — without notes. That&apos;s the bar for moving on.
+            </p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0">
+              <strong>5–6 right?</strong> Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong> Don&apos;t skip — Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
+            </p>
+          </div>
+        </section>
+      </Checkpoint>
+
+      {/* ================================================================= */}
       {/* NEXT PHASE                                                         */}
       {/* ================================================================= */}
       <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
