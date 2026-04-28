@@ -984,7 +984,7 @@ public final class LinearRegression {
             The raw error. Can be positive (over-predicted) or negative (under-predicted).
           </Tile>
           <Tile n={2} title="Square it">
-            Flips sign — errors of +5 and −5 both contribute 25. Also <em>super-linearly penalizes big errors</em>: an error of 10 contributes 100 to the sum, but an error of 2 contributes just 4. Fifty times less.
+            Flips sign — errors of +5 and −5 both contribute 25. Also <em>super-linearly penalizes big errors</em>: an error of 10 contributes 100 to the sum, but an error of 2 contributes just 4 — twenty-five times less.
           </Tile>
           <Tile n={3} title="Average over all examples">
             Without averaging, your loss would grow with dataset size. The average keeps it comparable across different dataset sizes and training runs.
