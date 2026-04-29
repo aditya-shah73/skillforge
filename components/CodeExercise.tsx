@@ -95,7 +95,7 @@ export default function CodeExercise({
               <code className={`language-${lang}`}>{solution}</code>
             </pre>
             <p className="text-xs text-slate-600 dark:text-slate-400 italic mt-2">
-              Your solution doesn&apos;t have to match this exactly — as long as the behaviour is right, it&apos;s right. Compare and see if theirs is cleaner or yours is.
+              Your solution doesn&apos;t have to match this exactly — as long as the behavior is right, it&apos;s right. Compare and see if theirs is cleaner or yours is.
             </p>
           </div>
         )}
