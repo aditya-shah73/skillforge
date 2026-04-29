@@ -917,9 +917,14 @@ n = 1000000
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           <strong>Up next: Module 2 — Space complexity.</strong> The half of Big-O nobody talks about until they need it. Why recursion costs memory. What the JVM call stack actually looks like. The difference between auxiliary space (the part you control) and total space (the part you don&apos;t).
         </p>
-        <p className="text-sm text-slate-500 italic mb-0">
-          Module 2 is coming soon — we&apos;re shipping the DSA track one module at a time.
-        </p>
+        <div className="mt-5">
+          <Link
+            href="/courses/dsa/modules/space-complexity"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-rose-600 hover:to-orange-600 transition no-underline"
+          >
+            Continue to Module 2: Space complexity →
+          </Link>
+        </div>
       </section>
     </article>
   );

@@ -35,8 +35,8 @@ export const MODULES: Module[] = [
 
   // Phase 1 · Complexity & the Mental Model
   { slug: "big-o", number: 1, phase: "Complexity & the Mental Model", phaseNumber: 1, title: "Big-O from zero", subtitle: "Growth rates, why we ignore constants, and the 7 curves you'll meet", duration: "~1.5–2h", project: "Java micro-benchmark: plot operation counts vs n for each curve", status: "available" },
-  { slug: "space-complexity", number: 2, phase: "Complexity & the Mental Model", phaseNumber: 1, title: "Space complexity & the call stack", subtitle: "Auxiliary vs total space, why recursion costs memory, JVM stack vs heap", duration: "~1–1.5h", project: "Trace memory for iterative vs recursive factorial; call-stack visualizer", status: "coming-soon" },
-  { slug: "amortized-analysis", number: 3, phase: "Complexity & the Mental Model", phaseNumber: 1, title: "Best, average, worst & amortized analysis", subtitle: "Why ArrayList.add is O(1) on average, and when worst-case actually matters", duration: "~1–1.5h", project: "Amortized-cost simulator for a dynamic array", status: "coming-soon" },
+  { slug: "space-complexity", number: 2, phase: "Complexity & the Mental Model", phaseNumber: 1, title: "Space complexity & the call stack", subtitle: "Auxiliary vs total space, why recursion costs memory, JVM stack vs heap", duration: "~1–1.5h", project: "Trace memory for iterative vs recursive factorial; call-stack visualizer", status: "available" },
+  { slug: "amortized-analysis", number: 3, phase: "Complexity & the Mental Model", phaseNumber: 1, title: "Best, average, worst & amortized analysis", subtitle: "Why ArrayList.add is O(1) on average, and when worst-case actually matters", duration: "~1–1.5h", project: "Amortized-cost simulator for a dynamic array", status: "available" },
 
   // Phase 2 · Linear Data Structures
   { slug: "arrays", number: 4, phase: "Linear Data Structures", phaseNumber: 2, title: "Arrays & dynamic arrays", subtitle: "Fixed vs dynamic, the doubling trick, ArrayList internals, prefix sums", duration: "~2–2.5h", project: "Build your own ArrayList in Java + LeetCode: Running Sum, Best Time to Buy/Sell Stock I", status: "coming-soon" },
