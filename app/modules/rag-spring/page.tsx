@@ -233,6 +233,17 @@ public class DocsService {
           <li>Tika Document Reader (Spring AI) — for the stretch goal of ingesting PDFs</li>
         </ul>
 
+        <p>Spin up Postgres with the pgvector extension in Docker:</p>
+
+        <CodeBlock lang="plain">{`docker run -d --name pg-rag-docs \\
+  -e POSTGRES_PASSWORD=secret \\
+  -e POSTGRES_DB=ragdocs \\
+  -p 5432:5432 \\
+  pgvector/pgvector:pg16
+
+# One-time: enable the extension
+docker exec -it pg-rag-docs psql -U postgres -d ragdocs -c "CREATE EXTENSION IF NOT EXISTS vector;"`}</CodeBlock>
+
         <CodeBlock lang="plain">{`# application.yml
 spring:
   datasource:
@@ -246,7 +257,7 @@ spring:
       api-key: \${OPENAI_API_KEY}
       chat:
         options:
-          model: claude-haiku-class-or-equivalent  # cheap; only used for context prefixes
+          model: gpt-4o-mini  # cheap chat model; swap for your provider's equivalent
       embedding:
         options:
           model: text-embedding-3-small
@@ -271,6 +282,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -918,7 +930,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           Sanity-check after ingestion. Connect to the database and confirm chunks landed:
         </p>
 
-        <CodeBlock lang="plain">{`docker exec -it pg-vec-issues psql -U postgres -d ragdocs -c \\
+        <CodeBlock lang="plain">{`docker exec -it pg-rag-docs psql -U postgres -d ragdocs -c \\
   "SELECT count(*), avg(length(content)) FROM vector_store"
 
 # Expected: a few hundred to a few thousand rows; avg content length ~500–2000 chars`}</CodeBlock>

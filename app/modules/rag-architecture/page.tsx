@@ -244,7 +244,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
             </p>
             <p className="text-xs text-slate-500 m-0">
               <strong>Good for:</strong> baseline, uniform corpora (transcripts, plain prose).{" "}
-              <strong>Bad for:</strong> structured docs — splits will mid-paragraph, mid-sentence,
+              <strong>Bad for:</strong> structured docs — splits mid-paragraph, mid-sentence,
               mid-code-block.
             </p>
           </div>
@@ -674,7 +674,7 @@ USER:
           </li>
         </ol>
 
-        <h3 className="text-xl function-bold mt-8 mb-3">The order matters: lost-in-the-middle</h3>
+        <h3 className="text-xl font-bold mt-8 mb-3">The order matters: lost-in-the-middle</h3>
 
         <p>
           When you have many context chunks, LLMs pay more attention to the start and end of the context
@@ -807,14 +807,18 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Step 1 — A Chunker interface</h3>
 
-        <CodeBlock lang="java">{`package com.example.chunklab;
+        <CodeBlock lang="java">{`// Chunker.java
+package com.example.chunklab;
 
 import java.util.List;
 
 public interface Chunker {
     String name();
     List<Chunk> chunk(String docId, String text);
-}
+}`}</CodeBlock>
+
+        <CodeBlock lang="java">{`// Chunk.java
+package com.example.chunklab;
 
 public record Chunk(
     String docId,
@@ -847,10 +851,12 @@ public class FixedSizeChunker implements Chunker {
     }
 }`}</CodeBlock>
 
-        <CodeBlock lang="java">{`// 2. Recursive: try \\n\\n, then \\n, then '. ', then char split
+        <CodeBlock lang="java">{`// 2. Recursive: try \\n\\n, then \\n, then '. ', then hard char split
 public class RecursiveChunker implements Chunker {
     private final int targetTokens;
-    private static final String[] SEPS = { "\\n\\n", "\\n", ". ", "" };
+    // Non-empty separators only; the empty-string terminator is handled
+    // explicitly below as a hard character-window split.
+    private static final String[] SEPS = { "\\n\\n", "\\n", ". " };
 
     public RecursiveChunker(int targetTokens) { this.targetTokens = targetTokens; }
     public String name() { return "recursive-" + targetTokens; }
@@ -865,8 +871,17 @@ public class RecursiveChunker implements Chunker {
     }
 
     private List<String> recursiveSplit(String text, int sepIdx) {
-        if (estimateTokens(text) <= targetTokens || sepIdx >= SEPS.length) {
+        if (estimateTokens(text) <= targetTokens) {
             return List.of(text);
+        }
+        // Ran out of separators — fall back to a hard character-window split.
+        if (sepIdx >= SEPS.length) {
+            int charsPerChunk = targetTokens * 4;  // ~4 chars per token
+            List<String> out = new ArrayList<>();
+            for (int i = 0; i < text.length(); i += charsPerChunk) {
+                out.add(text.substring(i, Math.min(i + charsPerChunk, text.length())));
+            }
+            return out;
         }
         List<String> out = new ArrayList<>();
         StringBuilder current = new StringBuilder();
