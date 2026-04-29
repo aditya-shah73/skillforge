@@ -19,7 +19,7 @@ The platform-level home page (`app/page.tsx`) is a course picker that reads from
 The active courses today:
 
 - **`ai`** — *AI for Engineers*, available, 28 modules.
-- **`dsa`** — *DSA in Java*, status `coming-soon`, no modules yet.
+- **`dsa`** — *DSA in Java*, available, 34 modules total (only orientation shipping today; content rolling out one module at a time).
 
 # Course conventions
 

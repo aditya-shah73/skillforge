@@ -2,40 +2,45 @@ import Link from "next/link";
 import { COURSES, ai, dsa } from "@/lib/courses";
 
 export default function Home() {
+  // Live count of available modules across every course — used by the
+  // gamification preview's denominator so it stays correct as content ships.
+  const courseData = COURSES.map((c) => (c.id === "ai" ? ai : dsa));
+  const availableModuleCount = courseData.reduce(
+    (sum, c) => sum + c.MODULES.filter((m) => m.status === "available").length,
+    0,
+  );
+
   return (
     <div className="relative">
-      {/* Decorative gradient blobs */}
+      {/* Decorative gradient blobs (lighter — just two, behind the hero) */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-20 -z-10 overflow-hidden">
-        <div className="absolute left-1/4 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-400/30 blur-3xl dark:bg-indigo-500/20" />
-        <div className="absolute right-1/4 top-10 h-72 w-72 translate-x-1/2 rounded-full bg-purple-400/30 blur-3xl dark:bg-purple-500/20" />
-        <div className="absolute left-1/2 top-32 h-72 w-72 -translate-x-1/2 rounded-full bg-emerald-300/20 blur-3xl dark:bg-emerald-500/10" />
+        <div className="absolute left-1/4 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-indigo-400/25 blur-3xl dark:bg-indigo-500/15" />
+        <div className="absolute right-1/4 top-10 h-64 w-64 translate-x-1/2 rounded-full bg-purple-400/25 blur-3xl dark:bg-purple-500/15" />
       </div>
 
-      {/* Hero */}
-      <section className="mb-16 pt-4 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-3 py-1 text-xs font-semibold text-slate-600 backdrop-blur dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300 mb-6">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-          </span>
-          AI for Engineers — shipping now
-        </div>
-        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-5 leading-[1.05]">
+      {/* Hero — tightened: smaller H1, inline value strip, no separate stats row */}
+      <section className="mb-12 pt-2 text-center sm:text-left">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 leading-[1.05]">
           Forge real skills,{" "}
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             one project at a time.
           </span>
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto sm:mx-0 leading-relaxed">
-          Hands-on courses for working engineers. Opinionated pedagogy, real Java/Spring projects, and checkpoints that actually gate progress. <span className="text-slate-900 dark:text-slate-100 font-medium">No passive video binges.</span>
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto sm:mx-0 leading-relaxed mb-5">
+          Hands-on courses for working engineers. Real Java/Spring projects, checkpoints that actually gate progress. <span className="text-slate-900 dark:text-slate-100 font-medium">No passive video binges.</span>
         </p>
 
-        {/* Stats strip */}
-        <div className="mt-8 flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-6">
-          <Stat value={ai.MODULES.length} label="modules live" accent="indigo" />
-          <Stat value={ai.PHASES.length} label="learning phases" accent="purple" />
-          <Stat value="100%" label="hands-on" accent="emerald" />
-          <Stat value="0" label="login required" accent="pink" />
+        {/* Inline value strip — replaces the old stats row */}
+        <div className="flex flex-wrap justify-center sm:justify-start gap-2 text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 px-3 py-1 font-medium">
+            <span aria-hidden>🛠</span> Project-driven
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 px-3 py-1 font-medium">
+            <span aria-hidden>🧪</span> Gating checkpoints
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 px-3 py-1 font-medium">
+            <span aria-hidden>⚡</span> Local-first, no login
+          </span>
         </div>
       </section>
 
@@ -58,22 +63,10 @@ export default function Home() {
               <div
                 className={`group relative h-full overflow-hidden rounded-2xl border p-6 transition-all duration-300 ${
                   isAvailable
-                    ? "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:-translate-y-1 hover:border-transparent hover:shadow-2xl cursor-pointer"
+                    ? "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:-translate-y-1 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-2xl cursor-pointer"
                     : "border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/60 opacity-80"
                 }`}
               >
-                {/* Animated gradient ring on hover */}
-                {isAvailable && (
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${course.color} -z-10`}
-                    style={{
-                      maskImage: "linear-gradient(black, black), linear-gradient(black, black)",
-                      WebkitMaskComposite: "xor",
-                      padding: "2px",
-                    }}
-                  />
-                )}
                 {/* Subtle gradient tint background on hover */}
                 {isAvailable && (
                   <div
@@ -151,7 +144,7 @@ export default function Home() {
         <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-5">
           Why Skillforge
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-3 gap-4">
           <ValueProp
             icon="🛠"
             title="Project-driven"
@@ -169,12 +162,6 @@ export default function Home() {
             title="Gating checkpoints"
             desc="You don't progress by clicking next — you progress by answering correctly."
             accent="from-emerald-500 to-teal-500"
-          />
-          <ValueProp
-            icon="⚡"
-            title="Runs locally"
-            desc="No login, no backend. Progress lives in your browser. Clear data, start fresh."
-            accent="from-sky-500 to-blue-500"
           />
         </div>
       </section>
@@ -211,7 +198,7 @@ export default function Home() {
                   </div>
                   <div className="h-8 w-px bg-slate-200 dark:bg-slate-700" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-500">12/28</div>
+                    <div className="text-2xl font-bold text-emerald-500">12<span className="text-slate-400 dark:text-slate-500">/{availableModuleCount}</span></div>
                     <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Modules</div>
                   </div>
                 </div>
@@ -227,23 +214,6 @@ export default function Home() {
           Progress, XP, streaks, and quiz state live in your browser&apos;s localStorage. No login, no backend — clearing site data resets everything.
         </p>
       </section>
-    </div>
-  );
-}
-
-function Stat({ value, label, accent }: { value: string | number; label: string; accent: "indigo" | "purple" | "emerald" | "pink" }) {
-  const colors: Record<typeof accent, string> = {
-    indigo: "from-indigo-500 to-indigo-400",
-    purple: "from-purple-500 to-purple-400",
-    emerald: "from-emerald-500 to-emerald-400",
-    pink: "from-pink-500 to-pink-400",
-  };
-  return (
-    <div className="flex items-baseline gap-2">
-      <span className={`text-2xl font-bold bg-gradient-to-r ${colors[accent]} bg-clip-text text-transparent`}>
-        {value}
-      </span>
-      <span className="text-xs uppercase tracking-wider text-slate-500 font-semibold">{label}</span>
     </div>
   );
 }

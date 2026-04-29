@@ -5,7 +5,7 @@ Hands-on, project-driven courses for working engineers. The whole thing is a Nex
 ## Tracks
 
 - **AI for Engineers** — *available now.* From zero ML background to shipping production AI features (Java / Spring / React / GraphQL). 28 modules across 6 phases (plus orientation).
-- **DSA in Java** — *coming soon.* Pattern-first prep for LeetCode-style problems: arrays, two pointers, sliding window, trees, graphs, DP. Built around the same pedagogy as the AI course, just retargeted to interview prep.
+- **DSA in Java** — *available now (orientation only — content rolling out).* Pattern-first LeetCode prep for engineers returning to interview prep after years away. 34 modules across 8 phases (plus orientation), shipping one module at a time.
 
 The home page is a course picker; pick a track and dive in.
 
