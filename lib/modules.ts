@@ -53,9 +53,9 @@ export const MODULES: Module[] = [
   { slug: "multimodal", number: 20, phase: "Frontend AI Integration", phaseNumber: 4, title: "Multimodal inputs", subtitle: "Images, files, vision models", duration: "~1.5h", project: "Receipt parser", status: "available" },
 
   // Phase 5
-  { slug: "agents-intro", number: 21, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agent fundamentals", subtitle: "ReAct loop, memory, when NOT to use agents", duration: "~2h", project: "Research agent", status: "coming-soon" },
-  { slug: "agent-spring", number: 22, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agents in Spring Boot", subtitle: "Tool loop, state, stopping conditions", duration: "~2h", project: "Code migration agent", status: "coming-soon" },
-  { slug: "multi-agent", number: 23, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Multi-agent patterns", subtitle: "Orchestrator/subagent, parallelization", duration: "~1.5h", project: "PR review panel", status: "coming-soon" },
+  { slug: "agents-intro", number: 21, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agent fundamentals", subtitle: "ReAct loop, memory, when NOT to use agents", duration: "~2h", project: "Research agent", status: "available" },
+  { slug: "agent-spring", number: 22, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agents in Spring Boot", subtitle: "Tool loop, state, stopping conditions", duration: "~2h", project: "Code migration agent", status: "available" },
+  { slug: "multi-agent", number: 23, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Multi-agent patterns", subtitle: "Orchestrator/subagent, parallelization", duration: "~1.5h", project: "PR review panel", status: "available" },
 
   // Phase 6
   { slug: "evals", number: 24, phase: "Production & Capstone", phaseNumber: 6, title: "Evals", subtitle: "LLM-as-judge, golden sets, regression testing", duration: "~1.5h", project: "Eval harness", status: "coming-soon" },
