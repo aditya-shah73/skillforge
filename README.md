@@ -1,24 +1,29 @@
-# AI for Engineers
+# Skillforge
 
-An interactive, browser-based course that takes a working full-stack engineer (Java / Spring / React / GraphQL) from zero ML background to shipping production AI features — with agents, RAG, evals, and the rest of the modern stack.
+Hands-on, project-driven courses for working engineers. The whole thing is a Next.js app you run locally — every module is a single page with embedded quizzes, worked examples, code exercises, and gating checkpoints. Progress is tracked in localStorage. There's a mascot called Tokey.
 
-The whole thing is a Next.js app you run locally. Every module is a single page with embedded quizzes, worked examples, code exercises, and checkpoints. Progress is tracked in localStorage. There's a mascot called Tokey.
+## Tracks
 
-## What's in here
+- **AI for Engineers** — *available now.* From zero ML background to shipping production AI features (Java / Spring / React / GraphQL). 28 modules across 6 phases (plus orientation).
+- **DSA in Java** — *coming soon.* Pattern-first prep for LeetCode-style problems: arrays, two pointers, sliding window, trees, graphs, DP. Built around the same pedagogy as the AI course, just retargeted to interview prep.
 
-### Pedagogy
+The home page is a course picker; pick a track and dive in.
 
-The course is opinionated. Every concept follows the same five-step contract:
+## Pedagogy
+
+The platform is opinionated. Every concept follows the same five-step contract:
 
 1. **Analogy** — the intuition, before any math
-2. **Formula** — with every symbol explained
-3. **Worked example** — by hand, with actual numbers
+2. **Formula (or pattern)** — with every symbol explained
+3. **Worked example** — by hand, with actual numbers (or a fully traced LeetCode problem)
 4. **Variants** — what changes in practice, and why
 5. **Checkpoint** — a quiz that gates progress
 
 A checkpoint only clears when you can do three things: explain the idea in two minutes, recognize it in code you didn't write, and implement it from scratch in Java. Quizzes enforce this — you don't progress by clicking "next," you progress by answering correctly.
 
-### Curriculum — 28 modules across 6 phases (plus orientation)
+## AI for Engineers — curriculum
+
+28 modules across 6 phases (plus orientation). All available today.
 
 **Phase 0 · Orientation**
 
@@ -69,8 +74,6 @@ A checkpoint only clears when you can do three things: explain the idea in two m
 26. Fine-tuning & RLHF — when to bother, and why RAG usually wins
 27. Capstone project — end-to-end AI engineering assistant
 
-Status today: all 28 modules are built and available.
-
 ### Projects
 
 Theory-only courses don't stick. Each module ships with a hands-on project — most are Java/Spring builds you do alongside the reading. A few highlights:
@@ -93,16 +96,21 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Progress, completed checkpoints, and quiz state all live in browser localStorage — clearing site data resets the course.
+Progress, completed checkpoints, and quiz state all live in browser localStorage — clearing site data resets everything. There is a one-time migration on first load that moves the old `ai-course-progress-v1` key to `skillforge-progress-v1`, so existing learners don't lose XP or streaks.
 
 ## Project structure
 
 ```
 app/
-  page.tsx                         # course home / module grid
-  modules/<slug>/page.tsx          # one page per module (28 of them)
+  page.tsx                                       # course picker (landing)
+  layout.tsx                                     # platform shell
+  courses/
+    ai/
+      page.tsx                                   # AI course module grid
+      modules/<slug>/page.tsx                    # one page per AI module (28)
+    dsa/                                         # (placeholder — content coming)
 components/
-  Quiz.tsx, Checkpoint.tsx,        # interactive pedagogy primitives
+  Quiz.tsx, Checkpoint.tsx,                      # interactive pedagogy primitives
   WorkedExample.tsx, CodeExercise.tsx,
   ClassifyChallenge.tsx, Callout.tsx,
   PartRecap.tsx, TestYourself.tsx,
@@ -110,18 +118,27 @@ components/
   ModuleProgress.tsx, HeaderStats.tsx,
   CodeBlock.tsx, Confetti.tsx, ...
 lib/
-  modules.ts                       # single source of truth for the syllabus
-  progress.tsx                     # localStorage-backed progress context
+  courses/
+    ai.ts                                        # AI course: MODULES, PHASES, COURSE_META
+    dsa.ts                                       # DSA course: stub
+    index.ts                                     # COURSES registry, CourseMeta type
+  modules.ts                                     # backwards-compat shim → courses/ai
+  progress.tsx                                   # localStorage-backed progress context
 ```
 
-Every module is a single `app/modules/<slug>/page.tsx` that composes the primitives in `components/`. The syllabus in `lib/modules.ts` drives the home page grid; flipping a module's `status` is what controls whether it shows up as playable.
+Adding a new course:
+
+1. Create `lib/courses/<id>.ts` — export `MODULES`, `PHASES`, `COURSE_META`, `getModuleBySlug`.
+2. Add it to `COURSES` in `lib/courses/index.ts`.
+3. Create `app/courses/<id>/page.tsx` (course landing) and `app/courses/<id>/modules/<slug>/page.tsx` for each module.
+4. Flip `COURSE_META.status` to `"available"` once you have content.
 
 ## Tech stack
 
 - Next.js 16 (App Router, Turbopack) · React 19 · TypeScript
 - Tailwind CSS v4 (dark mode by default)
 - React Context for progress / mascot / sound state
-- No backend for the course site itself — everything runs client-side, with progress in localStorage. The Spring Boot service you'll see in later modules is something you build *as a project*, not something this site hosts.
+- No backend for the platform itself — everything runs client-side, with progress in localStorage. The Spring Boot service learners build in later AI modules is a *project*, not something this site hosts.
 
 ## Conventions
 

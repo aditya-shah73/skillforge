@@ -4,6 +4,23 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+# Skillforge platform conventions
+
+This repo is a multi-course learning platform. Each course is a self-contained track:
+
+- `lib/courses/<id>.ts` — the course's data: `MODULES`, `PHASES`, `COURSE_META`, `getModuleBySlug`.
+- `app/courses/<id>/page.tsx` — the course landing page (module grid).
+- `app/courses/<id>/modules/<slug>/page.tsx` — one page per module.
+
+The platform-level home page (`app/page.tsx`) is a course picker that reads from `lib/courses/index.ts`. Don't put course-specific copy there.
+
+`lib/modules.ts` is a backwards-compat shim that re-exports from `lib/courses/ai`. New code should import from the per-course module directly (`@/lib/courses/ai` or `@/lib/courses/dsa`), not from `@/lib/modules`.
+
+The active courses today:
+
+- **`ai`** — *AI for Engineers*, available, 28 modules.
+- **`dsa`** — *DSA in Java*, status `coming-soon`, no modules yet.
+
 # Course conventions
 
 ## Module durations
@@ -46,4 +63,6 @@ Reuse components from `components/` rather than inventing new patterns:
 
 ## The syllabus
 
-`lib/modules.ts` is the single source of truth. Flipping `status: "coming-soon"` → `"available"` is what makes a module show up as playable on the home page. The home page derives counts dynamically — don't hardcode "N modules" anywhere.
+`lib/courses/<id>.ts` is the single source of truth for each course. Flipping a module's `status: "coming-soon"` → `"available"` is what makes it show up as playable on its course page. The course page and the platform picker both derive counts dynamically — don't hardcode "N modules" anywhere in app code.
+
+(`lib/modules.ts` is a temporary back-compat shim re-exporting from `lib/courses/ai`. Existing module pages still import from it. New imports should target `lib/courses/<id>` directly.)

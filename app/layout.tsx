@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI for Engineers",
-  description: "A hands-on AI course for working full-stack engineers. Build real intuition for LLMs, embeddings, RAG, and agents — then ship production-quality AI features.",
+  title: "Skillforge — hands-on courses for engineers",
+  description: "Project-driven, pattern-first courses for working engineers. Currently shipping: AI for Engineers. In planning: DSA in Java.",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
               <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
                 <Link href="/" className="font-bold text-lg tracking-tight">
-                  <span className="text-indigo-600 dark:text-indigo-400">AI</span> for Engineers
+                  <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Skillforge</span>
                 </Link>
                 <HeaderStats />
               </nav>

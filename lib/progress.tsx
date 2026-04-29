@@ -45,7 +45,10 @@ const defaultProgress: Progress = {
 
 const ProgressContext = createContext<ProgressContextType | null>(null);
 
-const STORAGE_KEY = "ai-course-progress-v1";
+const STORAGE_KEY = "skillforge-progress-v1";
+// Older builds used this key. We migrate it once on first load so existing
+// learners don't lose their XP / streak / completed checkpoints.
+const LEGACY_STORAGE_KEY = "ai-course-progress-v1";
 
 function todayStr() {
   return new Date().toISOString().slice(0, 10);
@@ -62,7 +65,19 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      let raw = localStorage.getItem(STORAGE_KEY);
+      // Migrate from the old "ai-course-progress-v1" key on first load after
+      // the platform rename. Read once, write under the new key, drop the old.
+      if (!raw) {
+        const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+        if (legacy) {
+          raw = legacy;
+          try {
+            localStorage.setItem(STORAGE_KEY, legacy);
+            localStorage.removeItem(LEGACY_STORAGE_KEY);
+          } catch {}
+        }
+      }
       if (raw) {
         const parsed = JSON.parse(raw);
         setProgress({ ...defaultProgress, ...parsed });
