@@ -58,10 +58,10 @@ export const MODULES: Module[] = [
   { slug: "multi-agent", number: 23, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Multi-agent patterns", subtitle: "Orchestrator/subagent, parallelization", duration: "~1.5h", project: "PR review panel", status: "available" },
 
   // Phase 6
-  { slug: "evals", number: 24, phase: "Production & Capstone", phaseNumber: 6, title: "Evals", subtitle: "LLM-as-judge, golden sets, regression testing", duration: "~1.5h", project: "Eval harness", status: "coming-soon" },
-  { slug: "security", number: 25, phase: "Production & Capstone", phaseNumber: 6, title: "Security & guardrails", subtitle: "Prompt injection, PII, output filtering", duration: "~1.5h", project: "Injection test suite", status: "coming-soon" },
-  { slug: "fine-tuning", number: 26, phase: "Production & Capstone", phaseNumber: 6, title: "Fine-tuning & RLHF (when to bother)", subtitle: "How model training actually works — and why RAG usually wins", duration: "~1.5h", project: "Decision framework: fine-tune vs prompt vs RAG", status: "coming-soon" },
-  { slug: "capstone", number: 27, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~3h", project: "Portfolio centerpiece", status: "coming-soon" },
+  { slug: "evals", number: 24, phase: "Production & Capstone", phaseNumber: 6, title: "Evals", subtitle: "LLM-as-judge, golden sets, regression testing", duration: "~1.5h", project: "Eval harness", status: "available" },
+  { slug: "security", number: 25, phase: "Production & Capstone", phaseNumber: 6, title: "Security & guardrails", subtitle: "Prompt injection, PII, output filtering", duration: "~1.5h", project: "Injection test suite", status: "available" },
+  { slug: "fine-tuning", number: 26, phase: "Production & Capstone", phaseNumber: 6, title: "Fine-tuning & RLHF (when to bother)", subtitle: "How model training actually works — and why RAG usually wins", duration: "~1.5h", project: "Decision framework: fine-tune vs prompt vs RAG", status: "available" },
+  { slug: "capstone", number: 27, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~3h", project: "Portfolio centerpiece", status: "available" },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
