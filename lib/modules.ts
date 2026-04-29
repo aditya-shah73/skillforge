@@ -48,9 +48,9 @@ export const MODULES: Module[] = [
   { slug: "rag-spring", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "available" },
 
   // Phase 4
-  { slug: "react-streaming", number: 18, phase: "Frontend AI Integration", phaseNumber: 4, title: "React streaming patterns", subtitle: "SSE consumption, optimistic updates, tool results", duration: "~1.5h", project: "Chat UI component library", status: "coming-soon" },
-  { slug: "chat-interface", number: 19, phase: "Frontend AI Integration", phaseNumber: 4, title: "Full chat interface", subtitle: "React + GraphQL + Spring Boot end-to-end", duration: "~2h", project: "Team standup bot", status: "coming-soon" },
-  { slug: "multimodal", number: 20, phase: "Frontend AI Integration", phaseNumber: 4, title: "Multimodal inputs", subtitle: "Images, files, vision models", duration: "~1.5h", project: "Receipt parser", status: "coming-soon" },
+  { slug: "react-streaming", number: 18, phase: "Frontend AI Integration", phaseNumber: 4, title: "React streaming patterns", subtitle: "SSE consumption, optimistic updates, tool results", duration: "~1.5h", project: "Chat UI component library", status: "available" },
+  { slug: "chat-interface", number: 19, phase: "Frontend AI Integration", phaseNumber: 4, title: "Full chat interface", subtitle: "React + GraphQL + Spring Boot end-to-end", duration: "~2h", project: "Team standup bot", status: "available" },
+  { slug: "multimodal", number: 20, phase: "Frontend AI Integration", phaseNumber: 4, title: "Multimodal inputs", subtitle: "Images, files, vision models", duration: "~1.5h", project: "Receipt parser", status: "available" },
 
   // Phase 5
   { slug: "agents-intro", number: 21, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agent fundamentals", subtitle: "ReAct loop, memory, when NOT to use agents", duration: "~2h", project: "Research agent", status: "coming-soon" },
