@@ -43,9 +43,9 @@ export const MODULES: Module[] = [
 
   // Phase 3
   { slug: "embeddings-deep", number: 14, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Production embeddings: models, dimensions, cost, the curse", duration: "~2h", project: "Semantic bookmark search", status: "available" },
-  { slug: "pgvector", number: 15, phase: "Vector Search & RAG", phaseNumber: 3, title: "Vector DBs & pgvector", subtitle: "HNSW vs IVFFlat, indexing, Postgres integration", duration: "~2h", project: "Duplicate issue detector", status: "coming-soon" },
-  { slug: "rag-architecture", number: 16, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG architecture", subtitle: "Chunking, retrieval, context assembly", duration: "~2h", project: "Doc chunking lab", status: "coming-soon" },
-  { slug: "rag-spring", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "coming-soon" },
+  { slug: "pgvector", number: 15, phase: "Vector Search & RAG", phaseNumber: 3, title: "Vector DBs & pgvector", subtitle: "HNSW vs IVFFlat, indexing, Postgres integration", duration: "~2h", project: "Duplicate issue detector", status: "available" },
+  { slug: "rag-architecture", number: 16, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG architecture", subtitle: "Chunking, retrieval, context assembly", duration: "~2h", project: "Doc chunking lab", status: "available" },
+  { slug: "rag-spring", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "available" },
 
   // Phase 4
   { slug: "react-streaming", number: 18, phase: "Frontend AI Integration", phaseNumber: 4, title: "React streaming patterns", subtitle: "SSE consumption, optimistic updates, tool results", duration: "~1.5h", project: "Chat UI component library", status: "coming-soon" },
