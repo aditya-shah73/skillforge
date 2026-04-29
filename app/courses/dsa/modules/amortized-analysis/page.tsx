@@ -795,12 +795,15 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           That&apos;s the foundation. Every data structure you meet from here on out comes with a complexity table — and now you can read those tables critically. You know which numbers are real guarantees, which are amortized, and which are statistical bets.
         </p>
-        <p className="mb-0 text-slate-700 dark:text-slate-300">
+        <p className="mb-4 text-slate-700 dark:text-slate-300">
           <strong>Up next: Phase 2 — Linear Data Structures.</strong> We start meeting the structures themselves: arrays, dynamic arrays (now you know how they really work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
         </p>
-        <p className="text-sm text-slate-500 italic mt-4 mb-0">
-          Phase 2 is shipping next — we&apos;re building the DSA track one phase at a time.
-        </p>
+        <Link
+          href="/courses/dsa/modules/arrays"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+        >
+          Continue to Module 4 — Arrays &amp; dynamic arrays →
+        </Link>
       </section>
     </article>
   );
