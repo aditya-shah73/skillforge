@@ -12,25 +12,21 @@ export default function HeaderStats() {
     setMounted(true);
   }, []);
 
-  // Animate XP counter up
+  // Animate XP counter up. Intentionally omit `displayXp` from deps so the
+  // interval doesn't reset on every tick — we drive convergence inside the
+  // interval using setDisplayXp's functional updater.
   useEffect(() => {
     if (!mounted) return;
-    const diff = xp - displayXp;
-    if (diff === 0) return;
-    const steps = Math.min(30, Math.abs(diff));
-    const inc = diff / steps;
-    let step = 0;
     const timer = setInterval(() => {
-      step++;
-      if (step >= steps) {
-        setDisplayXp(xp);
-        clearInterval(timer);
-      } else {
-        setDisplayXp((v) => Math.round(v + inc));
-      }
+      setDisplayXp((v) => {
+        const diff = xp - v;
+        if (diff === 0) return v;
+        const stepSize = Math.max(1, Math.ceil(Math.abs(diff) / 30));
+        return diff > 0 ? Math.min(xp, v + stepSize) : Math.max(xp, v - stepSize);
+      });
     }, 20);
     return () => clearInterval(timer);
-  }, [xp, mounted, displayXp]);
+  }, [xp, mounted]);
 
   if (!mounted) {
     return <div className="w-48 h-6" />;

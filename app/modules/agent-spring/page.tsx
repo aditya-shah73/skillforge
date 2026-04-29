@@ -9,7 +9,6 @@ import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 
 const CHECKPOINTS = [
-  { id: "spring-tools", title: "Tools the Spring AI way" },
   { id: "auto-loop", title: "The auto-loop and why to opt out" },
   { id: "memory-state", title: "Memory and state across turns" },
   { id: "stopping", title: "Stopping conditions in production" },

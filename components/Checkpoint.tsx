@@ -47,8 +47,23 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
   const [showConfetti, setShowConfetti] = useState(false);
   const [registeredIds, setRegisteredIds] = useState<Set<string>>(new Set());
   const [correctIds, setCorrectIds] = useState<Set<string>>(new Set());
+  // Becomes true a tick after mount. Used to decide whether a quiz-less
+  // Checkpoint should fall back to a manual "Mark as done" button.
+  const [registrationSettled, setRegistrationSettled] = useState(false);
   const firedRef = useRef(false);
   const completed = isCheckpointComplete(moduleSlug, id);
+
+  // Wait one render cycle for child Quiz components to register themselves.
+  // If none have by then, treat this Checkpoint as auto-manual.
+  useEffect(() => {
+    const t = setTimeout(() => setRegistrationSettled(true), 0);
+    return () => clearTimeout(t);
+  }, []);
+
+  // A Checkpoint is "effectively manual" if the author asked for it (manual prop)
+  // OR if no quizzes have registered after the settle tick — i.e. it's a
+  // recap/section-end checkpoint with no gating quizzes inside.
+  const effectiveManual = manual || (registrationSettled && registeredIds.size === 0);
 
   const register = useCallback((quizId: string) => {
     setRegisteredIds((prev) => {
@@ -106,14 +121,14 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
   }, [completed, moduleSlug, id, xp, title, celebration, completeCheckpoint, addXp, play, say]);
 
   // Auto-fire when every registered quiz is resolved.
-  // Manual checkpoints (project-style, no quizzes) skip this and use the button.
+  // Manual (or effectively manual) checkpoints skip this and use the button.
   useEffect(() => {
-    if (manual) return;
+    if (effectiveManual) return;
     if (registeredIds.size === 0) return;
     const allCorrect = Array.from(registeredIds).every((qid) => correctIds.has(qid));
     if (!allCorrect) return;
     fire();
-  }, [manual, registeredIds, correctIds, fire]);
+  }, [effectiveManual, registeredIds, correctIds, fire]);
 
   // If the checkpoint was already completed in a prior session, don't re-fire.
   useEffect(() => {
@@ -122,7 +137,7 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
 
   const total = registeredIds.size;
   const done = Array.from(registeredIds).filter((qid) => correctIds.has(qid)).length;
-  const showProgress = !manual && total > 0 && !completed;
+  const showProgress = !effectiveManual && total > 0 && !completed;
 
   return (
     <>
@@ -144,12 +159,12 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
             ✓ Completed — nice work.
           </div>
         )}
-        {!completed && !manual && total > 0 && done < total && (
+        {!completed && !effectiveManual && total > 0 && done < total && (
           <div className="mt-4 text-xs text-emerald-700/70 dark:text-emerald-300/70 italic">
             Answer every quiz above to clear this checkpoint.
           </div>
         )}
-        {!completed && manual && (
+        {!completed && effectiveManual && (
           <button
             onClick={fire}
             className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition"

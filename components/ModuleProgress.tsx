@@ -24,7 +24,7 @@ export default function ModuleProgress({
   const done = completedCheckpoints[moduleSlug] || [];
   const total = checkpoints.length;
   const completed = checkpoints.filter((c) => done.includes(c.id)).length;
-  const pct = Math.round((completed / total) * 100);
+  const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   return (
     <div className="mt-6 mb-2">
