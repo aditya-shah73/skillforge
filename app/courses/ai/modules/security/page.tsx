@@ -61,10 +61,10 @@ export default function SecurityModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Modules 9–13 (the API surface), Module 11 (tool use — the highest-stakes attack vector),
+        <p className="m-0">Modules 9–13 (the API surface), Module 11 (tool use — the highest-stakes attack vector),
         Module 17 (RAG — where indirect injection lives), and Module 24 (evals — security
         cases live in your golden set). Module 22 (agents) is useful background; agents with
-        tools are where injections hurt most.
+        tools are where injections hurt most.</p>
       </Callout>
 
       {/* ============================================================== */}
@@ -110,11 +110,11 @@ export default function SecurityModule() {
       </ol>
 
       <Callout variant="warn" title="The fundamental asymmetry">
-        Classical security has formal boundaries — the SQL parser knows where SQL ends and
+        <p className="m-0">Classical security has formal boundaries — the SQL parser knows where SQL ends and
         data begins. LLMs don&apos;t. To a model, &quot;your instructions&quot; and
         &quot;the user&apos;s text&quot; and &quot;the document we retrieved&quot; are all
         just tokens flowing through the same context window. There is no parser-level
-        guarantee separating them. You build the guarantees in software, around the model.
+        guarantee separating them. You build the guarantees in software, around the model.</p>
       </Callout>
 
       <h3>The defense-in-depth picture</h3>
@@ -309,10 +309,10 @@ In character, answer:..."
       </p>
 
       <Callout variant="warn" title="Indirect injection + tools = the worst case">
-        Indirect injection on a chat-only LLM is annoying. Indirect injection on an LLM with
+        <p className="m-0">Indirect injection on a chat-only LLM is annoying. Indirect injection on an LLM with
         tools is catastrophic. The attacker can hijack tool calls — send emails, execute
         code, post messages, exfiltrate data — using the user&apos;s authority. Every agent
-        with tool access plus untrusted data input is a candidate for this attack.
+        with tool access plus untrusted data input is a candidate for this attack.</p>
       </Callout>
 
       <h3>Why &quot;detect injection in input&quot; doesn&apos;t work</h3>
@@ -681,10 +681,10 @@ public class PiiRedactor {
 }`}</CodeBlock>
 
       <Callout variant="warn" title="Regex PII detection is leaky">
-        The patterns above will miss a lot — international phone formats, foreign emails,
+        <p className="m-0">The patterns above will miss a lot — international phone formats, foreign emails,
         addresses that don&apos;t match a US SSN shape, names. For high-stakes systems use
         a real PII library (Microsoft Presidio, AWS Comprehend Medical/PII, GCP DLP) or an
-        LLM-based PII classifier. Regex is the cheap first pass.
+        LLM-based PII classifier. Regex is the cheap first pass.</p>
       </Callout>
 
       <h3>Cross-user data leakage in RAG</h3>
@@ -863,11 +863,11 @@ public class CanarySystemPrompt {
       </ul>
 
       <Callout variant="insight" title="Jailbreaks aren't a moat — operations are">
-        Frontier-lab safety teams know jailbreaks will work occasionally. The system isn&apos;t
+        <p className="m-0">Frontier-lab safety teams know jailbreaks will work occasionally. The system isn&apos;t
         designed to be jailbreak-proof; it&apos;s designed so that one jailbreak doesn&apos;t
         cascade into a real-world incident. That&apos;s your job too: assume the model can be
         compromised, design so &quot;model misbehaves&quot; doesn&apos;t mean
-        &quot;customer data leaks.&quot; Defense in depth, again.
+        &quot;customer data leaks.&quot; Defense in depth, again.</p>
       </Callout>
 
       <PartRecap
@@ -1155,15 +1155,15 @@ public class ResponseAnalyzer {
 }`}</CodeBlock>
 
       <Callout variant="warn" title="Project warning: cleanup matters">
-        Indirect-injection cases inject docs into your RAG store as setup. <em>Always</em>
+        <p className="m-0">Indirect-injection cases inject docs into your RAG store as setup. <em>Always</em>
         clean them up in teardown — even on failure. A test corpus that pollutes your RAG
-        index is its own security problem. Wrap with try/finally if you have to.
+        index is its own security problem. Wrap with try/finally if you have to.</p>
       </Callout>
 
       <h3>Build it</h3>
 
       <Callout variant="info" title="The exercise">
-        Wire the suite against any LLM endpoint you&apos;ve built. Steps:
+        <p className="m-0">Wire the suite against any LLM endpoint you&apos;ve built. Steps:</p>
         <ol className="mt-2 list-decimal pl-5 space-y-1 mb-0">
           <li>Pick an endpoint to attack (your Module 17 RAG endpoint is ideal — RAG endpoints have the most surface)</li>
           <li>Take the 6 starter cases above; add 6 more from the GitHub repo <code>llm-attacks/PromptInject</code> or similar (~30 min)</li>

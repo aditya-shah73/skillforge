@@ -61,9 +61,11 @@ export default function MultimodalModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 9 (Claude API fundamentals) for the request shape, Module 10 (Spring AI) for the
-        Java client, Module 19 (chat interface) for the upload UI you&apos;ll bolt this onto.
-        Optional but useful: Module 6 (embeddings) — image embeddings come from the same idea.
+        <p className="m-0">
+          Module 9 (Claude API fundamentals) for the request shape, Module 10 (Spring AI) for the
+          Java client, Module 19 (chat interface) for the upload UI you&apos;ll bolt this onto.
+          Optional but useful: Module 6 (embeddings) — image embeddings come from the same idea.
+        </p>
       </Callout>
 
       {/* ================================================================= */}
@@ -94,10 +96,12 @@ export default function MultimodalModule() {
         </p>
 
         <Callout variant="warn" title="The expensive screenshot trap">
-          Default phone photos are 4032×3024 — about 12 megapixels. Sent raw, that&apos;s
-          tens of thousands of tokens per image, and most providers will resize you down anyway
-          (badly, on their side). Always resize on your side, to a known dimension, before
-          uploading. We&apos;ll do this in the project.
+          <p className="m-0">
+            Default phone photos are 4032×3024 — about 12 megapixels. Sent raw, that&apos;s
+            tens of thousands of tokens per image, and most providers will resize you down anyway
+            (badly, on their side). Always resize on your side, to a known dimension, before
+            uploading. We&apos;ll do this in the project.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">It&apos;s the same transformer</h3>
@@ -146,10 +150,12 @@ export default function MultimodalModule() {
         </div>
 
         <Callout variant="insight" title="The right mental model">
-          Vision models are a smart human glancing at an image — not a microscope. If a smart human
-          would need to zoom in or use a tool, the model probably will too. Your job is to either
-          (a) crop and resize so the relevant content is large and clear, or (b) call a real
-          OCR/CV tool from a Module-11-style tool-use loop.
+          <p className="m-0">
+            Vision models are a smart human glancing at an image — not a microscope. If a smart human
+            would need to zoom in or use a tool, the model probably will too. Your job is to either
+            (a) crop and resize so the relevant content is large and clear, or (b) call a real
+            OCR/CV tool from a Module-11-style tool-use loop.
+          </p>
         </Callout>
 
         <PartRecap
@@ -372,11 +378,13 @@ public class ImageResizer {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="JPEG re-encoding loses quality">
-          The example above re-encodes everything as JPEG. For receipts this is fine — they&apos;re
-          already photos. But if a user uploads a PNG screenshot of a sharp UI and you re-encode to
-          JPEG, you&apos;ll add compression artifacts that hurt OCR. Decision rule: if input is PNG
-          and the image has fewer than ~2000 unique colors (likely a screenshot), keep PNG. Otherwise
-          JPEG at 85% is plenty.
+          <p className="m-0">
+            The example above re-encodes everything as JPEG. For receipts this is fine — they&apos;re
+            already photos. But if a user uploads a PNG screenshot of a sharp UI and you re-encode to
+            JPEG, you&apos;ll add compression artifacts that hurt OCR. Decision rule: if input is PNG
+            and the image has fewer than ~2000 unique colors (likely a screenshot), keep PNG. Otherwise
+            JPEG at 85% is plenty.
+          </p>
         </Callout>
 
         <PartRecap
@@ -553,9 +561,11 @@ public record Receipt(
         """;`}</CodeBlock>
 
         <Callout variant="insight" title="Few-shot beats verbose instructions">
-          A common bug: writing 200 words explaining how European receipts work, getting it 70%
-          right. Replacing all 200 words with two examples often gets it 95%+ right. Show, don&apos;t
-          tell — the model is a pattern-matcher.
+          <p className="m-0">
+            A common bug: writing 200 words explaining how European receipts work, getting it 70%
+            right. Replacing all 200 words with two examples often gets it 95%+ right. Show, don&apos;t
+            tell — the model is a pattern-matcher.
+          </p>
         </Callout>
 
         <PartRecap
@@ -699,10 +709,12 @@ public class ReceiptController {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Don't forget Spring's multipart limits">
-          By default Spring caps multipart uploads at 1 MB per file and 10 MB per request. Your 8 MB
-          check above will never fire — Spring rejects the request earlier with a confusing
-          MaxUploadSizeExceededException. Set <code>spring.servlet.multipart.max-file-size=10MB</code>
-          and <code>max-request-size=10MB</code> in <code>application.yml</code> to match.
+          <p className="m-0">
+            By default Spring caps multipart uploads at 1 MB per file and 10 MB per request. Your 8 MB
+            check above will never fire — Spring rejects the request earlier with a confusing
+            MaxUploadSizeExceededException. Set <code>spring.servlet.multipart.max-file-size=10MB</code>
+            and <code>max-request-size=10MB</code> in <code>application.yml</code> to match.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">The frontend upload UI</h3>
@@ -763,9 +775,11 @@ export function ReceiptUploader() {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Streaming or not?">
-          For one-shot extraction (receipt → JSON), don&apos;t bother streaming. The whole call
-          finishes in 2-4 seconds, and a JSON object isn&apos;t meaningful to render token-by-token.
-          Save streaming for the chat UX (Module 18/19), where partial output is actually useful.
+          <p className="m-0">
+            For one-shot extraction (receipt → JSON), don&apos;t bother streaming. The whole call
+            finishes in 2-4 seconds, and a JSON object isn&apos;t meaningful to render token-by-token.
+            Save streaming for the chat UX (Module 18/19), where partial output is actually useful.
+          </p>
         </Callout>
 
         <PartRecap
@@ -972,11 +986,13 @@ ORDER BY 1 DESC;`}</CodeBlock>
         </ul>
 
         <Callout variant="spring" title="Test fixtures matter">
-          Build a <code>fixtures/</code> directory of 10-20 real receipts (yours, your roommate&apos;s,
-          whatever). Some printed, some thermal-paper, some screenshots, one HEIC, one PDF. Run
-          your pipeline against the whole set on every change and eyeball the results. This is
-          your eval suite — Module 24 will formalize it, but a manual version pays off
-          immediately.
+          <p className="m-0">
+            Build a <code>fixtures/</code> directory of 10-20 real receipts (yours, your roommate&apos;s,
+            whatever). Some printed, some thermal-paper, some screenshots, one HEIC, one PDF. Run
+            your pipeline against the whole set on every change and eyeball the results. This is
+            your eval suite — Module 24 will formalize it, but a manual version pays off
+            immediately.
+          </p>
         </Callout>
 
         <Checkpoint

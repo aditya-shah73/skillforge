@@ -60,9 +60,11 @@ export default function ChatInterfaceModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 11 (tool use) for the backend tool loop, Module 12 (streaming with SSE) for the
-        Spring Boot endpoint, Module 18 (React streaming patterns) for the frontend hook and
-        components. This module connects them.
+        <p className="m-0">
+          Module 11 (tool use) for the backend tool loop, Module 12 (streaming with SSE) for the
+          Spring Boot endpoint, Module 18 (React streaming patterns) for the frontend hook and
+          components. This module connects them.
+        </p>
       </Callout>
 
       {/* ================================================================= */}
@@ -139,11 +141,13 @@ export default nextConfig;`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="Streaming + rewrites: confirm both directions">
-          Next.js rewrites preserve <code>text/event-stream</code> in modern versions, but if you&apos;re
-          on Vercel&apos;s default runtime there are buffering quirks. If your tokens arrive in one
-          big chunk instead of dribbling in, the proxy is buffering. Solutions: run the API on a host
-          that doesn&apos;t buffer (Edge runtime, or a direct connection), or skip the rewrite and use
-          CORS for the streaming endpoint specifically.
+          <p className="m-0">
+            Next.js rewrites preserve <code>text/event-stream</code> in modern versions, but if you&apos;re
+            on Vercel&apos;s default runtime there are buffering quirks. If your tokens arrive in one
+            big chunk instead of dribbling in, the proxy is buffering. Solutions: run the API on a host
+            that doesn&apos;t buffer (Edge runtime, or a direct connection), or skip the rewrite and use
+            CORS for the streaming endpoint specifically.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">The chat request shape</h3>
@@ -428,11 +432,13 @@ public Flux<String> stream(@RequestBody ChatRequest req) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Persist the assistant message even on cancellation">
-          The <code>concatWith</code> only fires on a clean completion. If the client aborts mid-stream
-          you&apos;ll lose the partial assistant message. Use <code>doOnCancel</code> /
-          <code>doFinally</code> to persist <code>assistantBuf</code> on any terminal signal — clean
-          completion, error, or cancel. Otherwise refreshes after a cancelled stream show only the
-          user&apos;s side.
+          <p className="m-0">
+            The <code>concatWith</code> only fires on a clean completion. If the client aborts mid-stream
+            you&apos;ll lose the partial assistant message. Use <code>doOnCancel</code> /
+            <code>doFinally</code> to persist <code>assistantBuf</code> on any terminal signal — clean
+            completion, error, or cancel. Otherwise refreshes after a cancelled stream show only the
+            user&apos;s side.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">The frontend side: load and continue</h3>
@@ -653,11 +659,13 @@ private Flux<String> toSseFrames(ChatResponse chatResponse) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Spring AI API surface drift">
-          The exact method names on <code>ChatResponse</code> / <code>Generation</code> /
-          <code>AssistantMessage</code> have shifted between Spring AI milestones. The shape above
-          reflects the 1.0 GA contract. If you&apos;re on a different version, the concepts are the
-          same — find the equivalent of &quot;get tool calls from the streamed assistant message&quot;
-          in your version&apos;s docs.
+          <p className="m-0">
+            The exact method names on <code>ChatResponse</code> / <code>Generation</code> /
+            <code>AssistantMessage</code> have shifted between Spring AI milestones. The shape above
+            reflects the 1.0 GA contract. If you&apos;re on a different version, the concepts are the
+            same — find the equivalent of &quot;get tool calls from the streamed assistant message&quot;
+            in your version&apos;s docs.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Wiring tool results back</h3>
@@ -712,12 +720,14 @@ public class ToolService {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Don't over-engineer the first version">
-          Threading tool-result events through Spring AI&apos;s tool loop is fiddly enough that for
-          a first version, many teams skip it: just emit the tool_call event and let the next
-          assistant text turn imply &quot;the tool returned something useful.&quot; The UX is still
-          better than no tool visibility, and it&apos;s 90% less code. Add explicit tool_result
-          events when the product needs them — for example, when results are large enough to deserve
-          their own UI affordance.
+          <p className="m-0">
+            Threading tool-result events through Spring AI&apos;s tool loop is fiddly enough that for
+            a first version, many teams skip it: just emit the tool_call event and let the next
+            assistant text turn imply &quot;the tool returned something useful.&quot; The UX is still
+            better than no tool visibility, and it&apos;s 90% less code. Add explicit tool_result
+            events when the product needs them — for example, when results are large enough to deserve
+            their own UI affordance.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">The frontend already handles this</h3>
@@ -911,9 +921,11 @@ if (totalTokens > 50_000) {
         </ul>
 
         <Callout variant="warn" title="Log redaction is harder than it looks">
-          Heuristic redaction (regex for emails, phone numbers, etc.) misses a lot. The safer pattern
-          is to log a content hash and structural metadata, then store the actual content (if you need
-          it) in a separate, access-controlled audit store — not your normal observability stack.
+          <p className="m-0">
+            Heuristic redaction (regex for emails, phone numbers, etc.) misses a lot. The safer pattern
+            is to log a content hash and structural metadata, then store the actual content (if you need
+            it) in a separate, access-controlled audit store — not your normal observability stack.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">4. Graceful degradation</h3>

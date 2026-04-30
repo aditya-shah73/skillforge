@@ -88,9 +88,9 @@ flowchart LR
           question="Based on the timings above, which version is the better algorithm?"
           options={[
             { label: "Version A — it ran faster, end of story.", explanation: "This is the trap. Real wall-clock time depends on n, on the JVM, on what was in cache, on whether you got lucky and the target was at the start. We need a different lens." },
-            { label: "Version B — hash sets are always faster.", explanation: "&quot;Always&quot; is too strong. For tiny inputs, the overhead of building the set can lose to a simple linear scan." },
-            { label: "It depends on what we mean by &apos;faster&apos; — and on n.", correct: true, explanation: "Exactly. Wall-clock time at one specific n tells you almost nothing. We need to know how each version SCALES as n grows. That's what Big-O measures." },
-            { label: "We can&apos;t tell — we&apos;d need to profile both.", explanation: "Closer, but profiling at one n is the same trap. The real question is: how does runtime grow as n grows? That's a different measurement." },
+            { label: "Version B — hash sets are always faster.", explanation: "\"Always\" is too strong. For tiny inputs, the overhead of building the set can lose to a simple linear scan." },
+            { label: "It depends on what we mean by 'faster' — and on n.", correct: true, explanation: "Exactly. Wall-clock time at one specific n tells you almost nothing. We need to know how each version SCALES as n grows. That's what Big-O measures." },
+            { label: "We can't tell — we'd need to profile both.", explanation: "Closer, but profiling at one n is the same trap. The real question is: how does runtime grow as n grows? That's a different measurement." },
           ]}
         />
 
@@ -138,9 +138,9 @@ flowchart LR
           question="In the stadium analogy, Strategy 2 (50 parallel ushers) and Strategy 1 (1 usher) — what's the relationship between their growth shapes?"
           options={[
             { label: "Strategy 2 is fundamentally faster — different growth shape.", explanation: "Same shape. 50 ushers is still linear in n — you just shift the line down by a constant factor. Big-O treats them the same." },
-            { label: "Same growth shape. Strategy 2 is faster by a constant factor (50×), but both grow linearly with n.", correct: true, explanation: "Right. Both are O(n). Constants matter on a stopwatch but not for Big-O. We&apos;ll see why that&apos;s actually the right call in Part 2." },
+            { label: "Same growth shape. Strategy 2 is faster by a constant factor (50×), but both grow linearly with n.", correct: true, explanation: "Right. Both are O(n). Constants matter on a stopwatch but not for Big-O. We'll see why that's actually the right call in Part 2." },
             { label: "Strategy 2 is slower because of coordination overhead.", explanation: "Maybe in real life, but the analogy abstracts that away. Both do work proportional to n." },
-            { label: "Can&apos;t tell without timing them.", explanation: "We don&apos;t need to time them — the work pattern itself tells us everything. That&apos;s the whole point." },
+            { label: "Can't tell without timing them.", explanation: "We don't need to time them — the work pattern itself tells us everything. That's the whole point." },
           ]}
         />
 
@@ -229,8 +229,8 @@ flowchart LR
               body: (
                 <>
                   <p>Algorithm X: <code>5(1,000,000) + 3 = 5,000,003</code> operations.</p>
-                  <p>Algorithm Y: <code>1,000,000² / 100 = 10,000,000,000,000</code> operations.</p>
-                  <p><strong>X wins by 2 million×.</strong> Y is now hopeless.</p>
+                  <p>Algorithm Y: <code>1,000,000² / 100 = 10,000,000,000</code> operations.</p>
+                  <p><strong>X wins by ~2,000×.</strong> Y is now hopeless.</p>
                 </>
               ),
             },
@@ -279,10 +279,10 @@ flowchart LR
           kind="Drill"
           question={"What is the Big-O of f(n) = 3n³ + 50n² + 1000n + 999,999?"}
           options={[
-            { label: "O(n³ + n² + n + 1)", explanation: "We don&apos;t leave terms in. Drop the lower-order terms entirely." },
+            { label: "O(n³ + n² + n + 1)", explanation: "We don't leave terms in. Drop the lower-order terms entirely." },
             { label: "O(3n³)", explanation: "Right idea but drop the constant. Big-O has no leading coefficient." },
             { label: "O(n³)", correct: true, explanation: "Drop constants (3 → 1), drop lower-order terms (50n², 1000n, 999999 all vanish next to n³). The 999,999 looks scary but at n=10,000 the n³ term is 10¹² — the constant is rounding error." },
-            { label: "O(n³ × n²)", explanation: "We don&apos;t multiply terms — we keep the dominant one." },
+            { label: "O(n³ × n²)", explanation: "We don't multiply terms — we keep the dominant one." },
           ]}
         />
 
@@ -291,9 +291,9 @@ flowchart LR
           question="What is the Big-O of f(n) = 100? (a function that does the same amount of work no matter what n is)"
           options={[
             { label: "O(100)", explanation: "Constants get dropped. 100 is a constant." },
-            { label: "O(1)", correct: true, explanation: "Right. Any function that does a fixed amount of work — regardless of n — is O(1), called &quot;constant time.&quot; Whether it&apos;s 1 operation or 100 operations or 10⁹ operations, it&apos;s all O(1) as long as it doesn&apos;t grow with n." },
-            { label: "O(n)", explanation: "It doesn&apos;t depend on n at all — it&apos;s flat." },
-            { label: "It has no Big-O.", explanation: "Constant-work functions absolutely have a Big-O — it&apos;s O(1)." },
+            { label: "O(1)", correct: true, explanation: "Right. Any function that does a fixed amount of work — regardless of n — is O(1), called \"constant time.\" Whether it's 1 operation or 100 operations or 10⁹ operations, it's all O(1) as long as it doesn't grow with n." },
+            { label: "O(n)", explanation: "It doesn't depend on n at all — it's flat." },
+            { label: "It has no Big-O.", explanation: "Constant-work functions absolutely have a Big-O — it's O(1)." },
           ]}
         />
 
@@ -307,10 +307,10 @@ flowchart LR
           title="Part 2 recap"
           gist="Drop constants and lower-order terms. The dominant term is the algorithm's identity."
           points={[
-            { takeaway: "At large n, the highest-order term dwarfs everything else.", detail: <>The crossover example showed it cleanly: at n=1M, the n² term&apos;s 10¹³ operations make the 5n term completely invisible. That&apos;s why Big-O drops everything except the dominant term.</> },
+            { takeaway: "At large n, the highest-order term dwarfs everything else.", detail: <>The crossover example showed it cleanly: at n=1M, Algorithm Y&apos;s 10¹⁰ operations make Algorithm X&apos;s 5M operations look small — and the gap only widens from there. That&apos;s why Big-O drops everything except the dominant term.</> },
             { takeaway: "Drop constants: 5n → n, n²/100 → n², 1000 → 1.", detail: <>Constants depend on hardware, on which exact instructions you used, on whether the JIT compiler optimized your loop. They&apos;re not a property of the algorithm — they&apos;re noise.</> },
             { takeaway: "Drop lower-order terms: n² + 5n + 100 → n².", detail: <>Same reasoning at a different scale. Once n is large enough, n² makes 5n look like nothing.</> },
-            { takeaway: "O(1) means &apos;doesn&apos;t grow with n&apos; — not &apos;fast&apos;.", detail: <>A 10-billion-operation function that doesn&apos;t depend on n is O(1). In practice O(1) is fast, but the notation itself is silent on absolute speed.</> },
+            { takeaway: "O(1) means 'doesn't grow with n' — not 'fast'.", detail: <>A 10-billion-operation function that doesn&apos;t depend on n is O(1). In practice O(1) is fast, but the notation itself is silent on absolute speed.</> },
           ]}
         />
       </section>
@@ -439,11 +439,11 @@ flowchart LR
             { id: "exponential", label: "O(2ⁿ)", color: "rose" },
           ]}
           items={[
-            { id: "i1", label: "Reading arr[42] from a Java int[]", answer: "constant", explanation: "Array access is constant time. Doesn&apos;t depend on array length." },
+            { id: "i1", label: "Reading arr[42] from a Java int[]", answer: "constant", explanation: "Array access is constant time. Doesn't depend on array length." },
             { id: "i2", label: "Pushing one element onto a Stack", answer: "constant", explanation: "Stack push (in an ArrayDeque or array-backed stack) is O(1) amortized." },
             { id: "i3", label: "HashMap.get(key) on average", answer: "constant", explanation: "Hash to bucket, follow short chain. O(1) on average. Worst case O(n), but the expected case is constant." },
             { id: "i4", label: "Binary search in a sorted array", answer: "logarithmic", explanation: "Each step halves the search space. log₂(n) steps total." },
-            { id: "i5", label: "Walking through every element of a list once", answer: "linear", explanation: "One for-loop, no nested work — that&apos;s the textbook O(n)." },
+            { id: "i5", label: "Walking through every element of a list once", answer: "linear", explanation: "One for-loop, no nested work — that's the textbook O(n)." },
             { id: "i6", label: "Counting all even numbers in an int[]", answer: "linear", explanation: "One pass, constant work per element. O(n)." },
             { id: "i7", label: "Sorting an array with merge sort", answer: "linearithmic", explanation: "Classic O(n log n). Splits the array log n times, each level does O(n) work to merge." },
             { id: "i8", label: "For every pair (i, j) in an array, check if arr[i] + arr[j] == target — without using a hashmap", answer: "quadratic", explanation: "Nested loop over the same array — about n²/2 pairs, which simplifies to O(n²)." },
@@ -458,7 +458,7 @@ flowchart LR
           points={[
             { takeaway: "The seven: O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ), O(n!) — best to worst.", detail: <>Memorize this list. Most interview problems ask you to move from one curve to the next-better one.</> },
             { takeaway: "log n is absurdly powerful: a billion-element input takes ~30 halvings.", detail: <>Any time you can swap O(n) for O(log n), the algorithm gets dramatically more scalable. Binary search is the canonical example.</> },
-            { takeaway: "The line you don&apos;t want to cross is O(n log n) → O(n²).", detail: <>O(n²) becomes painful at n = 10,000 and lethal at n = 1,000,000. Most optimization problems are about staying on the right side of this line.</> },
+            { takeaway: "The line you don't want to cross is O(n log n) → O(n²).", detail: <>O(n²) becomes painful at n = 10,000 and lethal at n = 1,000,000. Most optimization problems are about staying on the right side of this line.</> },
             { takeaway: "O(2ⁿ) and O(n!) are scary fast. Each step doubles or multiplies; you hit the heat death of the universe quickly.", detail: <>If your algorithm is exponential, you almost always need a different approach (DP, pruning, greedy). We&apos;ll meet all of those.</> },
           ]}
         />
@@ -613,9 +613,9 @@ boolean badContains(List<String> haystack, String needle) {
           kind="Drill"
           question={"What is the Big-O of this method?\n\nvoid f(int n) {\n  for (int i = 0; i < n; i++) {\n    for (int j = 0; j < n; j++) {\n      System.out.println(i + j);\n    }\n  }\n  for (int i = 0; i < n; i++) {\n    System.out.println(i);\n  }\n}"}
           options={[
-            { label: "O(n)", explanation: "The single loop at the bottom is O(n), but there&apos;s a nested O(n²) block above it. The dominant term wins." },
+            { label: "O(n)", explanation: "The single loop at the bottom is O(n), but there's a nested O(n²) block above it. The dominant term wins." },
             { label: "O(n²)", correct: true, explanation: "The nested loop is O(n²), the trailing single loop is O(n). Dominant term: O(n²)." },
-            { label: "O(n² + n)", explanation: "We don&apos;t leave the lower-order term in. Drop it." },
+            { label: "O(n² + n)", explanation: "We don't leave the lower-order term in. Drop it." },
             { label: "O(n³)", explanation: "Only two levels of nesting. The third loop is sequential, not nested." },
           ]}
         />
@@ -625,8 +625,8 @@ boolean badContains(List<String> haystack, String needle) {
           question={"What is the Big-O of this method?\n\nvoid g(int n) {\n  for (int i = 1; i < n; i = i * 2) {\n    System.out.println(i);\n  }\n}"}
           options={[
             { label: "O(n)", explanation: "Look again at how i changes — it doubles, not increments." },
-            { label: "O(log n)", correct: true, explanation: "i doubles each step, so it reaches n in log₂(n) steps. Halving and doubling both give log n — they&apos;re symmetric." },
-            { label: "O(n log n)", explanation: "Only one loop, with constant work inside. There&apos;s no n × log n shape here." },
+            { label: "O(log n)", correct: true, explanation: "i doubles each step, so it reaches n in log₂(n) steps. Halving and doubling both give log n — they're symmetric." },
+            { label: "O(n log n)", explanation: "Only one loop, with constant work inside. There's no n × log n shape here." },
             { label: "O(n²)", explanation: "No nested loop." },
           ]}
         />
@@ -635,10 +635,10 @@ boolean badContains(List<String> haystack, String needle) {
           kind="Drill"
           question={"What is the Big-O of this method? Assume `set` is a HashSet.\n\nint countMatches(int[] arr, Set<Integer> set) {\n  int count = 0;\n  for (int x : arr) {\n    if (set.contains(x)) count++;\n  }\n  return count;\n}"}
           options={[
-            { label: "O(n²)", explanation: "HashSet.contains is O(1) on average — not O(n). That&apos;s the whole point of a hash set." },
-            { label: "O(n)", correct: true, explanation: "n iterations × O(1) per HashSet.contains = O(n). This is exactly why you&apos;d swap a List for a HashSet — to drop from O(n²) to O(n)." },
-            { label: "O(n log n)", explanation: "HashSet doesn&apos;t involve any logs. That&apos;s TreeSet." },
-            { label: "O(1)", explanation: "There&apos;s a loop over n elements — definitely not constant time." },
+            { label: "O(n²)", explanation: "HashSet.contains is O(1) on average — not O(n). That's the whole point of a hash set." },
+            { label: "O(n)", correct: true, explanation: "n iterations × O(1) per HashSet.contains = O(n). This is exactly why you'd swap a List for a HashSet — to drop from O(n²) to O(n)." },
+            { label: "O(n log n)", explanation: "HashSet doesn't involve any logs. That's TreeSet." },
+            { label: "O(1)", explanation: "There's a loop over n elements — definitely not constant time." },
           ]}
         />
 
@@ -854,7 +854,7 @@ n = 1000000
           options={[
             { label: "O(7n² + 2n log n + 99)", explanation: "We strip constants and lower-order terms." },
             { label: "O(n²)", correct: true, explanation: "Drop constants (7, 2, 99). Drop the lower-order n log n term. Dominant term: n²." },
-            { label: "O(n² log n)", explanation: "We don&apos;t multiply unrelated terms — we keep the single dominant one." },
+            { label: "O(n² log n)", explanation: "We don't multiply unrelated terms — we keep the single dominant one." },
             { label: "O(n log n)", explanation: "n² grows faster than n log n. The n² term is the dominant one, not the n log n term." },
           ]}
         />
@@ -864,7 +864,7 @@ n = 1000000
           question="Algorithm A is O(n²). Algorithm B is O(n log n). Which is true?"
           options={[
             { label: "B is always faster than A.", explanation: "Not always — at very small n, A might win because of smaller constants. Big-O is about scaling, not absolute speed at every n." },
-            { label: "For sufficiently large n, B is faster than A.", correct: true, explanation: "Right. That&apos;s exactly what Big-O guarantees: for sufficiently large n, the lower-order class wins, regardless of constants. Below the crossover point, anything can happen." },
+            { label: "For sufficiently large n, B is faster than A.", correct: true, explanation: "Right. That's exactly what Big-O guarantees: for sufficiently large n, the lower-order class wins, regardless of constants. Below the crossover point, anything can happen." },
             { label: "They have the same scaling behavior.", explanation: "n² and n log n are different growth classes — n² grows much faster as n increases." },
             { label: "B is faster only when n is small.", explanation: "Backwards — at small n, B might LOSE to A because of constants. At large n, B wins." },
           ]}
@@ -874,10 +874,10 @@ n = 1000000
           kind="Final"
           question={"What's the Big-O of this method?\n\nvoid h(int n) {\n  for (int i = 0; i < n; i++) {\n    for (int j = 1; j < n; j = j * 2) {\n      System.out.println(i + j);\n    }\n  }\n}"}
           options={[
-            { label: "O(n²)", explanation: "Look at the inner loop again: j doubles each step (j *= 2), it doesn&apos;t increment by 1." },
-            { label: "O(n log n)", correct: true, explanation: "Outer loop runs n times. Inner loop&apos;s j doubles each step → log n iterations. n × log n = O(n log n). This is the shape of efficient sorting." },
-            { label: "O(log n)", explanation: "There&apos;s an outer loop that does run n times. We&apos;re not just inside the log loop." },
-            { label: "O(n)", explanation: "The inner loop adds work — log n work per outer iteration. We can&apos;t ignore it." },
+            { label: "O(n²)", explanation: "Look at the inner loop again: j doubles each step (j *= 2), it doesn't increment by 1." },
+            { label: "O(n log n)", correct: true, explanation: "Outer loop runs n times. Inner loop's j doubles each step → log n iterations. n × log n = O(n log n). This is the shape of efficient sorting." },
+            { label: "O(log n)", explanation: "There's an outer loop that does run n times. We're not just inside the log loop." },
+            { label: "O(n)", explanation: "The inner loop adds work — log n work per outer iteration. We can't ignore it." },
           ]}
         />
 
@@ -885,9 +885,9 @@ n = 1000000
           kind="Final"
           question="Which of these statements is FALSE?"
           options={[
-            { label: "An O(1) algorithm could in principle do a billion operations, as long as it doesn&apos;t depend on n.", explanation: "True. O(1) means &apos;does not grow with n&apos; — not &apos;fast.&apos;" },
+            { label: "An O(1) algorithm could in principle do a billion operations, as long as it doesn't depend on n.", explanation: "True. O(1) means 'does not grow with n' — not 'fast.'" },
             { label: "An O(n) algorithm is always faster than an O(n²) algorithm.", correct: true, explanation: "FALSE — this is the one. At small n, an O(n²) algorithm with tiny constants can beat an O(n) algorithm with large constants. Big-O guarantees the better algorithm wins eventually, not at every n." },
-            { label: "Big-O ignores the machine, the input, and the language.", explanation: "True. That&apos;s what makes it portable across systems." },
+            { label: "Big-O ignores the machine, the input, and the language.", explanation: "True. That's what makes it portable across systems." },
             { label: "log₂(1,000,000) is roughly 20.", explanation: "True. 2²⁰ = 1,048,576." },
           ]}
         />
@@ -896,9 +896,9 @@ n = 1000000
           kind="Final"
           question="You're given an unsorted int[] of length n. You need to check whether the array contains duplicates. Which approach is best at scale?"
           options={[
-            { label: "Nested loop, comparing every pair — O(n²)", explanation: "Works but doesn&apos;t scale. We can do much better." },
-            { label: "Sort the array, then walk it once looking at adjacent pairs — O(n log n)", explanation: "Better than n² and a great answer when memory is tight. But there&apos;s an even better option here." },
-            { label: "Walk the array once, adding to a HashSet, returning true on first repeat — O(n)", correct: true, explanation: "Best. One pass, O(1) average for each HashSet add and lookup, total O(n). This is the canonical answer to LeetCode &apos;Contains Duplicate.&apos; You&apos;ll see this pattern over and over." },
+            { label: "Nested loop, comparing every pair — O(n²)", explanation: "Works but doesn't scale. We can do much better." },
+            { label: "Sort the array, then walk it once looking at adjacent pairs — O(n log n)", explanation: "Better than n² and a great answer when memory is tight. But there's an even better option here." },
+            { label: "Walk the array once, adding to a HashSet, returning true on first repeat — O(n)", correct: true, explanation: "Best. One pass, O(1) average for each HashSet add and lookup, total O(n). This is the canonical answer to LeetCode 'Contains Duplicate.' You'll see this pattern over and over." },
             { label: "Use Arrays.sort then Arrays.binarySearch in a loop — O(n log n + n log n) = O(n log n)", explanation: "Works but does more work than necessary — the HashSet approach is O(n)." },
           ]}
         />

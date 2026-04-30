@@ -106,8 +106,10 @@ flowchart LR
         </p>
 
         <Callout variant="spring" title="The trade in one sentence">
-          Arrays are O(1) to read by index and O(n) to insert in the middle. Linked lists are O(n) to read by index
-          and O(1) to insert <em>once you have a pointer to the spot</em>. Pick your pain.
+          <p className="m-0">
+            Arrays are O(1) to read by index and O(n) to insert in the middle. Linked lists are O(n) to read by index
+            and O(1) to insert <em>once you have a pointer to the spot</em>. Pick your pain.
+          </p>
         </Callout>
 
         <h3>The analogy: a treasure hunt</h3>
@@ -185,9 +187,11 @@ class MyLinkedList<E> {
         </ul>
 
         <Callout variant="info" title="Java's two LinkedLists are very different">
-          <code>java.util.LinkedList&lt;E&gt;</code> is the doubly-linked one we're modelling. It also implements{" "}
-          <code>Deque</code>, so you can use it as a queue or stack. (Spoiler: <code>ArrayDeque</code> is faster for
-          almost every real workload — Module 8.)
+          <p className="m-0">
+            <code>java.util.LinkedList&lt;E&gt;</code> is the doubly-linked one we're modelling. It also implements{" "}
+            <code>Deque</code>, so you can use it as a queue or stack. (Spoiler: <code>ArrayDeque</code> is faster for
+            almost every real workload — Module 8.)
+          </p>
         </Callout>
 
         <Quiz
@@ -230,11 +234,15 @@ class MyLinkedList<E> {
         </table>
 
         <Callout variant="warn" title="The most-asked LinkedList interview gotcha">
-          <code>linkedList.get(i)</code> is <strong>O(n)</strong>. So this loop:
+          <p className="m-0">
+            <code>linkedList.get(i)</code> is <strong>O(n)</strong>. So this loop:
+          </p>
           <CodeBlock lang="java">{`for (int i = 0; i < list.size(); i++) {
     process(list.get(i));   // O(n) every iteration → O(n²) total
 }`}</CodeBlock>
-          is quadratic on a LinkedList. Always iterate with an enhanced-for or an Iterator — those walk one step at a time and stay O(n).
+          <p className="m-0">
+            is quadratic on a LinkedList. Always iterate with an enhanced-for or an Iterator — those walk one step at a time and stay O(n).
+          </p>
         </Callout>
 
         <h3>Worked example: insert-at-index, step by step</h3>
@@ -318,9 +326,11 @@ public void addAt(int i, E v) {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="When to reach for a dummy head">
-          Any time you're writing a linked-list algorithm where the answer might require <em>removing or replacing the
-          head</em>. Examples: removing all nodes with a given value (LC 203), removing duplicates (LC 83), reversing the
-          first k nodes. A two-line dummy.next = head; setup eliminates a class of bugs.
+          <p className="m-0">
+            Any time you're writing a linked-list algorithm where the answer might require <em>removing or replacing the
+            head</em>. Examples: removing all nodes with a given value (LC 203), removing duplicates (LC 83), reversing the
+            first k nodes. A two-line dummy.next = head; setup eliminates a class of bugs.
+          </p>
         </Callout>
 
         <h3>Trick 2: fast/slow (tortoise &amp; hare) pointers</h3>
@@ -362,9 +372,11 @@ public boolean hasCycle(Node<Integer> head) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="The cycle invariant in one line">
-          On an acyclic list, <code>fast</code> always hits null first because it moves twice as quickly. On a cyclic
-          list, <code>fast</code> can never escape, and the gap between fast and slow shrinks by one node per iteration
-          inside the cycle — so they must collide. There is no third option.
+          <p className="m-0">
+            On an acyclic list, <code>fast</code> always hits null first because it moves twice as quickly. On a cyclic
+            list, <code>fast</code> can never escape, and the gap between fast and slow shrinks by one node per iteration
+            inside the cycle — so they must collide. There is no third option.
+          </p>
         </Callout>
 
         <h3>Trick 3 (bonus): in-place reversal</h3>
@@ -489,8 +501,10 @@ public Node<E> reverse(Node<E> head) {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Why the iterator matters">
-          Without it, iterating with <code>for (int i = 0; i &lt; size; i++) get(i)</code> is O(n²). The iterator walks
-          one node at a time and stays O(n). Always provide one.
+          <p className="m-0">
+            Without it, iterating with <code>for (int i = 0; i &lt; size; i++) get(i)</code> is O(n²). The iterator walks
+            one node at a time and stays O(n). Always provide one.
+          </p>
         </Callout>
 
         <h3>Step 2 · LeetCode 206 — Reverse a Linked List</h3>
@@ -531,9 +545,11 @@ public Node<Integer> reverseList(Node<Integer> head) {
 }`}</CodeBlock>
 
         <Callout variant="spring" title="Stretch goal — LC 142, finding where the cycle starts">
-          Once <code>slow</code> and <code>fast</code> meet inside the cycle, reset <code>fast</code> to <code>head</code>
-          and walk both one step at a time. They meet at the cycle entrance. Number-theoretic, beautiful, and worth
-          working out on paper.
+          <p className="m-0">
+            Once <code>slow</code> and <code>fast</code> meet inside the cycle, reset <code>fast</code> to <code>head</code>
+            and walk both one step at a time. They meet at the cycle entrance. Number-theoretic, beautiful, and worth
+            working out on paper.
+          </p>
         </Callout>
 
       </section>

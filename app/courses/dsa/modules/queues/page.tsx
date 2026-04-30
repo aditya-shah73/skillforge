@@ -202,9 +202,11 @@ flowchart LR
         </ol>
 
         <Callout variant="info" title="What ArrayDeque actually does">
-          <code>java.util.ArrayDeque</code> uses option 2 internally — a power-of-two capacity, head and tail indices,
-          and the &quot;leave one slot empty&quot; convention so it can use a fast bitwise AND instead of modulo. It's the
-          textbook ring buffer with one performance trick.
+          <p>
+            <code>java.util.ArrayDeque</code> uses option 2 internally — a power-of-two capacity, head and tail indices,
+            and the &quot;leave one slot empty&quot; convention so it can use a fast bitwise AND instead of modulo.
+          </p>
+          <p>It's the textbook ring buffer with one performance trick.</p>
         </Callout>
 
         <WorkedExample
@@ -248,11 +250,13 @@ flowchart LR
         </ul>
 
         <Callout variant="insight" title="The single Java rule you need">
-          For 95% of stack and queue code in Java, just write:
+          <p>For 95% of stack and queue code in Java, just write:</p>
           <CodeBlock lang="java">{`Deque<E> stack = new ArrayDeque<>();   // use push/pop/peek
 Deque<E> queue = new ArrayDeque<>();   // use offer/poll/peek`}</CodeBlock>
-          <code>java.util.Stack</code> and <code>java.util.LinkedList</code>-as-queue are both legacy. ArrayDeque
-          beats them on cache locality, allocation, and clarity.
+          <p>
+            <code>java.util.Stack</code> and <code>java.util.LinkedList</code>-as-queue are both legacy. ArrayDeque
+            beats them on cache locality, allocation, and clarity.
+          </p>
         </Callout>
 
         <h3>The deque-as-sliding-window superpower</h3>
@@ -283,9 +287,11 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Subtle invariant — front is the current max only because we maintain it">
-          Each index is added once and removed at most once, so total work is O(n). The deque is monotonically
-          decreasing by value from front to back: nothing dominated by a newer-and-bigger element survives. That
-          invariant is what makes the front always be the window max.
+          <p>Each index is added once and removed at most once, so total work is O(n).</p>
+          <p>
+            The deque is monotonically decreasing by value from front to back: nothing dominated by a
+            newer-and-bigger element survives. That invariant is what makes the front always be the window max.
+          </p>
         </Callout>
 
         <h3>Classify the operation</h3>
@@ -346,9 +352,11 @@ public java.util.List<java.util.List<Integer>> levelOrder(TreeNode root) {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="The level-batch trick">
-          Snapshot <code>q.size()</code> at the start of each outer iteration. That's the size of the current level —
-          we drain exactly that many before any of the children we just enqueued get processed. This little move
-          gives you per-level batches without needing a sentinel.
+          <p>
+            Snapshot <code>q.size()</code> at the start of each outer iteration. That's the size of the current level —
+            we drain exactly that many before any of the children we just enqueued get processed.
+          </p>
+          <p>This little move gives you per-level batches without needing a sentinel.</p>
         </Callout>
 
         <h3>Pattern 2 · Sliding-window with a monotonic deque</h3>
@@ -454,9 +462,12 @@ class RecentCounter {
         int oldCap = data.length;
         Object[] bigger = new Object[oldCap * 2];
         // Copy the elements in logical order: head..end, then 0..tail.
+        // We're called only when full (size == oldCap, so head == tail).
+        // If head > 0 the data wraps and we need both segments;
+        // if head == 0 the first arraycopy already grabbed everything.
         int rightSegment = oldCap - head;
         System.arraycopy(data, head, bigger, 0, rightSegment);
-        if (tail < head) {
+        if (head > 0) {
             System.arraycopy(data, 0, bigger, rightSegment, tail);
         }
         data = bigger;
@@ -466,9 +477,12 @@ class RecentCounter {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="The grow() function is where almost every ring-buffer bug lives">
-          When the data is wrapped (tail &lt; head), a single <code>System.arraycopy</code> won't do — you need two,
-          one for the head-to-end segment and one for the start-to-tail segment. Trace it on paper before convincing
-          yourself it's right.
+          <p>
+            Grow runs only when the buffer is full, so <code>head == tail</code>. If <code>head &gt; 0</code> the data
+            wraps around the end of the array — you need <em>two</em> <code>System.arraycopy</code> calls, one for the
+            <code>head</code>-to-end segment and one for the <code>0</code>-to-<code>tail</code> segment.
+          </p>
+          <p>If <code>head == 0</code> the data is contiguous and the second copy is a no-op. Trace it on paper before convincing yourself it's right.</p>
         </Callout>
 
         <h3>Step 2 · LeetCode 232 — Implement Queue using Stacks</h3>
@@ -505,9 +519,14 @@ class RecentCounter {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why this is amortized O(1)">
-          Each element is pushed onto <code>in</code> once, popped from <code>in</code> once (during the shift), pushed
-          onto <code>out</code> once, and popped from <code>out</code> once. Four constant-time ops over the element's
-          lifetime → amortized O(1) per public operation. Same accounting argument as ArrayList's doubling.
+          <p>
+            Each element is pushed onto <code>in</code> once, popped from <code>in</code> once (during the shift),
+            pushed onto <code>out</code> once, and popped from <code>out</code> once.
+          </p>
+          <p>
+            Four constant-time ops over the element's lifetime → amortized O(1) per public operation. Same accounting
+            argument as ArrayList's doubling.
+          </p>
         </Callout>
 
         <h3>Step 3 · LeetCode 933 — Number of Recent Calls</h3>

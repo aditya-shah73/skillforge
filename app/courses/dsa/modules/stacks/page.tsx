@@ -71,17 +71,19 @@ flowchart TB
     subgraph DT["Daily Temperatures: [73, 74, 75, 71, 69, 72, 76, 73]"]
         direction TB
         T1["i = 5, temp = 72"]
-        T2["Stack indices (bottom → top): [2 (75)]"]
-        T3["72 > 71? yes — pop 4 (69), answer[4] = 5 - 4 = 1"]
-        T4["72 > 75? no — stop popping"]
-        T5["push 5 → stack = [2, 5]"]
-        T1 --> T2 --> T3 --> T4 --> T5
+        T2["Stack indices (bottom → top): [2 (75), 3 (71), 4 (69)]"]
+        T3["72 > 69? yes — pop 4, answer[4] = 5 - 4 = 1"]
+        T4["72 > 71? yes — pop 3, answer[3] = 5 - 3 = 2"]
+        T5["72 > 75? no — stop popping"]
+        T6["push 5 → stack = [2, 5]"]
+        T1 --> T2 --> T3 --> T4 --> T5 --> T6
     end
     style T1 fill:#1e293b,color:#fff,stroke:#475569
     style T2 fill:#fbbf24,color:#000,stroke:#d97706
     style T3 fill:#10b981,color:#fff,stroke:#047857
-    style T4 fill:#ef4444,color:#fff,stroke:#b91c1c
-    style T5 fill:#fbbf24,color:#000,stroke:#d97706
+    style T4 fill:#10b981,color:#fff,stroke:#047857
+    style T5 fill:#ef4444,color:#fff,stroke:#b91c1c
+    style T6 fill:#fbbf24,color:#000,stroke:#d97706
   `.trim();
 
   return (
@@ -222,10 +224,14 @@ flowchart TB
 }`}</CodeBlock>
 
         <Callout variant="info" title="Use ArrayDeque, not Stack">
-          Java has a <code>java.util.Stack</code> class. <strong>Don't use it.</strong> It's a legacy JDK 1.0 class
-          that extends Vector (synchronized, slow). Use <code>ArrayDeque&lt;E&gt;</code> as a stack — call
-          <code>push</code>, <code>pop</code>, and <code>peek</code> on it. It's an array-backed deque, faster, and
-          correct. Module 8 explains why.
+          <p>
+            Java has a <code>java.util.Stack</code> class. <strong>Don't use it.</strong> It's a legacy JDK 1.0 class
+            that extends Vector (synchronized, slow).
+          </p>
+          <p>
+            Use <code>ArrayDeque&lt;E&gt;</code> as a stack — call <code>push</code>, <code>pop</code>, and{" "}
+            <code>peek</code> on it. It's an array-backed deque, faster, and correct. Module 8 explains why.
+          </p>
         </Callout>
 
         <h3>Same operations, different costs?</h3>
@@ -284,8 +290,11 @@ public boolean isValid(String s) {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="The recognition cue">
-          If the problem mentions matching, balancing, or nesting — and especially if it gives you a string with
-          symbols that pair up — reach for a stack before you reach for anything else. You will almost never regret it.
+          <p>
+            If the problem mentions matching, balancing, or nesting — and especially if it gives you a string with
+            symbols that pair up — reach for a stack before you reach for anything else.
+          </p>
+          <p>You will almost never regret it.</p>
         </Callout>
 
         <h3>Pattern 2 · Postfix / RPN evaluation</h3>
@@ -312,8 +321,11 @@ public int evalRPN(String[] tokens) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Operand order matters">
-          When you pop two operands, the <em>second</em> pop is the left operand. Hence <code>a - b</code>, not
-          <code>b - a</code>. Get this backwards once, suffer for an afternoon.
+          <p>
+            When you pop two operands, the <em>second</em> pop is the left operand. Hence <code>a - b</code>, not{" "}
+            <code>b - a</code>.
+          </p>
+          <p>Get this backwards once, suffer for an afternoon.</p>
         </Callout>
 
         <h3>Pattern 3 · Monotonic stack (the unlock pattern)</h3>
@@ -349,9 +361,13 @@ public int[] dailyTemperatures(int[] T) {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why monotonic stacks are O(n)">
-          Each index is pushed exactly once and popped at most once. So the total work across the whole loop is O(n),
-          even though the inner <code>while</code> can pop many indices in a single iteration. This amortized argument is
-          the same shape as ArrayList's doubling — different mechanism, same idea.
+          <p>
+            Each index is pushed exactly once and popped at most once. So the total work across the whole loop is
+            O(n), even though the inner <code>while</code> can pop many indices in a single iteration.
+          </p>
+          <p>
+            This amortized argument is the same shape as ArrayList's doubling — different mechanism, same idea.
+          </p>
         </Callout>
 
         <Quiz
@@ -412,9 +428,11 @@ public int[] dailyTemperatures(int[] T) {
         />
 
         <Callout variant="warn" title="Recursion vs explicit stack — pick consciously">
-          For small, balanced inputs: recursion reads more clearly. For deep inputs you don't trust (parser on user
-          input, tree from the network, graph with adversarial depth): use an explicit <code>ArrayDeque</code>. The
-          rewrite is mechanical.
+          <p>For small, balanced inputs: recursion reads more clearly.</p>
+          <p>
+            For deep inputs you don't trust (parser on user input, tree from the network, graph with adversarial
+            depth): use an explicit <code>ArrayDeque</code>. The rewrite is mechanical.
+          </p>
         </Callout>
       </section>
       </Checkpoint>
@@ -513,8 +531,11 @@ public class MinStack {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why the parallel min stack works">
-          Whatever was the min when you pushed x is still the min after you pop x — because you popped the same epoch
-          of the stack on both. So the two stacks march in lockstep, and getMin is just a peek.
+          <p>
+            Whatever was the min when you pushed x is still the min after you pop x — because you popped the same
+            epoch of the stack on both.
+          </p>
+          <p>So the two stacks march in lockstep, and getMin is just a peek.</p>
         </Callout>
 
         <h3>Step 5 · LeetCode 739 — Daily Temperatures</h3>

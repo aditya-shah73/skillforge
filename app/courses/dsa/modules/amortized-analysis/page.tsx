@@ -89,10 +89,10 @@ flowchart LR
           kind="Gut check"
           question={"You linearly search a 1,000-element array for some value x. The Big-O is...?"}
           options={[
-            { label: "O(n) — always.", explanation: "We say O(n), but that&apos;s only the worst case. If x is at index 0, the algorithm finishes after one comparison — O(1)." },
+            { label: "O(n) — always.", explanation: "We say O(n), but that's only the worst case. If x is at index 0, the algorithm finishes after one comparison — O(1)." },
             { label: "O(1) on the best run, O(n) on the worst run.", correct: true, explanation: "Right. Same algorithm, three different Big-O answers depending on input — best, average, and worst. We usually quote worst, but the others are real and matter." },
-            { label: "O(log n) — modern Java optimizes this.", explanation: "There&apos;s no halving here, and the JIT doesn&apos;t change asymptotic shape. Linear search is linear." },
-            { label: "Unanswerable without the input.", explanation: "Closer, but we CAN answer it — three answers, one per case (best/avg/worst). That&apos;s the whole point of the three-case framework." },
+            { label: "O(log n) — modern Java optimizes this.", explanation: "There's no halving here, and the JIT doesn't change asymptotic shape. Linear search is linear." },
+            { label: "Unanswerable without the input.", explanation: "Closer, but we CAN answer it — three answers, one per case (best/avg/worst). That's the whole point of the three-case framework." },
           ]}
         />
 
@@ -132,9 +132,9 @@ flowchart LR
           title="Part 1 recap"
           gist="Big-O isn't one answer per algorithm. It's three — best, average, worst — and we usually quote the worst."
           points={[
-            { takeaway: "Best/average/worst describe how an algorithm behaves on different INPUTS, not how it changes over time.", detail: "Linear search is the canonical example: O(1) if the target is first, O(n) if it&apos;s last, O(n) on average. All three are properties of the same algorithm." },
-            { takeaway: "Worst case is the default. It&apos;s the only one that makes a guarantee.", detail: "If someone says 'this is O(n²)' without qualifying, they almost always mean worst case. It&apos;s the SLA you can promise." },
-            { takeaway: "Average case requires a probability model — 'typical' inputs. Best case is usually a curiosity.", detail: "The honest answer to 'how fast on average?' depends on what you assume the inputs look like. That&apos;s why interviewers usually ask for worst." },
+            { takeaway: "Best/average/worst describe how an algorithm behaves on different INPUTS, not how it changes over time.", detail: "Linear search is the canonical example: O(1) if the target is first, O(n) if it's last, O(n) on average. All three are properties of the same algorithm." },
+            { takeaway: "Worst case is the default. It's the only one that makes a guarantee.", detail: "If someone says 'this is O(n²)' without qualifying, they almost always mean worst case. It's the SLA you can promise." },
+            { takeaway: "Average case requires a probability model — 'typical' inputs. Best case is usually a curiosity.", detail: "The honest answer to 'how fast on average?' depends on what you assume the inputs look like. That's why interviewers usually ask for worst." },
           ]}
         />
       </section>
@@ -234,9 +234,9 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
           kind="Quick check"
           question={"What's the BEST-case time of bubble sort with an early-exit (skip the next pass if no swaps happened)?\n\nvoid bubbleSort(int[] arr) {\n    for (int i = 0; i < arr.length; i++) {\n        boolean swapped = false;\n        for (int j = 0; j < arr.length - 1 - i; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int tmp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = tmp;\n                swapped = true;\n            }\n        }\n        if (!swapped) return;\n    }\n}"}
           options={[
-            { label: "O(n²) — bubble sort is always n².", explanation: "That&apos;s the worst case. With early-exit, the BEST case is much better." },
+            { label: "O(n²) — bubble sort is always n².", explanation: "That's the worst case. With early-exit, the BEST case is much better." },
             { label: "O(n)", correct: true, explanation: "Right. On already-sorted input, the inner loop does n - 1 comparisons, sets no swaps, and we return early. One outer pass, O(n) work." },
-            { label: "O(log n)", explanation: "There&apos;s no halving here. Best case is one full pass — that&apos;s n, not log n." },
+            { label: "O(log n)", explanation: "There's no halving here. Best case is one full pass — that's n, not log n." },
             { label: "O(1)", explanation: "We still have to verify the array is sorted — that requires reading every element. Best case is O(n), not constant." },
           ]}
         />
@@ -245,9 +245,9 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
           kind="Quick check"
           question="Quicksort's worst case is O(n²) — but it's the GO-TO sort in most standard libraries. Why?"
           options={[
-            { label: "Because the worst case rarely happens with good pivot choice.", correct: true, explanation: "Right. Quicksort&apos;s AVERAGE case is O(n log n), and the constants are smaller than merge sort. With randomized or median-of-three pivots, the worst case is statistically unreachable. So we use it — and accept the trade-off." },
-            { label: "Because Java optimizes it.", explanation: "Java doesn&apos;t change asymptotic complexity. The reason is structural: average case dominates real performance, and quicksort&apos;s average is excellent." },
-            { label: "Because it&apos;s O(1) memory.", explanation: "Quicksort is O(log n) auxiliary stack space — not O(1). And merge sort is O(n) — yes, that&apos;s a real factor, but not the main reason." },
+            { label: "Because the worst case rarely happens with good pivot choice.", correct: true, explanation: "Right. Quicksort's AVERAGE case is O(n log n), and the constants are smaller than merge sort. With randomized or median-of-three pivots, the worst case is statistically unreachable. So we use it — and accept the trade-off." },
+            { label: "Because Java optimizes it.", explanation: "Java doesn't change asymptotic complexity. The reason is structural: average case dominates real performance, and quicksort's average is excellent." },
+            { label: "Because it's O(1) memory.", explanation: "Quicksort is O(log n) auxiliary stack space — not O(1). And merge sort is O(n) — yes, that's a real factor, but not the main reason." },
             { label: "Because nobody cares about big inputs.", explanation: "Standard libraries care about big inputs more than anyone. The reason is average-case performance." },
           ]}
         />
@@ -256,7 +256,7 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
           title="Part 2 recap"
           gist="Three cases: best (the dream), average (typical), worst (the guarantee). They can be wildly different."
           points={[
-            { takeaway: "Insertion sort: O(n) best, O(n²) average and worst. The best case is why it ships in standard libraries.", detail: "Already-sorted input runs in linear time. That&apos;s why hybrid sorts like Java&apos;s Arrays.sort use insertion sort on small partitions — those are often nearly sorted, and the constants are tiny." },
+            { takeaway: "Insertion sort: O(n) best, O(n²) average and worst. The best case is why it ships in standard libraries.", detail: "Already-sorted input runs in linear time. That's why hybrid sorts like Java's Arrays.sort use insertion sort on small partitions — those are often nearly sorted, and the constants are tiny." },
             { takeaway: "HashMap: O(1) best and average, O(n) worst. Average is what we quote because worst is statistically unreachable.", detail: "All-keys-collide is a worst case so unlikely with good hash functions that quoting it is misleading. We say 'O(1)' and add the asterisk on demand." },
             { takeaway: "Quicksort: O(n log n) best and average, O(n²) worst. Used everywhere because average case dominates real workloads.", detail: "With randomized pivots, the worst case is statistically near-impossible. The smaller constants and lower space cost beat merge sort in practice." },
           ]}
@@ -387,9 +387,9 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           question="If ArrayList resized by adding 100 each time instead of doubling, what would the amortized cost of add() be?"
           options={[
             { label: "Still O(1) — resizing is rare.", explanation: "Not rare enough! Resize happens every 100 adds, and each resize copies n elements. Total work grows like n²." },
-            { label: "O(n)", correct: true, explanation: "Right. Arithmetic growth means resize-copy work sums to ~n²/200 (resizes happen at sizes 100, 200, ..., n, copying that many each time). Divided by n = ~n/200 = O(n) per add. Doubling is what makes the geometric series collapse — arithmetic growth doesn&apos;t." },
-            { label: "O(log n)", explanation: "log n shows up when something halves. Here we&apos;re adding a fixed amount, not halving anything." },
-            { label: "O(n²)", explanation: "We&apos;re asking about cost PER add, not total. Total is O(n²); per add is O(n)." },
+            { label: "O(n)", correct: true, explanation: "Right. Arithmetic growth means resize-copy work sums to ~n²/200 (resizes happen at sizes 100, 200, ..., n, copying that many each time). Divided by n = ~n/200 = O(n) per add. Doubling is what makes the geometric series collapse — arithmetic growth doesn't." },
+            { label: "O(log n)", explanation: "log n shows up when something halves. Here we're adding a fixed amount, not halving anything." },
+            { label: "O(n²)", explanation: "We're asking about cost PER add, not total. Total is O(n²); per add is O(n)." },
           ]}
         />
 
@@ -398,9 +398,9 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           question="Which statement about amortized O(1) is TRUE?"
           options={[
             { label: "Every call is O(1).", explanation: "Not every call! Some calls trigger an O(n) resize. Amortized is the AVERAGE over n calls, not a guarantee on each one." },
-            { label: "The total work over n calls is O(n).", correct: true, explanation: "Right. That&apos;s the definition of amortized O(1) — n operations cost O(n) total, so on average each one cost O(1). Individual calls can spike." },
+            { label: "The total work over n calls is O(n).", correct: true, explanation: "Right. That's the definition of amortized O(1) — n operations cost O(n) total, so on average each one cost O(1). Individual calls can spike." },
             { label: "Worst case is O(1).", explanation: "Worst case for ArrayList.add is O(n) — the resize-and-copy. Amortized is a different number that talks about averages over a sequence." },
-            { label: "It&apos;s the same as 'average case.'", explanation: "Different concept. Average case is across inputs; amortized is across a sequence of operations on one data structure." },
+            { label: "It's the same as 'average case.'", explanation: "Different concept. Average case is across inputs; amortized is across a sequence of operations on one data structure." },
           ]}
         />
 
@@ -408,8 +408,8 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           kind="Quick check"
           question={"You make 1,000,000 add() calls to an empty ArrayList. Approximately how many element-COPIES (not new writes) happen across all the resizes combined?"}
           options={[
-            { label: "About 1,000,000.", correct: true, explanation: "Right. Resizes copy 1 + 2 + 4 + 8 + … + 524,288 ≈ 1,048,575 ≈ n elements total. The geometric sum 2^0 + 2^1 + ... + 2^(k-1) collapses to 2^k − 1, which is ≈ n. That&apos;s why amortized works — total copies stay linear in n." },
-            { label: "About 2,000,000.", explanation: "A common slip: people double the answer thinking the geometric sum is ~2n. It&apos;s not — sum of 2^0 + ... + 2^(k-1) = 2^k − 1 ≈ n, not 2n. Off by a factor of 2." },
+            { label: "About 1,000,000.", correct: true, explanation: "Right. Resizes copy 1 + 2 + 4 + 8 + … + 524,288 ≈ 1,048,575 ≈ n elements total. The geometric sum 2^0 + 2^1 + ... + 2^(k-1) collapses to 2^k − 1, which is ≈ n. That's why amortized works — total copies stay linear in n." },
+            { label: "About 2,000,000.", explanation: "A common slip: people double the answer thinking the geometric sum is ~2n. It's not — sum of 2^0 + ... + 2^(k-1) = 2^k − 1 ≈ n, not 2n. Off by a factor of 2." },
             { label: "About log₂(1,000,000) ≈ 20.", explanation: "There are ~20 resize EVENTS, but each one copies more elements than the last. Total copies sum to ~n, not the count of events." },
             { label: "About 1,000,000² = 10¹²", explanation: "If we resized constantly that would happen, but doubling means resize events are exponentially spaced." },
           ]}
@@ -494,7 +494,7 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
             { id: "stack-peek", label: "ArrayDeque.peek()", answer: "constant", explanation: "Just reads the head/tail slot. No resize, no allocation, true O(1)." },
             { id: "linear-search", label: "Linear search of an unsorted int[]", answer: "worst-on", explanation: "Worst case the target is at the end (or absent) — n comparisons. No amortization story." },
             { id: "list-contains", label: "ArrayList.contains(x) — linear scan", answer: "worst-on", explanation: "Same as linear search — every call is O(n) worst case, no clever amortization." },
-            { id: "hash-resize-call", label: "The single HashMap.put call that triggers a rehash", answer: "worst-on", explanation: "Looking at one specific call, not the average — that single put copies n entries, so it&apos;s O(n)." },
+            { id: "hash-resize-call", label: "The single HashMap.put call that triggers a rehash", answer: "worst-on", explanation: "Looking at one specific call, not the average — that single put copies n entries, so it's O(n)." },
             { id: "hash-get-typical", label: "HashMap.get(k) for an existing key", answer: "constant", explanation: "get() never resizes. Hash to bucket, follow short chain. True O(1) on average." },
             { id: "arr-add-no-resize", label: "ArrayList.add(x) when capacity has slack", answer: "constant", explanation: "If you pre-sized the list, every add is genuinely O(1) — no resize possible." },
           ]}
@@ -508,8 +508,8 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           options={[
             { label: "O(n²) — each insert is O(n) worst case, n inserts = n².", explanation: "Worst case is technically O(n) per put, but the rehashes are rare. Amortized analysis tells us the total work is O(n)." },
             { label: "O(n) — amortized O(1) per put × n puts.", correct: true, explanation: "Right. Even though some puts trigger an O(n) rehash, the amortized cost is O(1) per put. n puts total = O(n) work overall." },
-            { label: "O(n log n).", explanation: "log n would show up if HashMap did logarithmic work per put — but it doesn&apos;t. Amortized is O(1)." },
-            { label: "O(1).", explanation: "n puts can&apos;t be O(1) total — that&apos;d be sublinear in n. We mean O(1) PER put, but n puts total is O(n)." },
+            { label: "O(n log n).", explanation: "log n would show up if HashMap did logarithmic work per put — but it doesn't. Amortized is O(1)." },
+            { label: "O(1).", explanation: "n puts can't be O(1) total — that'd be sublinear in n. We mean O(1) PER put, but n puts total is O(n)." },
           ]}
         />
 
@@ -517,10 +517,10 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           kind="Quick check"
           question={"You're benchmarking a service with strict P99 latency targets. Should you use ArrayList or LinkedList for an append-heavy workload?"}
           options={[
-            { label: "ArrayList — amortized O(1) is faster than LinkedList&apos;s actual O(1).", explanation: "True for throughput, but at the P99 you&apos;ll see the resize spikes. P99 doesn&apos;t care about averages." },
-            { label: "LinkedList — its append is genuinely O(1) per call, no spikes.", correct: true, explanation: "Right. For P99-sensitive code, predictable per-operation cost beats slightly-better average. LinkedList&apos;s append is true O(1), every call. ArrayList&apos;s append is amortized O(1) but spikes when it resizes." },
-            { label: "Either — the JIT will fix it.", explanation: "The JIT does great work, but it doesn&apos;t turn an O(n) array copy into O(1)." },
-            { label: "Neither — use a HashMap.", explanation: "HashMap has the same amortized-vs-worst issue (rehashes). Doesn&apos;t solve the latency problem." },
+            { label: "ArrayList — amortized O(1) is faster than LinkedList's actual O(1).", explanation: "True for throughput, but at the P99 you'll see the resize spikes. P99 doesn't care about averages." },
+            { label: "LinkedList — its append is genuinely O(1) per call, no spikes.", correct: true, explanation: "Right. For P99-sensitive code, predictable per-operation cost beats slightly-better average. LinkedList's append is true O(1), every call. ArrayList's append is amortized O(1) but spikes when it resizes." },
+            { label: "Either — the JIT will fix it.", explanation: "The JIT does great work, but it doesn't turn an O(n) array copy into O(1)." },
+            { label: "Neither — use a HashMap.", explanation: "HashMap has the same amortized-vs-worst issue (rehashes). Doesn't solve the latency problem." },
           ]}
         />
 
@@ -528,7 +528,7 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           title="Part 4 recap"
           gist="Amortized O(1) shows up everywhere. Most of the time it's the right number — but not always."
           points={[
-            { takeaway: "ArrayList, HashMap, ArrayDeque, StringBuilder, splay trees, union-find — all amortized.", detail: "If a data structure has a 'rare expensive resize/rebalance,' it&apos;s probably running amortized analysis. The pattern is: cheap most of the time, expensive occasionally, stays cheap on average." },
+            { takeaway: "ArrayList, HashMap, ArrayDeque, StringBuilder, splay trees, union-find — all amortized.", detail: "If a data structure has a 'rare expensive resize/rebalance,' it's probably running amortized analysis. The pattern is: cheap most of the time, expensive occasionally, stays cheap on average." },
             { takeaway: "Geometric growth (2× or 1.5×) is what makes amortized O(1) work for dynamic arrays.", detail: "Arithmetic growth (+constant each time) breaks the math. The resize cost has to be exponentially spaced, not arithmetic." },
             { takeaway: "Amortized is the wrong number when the worst-case spike itself is the problem.", detail: "Real-time systems, P99 latency targets, GC-sensitive paths — these care about the spikes, not the average. Pre-size your structures or pick true-O(1) alternatives." },
           ]}
@@ -721,7 +721,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
             { label: "O(1) — give them the best news.", explanation: "Best case is the daydream. Quoting it without context is misleading." },
             { label: "O(n²) and stop there.", explanation: "Worst case is the right starting answer, but you should signal that you know the others. 'O(n²) worst case, O(n) average' is a stronger answer." },
             { label: "Lead with worst, mention the others if relevant.", correct: true, explanation: "Right. 'O(n²) worst case' is the conservative answer. Then optionally add 'O(n) on average' or 'O(1) on already-sorted input.' That signals you understand all three." },
-            { label: "Average — that&apos;s what users experience.", explanation: "Closer for some questions, but 'average' depends on the input distribution. Worst case is the safer default unless the interviewer specifies." },
+            { label: "Average — that's what users experience.", explanation: "Closer for some questions, but 'average' depends on the input distribution. Worst case is the safer default unless the interviewer specifies." },
           ]}
         />
 
@@ -729,10 +729,10 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           kind="Final"
           question="Which of these is genuinely amortized O(1) — not just 'usually fast'?"
           options={[
-            { label: "Linear search of an array.", explanation: "Linear search has no amortization story — it&apos;s O(n) worst, O(n) average, every call independent." },
+            { label: "Linear search of an array.", explanation: "Linear search has no amortization story — it's O(n) worst, O(n) average, every call independent." },
             { label: "ArrayList.add at the end (no index given).", correct: true, explanation: "Right. This is THE canonical amortized O(1). Most adds are O(1); the rare resize is O(n); the average over n adds is O(1) because of geometric growth." },
-            { label: "ArrayList.add(0, x) — inserting at the beginning.", explanation: "That&apos;s O(n) every call — every existing element shifts right. No amortization helps." },
-            { label: "ArrayList.contains(x).", explanation: "That&apos;s a linear scan — O(n) worst case, no amortization." },
+            { label: "ArrayList.add(0, x) — inserting at the beginning.", explanation: "That's O(n) every call — every existing element shifts right. No amortization helps." },
+            { label: "ArrayList.contains(x).", explanation: "That's a linear scan — O(n) worst case, no amortization." },
           ]}
         />
 
@@ -742,7 +742,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           options={[
             { label: "Every individual call is O(1).", explanation: "False — that would be 'true O(1).' Amortized allows individual spikes." },
             { label: "The total cost of n calls is O(n), so per-call cost is O(1) on average.", correct: true, explanation: "Right. Amortized is a property of a SEQUENCE: n operations cost O(n) total, so average cost per op = O(1). Individual operations can still be O(n)." },
-            { label: "It&apos;s the same as average case.", explanation: "Different. Average case averages over INPUTS; amortized averages over a sequence of OPERATIONS on one data structure." },
+            { label: "It's the same as average case.", explanation: "Different. Average case averages over INPUTS; amortized averages over a sequence of OPERATIONS on one data structure." },
             { label: "It only applies to arrays.", explanation: "Amortization applies to many data structures — HashMap rehashes, splay trees, union-find with path compression, stacks with multipop, etc." },
           ]}
         />
@@ -752,7 +752,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           question={"For HashMap.put with a good hash function, what's the BEST way to characterize its time complexity?"}
           options={[
             { label: "O(1) — full stop.", explanation: "Misleading without an asterisk. The worst case (rehash, or all-collisions) is O(n)." },
-            { label: "O(n) — that&apos;s the worst case.", explanation: "Technically true but pessimistic — in practice we say O(1) because the worst case is statistically near-impossible with good hashing." },
+            { label: "O(n) — that's the worst case.", explanation: "Technically true but pessimistic — in practice we say O(1) because the worst case is statistically near-impossible with good hashing." },
             { label: "Amortized O(1), worst case O(n).", correct: true, explanation: "Right. Amortized O(1) per put (handles the rehash) AND we acknowledge the all-collisions worst case. This is the answer that signals you understand both." },
             { label: "It depends on the JVM.", explanation: "JVM details matter for constants, but the asymptotic answer is the same on every implementation." },
           ]}
@@ -762,7 +762,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           kind="Final"
           question={"You're shipping a real-time system with strict P99 latency. Which growth strategy for a dynamic buffer is best?"}
           options={[
-            { label: "Geometric (2×) — best amortized cost.", explanation: "Best amortized cost, but those rare resizes are exactly what kills your P99. The amortized math doesn&apos;t help when each individual resize is the problem." },
+            { label: "Geometric (2×) — best amortized cost.", explanation: "Best amortized cost, but those rare resizes are exactly what kills your P99. The amortized math doesn't help when each individual resize is the problem." },
             { label: "Pre-size to the maximum expected capacity, then never resize.", correct: true, explanation: "Right. P99-sensitive systems need predictable per-op cost. Pre-sizing eliminates resize spikes entirely. You pay upfront in memory; you never pay in latency." },
             { label: "Arithmetic (+10 each time) — smaller spikes.", explanation: "Smaller spikes individually, but MUCH more frequent — and the total work is O(n²). Worst of both worlds." },
             { label: "Use a LinkedList — every append is true O(1).", explanation: "True O(1) per append is right, but LinkedList has worse cache behavior and more allocation. Pre-sized array is usually a better answer if max size is known." },
@@ -773,10 +773,10 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           kind="Final"
           question="Which of these statements is FALSE?"
           options={[
-            { label: "An algorithm&apos;s best, average, and worst case can all be different growth classes.", explanation: "True — quicksort is best/avg O(n log n) but worst O(n²). Insertion sort is best O(n) but avg/worst O(n²)." },
+            { label: "An algorithm's best, average, and worst case can all be different growth classes.", explanation: "True — quicksort is best/avg O(n log n) but worst O(n²). Insertion sort is best O(n) but avg/worst O(n²)." },
             { label: "Amortized analysis only matters for data structures, not for one-shot algorithms.", explanation: "True. Amortized is about a sequence of operations on the same structure — irrelevant to a single sort or search." },
-            { label: "Geometric growth (2×) is required for amortized O(1) on dynamic arrays.", explanation: "True — any constant factor &gt; 1 (1.5×, 2×) works. Strictly arithmetic growth breaks it." },
-            { label: "Amortized O(1) means worst-case O(1).", correct: true, explanation: "FALSE — this is the one. Amortized O(1) is compatible with worst-case O(n). The whole point is to give a useful AVERAGE when individual operations spike. If worst case were already O(1), we wouldn&apos;t need amortization." },
+            { label: "Geometric growth (2×) is required for amortized O(1) on dynamic arrays.", explanation: "True — any constant factor > 1 (1.5×, 2×) works. Strictly arithmetic growth breaks it." },
+            { label: "Amortized O(1) means worst-case O(1).", correct: true, explanation: "FALSE — this is the one. Amortized O(1) is compatible with worst-case O(n). The whole point is to give a useful AVERAGE when individual operations spike. If worst case were already O(1), we wouldn't need amortization." },
           ]}
         />
 

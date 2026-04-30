@@ -264,8 +264,8 @@ flowchart LR
         root.right = delete(root.right, key);
     } else {
         // Found the target.
-        if (root.left == null) return root.right;     // case 1 or 2
-        if (root.right == null) return root.left;     // case 2
+        if (root.left == null) return root.right;     // case 1 (leaf) or case 2 (only right child)
+        if (root.right == null) return root.left;     // case 2 (only left child)
 
         // Case 3: two children. Steal value from in-order successor.
         TreeNode succ = root.right;
@@ -289,7 +289,7 @@ flowchart LR
             { title: "Find 8", body: "Start at root (8). It IS the target. So we're in case 3 — 8 has two children (3 and 10)." },
             { title: "Find the in-order successor", body: "Walk to root.right (10), then keep going left until null. 10 has left=9, 9 has no left. Successor is 9." },
             { title: "Copy successor's value into target", body: "Set root.val = 9. The tree now has two 9s, and the BST invariant is temporarily violated for the successor." },
-            { title: "Delete the successor from the right subtree", body: "Recursively delete 9 from root.right. 9 has no left child, so this is case 2: promote 9's right child (none, in this tree). 10's left becomes null. Done." },
+            { title: "Delete the successor from the right subtree", body: "Recursively delete 9 from root.right. 9 has no children at all (leaf), so this is case 1: just unlink it. 10's left becomes null. Done." },
             { title: "The tree is now valid", body: "Root holds 9, the original 9 node is gone, and inorder traversal still produces 1, 3, 4, 6, 7, 9, 10, 14 — sorted, with 8 gone." },
           ]}
         />

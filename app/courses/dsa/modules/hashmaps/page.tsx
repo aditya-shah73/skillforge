@@ -79,13 +79,13 @@ flowchart LR
     A -- "put(k4,v4) trips threshold" --> B
     subgraph B["After: cap=8, all entries rehashed"]
         direction TB
-        B0["[0] —"]
-        B1["[1] (k1,v1)"]
-        B2["[2] —"]
+        B0["[0] (k1,v1)"]
+        B1["[1] —"]
+        B2["[2] (k2,v2)"]
         B3["[3] (k4,v4)"]
         B4["[4] —"]
-        B5["[5] (k3,v3)"]
-        B6["[6] (k2,v2)"]
+        B5["[5] —"]
+        B6["[6] (k3,v3)"]
         B7["[7] —"]
     end
     style A fill:#fef3c7,color:#000,stroke:#d97706
@@ -171,10 +171,15 @@ int v = table[42];       // get(42) → 99`}</CodeBlock>
 int index = h(key) & (capacity - 1);`}</CodeBlock>
 
         <Callout variant="info" title="Why power-of-two capacities">
-          When <code>capacity</code> is a power of two, <code>x % capacity</code> equals <code>x &amp; (capacity - 1)</code>.
-          Bitwise AND is faster than modulo, which is why Java&apos;s <code>HashMap</code> always rounds capacity up to
-          a power of two. The <code>0x7fffffff</code> mask in the modulo version strips the sign bit so the index
-          is non-negative — a quirk of Java&apos;s signed-integer hash codes.
+          <p>
+            When <code>capacity</code> is a power of two, <code>x % capacity</code> equals <code>x &amp; (capacity - 1)</code>.
+            Bitwise AND is faster than modulo, which is why Java&apos;s <code>HashMap</code> always rounds capacity up to
+            a power of two.
+          </p>
+          <p>
+            The <code>0x7fffffff</code> mask in the modulo version strips the sign bit so the index
+            is non-negative — a quirk of Java&apos;s signed-integer hash codes.
+          </p>
         </Callout>
 
         <h3>What makes a hash function &quot;good&quot;</h3>
@@ -245,11 +250,16 @@ V get(K key) {
         </p>
 
         <Callout variant="info" title="Open addressing — the alternative">
-          Instead of chains, open addressing stores entries directly in the array and probes (linear, quadratic,
-          double-hashing) for the next free slot when the target is taken. It has better cache behavior (no pointer
-          chasing) but suffers from <em>clustering</em> and is fiddlier to delete from. Python&apos;s <code>dict</code>{" "}
-          and Go&apos;s <code>map</code> use variants of open addressing. Java&apos;s <code>HashMap</code> uses
-          chaining. Both are O(1) average. We&apos;ll focus on chaining since that&apos;s what you&apos;ll meet in Java.
+          <p>
+            Instead of chains, open addressing stores entries directly in the array and probes (linear, quadratic,
+            double-hashing) for the next free slot when the target is taken. It has better cache behavior (no pointer
+            chasing) but suffers from <em>clustering</em> and is fiddlier to delete from.
+          </p>
+          <p>
+            Python&apos;s <code>dict</code> and Go&apos;s <code>map</code> use variants of open addressing. Java&apos;s{" "}
+            <code>HashMap</code> uses chaining. Both are O(1) average. We&apos;ll focus on chaining since that&apos;s
+            what you&apos;ll meet in Java.
+          </p>
         </Callout>
 
         <h3>Why load factor matters</h3>
@@ -357,10 +367,14 @@ static final int MIN_TREEIFY_CAPACITY = 64;           // resize first if smaller
         </p>
 
         <Callout variant="info" title="You'll never see treeification fire on real data">
-          With a decent <code>hashCode</code> and a load factor of 0.75, the probability of any chain reaching 8 is
-          astronomically small (a Poisson tail — the JDK source comments quote ~1 in 100 million). Treeification
-          is a safety net for adversarial input, not a normal-mode performance feature. If your map is treeifying,
-          either your <code>hashCode</code> is broken or someone is attacking you.
+          <p>
+            With a decent <code>hashCode</code> and a load factor of 0.75, the probability of any chain reaching 8 is
+            astronomically small (a Poisson tail — the JDK source comments quote ~1 in 100 million).
+          </p>
+          <p>
+            Treeification is a safety net for adversarial input, not a normal-mode performance feature. If your map
+            is treeifying, either your <code>hashCode</code> is broken or someone is attacking you.
+          </p>
         </Callout>
 
         <h3>Resize, in detail</h3>
@@ -447,9 +461,13 @@ String s = labels.get(new Point(1, 2));   // → null !`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="The fix is one line">
-          Java has <code>Objects.hash(...)</code> which combines a tuple of fields into a hash. Or use a record:
-          records auto-generate <code>equals</code>, <code>hashCode</code>, and <code>toString</code> from the
-          components. <code>record Point(int x, int y) {}</code> gets it right by default.
+          <p>
+            Java has <code>Objects.hash(...)</code> which combines a tuple of fields into a hash.
+          </p>
+          <p>
+            Or use a record: records auto-generate <code>equals</code>, <code>hashCode</code>, and <code>toString</code>{" "}
+            from the components. <code>record Point(int x, int y) {}</code> gets it right by default.
+          </p>
         </Callout>
 
         <h3>Mutable keys — the second silent disaster</h3>
@@ -487,9 +505,14 @@ public int hashCode() {
         </p>
 
         <Callout variant="warn" title="Don't get cute">
-          <code>hashCode</code> just needs to be fast, deterministic, and reasonably uniform. It does <strong>not</strong>{" "}
-          need to be cryptographic. Don&apos;t reach for SHA-256. <code>Objects.hash(...)</code> is right 95% of the
-          time. Profile before optimizing.
+          <p>
+            <code>hashCode</code> just needs to be fast, deterministic, and reasonably uniform. It does{" "}
+            <strong>not</strong> need to be cryptographic.
+          </p>
+          <p>
+            Don&apos;t reach for SHA-256. <code>Objects.hash(...)</code> is right 95% of the time. Profile before
+            optimizing.
+          </p>
         </Callout>
 
         <h3>Why all of this lives in this module</h3>
@@ -671,9 +694,13 @@ public int hashCode() {
         </ol>
 
         <Callout variant="insight" title="What to take away">
-          The pattern across all three is the same: <em>can I rephrase this as &quot;have I seen X before?&quot;</em>{" "}
-          If yes, a hash table makes it O(n). Whenever you catch yourself doing a nested loop over the same array,
-          try that rephrasing first.
+          <p>
+            The pattern across all three is the same: <em>can I rephrase this as &quot;have I seen X before?&quot;</em>{" "}
+            If yes, a hash table makes it O(n).
+          </p>
+          <p>
+            Whenever you catch yourself doing a nested loop over the same array, try that rephrasing first.
+          </p>
         </Callout>
       </section>
       </Checkpoint>

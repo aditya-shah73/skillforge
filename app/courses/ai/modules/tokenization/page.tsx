@@ -199,7 +199,7 @@ flowchart TD
         </p>
 
         <Callout variant="warn" title="Real production impact">
-          If your app serves users in multiple languages, a Japanese or Hindi user costs you 2-3x what an English user costs — even for the same message. Plan your pricing accordingly.
+          <p className="m-0">If your app serves users in multiple languages, a Japanese or Hindi user costs you 2-3x what an English user costs — even for the same message. Plan your pricing accordingly.</p>
         </Callout>
 
         <Quiz

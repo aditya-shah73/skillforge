@@ -544,9 +544,9 @@ PriorityQueue<String> p = new PriorityQueue<>(
           title="The top-K mental model"
           gist="A heap is a partial sort. When you need the extreme few out of many, a bounded heap of size K does in O(N log K) what a full sort would do in O(N log N)."
           points={[
-            { takeaway: "&quot;K out of N where K is small&quot; → bounded heap.", detail: "Top-K largest → min-heap of size K. Top-K smallest → max-heap of size K. The heap holds the survivors; the root is the eviction candidate." },
-            { takeaway: "&quot;Always smallest/largest from a changing set&quot; → unbounded heap.", detail: "Event scheduler, Dijkstra, merge K sorted lists. The heap holds the entire candidate set, and you keep polling and offering as the world evolves." },
-            { takeaway: "&quot;Median of a stream&quot; → two heaps.", detail: "Max-heap for the lower half, min-heap for the upper half. Balance their sizes after each insert; median is at one or both roots." },
+            { takeaway: "\"K out of N where K is small\" → bounded heap.", detail: "Top-K largest → min-heap of size K. Top-K smallest → max-heap of size K. The heap holds the survivors; the root is the eviction candidate." },
+            { takeaway: "\"Always smallest/largest from a changing set\" → unbounded heap.", detail: "Event scheduler, Dijkstra, merge K sorted lists. The heap holds the entire candidate set, and you keep polling and offering as the world evolves." },
+            { takeaway: "\"Median of a stream\" → two heaps.", detail: "Max-heap for the lower half, min-heap for the upper half. Balance their sizes after each insert; median is at one or both roots." },
             { takeaway: "Frequency-then-heap is one of the most common patterns in interviews.", detail: "HashMap counts, heap selects the top K. LC 347 is the canonical example, but variations include 'most common word', 'longest streak', 'most frequent character'." },
             { takeaway: "Watch for the bucket-sort escape hatch.", detail: "When the priority key is a small integer (frequency, age, score in [0, 100]), bucket sort beats heap. Mention it if asked for a better-than-O(n log k) approach." },
           ]}

@@ -258,7 +258,7 @@ class ArrayList<E> {
               ),
             },
             {
-              title: "add(&apos;a&apos;) — slot free, just write",
+              title: "add('a') — slot free, just write",
               body: (
                 <>
                   <p>
@@ -268,7 +268,7 @@ class ArrayList<E> {
               ),
             },
             {
-              title: "add(&apos;b&apos;) — full, must resize",
+              title: "add('b') — full, must resize",
               body: (
                 <>
                   <p>
@@ -281,7 +281,7 @@ class ArrayList<E> {
               ),
             },
             {
-              title: "add(&apos;c&apos;) — full again, resize to 4",
+              title: "add('c') — full again, resize to 4",
               body: (
                 <>
                   <p>
@@ -294,7 +294,7 @@ class ArrayList<E> {
               ),
             },
             {
-              title: "add(&apos;d&apos;) — slot free, just write",
+              title: "add('d') — slot free, just write",
               body: (
                 <>
                   <p>
@@ -304,7 +304,7 @@ class ArrayList<E> {
               ),
             },
             {
-              title: "add(&apos;e&apos;) — full, resize to 8",
+              title: "add('e') — full, resize to 8",
               body: (
                 <>
                   <p>

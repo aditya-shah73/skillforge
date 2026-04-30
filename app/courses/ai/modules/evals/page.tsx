@@ -60,10 +60,12 @@ export default function EvalsModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Modules 9–13 (the API + Spring AI surface) and Module 11 (tool use). The capstone in
-        Module 17 (RAG end-to-end) is what we&apos;ll be evaluating, so revisiting the
-        architecture there will make the examples concrete. Module 22 (agents in Spring) is
-        useful background — agent outputs are notoriously hard to eval, so we touch on that.
+        <p className="m-0">
+          Modules 9–13 (the API + Spring AI surface) and Module 11 (tool use). The capstone in
+          Module 17 (RAG end-to-end) is what we&apos;ll be evaluating, so revisiting the
+          architecture there will make the examples concrete. Module 22 (agents in Spring) is
+          useful background — agent outputs are notoriously hard to eval, so we touch on that.
+        </p>
       </Callout>
 
       {/* ============================================================== */}
@@ -119,9 +121,11 @@ export default function EvalsModule() {
       </p>
 
       <Callout variant="insight" title="The mental model">
-        Evals are unit tests where the assertion is fuzzy. Instead of <code>output == expected</code>,
-        the assertion is <em>&quot;does this output satisfy a quality bar?&quot;</em> — and that
-        bar is enforced by a rubric, a heuristic, or another LLM acting as judge.
+        <p className="m-0">
+          Evals are unit tests where the assertion is fuzzy. Instead of <code>output == expected</code>,
+          the assertion is <em>&quot;does this output satisfy a quality bar?&quot;</em> — and that
+          bar is enforced by a rubric, a heuristic, or another LLM acting as judge.
+        </p>
       </Callout>
 
       <h3>The eval ladder — cheapest to most expensive</h3>
@@ -163,11 +167,13 @@ export default function EvalsModule() {
       </p>
 
       <Callout variant="warn" title="The vibes-based eval anti-pattern">
-        &quot;I tried 5 prompts in the playground, the third one looked best, ship it.&quot;
-        That&apos;s not an eval — that&apos;s confirmation bias with a stopwatch. You picked
-        the prompt that worked on the inputs you happened to type, which are biased toward
-        whatever you were thinking about that morning. The first eval you build, even with
-        20 cases, is dramatically better than vibes.
+        <p className="m-0">
+          &quot;I tried 5 prompts in the playground, the third one looked best, ship it.&quot;
+          That&apos;s not an eval — that&apos;s confirmation bias with a stopwatch. You picked
+          the prompt that worked on the inputs you happened to type, which are biased toward
+          whatever you were thinking about that morning. The first eval you build, even with
+          20 cases, is dramatically better than vibes.
+        </p>
       </Callout>
 
       <PartRecap
@@ -227,10 +233,12 @@ export default function EvalsModule() {
       </ol>
 
       <Callout variant="warn" title="Golden sets are not training data">
-        Don&apos;t put your golden cases in your few-shot prompt or fine-tuning data. If you
-        do, the model will memorize them and your eval will lie. Keep the eval set
-        physically separate from any data the model has seen during prompt-iteration. This
-        is the LLM equivalent of train/test split discipline.
+        <p className="m-0">
+          Don&apos;t put your golden cases in your few-shot prompt or fine-tuning data. If you
+          do, the model will memorize them and your eval will lie. Keep the eval set
+          physically separate from any data the model has seen during prompt-iteration. This
+          is the LLM equivalent of train/test split discipline.
+        </p>
       </Callout>
 
       <h3>Sizing — how many cases do you need?</h3>
@@ -568,29 +576,37 @@ public class JudgeService {
       <h3>The bias traps everyone hits</h3>
 
       <Callout variant="warn" title="Position bias">
-        If you give the judge two responses to compare (A vs B), it will systematically prefer
-        whichever you list first. Solution: randomize order, or run both directions and
-        average. This is the single most common eval bug.
+        <p className="m-0">
+          If you give the judge two responses to compare (A vs B), it will systematically prefer
+          whichever you list first. Solution: randomize order, or run both directions and
+          average. This is the single most common eval bug.
+        </p>
       </Callout>
 
       <Callout variant="warn" title="Length bias">
-        Judges prefer longer, more verbose responses — even when they&apos;re wrong. If your
-        rubric is open-ended, the judge will score the 200-word answer higher than the
-        50-word answer that&apos;s actually more accurate. Counter with explicit rubric
-        instructions: &quot;Conciseness is preferred unless detail is required.&quot;
+        <p className="m-0">
+          Judges prefer longer, more verbose responses — even when they&apos;re wrong. If your
+          rubric is open-ended, the judge will score the 200-word answer higher than the
+          50-word answer that&apos;s actually more accurate. Counter with explicit rubric
+          instructions: &quot;Conciseness is preferred unless detail is required.&quot;
+        </p>
       </Callout>
 
       <Callout variant="warn" title="Self-preference bias">
-        A model judging its own outputs will rate them higher than outputs from other
-        models. If you&apos;re comparing prompts for the <em>same</em> production model,
-        this washes out. If you&apos;re comparing models, use a third model as judge.
+        <p className="m-0">
+          A model judging its own outputs will rate them higher than outputs from other
+          models. If you&apos;re comparing prompts for the <em>same</em> production model,
+          this washes out. If you&apos;re comparing models, use a third model as judge.
+        </p>
       </Callout>
 
       <Callout variant="warn" title="Calibration drift">
-        Run the same case through the judge twice and you may get a 4 then a 5. Some
-        variance is unavoidable. Mitigate by running the judge with temperature 0,
-        averaging scores across N runs (3 is a sweet spot), or — for high-stakes evals —
-        having two different judge models vote.
+        <p className="m-0">
+          Run the same case through the judge twice and you may get a 4 then a 5. Some
+          variance is unavoidable. Mitigate by running the judge with temperature 0,
+          averaging scores across N runs (3 is a sweet spot), or — for high-stakes evals —
+          having two different judge models vote.
+        </p>
       </Callout>
 
       <h3>Calibrating the judge against humans</h3>
@@ -617,10 +633,12 @@ public class JudgeService {
       </p>
 
       <Callout variant="insight" title="When NOT to use a judge">
-        Don&apos;t use an LLM judge for things you can check deterministically. If the answer
-        should be the number 1969, just check for &quot;1969&quot;. If the answer must be
-        valid JSON, parse it. The judge is for nuance — was the explanation clear? Was the
-        tone right? Did it cite a source? Save the tokens for cases that actually need them.
+        <p className="m-0">
+          Don&apos;t use an LLM judge for things you can check deterministically. If the answer
+          should be the number 1969, just check for &quot;1969&quot;. If the answer must be
+          valid JSON, parse it. The judge is for nuance — was the explanation clear? Was the
+          tone right? Did it cite a source? Save the tokens for cases that actually need them.
+        </p>
       </Callout>
 
       <PartRecap
@@ -788,10 +806,12 @@ jobs:
       </ul>
 
       <Callout variant="info" title="The pre-merge dashboard">
-        The PR comment should show, at minimum: the aggregate score (and delta from main),
-        the p0-case status (every p0 case green), and any cases whose score changed by &gt; 1
-        point (good or bad — improvements are interesting too). A good eval comment makes
-        merge/no-merge a 5-second decision for the reviewer.
+        <p className="m-0">
+          The PR comment should show, at minimum: the aggregate score (and delta from main),
+          the p0-case status (every p0 case green), and any cases whose score changed by &gt; 1
+          point (good or bad — improvements are interesting too). A good eval comment makes
+          merge/no-merge a 5-second decision for the reviewer.
+        </p>
       </Callout>
 
       <PartRecap
@@ -1027,9 +1047,11 @@ class EvalHarnessIT {
 }`}</CodeBlock>
 
       <Callout variant="warn" title="Project warning: cost discipline">
-        A 50-case suite with judge scoring costs roughly $0.10–$0.50 per run depending on
-        models. CI on every commit to main = ~$50/month at 100 commits/day. Watch the
-        path filter and consider a manual-trigger option for non-AI PRs.
+        <p className="m-0">
+          A 50-case suite with judge scoring costs roughly $0.10–$0.50 per run depending on
+          models. CI on every commit to main = ~$50/month at 100 commits/day. Watch the
+          path filter and consider a manual-trigger option for non-AI PRs.
+        </p>
       </Callout>
 
       <h3>Build it</h3>

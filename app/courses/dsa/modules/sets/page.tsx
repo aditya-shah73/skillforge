@@ -121,10 +121,14 @@ seen.size();              // 1`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="Set ≠ Map<K, Boolean> in your code">
-          You <em>can</em> simulate a set with <code>Map&lt;K, Boolean&gt;</code>, but don&apos;t. <code>Set</code>{" "}
-          conveys intent (&quot;I only care about presence&quot;) and gives you set-algebra operations:{" "}
-          <code>retainAll</code> (intersection), <code>addAll</code> (union), <code>removeAll</code> (difference).
-          Use the right type.
+          <p>
+            You <em>can</em> simulate a set with <code>Map&lt;K, Boolean&gt;</code>, but don&apos;t.
+          </p>
+          <p>
+            <code>Set</code> conveys intent (&quot;I only care about presence&quot;) and gives you set-algebra
+            operations: <code>retainAll</code> (intersection), <code>addAll</code> (union), <code>removeAll</code>{" "}
+            (difference). Use the right type.
+          </p>
         </Callout>
 
         <h3>Set algebra, in one slide</h3>
@@ -199,10 +203,15 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
         </ul>
 
         <Callout variant="warn" title="TreeSet wants Comparable elements">
-          If your element type doesn&apos;t implement <code>Comparable</code>, you must pass a <code>Comparator</code>{" "}
-          to the <code>TreeSet</code> constructor. Forget that and you get <code>ClassCastException</code> at the
-          first <code>add</code> — a runtime, not compile-time, failure. (Records implement <code>Comparable</code>{" "}
-          only if you write it; built-in <code>Integer</code>/<code>String</code> already do.)
+          <p>
+            If your element type doesn&apos;t implement <code>Comparable</code>, you must pass a{" "}
+            <code>Comparator</code> to the <code>TreeSet</code> constructor. Forget that and you get{" "}
+            <code>ClassCastException</code> at the first <code>add</code> — a runtime, not compile-time, failure.
+          </p>
+          <p>
+            (Records implement <code>Comparable</code> only if you write it; built-in <code>Integer</code>/
+            <code>String</code> already do.)
+          </p>
         </Callout>
 
         <ClassifyChallenge
@@ -383,11 +392,15 @@ boolean isAnagram(String s, String t) {
         </ol>
 
         <Callout variant="insight" title="Why a Set isn't enough here">
-          You might wonder: if we just want &quot;no repeats&quot;, can&apos;t we use a <code>HashSet</code> instead
-          of a <code>HashMap</code>? Yes — <code>add</code> returns false on duplicate. But once the window has to
-          shrink, you need to know <em>how many copies</em> of the left character remain so you only erase it from
-          the set when the count hits zero. That&apos;s a frequency map. The Set works for &quot;ever seen&quot;;
-          the Map works for &quot;currently present, with count&quot;.
+          <p>
+            You might wonder: if we just want &quot;no repeats&quot;, can&apos;t we use a <code>HashSet</code>{" "}
+            instead of a <code>HashMap</code>? Yes — <code>add</code> returns false on duplicate.
+          </p>
+          <p>
+            But once the window has to shrink, you need to know <em>how many copies</em> of the left character
+            remain so you only erase it from the set when the count hits zero. That&apos;s a frequency map. The Set
+            works for &quot;ever seen&quot;; the Map works for &quot;currently present, with count&quot;.
+          </p>
         </Callout>
 
         <PartRecap
@@ -470,10 +483,14 @@ boolean isAnagram(String s, String t) {
         </ol>
 
         <Callout variant="insight" title="What you should have internalized">
-          Three reflexes: (1) &quot;Have I seen this before?&quot; → <code>HashSet</code>. (2) &quot;How many of
-          each?&quot; → <code>HashMap&lt;K, Integer&gt;</code> or fixed array. (3) &quot;Best window satisfying
-          some invariant?&quot; → two pointers + frequency map. Every set/map problem you&apos;ll see is one of
-          these.
+          <p>
+            Three reflexes: (1) &quot;Have I seen this before?&quot; → <code>HashSet</code>. (2) &quot;How many of
+            each?&quot; → <code>HashMap&lt;K, Integer&gt;</code> or fixed array. (3) &quot;Best window satisfying
+            some invariant?&quot; → two pointers + frequency map.
+          </p>
+          <p>
+            Every set/map problem you&apos;ll see is one of these.
+          </p>
         </Callout>
       </section>
       </Checkpoint>

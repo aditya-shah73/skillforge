@@ -61,9 +61,11 @@ export default function ReactStreamingModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 12 (streaming with SSE) for the backend mental model. You don&apos;t need a running
-        Spring Boot server — we ship a mock SSE endpoint as a Next.js API route so the project runs
-        standalone.
+        <p className="m-0">
+          Module 12 (streaming with SSE) for the backend mental model. You don&apos;t need a running
+          Spring Boot server — we ship a mock SSE endpoint as a Next.js API route so the project runs
+          standalone.
+        </p>
       </Callout>
 
       {/* ================================================================= */}
@@ -288,8 +290,10 @@ export async function* streamChat(
         </ul>
 
         <Callout variant="warn" title="Don't reach for an SSE library unless you have to">
-          The 20 lines above are easier to read, debug, and modify than any package you&apos;ll find.
-          SSE is a simple protocol; the libraries usually add more surface area than they save you.
+          <p className="m-0">
+            The 20 lines above are easier to read, debug, and modify than any package you&apos;ll find.
+            SSE is a simple protocol; the libraries usually add more surface area than they save you.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">A mock SSE endpoint for development</h3>
@@ -587,11 +591,13 @@ export function useStreamingChat() {
         </ol>
 
         <Callout variant="warn" title="Watch out: re-rendering on every token">
-          If your messages get very long (thousands of tokens), <code>setMessages</code> on every
-          token will re-render the whole list. Two cheap fixes: split the in-flight message into its
-          own state slot rendered by a sibling component, or switch to a reducer +
-          <code>useSyncExternalStore</code> for that slot. For most chat UIs (under a few thousand
-          tokens per message), the simple version is fine — measure before you optimize.
+          <p className="m-0">
+            If your messages get very long (thousands of tokens), <code>setMessages</code> on every
+            token will re-render the whole list. Two cheap fixes: split the in-flight message into its
+            own state slot rendered by a sibling component, or switch to a reducer +{" "}
+            <code>useSyncExternalStore</code> for that slot. For most chat UIs (under a few thousand
+            tokens per message), the simple version is fine — measure before you optimize.
+          </p>
         </Callout>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Using the hook</h3>
@@ -884,8 +890,10 @@ export function useAutoScroll<T>(dep: T) {
 )}`}</CodeBlock>
 
         <Callout variant="insight" title="Partial content + retry is the industry pattern">
-          Every mature chat product does this — ChatGPT, Claude.ai, Cursor. Keep the partial content;
-          offer a continue button. Don&apos;t silent-retry and don&apos;t erase what arrived.
+          <p className="m-0">
+            Every mature chat product does this — ChatGPT, Claude.ai, Cursor. Keep the partial content;
+            offer a continue button. Don&apos;t silent-retry and don&apos;t erase what arrived.
+          </p>
         </Callout>
 
         <Quiz
