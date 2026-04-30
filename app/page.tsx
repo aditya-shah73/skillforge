@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { COURSES, ai, dsa } from "@/lib/courses";
+import { COURSES, ai, dsa, systemDesign } from "@/lib/courses";
+
+const COURSE_DATA = { ai, dsa, "system-design": systemDesign } as const;
 
 export default function Home() {
   // Live count of available modules across every course — used by the
   // gamification preview's denominator so it stays correct as content ships.
-  const courseData = COURSES.map((c) => (c.id === "ai" ? ai : dsa));
+  const courseData = COURSES.map((c) => COURSE_DATA[c.id]);
   const availableModuleCount = courseData.reduce(
     (sum, c) => sum + c.MODULES.filter((m) => m.status === "available").length,
     0,
@@ -55,7 +57,7 @@ export default function Home() {
         <div className="grid sm:grid-cols-2 gap-5">
           {COURSES.map((course) => {
             const isAvailable = course.status === "available";
-            const data = course.id === "ai" ? ai : dsa;
+            const data = COURSE_DATA[course.id];
             const moduleCount = data.MODULES.length;
             const phaseCount = data.PHASES.length;
 
