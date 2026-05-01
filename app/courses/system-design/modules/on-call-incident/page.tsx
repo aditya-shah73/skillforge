@@ -251,7 +251,7 @@ export default function Page() {
 
         <PartRecap
           title="Part 2 recap"
-          gist="The hardest skill is mitigating before you understand — and it&apos;s the highest-leverage one."
+          gist="The hardest skill is mitigating before you understand — and it's the highest-leverage one."
           points={[
             { takeaway: "Mitigate before you diagnose. Always.", detail: <>Stop the bleeding first. The customer is suffering during diagnosis but not during a clean rollback. Investigate after mitigation lands.</> },
             { takeaway: "The mitigation hierarchy: rollback, revert, failover, shed, scale.", detail: <>Roughly in order of speed and reliability. The first three are surgical; the last two buy time.</> },

@@ -115,7 +115,7 @@ export default function Page() {
 
         <ClassifyChallenge
           title="Classify these operations"
-          prompt="For each operation, decide whether it&apos;s naturally idempotent, idempotent with cooperation (needs an idempotency key), or inherently non-idempotent."
+          prompt="For each operation, decide whether it's naturally idempotent, idempotent with cooperation (needs an idempotency key), or inherently non-idempotent."
           buckets={[
             { id: "natural", label: "Naturally idempotent", color: "emerald" },
             { id: "cooperative", label: "Needs an idempotency key", color: "indigo" },

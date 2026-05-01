@@ -511,7 +511,7 @@ message Payment {
 
         <ClassifyChallenge
           title="Match the workload to the protocol"
-          prompt="For each scenario, pick the protocol whose strengths most directly fit the workload. There&apos;s sometimes more than one defensible answer — go with the most natural match."
+          prompt="For each scenario, pick the protocol whose strengths most directly fit the workload. There's sometimes more than one defensible answer — go with the most natural match."
           buckets={[
             { id: "rest", label: "REST", color: "emerald" },
             { id: "grpc", label: "gRPC", color: "indigo" },

@@ -165,7 +165,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
           <Quiz
             kind="Quick check"
             xp={15}
-            question="The numbers say 100 comment writes/sec at peak. A teammate proposes Cassandra for the comments table because it &quot;scales better.&quot; Right call?"
+            question={`The numbers say 100 comment writes/sec at peak. A teammate proposes Cassandra for the comments table because it "scales better." Right call?`}
             options={[
               { label: "Yes — Cassandra is a better fit for write-heavy workloads", correct: false, explanation: "100 writes/sec is trivial for any modern DB. Postgres handles thousands easily." },
               { label: "No — Postgres comfortably handles this volume; Cassandra adds operational tax for no gain", correct: true, explanation: "Right. Don't reach for distributed datastores at scales they're not needed for. Postgres is the simpler, faster path here." },
@@ -673,7 +673,7 @@ public ResponseEntity<Comment> create(
           <Quiz
             kind="Quick check"
             xp={15}
-            question="An interviewer says &quot;your design has six services for 5k devs — that's overengineered.&quot; Best response?"
+            question={`An interviewer says "your design has six services for 5k devs — that's overengineered." Best response?`}
             options={[
               { label: "Six services is industry standard", correct: false, explanation: "Appeal to authority. Doesn't address the critique." },
               { label: "Fair point — minimum is 3 (review, comment, notify); search and audit start as libraries and split when they earn it", correct: true, explanation: "Right. Acknowledge the critique, defend the core, and show you'd evolve the boundaries with evidence. That's senior thinking." },
@@ -685,7 +685,7 @@ public ResponseEntity<Comment> create(
           <Quiz
             kind="Quick check"
             xp={15}
-            question="Asked &quot;what's your single point of failure?&quot; The wrong answer is:"
+            question={`Asked "what's your single point of failure?" The wrong answer is:`}
             options={[
               { label: "The API gateway, mitigated by running multiple instances", correct: false, explanation: "This is honest and shows you've thought about it." },
               { label: "The corporate IdP — SSO outage blocks new logins", correct: false, explanation: "Honest acknowledgment of an external dependency. Good answer." },

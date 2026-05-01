@@ -172,7 +172,7 @@ public class OrderEventConsumer {
 
         <PartRecap
           title="Part 1 recap"
-          gist="At-least-once is the default. Build idempotent consumers; treat &quot;exactly-once&quot; claims with skepticism."
+          gist={`At-least-once is the default. Build idempotent consumers; treat "exactly-once" claims with skepticism.`}
           points={[
             { takeaway: "At-most-once loses messages on failure. At-least-once duplicates them. Exactly-once is rarely truly end-to-end.", detail: "The realistic spectrum is at-most-once for ephemeral data and at-least-once + idempotency everywhere else. “Exactly-once” in vendor docs almost always means within their system boundaries." },
             { takeaway: "Ack only after processing succeeds.", detail: "Acking before processing converts the queue from at-least-once to at-most-once — you’ll lose messages on consumer crashes, with no broker-side defense." },
@@ -432,7 +432,7 @@ public class OrderConsumer {
 
         <ClassifyChallenge
           title="Pick the broker"
-          prompt="Match each workload to the broker that fits best on the merits. There&apos;s a reasonable answer for each — argue with yourself when you disagree."
+          prompt="Match each workload to the broker that fits best on the merits. There's a reasonable answer for each — argue with yourself when you disagree."
           buckets={[
             { id: "sqs", label: "SQS", color: "amber" },
             { id: "rabbit", label: "RabbitMQ", color: "rose" },

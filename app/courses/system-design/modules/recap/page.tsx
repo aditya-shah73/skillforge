@@ -140,7 +140,7 @@ export default function Page() {
           <Quiz
             kind="Quick check"
             xp={15}
-            question="A PM asks you to &quot;design a notification system.&quot; What's your first question?"
+            question={`A PM asks you to "design a notification system." What's your first question?`}
             options={[
               { label: "Should we use Kafka or RabbitMQ?", correct: false, explanation: "Tool-first thinking. You don't know enough yet to pick." },
               { label: "What's the volume, latency budget, and acceptable delivery semantics?", correct: true, explanation: "Right. Volume drives infrastructure, latency drives architecture, semantics (at-least-once vs exactly-once) drives idempotency design." },
@@ -239,7 +239,7 @@ export default function Page() {
           <Quiz
             kind="Quick check"
             xp={15}
-            question="Your team wants to add an &quot;events&quot; table in Postgres that workers poll every second. Volume is 50k/sec. What do you push back on?"
+            question={`Your team wants to add an "events" table in Postgres that workers poll every second. Volume is 50k/sec. What do you push back on?`}
             options={[
               { label: "Postgres is fine — just add an index on processed=false", correct: false, explanation: "Polling at 50k/sec turns the table into a hot row contention nightmare. Indexes don't fix the lock storm." },
               { label: "Move to a real queue (Kafka, SQS) — DBs are not queues at this scale", correct: true, explanation: "Right. The polling pattern is a leading indicator that you've outgrown the DB-as-queue antipattern. Move to a log/queue." },

@@ -398,7 +398,7 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
         <h3>The matching exercise</h3>
         <ClassifyChallenge
           title="Pick the right storage tier for each workload"
-          prompt="There&apos;s sometimes more than one defensible answer. Pick the most direct fit."
+          prompt="There's sometimes more than one defensible answer. Pick the most direct fit."
           buckets={[
             { id: "postgres", label: "Postgres (or similar OLTP RDBMS)", color: "indigo" },
             { id: "warehouse", label: "Columnar warehouse (Snowflake / ClickHouse)", color: "amber" },
