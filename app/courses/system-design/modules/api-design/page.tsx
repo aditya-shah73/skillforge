@@ -568,9 +568,250 @@ message Payment {
       </Checkpoint>
 
       <section>
+        <h2>Part 4 · API design from the client&apos;s seat</h2>
+        <p>
+          Everything so far has been the server&apos;s view: verbs, status codes, contracts, protocol choice. But the people consuming your API every day are usually frontend developers, and their constraints are different. Round trips cost real time on a phone over LTE. Optimistic updates need cooperative API shapes. Pagination for an infinite-scrolling list has different requirements than pagination for an admin table. Senior backend engineers who&apos;ve never sat next to a frontend dev tend to ship APIs that are technically correct and operationally annoying — this part is about closing that gap.
+        </p>
+
+        <h3>REST vs GraphQL vs tRPC — through the client&apos;s eyes</h3>
+        <p>
+          Part 3 compared protocols from the architecture seat. Now look at the same three (well, two of them plus tRPC) from the seat of someone trying to render a screen on a phone over a flaky network. The tradeoffs shift.
+        </p>
+        <p>
+          <strong>REST from the client.</strong> Every screen typically needs data from multiple resources. A user-profile page wants the user, their last 10 posts, the comment count on each post, and the current viewer&apos;s follow status. With REST that&apos;s frequently 4+ round trips, or one over-fetching aggregate endpoint that returns 80% data the screen doesn&apos;t use. The win: HTTP caching works for free. Set <code>Cache-Control: max-age=300</code> on the user endpoint and every CDN, every browser, every service worker caches it without you doing anything. That&apos;s a genuine superpower the alternatives don&apos;t replicate.
+        </p>
+        <p>
+          <strong>GraphQL from the client.</strong> One round trip, exactly the fields the screen needs. The N+1 problem moves from the wire to the server (where DataLoader handles it) instead of leaking onto the client&apos;s network tab. The cost is real and the sharpest edge is caching: every query is a POST with a unique body, so HTTP caching doesn&apos;t apply for free. The industry workaround is <strong>persisted queries</strong> — the client ships a hash, the server has the query stored — which lets you GET-cache by hash and also lets you lock down the query surface so a hostile client can&apos;t send <code>{`{ users { posts { author { posts { ... } } } } }`}</code> and DOS the resolver. This is also why Meta built Relay: client-side normalized cache plus persisted queries plus declarative data requirements per component. GraphQL without that machinery is GraphQL on hard mode.
+        </p>
+        <p>
+          <strong>tRPC from the client.</strong> tRPC isn&apos;t really a protocol — it&apos;s a TypeScript pattern that takes server function signatures and surfaces them on the client as typed function calls, with no schema language in between. If your stack is Next.js front, Node.js back, monorepo, one team, then tRPC is genuinely magical: rename a server function and the client gets a type error in your IDE before you save. Zero schema drift, zero codegen step, zero runtime version negotiation. The catch: it&apos;s only useful when both ends are TypeScript. The moment your backend is Java/Spring (which, in this course, it is), tRPC stops applying — there&apos;s no Java sibling that gives you the same shape, and even if there were, you&apos;d be back to needing a schema layer to bridge the languages, which is exactly what tRPC&apos;s pitch is &quot;you don&apos;t need.&quot;
+        </p>
+
+        <Callout variant="insight" title="The decision in one paragraph">
+          <p className="m-0">REST when your API is public or your reads are heavily cached at the edge — HTTP caching pays for the chattiness. GraphQL when you have multiple client surfaces (web, iOS, Android) hitting the same backend with different data needs, and you&apos;re willing to invest in persisted queries + DataLoader + a normalized client cache. tRPC when you&apos;re a TS-only monorepo and want the fewest possible moving parts. Notice none of these say &quot;the best one&quot; — they say &quot;the one whose strengths line up with your shape.&quot;</p>
+        </Callout>
+
+        <h3>Pagination — what the client actually needs</h3>
+        <p>
+          Part 2 covered pagination from the database&apos;s seat: offset gets slow, cursors solve it. The client view adds a second failure mode that doesn&apos;t care about query plans: <strong>infinite scroll</strong>. A user scrolls a feed; new posts are inserted at the top while they scroll. With offset pagination, the next page query says &quot;skip 20, take 20,&quot; but those 20 just got pushed down by 3 inserts — so page 2 re-shows three rows from page 1, and skips three rows that should have been on page 2. The user doesn&apos;t see &quot;a pagination bug.&quot; They see duplicates and missing posts and assume your app is broken.
+        </p>
+        <p>
+          Cursor pagination fixes this because the cursor pins to a specific row, not a position. <code>?cursor=eyJpZCI6MTIzfQ</code> means &quot;give me rows that come after row 123 in the sort order.&quot; Inserts above row 123 don&apos;t affect the answer. That&apos;s why every infinite-scroll feed in production — Twitter/X, Instagram, Reddit, LinkedIn — uses cursors. There is no offset-pagination feed that survives contact with a real user base.
+        </p>
+        <p>
+          The client contract for cursor pagination has three pieces: a <code>nextCursor</code> field (opaque string), a <code>hasMore</code> boolean (so the client knows when to stop), and crucially <em>not</em> a total count. Total counts are how naive APIs leak performance. <code>SELECT COUNT(*) FROM posts WHERE feed_id = ?</code> on a billion-row table is a multi-second query — and you&apos;re running it on every single page fetch. The user doesn&apos;t need it. Show them &quot;1,234+ posts&quot; or just nothing. Reserve the total for screens where you genuinely have one (a settled admin report) and pre-compute it.
+        </p>
+
+        <CodeBlock lang="java" caption="A cursor-paginated feed endpoint in Spring">{`@RestController
+@RequestMapping("/v1/feeds")
+public class FeedController {
+
+  private final JdbcTemplate jdbc;
+
+  @GetMapping("/{feedId}/posts")
+  public PageResponse<PostDto> listPosts(
+      @PathVariable String feedId,
+      @RequestParam(required = false) String cursor,
+      @RequestParam(defaultValue = "20") int limit) {
+
+    if (limit > 100) limit = 100; // cap so a hostile client can't ask for 10M rows
+
+    // Decode the cursor to (createdAt, id). First page: cursor is null, no WHERE.
+    Cursor c = cursor == null ? null : Cursor.decode(cursor);
+
+    String sql = """
+        SELECT id, feed_id, body, created_at
+          FROM posts
+         WHERE feed_id = ?
+           AND (? IS NULL OR (created_at, id) < (?, ?))
+         ORDER BY created_at DESC, id DESC
+         LIMIT ?
+        """;
+
+    // Fetch limit+1 so we can tell if there's a next page without a COUNT(*).
+    List<PostDto> rows = jdbc.query(sql,
+        new Object[]{ feedId, c, c == null ? null : c.createdAt(), c == null ? null : c.id(), limit + 1 },
+        (rs, i) -> new PostDto(
+            rs.getString("id"),
+            rs.getString("feed_id"),
+            rs.getString("body"),
+            rs.getTimestamp("created_at").toInstant()));
+
+    boolean hasMore = rows.size() > limit;
+    if (hasMore) rows = rows.subList(0, limit);
+
+    String nextCursor = null;
+    if (hasMore && !rows.isEmpty()) {
+      PostDto last = rows.get(rows.size() - 1);
+      nextCursor = Cursor.encode(new Cursor(last.createdAt(), last.id()));
+    }
+
+    return new PageResponse<>(rows, nextCursor, hasMore);
+  }
+}
+
+public record Cursor(Instant createdAt, String id) {
+  public static String encode(Cursor c) {
+    String json = "{\\"t\\":\\"" + c.createdAt + "\\",\\"i\\":\\"" + c.id + "\\"}";
+    return Base64.getUrlEncoder().withoutPadding()
+        .encodeToString(json.getBytes(StandardCharsets.UTF_8));
+  }
+  public static Cursor decode(String s) { /* base64-decode + parse JSON */ }
+}
+
+public record PageResponse<T>(List<T> data, String nextCursor, boolean hasMore) {}`}</CodeBlock>
+
+        <p>
+          Two non-obvious tricks in there. First, <strong>fetch <code>limit + 1</code></strong>: if you get back more than the user asked for, there&apos;s a next page; trim the extra row before returning. This costs almost nothing and saves you from a separate count query. Second, the WHERE clause <code>(created_at, id) &lt; (?, ?)</code> uses tuple comparison so the index on <code>(feed_id, created_at, id)</code> serves the query without sorting. The <code>id</code> in the cursor is the tie-breaker for posts created in the same millisecond — without it, two posts at the exact same timestamp can be skipped or duplicated.
+        </p>
+
+        <Callout variant="warn" title="Don't ship total counts you don't need">
+          <p className="m-0">A client asking for <code>?include_total=true</code> is a smell. If the design genuinely needs &quot;page 47 of 312,&quot; revisit the design — that pattern is for desktop tables, not modern mobile feeds. If it&apos;s truly necessary, pre-compute the count in a materialized view or a counter table updated on insert/delete, never as a side-effect of pagination requests. <code>COUNT(*)</code> on every page request is one of the most reliable ways to take down a feed service under load.</p>
+        </Callout>
+
+        <h3>Optimistic updates — the API contract that makes them work</h3>
+        <p>
+          Optimistic updates are why a modern app feels instant. The user taps Like; the heart fills in immediately; the network request goes out in the background; if the server rejects the request, the heart un-fills with a small error toast. The latency disappears from the user&apos;s perception. Every product app of any quality does this for any frequently-tapped action.
+        </p>
+        <p>
+          The API needs to cooperate, and most APIs don&apos;t. The contract has four pieces:
+        </p>
+        <ol>
+          <li><strong>Idempotent mutations.</strong> The client predicted &quot;like succeeded.&quot; The network burped; the client retries. If the second call double-likes the post, optimism becomes a bug. This is exactly what idempotency keys (Module 22, also Part 2 above) solve — the client generates a key per logical action, retries are safe.</li>
+          <li><strong>Client-generated IDs.</strong> If the user creates a comment optimistically, the client renders it with some ID immediately. If the server then assigns its own ID on creation, the client now has a temporary ID it has to reconcile with the real one — and any in-flight updates to that comment (edits, deletes) referencing the temporary ID need to be remapped. The cleaner contract: the client generates a UUID, sends it in the create request, the server uses it. Now the optimistic record and the server record have the same ID; no reconciliation.</li>
+          <li><strong>Deterministic response shapes.</strong> The optimistic UI predicted what the server would return. If the server&apos;s response shape varies (sometimes <code>updatedAt</code>, sometimes <code>updated_at</code>, sometimes a different nested structure), the client&apos;s prediction is always wrong on some field, and optimism leaks &quot;flicker&quot; bugs as the predicted state gets replaced by the actual state. Pick a shape and stick to it byte-for-byte.</li>
+          <li><strong>Server returns the canonical entity.</strong> Don&apos;t return <code>{`{"success": true}`}</code>. Return the full entity as it now exists on the server. The client diffs against its optimistic guess and fixes any drift silently.</li>
+        </ol>
+
+        <CodeBlock lang="java" caption="A create endpoint that supports optimistic UI">{`@PostMapping("/v1/comments")
+public ResponseEntity<CommentDto> createComment(
+    @RequestHeader(value = "Idempotency-Key", required = true) String idempotencyKey,
+    @RequestBody CreateCommentRequest req) {
+
+  // Client generated the ID — we honor it instead of generating our own.
+  // This is what makes optimistic UI clean: the client's optimistic
+  // record and the server's canonical record have the same ID.
+  if (req.id() == null || !isValidUuid(req.id())) {
+    throw new ValidationException("id is required and must be a UUID");
+  }
+
+  Comment saved = service.create(
+      req.id(),
+      req.postId(),
+      req.body(),
+      currentUser(),
+      idempotencyKey
+  );
+
+  // Return the canonical entity, not just {"success": true}.
+  // The client uses this to reconcile against its optimistic prediction.
+  return ResponseEntity.status(HttpStatus.CREATED).body(CommentDto.from(saved));
+}`}</CodeBlock>
+
+        <p>
+          When optimistic updates <em>don&apos;t</em> work: anything where the client can&apos;t predict the result. &quot;Submit payment&quot; — the client doesn&apos;t know if the card will be approved. &quot;Reserve the last seat&quot; — the client doesn&apos;t know if someone else just reserved it. &quot;Apply discount code&quot; — the client doesn&apos;t know if the code is valid. Anything with <strong>cross-entity invariants</strong> (uniqueness checks, balance checks, inventory) needs the server&apos;s real answer before the UI commits. The fix is the opposite of optimism: show a spinner, await the server, then commit. Trying to predict these and rolling back creates worse UX than just showing the spinner — the user sees their action &quot;succeed&quot; then visibly fail, which feels broken in a way that a one-second spinner doesn&apos;t.
+        </p>
+
+        <Callout variant="info" title="The simple test">
+          <p className="m-0">Can the client compute the result without talking to anyone else? If yes, optimistic update is fine (likes, follows, marking-as-read, edits to your own content). If the result depends on something the client doesn&apos;t have (other users, inventory, payment networks), do not be optimistic — show a spinner and wait. The product manager will push back; show them the alternative (an action that &quot;succeeds&quot; then visibly reverses) and they&apos;ll change their mind.</p>
+        </Callout>
+
+        <h3>BFF — Backend for Frontend</h3>
+        <p>
+          The shape of the problem: you have N clients (web, iOS, Android, watchOS, partner SDK) talking to M backend services (user, post, comment, notification, recommendation, payment). Every client needs a different blend of data per screen. The naive answer is &quot;each client calls each service directly and aggregates client-side.&quot; That works briefly, then breaks down: every client team has to know the full service topology, every service version bump risks breaking some client, mobile clients pay for chatty round trips on slow networks, and authentication/authorization gets re-implemented in each client.
+        </p>
+        <p>
+          The <strong>Backend for Frontend</strong> pattern puts a thin aggregating service in front of the backend, one per client family. The web BFF returns shapes optimized for the web app; the iOS BFF returns shapes optimized for the iOS app. Each BFF is owned by the same team that owns the client — that&apos;s the &quot;for frontend&quot; part. The frontend team can ship a screen change without coordinating with backend service teams; they just change their BFF.
+        </p>
+
+        <CodeBlock lang="plain" caption="The shape of a BFF deployment">{`Without BFF:                          With BFF (one per client family):
+
+[Web]   ─┐                            [Web]    → [Web BFF]    ─┐
+[iOS]   ─┼─→ [User svc]               [iOS]    → [iOS BFF]    ─┼─→ [User svc]
+[Andr.] ─┘   [Post svc]               [Andr.]  → [Andr. BFF]  ─┘   [Post svc]
+              [Comment svc]                                          [Comment svc]
+              [Notif svc]                                            [Notif svc]
+
+Every client knows                    Each client talks to one shape-
+about every service.                  matched gateway. Backend services
+N×M coupling.                         are decoupled from clients.`}</CodeBlock>
+
+        <p>
+          The non-obvious decision is <strong>fat BFF vs thin BFF</strong>. A thin BFF is just shape transformation: it calls 3 backend services in parallel, merges the results, drops fields the client doesn&apos;t need, returns a shape tuned for the screen. A fat BFF starts adding business logic — &quot;if user is in experiment group X, swap field Y for field Z,&quot; &quot;compute this aggregate from those service responses,&quot; &quot;cache this expensive query specifically for the iOS feed.&quot; Fat BFFs are seductive: the frontend team can ship anything they want without waiting on a backend team.
+        </p>
+        <p>
+          The senior take: <strong>keep BFFs thin.</strong> Once a BFF has business logic, it&apos;s a service in disguise — it has its own domain knowledge, its own bugs, its own ownership conflicts (the &quot;frontend team&quot; doesn&apos;t actually want to be on call for a backend service). The right home for business logic is the underlying service. The BFF&apos;s job is shape-shifting and request fan-out, full stop. When you find yourself reaching for a database in the BFF or computing something non-trivial, that&apos;s a signal the backend service should expose the missing capability instead.
+        </p>
+
+        <Callout variant="insight" title="GraphQL gateways are BFFs at scale">
+          <p className="m-0">Meta&apos;s Relay/GraphQL setup is, architecturally, a BFF — clients talk GraphQL to a gateway that fans out to internal services. The difference is that instead of a hand-coded BFF per client, the gateway is generic: each client describes its data needs declaratively (the GraphQL query) and the gateway resolves them. That&apos;s why GraphQL pays off when you have many client surfaces — it&apos;s a generic BFF that scales to a new client by writing queries instead of writing a new service. If you have one or two clients, a hand-coded BFF in Spring is simpler. If you have ten, GraphQL federation starts to win.</p>
+        </Callout>
+
+        <Callout variant="spring" title="Where the BFF lives in a Java/Spring shop">
+          <p className="m-0">Spring Cloud Gateway can host BFF logic — it has filter chains, request aggregation, and reactive composition built in. The temptation is to put all BFF logic in the gateway because &quot;it&apos;s already there.&quot; Resist it: the gateway is shared infrastructure, owned by a platform team, and putting client-specific shape logic in it creates a permanent coordination tax between the platform team and every client team. The cleaner deployment is a separate Spring Boot service per client family (web-bff, mobile-bff), each owned by the corresponding client team, with the gateway just routing to them. The next module on Spring Cloud Gateway covers this distinction in detail.</p>
+        </Callout>
+
+        <ClassifyChallenge
+          title="Pick the right tool for each client-side problem"
+          prompt="Each scenario hits one of the patterns from this part. Drop it into the bucket whose strengths line up with the problem."
+          buckets={[
+            { id: "rest", label: "REST + HTTP cache", color: "emerald" },
+            { id: "graphql", label: "GraphQL", color: "violet" },
+            { id: "trpc", label: "tRPC", color: "sky" },
+            { id: "cursor", label: "Cursor pagination", color: "indigo" },
+            { id: "optimistic", label: "Optimistic update", color: "amber" },
+            { id: "bff", label: "BFF (thin)", color: "rose" },
+          ]}
+          items={[
+            { id: "feed", label: "An infinite-scroll social feed where new posts arrive at the top while users scroll.", answer: "cursor", explanation: "Inserts above the user's current position would cause offset pagination to duplicate or skip rows. Cursors pin to a specific row so inserts don't shift the answer." },
+            { id: "like", label: "A 'like' button that should fill in instantly when tapped, before the network call completes.", answer: "optimistic", explanation: "Likes are predictable (the client knows whether the user is allowed to like) and the action is idempotent. Classic optimistic-update territory — show the result immediately, reconcile if the server rejects." },
+            { id: "monorepo", label: "A Next.js app and a Node.js backend in a single TypeScript monorepo, one team, no other consumers.", answer: "trpc", explanation: "Single language, single team, monorepo — exactly the shape tRPC was built for. No schema layer, end-to-end types from server function signatures. The moment you add a non-TS client this stops being the right answer." },
+            { id: "manyclients", label: "A platform with web, iOS, Android, and partner SDK each fetching different blends of user/post/comment data per screen.", answer: "graphql", explanation: "Many client surfaces, varied data needs, same backend services. GraphQL's query-per-client model pays for its complexity here — each client asks for exactly its screen's shape." },
+            { id: "blog", label: "A public blog API where most reads can be cached at the CDN edge for 5 minutes.", answer: "rest", explanation: "GET-able URLs + Cache-Control headers is REST's caching superpower. Every CDN handles it natively. POST-based protocols (GraphQL, gRPC) make CDN caching painful." },
+            { id: "screenshape", label: "A web app where the home screen needs data from 4 backend services in a specific aggregated shape, and the iOS app needs the same data in a different shape.", answer: "bff", explanation: "Two client surfaces wanting different shapes of overlapping data is the textbook BFF case. One BFF per client family, each does fan-out + shape transformation, business logic stays in the underlying services." },
+          ]}
+        />
+
+        <Quiz
+          question={`A frontend team complains: "Your list endpoint returns a 'totalCount' field, and pagination works fine on staging, but in production it takes 8 seconds per page on the largest tenant." The backend uses cursor pagination with a separate COUNT(*) query for totalCount. What's the senior fix?`}
+          options={[
+            { label: "Drop totalCount from the response. Most clients don't actually need it; the COUNT(*) is what's slow at scale. Return nextCursor + hasMore and let the client render '1,000+' or nothing.", correct: true, explanation: "Right. COUNT(*) on a large filtered table is the classic 'scales to a wall' query — fine at staging volumes, multi-second in production. The client almost never needs an exact total; nextCursor + hasMore is sufficient for every infinite-scroll UI. If the product really needs a total, pre-compute it, don't recompute it per page request." },
+            { label: "Add an index to speed up COUNT(*).", explanation: "Indexes can help bounded counts but COUNT(*) on a filtered set still has to traverse all matching rows. The deeper question is whether you need the count at all — for cursor pagination on a feed, you don't." },
+            { label: "Cache the totalCount in Redis with a 30-second TTL.", explanation: "This masks the symptom but you'll pay the COUNT query on every cache miss, and stale counts can cause off-by-one UI bugs ('1,234 results' but only 1,233 actually return). The right answer is to question whether the client needs the total at all." },
+            { label: "Switch from cursor pagination to offset pagination so you can compute totals more cheaply.", explanation: "Offset pagination is slower, not faster, at large offsets — and it has correctness bugs under inserts that cursor pagination avoids. The total is the problem, not the pagination strategy." },
+          ]}
+          hint="Which part of the response is actually expensive — the page or the count?"
+          xp={8}
+        />
+
+        <Quiz
+          question={`A team building a mobile app wants optimistic updates for "create a comment." The current API generates the comment ID server-side and returns it in the create response. The mobile team says optimistic UI is "really hard" with this API. What's the API change that makes it easy?`}
+          options={[
+            { label: "Accept a client-generated UUID as the comment ID in the create request. The client renders the optimistic comment with that UUID immediately, and when the server responds, the IDs already match — no reconciliation needed.", correct: true, explanation: "Right. Server-generated IDs force the client to reconcile its optimistic record (with a temporary ID) against the server record (with the real ID). Any in-flight edits or deletes referencing the temp ID then need remapping — that's the 'really hard' part. Letting the client generate the ID makes the optimistic record and the canonical record share an ID from the start. Pair this with idempotency keys so retries don't create duplicates." },
+            { label: "Return success: true immediately and let the server process the comment in the background.", explanation: "This is fire-and-forget, not optimistic UI — and it's a strictly worse UX because the client has no way to surface a real failure. Optimistic UI needs the canonical entity back so it can reconcile against its prediction." },
+            { label: "Move the create endpoint from POST to PUT so it's idempotent.", explanation: "PUT to a server-chosen URL still gives you a server-chosen ID. The fix is letting the client choose the ID (and adding an idempotency key for retry safety), not changing the verb." },
+            { label: "Use WebSockets so the client gets the canonical ID in real time.", explanation: "WebSockets don't solve the underlying ID-mismatch problem — the client still has to render the comment optimistically before any server round trip completes. The cleaner answer is making the IDs match by construction, not by faster delivery." },
+          ]}
+          hint="What gets harder when the client's optimistic ID doesn't match the server's real ID?"
+          xp={8}
+        />
+
+        <PartRecap
+          title="Part 4 recap"
+          gist="Server-shaped APIs and client-shaped APIs aren't the same. Picking REST/GraphQL/tRPC, paginating for infinite scroll, supporting optimistic updates, and shaping a thin BFF are all calls that look different from the client's seat than from the server's."
+          points={[
+            { takeaway: "Protocol choice depends on cache shape and team shape", detail: "REST when reads are heavily edge-cacheable. GraphQL when many clients share a backend with varied data needs (commit to persisted queries + DataLoader). tRPC for TS-only monorepos. None is universally best." },
+            { takeaway: "Cursor pagination is the only sane answer for infinite scroll", detail: "Inserts shift offset-based queries; cursors pin to a row. Return nextCursor + hasMore, drop totalCount unless you've pre-computed it — COUNT(*) per page is how feeds fall over at scale." },
+            { takeaway: "Optimistic UI needs API cooperation", detail: "Idempotent mutations + client-generated IDs + deterministic response shapes + canonical entity in the response. Don't be optimistic for cross-entity invariants (payments, inventory, uniqueness) — show a spinner instead." },
+            { takeaway: "Keep BFFs thin", detail: "One BFF per client family does fan-out + shape transformation. Business logic belongs in underlying services. GraphQL gateways are generic BFFs that pay off at many-client scale; hand-coded BFFs are simpler at small scale." },
+          ]}
+        />
+      </section>
+
+      <section>
         <h2>Wrapping up</h2>
         <p>
-          API design is the contract layer between teams. Get the verbs right so retries are safe. Get pagination, idempotency, and errors right so the API survives scale. Pick the protocol that matches the boundary — public, internal, or many-client. The next module zooms in on one of those boundaries: the gateway that sits at the edge of your system handling routing, auth, and rate limiting before traffic reaches your services.
+          API design is the contract layer between teams. Get the verbs right so retries are safe. Get pagination, idempotency, and errors right so the API survives scale. Pick the protocol that matches the boundary — public, internal, or many-client. Shape the response for the client doing the calling, not the database underneath. The next module zooms in on one of those boundaries: the gateway that sits at the edge of your system handling routing, auth, and rate limiting before traffic reaches your services.
         </p>
       </section>
 

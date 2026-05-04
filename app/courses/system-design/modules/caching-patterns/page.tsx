@@ -13,6 +13,7 @@ const CHECKPOINTS = [
   { id: "patterns", title: "Four patterns" },
   { id: "ttl-invalidation", title: "TTL & invalidation" },
   { id: "what-to-cache", title: "What to cache" },
+  { id: "personalization", title: "Personalization caching" },
 ];
 
 const cacheAsideDiagram = `sequenceDiagram
@@ -487,6 +488,204 @@ public class UserService {
             { takeaway: "Some data should not be cached.", detail: "Inventory, balances, anything where staleness causes correctness bugs. The DB exists for a reason." },
             { takeaway: "Multi-level caches walk down: browser → CDN → local → distributed → DB buffer.", detail: "Each layer has shorter TTLs and serves more local traffic. Costs compound; design each layer's invalidation deliberately." },
             { takeaway: "Authorization caches need event-driven invalidation, not just TTL.", detail: "Stale auth = security incident. Publish revoke events to evict caches immediately." },
+          ]}
+        />
+      </Checkpoint>
+
+      <Checkpoint moduleSlug="caching-patterns" id="personalization" title="Personalization caching" xp={25}>
+        <h2 className="text-2xl font-semibold mb-4">Part 4 — Personalization caching</h2>
+
+        <p>
+          Everything before this part assumed the cached value was the same for everyone — a product page, a config
+          blob, an auth decision keyed on a single user. Personalization breaks that assumption. The cached payload
+          now depends on <em>who is asking</em>, and sometimes on what device, locale, experiment bucket, and feature
+          flags they happen to have today. The math gets ugly fast, and the patterns from Parts 1-3 still apply but
+          need to be re-tuned around cardinality.
+        </p>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Global vs per-user: the cardinality spectrum</h3>
+        <p>
+          Cache one entry that covers everyone — a homepage HTML fragment, a top-10 trending list — and you get a
+          near-100% hit rate from a single key. Memory is trivial, latency is great, life is good. Now make that
+          fragment personalized. Each user gets their own entry. With 100M DAU and a 10KB payload per user, you
+          are sitting on roughly 1TB of cached state. That is no longer a single Redis node; that is a sharded
+          cluster with replication, eviction policies, and an on-call rotation.
+        </p>
+
+        <ul>
+          <li><strong>Global cache:</strong> 1 entry, ~100% hit rate, KB of memory. Good for anything that does not depend on identity.</li>
+          <li><strong>Per-user cache:</strong> N entries, hit rate bounded by user re-visit rate. Memory grows linearly with active users.</li>
+          <li><strong>Per-user × per-context cache:</strong> N × M entries. Memory and miss rate both go through the roof if M is not controlled.</li>
+        </ul>
+
+        <Callout variant="insight" title="Run the numbers before you cache per-user">
+          <p className="m-0">
+            Per-user caching only makes sense if a user re-reads their own data within the TTL window. If your average
+            user logs in twice a week and the TTL is 5 minutes, your hit rate is essentially zero — you are paying for
+            memory and getting no latency win. Either widen the TTL, narrow the audience (cache only for active users),
+            or stop personalizing that surface.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Cache key cardinality explosion</h3>
+        <p>
+          The seductive bug: you start with <code>feed:userId</code>, then someone asks for a locale-aware variant,
+          then a device-class split, then an A/B experiment, then a feature flag set. Each dimension multiplies the
+          key space. Five dimensions with even modest cardinality (say 10 each) blow your namespace up by 100,000x.
+          Most of those keys are read once and never again, so your cache becomes a write-only data structure with a
+          hit rate that asymptotes to zero.
+        </p>
+        <p>
+          The anti-pattern is putting <em>every</em> request parameter into the key. The pattern is to be deliberate
+          about which dimensions actually change the response, and hash the rest into a single bounded fingerprint:
+        </p>
+
+        <CodeBlock lang="java" caption="Bounded cache keys — explicit dimensions, hashed context fingerprint">{`public String cacheKey(long userId, RequestContext ctx) {
+    // Explicit dimensions that actually change the response.
+    String locale = ctx.locale();                 // ~50 values
+    String deviceClass = ctx.deviceClass();       // 3 values: mobile, tablet, desktop
+
+    // Everything else (experiment bucket, flag set, app version, etc.)
+    // gets folded into a single short fingerprint. This caps cardinality.
+    String fingerprint = ctx.experimentBucket() + "|" + ctx.flagSetId();
+    String fp = Hashing.murmur3_32_fixed()
+        .hashString(fingerprint, StandardCharsets.UTF_8)
+        .toString();   // 8 hex chars
+
+    return "feed:" + userId + ":" + locale + ":" + deviceClass + ":" + fp;
+}`}</CodeBlock>
+
+        <p>
+          The fingerprint approach has a tradeoff: when an experiment ships, you invalidate by changing the
+          <code> flagSetId</code> globally, which evicts everyone&apos;s personalized entry at once. That is fine
+          (and often desirable — see TTL section below), but it does mean you take a load spike on rollout. Plan for it.
+        </p>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Cold start</h3>
+        <p>
+          The first request from a new user is, by definition, a cache miss. If your personalized response takes
+          800ms to compute end-to-end, that user&apos;s first impression is an 800ms blank screen. Three mitigations,
+          in increasing order of complexity:
+        </p>
+        <ol>
+          <li><strong>Pre-warm on signup.</strong> Kick a background job when the account is created. By the time the user lands on the home feed, the cache is already populated. Works well for predictable post-signup flows.</li>
+          <li><strong>Serve the global fallback.</strong> Render the &quot;popular for everyone&quot; feed for new users until you have enough signal to personalize. This doubles as a cold-start solution and as the answer to the new-user model problem in any recommender system.</li>
+          <li><strong>Async upgrade.</strong> Send the global feed immediately, then push or poll for the personalized version and swap it in client-side. Faster first byte, slightly more frontend complexity.</li>
+        </ol>
+        <p>
+          The tradeoff is real: faster first byte versus less personalized first impression. Most teams default to
+          option 2 with a planned upgrade to option 3 once they have the infra to support it.
+        </p>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">TTL strategy for personalized data</h3>
+        <p>
+          Personalization data has a wider range of natural lifetimes than the data we cached in Part 2. Match the
+          TTL to the actual rate of change, not to an arbitrary default:
+        </p>
+        <ul>
+          <li><strong>Active session caches</strong> (feed, recommendations, search ranking) — 60s to 5 minutes. The user is browsing, signals are arriving, you want personalization to feel responsive to recent clicks.</li>
+          <li><strong>Stable preferences</strong> (language, theme, notification settings) — hours. These change rarely and are usually edited via a single endpoint where you can invalidate explicitly.</li>
+          <li><strong>Long-tail profile features</strong> (interest vectors, demographic estimates) — hours to a day. Computed by an offline job; the cache TTL just needs to outlive the gap between job runs.</li>
+        </ul>
+
+        <Callout variant="warn" title="Never TTL forever">
+          <p className="m-0">
+            Even when the underlying data is genuinely stable, cap the TTL at something like 24 hours. The reason is
+            operational: you will, eventually, deploy a bug that writes corrupt or inappropriate data to the cache.
+            When that happens you need a way to flush the bad entries that does not require running a script across
+            the whole cluster. A finite TTL means &quot;wait one cycle and the bad data ages out on its own.&quot;
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">The hot user problem</h3>
+        <p>
+          User traffic is not uniformly distributed. A celebrity, a popular brand account, or an internal admin user
+          can attract 1000x the read traffic of a normal user. Their per-user cache entry becomes a hot key, and a
+          single Redis node ends up serving an outsized share of the cluster&apos;s requests. CPU on that one node
+          saturates while the others sit idle. (We will dig into hot-key mechanics in the next module on distributed
+          cache architecture.)
+        </p>
+        <p>
+          Three mitigations, often combined:
+        </p>
+        <ul>
+          <li><strong>Replicate hot keys to N nodes.</strong> Detect keys above a traffic threshold and write copies to several shards. Reads pick a random copy. Memory cost is N×, but per-node load is 1/N×.</li>
+          <li><strong>Client-side cache for top-K hot users.</strong> Each app instance keeps an in-process Caffeine cache of the few hundred hottest user IDs. Sub-microsecond reads, no Redis hop. Pair with pub/sub invalidation as covered in Part 3.</li>
+          <li><strong>Don&apos;t personalize at all for these accounts.</strong> A celebrity feed is read by millions of strangers; personalizing the celebrity-side response makes no sense. Serve the global, denormalized version and skip the per-user computation.</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Stale-while-revalidate for personalization</h3>
+        <p>
+          The most useful pattern in this entire section. The idea: when a personalized cache entry is past its
+          freshness threshold but still within its hard TTL, serve the stale value immediately and trigger an async
+          recompute in the background. The current request gets fast latency; the next request gets fresh data.
+          The user never sees a miss-on-hot-key delay.
+        </p>
+        <p>
+          Caffeine has first-class support for this via <code>refreshAfterWrite</code>, separate from
+          <code> expireAfterWrite</code>. When a key is older than the refresh threshold but younger than the
+          expiry threshold, the next read returns the stale value and schedules a background reload through the
+          configured <code>CacheLoader</code>.
+        </p>
+
+        <CodeBlock lang="java" caption="Caffeine: per-user personalization with refresh-after-write">{`@Configuration
+public class PersonalizationCacheConfig {
+
+    @Bean
+    public LoadingCache<String, FeedPayload> personalizedFeedCache(FeedComputeService compute) {
+        return Caffeine.newBuilder()
+            .maximumSize(100_000)                              // bound memory
+            .expireAfterWrite(Duration.ofMinutes(10))          // hard TTL
+            .refreshAfterWrite(Duration.ofMinutes(1))          // serve stale, refresh async
+            .recordStats()
+            .build(key -> compute.computeFeed(key));           // CacheLoader
+    }
+}
+
+@Service
+public class FeedService {
+    @Autowired LoadingCache<String, FeedPayload> cache;
+
+    public FeedPayload getFeed(long userId, RequestContext ctx) {
+        return cache.get(cacheKey(userId, ctx));   // never blocks on stale-but-not-expired
+    }
+}`}</CodeBlock>
+
+        <p>
+          The mechanics: a read between minute 1 and minute 10 returns instantly with the existing value, and
+          Caffeine schedules <code>compute.computeFeed</code> on its executor. The next read sees the refreshed
+          value. Past minute 10, the entry is fully evicted and the next read blocks on a fresh computation.
+        </p>
+
+        <Callout variant="spring" title="Spring's @Cacheable doesn't do refresh-after-write">
+          <p className="m-0">
+            <code>@Cacheable</code> gives you cache-aside with TTL, but it does not have a built-in stale-while-revalidate.
+            For personalization you typically reach for a <code>LoadingCache</code> directly (Caffeine in-process, or a
+            Redis-backed equivalent like Caffeine&apos;s async loaders fronting a <code>RedisTemplate</code>). Some teams
+            also approximate it with a scheduled <code>@Scheduled</code> job that rewarms hot keys before they expire.
+          </p>
+        </Callout>
+
+        <Quiz
+          kind="Quick check"
+          question="Your team caches a personalized recommendations feed per user, keyed on (userId, locale, deviceClass, experimentBucket, flagSetId, appVersion, abTestArm, sessionType). The cache has a 65% hit rate in load tests but only 4% in production. What is the most likely cause and the right first move?"
+          options={[
+            { label: "Production has more users than load tests — increase the cache size.", correct: false, explanation: "More users alone would not crater the hit rate from 65% to 4%. Memory pressure shows up as evictions, not as keys-never-matching. The shape of the problem is cardinality, not capacity." },
+            { label: "The key has too many dimensions; in production, real users hit unique combinations of locale × experiment × flagSet × version × testArm × sessionType, so the same logical request rarely produces the same key twice.", correct: true, explanation: "Classic cardinality explosion. Load tests use a small synthetic matrix, so combinations repeat. Production has the full combinatorial blowup, and most cached entries are read once and never re-hit. Fix: enumerate the dimensions that actually change the response (probably 2-3 of the 8) and fold the rest into a single hashed context fingerprint that changes only when those flags actually flip globally." },
+            { label: "Redis is evicting entries because of network pressure between app and cache.", correct: false, explanation: "Network pressure causes timeouts and connection errors, not stable low hit rates. The symptom — consistent 4% hit rate, not flaky — points at the keys, not the transport." },
+            { label: "TTL is too short — increase it from 5 minutes to 1 hour.", correct: false, explanation: "Longer TTLs help if entries are being evicted before re-read, but if every request produces a new key the TTL is irrelevant. Fix the cardinality first; only then revisit TTL." },
+          ]}
+        />
+
+        <PartRecap
+          title="Part 4 recap"
+          gist="Personalization breaks the global-cache assumption. Watch cardinality, plan for cold start, match TTL to data lifetime, defang hot users, and use stale-while-revalidate to hide miss latency."
+          points={[
+            { takeaway: "Per-user cache memory scales with active users — do the math before you build.", detail: "100M DAU × 10KB = 1TB. That is a Redis cluster, not a single node. Justify the per-user cost, or stay global." },
+            { takeaway: "Cardinality explodes when you put every request param in the key.", detail: "Enumerate the 2-3 dimensions that actually change the response; hash the rest into a context fingerprint." },
+            { takeaway: "Cold start is a UX problem, not a cache problem.", detail: "Pre-warm on signup, fall back to a global feed, or async-upgrade after first byte. Pick based on tolerance for empty-feed first impressions." },
+            { takeaway: "Hot users break uniform-distribution assumptions.", detail: "Replicate their entries across nodes, serve from a top-K local cache, or skip personalization for celebrity-style accounts entirely." },
+            { takeaway: "Stale-while-revalidate is the personalization superpower.", detail: "Caffeine's refreshAfterWrite gives you instant reads plus async refresh, with no extra plumbing. Use it for any per-user payload that takes >50ms to compute." },
           ]}
         />
       </Checkpoint>

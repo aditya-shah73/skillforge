@@ -13,6 +13,7 @@ const CHECKPOINTS = [
   { id: "requirements-and-estimation", title: "Clarify and estimate" },
   { id: "api-and-design", title: "API, data, high-level design" },
   { id: "fanout-deep-dive", title: "Fanout deep-dive" },
+  { id: "ranking-layer", title: "Ranking layer" },
   { id: "wrap", title: "Wrap and what I'd revisit" },
 ];
 
@@ -43,6 +44,32 @@ sequenceDiagram
   API->>DB: hydrate post_ids
   API->>DB: pull recent posts from celebrity authors V follows
   API-->>V: merged, sorted feed
+`;
+
+const rankingFunnelDiagram = `
+flowchart LR
+  U[User opens feed] --> CG[Candidate Generation<br/>~10,000 candidates<br/>recall-oriented]
+  CG --> R[Ranking Model<br/>~500 survivors<br/>P like, P comment, P share]
+  R --> RR[Re-ranking<br/>~50 final posts<br/>diversity, freshness, ads]
+  RR --> Resp[Response to client]
+
+  subgraph Sources [Candidate sources]
+    F[Friends recent posts]
+    G[Groups joined]
+    H[2-hop follow graph]
+    V[Viral content pool]
+    A[Ads inventory]
+  end
+  Sources --> CG
+
+  FS[(Feature Store<br/>Redis / in-memory)]
+  ML[Model Serving<br/>gRPC, p99 lt 50ms]
+  FS -.features.-> R
+  R -.RPC.-> ML
+
+  Resp --> LOG[Impression + action log]
+  LOG --> KQ[(Kafka)]
+  KQ --> TR[ML training pipeline]
 `;
 
 export default function Page() {
@@ -478,10 +505,238 @@ public class TimelineService {
         />
       </Checkpoint>
 
-      <Checkpoint moduleSlug={mod.slug} id="wrap" title="Part 4 · Wrap and what I'd revisit" xp={6}>
+      <Checkpoint moduleSlug={mod.slug} id="ranking-layer" title="Part 4 · Ranking layer (the ML systems lens)" xp={14}>
+        <h2>Why ranking exists at all</h2>
+        <p>
+          The system we just built returns the most recent posts from people you follow. That&apos;s how Facebook actually worked until ~2009, and it broke at scale for a boring reason: <strong>users have too many friends</strong>. If you follow 500 people who collectively post 2,000 times a day, your reverse-chronological feed pushes your sister&apos;s wedding photos off the top within minutes — buried under random lunch pics from acquaintances. The fanout system worked perfectly; the <em>product</em> was failing.
+        </p>
+        <p>
+          The fix is to score every candidate post by predicted engagement and reorder. Controversial in the abstract, but for the interview it&apos;s the constraint: <strong>ranking optimizes for engagement (time spent, interactions)</strong>, and that&apos;s the metric the system is graded on. Note the second-order architectural consequence: <strong>without ranking, fanout strategy stops mattering past N≈200 friends.</strong> If you only ever read the top 50 of your timeline anyway, it doesn&apos;t matter whether the bottom 9,950 candidates were precomputed or not. Ranking makes candidate <em>generation</em> matter more than candidate <em>delivery</em>.
+        </p>
+
+        <Callout variant="info" title="The architecture above doesn't change — ranking is an addition">
+          <p className="m-0">
+            Hybrid fanout still produces the candidate set. Ranking is a transform applied to that set before the response. You don&apos;t throw away the previous three parts; you stack a ranking funnel on top of them. That&apos;s the single most important framing for the interview: <em>delivery and ranking are orthogonal concerns</em>.
+          </p>
+        </Callout>
+
+        <h2>The three-stage funnel: candidate gen → ranking → re-ranking</h2>
+        <p>
+          Every production feed-ranking system on the planet looks like this funnel. Get the shape in your head — the names, the sizes, the cost profile of each stage.
+        </p>
+
+        <Mermaid chart={rankingFunnelDiagram} />
+
+        <h3>Stage 1 · Candidate generation (~10,000 candidates)</h3>
+        <p>
+          The question this stage answers is <em>&quot;what could this user plausibly see?&quot;</em> It&apos;s recall-oriented — false negatives are catastrophic (a great post you never considered), false positives are cheap (the next stage filters them). Candidates come from multiple parallel <strong>retrieval sources</strong>:
+        </p>
+        <ul>
+          <li><strong>Friends&apos; recent posts</strong> — the hybrid timeline we built in Parts 2-3.</li>
+          <li><strong>Groups joined / pages followed</strong> — same fanout pattern, different graph edge.</li>
+          <li><strong>Follow-graph 2-hop</strong> — &quot;your friend liked this&quot; posts, fetched from a graph traversal.</li>
+          <li><strong>Viral content pool</strong> — top-K trending posts globally, regardless of follow.</li>
+          <li><strong>Embedding-based ANN</strong> — &quot;posts similar to ones you engaged with&quot;, served from a vector index (FAISS, ScaNN, Vespa).</li>
+          <li><strong>Ads inventory</strong> — separate retrieval system, joined in here so ads compete with organic in ranking.</li>
+        </ul>
+        <p>
+          Each source is a <strong>separate retrieval system</strong> with its own latency and cache budget. They run in parallel and union their outputs. Latency budget per source: ~10-30ms.
+        </p>
+
+        <h3>Stage 2 · Ranking (~500 survivors)</h3>
+        <p>
+          The question here is <em>&quot;which 500 of these 10,000 are the best?&quot;</em> This is where the heavy ML lives — a neural network scores each candidate against the user. Modern ranking is <strong>multi-task</strong>: a single network predicts P(like), P(comment), P(share), P(skip), P(report), and a final score is a weighted sum tuned by the product team.
+        </p>
+        <ul>
+          <li><strong>Features per candidate:</strong> user history embedding, post content embedding, post age, author affinity (how often you engage with this author), recent CTR on similar content.</li>
+          <li><strong>Compute cost:</strong> 10,000 candidates × one forward pass each. Either batched on a GPU or distilled into a lighter model. Latency budget: 30-50ms total.</li>
+          <li><strong>Why a neural net and not a heuristic?</strong> Heuristics work until they don&apos;t — &quot;recent + popular&quot; was the rule for years; it lost to learned models because the interaction effects (this user, this author, this time of day, this content type) are too combinatorial to hand-tune.</li>
+        </ul>
+
+        <h3>Stage 3 · Re-ranking (~50 final posts)</h3>
+        <p>
+          The question here is <em>&quot;of the top 500, which final 50 do we show, and in what order?&quot;</em> This stage is rule-based, not learned. It enforces:
+        </p>
+        <ul>
+          <li><strong>Diversity</strong> — don&apos;t show 5 cat photos in a row even if the model loves them. Cap consecutive items by author, topic, content type.</li>
+          <li><strong>Freshness boost</strong> — penalize posts older than ~24h; the model alone often over-weights timeless content.</li>
+          <li><strong>Business constraints</strong> — ads every N posts (typically 1-in-6 to 1-in-10), no two ads adjacent, no two posts from the same advertiser within K positions.</li>
+          <li><strong>Floor rules</strong> — guarantee at least one post from a close friend in the top 10 even if the model didn&apos;t pick them.</li>
+        </ul>
+        <p>
+          Re-ranking is cheap (~5ms) but politically expensive — every product team wants their thumb on this scale. Treat it as a configuration layer with a config-as-code review process.
+        </p>
+
+        <Quiz
+          question="Why split candidate generation and ranking into separate stages instead of running one big model over everything in the user's reachable graph?"
+          options={[
+            { label: "Cost. Running the heavy ranking model over millions of reachable posts is computationally infeasible at request time. Candidate generation is a fast, recall-oriented funnel that brings the set down to ~10K — small enough that the heavier ranking model can score every survivor inside the latency budget. The two stages have fundamentally different cost models: cheap-and-broad vs expensive-and-precise.", correct: true, explanation: "Right. The funnel exists because you can't afford to run a 100M-parameter model over 10M candidates per feed load. Each stage is a different cost/quality trade." },
+            { label: "Because candidate generation requires writes and ranking is read-only.", explanation: "Both stages are read-only at request time. The split is a compute budget decision, not a read/write boundary." },
+            { label: "To support multiple A/B test cells.", explanation: "A/B testing happens regardless of the funnel structure. The funnel exists because of compute economics." },
+            { label: "Ranking models can't operate on more than 1,000 inputs.", explanation: "There's no hard limit; the model would happily ingest more — but at unacceptable cost and latency." },
+          ]}
+          hint="Multiply the candidate count by the per-candidate model cost. What does it look like at 10M candidates?"
+          xp={8}
+        />
+
+        <h2>Caching the funnel</h2>
+        <p>
+          A user scrolls 50-100 posts before bailing. If we re-run the entire 10K-candidate funnel on every page request, we&apos;re doing roughly <strong>200x</strong> the work the user actually consumes. Caching at each stage of the funnel is how this becomes affordable.
+        </p>
+        <ul>
+          <li><strong>Candidate gen cache:</strong> per-user, TTL 5-15 minutes. Refreshing 10K candidates every scroll is wasteful; nothing about the candidate <em>set</em> changes minute-to-minute for most users.</li>
+          <li><strong>Top-N ranked cache:</strong> cache the ranked top 500 for the session. Serve pages of 50 from this cache as the user scrolls. Recompute only when they exhaust it.</li>
+          <li><strong>Feature cache:</strong> user-side features (profile embedding, recent activity vector) cached at session start. Post-side features cached per post for ~5 minutes.</li>
+        </ul>
+        <p>
+          The reason this works: <strong>the user&apos;s scroll behavior is the cache eviction policy</strong>. They&apos;ll see the top 50 and bail; recomputing past position 50 is wasted compute most of the time. Reality check on scale: Facebook serves ~1B feed loads/day. At that volume, re-running the full funnel on every load is impossible by a factor of ~100x — caching <em>is</em> the architecture.
+        </p>
+
+        <Callout variant="warn" title="What you cache vs what you don't">
+          <p className="m-0">
+            Cache the <em>candidate set</em> and the <em>ranked order</em>. Don&apos;t cache the final assembled response — re-ranking constraints (ads cadence, diversity windows, floor rules) depend on what the user has already seen <em>this session</em>, which the cache doesn&apos;t know. Re-ranking is cheap; run it fresh on every page request against the cached ranked top 500.
+          </p>
+        </Callout>
+
+        <h2>A/B testing at the feed level</h2>
+        <p>
+          You don&apos;t ship a new ranking model the way you ship a backend change — you ship it to 1% of users, watch metrics for a week, and ramp from there. The infrastructure for this lives next to the ranking service and you should be ready to talk about it.
+        </p>
+        <ul>
+          <li><strong>Bucketing:</strong> consistent hashing on user_id maps every user to a stable bucket. The same user always gets the same experiment cell unless explicitly rerolled.</li>
+          <li><strong>Why you can&apos;t change buckets mid-experiment:</strong> selection bias. If you move a user from cell A to cell B because A is &quot;not working for them&quot;, you&apos;ve broken the random-assignment invariant and the metric comparison is meaningless.</li>
+          <li><strong>Metrics to watch:</strong> short-term engagement (sessions, time spent, interactions) AND long-term retention (D7, D28). A model that boosts short-term engagement but tanks D28 retention is shipping outrage-bait — not what you want.</li>
+          <li><strong>Holdouts:</strong> a small population (1-5%) that <em>never</em> gets new ranking changes. Compare their long-run engagement to the rest of the user base. If holdouts show better retention than the main population, you&apos;ve been over-fitting on short-term metrics — a slow-burn quality regression you can only see with a stable control.</li>
+        </ul>
+        <p>
+          Real number: Meta runs roughly 1,000 concurrent A/B tests on feed ranking at any given time. Each user is in dozens of tests simultaneously. The ranking service has to know <em>which</em> tests this user is in and <em>which model variant</em> to call — usually via a feature flag service queried at the start of the request.
+        </p>
+
+        <h2>Cold start for ranking</h2>
+        <p>
+          A new user has no history — no likes, no prior sessions, no engagement signal. Every candidate looks equally good to the model, which is the same as ranking randomly. You need explicit fallbacks:
+        </p>
+        <ul>
+          <li><strong>Demographic similarity:</strong> bootstrap the user&apos;s embedding from users with similar declared attributes (age range, region, language). Rough but usable.</li>
+          <li><strong>Popular content fallback:</strong> for the first N sessions, lean heavily on the global viral pool. Universally engaging content is universally engaging.</li>
+          <li><strong>Friend-engagement proxy:</strong> rank candidates by what the new user&apos;s <em>friends</em> are engaging with. Good cold-start signal because new users typically follow people they know.</li>
+          <li><strong>Active onboarding:</strong> first-session prompts (&quot;pick 3 topics&quot;) generate explicit signal you can feed into the model immediately.</li>
+        </ul>
+        <p>
+          This connects to the broader cold-start pattern from the caching-patterns module — same principle (no historical signal, fall back to a population prior), different surface area.
+        </p>
+
+        <h2>What the full-stack engineer actually builds</h2>
+        <p>
+          Important boundary to know in interviews: <strong>the ranking model itself is owned by the ML team</strong>. You&apos;re not training neural networks at the whiteboard. What you <em>are</em> building is the serving infrastructure around the model — and that&apos;s where most of the interesting systems work lives.
+        </p>
+        <ul>
+          <li><strong>Feature store</strong> — low-latency reads of user features (recent activity, embedding) and post features (engagement counters, content embedding) at request time. Redis or an in-memory feature server. p99 read budget: ~5ms across hundreds of features.</li>
+          <li><strong>Model serving</strong> — gRPC call to a Python TF Serving / TorchServe / Triton process. Batch the candidate set into a single inference call. p99 budget: &lt;50ms.</li>
+          <li><strong>Logging pipeline</strong> — every <em>impression</em> (post shown) and every <em>action</em> (like, comment, dwell-time, skip) goes to a Kafka topic that feeds the ML training pipeline. Without this loop, the model can&apos;t learn from what it shipped.</li>
+          <li><strong>Experiment service</strong> — flag lookup at request time to decide which model variant to call.</li>
+          <li><strong>Fallback path</strong> — if the model serving call fails or times out, drop to a heuristic ranker (recency + simple popularity). The feed must never fail closed.</li>
+        </ul>
+
+        <Callout variant="warn" title="Training-serving skew is the silent killer">
+          <p className="m-0">
+            The most common production ML bug is <strong>training-serving skew</strong>: a feature is computed one way in the offline training pipeline (say, &quot;total likes in last 7 days&quot; computed from a batch query at midnight) and a different way at serving time (the same feature, but read from a real-time counter that&apos;s been updated incrementally). The two values disagree, the model trained on the offline distribution sees a different distribution at serving time, and quality silently regresses. Fix: compute features in <em>one</em> place and snapshot them into both pipelines. This is what &quot;feature store&quot; literally means as a discipline, not just as a Redis instance.
+          </p>
+        </Callout>
+
+        <h3>The Spring/Java assembly endpoint</h3>
+        <p>
+          Here&apos;s how the feed endpoint changes when you stack ranking on top of the hybrid fanout. The candidate-gen step is the existing <code>buildFeed</code> from Part 3; ranking is a gRPC RPC; re-ranking is in-process.
+        </p>
+
+        <CodeBlock lang="java" caption="src/main/java/com/feed/api/RankedFeedController.java">{`@RestController
+@RequestMapping("/api/v2")
+public class RankedFeedController {
+
+    private final TimelineService timelines;       // candidate gen (Parts 2-3)
+    private final FeatureStore featureStore;       // Redis-backed feature reads
+    private final RankingClient rankingClient;     // gRPC to model serving
+    private final ReRanker reRanker;               // in-process diversity, ads, freshness
+    private final ImpressionLogger impressionLog;  // Kafka producer
+    private final ExperimentService experiments;
+
+    @GetMapping("/feed")
+    public FeedResponse feed(
+            @RequestHeader("X-User-Id") String userId,
+            @RequestParam(defaultValue = "50") int limit,
+            @RequestParam(required = false) String cursor) {
+
+        String variant = experiments.variantFor(userId, "feed-ranking-v3");
+
+        // 1. Candidate generation — hybrid fanout from Part 3, plus other sources
+        List<Candidate> candidates = timelines.generateCandidates(userId, 10_000);
+
+        // 2. Feature hydration — one batched Redis read for user + post features
+        FeatureBundle features = featureStore.hydrate(userId, candidates);
+
+        // 3. Ranking — gRPC to the model serving process; falls back to heuristic on failure
+        List<ScoredCandidate> ranked;
+        try {
+            ranked = rankingClient.score(variant, features, candidates);
+        } catch (RankingTimeoutException e) {
+            ranked = HeuristicRanker.recencyAndPopularity(candidates); // safe fallback
+        }
+
+        // 4. Re-ranking — diversity, freshness boost, ads, business rules
+        List<Candidate> finalSet = reRanker.apply(ranked, userId, limit);
+
+        // 5. Log impressions for the training pipeline (async, fire-and-forget)
+        impressionLog.logAsync(userId, finalSet, variant);
+
+        return FeedResponse.of(finalSet, cursor);
+    }
+}`}</CodeBlock>
+
+        <p>
+          Three things to point at in the interview: (1) the <code>experiments.variantFor()</code> call right at the top — every request is in some bucket, and bucketing happens before any work that depends on the model variant. (2) the try/catch around <code>rankingClient.score</code> with a heuristic fallback — the feed never fails closed; if the model service is down, users still get a (worse) feed. (3) <code>impressionLog.logAsync</code> is the closing of the loop — without that event stream the model can&apos;t learn.
+        </p>
+
+        <Quiz
+          question="The model serving call (gRPC to a Python process) starts timing out at p99 ~80ms, blowing the 200ms feed SLO. What's the right first move?"
+          options={[
+            { label: "Short-circuit to the heuristic fallback when latency exceeds the budget — the feed must keep loading. In parallel, investigate the model service: is it a GC pause, a batch-size tuning issue, a feature-store slowdown propagating through? The SLO is non-negotiable; quality regression for some users is preferable to a broken feed for everyone.", correct: true, explanation: "Right. The feed never fails closed. The fallback path exists exactly for this. You diagnose in parallel — but you don't let p99 latency degrade while you investigate." },
+            { label: "Increase the gRPC timeout so calls don't fail.", explanation: "That makes the SLO miss worse, not better. Higher timeouts mean more users wait longer; the failure rate stays the same." },
+            { label: "Add caching in front of the model service.", explanation: "Ranking output is per-user, per-candidate-set — cache hit rate would be near zero unless the user reloads quickly. The fallback is the right immediate move." },
+            { label: "Roll back the most recent model deploy.", explanation: "That might be the right diagnosis eventually, but it doesn't address the immediate user-facing degradation. Fall back first, then diagnose." },
+          ]}
+          hint="What happens to the user-visible product if the model service is slow? What guarantee should the feed make even when ML is broken?"
+          xp={8}
+        />
+
+        <Quiz
+          question="A new ranking model wins +3% engagement in a 1% A/B test for 7 days. The team wants to ramp to 100%. What's the most important check before you do?"
+          options={[
+            { label: "Compare the test cell against a long-running holdout that has never received recent ranking changes. Short-term wins compound — many models that win in week-1 A/B tests cause slow-burn retention regressions that only show up in holdouts measured over months. Without that comparison you can't distinguish a real improvement from a sugar-rush metric.", correct: true, explanation: "Right. Short-term engagement and long-term retention often diverge. Holdouts are the only way to detect cumulative drift across many sequential 'wins'." },
+            { label: "Re-run the experiment at 5% to confirm.", explanation: "Re-running at higher exposure gives you tighter confidence intervals on the same metric, but doesn't tell you whether short-term engagement maps to long-term retention. The holdout comparison is the missing check." },
+            { label: "Make sure the model passes offline evaluation.", explanation: "Offline eval was already passed before the A/B test launched — that's how it got there. The question is what comes next, not what came before." },
+            { label: "Verify the bucketing hash hasn't drifted.", explanation: "Bucketing integrity is important, but the substantive question for ramping is about long-term metrics, not infrastructure correctness." },
+          ]}
+          hint="What's the difference between 'this model won the A/B test' and 'this model is good for the product'?"
+          xp={8}
+        />
+
+        <PartRecap
+          title="Part 4 recap"
+          gist="Ranking is a three-stage funnel — candidate gen, ranking model, re-ranking — stacked on top of the hybrid fanout from Parts 2-3. The full-stack engineer owns the serving infrastructure (feature store, model RPC, impression logging, experiment service, fallbacks), not the model itself. Caching and A/B testing are how this scales to 1B feed loads/day."
+          points={[
+            { takeaway: "The funnel exists because compute is finite", detail: "Candidate gen is recall-oriented and cheap (~10K out). Ranking is precision-oriented and expensive (~500 out). Re-ranking is rule-based and applies business constraints (~50 out). Each stage has a different cost model — that's why they're separate." },
+            { takeaway: "Caching is structural, not a tweak", detail: "Cache the candidate set per-user (5-15 min TTL) and the ranked top-500 per-session. Re-ranking runs fresh per page because it depends on what was already shown. At 1B/day there's no other way to fit." },
+            { takeaway: "A/B testing requires bucketing AND holdouts", detail: "Consistent-hash bucketing for assignment stability. Long-running holdouts to detect slow-burn retention regressions that short-term metrics hide. Meta runs ~1000 concurrent feed-ranking tests." },
+            { takeaway: "Cold start needs explicit fallbacks", detail: "New users have no signal; the model degenerates to random ordering. Fall back to demographic priors, popular content, and friend-engagement proxies until enough history accumulates." },
+            { takeaway: "Full-stack owns the serving plane, not the model", detail: "Feature store, model RPC, impression logging, experiment service, heuristic fallback — that's the system. Watch for training-serving skew: the silent quality killer." },
+            { takeaway: "The feed must never fail closed", detail: "Model timeout = fall back to heuristic ranking. Feature store down = fall back to default features. Logging broken = drop logs and serve. A working bad feed beats a broken good feed every time." },
+          ]}
+        />
+      </Checkpoint>
+
+      <Checkpoint moduleSlug={mod.slug} id="wrap" title="Part 5 · Wrap and what I'd revisit" xp={6}>
         <h2>What I&apos;d revisit if I had more time</h2>
         <ul>
-          <li><strong>Ranking.</strong> Real feeds aren&apos;t chronological — they&apos;re ranked by predicted engagement. The architecture above stays the same; we add a ranking service that scores candidate posts (the merged set from push + pull) and reorders. The ranking step is a pure function of (user_id, posts) and lives between the merge and the response.</li>
           <li><strong>Multi-region.</strong> Posts table replicates cross-region with conflict resolution (last-write-wins on post_id is fine because post_ids are immutable). Timelines are per-region — a user&apos;s feed is computed in their home region against the local replica of the posts table.</li>
           <li><strong>Backpressure on the fanout queue.</strong> If queue lag exceeds threshold, we should either drop the celebrity threshold dynamically (more authors go pull, less push load) or shed non-critical fanout (e.g. for inactive followers). Naming this as a control mechanism is a senior signal.</li>
           <li><strong>Inactive user GC.</strong> Storing precomputed timelines for users who haven&apos;t opened the app in 6 months is wasted memory. Periodically evict inactive timelines and lazily rebuild on next login (which is a one-time pull).</li>

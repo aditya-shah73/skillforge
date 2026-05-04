@@ -14,6 +14,7 @@ const CHECKPOINTS = [
   { id: "secrets-mtls", title: "Secrets & mTLS" },
   { id: "owasp", title: "OWASP" },
   { id: "pii", title: "PII & deletion" },
+  { id: "modern-auth", title: "Modern auth depth" },
 ];
 
 const oauthFlow = `sequenceDiagram
@@ -38,6 +39,29 @@ const mtlsFlow = `flowchart LR
   A -.verifies.-> CA[Internal CA]
   B -.verifies.-> CA
   A <-->|encrypted + authenticated| B`;
+
+const authTiers = `flowchart LR
+  C[Browser/SPA<br/>access token in memory<br/>refresh in HttpOnly cookie] -->|HTTPS| E[Edge / Gateway<br/>JWT signature + basic claims]
+  E --> B[BFF<br/>holds session cookie<br/>mints svc tokens]
+  B -->|service JWT<br/>aud=orders| O[Orders Service]
+  B -->|service JWT<br/>aud=billing| BI[Billing Service]
+  O -->|validates aud, scope, exp| O
+  BI -->|validates aud, scope, exp| BI`;
+
+const refreshRotation = `sequenceDiagram
+  participant C as Client
+  participant A as Auth Server
+  Note over C,A: Initial login
+  C->>A: code + verifier
+  A->>C: AT1 (5 min) + RT1 (family=F1, gen=1)
+  Note over C,A: Normal refresh
+  C->>A: RT1
+  A->>A: mark RT1 used, issue gen=2
+  A->>C: AT2 + RT2 (family=F1, gen=2)
+  Note over C,A: Attacker tries stolen RT1
+  C->>A: RT1 (already used!)
+  A->>A: REUSE DETECTED — kill family F1
+  A->>C: 401 + force re-login`;
 
 export default function Page() {
   const mod = getModuleBySlug("security-design")!;
@@ -540,14 +564,463 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
         />
       </section>
 
+      {/* ============================== PART 5 ============================== */}
+      <section className="my-12">
+        <h2 className="text-2xl font-bold mb-4">Part 5 — Modern auth depth: OAuth flows, tokens, CSRF, and tier placement</h2>
+        <p>
+          Part 1 gave you the AuthN/AuthZ split and a feel for OAuth. This part is the depth: which OAuth flow to pick
+          and why, what the actual difference is between an ID token and an access token, how refresh token rotation
+          works (and why it&apos;s a tripwire, not just a UX feature), what CSRF looks like in 2026 now that browsers
+          ship SameSite=Lax by default, and where auth state should physically live as a request walks from the browser
+          through your edge, BFF, and downstream services.
+        </p>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">OAuth2 flows — pick one, and only one</h3>
+        <p>
+          OAuth2 has a handful of grant types. In 2026, the answer is almost always Authorization Code with PKCE. The
+          others are either dead, deprecated, or narrow special cases.
+        </p>
+
+        <ul className="space-y-2">
+          <li>
+            <strong>Authorization Code + PKCE.</strong> The default for SPAs, mobile apps, native desktop apps, and
+            anything else that can&apos;t safely hold a client secret. PKCE replaces the client secret with a per-flow
+            verifier the attacker can&apos;t guess.
+          </li>
+          <li>
+            <strong>Authorization Code (classic).</strong> Server-side web apps that have a real backend with a real
+            client secret. Still fine. Add PKCE anyway — defense in depth, costs nothing.
+          </li>
+          <li>
+            <strong>Client Credentials.</strong> Service-to-service. No human in the loop. The service authenticates
+            with its own client ID + secret and gets an access token scoped to itself.
+          </li>
+          <li>
+            <strong>Implicit flow.</strong> Dead. The OAuth 2.1 draft formally removes it. Don&apos;t use it.
+          </li>
+          <li>
+            <strong>Resource Owner Password (ROPC).</strong> User hands their password to the client. Defeats the whole
+            point of OAuth (don&apos;t share passwords with apps). Reserved for legacy migration only.
+          </li>
+        </ul>
+
+        <Callout variant="warn" title="Why implicit flow is dead">
+          <p className="m-0">
+            Implicit returned the access token directly in the URL fragment after redirect. That means the token landed
+            in browser history, in HTTP referer headers, in proxy logs, and in any analytics script that read
+            <code> location.hash</code>. There was no client authentication and no code exchange step — whoever saw the
+            URL got the token.
+          </p>
+          <p className="m-0">
+            PKCE killed the &quot;but SPAs can&apos;t hold secrets&quot; argument that originally justified implicit.
+            Auth code + PKCE gives SPAs a safe flow with a server-side exchange. There is no remaining reason to use
+            implicit.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">ID token vs access token — they answer different questions</h3>
+        <p>
+          OIDC layers identity on top of OAuth2. The auth server hands back two tokens after a successful login flow,
+          and they are not interchangeable.
+        </p>
+        <ul className="space-y-2">
+          <li>
+            <strong>ID token (OIDC, &quot;who you are&quot;).</strong> A JWT containing user claims:
+            <code> sub</code>, <code>email</code>, <code>name</code>, <code>iat</code>, <code>aud</code> = your
+            client ID. The client consumes this to know who logged in. <strong>Never send an ID token to an
+            API.</strong> It&apos;s addressed to the client app, not the resource server.
+          </li>
+          <li>
+            <strong>Access token (OAuth, &quot;what you can do&quot;).</strong> A bearer credential the client sends to
+            APIs. Carries scopes and an audience claim naming the resource server. The API validates signature, issuer,
+            audience, expiry, and required scopes.
+          </li>
+        </ul>
+
+        <CodeBlock lang="java" caption="Spring resource server — validating audience and scope">{`@Bean
+JwtDecoder jwtDecoder(@Value("\${app.issuer}") String issuer,
+                      @Value("\${app.audience}") String audience) {
+  NimbusJwtDecoder decoder =
+      JwtDecoders.fromIssuerLocation(issuer);
+
+  OAuth2TokenValidator<Jwt> withIssuer =
+      JwtValidators.createDefaultWithIssuer(issuer);
+
+  // Audience check — reject tokens minted for a different service
+  OAuth2TokenValidator<Jwt> withAudience = jwt ->
+      jwt.getAudience() != null && jwt.getAudience().contains(audience)
+        ? OAuth2TokenValidatorResult.success()
+        : OAuth2TokenValidatorResult.failure(
+            new OAuth2Error("invalid_audience",
+              "Token aud does not include " + audience, null));
+
+  decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(withIssuer, withAudience));
+  return decoder;
+}`}</CodeBlock>
+
+        <Callout variant="insight" title="Don't reuse access tokens across services">
+          <p className="m-0">
+            If your orders service and billing service both accept the same token, a compromise in either one becomes a
+            compromise of both. Mint per-audience tokens — the BFF (or a token exchange endpoint) trades the
+            user&apos;s session for a token scoped to exactly the downstream it needs.
+          </p>
+          <p className="m-0">
+            This is the same instinct as least-privilege IAM: the blast radius of any single token is bounded by its
+            audience and scope.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Session vs JWT — the 2026 take</h3>
+        <p>
+          The mid-2010s consensus was &quot;JWT for everything, sessions are legacy.&quot; That consensus was wrong, and
+          the industry is quietly walking it back. Here&apos;s the honest tradeoff.
+        </p>
+
+        <div className="my-6 grid md:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <p className="font-semibold mb-2">JWT — pros</p>
+            <ul className="text-sm space-y-1">
+              <li>Stateless. No DB read per request.</li>
+              <li>Trivial to scale horizontally — any node can validate.</li>
+              <li>Works across origins and across services without a shared session store.</li>
+              <li>Carries claims (scopes, tenant) the resource server can act on.</li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <p className="font-semibold mb-2">JWT — cons</p>
+            <ul className="text-sm space-y-1">
+              <li>Can&apos;t revoke until expiry — fired user keeps access for the TTL.</li>
+              <li>Bytes ride on every request. Big claims = big requests.</li>
+              <li>Key rotation is a real operational chore (JWKS, kid headers, overlap windows).</li>
+              <li>Footguns: alg=none, weak HS256 secrets, missing aud check.</li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <p className="font-semibold mb-2">Session — pros</p>
+            <ul className="text-sm space-y-1">
+              <li>Instant revocation — delete the row, done.</li>
+              <li>Tiny opaque cookie. No claim leakage.</li>
+              <li>Server controls everything: roles, lockouts, step-up auth.</li>
+              <li>Hard to misuse — there&apos;s no &quot;forgot to validate&quot; case.</li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <p className="font-semibold mb-2">Session — cons</p>
+            <ul className="text-sm space-y-1">
+              <li>Session store is a hot dependency — Redis goes down, logins go down.</li>
+              <li>Sticky sessions or a shared store needed across instances.</li>
+              <li>Doesn&apos;t cross origins easily.</li>
+              <li>Less natural for B2B APIs and machine clients.</li>
+            </ul>
+          </div>
+        </div>
+
+        <Callout variant="insight" title="Opinion — what to actually pick">
+          <p className="m-0">
+            For a first-party web app where the same org owns the frontend and the backend, sessions win. Revocation is
+            free, the cookie is small, and the failure modes are well-understood. Pair with a BFF and you don&apos;t
+            ever need to expose a JWT to the browser.
+          </p>
+          <p className="m-0">
+            For B2B APIs where third parties integrate, mobile apps, and service-to-service traffic, JWT wins. There&apos;s
+            no shared session store across orgs, and the stateless model fits. Just keep TTLs short (5–15 minutes) and
+            rotate refresh tokens.
+          </p>
+          <p className="m-0">
+            The &quot;JWT in localStorage for our SPA&quot; pattern that dominated 2017–2020 was the worst of both
+            worlds. Move first-party SPAs to BFF + session cookie.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Refresh token rotation — and why it&apos;s a tripwire</h3>
+        <p>
+          The standard pattern: short-lived access token (5–15 minutes), long-lived refresh token (days to weeks). When
+          the access token expires, the client posts the refresh token to the auth server and gets a new access token
+          back. Simple enough.
+        </p>
+        <p>
+          The interesting part is rotation. Each refresh exchange returns a <em>new</em> refresh token and invalidates
+          the old one. If the old refresh token is ever presented again, that&apos;s a stolen-token signal — the
+          attacker and the legitimate client are both holding copies. The auth server kills the entire token
+          family and forces re-login.
+        </p>
+
+        <Mermaid chart={refreshRotation} />
+
+        <CodeBlock lang="java" caption="Refresh token rotation with reuse detection (sketch)">{`@Service
+public class RefreshTokenService {
+  private final RefreshTokenRepository repo;
+
+  @Transactional
+  public TokenPair rotate(String presentedRefresh) {
+    RefreshToken rt = repo.findByToken(hash(presentedRefresh))
+        .orElseThrow(() -> new BadCredentials("unknown refresh"));
+
+    if (rt.isRevoked() || rt.isUsed()) {
+      // REUSE DETECTED — someone else used this token already
+      // Kill the entire family — both legit user and attacker get logged out
+      repo.revokeFamily(rt.getFamilyId());
+      throw new TokenReuseDetected("family " + rt.getFamilyId() + " compromised");
+    }
+
+    if (rt.getExpiresAt().isBefore(Instant.now())) {
+      throw new BadCredentials("refresh expired");
+    }
+
+    // Mark old as used, mint new in same family, increment generation
+    rt.markUsed();
+    RefreshToken next = RefreshToken.builder()
+        .familyId(rt.getFamilyId())
+        .generation(rt.getGeneration() + 1)
+        .userId(rt.getUserId())
+        .expiresAt(Instant.now().plus(Duration.ofDays(14)))
+        .build();
+    repo.save(next);
+
+    String accessJwt = mintAccessToken(rt.getUserId(), Duration.ofMinutes(10));
+    return new TokenPair(accessJwt, next.getRawToken());
+  }
+}`}</CodeBlock>
+
+        <Callout variant="warn" title="Storage — where these tokens go in the browser">
+          <p className="m-0">
+            Refresh token: <strong>HttpOnly, Secure, SameSite=Strict cookie</strong>, scoped to the auth server&apos;s
+            origin. JavaScript can&apos;t read it, so XSS can&apos;t steal it.
+          </p>
+          <p className="m-0">
+            Access token: <strong>in memory only</strong> (a JS variable, a closure, a Redux slice — not localStorage,
+            not sessionStorage). It lives 10 minutes anyway; if the page reloads, refresh fetches a fresh one.
+          </p>
+          <p className="m-0">
+            localStorage for tokens is an XSS amplifier. One reflected XSS through any third-party script and the
+            attacker exfiltrates the token to their server. With HttpOnly cookies + in-memory access tokens, XSS still
+            hurts but it can&apos;t walk away with persistent credentials.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">CSRF in 2026 — what changed and what didn&apos;t</h3>
+        <p>
+          Modern browsers default cookies to <code>SameSite=Lax</code>. That single change neutered most classic CSRF:
+          a malicious site can no longer cause your browser to silently POST to <code>bank.com/transfer</code> with
+          your auth cookie attached. The cookie is simply not sent on cross-site sub-requests.
+        </p>
+        <p>That doesn&apos;t mean CSRF is solved. It means the threat model shifted.</p>
+
+        <ul className="space-y-2">
+          <li>
+            <strong>SameSite=Lax</strong> still sends cookies on top-level GET navigations. If your app does
+            state-changing GETs (it shouldn&apos;t, but legacy code does), CSRF still works.
+          </li>
+          <li>
+            <strong>SameSite=Strict</strong> blocks even top-level navigations. Safer, but breaks the &quot;click a
+            link in an email and stay logged in&quot; UX. Often paired with a short-lived &quot;lax&quot; sibling
+            cookie for first-request bootstrap.
+          </li>
+          <li>
+            <strong>SameSite=None</strong> with <code>Secure</code> is required for cross-site cookies (think:
+            embedded widgets, federated login pop-ups). These are still CSRF-vulnerable and need explicit defenses.
+          </li>
+          <li>
+            <strong>Same-origin form posts</strong> from a compromised script on your own origin bypass SameSite
+            entirely — that&apos;s an XSS problem, not a CSRF problem, but the impact looks similar.
+          </li>
+        </ul>
+
+        <p className="font-semibold mt-6">The three CSRF defenses, and what each actually defends:</p>
+
+        <ClassifyChallenge
+          title="CSRF defense fit"
+          prompt="Match each scenario to the defense that best fits. (Some defenses can stack — pick the one that does the heavy lifting.)"
+          buckets={[
+            { id: "samesite", label: "SameSite cookie", color: "emerald" },
+            { id: "double", label: "Double-submit cookie", color: "amber" },
+            { id: "synch", label: "Synchronizer token", color: "indigo" },
+            { id: "header", label: "Custom header + CORS", color: "violet" },
+          ]}
+          items={[
+            { id: "c1", label: "First-party app, modern browsers, server-side rendered forms", answer: "samesite", explanation: "SameSite=Lax does the work for free. Add a synchronizer token if you want belt-and-suspenders for legacy browsers." },
+            { id: "c2", label: "Stateless API consumed by your own SPA on the same domain", answer: "header", explanation: "Require a custom header (e.g. X-Requested-With) — browsers won't send custom headers cross-origin without a preflight, and CORS blocks the preflight. Cheap and effective." },
+            { id: "c3", label: "Server has no session store; embeds anti-CSRF cookie that the form re-submits as a hidden field", answer: "double", explanation: "Double-submit cookie. The server compares the cookie value to the form field — attacker can't read the cookie cross-origin to forge the field." },
+            { id: "c4", label: "Classic server-rendered app with sessions; high-value form posts", answer: "synch", explanation: "Synchronizer token. Server stores per-session token, embeds in form, validates on submit. Strongest defense, requires session state." },
+          ]}
+        />
+
+        <Callout variant="info" title="Spring Security defaults that earn their keep">
+          <p className="m-0">
+            Spring Security ships CSRF protection enabled by default for non-GET requests using a synchronizer token
+            stored in the session. For SPAs talking to the same backend, switch to the
+            <code> CookieCsrfTokenRepository.withHttpOnlyFalse()</code> repository — it stores the token in a readable
+            cookie that your frontend echoes back as a header. That&apos;s a double-submit pattern, configured in two
+            lines.
+          </p>
+          <p className="m-0">
+            For pure API services that only accept JSON with a custom <code>Authorization</code> header (and never
+            cookies), CSRF protection can be disabled — there&apos;s no ambient-credential to forge. Verify that
+            assumption before flipping the switch.
+          </p>
+        </Callout>
+
+        <h3 className="text-xl font-semibold mt-8 mb-3">Where auth state lives — full-stack tier walkthrough</h3>
+        <p>
+          The interview question that separates &quot;has read a JWT tutorial&quot; from &quot;has shipped this in
+          production&quot; is: as a request walks from the browser through your edge gateway, into a BFF, then out to
+          three downstream services — what auth credential exists at each hop, and who validates what?
+        </p>
+
+        <Mermaid chart={authTiers} />
+
+        <ul className="space-y-2 mt-4">
+          <li>
+            <strong>Client (browser/SPA).</strong> Holds an access token in memory and a refresh token in an HttpOnly
+            cookie. Or — for first-party apps — holds nothing but a session cookie, and the BFF does all token handling
+            server-side. The client&apos;s job is to send credentials, not to mint or validate them.
+          </li>
+          <li>
+            <strong>Edge / API gateway / CDN.</strong> Cheap, high-volume checks: JWT signature verification against
+            cached JWKS, expiry, issuer, basic claim shape. This kills obviously-bogus traffic before it costs you
+            compute. The edge does <em>not</em> do fine-grained authz — it doesn&apos;t know your data model.
+          </li>
+          <li>
+            <strong>BFF (backend-for-frontend).</strong> The trust pivot. Holds the user&apos;s session cookie,
+            translates it into per-audience service tokens via a token exchange (RFC 8693) or a credentials-grant call.
+            The BFF is the only thing that ever sees the user&apos;s long-lived credential.
+          </li>
+          <li>
+            <strong>Service.</strong> Validates the service-scoped JWT: signature, issuer, audience (= itself), expiry,
+            scopes. Then enforces fine-grained authz against its own data model — &quot;this user owns this order.&quot;
+          </li>
+        </ul>
+
+        <Callout variant="warn" title="Anti-pattern — client passes one token to N services">
+          <p className="m-0">
+            The shortcut design: the SPA gets one access token from login and forwards it directly to orders, billing,
+            inventory, and notifications. It feels simple. It is also a leak amplifier — any one of those services
+            getting compromised exposes a token good for all of them, and there&apos;s no central point to revoke.
+          </p>
+          <p className="m-0">
+            The BFF pattern fixes this. The browser holds a session cookie; the BFF mints a fresh per-audience token
+            for each downstream call. Revocation is one row in the session store. Token blast radius is one service.
+          </p>
+        </Callout>
+
+        <CodeBlock lang="java" caption="BFF — exchanging a session for a downstream service token">{`@Component
+public class DownstreamTokenMinter {
+  private final WebClient authServer;
+
+  // RFC 8693 token exchange: subject = user from session, audience = target service
+  public Mono<String> tokenFor(String userId, String audience) {
+    return authServer.post()
+        .uri("/oauth2/token")
+        .body(BodyInserters.fromFormData("grant_type", "urn:ietf:params:oauth:grant-type:token-exchange")
+            .with("subject_token", internalAssertionFor(userId))
+            .with("subject_token_type", "urn:ietf:params:oauth:token-type:jwt")
+            .with("audience", audience)
+            .with("scope", scopesFor(audience)))
+        .retrieve()
+        .bodyToMono(TokenResponse.class)
+        .map(TokenResponse::accessToken);
+  }
+}
+
+@RestController
+public class OrdersController {
+  private final WebClient orders;
+  private final DownstreamTokenMinter minter;
+
+  @GetMapping("/api/orders")
+  public Mono<List<Order>> myOrders(@AuthenticationPrincipal SessionUser u) {
+    return minter.tokenFor(u.id(), "orders-service")
+      .flatMap(token -> orders.get()
+          .uri("/orders?owner={id}", u.id())
+          .header("Authorization", "Bearer " + token)
+          .retrieve()
+          .bodyToFlux(Order.class)
+          .collectList());
+  }
+}`}</CodeBlock>
+
+        <Checkpoint moduleSlug="security-design" id="modern-auth" title="Modern auth depth checkpoint" xp={20}>
+          <Quiz
+            kind="Quick check"
+            xp={15}
+            question="A SPA team is choosing between auth code + PKCE and implicit flow. Why is implicit the wrong choice in 2026?"
+            options={[
+              { label: "Implicit returns the access token in the URL fragment, leaking it to history, referers, and analytics; OAuth 2.1 removes it entirely", correct: true, explanation: "Right. The token landed in browser history, referer headers, and any script reading location.hash. PKCE made the original 'SPAs can't hold secrets' justification obsolete." },
+              { label: "Implicit is slower than auth code because of the extra round trip", correct: false, explanation: "Implicit is technically fewer hops — that was its original appeal. Speed isn't the issue; token leakage is." },
+              { label: "Implicit doesn't support refresh tokens, so users have to log in every hour", correct: false, explanation: "True but secondary. The disqualifier is access token leakage via the URL, not the refresh-token UX." },
+            ]}
+          />
+
+          <Quiz
+            kind="Quick check"
+            xp={15}
+            question="Your refresh token rotation logic detects that a refresh token was presented twice. What should happen?"
+            options={[
+              { label: "Issue a new pair anyway — refresh tokens can be reused once for retry safety", correct: false, explanation: "No. Reuse is a stolen-token signal. The attacker has a copy and so does the legitimate client." },
+              { label: "Revoke the entire token family and force the user to re-authenticate", correct: true, explanation: "Right. A used refresh being presented again means two parties hold it. You don't know which is the attacker, so kill the family and make both re-authenticate." },
+              { label: "Log a warning and let it through — could just be a network retry", correct: false, explanation: "Network retries should use idempotency keys, not token reuse. Reuse means compromise; treat it that way." },
+            ]}
+            hint="The whole point of rotation is that reuse becomes a tripwire."
+          />
+
+          <Quiz
+            kind="Quick check"
+            xp={15}
+            question="A teammate stores access tokens in localStorage 'so the SPA can read them after a reload.' What's the strongest objection?"
+            options={[
+              { label: "localStorage is slower than memory access", correct: false, explanation: "Performance isn't meaningfully different for this use." },
+              { label: "Any XSS on the page becomes a full account takeover — the attacker exfiltrates the token to their server", correct: true, explanation: "Right. localStorage is readable by any script on the origin. With HttpOnly refresh cookies + in-memory access tokens, XSS still hurts but can't walk away with persistent credentials." },
+              { label: "localStorage has a 5MB quota that JWTs will exceed", correct: false, explanation: "JWTs are kilobytes; quota isn't the issue." },
+            ]}
+          />
+
+          <Quiz
+            kind="Quick check"
+            xp={15}
+            question="In a BFF architecture, where does the user's long-lived credential live, and what does the browser send to downstream services?"
+            options={[
+              { label: "Browser sends a JWT directly to each service; BFF just proxies", correct: false, explanation: "That's the anti-pattern — it's the 'one token to N services' design that defeats per-service blast-radius limits." },
+              { label: "BFF holds the session; browser sends only a session cookie; BFF mints per-audience service tokens for each downstream call", correct: true, explanation: "Right. The user's credential never reaches the browser as a bearer token. Each downstream gets a token scoped to itself, so a compromise of one service doesn't grant access to the others." },
+              { label: "Both browser and BFF hold the same access token, sent to all services", correct: false, explanation: "Same problem as option A — single token, broad blast radius, no central revocation." },
+            ]}
+          />
+
+          <Quiz
+            kind="Quick check"
+            xp={15}
+            question="Your team enables SameSite=Lax on session cookies and asks if CSRF tokens can be removed. What's the right answer?"
+            options={[
+              { label: "Yes — SameSite=Lax fully replaces CSRF tokens in 2026", correct: false, explanation: "Lax still sends cookies on top-level GET navigations and doesn't help if you have any cross-site embed flows or SameSite=None cookies. It's a strong default, not a complete replacement." },
+              { label: "Keep CSRF defenses for state-changing endpoints — Lax handles the common case but not top-level GET state changes, cross-site embeds, or SameSite=None cookies", correct: true, explanation: "Right. SameSite=Lax solves most classic CSRF for free, but state-changing GETs, embedded widgets, and cross-site auth flows still need explicit defenses (synchronizer tokens, double-submit, or custom headers)." },
+              { label: "No — CSRF tokens are required by every framework regardless of SameSite", correct: false, explanation: "Frameworks let you disable CSRF protection; the question is whether you should, not whether you can." },
+            ]}
+            hint="Think about what SameSite=Lax does NOT cover."
+          />
+        </Checkpoint>
+
+        <PartRecap
+          title="Part 5 recap"
+          gist="Modern auth is a stack of small, opinionated choices: PKCE everywhere, per-audience tokens, rotated refresh, in-memory access tokens, and a BFF that owns the user's credential."
+          points={[
+            { takeaway: "Auth code + PKCE is the default flow. Implicit is dead.", detail: "OAuth 2.1 formally removes implicit; PKCE killed the SPA-can't-hold-secrets argument." },
+            { takeaway: "ID token says who, access token says what. Don't mix them.", detail: "ID tokens go to the client. Access tokens go to APIs and must have aud validated." },
+            { takeaway: "Sessions for first-party web, JWT for B2B/mobile. The 'JWT for everything' era was a mistake.", detail: "Pair first-party SPAs with a BFF + session cookie; never expose a long-lived JWT to the browser." },
+            { takeaway: "Rotate refresh tokens; treat reuse as a compromise.", detail: "Used refresh seen twice = kill the family. It's a tripwire, not a UX nicety." },
+            { takeaway: "SameSite=Lax solves most CSRF for free, not all of it.", detail: "Keep defenses for state-changing GETs, cross-site embeds, and SameSite=None scenarios." },
+            { takeaway: "Per-tier auth: edge does cheap checks, BFF holds the session, services validate per-audience JWTs, client holds nothing persistent in JS.", detail: "One token to N services is the anti-pattern. Mint per-audience, revoke at the BFF." },
+          ]}
+        />
+      </section>
+
       {/* ============================== Closing ============================== */}
       <section className="my-12 rounded-xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 p-8">
         <h2 className="text-2xl font-bold mb-3">Walking out</h2>
         <p>
           Security in system design is mostly about not skipping the boring checks. Validate audience claims. Push
           ownership filters into queries. Resolve URLs before fetching. Encrypt with per-user keys. Log auth events.
-          None of it is glamorous, all of it is what separates a system that sleeps soundly from one that ends up in a
-          retrospective post-mortem.
+          Pick auth code + PKCE, not implicit. Rotate refresh tokens and treat reuse as a tripwire. Keep access tokens
+          in memory and refresh tokens in HttpOnly cookies. None of it is glamorous, all of it is what separates a
+          system that sleeps soundly from one that ends up in a retrospective post-mortem.
         </p>
         <p className="mt-3">
           The frameworks help — Spring Security, OAuth2 libraries, service meshes, KMS providers — but they only help

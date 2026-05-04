@@ -26,6 +26,7 @@ export const PHASES = [
   { number: 5, name: "Distributed Systems Deep", color: "from-indigo-500 to-purple-500" },
   { number: 6, name: "Case Studies", color: "from-fuchsia-500 to-pink-500" },
   { number: 7, name: "Production & Capstone", color: "from-pink-500 to-rose-500" },
+  { number: 8, name: "Frontend System Design", color: "from-teal-500 to-cyan-500" },
 ];
 
 export const MODULES: Module[] = [
@@ -84,6 +85,11 @@ export const MODULES: Module[] = [
   { slug: "security-design", number: 37, phase: "Production & Capstone", phaseNumber: 7, title: "Security at scale", subtitle: "Auth/authz, JWT vs sessions, secrets management, defense in depth", duration: "~2–2.5h", project: "Design exercise: secure a multi-tenant API — auth, authz, secrets, defense in depth", status: "available" },
   { slug: "recap", number: 38, phase: "Production & Capstone", phaseNumber: 7, title: "Course recap", subtitle: "The full mental model, decision frameworks, what to internalize", duration: "~1–1.5h", project: "No project — synthesize the decision frameworks into a personal cheat sheet", status: "available" },
   { slug: "capstone", number: 39, phase: "Production & Capstone", phaseNumber: 7, title: "Capstone: design a code review platform", subtitle: "End-to-end design — ingest, search, real-time comments, notifications, audit log", duration: "~4–5h", project: "Capstone design exercise: code review platform end-to-end — ingest, search, real-time, notifications, audit", status: "available" },
+
+  // Phase 8 · Frontend System Design
+  { slug: "frontend-fundamentals", number: 40, phase: "Frontend System Design", phaseNumber: 8, title: "Frontend system design fundamentals", subtitle: "Rendering strategies (SSR/SSG/ISR/CSR), Core Web Vitals, state management, bundle budgets", duration: "~2–2.5h", project: "Worked example: pick the rendering strategy + state architecture for 4 product surfaces and defend each choice", status: "available" },
+  { slug: "frontend-design-feed", number: 41, phase: "Frontend System Design", phaseNumber: 8, title: "Design a feed UI", subtitle: "Virtualization, infinite scroll, optimistic updates, image loading — the feed archetype", duration: "~2.5–3h", project: "Design exercise: Twitter-scale feed UI — components, state shape, virtualization, optimistic likes, offline read", status: "available" },
+  { slug: "frontend-design-realtime", number: 42, phase: "Frontend System Design", phaseNumber: 8, title: "Design a real-time UI", subtitle: "WebSocket vs SSE, reconnect/backoff, presence, multi-tab sync, CRDT intuition", duration: "~2.5–3h", project: "Design exercise: collaborative doc OR chat UI — connection mgmt, presence, multi-tab, offline edits", status: "available" },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {

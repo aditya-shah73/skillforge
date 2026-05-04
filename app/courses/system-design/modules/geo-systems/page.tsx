@@ -6,12 +6,14 @@ import ModuleProgress from "@/components/ModuleProgress";
 import Mermaid from "@/components/Mermaid";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
+import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 
 const CHECKPOINTS = [
   { id: "physics", title: "The physics of distance" },
   { id: "topologies", title: "Multi-region topologies" },
   { id: "edge", title: "CDNs and edge compute" },
+  { id: "multi-device", title: "Multi-device sync" },
 ];
 
 const activeActiveDiagram = `flowchart LR
@@ -318,6 +320,220 @@ export default function Page() {
             { takeaway: "Cache hit rate is the metric", detail: "A CDN with 50% hit rate is a load balancer with a billing problem. Aim for 90%+, which means strict cache-key hygiene." },
             { takeaway: "Edge compute is stateless-by-default", detail: "Putting code at the edge while leaving data at origin usually adds latency for non-origin-region users. State must travel too." },
             { takeaway: "Layer the architecture", detail: "CDN for public reads, edge for shaping, regional for per-user reads/writes, global consensus only for the few things that need it." },
+          ]}
+        />
+
+      </Checkpoint>
+
+      <Checkpoint moduleSlug="geo-systems" id="multi-device" title="Part 4 · Multi-device sync" xp={25}>
+
+        <h2>Same problem, different scale</h2>
+        <p>
+          Multi-region replication is the same problem you have on a phone. A user has 3-4 devices — phone, laptop, tablet, maybe a watch — and each one is a replica of their state. Each device goes offline (subway, airplane, dead Wi-Fi), accepts writes locally, and has to converge with the rest when it reconnects. The constraints are different from data centers (battery, push limits, flaky cellular) but the math is the same: you have multiple writers, asynchronous replication, and conflicts you have to resolve.
+        </p>
+        <p>
+          The user&apos;s mental model is unforgiving: <em>read a message on your phone, open your laptop, and the chat list better show that message as read</em>. They expect convergence within a couple of seconds. The hard cases are the offline ones. Device A marks a message read while flying; device B replies to the same message while on the subway. Both reconnect 30 minutes later. What does the user see?
+        </p>
+
+        <Callout variant="info" title="Why this is on the senior interview circuit">
+          <p className="m-0">Once you understand multi-region replication, multi-device sync is the same idea at a smaller scale — but with extra constraints (battery, mobile background limits, push wakeups). Interviewers love it because it forces you to talk about CRDTs, vector clocks, conflict resolution, and the tradeoff between server-authoritative and local-first architectures all in one design.</p>
+        </Callout>
+
+        <h2>Last-write-wins: when it&apos;s honest, when it lies</h2>
+        <p>
+          The simplest conflict policy: tag every write with a timestamp; on merge, the highest timestamp wins. It&apos;s cheap, stateless, and works fine for a specific shape of state — <strong>idempotent state with an absorbing value</strong>. The classic example is a read receipt. Once <code>isRead = true</code>, no later write flips it back. So even if two devices race to mark it read, both writes produce the same final state. WhatsApp uses LWW for read receipts because the cost of getting it wrong is low — at worst, you briefly show unread on one device for a second before convergence.
+        </p>
+        <p>
+          LWW lies on three shapes of state:
+        </p>
+        <ul>
+          <li><strong>Counters.</strong> Two devices both increment a like-count from 5. With LWW, both writes say &quot;the new value is 6&quot;. One increment is lost. The correct final value is 7.</li>
+          <li><strong>Text edits.</strong> Two devices edit a doc title from different starting points. LWW keeps one version verbatim and discards the other entirely — even though both edits were intentional.</li>
+          <li><strong>Sets with concurrent add/remove.</strong> Device A adds tag &quot;urgent&quot;; device B removes tag &quot;urgent&quot;. LWW picks one based on clock skew, not user intent.</li>
+        </ul>
+
+        <Callout variant="warn" title="Clock skew is the hidden enemy">
+          <p className="m-0">LWW assumes timestamps are comparable across devices. They are not. Phones drift, users set their clocks manually, time zones get confused. Production LWW systems use a <em>logical</em> timestamp (a Lamport clock) or a <em>hybrid</em> timestamp (HLC — wall clock plus a logical counter to break ties). Naive wall-clock LWW will betray you the first time a user changes their phone&apos;s time zone mid-flight.</p>
+        </Callout>
+
+        <h2>Vector clocks for sync</h2>
+        <p>
+          When LWW lies, you need to detect concurrency rather than paper over it. That&apos;s what vector clocks do — and we already covered the mechanics in the clock-time module, so this is the application.
+        </p>
+        <p>
+          Each device gets a counter. Every local change increments that device&apos;s counter. State carries a vector of all counters the device has seen. On merge:
+        </p>
+        <ul>
+          <li>If vector A dominates B (every component of A is &gt;= B), A is strictly newer. Take A.</li>
+          <li>If B dominates A, take B.</li>
+          <li>If neither dominates (some components of A are higher, some of B), the writes were concurrent. You have a real conflict — surface it, or apply a deterministic merge rule.</li>
+        </ul>
+        <p>
+          The win over LWW is honesty: vector clocks tell you <em>that</em> a conflict happened. They don&apos;t tell you how to resolve it; that&apos;s an application choice. But knowing a conflict exists is half the battle — silent data loss is what makes LWW dangerous.
+        </p>
+
+        <CodeBlock lang="plain" caption="Example: phone increments, laptop increments, then they sync">{`Initial state on both:    { phone: 0, laptop: 0 }   value: "draft"
+
+Phone edits offline:      { phone: 1, laptop: 0 }   value: "draft v1"
+Laptop edits offline:     { phone: 0, laptop: 1 }   value: "draft v2"
+
+Both reconnect; server compares vectors:
+  phone vec    { phone: 1, laptop: 0 }
+  laptop vec   { phone: 0, laptop: 1 }
+  Neither dominates -> CONCURRENT WRITE -> conflict surfaced
+
+Resolution (app choice): keep both versions, prompt user, or apply CRDT merge.`}</CodeBlock>
+
+        <h2>CRDTs: the merge math that doesn&apos;t require asking</h2>
+        <p>
+          A Conflict-free Replicated Data Type is a data structure with a merge operation that is commutative, associative, and idempotent. Translation: no matter what order replicas merge in, no matter how many times they merge, they all converge to the same state. No coordination required, no conflicts to resolve at the application layer.
+        </p>
+        <p>
+          Two flavors:
+        </p>
+        <ul>
+          <li><strong>State-based (CvRDT).</strong> Each replica sends its full state. Merge is a function like <code>max</code> or set union. Heavy on bandwidth, simple on logic.</li>
+          <li><strong>Op-based (CmRDT).</strong> Each replica sends individual operations. Operations must be commutative (<code>add(x)</code> and <code>add(y)</code> can run in any order). Lighter bandwidth, requires reliable broadcast.</li>
+        </ul>
+        <p>
+          The greatest hits, by use case:
+        </p>
+        <ul>
+          <li><strong>G-counter</strong> (grow-only counter): each device tracks its own count; the value is the sum. Used for like counts, view counts, anything that only goes up.</li>
+          <li><strong>PN-counter:</strong> a G-counter for increments and another for decrements; value is the difference. Now you can decrement too.</li>
+          <li><strong>LWW-register:</strong> a single value with a timestamp. The honest version of LWW, used inside CRDT toolkits.</li>
+          <li><strong>OR-set</strong> (observed-remove set): adds win over concurrent removes when the remove didn&apos;t see the add. Used for tag lists, collaborative selections.</li>
+          <li><strong>RGA / Yjs / Automerge:</strong> collaborative text. Each character has a unique ID; concurrent inserts interleave deterministically.</li>
+        </ul>
+
+        <Callout variant="insight" title="When to reach for a CRDT — and when not to">
+          <p className="m-0">Reach for a CRDT when convergence matters more than a hard invariant: collaborative editing (Google Docs, Figma, Linear), shopping carts that sync across devices, social-feed read state, presence aggregation. Do <strong>not</strong> reach for a CRDT when you have a hard invariant the system must never violate — bank balance &gt;= 0, ticket inventory &gt; 0, unique-username constraint. Those need consensus (Paxos, Raft) or a single serializing point. CRDTs guarantee convergence; they do not guarantee invariants.</p>
+        </Callout>
+
+        <h2>Two architectures for sync</h2>
+        <p>
+          The architectural axis is who owns the merge. Two honest patterns:
+        </p>
+
+        <h3>Server-authoritative</h3>
+        <p>
+          The server is the source of truth. Devices push deltas (often LWW or vector-clocked) to the server; the server applies the merge rule and broadcasts the result back to other devices via WebSocket or push. This is what Slack, WhatsApp, iMessage, and most consumer apps do. It&apos;s simple to reason about — there&apos;s exactly one place where conflicts get resolved — and easy to bolt on auth, audit, and analytics. The cost is offline pain: when devices are offline, they accumulate divergent state, and the server&apos;s merge logic has to be correct.
+        </p>
+
+        <h3>Peer-to-peer / local-first</h3>
+        <p>
+          Devices sync directly using CRDTs; the server is just a relay (or sometimes absent entirely on a LAN). Linear, Figma&apos;s collab layer, and Automerge-based apps lean here. Offline is great — every device is a real replica, no server round trip needed to make a local change feel real. The cost is engineering complexity: you&apos;re running a CRDT engine on the client, debugging convergence issues across versions, and giving up the simplicity of a single source of truth. Not a casual choice.
+        </p>
+
+        <Callout variant="info" title="Picking between them">
+          <p className="m-0">If your app is mostly online and the server has the real audit trail (chat, social, e-commerce), go server-authoritative — it&apos;s simpler and the offline gap is acceptable. If your app is editing-centric and offline-first is part of the pitch (knowledge tools, design tools, project planning), invest in local-first / CRDT. Most teams underestimate how much engineering local-first costs; pick it for the right reason, not the marketing.</p>
+        </Callout>
+
+        <h2>Spring example: a server-authoritative sync endpoint</h2>
+        <p>
+          Here&apos;s the shape of a server-authoritative sync endpoint that accepts a vector-clock-tagged delta from a device and merges it. Skipping persistence and auth for clarity.
+        </p>
+
+        <CodeBlock lang="java" caption="A sync endpoint that accepts a versioned delta and resolves with vector clocks">{`@RestController
+@RequestMapping("/sync")
+public class SyncController {
+
+  private final SyncStore store;
+  private final SyncBroadcaster broadcaster;
+
+  public SyncController(SyncStore store, SyncBroadcaster broadcaster) {
+    this.store = store;
+    this.broadcaster = broadcaster;
+  }
+
+  @PostMapping("/{userId}/delta")
+  public ResponseEntity<MergeResult> push(
+      @PathVariable String userId,
+      @RequestBody DeviceDelta delta
+  ) {
+    DocumentState server = store.load(userId, delta.docId());
+    VectorClock incoming = delta.vectorClock();
+
+    if (incoming.dominates(server.clock())) {
+      // Device has strictly newer state — accept, broadcast.
+      DocumentState merged = server.applyDelta(delta);
+      store.save(userId, merged);
+      broadcaster.fanOut(userId, merged, delta.deviceId());
+      return ResponseEntity.ok(MergeResult.accepted(merged.clock()));
+    }
+    if (server.clock().dominates(incoming)) {
+      // Device is behind — tell it to pull.
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body(MergeResult.behind(server));
+    }
+    // Concurrent edit — apply CRDT/LWW merge rule.
+    DocumentState merged = server.merge(delta);
+    store.save(userId, merged);
+    broadcaster.fanOut(userId, merged, delta.deviceId());
+    return ResponseEntity.ok(MergeResult.merged(merged.clock()));
+  }
+}`}</CodeBlock>
+
+        <p>
+          Three branches map directly to the vector-clock cases: dominate, be-dominated, concurrent. Real systems add idempotency keys (so a retried push doesn&apos;t double-apply), per-doc locks (so two pushes for the same doc serialize), and audit logging.
+        </p>
+
+        <h2>Presence across devices</h2>
+        <p>
+          &quot;Online&quot; gets weird when a user has four devices. The honest pattern: each device sends a heartbeat (every 30-60s on Wi-Fi, longer on cellular). The server aggregates per-user:
+        </p>
+        <ul>
+          <li><strong>Online status:</strong> user is online if <em>any</em> device is online. Set union, expressed as a presence bitmap or simply &quot;max heartbeat across devices &gt; now - threshold&quot;.</li>
+          <li><strong>Last seen:</strong> max heartbeat timestamp across devices. Even after all devices go offline, this gives you the right number.</li>
+          <li><strong>Typing indicators:</strong> per-device, not per-user. A user can type from their phone while their laptop sits idle; aggregating &quot;is typing&quot; across devices produces nonsense (&quot;Alice is typing&quot; that flickers because the laptop briefly thought she stopped).</li>
+        </ul>
+        <p>
+          Some apps surface the device explicitly (&quot;Alice — online from iPhone&quot;). Most just unify, because the user already knows which device they have in their hand. Picking one is a UX call, not a systems call — but the underlying aggregation logic is the same either way.
+        </p>
+
+        <h2>The mobile-specific dragons</h2>
+        <p>
+          Mobile adds constraints that pure server-side replication doesn&apos;t face. You can&apos;t treat phones like servers that happen to be small.
+        </p>
+        <ul>
+          <li><strong>iOS background limits.</strong> Once your app backgrounds, you get a few seconds to clean up and then iOS suspends you. Your sync code is dead. The only way to wake up is a silent push (<code>content-available: 1</code>), and even those are rate-limited and best-effort. Plan for &quot;the device will not sync until the user opens the app or until a push wakes it.&quot;</li>
+          <li><strong>Android Doze.</strong> Same idea, different name. After a period of inactivity, Android batches network and alarm work. Messaging apps can claim a high-priority FCM exemption, but for general apps you&apos;re subject to maintenance windows.</li>
+          <li><strong>Battery.</strong> Aggressive heartbeats and constant socket reconnects drain batteries and get your app uninstalled. Back off when in background; rely on push as a wake signal rather than polling. The honest contract: foreground = real-time; background = best-effort, push-driven.</li>
+          <li><strong>Push as a sync trigger.</strong> The pattern most messaging apps use: send a small &quot;something changed&quot; push, the OS wakes the app for a few seconds, the app pulls the actual deltas, then it goes back to sleep. The push payload is a wake signal, not the data itself — payloads are size-limited and may be dropped.</li>
+        </ul>
+
+        <Callout variant="warn" title="Don't treat the phone like a server">
+          <p className="m-0">A common interview mistake: designing multi-device sync as if every device runs a long-lived process that listens on a socket. On mobile, that process dies the moment the user backgrounds the app. Your design needs to assume the device disappears for hours and reappears with a stale view, then catches up via push-triggered pulls. Anything else will fail review the moment a real mobile engineer looks at it.</p>
+        </Callout>
+
+        <Quiz
+          question="You're designing read-receipt sync for a chat app. Three devices, each may go offline. Two devices independently mark the same message as read while offline. They both reconnect. Which conflict policy is appropriate?"
+          options={[
+            { label: "Vector clocks with manual conflict resolution.", correct: false, explanation: "Overkill. Read state is idempotent — once read, it stays read. There's no real conflict to surface to the user." },
+            { label: "Last-write-wins on the isRead flag.", correct: true, explanation: "Read state is idempotent with an absorbing value (true). Both writes produce the same final state regardless of order. LWW is the cheapest correct answer here, and it's what WhatsApp actually does." },
+            { label: "A G-counter — count how many devices have marked it read.", correct: false, explanation: "A counter would let you track per-device read state but the user-facing 'read' boolean is binary. Adding a counter solves a problem you don't have." },
+            { label: "A consensus protocol (Raft) across devices.", correct: false, explanation: "Consensus needs a quorum, which an offline device by definition can't participate in. Reaching for consensus on a per-message read receipt is wildly disproportionate." },
+          ]}
+        />
+
+        <Quiz
+          question="A team is choosing between server-authoritative and local-first / CRDT sync for a collaborative project planner where users frequently work offline on planes and trains. Which is the better default and why?"
+          options={[
+            { label: "Server-authoritative — simpler to reason about.", correct: false, explanation: "Simpler is true, but it punishes the offline use case the team explicitly cares about. Every offline edit accumulates divergent state that may conflict on reconnect, and the server is the only place that can resolve it." },
+            { label: "Local-first / CRDT — offline edits converge without coordination, which matches the user pattern.", correct: true, explanation: "When offline-first is the explicit pitch, CRDT-based local-first sync earns its complexity. Edits feel instant on the device and converge cleanly across devices because the merge math is built in. This is the Linear / Figma / Automerge bet." },
+            { label: "Server-authoritative with longer offline buffers — easier to ship.", correct: false, explanation: "Buffers don't fix the merge problem; they postpone it. The server still has to resolve conflicts somehow when the buffer flushes, and without CRDT structure that's where data gets lost." },
+            { label: "Either is fine — the choice is purely cosmetic.", correct: false, explanation: "It's a real engineering tradeoff. Local-first costs more to build and maintain but pays off when offline editing is core to the product. Server-authoritative is cheaper but the offline experience suffers." },
+          ]}
+        />
+
+        <PartRecap
+          title="Part 4 recap"
+          gist="Multi-device sync is multi-region replication at a smaller scale, with extra mobile constraints. Pick a conflict policy that matches your data shape, and pick an architecture that matches how often your users are offline."
+          points={[
+            { takeaway: "LWW is fine for idempotent state, dangerous elsewhere", detail: "Read receipts and absorbing booleans take LWW well. Counters, text edits, and sets with concurrent add/remove need vector clocks or CRDTs." },
+            { takeaway: "CRDTs guarantee convergence, not invariants", detail: "Reach for them when merging beats coordinating. Don't reach for them when the system must never violate a hard rule like balance >= 0 — that needs consensus." },
+            { takeaway: "Server-authoritative vs local-first is an honest tradeoff", detail: "Server-authoritative is simpler and right for most consumer apps. Local-first is worth the engineering cost when offline editing is core to the product." },
+            { takeaway: "Mobile devices are not always-on replicas", detail: "iOS suspension and Android Doze mean sync only runs in foreground or via push wake. Design for hours-long offline gaps, not seconds-long blips." },
           ]}
         />
 

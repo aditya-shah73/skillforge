@@ -15,7 +15,7 @@ import React from "react";
  *  - default:    light slate (from <pre> color: inherit)
  */
 
-type Lang = "java" | "plain";
+type Lang = "java" | "plain" | "ts" | "tsx";
 
 const JAVA_KEYWORDS = new Set([
   "public", "private", "protected", "final", "static", "class", "interface",

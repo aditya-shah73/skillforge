@@ -13,6 +13,7 @@ const CHECKPOINTS = [
   { id: "framework", title: "The framework" },
   { id: "pitfalls", title: "Common pitfalls" },
   { id: "communication", title: "Communicating in the room" },
+  { id: "frontend", title: "The frontend variant" },
 ];
 
 const frameworkDiagram = `flowchart LR
@@ -457,6 +458,314 @@ public void follow(
             { takeaway: "Ask for load-bearing decisions, assume the rest", detail: "Read/write ratio: ask. CDN vendor: assume. Knowing which decisions matter is itself a senior signal." },
             { takeaway: "Deep-dives have a 5-step shape", detail: "Name problem → propose approaches → compare on axis → pick and justify → note what you'd verify. Practice until automatic." },
             { takeaway: "Wrap with revisit + failure + monitor", detail: "What you'd come back to, failure modes you're worried about, what you'd alert on. Signals senior maturity in 3 minutes." },
+          ]}
+        />
+      </Checkpoint>
+
+      <Checkpoint moduleSlug="interview-framework" id="frontend" title="Part 4 · The frontend variant" xp={30}>
+        <h2>The frontend round is a different game</h2>
+        <p>
+          Everything above assumed you&apos;re being asked to design a backend system — APIs, databases, queues, fanout. But more and more senior interviews now include a <strong>frontend system design round</strong>, especially for full-stack roles. Candidates who only prep the backend framework get blindsided. The 45-minute clock is the same. The phases look superficially similar. But what the interviewer is testing is almost completely different.
+        </p>
+        <p>
+          If you&apos;re a Java/Spring engineer interviewing at a FAANG for a senior role that touches the client, you need a second framework alongside the first. This part gives it to you.
+        </p>
+
+        <h3>How the frontend round differs from the backend round</h3>
+        <p>
+          Same surface — &quot;Design X&quot; — but the axes shift. Here&apos;s the diff against the backend framework you just learned:
+        </p>
+        <CodeBlock lang="plain" caption="Backend round vs frontend round — what changes">{`AXIS                       BACKEND ROUND               FRONTEND ROUND
+---------------------------------------------------------------------------
+Capacity math              QPS, storage, fanout        Bytes per scroll, JS budget,
+                                                       frame-time budget (16ms)
+
+Decomposition              Services + queues + DBs     Components + state + props
+
+State                      Persisted in DB             Lives in client memory;
+                                                       where? local / context /
+                                                       global / server cache
+
+Network                    Free pipe between services  Hostile environment — slow,
+                                                       lossy, sometimes offline
+
+Perf concerns              p99 latency, throughput     Bundle size, time-to-interactive,
+                                                       perceived perf, jank
+
+Failure modes              Outage, hot key, backpressure  Network drop, slow API,
+                                                       stale cache, race conditions
+
+Cross-cutting concerns     Auth, observability, ratelimits   A11y, i18n, responsive,
+                                                       offline, SEO`}</CodeBlock>
+        <p>
+          The biggest shift: <strong>the client is not a thin presentation layer</strong>. It&apos;s a stateful, networked program running on a device you don&apos;t control, over a connection that may drop mid-request. The interviewer is testing whether you treat it that way.
+        </p>
+
+        <Callout variant="warn" title="The most common backend-prep blindspot">
+          <p className="m-0">Backend-trained candidates underestimate how much the network matters on the client side. Between two services in your VPC, a 10ms round trip is a slow day. Between a phone on 3G and your API, 800ms is realistic. <strong>Every interaction has to assume the network might be slow or fail.</strong> Optimistic updates, retries, error states, offline queues — these aren&apos;t edge cases on the frontend; they&apos;re the main path.</p>
+        </Callout>
+
+        <h3>The frontend interview 45-minute flow</h3>
+        <p>
+          Same six-ish phases, but the content of each is different. Internalize this rhythm separately:
+        </p>
+        <CodeBlock lang="plain" caption="Frontend round 45-min flow">{`0-5 min    Clarify scope
+              - What surfaces? (web only? mobile web? native?)
+              - What devices? (mobile/desktop/both, low-end Android?)
+              - Online-only or offline-capable?
+              - A11y scope? (keyboard nav, screen reader, WCAG AA/AAA?)
+              - i18n? (RTL? long German words breaking layout?)
+              - SEO? (does Google need to index this?)
+
+5-12 min   Component breakdown
+              - Decompose the UI into reusable components
+              - Draw the tree: <App> -> <Header> + <Feed> -> <Post>
+              - Identify shared state vs local state per component
+
+12-22 min  State + data flow
+              - State shape (sketch in JSON)
+              - Where it lives: local / context / global store / server cache
+              - What triggers updates? (user action / WS push / poll / refetch)
+              - How data flows from API -> normalized cache -> render
+
+22-35 min  Deep-dive on 1-2 hard parts
+              Typically:
+              (a) data fetching + caching strategy
+              (b) one perf-critical interaction (scroll / drag / real-time)
+
+35-42 min  Tradeoffs the interviewer will prod
+              - SSR vs CSR vs SSG vs ISR
+              - REST vs GraphQL vs RPC
+              - Optimistic updates: yes / no / per-action
+              - A11y: where it costs you and where it doesn't
+
+42-45 min  Wrap
+              - What I'd do with more time
+              - What can go wrong in prod (and what I'd alert on)`}</CodeBlock>
+
+        <h3>The frontend &quot;capacity&quot; questions (when they come)</h3>
+        <p>
+          Backend rounds drill QPS. Frontend rounds drill <em>budgets</em> — bytes, frames, milliseconds. These are the three numbers you should be able to talk about without flinching:
+        </p>
+        <ul>
+          <li>
+            <strong>Bundle size budget.</strong> &quot;Your app must be interactive in 3 seconds on 3G — what&apos;s your JS budget?&quot; Rough answer: <strong>~170 KB compressed</strong> over the wire (3G ≈ 400 Kbps effective; 3 sec × 50 KB/sec ≈ 150–200 KB). That&apos;s the entire critical-path JS. Anything beyond that is code-split and lazy-loaded.
+          </li>
+          <li>
+            <strong>List rendering cost.</strong> &quot;Feed has 10,000 items, you render them all at once, why is the page locked?&quot; Each DOM node costs memory and layout work. 10k nodes × maybe 50 bytes of layout state each plus reflow time = browser stalls. Fix: <strong>virtualization</strong> — only render the ~20 visible items plus a buffer; recycle nodes as the user scrolls.
+          </li>
+          <li>
+            <strong>Re-render cost.</strong> &quot;Every keystroke re-renders the whole tree, you have a 16ms-per-frame budget at 60fps, why is it janky?&quot; React&apos;s reconciler has to walk the tree every render. Fixes: <strong>memoization</strong> (React.memo, useMemo on derived values), <strong>stable keys</strong> (no array index keys on dynamic lists), <strong>state colocation</strong> (push state down so only the leaf re-renders).
+          </li>
+        </ul>
+        <CodeBlock lang="plain" caption="The three frontend budgets to memorize">{`Bundle (critical-path JS)       ~170 KB compressed for 3s on 3G
+Frame                            16ms (60fps) — JS work per frame
+Time-to-interactive              < 3s on mid-tier phone, < 1s on desktop
+List render                      Don't put more than ~100 nodes in the DOM
+                                 at once; virtualize beyond that`}</CodeBlock>
+
+        <h3>Common archetypes — and what each one is testing</h3>
+        <p>
+          Frontend prompts cluster into a small number of archetypes. The prompt is a wrapper; the test underneath is consistent. Recognize the test and you know which deep-dive to lean into.
+        </p>
+        <ul>
+          <li>
+            <strong>Design Twitter feed (or Instagram, TikTok).</strong> Infinite scroll, virtualization, optimistic likes, image loading. <em>Tests:</em> list perf + state caching + the network-is-hostile mindset (slow images, in-flight likes that fail).
+          </li>
+          <li>
+            <strong>Design Google Docs (or Figma, Notion collab).</strong> Real-time collaboration, conflict resolution, presence indicators. <em>Tests:</em> WebSocket handling + OT or CRDT intuition + how state reconciles when two clients edit the same doc.
+          </li>
+          <li>
+            <strong>Design autocomplete / search box.</strong> Debounce input, abort in-flight requests when a new keystroke comes, cache results, render highlights. <em>Tests:</em> async control flow under user-driven event storms.
+          </li>
+          <li>
+            <strong>Design a photo gallery (or e-commerce product grid).</strong> Lazy loading, prefetch on hover, blur-up placeholders, responsive images (srcset). <em>Tests:</em> perceived perf + image loading strategy.
+          </li>
+          <li>
+            <strong>Design a dashboard.</strong> Many widgets, each fetching different data, layout responsiveness, mobile breakpoints. <em>Tests:</em> composition + how you orchestrate data fetching across independent widgets without waterfalling.
+          </li>
+        </ul>
+
+        <Callout variant="insight" title="Recognize the archetype, recognize the test">
+          <p className="m-0">If you hear &quot;design Twitter feed,&quot; the interviewer is almost certainly going to push you on virtualization and optimistic updates. If you hear &quot;design autocomplete,&quot; they want to see debounce + abort + cache. Mapping the prompt to the archetype on minute one tells you which deep-dives to pre-load. Just don&apos;t skip the clarify phase — the prompt may have a twist that changes which archetype it actually is.</p>
+        </Callout>
+
+        <h3>State shape — the thing junior candidates skip</h3>
+        <p>
+          When the interviewer asks &quot;where does state live?&quot;, the wrong answer is &quot;Redux&quot; (or &quot;Zustand,&quot; or &quot;Context&quot;). The right answer starts with <strong>what&apos;s actually in the state</strong>, then talks about where it goes. Sketch it in JSON. Make the field names real.
+        </p>
+        <CodeBlock lang="plain" caption="State shape for a Twitter-like feed (sketch this on the whiteboard)">{`// Server cache (React Query / SWR / Apollo) — normalized
+{
+  posts: {
+    "p_8821": { id, authorId, text, createdAt, likeCount, likedByMe },
+    "p_8822": { ... }
+  },
+  users: {
+    "u_412": { id, handle, displayName, avatarUrl }
+  },
+  feedPages: {
+    "home:cursor=null":  { ids: ["p_8821", "p_8822", ...], nextCursor: "abc" },
+    "home:cursor=abc":   { ids: [...], nextCursor: "def" }
+  }
+}
+
+// UI state (component-local or small global)
+{
+  composer: { open: false, draft: "" },
+  optimistic: {
+    likes: { "p_8821": "pending" }   // for rolling back on failure
+  }
+}`}</CodeBlock>
+        <p>
+          Two things this sketch shows that the interviewer is grading on: (1) <strong>normalization</strong> — posts and users are stored once and referenced by id, so a like update touches one place; (2) <strong>separation</strong> — server cache (refetched, evictable) is separate from UI state (ephemeral, never serialized to the server). That distinction alone separates mid from senior signal.
+        </p>
+
+        <h3>Deep-dive: the data fetching + caching strategy</h3>
+        <p>
+          This is the most-asked deep-dive in frontend rounds, and the answer is rarely &quot;just call fetch.&quot; The interviewer wants to hear you reason about a few axes:
+        </p>
+        <ul>
+          <li><strong>When to fetch:</strong> on mount, on focus, on stale, on user action, prefetched on hover.</li>
+          <li><strong>What to cache:</strong> by query key (URL + params), normalized by entity id, or both.</li>
+          <li><strong>Invalidation:</strong> after a mutation (write), invalidate which queries? &quot;User likes a post&quot; → invalidate that post&apos;s query key, but probably not the whole feed.</li>
+          <li><strong>Optimistic updates:</strong> apply the mutation locally first, roll back if the server rejects. Critical for likes, follow buttons, anything that needs to feel instant.</li>
+          <li><strong>Refetch on focus / reconnect:</strong> the user came back to the tab after 10 minutes — is your data stale?</li>
+        </ul>
+        <CodeBlock lang="plain" caption="The fetching deep-dive sentence shape (use this verbatim shape)">{`"For the feed I'd use a server cache library (React Query) with the
+ query key 'home-feed:{cursor}'. Fresh-while-revalidate strategy:
+ show cached data instantly, refetch on focus, infinite scroll appends
+ pages. Likes are optimistic — apply locally, fire mutation, roll back
+ on failure with a toast. After a mutation we invalidate by post id,
+ not the whole feed, so we don't blow the page cache."`}</CodeBlock>
+
+        <h3>Deep-dive: a perf-critical interaction</h3>
+        <p>
+          The other typical deep-dive is one specific interaction: scroll, drag, real-time update, animation. The micro-pattern is the same as the backend one — name the constraint, propose approaches, compare, pick:
+        </p>
+        <CodeBlock lang="plain" caption="Perf deep-dive — virtualized infinite scroll">{`Constraint: 10,000+ feed items, 16ms frame budget.
+
+Approaches:
+  (a) Render all items                  -> DOM blows up, scroll janks
+  (b) Pagination ("Load more" button)   -> simple, but bad UX
+  (c) Virtualization                    -> render ~window+buffer, recycle nodes
+
+Pick: (c). Implementation sketch:
+  - Track scroll position
+  - Compute visible range from item height + scrollTop
+  - Render only items[start..end] + ~5 buffer above/below
+  - Items have stable keys (post id) so React reuses DOM nodes
+  - Item heights variable? Use a measured-height cache or
+    react-virtual / react-window to handle it
+
+What I'd verify:
+  - Smooth at 60fps on a mid-tier Android (Chrome perf panel)
+  - No layout thrash on item enter/exit
+  - Screen-reader can still navigate (aria-rowindex, focus management)`}</CodeBlock>
+
+        <h3>What scoring criteria actually look like</h3>
+        <p>
+          From the inside, the rubric isn&apos;t &quot;did they get the right answer.&quot; It&apos;s a rough ladder:
+        </p>
+        <ul>
+          <li>
+            <strong>Junior signal:</strong> can build it. Misses edge cases — empty state, error state, loading state, what happens when the API is slow. Doesn&apos;t talk about a11y or perf unprompted.
+          </li>
+          <li>
+            <strong>Mid signal:</strong> handles edge cases, perf, a11y. Has a few tradeoff conversations when prompted. Picks reasonable defaults but doesn&apos;t always justify them.
+          </li>
+          <li>
+            <strong>Senior signal:</strong> drives the conversation. Asks &quot;what&apos;s the actual goal here?&quot; before designing. Proposes alternatives, knows which patterns apply to which constraints. Brings up monitoring, A/B rollout, feature flags <em>without being asked</em>. Notices ambiguity in the prompt and surfaces it.
+          </li>
+        </ul>
+        <p>
+          The thing that turns mid into senior, on a single axis, is <strong>self-driven scope-setting and real tradeoff discussion</strong>. Mid candidates answer questions; seniors set the agenda and explain why something is in or out of scope.
+        </p>
+
+        <h3>What candidates flunk on (the recurring failure modes)</h3>
+        <p>
+          From the other side of the table, the failure patterns are surprisingly consistent:
+        </p>
+        <ul>
+          <li>
+            <strong>Diving straight into components without clarifying scope.</strong> &quot;OK so I&apos;ll have a Header, a Feed, a Sidebar...&quot; Same mistake as jumping to architecture in the backend round — you&apos;re solving a problem you haven&apos;t scoped.
+          </li>
+          <li>
+            <strong>No state shape — handwaves &quot;we&apos;ll store it in Redux.&quot;</strong> Show me what&apos;s in the store. If you can&apos;t sketch the JSON, you don&apos;t have a design yet.
+          </li>
+          <li>
+            <strong>Forgetting accessibility entirely.</strong> Even one sentence — &quot;I&apos;d make sure the feed is keyboard-navigable and the like button has a clear aria-label and aria-pressed state&quot; — separates you from candidates who don&apos;t mention a11y once.
+          </li>
+          <li>
+            <strong>Not addressing what happens when the network fails.</strong> Slow API, dropped request, offline. If you don&apos;t bring it up, the interviewer will, and you&apos;ll be answering reactively instead of leading.
+          </li>
+          <li>
+            <strong>Picking a stack without justifying it.</strong> &quot;I&apos;ll use Next.js&quot; with no &quot;because&quot; signals memorization, not judgment. Always pair the choice with the reason.
+          </li>
+        </ul>
+
+        <Callout variant="info" title="The 'because' rule">
+          <p className="m-0">For every technology you name in a frontend round, append a <strong>because</strong> clause naming the constraint that drove the choice. &quot;Next.js because we need SSR for SEO on the public pages.&quot; &quot;React Query because we have a lot of derived server state and want stale-while-revalidate out of the box.&quot; &quot;Tailwind because the team values design-system consistency and we&apos;re not building a CSS framework from scratch.&quot; If you can&apos;t produce the &quot;because,&quot; don&apos;t name the tech — describe the capability instead.</p>
+        </Callout>
+
+        <h3>Pre-interview checklist for the candidate</h3>
+        <p>
+          A short, sharp list of things that come up almost every frontend round. If you can&apos;t talk about any of these for 60 seconds without prep, you&apos;re not ready:
+        </p>
+        <ul>
+          <li>
+            <strong>Rendering strategies cold.</strong> SSR, SSG, ISR, CSR — when each. SSR for SEO + first-paint + dynamic per-user content. SSG for content that&apos;s the same for everyone (marketing, docs). ISR for SSG with periodic regeneration. CSR for app-shell after auth wall.
+          </li>
+          <li>
+            <strong>One state management lib deeply, not three superficially.</strong> Pick one (React Query, Redux Toolkit, Zustand, Jotai) and know its mental model — when it shines, what it&apos;s bad at. Don&apos;t name three on the whiteboard.
+          </li>
+          <li>
+            <strong>How to virtualize a list — the algorithm, not just the lib.</strong> Compute visible range from scrollTop and item height, render that range plus a buffer, recycle DOM. You should be able to whiteboard this without naming react-window.
+          </li>
+          <li>
+            <strong>Debounce, throttle, cancel.</strong> Debounce for &quot;wait until they stop typing&quot; (search). Throttle for &quot;limit rate of fires&quot; (scroll handlers). AbortController for canceling in-flight fetches when a new query supersedes them. They will come up.
+          </li>
+          <li>
+            <strong>A default stack you can defend.</strong> Mine: &quot;Next.js + React Query + Tailwind + TypeScript, because Next gives me SSR/ISR for free, React Query handles server state, Tailwind keeps styling co-located with components, and TS catches the prop-shape bugs early.&quot; Have your version ready.
+          </li>
+        </ul>
+
+        <Quiz
+          question="A candidate is asked 'Design a Twitter-like feed.' Their first move is: 'I'll have a <Header>, a <Feed> with <Post> children, and a <Sidebar>. Posts will be in Redux.' What did they skip, and which phase is the bigger miss?"
+          options={[
+            { label: "They skipped clarifying scope (devices, online/offline, a11y, SEO) and they handwaved state — 'in Redux' isn't a state shape. The bigger miss is clarification, because it determines whether SSR matters, whether you need offline support, and whether the device constraints change the perf budget.", correct: true, explanation: "Right. Both misses are real, but clarification comes first by ordering. You can fix a vague state shape with a follow-up sketch; you can't recover from designing the wrong product. Same pattern as Pitfall 1 in the backend round, just on different axes." },
+            { label: "Nothing — that's a fast, confident start.", explanation: "Same antipattern as jumping to architecture in the backend round. The interviewer hasn't told you what surfaces matter, what devices, whether SEO is needed. You're committing to a design before you have constraints." },
+            { label: "They skipped naming the framework (Next.js / Remix / etc).", explanation: "Naming a framework before you've clarified is the opposite mistake — picking tech without constraints. You don't fix the miss by adding more tech earlier." },
+            { label: "They forgot to mention TypeScript.", explanation: "TypeScript is a detail compared to scoping the product. The interviewer will infer language choices from the rest of the conversation." },
+          ]}
+          hint="Which phase always comes first, and what does 'state in Redux' actually tell the interviewer?"
+          xp={7}
+        />
+
+        <Quiz
+          question="The interviewer says: 'Your feed page must be interactive in 3 seconds on a 3G connection. What's your JavaScript budget for the critical path?' What's the strongest answer?"
+          options={[
+            { label: "'Roughly 170 KB compressed. 3G effective throughput is around 400 Kbps, which is ~50 KB/sec, so 3 seconds of download budget gives you about 150-200 KB. That's the whole critical-path bundle — anything beyond that has to be code-split and lazy-loaded after first interactive.'", correct: true, explanation: "Yes. Names the number, shows the math, and bridges to the architectural consequence (code-splitting). That's exactly the shape of answer that signals you've internalized the budget rather than memorized a slogan." },
+            { label: "'Bundle size matters a lot — I'd use code splitting and lazy loading.'", explanation: "True but generic. The interviewer asked for a number; you didn't give one. They're testing whether you actually know the budget, not whether you know the technique names." },
+            { label: "'Modern bundlers tree-shake aggressively, so it's hard to put a fixed number on it.'", explanation: "Dodge. Even if there's variance, candidates who can ballpark and explain the math get the points. Refusing to commit to a number signals you don't actually know it." },
+            { label: "'Around 1 MB — that's typical for a React app.'", explanation: "1 MB on 3G is ~20 seconds of download. The whole point of the question is that the typical bundle is too big for the constraint. Naming the typical without flagging the gap is missing the point." },
+          ]}
+          hint="3G ≈ 400 Kbps. Convert to bytes/sec, multiply by the time budget."
+          xp={7}
+        />
+
+        <Callout variant="insight" title="Mapping backend muscle to frontend questions">
+          <p className="m-0">A lot of your backend prep transfers if you remap the axes. &quot;Sharding&quot; on the backend is &quot;code splitting&quot; on the frontend — both partition work to fit a constraint. &quot;Cache invalidation&quot; is the same hard problem in both worlds, just with different invalidators (TTL + write-through on the backend; mutation-driven query invalidation on the frontend). &quot;Hot key&quot; on the backend has an analogue in &quot;most-rendered component&quot; on the frontend. Don&apos;t learn frontend as a separate skill — learn it as the same skill applied to a stateful client over a hostile network.</p>
+        </Callout>
+
+        <PartRecap
+          title="Part 4 recap"
+          gist="The frontend round shares the 45-minute rhythm but tests different axes — components, state shape, network as hostile environment, perf budgets in bytes and frames."
+          points={[
+            { takeaway: "Network is hostile, not free", detail: "Every interaction has to assume the API might be slow or fail. Optimistic updates, retries, error states, loading states aren't edge cases — they're the main path." },
+            { takeaway: "Memorize the three budgets", detail: "~170 KB JS for 3s on 3G, 16ms per frame at 60fps, < 100 DOM nodes in a single list before virtualizing. Numbers anchor the design the same way QPS does on the backend." },
+            { takeaway: "State shape, not state library", detail: "Sketch the JSON. Show normalized server cache vs ephemeral UI state. 'It's in Redux' isn't a design; the contents of the store are." },
+            { takeaway: "Recognize the archetype, pre-load the deep-dive", detail: "Twitter feed → virtualization + optimistic. Autocomplete → debounce + abort + cache. Docs → WS + CRDT. The prompt tells you which deep-dive to plan for." },
+            { takeaway: "Senior signal = scope-setting + real tradeoffs", detail: "Asks 'what's the goal' before designing. Brings up a11y, monitoring, A/B rollout unprompted. Pairs every tech choice with a 'because' tied to the constraint." },
           ]}
         />
       </Checkpoint>
