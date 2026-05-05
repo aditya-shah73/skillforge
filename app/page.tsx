@@ -54,7 +54,7 @@ export default function Home() {
           </h2>
           <span className="text-xs text-slate-400">{COURSES.length} courses</span>
         </div>
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {COURSES.map((course) => {
             const isAvailable = course.status === "available";
             const data = COURSE_DATA[course.id];
@@ -63,7 +63,7 @@ export default function Home() {
 
             const card = (
               <div
-                className={`group relative h-full overflow-hidden rounded-2xl border p-6 transition-all duration-300 ${
+                className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300 ${
                   isAvailable
                     ? "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:-translate-y-1 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-2xl cursor-pointer"
                     : "border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950/60 opacity-80"
@@ -77,52 +77,51 @@ export default function Home() {
                   />
                 )}
 
-                <div className="relative">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${course.color} text-3xl shadow-lg shadow-slate-900/5`}>
+                <div className="relative flex flex-1 flex-col">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${course.color} text-2xl shadow-lg shadow-slate-900/5`}>
                       <span>{course.icon}</span>
                     </div>
-                    {isAvailable ? (
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 ring-1 ring-emerald-200 dark:ring-emerald-900">
-                        ● Available
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700">
+                    {!isAvailable && (
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700">
                         Coming soon
                       </span>
                     )}
                   </div>
-                  <h3 className={`text-2xl font-bold mb-1 bg-gradient-to-r ${course.color} bg-clip-text text-transparent`}>
+                  <h3 className={`text-xl font-bold mb-1 bg-gradient-to-r ${course.color} bg-clip-text text-transparent`}>
                     {course.name}
                   </h3>
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{course.tagline}</p>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">{course.tagline}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     {course.description}
                   </p>
 
+                  {/* Spacer pushes meta + footer to the bottom so cards align across columns */}
+                  <div className="flex-1" />
+
                   {/* Course meta row */}
-                  <div className="flex items-center gap-4 mb-5 text-xs text-slate-500 dark:text-slate-400">
-                    <span className="inline-flex items-center gap-1.5">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="inline-flex items-center gap-1">
                       <span className="text-slate-300 dark:text-slate-600">▦</span>
                       {isAvailable ? `${moduleCount} modules` : "modules TBD"}
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
+                    <span className="inline-flex items-center gap-1">
                       <span className="text-slate-300 dark:text-slate-600">▤</span>
                       {phaseCount} phases
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
+                    <span className="inline-flex items-center gap-1">
                       <span className="text-slate-300 dark:text-slate-600">⚙</span>
                       Java
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
-                    <span className="text-xs text-slate-500">
-                      {isAvailable ? "Ready to go" : "In planning — check back soon"}
+                  <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <span className="text-[11px] text-slate-500">
+                      {isAvailable ? "Ready to go" : "In planning"}
                     </span>
                     {isAvailable && (
-                      <span className={`text-sm font-semibold bg-gradient-to-r ${course.color} bg-clip-text text-transparent inline-flex items-center gap-1`}>
-                        Start course
+                      <span className={`text-xs font-semibold bg-gradient-to-r ${course.color} bg-clip-text text-transparent inline-flex items-center gap-1`}>
+                        Start
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
                     )}
