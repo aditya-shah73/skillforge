@@ -9,7 +9,7 @@ export default function DsaHome() {
 
   return (
     <div>
-      <Link href="/" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 mb-6 transition">
+      <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 mb-6 transition">
         ← All courses
       </Link>
       <section className="mb-12">

@@ -113,10 +113,10 @@ flowchart TD
       <ModuleProgress moduleSlug="dp-advanced" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 inline-block px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
           Phase 7 · Module 29 · Closeout
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>

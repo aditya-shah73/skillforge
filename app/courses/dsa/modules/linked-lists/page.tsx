@@ -77,10 +77,10 @@ flowchart LR
       <ModuleProgress moduleSlug="linked-lists" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-3 inline-block px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold tracking-wide uppercase">
+        <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold tracking-wide uppercase">
           Module {mod.number} · {mod.phase}
         </div>
         <h1 className="mt-4 text-4xl font-bold tracking-tight">{mod.title}</h1>
