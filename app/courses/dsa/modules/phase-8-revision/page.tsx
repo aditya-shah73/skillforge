@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. This is the closing
 // reference card for Phase 8: tries, union-find, advanced graphs, UMPIRE,
@@ -675,6 +676,7 @@ for (int[] e : edges) {
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="phase-8-revision" />
     </article>
   );
 }

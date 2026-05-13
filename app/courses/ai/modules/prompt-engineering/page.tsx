@@ -6,6 +6,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "mental-model", title: "What a prompt actually is" },
@@ -23,7 +24,7 @@ export default function PromptEngineeringModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -809,6 +810,7 @@ Output:`}</CodeBlock>
           Start Module 8 →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="prompt-engineering" />
     </article>
   );
 }

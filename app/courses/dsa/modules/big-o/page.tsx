@@ -10,6 +10,7 @@ import TestYourself from "@/components/TestYourself";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "The setup" },
@@ -926,6 +927,7 @@ n = 1000000
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="big-o" />
     </article>
   );
 }

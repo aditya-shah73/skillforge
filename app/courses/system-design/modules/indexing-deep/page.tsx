@@ -7,6 +7,7 @@ import Mermaid from "@/components/Mermaid";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "btree", title: "B-tree mechanics: how the read-optimized index works" },
@@ -492,6 +493,7 @@ public class Order {
           Continue to Partitioning &amp; sharding →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="indexing-deep" />
     </article>
   );
 }

@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "signals", title: "Signals & methods" },
@@ -484,6 +485,7 @@ public class CorrelationIdFilter implements Filter {
           Module 22: On-call &amp; incident response →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="observability" />
     </article>
   );
 }

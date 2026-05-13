@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "l4-vs-l7", title: "L4 vs L7" },
@@ -413,6 +414,7 @@ total_nodes    = per_zone_nodes * zones
           Module 18: Rate limiting →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="load-balancing" />
     </article>
   );
 }

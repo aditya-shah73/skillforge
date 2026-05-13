@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "two-dims", title: "When state needs two dimensions" },
@@ -1039,6 +1040,7 @@ answer: dp[N][W]`}</CodeBlock>
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="dp-2d" />
     </article>
   );
 }

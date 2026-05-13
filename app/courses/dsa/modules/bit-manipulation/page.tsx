@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "Binary numbers and the operators in Java" },
@@ -1168,6 +1169,7 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="bit-manipulation" />
     </article>
   );
 }

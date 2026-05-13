@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview. Phase 6 is the biggest
@@ -933,6 +934,7 @@ int partition(int[] a, int lo, int hi) {
           Next phase: Dynamic Programming →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="phase-6-revision" />
     </article>
   );
 }

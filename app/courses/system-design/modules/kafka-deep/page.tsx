@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "model", title: "The log model" },
@@ -603,6 +604,7 @@ public class OutboxPublisher {
           You can produce, consume, and reason about Kafka. Now the question of how to use it: <Link href="/courses/system-design/modules/event-driven-cqrs" className="text-cyan-600 hover:underline">event-driven architecture, event sourcing, and CQRS</Link> — when each helps, and when they&apos;re overkill.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="kafka-deep" />
     </article>
   );
 }

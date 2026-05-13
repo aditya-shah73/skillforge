@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "spring-ai-rag", title: "Spring AI's RAG primitives" },
@@ -23,7 +24,7 @@ export default function RagSpringModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1141,6 +1142,7 @@ q.addEventListener('keydown', async (e) => {
           Module 18: React streaming patterns →
         </Link>
       </footer>
+        <ModuleNav courseId="ai" currentSlug="rag-spring" />
     </article>
   );
 }

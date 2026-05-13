@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "algorithms", title: "Algorithms" },
@@ -522,6 +523,7 @@ public class DecorrelatedJitter {
           Module 19: Resilience4j deep dive →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="rate-limiting" />
     </article>
   );
 }

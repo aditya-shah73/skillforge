@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MODULES, PHASES } from "@/lib/courses/dsa";
+import CourseProgress from "@/components/CourseProgress";
 
 export default function DsaHome() {
   const modulesByPhase = PHASES.map((phase) => ({
@@ -20,6 +21,8 @@ export default function DsaHome() {
           Built for engineers returning to interview prep after years away. Start with Big-O from zero, build every data structure from scratch, then drill the named LeetCode patterns until you can recognize them on sight.
         </p>
       </section>
+
+      <CourseProgress courseId="dsa" color="from-emerald-500 to-teal-500" />
 
       <section className="mb-14 grid sm:grid-cols-2 gap-x-10 gap-y-8 border-y border-slate-200 dark:border-slate-800 py-8">
         <div className="border-l-2 border-emerald-500 dark:border-emerald-400 pl-5">

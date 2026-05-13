@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "incident-mechanics", title: "Incident mechanics" },
@@ -382,6 +383,7 @@ export default function Page() {
           ← Back to all modules
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="on-call-incident" />
     </article>
   );
 }

@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before a system-design interview, not to grind
@@ -668,6 +669,7 @@ public List<Order> recentOrders(long userId) {
           Next phase: Communication →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-2-revision" />
     </article>
   );
 }

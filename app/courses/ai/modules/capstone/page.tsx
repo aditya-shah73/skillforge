@@ -6,6 +6,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Callout from "@/components/Callout";
+import ModuleNav from "@/components/ModuleNav";
 
 const SLUG = "capstone";
 
@@ -20,7 +21,7 @@ const CHECKPOINTS = [
 export default function CapstoneModule() {
   return (
     <article className="prose-custom">
-      <Link href="/" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-slate-100">
+      <Link href="/courses/ai" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-slate-100">
         ← All modules
       </Link>
 
@@ -881,6 +882,7 @@ conversation:
       <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-8 mb-12">
         — Fin —
       </p>
+        <ModuleNav courseId="ai" currentSlug="capstone" />
     </article>
   );
 }

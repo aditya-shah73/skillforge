@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "lens", title: "The frontend lens" },
@@ -927,6 +928,7 @@ function useDeletePost() {
           Continue to Design a feed UI →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="frontend-fundamentals" />
     </article>
   );
 }

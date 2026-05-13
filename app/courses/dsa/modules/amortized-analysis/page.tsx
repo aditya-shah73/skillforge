@@ -9,6 +9,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "The three cases" },
@@ -805,6 +806,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           Continue to Module 4 — Arrays &amp; dynamic arrays →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="amortized-analysis" />
     </article>
   );
 }

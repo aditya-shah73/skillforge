@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "reqs", title: "Requirements & estimation" },
@@ -432,6 +433,7 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
           Continue to Design a ride-sharing service →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-rate-limiter" />
     </article>
   );
 }

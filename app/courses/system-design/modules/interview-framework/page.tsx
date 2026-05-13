@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "framework", title: "The framework" },
@@ -792,6 +793,7 @@ What I'd verify:
           Continue to Design TinyURL →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="interview-framework" />
     </article>
   );
 }

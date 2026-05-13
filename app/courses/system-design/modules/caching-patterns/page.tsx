@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "patterns", title: "Four patterns" },
@@ -706,6 +707,7 @@ public class FeedService {
           Distributed caches deep dive: Redis architecture, hot keys, and operations →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="caching-patterns" />
     </article>
   );
 }

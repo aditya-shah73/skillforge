@@ -6,6 +6,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "scope", title: "Scope + components", xp: 15 },
@@ -1048,6 +1049,7 @@ export function useFeedKeyboardNav(itemCount: number) {
           Module 42: Design a real-time chat UI. Same framework, different archetype — message ordering under flaky networks, presence and typing indicators, scroll-to-bottom semantics, and why message lists are virtualized differently than feeds.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="frontend-design-feed" />
     </article>
   );
 }

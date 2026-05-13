@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "hierarchy", title: "The consistency hierarchy" },
@@ -419,6 +420,7 @@ public ProfileResponse updateName(Long userId, String newName) {
           Continue to Phase 2: SQL vs NoSQL →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="consistency-models" />
     </article>
   );
 }

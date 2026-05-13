@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 25 minutes before a system-design interview, not to grind
@@ -619,6 +620,7 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           Next phase: Production &amp; Capstone →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-6-revision" />
     </article>
   );
 }

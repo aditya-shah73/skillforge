@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why", title: "Why a gateway exists" },
@@ -602,6 +603,7 @@ public class FallbackController {
           The gateway handles synchronous traffic. The next module looks at the asynchronous side: <Link href="/courses/system-design/modules/message-queues" className="text-cyan-600 hover:underline">message queues</Link> — delivery semantics, ordering, dead-letter queues, and the SQS / RabbitMQ / Kafka decision.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="spring-cloud-gateway" />
     </article>
   );
 }

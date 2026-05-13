@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "beyond-linear", title: "Beyond linear state — three new DP families" },
@@ -1023,6 +1024,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="dp-advanced" />
     </article>
   );
 }

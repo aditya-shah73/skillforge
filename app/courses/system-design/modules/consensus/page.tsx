@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-hard", title: "Why consensus is hard" },
@@ -436,6 +437,7 @@ public class RaftNode {
           Continue to Distributed Transactions →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="consensus" />
     </article>
   );
 }

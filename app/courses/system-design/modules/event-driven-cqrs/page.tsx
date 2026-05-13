@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "event-driven", title: "Event-driven & pub-sub" },
@@ -605,6 +606,7 @@ public class OrderProjector {
           You can design the synchronous side (REST, gRPC, GraphQL) and the asynchronous side (queues, Kafka, event-driven, CQRS) — and you know when each is right and when each is overkill. The next phase moves to operating these systems: caching, observability, and the patterns that keep them running. <Link href="/courses/system-design" className="text-cyan-600 hover:underline">Back to all modules →</Link>
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="event-driven-cqrs" />
     </article>
   );
 }

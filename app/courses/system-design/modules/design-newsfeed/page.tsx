@@ -8,6 +8,7 @@ import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "requirements-and-estimation", title: "Clarify and estimate" },
@@ -773,6 +774,7 @@ public class RankedFeedController {
           Module 31: Design Twitter. Newsfeed + timelines + search + trending — a busier surface area, but the framework you just used on news feed handles all of it.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-newsfeed" />
     </article>
   );
 }

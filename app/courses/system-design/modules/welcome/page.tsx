@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 export default function Page() {
   const mod = getModuleBySlug("welcome")!;
@@ -148,6 +149,7 @@ export default function Page() {
           Start Module 1: Back-of-envelope estimation →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="welcome" />
     </article>
   );
 }

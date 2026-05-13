@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview when "DP" appears in the prompt.
@@ -665,6 +666,7 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           Next phase: Advanced &amp; Interview Prep →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="phase-7-revision" />
     </article>
   );
 }

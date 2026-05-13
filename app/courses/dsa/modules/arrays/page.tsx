@@ -9,6 +9,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What an array really is" },
@@ -815,6 +816,7 @@ size++;`}</CodeBlock>
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="arrays" />
     </article>
   );
 }

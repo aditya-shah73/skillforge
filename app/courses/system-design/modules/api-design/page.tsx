@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "rest", title: "REST done right" },
@@ -827,6 +828,7 @@ N×M coupling.                         are decoupled from clients.`}</CodeBlock>
           Continue to Spring Cloud Gateway →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="api-design" />
     </article>
   );
 }

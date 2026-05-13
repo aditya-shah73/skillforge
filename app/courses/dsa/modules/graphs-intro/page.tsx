@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "what", title: "What a graph is — beyond the textbook" },
@@ -691,6 +692,7 @@ return false;`}</CodeBlock>
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="graphs-intro" />
     </article>
   );
 }

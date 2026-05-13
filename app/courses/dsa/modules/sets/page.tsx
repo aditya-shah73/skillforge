@@ -9,6 +9,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What a set is — and why it's a HashMap in disguise" },
@@ -546,6 +547,7 @@ boolean isAnagram(String s, String t) {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="sets" />
     </article>
   );
 }

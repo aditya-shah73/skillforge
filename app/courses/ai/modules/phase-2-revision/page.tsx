@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The point is to re-read
 // this in 15-20 minutes before a system design conversation about an LLM
@@ -844,6 +845,7 @@ public String classify(String text) {
           Next phase: Embeddings deep dive →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="phase-2-revision" />
     </article>
   );
 }

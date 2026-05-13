@@ -9,6 +9,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "Why space matters" },
@@ -792,6 +793,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="space-complexity" />
     </article>
   );
 }

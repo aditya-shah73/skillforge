@@ -7,6 +7,7 @@ import Callout from "@/components/Callout";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "redis-arch", title: "Redis architecture" },
@@ -512,6 +513,7 @@ public User get(long id) {
           Search systems: when LIKE &apos;%foo%&apos; isn&apos;t enough →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="distributed-cache-deep" />
     </article>
   );
 }

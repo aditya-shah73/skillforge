@@ -6,6 +6,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "two-caches", title: "Two different caches" },
@@ -22,7 +23,7 @@ export default function PromptCachingModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -807,6 +808,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
         <Link href="/courses/ai/modules/streaming" className="text-indigo-600 hover:underline">← Module 12: Streaming</Link>
         <Link href="/courses/ai/modules/embeddings-deep" className="text-indigo-600 hover:underline">Module 14: Embeddings deep dive →</Link>
       </div>
+        <ModuleNav courseId="ai" currentSlug="prompt-caching" />
     </article>
   );
 }

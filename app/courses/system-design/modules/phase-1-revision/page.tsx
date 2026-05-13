@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this card before a system-design interview, not to grind through it.
@@ -654,6 +655,7 @@ public ProfileResponse updateName(Long userId, String newName) {
           Next phase: SQL vs NoSQL →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-1-revision" />
     </article>
   );
 }

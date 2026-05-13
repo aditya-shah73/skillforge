@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "intuition", title: "BFS vs DFS — the two traversals" },
@@ -811,6 +812,7 @@ void sink(char[][] grid, int r, int c) {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="bfs-dfs" />
     </article>
   );
 }

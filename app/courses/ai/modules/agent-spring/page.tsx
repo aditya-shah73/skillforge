@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "auto-loop", title: "The auto-loop and why to opt out" },
@@ -22,7 +23,7 @@ export default function AgentSpringModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1238,6 +1239,7 @@ Never:
           </p>
         </div>
       </section>
+        <ModuleNav courseId="ai" currentSlug="agent-spring" />
     </article>
   );
 }

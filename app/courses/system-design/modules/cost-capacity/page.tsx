@@ -7,6 +7,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "modeling", title: "Modeling cost per request" },
@@ -295,6 +296,7 @@ $/request      = monthly_cost / requests
         </p>
       </section>
 
+        <ModuleNav courseId="system-design" currentSlug="cost-capacity" />
     </article>
   );
 }

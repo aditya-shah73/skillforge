@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "reqs", title: "Requirements & estimation" },
@@ -510,6 +511,7 @@ public class FanoutConsumer {
           Continue to Design a distributed rate limiter →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-chat" />
     </article>
   );
 }

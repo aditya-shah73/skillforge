@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 export default function DsaWelcomeModule() {
   const mod = getModuleBySlug("welcome")!;
@@ -193,6 +194,7 @@ export default function DsaWelcomeModule() {
           Start Module 1: Big-O →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="welcome" />
     </article>
   );
 }

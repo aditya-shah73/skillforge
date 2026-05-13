@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MODULES, PHASES } from "@/lib/courses/system-design";
+import CourseProgress from "@/components/CourseProgress";
 
 export default function SystemDesignHome() {
   const modulesByPhase = PHASES.map((phase) => ({
@@ -20,6 +21,8 @@ export default function SystemDesignHome() {
           A layered system design course for Java engineers. Start with the fundamentals — CAP, consistency, scaling math — build up through storage, communication, and reliability patterns, then design real systems end-to-end. Concept-first, with Java/Spring where it matters.
         </p>
       </section>
+
+      <CourseProgress courseId="system-design" color="from-cyan-500 to-blue-500" />
 
       <section className="mb-14 grid sm:grid-cols-2 gap-x-10 gap-y-8 border-y border-slate-200 dark:border-slate-800 py-8">
         <div className="border-l-2 border-cyan-500 dark:border-cyan-400 pl-5">

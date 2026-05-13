@@ -6,6 +6,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "transport", title: "Connection + reconnect", xp: 20 },
@@ -998,6 +999,7 @@ function useChatScroll(messages: Message[]) {
           Back to all modules →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="frontend-design-realtime" />
     </article>
   );
 }

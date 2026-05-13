@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "chatclient-deep", title: "ChatClient deep dive" },
@@ -38,7 +39,7 @@ flowchart LR
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1028,13 +1029,14 @@ Session ended.`}</CodeBlock>
             Module 11 — Tool use →
           </Link>
           <Link
-            href="/"
+            href="/courses/ai"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-100 dark:hover:bg-amber-900/40 transition"
           >
             ← All modules
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="ai" currentSlug="spring-ai" />
     </article>
   );
 }

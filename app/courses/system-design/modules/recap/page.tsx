@@ -8,6 +8,7 @@ import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "compass", title: "The compass" },
@@ -1058,6 +1059,7 @@ export default function Page() {
           Module 39: Capstone — design a code review platform end to end. Bring the compass.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="recap" />
     </article>
   );
 }

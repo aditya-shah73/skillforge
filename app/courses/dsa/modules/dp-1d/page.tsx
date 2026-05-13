@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "template", title: "The 1D template — 'decision at index i'" },
@@ -1035,6 +1036,7 @@ return prev1;`}</CodeBlock>
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="dp-1d" />
     </article>
   );
 }

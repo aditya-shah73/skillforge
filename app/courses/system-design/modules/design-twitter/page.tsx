@@ -8,6 +8,7 @@ import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "scope-and-estimation", title: "Scope and estimate" },
@@ -526,6 +527,7 @@ public class TrendingIndexer {
           Module 32: Design a chat system. WebSockets, presence, message ordering, group chat, push notifications. The architecture shifts from request/response to stateful connections — and that changes everything about how you scale.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-twitter" />
     </article>
   );
 }

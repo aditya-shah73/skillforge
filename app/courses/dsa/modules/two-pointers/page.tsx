@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What two-pointers is — and the sorted-array tell" },
@@ -889,6 +890,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="two-pointers" />
     </article>
   );
 }

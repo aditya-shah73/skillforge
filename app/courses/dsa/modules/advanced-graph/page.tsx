@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "limits", title: "When Dijkstra fails — the negative-edge wall" },
@@ -952,6 +953,7 @@ Streaming / online setting (edges arrive one at a time):
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="advanced-graph" />
     </article>
   );
 }

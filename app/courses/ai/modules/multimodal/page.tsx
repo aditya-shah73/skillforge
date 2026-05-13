@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "what-multimodal", title: "What multimodal really means" },
@@ -23,7 +24,7 @@ export default function MultimodalModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1092,7 +1093,7 @@ ORDER BY 1 DESC;`}</CodeBlock>
             <div className="font-bold">Module 19 · Full chat interface</div>
           </Link>
           <Link
-            href="/"
+            href="/courses/ai/modules/agents-intro"
             className="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-600 p-4 transition"
           >
             <div className="text-xs uppercase tracking-wider text-slate-400 mb-1">Up next</div>
@@ -1100,6 +1101,7 @@ ORDER BY 1 DESC;`}</CodeBlock>
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="ai" currentSlug="multimodal" />
     </article>
   );
 }

@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision — no Checkpoints, no XP gates. Re-read on the train before
 // a distributed systems interview, not a tutorial.
@@ -772,6 +773,7 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           Next phase: Case Studies →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-5-revision" />
     </article>
   );
 }

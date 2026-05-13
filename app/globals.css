@@ -158,3 +158,98 @@ body {
   padding: 0;
   color: inherit;
 }
+
+/* =========================================================================
+ * Print styles
+ * Revision-note modules (Phase N revision notes) are designed as one-card
+ * reference sheets — people should be able to print them or save-as-PDF.
+ * Strip chrome, force light backgrounds (saves ink), expand code, prevent
+ * mid-block page breaks.
+ * Mark anything chrome-y with `print:hidden` (Tailwind) and it'll be gone.
+ * ======================================================================= */
+@media print {
+  /* Light backgrounds everywhere, regardless of OS color scheme. */
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide site chrome: sticky header, footer notes, floating Tokey, the
+   * gamification preview, the gradient blobs behind the hero. */
+  header,
+  nav,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Let main fill the page */
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Code blocks: keep readable, force borders not dark fills */
+  pre,
+  .prose-custom pre {
+    background-color: #f4f4f5 !important;
+    color: #18181b !important;
+    border: 1px solid #d4d4d8;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    white-space: pre-wrap !important;
+    word-wrap: break-word;
+  }
+
+  code,
+  .prose-custom code {
+    background-color: #f4f4f5 !important;
+    color: #18181b !important;
+  }
+
+  /* Avoid breaking inside callouts, checkpoints, worked examples */
+  .callout,
+  .worked-example,
+  blockquote,
+  table,
+  figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Headings should hold onto the content below them */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Force gradient text to render in a dark solid color when printed —
+   * `bg-clip-text text-transparent` prints as invisible otherwise. */
+  .bg-clip-text {
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #18181b !important;
+    background-image: none !important;
+  }
+
+  /* Resolve link URLs inline so a printed page is still navigable. Scope
+   * to .prose-custom so we don't blow up nav-link printouts on, e.g., card
+   * components. */
+  .prose-custom a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #52525b;
+    word-break: break-all;
+  }
+
+  /* Anything explicitly meant for print can opt in with .print-only */
+  .print-only {
+    display: block !important;
+  }
+}
+
+.print-only {
+  display: none;
+}

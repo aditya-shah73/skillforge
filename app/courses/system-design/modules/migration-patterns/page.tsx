@@ -7,6 +7,7 @@ import Mermaid from "@/components/Mermaid";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-hard", title: "Why migrations are hard" },
@@ -627,6 +628,7 @@ if drift counter > 0 for >1 hour:
           Continue to Security in System Design →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="migration-patterns" />
     </article>
   );
 }

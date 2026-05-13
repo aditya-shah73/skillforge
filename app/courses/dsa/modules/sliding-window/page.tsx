@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What 'sliding window' really means" },
@@ -868,6 +869,7 @@ for (int r = 0; r < s.length(); r++) {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="sliding-window" />
     </article>
   );
 }

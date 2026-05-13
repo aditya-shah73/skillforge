@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What greedy means — and why it fails" },
@@ -949,6 +950,7 @@ public static void stressTest() {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="greedy" />
     </article>
   );
 }

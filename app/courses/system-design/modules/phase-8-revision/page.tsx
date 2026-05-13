@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before a frontend system design interview, not
@@ -629,6 +630,7 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-8-revision" />
     </article>
   );
 }

@@ -7,6 +7,7 @@ import Mermaid from "@/components/Mermaid";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "cap", title: "What CAP actually says" },
@@ -388,6 +389,7 @@ export default function Page() {
           Continue to Consistency Models →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="cap-pacelc" />
     </article>
   );
 }

@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 15-20 minutes before shipping a RAG feature, not to grind through it.
@@ -745,6 +746,7 @@ public List<Document> search(String q) {
           Next phase: Frontend AI Integration →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="phase-3-revision" />
     </article>
   );
 }

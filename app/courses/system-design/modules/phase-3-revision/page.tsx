@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview, not to grind through it.
@@ -730,6 +731,7 @@ consumer.commitSync();`}</CodeBlock>
           Next phase: Distribution &amp; Scale →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-3-revision" />
     </article>
   );
 }

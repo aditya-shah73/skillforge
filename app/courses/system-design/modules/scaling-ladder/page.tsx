@@ -8,6 +8,7 @@ import Mermaid from "@/components/Mermaid";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "vertical", title: "Vertical first, then horizontal" },
@@ -447,6 +448,7 @@ public class SignupService {
           Continue to CAP and PACELC →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="scaling-ladder" />
     </article>
   );
 }

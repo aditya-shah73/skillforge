@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COURSES, ai, dsa, systemDesign } from "@/lib/courses";
+import ContinueWhereYouLeftOff from "@/components/ContinueWhereYouLeftOff";
 
 const COURSE_DATA = { ai, dsa, "system-design": systemDesign } as const;
 
@@ -45,6 +46,9 @@ export default function Home() {
           </span>
         </div>
       </section>
+
+      {/* Resume CTA — only renders if the user has completed at least one module */}
+      <ContinueWhereYouLeftOff />
 
       {/* Course picker */}
       <section className="mb-16">

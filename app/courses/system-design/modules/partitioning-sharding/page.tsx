@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-partition", title: "Why partition" },
@@ -423,6 +424,7 @@ export default function Page() {
           Replication: leaders, followers, and the lag you have to live with →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="partitioning-sharding" />
     </article>
   );
 }

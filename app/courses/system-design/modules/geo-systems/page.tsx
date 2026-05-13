@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "physics", title: "The physics of distance" },
@@ -546,6 +547,7 @@ public class SyncController {
         </p>
       </section>
 
+        <ModuleNav courseId="system-design" currentSlug="geo-systems" />
     </article>
   );
 }

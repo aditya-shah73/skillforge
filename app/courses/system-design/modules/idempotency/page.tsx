@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "what-and-why", title: "What and why" },
@@ -491,6 +492,7 @@ public class RequestFingerprint {
           Module 21: Observability →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="idempotency" />
     </article>
   );
 }

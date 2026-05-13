@@ -7,6 +7,7 @@ import Callout from "@/components/Callout";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-search", title: "Why DB isn't enough" },
@@ -525,6 +526,7 @@ public class ProductSearchService {
           Back to all modules — Phase 3 covers messaging and event-driven systems →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="search-systems" />
     </article>
   );
 }

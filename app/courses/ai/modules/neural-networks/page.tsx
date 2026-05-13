@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-neurons", title: "Why we need neurons at all" },
@@ -24,7 +25,7 @@ export default function NeuralNetworksModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1339,6 +1340,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
           Continue to Module 5 →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="neural-networks" />
     </article>
   );
 }

@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 15 minutes before an interview, not to grind through it.
@@ -759,6 +760,7 @@ boolean isBST(TreeNode n, Long min, Long max) {
           Next phase: Graphs →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="phase-3-revision" />
     </article>
   );
 }

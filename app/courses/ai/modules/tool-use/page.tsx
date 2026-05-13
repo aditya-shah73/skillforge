@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "why-tools", title: "Why tool use exists" },
@@ -36,7 +37,7 @@ sequenceDiagram
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -685,6 +686,7 @@ Bye.`}</CodeBlock>
         <Link href="/courses/ai/modules/spring-ai" className="text-indigo-600 hover:underline">← Module 10: Spring AI integration</Link>
         <Link href="/courses/ai/modules/streaming" className="text-indigo-600 hover:underline">Module 12: Streaming with SSE →</Link>
       </div>
+        <ModuleNav courseId="ai" currentSlug="tool-use" />
     </article>
   );
 }

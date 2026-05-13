@@ -8,6 +8,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "authn-authz", title: "AuthN/AuthZ" },
@@ -1034,6 +1035,7 @@ public class OrdersController {
           Module 38: Recap — we synthesize all 35 modules into a single mental compass before the capstone.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="security-design" />
     </article>
   );
 }

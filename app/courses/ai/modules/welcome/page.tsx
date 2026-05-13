@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 export default function WelcomeModule() {
   const mod = getModuleBySlug("welcome")!;
@@ -8,7 +9,7 @@ export default function WelcomeModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -144,6 +145,7 @@ export default function WelcomeModule() {
           Start Module 1 →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="welcome" />
     </article>
   );
 }

@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "wallclock", title: "Why wall clocks lie" },
@@ -356,6 +357,7 @@ public synchronized HLCTimestamp tickReceive(HLCTimestamp msg) {
         </p>
       </section>
 
+        <ModuleNav courseId="system-design" currentSlug="clock-time" />
     </article>
   );
 }

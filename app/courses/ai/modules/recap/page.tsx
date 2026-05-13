@@ -6,6 +6,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "the-request", title: "The request we'll trace" },
@@ -24,7 +25,7 @@ export default function RecapModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -661,13 +662,14 @@ T → ∞:   all logits get squashed toward equality
             Module 9 — Claude API fundamentals →
           </Link>
           <Link
-            href="/"
+            href="/courses/ai"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-200 font-medium text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition"
           >
             ← All modules
           </Link>
         </div>
       </section>
+        <ModuleNav courseId="ai" currentSlug="recap" />
     </article>
   );
 }

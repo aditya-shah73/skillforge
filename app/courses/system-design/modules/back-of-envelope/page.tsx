@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "latency", title: "Latency numbers" },
@@ -543,6 +544,7 @@ public class DataSourceConfig {
           Module 2: The scaling ladder →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="back-of-envelope" />
     </article>
   );
 }

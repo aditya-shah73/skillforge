@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "pain", title: "The pain point — naive recursive Fibonacci" },
@@ -1071,6 +1072,7 @@ private int climb(int n, Integer[] memo) {
           Subsequence, Decode Ways. The same four-step recipe, applied until it&apos;s reflex.
         </p>
       </div>
+        <ModuleNav courseId="dsa" currentSlug="dp-intro" />
     </article>
   );
 }

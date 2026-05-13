@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "semantics", title: "Delivery semantics" },
@@ -486,6 +487,7 @@ public class OrderConsumer {
           You&apos;ve picked Kafka for the workloads that need it. The next module goes deep on how Kafka actually works — partitions, consumer groups, offsets, and exactly-once with Spring Kafka. <Link href="/courses/system-design/modules/kafka-deep" className="text-cyan-600 hover:underline">Kafka deep dive →</Link>
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="message-queues" />
     </article>
   );
 }

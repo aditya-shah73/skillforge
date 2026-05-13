@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MODULES, PHASES } from "@/lib/modules";
+import CourseProgress from "@/components/CourseProgress";
 
 export default function Home() {
   const modulesByPhase = PHASES.map((phase) => ({
@@ -20,6 +21,8 @@ export default function Home() {
           A hands-on course for working full-stack engineers. Build real intuition for how LLMs, embeddings, RAG, and agents actually work — then ship production-quality AI features on top of your existing stack.
         </p>
       </section>
+
+      <CourseProgress courseId="ai" color="from-indigo-500 to-purple-500" />
 
       <section className="mb-14 grid sm:grid-cols-2 gap-x-10 gap-y-8 border-y border-slate-200 dark:border-slate-800 py-8">
         <div className="border-l-2 border-indigo-500 dark:border-indigo-400 pl-5">

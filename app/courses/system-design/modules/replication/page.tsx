@@ -7,6 +7,7 @@ import Callout from "@/components/Callout";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "leader-follower", title: "Leader-follower" },
@@ -469,6 +470,7 @@ SELECT
           Caching patterns: cache-aside, write-through, and the four ways to get invalidation wrong →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="replication" />
     </article>
   );
 }

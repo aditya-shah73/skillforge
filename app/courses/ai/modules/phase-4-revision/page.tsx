@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. Re-read in 15 minutes
 // before you sit down to wire up a chat UI or debug a stuck stream.
@@ -673,6 +674,7 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
           Next phase: Agents &amp; Advanced Patterns →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="phase-4-revision" />
     </article>
   );
 }

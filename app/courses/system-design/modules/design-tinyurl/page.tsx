@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "requirements-and-estimation", title: "Clarify and estimate" },
@@ -461,6 +462,7 @@ public class KeyGenerationService {
           Module 30: Design a news feed. Same framework, harder problem — fanout-on-write vs fanout-on-read, the celebrity hot-key, and why the &quot;right&quot; answer is usually a hybrid.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-tinyurl" />
     </article>
   );
 }

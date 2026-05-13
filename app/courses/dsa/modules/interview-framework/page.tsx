@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "frameworks", title: "Why frameworks matter under pressure" },
@@ -1563,6 +1564,7 @@ Me: "Final complexity:
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="interview-framework" />
     </article>
   );
 }

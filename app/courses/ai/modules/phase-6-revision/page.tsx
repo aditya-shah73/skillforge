@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The point is the
 // pre-capstone sanity sweep: evals, security, fine-tune vs RAG vs prompt.
@@ -646,6 +647,7 @@ public Response chat(ChatRequest req, User u) {
           Onward to the capstone →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="phase-6-revision" />
     </article>
   );
 }

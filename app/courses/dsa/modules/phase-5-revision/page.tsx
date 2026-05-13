@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. Phase 5 is one module
 // long (the Collections deep dive), so the revision is denser per page: a
@@ -659,6 +660,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           Next phase: Algorithmic Techniques →
         </Link>
       </section>
+        <ModuleNav courseId="dsa" currentSlug="phase-5-revision" />
     </article>
   );
 }

@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
+import ModuleNav from "@/components/ModuleNav";
 
 // Phase 5 revision — pure reference card. No checkpoints, no XP gates. The
 // point is to re-read this in 15 minutes before designing an agent, not to
@@ -675,6 +676,7 @@ String summary = llm.summarize(c, invoices); // ONE model call
           Next phase: Evals →
         </Link>
       </section>
+        <ModuleNav courseId="ai" currentSlug="phase-5-revision" />
     </article>
   );
 }

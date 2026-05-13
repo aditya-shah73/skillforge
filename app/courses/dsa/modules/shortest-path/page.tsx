@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "weighted", title: "Weighted graphs — and why BFS isn't enough" },
@@ -670,6 +671,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
         </div>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="shortest-path" />
     </article>
   );
 }

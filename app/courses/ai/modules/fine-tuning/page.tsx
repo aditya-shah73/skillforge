@@ -6,6 +6,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Callout from "@/components/Callout";
+import ModuleNav from "@/components/ModuleNav";
 
 const SLUG = "fine-tuning";
 
@@ -21,7 +22,7 @@ const CHECKPOINTS = [
 export default function FineTuningModule() {
   return (
     <article className="prose-custom">
-      <Link href="/" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-slate-100">
+      <Link href="/courses/ai" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-slate-100">
         ← All modules
       </Link>
 
@@ -761,6 +762,7 @@ mid-project. Decide these BEFORE you start.]
           piece. The thing you point at when somebody asks &quot;can you actually ship AI?&quot;
         </p>
       </div>
+        <ModuleNav courseId="ai" currentSlug="fine-tuning" />
     </article>
   );
 }

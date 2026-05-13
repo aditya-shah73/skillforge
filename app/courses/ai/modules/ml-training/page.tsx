@@ -11,6 +11,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeExercise from "@/components/CodeExercise";
 import GradientBowl from "@/components/GradientBowl";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "gradient-descent", title: "Gradient descent: how models actually learn" },
@@ -27,7 +28,7 @@ export default function MLTrainingModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1631,11 +1632,12 @@ b -= learningRate * gradB;`}
           <Link href="/courses/ai/modules/neural-networks" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition">
             Start Module 4 →
           </Link>
-          <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition">
+          <Link href="/courses/ai" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition">
             ← All modules
           </Link>
         </div>
       </footer>
+        <ModuleNav courseId="ai" currentSlug="ml-training" />
     </article>
   );
 }

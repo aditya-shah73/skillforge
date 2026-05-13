@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "reqs", title: "Requirements & estimation" },
@@ -408,6 +409,7 @@ public ResponseEntity<Void> stripeWebhook(
           Browse the full track on the <Link href="/courses/system-design" className="text-cyan-600 hover:underline">System Design course page</Link>.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="design-payments" />
     </article>
   );
 }

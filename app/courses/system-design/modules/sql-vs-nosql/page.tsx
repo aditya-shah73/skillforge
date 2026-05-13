@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "oltp-olap", title: "The OLTP/OLAP split is the real first question" },
@@ -482,6 +483,7 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
           Continue to Indexing deep dive →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="sql-vs-nosql" />
     </article>
   );
 }

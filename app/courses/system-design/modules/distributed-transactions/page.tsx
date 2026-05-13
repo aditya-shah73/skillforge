@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "two-pc", title: "2PC and why it bites" },
@@ -501,6 +502,7 @@ public class OutboxPoller {
           Continue to Clocks &amp; Time →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="distributed-transactions" />
     </article>
   );
 }

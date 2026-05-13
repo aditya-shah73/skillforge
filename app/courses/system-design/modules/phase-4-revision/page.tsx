@@ -5,6 +5,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
+import ModuleNav from "@/components/ModuleNav";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview or before going on-call, not
@@ -683,6 +684,7 @@ if (cached.isPresent()) {
           Next phase: Consensus — Raft &amp; Paxos →
         </Link>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="phase-4-revision" />
     </article>
   );
 }

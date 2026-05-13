@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "frontend-backend", title: "Frontend ↔ backend wiring" },
@@ -23,7 +24,7 @@ export default function ChatInterfaceModule() {
   return (
     <article className="prose-custom">
       <nav className="text-xs mb-6">
-        <Link href="/" className="text-indigo-600 hover:underline">← All modules</Link>
+        <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
       <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
@@ -1233,6 +1234,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           Module 20: Multimodal inputs →
         </Link>
       </footer>
+        <ModuleNav courseId="ai" currentSlug="chat-interface" />
     </article>
   );
 }

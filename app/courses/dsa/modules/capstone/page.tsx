@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "how-it-works", title: "How this capstone works" },
@@ -1257,6 +1258,7 @@ private int dfs(int r, int c) {
         </p>
       </section>
       </Checkpoint>
+        <ModuleNav courseId="dsa" currentSlug="capstone" />
     </article>
   );
 }

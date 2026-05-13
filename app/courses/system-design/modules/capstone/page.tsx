@@ -8,6 +8,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
+import ModuleNav from "@/components/ModuleNav";
 
 const CHECKPOINTS = [
   { id: "capacity", title: "Requirements & capacity" },
@@ -741,6 +742,7 @@ public ResponseEntity<Comment> create(
           framework. The first time you do it on something live, this all clicks.
         </p>
       </section>
+        <ModuleNav courseId="system-design" currentSlug="capstone" />
     </article>
   );
 }
