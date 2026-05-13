@@ -50,7 +50,7 @@ export const MODULES: Module[] = [
   { slug: "transformers", number: 5, phase: "ML & AI Foundations", phaseNumber: 1, title: "Attention & transformers", subtitle: "The one idea that ate the ML world — built from scratch", duration: "~3–4h", project: "Scaled dot-product attention from scratch in Java", status: "available" },
   { slug: "embeddings-intro", number: 6, phase: "ML & AI Foundations", phaseNumber: 1, title: "Embeddings: numbers become geometry", subtitle: "Vector space, cosine similarity, why semantic search works", duration: "~2–3h", project: "Nearest-neighbor search in Java + 2D visualizer", status: "available" },
   { slug: "prompt-engineering", number: 7, phase: "ML & AI Foundations", phaseNumber: 1, title: "Prompt engineering", subtitle: "System prompts, few-shot, chain-of-thought, structured output", duration: "~2h", project: "Local prompt pattern playground — no API key needed", status: "available" },
-  { slug: "recap", number: 8, phase: "ML & AI Foundations", phaseNumber: 1, title: "Putting it all together", subtitle: "Trace a real LLM request through every concept from Modules 1–7", duration: "~1–1.5h", project: "Annotated end-to-end request walkthrough", status: "available" },
+  { slug: "recap", number: 8, phase: "ML & AI Foundations", phaseNumber: 1, title: "Phase 1 revision notes", subtitle: "Trace a real LLM request through every concept from Modules 1–7 — the foundations on one card", duration: "~1–1.5h", project: "Annotated end-to-end request walkthrough", status: "available" },
 
   // Phase 2
   { slug: "api-fundamentals", number: 9, phase: "API & Backend Integration", phaseNumber: 2, title: "Claude API fundamentals", subtitle: "Auth, models, parameters — from zero to first request", duration: "~1.5h", project: "AI code reviewer CLI", status: "available" },
@@ -58,28 +58,33 @@ export const MODULES: Module[] = [
   { slug: "tool-use", number: 11, phase: "API & Backend Integration", phaseNumber: 2, title: "Tool use & function calling", subtitle: "Let the LLM call your GraphQL resolvers", duration: "~2h", project: "GraphQL-aware assistant", status: "available" },
   { slug: "streaming", number: 12, phase: "API & Backend Integration", phaseNumber: 2, title: "Streaming with SSE", subtitle: "Token-by-token from Spring Boot to React", duration: "~1.5h", project: "Live story generator", status: "available" },
   { slug: "prompt-caching", number: 13, phase: "API & Backend Integration", phaseNumber: 2, title: "Prompt caching & cost", subtitle: "Running LLMs at production scale", duration: "~1.5h", project: "Cost dashboard", status: "available" },
+  { slug: "phase-2-revision", number: 14, phase: "API & Backend Integration", phaseNumber: 2, title: "Phase 2 revision notes", subtitle: "Claude API, Spring AI, tool use, streaming, prompt caching — the backend AI toolkit on one card", duration: "~15–20 min", project: "No project — pure revision", status: "available" },
 
   // Phase 3
-  { slug: "embeddings-deep", number: 14, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Production embeddings: models, dimensions, cost, the curse", duration: "~2h", project: "Semantic bookmark search", status: "available" },
-  { slug: "pgvector", number: 15, phase: "Vector Search & RAG", phaseNumber: 3, title: "Vector DBs & pgvector", subtitle: "HNSW vs IVFFlat, indexing, Postgres integration", duration: "~2h", project: "Duplicate issue detector", status: "available" },
-  { slug: "rag-architecture", number: 16, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG architecture", subtitle: "Chunking, retrieval, context assembly", duration: "~2h", project: "Doc chunking lab", status: "available" },
-  { slug: "rag-spring", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "available" },
+  { slug: "embeddings-deep", number: 15, phase: "Vector Search & RAG", phaseNumber: 3, title: "Embeddings deep dive", subtitle: "Production embeddings: models, dimensions, cost, the curse", duration: "~2h", project: "Semantic bookmark search", status: "available" },
+  { slug: "pgvector", number: 16, phase: "Vector Search & RAG", phaseNumber: 3, title: "Vector DBs & pgvector", subtitle: "HNSW vs IVFFlat, indexing, Postgres integration", duration: "~2h", project: "Duplicate issue detector", status: "available" },
+  { slug: "rag-architecture", number: 17, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG architecture", subtitle: "Chunking, retrieval, context assembly", duration: "~2h", project: "Doc chunking lab", status: "available" },
+  { slug: "rag-spring", number: 18, phase: "Vector Search & RAG", phaseNumber: 3, title: "RAG in Spring Boot end-to-end", subtitle: "Spring AI + pgvector, full pipeline", duration: "~2h", project: "Chat with your docs", status: "available" },
+  { slug: "phase-3-revision", number: 19, phase: "Vector Search & RAG", phaseNumber: 3, title: "Phase 3 revision notes", subtitle: "Embeddings, pgvector, RAG architecture, Spring AI pipeline — the retrieval stack on one card", duration: "~15–20 min", project: "No project — pure revision", status: "available" },
 
   // Phase 4
-  { slug: "react-streaming", number: 18, phase: "Frontend AI Integration", phaseNumber: 4, title: "React streaming patterns", subtitle: "SSE consumption, optimistic updates, tool results", duration: "~1.5h", project: "Chat UI component library", status: "available" },
-  { slug: "chat-interface", number: 19, phase: "Frontend AI Integration", phaseNumber: 4, title: "Full chat interface", subtitle: "React + GraphQL + Spring Boot end-to-end", duration: "~2h", project: "Team standup bot", status: "available" },
-  { slug: "multimodal", number: 20, phase: "Frontend AI Integration", phaseNumber: 4, title: "Multimodal inputs", subtitle: "Images, files, vision models", duration: "~1.5h", project: "Receipt parser", status: "available" },
+  { slug: "react-streaming", number: 20, phase: "Frontend AI Integration", phaseNumber: 4, title: "React streaming patterns", subtitle: "SSE consumption, optimistic updates, tool results", duration: "~1.5h", project: "Chat UI component library", status: "available" },
+  { slug: "chat-interface", number: 21, phase: "Frontend AI Integration", phaseNumber: 4, title: "Full chat interface", subtitle: "React + GraphQL + Spring Boot end-to-end", duration: "~2h", project: "Team standup bot", status: "available" },
+  { slug: "multimodal", number: 22, phase: "Frontend AI Integration", phaseNumber: 4, title: "Multimodal inputs", subtitle: "Images, files, vision models", duration: "~1.5h", project: "Receipt parser", status: "available" },
+  { slug: "phase-4-revision", number: 23, phase: "Frontend AI Integration", phaseNumber: 4, title: "Phase 4 revision notes", subtitle: "SSE consumption, chat UI patterns, multimodal — the frontend AI playbook on one card", duration: "~15 min", project: "No project — pure revision", status: "available" },
 
   // Phase 5
-  { slug: "agents-intro", number: 21, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agent fundamentals", subtitle: "ReAct loop, memory, when NOT to use agents", duration: "~2h", project: "Research agent", status: "available" },
-  { slug: "agent-spring", number: 22, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agents in Spring Boot", subtitle: "Tool loop, state, stopping conditions", duration: "~2h", project: "Code migration agent", status: "available" },
-  { slug: "multi-agent", number: 23, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Multi-agent patterns", subtitle: "Orchestrator/subagent, parallelization", duration: "~1.5h", project: "PR review panel", status: "available" },
+  { slug: "agents-intro", number: 24, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agent fundamentals", subtitle: "ReAct loop, memory, when NOT to use agents", duration: "~2h", project: "Research agent", status: "available" },
+  { slug: "agent-spring", number: 25, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Agents in Spring Boot", subtitle: "Tool loop, state, stopping conditions", duration: "~2h", project: "Code migration agent", status: "available" },
+  { slug: "multi-agent", number: 26, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Multi-agent patterns", subtitle: "Orchestrator/subagent, parallelization", duration: "~1.5h", project: "PR review panel", status: "available" },
+  { slug: "phase-5-revision", number: 27, phase: "Agents & Advanced Patterns", phaseNumber: 5, title: "Phase 5 revision notes", subtitle: "ReAct, agent loops in Spring, multi-agent orchestration — the agent reference card", duration: "~15 min", project: "No project — pure revision", status: "available" },
 
   // Phase 6
-  { slug: "evals", number: 24, phase: "Production & Capstone", phaseNumber: 6, title: "Evals", subtitle: "LLM-as-judge, golden sets, regression testing", duration: "~1.5h", project: "Eval harness", status: "available" },
-  { slug: "security", number: 25, phase: "Production & Capstone", phaseNumber: 6, title: "Security & guardrails", subtitle: "Prompt injection, PII, output filtering", duration: "~1.5h", project: "Injection test suite", status: "available" },
-  { slug: "fine-tuning", number: 26, phase: "Production & Capstone", phaseNumber: 6, title: "Fine-tuning & RLHF (when to bother)", subtitle: "How model training actually works — and why RAG usually wins", duration: "~1.5h", project: "Decision framework: fine-tune vs prompt vs RAG", status: "available" },
-  { slug: "capstone", number: 27, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~3h", project: "Portfolio centerpiece", status: "available" },
+  { slug: "evals", number: 28, phase: "Production & Capstone", phaseNumber: 6, title: "Evals", subtitle: "LLM-as-judge, golden sets, regression testing", duration: "~1.5h", project: "Eval harness", status: "available" },
+  { slug: "security", number: 29, phase: "Production & Capstone", phaseNumber: 6, title: "Security & guardrails", subtitle: "Prompt injection, PII, output filtering", duration: "~1.5h", project: "Injection test suite", status: "available" },
+  { slug: "fine-tuning", number: 30, phase: "Production & Capstone", phaseNumber: 6, title: "Fine-tuning & RLHF (when to bother)", subtitle: "How model training actually works — and why RAG usually wins", duration: "~1.5h", project: "Decision framework: fine-tune vs prompt vs RAG", status: "available" },
+  { slug: "phase-6-revision", number: 31, phase: "Production & Capstone", phaseNumber: 6, title: "Phase 6 revision notes", subtitle: "Evals, security, fine-tune vs RAG vs prompt — the production-AI cheat sheet before the capstone", duration: "~15–20 min", project: "No project — pure revision", status: "available" },
+  { slug: "capstone", number: 32, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~3h", project: "Portfolio centerpiece", status: "available" },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {

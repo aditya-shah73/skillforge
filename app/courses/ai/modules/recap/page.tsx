@@ -34,7 +34,7 @@ export default function RecapModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Putting it all together</h1>
+        <h1 className="text-4xl font-bold tracking-tight mb-3">Phase 1 revision notes</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           One real Claude request, traced end to end, touching every concept from Modules 1–7. If a link is still fuzzy, this is where it snaps.
         </p>

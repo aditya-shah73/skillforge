@@ -798,7 +798,7 @@ Output:`}</CodeBlock>
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
       <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
-        <h3 className="mt-0 mb-2">Next up: Module 8 — Putting it all together</h3>
+        <h3 className="mt-0 mb-2">Next up: Module 8 — Phase 1 revision notes</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           One last stop before Phase 2: we trace an entire real Claude request end-to-end, touching every concept from Modules 1–7. If anything still feels fuzzy, that module is where it snaps into place.
         </p>
