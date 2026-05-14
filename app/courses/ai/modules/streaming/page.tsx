@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-stream", title: "Why stream at all" },
@@ -57,6 +58,7 @@ sequenceDiagram
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Token-by-token from Claude → Spring Boot → the browser. The UX upgrade users notice instantly.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="streaming" />
         <ModuleProgress moduleSlug="streaming" checkpoints={CHECKPOINTS} />
       </header>
 

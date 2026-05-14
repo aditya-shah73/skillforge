@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "vector-space", title: "Words as points in space" },
@@ -38,6 +39,7 @@ export default function EmbeddingsIntroModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Why &quot;king − man + woman ≈ queen&quot; isn&apos;t a party trick — it&apos;s the whole reason semantic search works.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="embeddings-intro" />
         <ModuleProgress moduleSlug="embeddings-intro" checkpoints={CHECKPOINTS} />
       </header>
 

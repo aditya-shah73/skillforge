@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What backtracking actually is — DFS with state you undo" },
@@ -134,6 +135,7 @@ diag2 (r-c=-1): (1,2), (2,3)"]
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="backtracking" />
       <ModuleProgress moduleSlug="backtracking" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

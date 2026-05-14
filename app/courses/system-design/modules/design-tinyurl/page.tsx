@@ -8,6 +8,7 @@ import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "requirements-and-estimation", title: "Clarify and estimate" },
@@ -46,6 +47,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <BookmarkButton courseId="system-design" moduleSlug="design-tinyurl" />
       </header>
 
       <ModuleProgress moduleSlug={mod.slug} checkpoints={CHECKPOINTS} />

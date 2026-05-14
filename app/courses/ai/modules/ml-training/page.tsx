@@ -12,6 +12,7 @@ import CodeExercise from "@/components/CodeExercise";
 import GradientBowl from "@/components/GradientBowl";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "gradient-descent", title: "Gradient descent: how models actually learn" },
@@ -42,6 +43,7 @@ export default function MLTrainingModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Gradient descent, learning rate, overfitting, evaluation — the loop that turns data into weights.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="ml-training" />
         <ModuleProgress moduleSlug="ml-training" checkpoints={CHECKPOINTS} />
       </header>
 

@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview when "DP" appears in the prompt.
@@ -56,6 +57,7 @@ flowchart TD
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The whole DP story — decision framework, six state shapes, memo vs tab, the space tricks — compressed to a reference card you can re-read in 20 minutes before an interview.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="phase-7-revision" />
         <ModuleProgress moduleSlug="phase-7-revision" checkpoints={CHECKPOINTS} />
       </header>
 

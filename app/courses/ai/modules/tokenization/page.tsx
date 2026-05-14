@@ -8,6 +8,7 @@ import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "The setup" },
@@ -62,6 +63,7 @@ flowchart TD
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Why does the AI charge me by the tok<em>what</em>?
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="tokenization" />
         <ModuleProgress moduleSlug="tokenization" checkpoints={CHECKPOINTS} />
       </header>
 

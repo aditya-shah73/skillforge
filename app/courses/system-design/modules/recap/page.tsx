@@ -9,6 +9,7 @@ import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import CodeBlock from "@/components/CodeBlock";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "compass", title: "The compass" },
@@ -52,6 +53,7 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
+      <BookmarkButton courseId="system-design" moduleSlug="recap" />
       <ModuleProgress moduleSlug="recap" checkpoints={CHECKPOINTS} />
       <nav className="text-xs mb-6">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>

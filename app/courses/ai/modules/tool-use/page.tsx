@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-tools", title: "Why tool use exists" },
@@ -53,6 +54,7 @@ sequenceDiagram
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Stop pasting data into prompts. Let the model call your code.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="tool-use" />
         <ModuleProgress moduleSlug="tool-use" checkpoints={CHECKPOINTS} />
       </header>
 

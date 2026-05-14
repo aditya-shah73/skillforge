@@ -14,6 +14,10 @@ type Progress = {
   hardcoreMode: boolean;
   easterEggs: string[];
   theme: string;
+  // Bookmarked modules, stored as "<courseId>/<moduleSlug>" keys. We namespace
+  // by course so identical slugs across courses (e.g. "welcome", "capstone")
+  // bookmark independently.
+  bookmarks: string[];
 };
 
 type ProgressContextType = Progress & {
@@ -27,6 +31,8 @@ type ProgressContextType = Progress & {
   unlockEasterEgg: (id: string) => boolean;
   setTheme: (theme: string) => void;
   isCheckpointComplete: (moduleSlug: string, checkpointId: string) => boolean;
+  toggleBookmark: (key: string) => void;
+  isBookmarked: (key: string) => boolean;
 };
 
 const defaultProgress: Progress = {
@@ -41,6 +47,7 @@ const defaultProgress: Progress = {
   hardcoreMode: false,
   easterEggs: [],
   theme: "default",
+  bookmarks: [],
 };
 
 const ProgressContext = createContext<ProgressContextType | null>(null);
@@ -181,6 +188,22 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return (progress.completedCheckpoints[moduleSlug] || []).includes(checkpointId);
   }, [progress.completedCheckpoints]);
 
+  const toggleBookmark = useCallback((key: string) => {
+    setProgress((p) => {
+      const exists = p.bookmarks.includes(key);
+      return {
+        ...p,
+        bookmarks: exists
+          ? p.bookmarks.filter((b) => b !== key)
+          : [...p.bookmarks, key],
+      };
+    });
+  }, []);
+
+  const isBookmarked = useCallback((key: string) => {
+    return progress.bookmarks.includes(key);
+  }, [progress.bookmarks]);
+
   return (
     <ProgressContext.Provider
       value={{
@@ -195,6 +218,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         unlockEasterEgg,
         setTheme,
         isCheckpointComplete,
+        toggleBookmark,
+        isBookmarked,
       }}
     >
       {children}
@@ -218,6 +243,8 @@ export function useProgress() {
       unlockEasterEgg: () => false,
       setTheme: () => {},
       isCheckpointComplete: () => false,
+      toggleBookmark: () => {},
+      isBookmarked: () => false,
     };
   }
   return ctx;

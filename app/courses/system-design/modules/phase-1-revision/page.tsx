@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this card before a system-design interview, not to grind through it.
@@ -53,6 +54,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Estimation numbers, scaling ladder, CAP/PACELC, consistency models — every foundation from Phase 1 compressed to a reference card you re-read in 15 minutes before a system-design interview.
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="phase-1-revision" />
         <ModuleProgress moduleSlug="phase-1-revision" checkpoints={CHECKPOINTS} />
       </header>
 

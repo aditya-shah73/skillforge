@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "intuition", title: "BFS vs DFS — the two traversals" },
@@ -104,6 +105,7 @@ flowchart TB
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="bfs-dfs" />
       <ModuleProgress moduleSlug="bfs-dfs" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

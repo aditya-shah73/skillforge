@@ -5,6 +5,9 @@ import "./globals.css";
 import { ProgressProvider } from "@/lib/progress";
 import { TokeyProvider } from "@/components/Tokey";
 import HeaderStats from "@/components/HeaderStats";
+import ReadingProgress from "@/components/ReadingProgress";
+import CommandPalette from "@/components/CommandPalette";
+import SearchButton from "@/components/SearchButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,12 +37,17 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
         <ProgressProvider>
           <TokeyProvider>
+            <ReadingProgress />
+            <CommandPalette />
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
               <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                <Link href="/" className="font-bold text-2xl tracking-tight">
+                <Link href="/" className="font-bold text-3xl sm:text-4xl tracking-tight leading-none">
                   <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Skillforge</span>
                 </Link>
-                <HeaderStats />
+                <div className="flex items-center gap-3">
+                  <SearchButton />
+                  <HeaderStats />
+                </div>
               </nav>
             </header>
             <main className="flex-1 max-w-4xl w-full mx-auto px-6 py-10">

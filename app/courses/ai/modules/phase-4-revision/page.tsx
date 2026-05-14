@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. Re-read in 15 minutes
 // before you sit down to wire up a chat UI or debug a stuck stream.
@@ -59,6 +60,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           SSE consumption, chat UI patterns, multimodal — the frontend AI playbook on one card you can re-read in 15 minutes.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="phase-4-revision" />
         <ModuleProgress moduleSlug="phase-4-revision" checkpoints={CHECKPOINTS} />
       </header>
 

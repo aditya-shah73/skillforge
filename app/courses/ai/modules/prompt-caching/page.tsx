@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "two-caches", title: "Two different caches" },
@@ -39,6 +40,7 @@ export default function PromptCachingModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The other half of running LLMs at production scale — and the line item finance asks about.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="prompt-caching" />
         <ModuleProgress moduleSlug="prompt-caching" checkpoints={CHECKPOINTS} />
       </header>
 

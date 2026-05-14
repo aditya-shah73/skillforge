@@ -10,6 +10,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "Why space matters" },
@@ -69,6 +70,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Auxiliary vs total space, why recursion costs memory, and what the JVM is really doing under the hood.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="space-complexity" />
         <ModuleProgress moduleSlug="space-complexity" checkpoints={CHECKPOINTS} />
       </header>
 

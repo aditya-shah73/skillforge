@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "mental-model", title: "What a prompt actually is" },
@@ -38,6 +39,7 @@ export default function PromptEngineeringModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The techniques that squeeze 80% more reliability out of the same model — with zero code, zero fine-tuning, and zero API calls today.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="prompt-engineering" />
         <ModuleProgress moduleSlug="prompt-engineering" checkpoints={CHECKPOINTS} />
       </header>
 

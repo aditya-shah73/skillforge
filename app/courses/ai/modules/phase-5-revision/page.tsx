@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Phase 5 revision — pure reference card. No checkpoints, no XP gates. The
 // point is to re-read this in 15 minutes before designing an agent, not to
@@ -58,6 +59,7 @@ export default function Phase5RevisionModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           ReAct, agent loops in Spring, multi-agent orchestration — the agent reference card.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
       </header>
 

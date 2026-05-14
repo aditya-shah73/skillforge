@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "what-is-agent", title: "What an agent actually is" },
@@ -38,6 +39,7 @@ export default function AgentsIntroModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           A loop, a tool list, and a stopping condition. That&apos;s the whole trick.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="agents-intro" />
         <ModuleProgress moduleSlug="agents-intro" checkpoints={CHECKPOINTS} />
       </header>
 

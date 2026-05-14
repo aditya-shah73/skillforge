@@ -2,6 +2,7 @@ import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 export default function Page() {
   const mod = getModuleBySlug("welcome")!;
@@ -23,6 +24,7 @@ export default function Page() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Read this first. It&apos;s five minutes and it sets up the way the next forty modules are going to talk to you.
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="welcome" />
       </header>
 
       <section>

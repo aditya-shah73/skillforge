@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before a system-design interview, not to grind
@@ -55,6 +56,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           SQL vs NoSQL, indexing, partitioning, replication, caching, search — the storage decision toolkit on one card.
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="phase-2-revision" />
         <ModuleProgress moduleSlug="phase-2-revision" checkpoints={CHECKPOINTS} />
       </header>
 

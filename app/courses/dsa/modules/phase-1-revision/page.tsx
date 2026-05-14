@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 15 minutes before an interview, not to grind through it.
@@ -59,6 +60,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The whole Big-O / space / amortized story compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="phase-1-revision" />
         <ModuleProgress moduleSlug="phase-1-revision" checkpoints={CHECKPOINTS} />
       </header>
 

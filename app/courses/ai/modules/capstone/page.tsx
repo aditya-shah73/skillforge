@@ -2,6 +2,7 @@ import Link from "next/link";
 import Quiz from "@/components/Quiz";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
+import BookmarkButton from "@/components/BookmarkButton";
 import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
@@ -34,6 +35,7 @@ export default function CapstoneModule() {
         The portfolio piece. Everything you&apos;ve learned, in one shippable system.
       </p>
 
+      <BookmarkButton courseId="ai" moduleSlug="capstone" />
       <ModuleProgress moduleSlug={SLUG} checkpoints={CHECKPOINTS} />
 
       <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-900">

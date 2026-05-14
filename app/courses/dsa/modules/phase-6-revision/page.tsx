@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview. Phase 6 is the biggest
@@ -63,6 +64,7 @@ flowchart TD
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Eight algorithmic techniques — two pointers, sliding window, binary search, sorting, recursion, backtracking, greedy, bits — each with its tell, template, and classic example on a single dense card.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="phase-6-revision" />
         <ModuleProgress moduleSlug="phase-6-revision" checkpoints={CHECKPOINTS} />
       </header>
 

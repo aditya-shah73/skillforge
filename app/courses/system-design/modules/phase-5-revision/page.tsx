@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision — no Checkpoints, no XP gates. Re-read on the train before
 // a distributed systems interview, not a tutorial.
@@ -48,6 +49,7 @@ stateDiagram-v2
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Consensus, sagas, clocks, geo-indexing, cost — the deep-systems reference card you can re-read in 20 minutes before an interview.
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
       </header>
 

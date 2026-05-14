@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-neurons", title: "Why we need neurons at all" },
@@ -39,6 +40,7 @@ export default function NeuralNetworksModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Layers, activations, backprop — from a single neuron up to a handwritten-digit classifier, all by hand in Java.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="neural-networks" />
         <ModuleProgress moduleSlug="neural-networks" checkpoints={CHECKPOINTS} />
       </header>
 

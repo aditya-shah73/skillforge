@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "spring-ai-rag", title: "Spring AI's RAG primitives" },
@@ -38,6 +39,7 @@ export default function RagSpringModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Architecture meets keyboard. Spring AI&apos;s VectorStore + pgvector, all the way through.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="rag-spring" />
         <ModuleProgress moduleSlug="rag-spring" checkpoints={CHECKPOINTS} />
       </header>
 

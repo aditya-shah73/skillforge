@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 20 minutes before an interview or before going on-call, not
@@ -72,6 +73,7 @@ stateDiagram-v2
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           {mod.subtitle}
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="phase-4-revision" />
         <ModuleProgress moduleSlug="phase-4-revision" checkpoints={CHECKPOINTS} />
       </header>
 

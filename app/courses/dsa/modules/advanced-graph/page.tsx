@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "limits", title: "When Dijkstra fails — the negative-edge wall" },
@@ -122,6 +123,7 @@ flowchart TB
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="advanced-graph" />
       <ModuleProgress moduleSlug="advanced-graph" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

@@ -10,6 +10,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What a heap is — and why it's an array" },
@@ -102,6 +103,7 @@ flowchart LR
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="heaps" />
       <ModuleProgress moduleSlug="heaps" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

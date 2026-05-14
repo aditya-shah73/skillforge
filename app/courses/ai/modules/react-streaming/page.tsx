@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-streaming", title: "Why streaming changes the UX" },
@@ -39,6 +40,7 @@ export default function ReactStreamingModule() {
           Module 12 streamed tokens out of Spring Boot. This module catches them in React without
           melting your component tree.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="react-streaming" />
         <ModuleProgress moduleSlug="react-streaming" checkpoints={CHECKPOINTS} />
       </header>
 

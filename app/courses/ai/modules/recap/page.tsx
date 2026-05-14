@@ -7,6 +7,7 @@ import CodeBlock from "@/components/CodeBlock";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "the-request", title: "The request we'll trace" },
@@ -39,6 +40,7 @@ export default function RecapModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           One real Claude request, traced end to end, touching every concept from Modules 1–7. If a link is still fuzzy, this is where it snaps.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="recap" />
         <ModuleProgress moduleSlug="recap" checkpoints={CHECKPOINTS} />
       </header>
 

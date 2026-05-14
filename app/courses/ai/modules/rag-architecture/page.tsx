@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "what-rag", title: "What RAG actually solves" },
@@ -38,6 +39,7 @@ export default function RagArchitectureModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Stop bolting embeddings onto an LLM. Build retrieval that earns its place in the prompt.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="rag-architecture" />
         <ModuleProgress moduleSlug="rag-architecture" checkpoints={CHECKPOINTS} />
       </header>
 

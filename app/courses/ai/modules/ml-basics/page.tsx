@@ -12,6 +12,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeExercise from "@/components/CodeExercise";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "learning", title: "What 'learning' actually means" },
@@ -43,6 +44,7 @@ export default function MLBasicsModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Problem types, features, labels, loss — slow, deep, with worked examples.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="ml-basics" />
         <ModuleProgress moduleSlug="ml-basics" checkpoints={CHECKPOINTS} />
       </header>
 

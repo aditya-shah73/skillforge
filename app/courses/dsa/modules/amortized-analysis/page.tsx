@@ -10,6 +10,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "The three cases" },
@@ -71,6 +72,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Why <code>ArrayList.add</code> is O(1) on average even though some calls do an O(n) resize. The accounting trick that makes it work.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="amortized-analysis" />
         <ModuleProgress moduleSlug="amortized-analysis" checkpoints={CHECKPOINTS} />
       </header>
 

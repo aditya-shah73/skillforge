@@ -9,6 +9,7 @@ import Mermaid from "@/components/Mermaid";
 import Checkpoint from "@/components/Checkpoint";
 import ModuleProgress from "@/components/ModuleProgress";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "capacity", title: "Requirements & capacity" },
@@ -67,6 +68,7 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
+      <BookmarkButton courseId="system-design" moduleSlug="capstone" />
       <ModuleProgress moduleSlug="capstone" checkpoints={CHECKPOINTS} />
       <nav className="text-xs mb-6">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>

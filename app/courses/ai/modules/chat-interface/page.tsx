@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "frontend-backend", title: "Frontend ↔ backend wiring" },
@@ -38,6 +39,7 @@ export default function ChatInterfaceModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           React on the front, Spring Boot on the back, tool-use in the middle. End-to-end, no mocks.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="chat-interface" />
         <ModuleProgress moduleSlug="chat-interface" checkpoints={CHECKPOINTS} />
       </header>
 

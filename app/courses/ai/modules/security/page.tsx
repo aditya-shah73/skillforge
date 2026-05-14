@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "threat-model", title: "The LLM threat model" },
@@ -38,6 +39,7 @@ export default function SecurityModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Your LLM feature is one creative input away from a CVE. Plan for it.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="security" />
         <ModuleProgress moduleSlug="security" checkpoints={CHECKPOINTS} />
       </header>
 

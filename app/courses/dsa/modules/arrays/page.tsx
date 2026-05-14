@@ -10,6 +10,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What an array really is" },
@@ -94,6 +95,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The simplest data structure, and the one every other one quietly relies on. Fixed arrays, the doubling trick, ArrayList internals, and the patterns that fall out for free.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="arrays" />
         <ModuleProgress moduleSlug="arrays" checkpoints={CHECKPOINTS} />
       </header>
 

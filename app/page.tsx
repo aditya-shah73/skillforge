@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { COURSES, ai, dsa, systemDesign } from "@/lib/courses";
 import ContinueWhereYouLeftOff from "@/components/ContinueWhereYouLeftOff";
+import BookmarksSection from "@/components/BookmarksSection";
 
 const COURSE_DATA = { ai, dsa, "system-design": systemDesign } as const;
 
@@ -49,6 +50,9 @@ export default function Home() {
 
       {/* Resume CTA — only renders if the user has completed at least one module */}
       <ContinueWhereYouLeftOff />
+
+      {/* Bookmarks — only renders if the user has saved any modules */}
+      <BookmarksSection />
 
       {/* Course picker */}
       <section className="mb-16">

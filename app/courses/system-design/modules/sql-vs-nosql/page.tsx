@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "oltp-olap", title: "The OLTP/OLAP split is the real first question" },
@@ -47,6 +48,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <BookmarkButton courseId="system-design" moduleSlug="sql-vs-nosql" />
         <ModuleProgress moduleSlug="sql-vs-nosql" checkpoints={CHECKPOINTS} />
       </header>
 

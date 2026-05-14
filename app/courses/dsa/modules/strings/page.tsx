@@ -10,6 +10,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "What a String really is" },
@@ -88,6 +89,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Strings are arrays in disguise. The twist is immutability — and the trap of <code>+</code> in a loop. Plus the patterns (anagram, palindrome, frequency counting) that interview problems hide behind.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="strings" />
         <ModuleProgress moduleSlug="strings" checkpoints={CHECKPOINTS} />
       </header>
 

@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "what-is-a-call", title: "What a call is" },
@@ -54,6 +55,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Auth, models, parameters — from zero to your first real request.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="api-fundamentals" />
         <ModuleProgress moduleSlug="api-fundamentals" checkpoints={CHECKPOINTS} />
       </header>
 

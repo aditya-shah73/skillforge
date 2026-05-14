@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The point is to re-read
 // this in 15-20 minutes before a system design conversation about an LLM
@@ -54,6 +55,7 @@ sequenceDiagram
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Claude API, Spring AI, tool use, streaming, prompt caching — the backend AI toolkit on one card.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="phase-2-revision" />
         <ModuleProgress moduleSlug="phase-2-revision" checkpoints={CHECKPOINTS} />
       </header>
 

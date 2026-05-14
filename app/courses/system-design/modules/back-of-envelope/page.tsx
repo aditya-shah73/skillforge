@@ -9,6 +9,7 @@ import PartRecap from "@/components/PartRecap";
 import ClassifyChallenge from "@/components/ClassifyChallenge";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "latency", title: "Latency numbers" },
@@ -36,6 +37,7 @@ export default function Page() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Latency numbers, QPS math, and capacity sizing — the arithmetic you&apos;ll do out loud in every interview and every design review.
         </p>
+        <BookmarkButton courseId="system-design" moduleSlug="back-of-envelope" />
         <ModuleProgress moduleSlug="back-of-envelope" checkpoints={CHECKPOINTS} />
       </header>
 

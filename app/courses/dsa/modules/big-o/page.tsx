@@ -11,6 +11,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "The setup" },
@@ -62,6 +63,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Growth rates, why we ignore constants, and the 7 curves you&apos;ll meet for the rest of your career.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="big-o" />
         <ModuleProgress moduleSlug="big-o" checkpoints={CHECKPOINTS} />
       </header>
 

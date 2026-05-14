@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "template", title: "The 1D template — 'decision at index i'" },
@@ -131,6 +132,7 @@ flowchart TB
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="dp-1d" />
       <ModuleProgress moduleSlug="dp-1d" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

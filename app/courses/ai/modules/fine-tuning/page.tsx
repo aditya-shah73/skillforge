@@ -7,6 +7,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Callout from "@/components/Callout";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const SLUG = "fine-tuning";
 
@@ -35,6 +36,7 @@ export default function FineTuningModule() {
         How model training actually works — and why RAG usually wins.
       </p>
 
+      <BookmarkButton courseId="ai" moduleSlug="fine-tuning" />
       <ModuleProgress moduleSlug={SLUG} checkpoints={CHECKPOINTS} />
 
       <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-900">

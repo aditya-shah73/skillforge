@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-attention", title: "Why attention was invented" },
@@ -40,6 +41,7 @@ export default function TransformersModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The one idea that ate the ML world — built from scratch, one matrix at a time.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="transformers" />
         <ModuleProgress moduleSlug="transformers" checkpoints={CHECKPOINTS} />
       </header>
 

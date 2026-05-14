@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import CodeBlock from "@/components/CodeBlock";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "wallclock", title: "Why wall clocks lie" },
@@ -45,6 +46,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <BookmarkButton courseId="system-design" moduleSlug="clock-time" />
         <ModuleProgress moduleSlug="clock-time" checkpoints={CHECKPOINTS} />
       </header>
 

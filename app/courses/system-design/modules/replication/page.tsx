@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "leader-follower", title: "Leader-follower" },
@@ -56,6 +57,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <BookmarkButton courseId="system-design" moduleSlug="replication" />
         <ModuleProgress moduleSlug="replication" checkpoints={CHECKPOINTS} />
       </header>
 

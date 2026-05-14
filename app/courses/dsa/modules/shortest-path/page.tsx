@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "weighted", title: "Weighted graphs — and why BFS isn't enough" },
@@ -79,6 +80,7 @@ flowchart LR
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="shortest-path" />
       <ModuleProgress moduleSlug="shortest-path" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

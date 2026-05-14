@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-evals", title: "Why evals exist" },
@@ -38,6 +39,7 @@ export default function EvalsModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The hardest part of shipping LLM features isn&apos;t writing the prompt. It&apos;s knowing whether the prompt got worse.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="evals" />
         <ModuleProgress moduleSlug="evals" checkpoints={CHECKPOINTS} />
       </header>
 

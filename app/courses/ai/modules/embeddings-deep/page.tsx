@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "models", title: "The embedding model marketplace" },
@@ -37,6 +38,7 @@ export default function EmbeddingsDeepModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Module 6 was the geometry. This is the engineering.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="embeddings-deep" />
         <ModuleProgress moduleSlug="embeddings-deep" checkpoints={CHECKPOINTS} />
       </header>
 

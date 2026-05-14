@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "what-multimodal", title: "What multimodal really means" },
@@ -38,6 +39,7 @@ export default function MultimodalModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Pictures, PDFs, screenshots. The model can see now — what does that change?
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="multimodal" />
         <ModuleProgress moduleSlug="multimodal" checkpoints={CHECKPOINTS} />
       </header>
 

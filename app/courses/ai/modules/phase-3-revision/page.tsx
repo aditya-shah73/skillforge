@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The whole point is to
 // re-read this in 15-20 minutes before shipping a RAG feature, not to grind through it.
@@ -69,6 +70,7 @@ export default function Phase3RevisionModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           {mod.subtitle}
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="phase-3-revision" />
         <ModuleProgress moduleSlug="phase-3-revision" checkpoints={CHECKPOINTS} />
       </header>
 

@@ -8,6 +8,7 @@ import PartRecap from "@/components/PartRecap";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "chatclient-deep", title: "ChatClient deep dive" },
@@ -55,6 +56,7 @@ flowchart LR
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The Spring-native way to call LLMs — memory, structured output, advisors, all the leverage.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="spring-ai" />
         <ModuleProgress moduleSlug="spring-ai" checkpoints={CHECKPOINTS} />
       </header>
 

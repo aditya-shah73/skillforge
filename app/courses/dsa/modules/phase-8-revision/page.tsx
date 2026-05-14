@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. This is the closing
 // reference card for Phase 8: tries, union-find, advanced graphs, UMPIRE,
@@ -53,6 +54,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The closing reference card before mock interviews. Tries, union-find, advanced graphs, UMPIRE, pattern keywords — everything you need within arm&apos;s reach during a live phone screen.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="phase-8-revision" />
         <ModuleProgress moduleSlug="phase-8-revision" checkpoints={CHECKPOINTS} />
       </header>
 

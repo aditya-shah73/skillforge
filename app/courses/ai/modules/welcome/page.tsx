@@ -2,6 +2,7 @@ import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 export default function WelcomeModule() {
   const mod = getModuleBySlug("welcome")!;
@@ -25,6 +26,7 @@ export default function WelcomeModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Read this first. It&apos;s five minutes and will save you hours.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="welcome" />
       </header>
 
       <section>

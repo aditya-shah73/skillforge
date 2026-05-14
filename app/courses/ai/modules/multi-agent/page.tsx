@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-multiple", title: "Why ever use more than one agent" },
@@ -38,6 +39,7 @@ export default function MultiAgentModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           One agent is hard. Two agents is harder. Make sure the second agent earns its keep.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="multi-agent" />
         <ModuleProgress moduleSlug="multi-agent" checkpoints={CHECKPOINTS} />
       </header>
 

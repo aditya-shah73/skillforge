@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/system-design";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "event-driven", title: "Event-driven & pub-sub" },
@@ -51,6 +52,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <BookmarkButton courseId="system-design" moduleSlug="event-driven-cqrs" />
         <ModuleProgress moduleSlug="event-driven-cqrs" checkpoints={CHECKPOINTS} />
       </header>
 

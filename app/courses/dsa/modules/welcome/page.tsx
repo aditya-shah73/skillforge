@@ -2,6 +2,7 @@ import Link from "next/link";
 import Callout from "@/components/Callout";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 export default function DsaWelcomeModule() {
   const mod = getModuleBySlug("welcome")!;
@@ -25,6 +26,7 @@ export default function DsaWelcomeModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Read this first. It&apos;s five minutes and will save you weeks of grinding the wrong way.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="welcome" />
       </header>
 
       <section>

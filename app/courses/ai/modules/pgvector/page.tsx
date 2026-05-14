@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "why-vdb", title: "Why a vector database" },
@@ -37,6 +38,7 @@ export default function PgvectorModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           When brute-force isn&apos;t cutting it, and you don&apos;t want a second database.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="pgvector" />
         <ModuleProgress moduleSlug="pgvector" checkpoints={CHECKPOINTS} />
       </header>
 

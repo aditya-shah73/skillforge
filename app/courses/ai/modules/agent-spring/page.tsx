@@ -8,6 +8,7 @@ import WorkedExample from "@/components/WorkedExample";
 import PartRecap from "@/components/PartRecap";
 import { getModuleBySlug } from "@/lib/modules";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "auto-loop", title: "The auto-loop and why to opt out" },
@@ -37,6 +38,7 @@ export default function AgentSpringModule() {
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Spring AI runs the loop for you. That&apos;s convenient — until you need it not to.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="agent-spring" />
         <ModuleProgress moduleSlug="agent-spring" checkpoints={CHECKPOINTS} />
       </header>
 

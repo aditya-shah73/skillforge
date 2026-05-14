@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. Phase 5 is one module
 // long (the Collections deep dive), so the revision is denser per page: a
@@ -88,6 +89,7 @@ flowchart TB
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The entire Java Collections Framework — hierarchy, Big-O, ordering, contracts, thread-safety — compressed to one reference card.
         </p>
+        <BookmarkButton courseId="dsa" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
       </header>
 

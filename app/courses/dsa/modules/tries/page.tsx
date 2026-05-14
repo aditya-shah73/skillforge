@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "motivation", title: "The motivating problem: prefix queries" },
@@ -96,6 +97,7 @@ flowchart TB
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="tries" />
       <ModuleProgress moduleSlug="tries" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

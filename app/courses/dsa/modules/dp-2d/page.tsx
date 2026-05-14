@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "two-dims", title: "When state needs two dimensions" },
@@ -82,6 +83,7 @@ flowchart LR
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="dp-2d" />
       <ModuleProgress moduleSlug="dp-2d" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">

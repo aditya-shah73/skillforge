@@ -6,6 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/ai";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 // Pure revision module — no Checkpoints, no XP gates. The point is the
 // pre-capstone sanity sweep: evals, security, fine-tune vs RAG vs prompt.
@@ -62,6 +63,7 @@ flowchart TD
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Evals, security, fine-tune vs RAG vs prompt — the production-AI cheat sheet before the capstone.
         </p>
+        <BookmarkButton courseId="ai" moduleSlug="phase-6-revision" />
         <ModuleProgress moduleSlug="phase-6-revision" checkpoints={CHECKPOINTS} />
       </header>
 

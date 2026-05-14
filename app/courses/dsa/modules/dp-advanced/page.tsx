@@ -9,6 +9,7 @@ import ClassifyChallenge from "@/components/ClassifyChallenge";
 import Mermaid from "@/components/Mermaid";
 import { getModuleBySlug } from "@/lib/courses/dsa";
 import ModuleNav from "@/components/ModuleNav";
+import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "beyond-linear", title: "Beyond linear state — three new DP families" },
@@ -111,6 +112,7 @@ flowchart TD
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      <BookmarkButton courseId="dsa" moduleSlug="dp-advanced" />
       <ModuleProgress moduleSlug="dp-advanced" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
