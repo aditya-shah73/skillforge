@@ -2,6 +2,7 @@
 
 import { useProgress } from "@/lib/progress";
 import { useEffect, useState } from "react";
+import Tooltip from "./Tooltip";
 
 export default function HeaderStats() {
   const { xp, streak, combo, soundEnabled, toggleSound, hardcoreMode, toggleHardcore } = useProgress();
@@ -40,35 +41,86 @@ export default function HeaderStats() {
         </div>
       )}
       {streak > 0 && (
-        <div title="Day streak" className="px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1.5">
-          🔥 {streak}
-        </div>
+        <Tooltip
+          label={
+            <>
+              <span className="font-semibold text-amber-700 dark:text-amber-300">Day streak</span>
+              <span className="block mt-1">
+                {streak} day{streak === 1 ? "" : "s"} in a row. Clear at least one quiz checkpoint each day to keep it alive — miss a day and it resets.
+              </span>
+            </>
+          }
+        >
+          <div className="px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1.5">
+            🔥 {streak}
+          </div>
+        </Tooltip>
       )}
-      <div title="XP" className="px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1.5">
-        ⚡ {displayXp} XP
-      </div>
-      <button
-        onClick={toggleHardcore}
-        title={hardcoreMode ? "Hardcore mode ON — wrong answers lock in. Click to disable." : "Hardcore mode OFF — you can retry quiz questions. Click to enable."}
-        aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
-        aria-pressed={hardcoreMode}
-        className={`w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
-          hardcoreMode
-            ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
-            : "hover:bg-slate-200 dark:hover:bg-slate-800"
-        }`}
+      <Tooltip
+        label={
+          <>
+            <span className="font-semibold text-indigo-700 dark:text-indigo-300">XP</span>
+            <span className="block mt-1">
+              Earned by clearing quiz checkpoints. Chain correct answers for a combo: <span className="font-mono">×1.5</span> at 3 in a row, <span className="font-mono">×2</span> at 5+. Quick answers earn a <span className="font-mono">+5</span> speed bonus.
+            </span>
+          </>
+        }
       >
-        {hardcoreMode ? "💀" : "🎯"}
-      </button>
-      <button
-        onClick={toggleSound}
-        title={soundEnabled ? "Mute" : "Unmute"}
-        aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
-        aria-pressed={soundEnabled}
-        className="w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+        <div className="px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1.5">
+          ⚡ {displayXp} XP
+        </div>
+      </Tooltip>
+      <Tooltip
+        label={
+          <>
+            <span className={`font-semibold ${hardcoreMode ? "text-rose-600 dark:text-rose-300" : "text-slate-700 dark:text-slate-200"}`}>
+              Hardcore mode {hardcoreMode ? "ON" : "OFF"}
+            </span>
+            <span className="block mt-1">
+              {hardcoreMode
+                ? "Wrong quiz answers lock in — no retries. Click to disable."
+                : "You can retry quiz questions until you get them right. Click to enable hardcore."}
+            </span>
+          </>
+        }
       >
-        {soundEnabled ? "🔊" : "🔇"}
-      </button>
+        <button
+          onClick={toggleHardcore}
+          aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
+          aria-pressed={hardcoreMode}
+          className={`w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
+            hardcoreMode
+              ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
+              : "hover:bg-slate-200 dark:hover:bg-slate-800"
+          }`}
+        >
+          {hardcoreMode ? "💀" : "🎯"}
+        </button>
+      </Tooltip>
+      <Tooltip
+        align="end"
+        label={
+          <>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">
+              Sound {soundEnabled ? "ON" : "OFF"}
+            </span>
+            <span className="block mt-1">
+              {soundEnabled
+                ? "Quiz feedback chimes — correct, wrong, combo, level-up — will play. Click to mute."
+                : "Quiz feedback chimes are muted. Click to unmute."}
+            </span>
+          </>
+        }
+      >
+        <button
+          onClick={toggleSound}
+          aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
+          aria-pressed={soundEnabled}
+          className="w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+        >
+          {soundEnabled ? "🔊" : "🔇"}
+        </button>
+      </Tooltip>
     </div>
   );
 }
