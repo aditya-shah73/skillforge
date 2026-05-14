@@ -37,11 +37,11 @@ export default function SearchButton() {
       onClick={open}
       aria-label="Open search (command palette)"
       title="Search courses & modules"
-      className="print:hidden group inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 pl-3 pr-2 py-1.5 text-sm text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-slate-700 dark:hover:text-slate-200 transition sm:min-w-[340px] sm:justify-start"
+      className="print:hidden group inline-flex w-full sm:max-w-md min-w-0 items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 pl-3 pr-2 py-1.5 text-sm text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-slate-700 dark:hover:text-slate-200 transition sm:justify-start"
     >
-      <span aria-hidden className="text-slate-400 group-hover:text-indigo-500 transition">⌕</span>
-      <span className="hidden sm:inline flex-1 text-left">Search courses & modules…</span>
-      <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-1.5 py-0.5 font-mono text-[11px] text-slate-500">
+      <span aria-hidden className="shrink-0 text-slate-400 group-hover:text-indigo-500 transition">⌕</span>
+      <span className="hidden sm:inline flex-1 min-w-0 text-left truncate">Search courses & modules…</span>
+      <kbd className="hidden sm:inline-flex shrink-0 items-center gap-0.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-1.5 py-0.5 font-mono text-[11px] text-slate-500">
         {modKey}
         <span>K</span>
       </kbd>

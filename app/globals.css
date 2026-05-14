@@ -134,6 +134,15 @@ body {
   line-height: 1.7;
 }
 
+/* Italic glyphs (especially h, l, b, k) extend past their advance width and
+   can visually merge with the next roman character — making "<em>both</em> the"
+   look like "boththe". `margin-inline-end` guarantees a visible gap on the
+   trailing side without shifting the leading edge. Applied site-wide (not
+   scoped to .prose-custom) so callouts and bare <p> blocks both get it. */
+em {
+  margin-inline-end: 0.15em;
+}
+
 .prose-custom code {
   background-color: #f4f4f5; /* zinc-100 */
   padding: 0.15rem 0.35rem;

@@ -30,15 +30,30 @@ export default function HeaderStats() {
   }, [xp, mounted]);
 
   if (!mounted) {
-    return <div className="w-56 h-9" />;
+    return <div className="shrink-0 w-40 h-9" />;
   }
 
   return (
-    <div className="flex items-center gap-3 text-sm">
+    // `shrink-0` so the search bar can't squish the stats group.
+    // `flex-nowrap` so chips never wrap to a second line as XP/combo grow.
+    // Compact paddings and a single icon-only "combo" pill on small screens
+    // keep the row stable even at 4-digit XP.
+    <div className="shrink-0 flex flex-nowrap items-center gap-2 text-sm">
       {combo >= 2 && (
-        <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold flex items-center gap-1.5 animate-bounce">
-          🔥 {combo}x combo
-        </div>
+        <Tooltip
+          label={
+            <>
+              <span className="font-semibold text-orange-600 dark:text-orange-300">Combo ×{combo}</span>
+              <span className="block mt-1">
+                {combo} correct answers in a row. Multiplier kicks in at 3 (×1.5) and 5+ (×2). One wrong answer resets it.
+              </span>
+            </>
+          }
+        >
+          <div className="px-2.5 py-1 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold flex items-center gap-1 animate-bounce tabular-nums">
+            🔥 <span className="font-mono">{combo}×</span>
+          </div>
+        </Tooltip>
       )}
       {streak > 0 && (
         <Tooltip
@@ -51,7 +66,7 @@ export default function HeaderStats() {
             </>
           }
         >
-          <div className="px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1.5">
+          <div className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1 tabular-nums">
             🔥 {streak}
           </div>
         </Tooltip>
@@ -66,8 +81,9 @@ export default function HeaderStats() {
           </>
         }
       >
-        <div className="px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1.5">
-          ⚡ {displayXp} XP
+        <div className="px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1 tabular-nums">
+          <span aria-hidden>⚡</span>
+          <span>{displayXp}</span>
         </div>
       </Tooltip>
       <Tooltip
@@ -88,7 +104,7 @@ export default function HeaderStats() {
           onClick={toggleHardcore}
           aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
           aria-pressed={hardcoreMode}
-          className={`w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
+          className={`shrink-0 w-8 h-8 rounded-full text-base flex items-center justify-center transition ${
             hardcoreMode
               ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
               : "hover:bg-slate-200 dark:hover:bg-slate-800"
@@ -116,7 +132,7 @@ export default function HeaderStats() {
           onClick={toggleSound}
           aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
           aria-pressed={soundEnabled}
-          className="w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+          className="shrink-0 w-8 h-8 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
         >
           {soundEnabled ? "🔊" : "🔇"}
         </button>

@@ -42,14 +42,17 @@ export default function RootLayout({
             <CommandPalette />
             <KeyboardHelp />
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
-              <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                <Link href="/" className="font-bold text-3xl sm:text-4xl tracking-tight leading-none">
+              <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
+                <Link href="/" className="font-bold text-3xl sm:text-4xl tracking-tight leading-none shrink-0">
                   <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Skillforge</span>
                 </Link>
-                <div className="flex items-center gap-3">
+                {/* Search bar fills remaining space; stats stay compact on the right.
+                    `min-w-0` on the search wrapper lets the button shrink below its
+                    intrinsic content width so the row can never overflow. */}
+                <div className="flex-1 min-w-0 flex justify-end sm:justify-start">
                   <SearchButton />
-                  <HeaderStats />
                 </div>
+                <HeaderStats />
               </nav>
             </header>
             <main className="flex-1 max-w-4xl w-full mx-auto px-6 py-10">
