@@ -29,28 +29,29 @@ export default function HeaderStats() {
   }, [xp, mounted]);
 
   if (!mounted) {
-    return <div className="w-48 h-6" />;
+    return <div className="w-56 h-9" />;
   }
 
   return (
-    <div className="flex items-center gap-3 text-xs">
+    <div className="flex items-center gap-3 text-sm">
       {combo >= 2 && (
-        <div className="px-2 py-1 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold flex items-center gap-1 animate-bounce">
+        <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold flex items-center gap-1.5 animate-bounce">
           🔥 {combo}x combo
         </div>
       )}
       {streak > 0 && (
-        <div title="Day streak" className="px-2 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1">
+        <div title="Day streak" className="px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1.5">
           🔥 {streak}
         </div>
       )}
-      <div title="XP" className="px-2 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono">
+      <div title="XP" className="px-3 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1.5">
         ⚡ {displayXp} XP
       </div>
       <button
         onClick={toggleSound}
         title={soundEnabled ? "Mute" : "Unmute"}
-        className="w-7 h-7 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+        aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
+        className="w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
       >
         {soundEnabled ? "🔊" : "🔇"}
       </button>

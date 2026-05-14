@@ -37,7 +37,7 @@ export default function SearchButton() {
       onClick={open}
       aria-label="Open search (command palette)"
       title="Search courses & modules"
-      className="print:hidden group inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 pl-3 pr-2 py-1.5 text-sm text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-slate-700 dark:hover:text-slate-200 transition sm:min-w-[240px] sm:justify-start"
+      className="print:hidden group inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 pl-3 pr-2 py-1.5 text-sm text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-slate-700 dark:hover:text-slate-200 transition sm:min-w-[340px] sm:justify-start"
     >
       <span aria-hidden className="text-slate-400 group-hover:text-indigo-500 transition">⌕</span>
       <span className="hidden sm:inline flex-1 text-left">Search courses & modules…</span>
