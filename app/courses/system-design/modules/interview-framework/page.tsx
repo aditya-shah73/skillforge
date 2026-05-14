@@ -101,7 +101,7 @@ export default function Page() {
           <strong>Functional requirements</strong> — what does the system <em>do</em>? Post tweets? Read a timeline? Search? DMs? Trending? Most prompts in 45 minutes need 3-4 core features, not 12. Pick a tight scope and get the interviewer&apos;s buy-in: &quot;I&apos;ll focus on posting tweets, the home timeline, and following users — does that match what you had in mind?&quot;
         </p>
         <p>
-          <strong>Non-functional requirements</strong> — how <em>well</em> does it have to do those things? Read-heavy or write-heavy? What&apos;s the latency budget (p99 100ms? 500ms?)? How available — three nines, four, five? Strongly consistent or eventually? What&apos;s the scale (DAU, QPS)?
+          <strong>Non-functional requirements</strong> — how <em>well</em>{" "}does it have to do those things? Read-heavy or write-heavy? What&apos;s the latency budget (p99 100ms? 500ms?)? How available — three nines, four, five? Strongly consistent or eventually? What&apos;s the scale (DAU, QPS)?
         </p>
         <p>
           You&apos;ll often need to assume some answers when the interviewer waves you off. That&apos;s fine. Say the assumption out loud: &quot;I&apos;ll assume read-heavy, roughly 100:1 reads to writes, and we can tolerate a few seconds of staleness on the timeline.&quot; Now both of you are operating on the same assumptions and they can correct you if those assumptions matter for what they&apos;re testing.
@@ -130,7 +130,7 @@ Annual storage growth             ~36 TB`}</CodeBlock>
 
         <h3>Phase 3 — API + Data model (~10 min)</h3>
         <p>
-          Now you can be concrete. Define 3-5 endpoints with realistic signatures. Don&apos;t over-engineer — a Java method signature, a request shape, a response shape. The point is to anchor what the system <em>does</em> in code that you and the interviewer both understand.
+          Now you can be concrete. Define 3-5 endpoints with realistic signatures. Don&apos;t over-engineer — a Java method signature, a request shape, a response shape. The point is to anchor what the system <em>does</em>{" "}in code that you and the interviewer both understand.
         </p>
         <CodeBlock lang="java" caption="API surface — make it look like real Spring code">{`@PostMapping("/tweets")
 public TweetResponse postTweet(
@@ -251,7 +251,7 @@ public void follow(
           Candidate hears &quot;Design Twitter,&quot; and within 60 seconds is sketching microservices and Kafka topics. The problem: you&apos;re committing to a scale and feature set the interviewer hasn&apos;t signed off on. Maybe the interviewer wants you to focus on the timeline and DM is out of scope. Maybe they want a 10k-user version, not 200M. You&apos;re solving a different problem than the one being asked.
         </p>
         <p>
-          The fix: <strong>force yourself to ask 3 questions before drawing anything.</strong> What features matter? What&apos;s the read/write ratio? What&apos;s the rough scale? You can do this in 2 minutes and it shapes everything else.
+          The fix: <strong>force yourself to ask 3 questions before drawing anything.</strong>{" "}What features matter? What&apos;s the read/write ratio? What&apos;s the rough scale? You can do this in 2 minutes and it shapes everything else.
         </p>
 
         <h3>Pitfall 2 — Hand-waving the estimation</h3>
@@ -259,11 +259,11 @@ public void follow(
           &quot;It&apos;ll be high QPS so we need to scale.&quot; That&apos;s not estimation; that&apos;s a vibe. Without numbers you can&apos;t tell whether your design needs sharding, just replicas, or just a bigger box. And if you can&apos;t do back-of-envelope math under pressure, the interviewer assumes you can&apos;t do it on the job either.
         </p>
         <p>
-          The fix: <strong>practice the standard formula until it&apos;s automatic.</strong> DAU × actions/day = total daily ops. Divide by 86,400 for average QPS. Multiply by 3 for peak. Multiply storage-per-record by daily ops for daily storage growth. Five operations, every interview, every time. Slow down and write the numbers down — out loud is fine, on the whiteboard is better.
+          The fix: <strong>practice the standard formula until it&apos;s automatic.</strong>{" "}DAU × actions/day = total daily ops. Divide by 86,400 for average QPS. Multiply by 3 for peak. Multiply storage-per-record by daily ops for daily storage growth. Five operations, every interview, every time. Slow down and write the numbers down — out loud is fine, on the whiteboard is better.
         </p>
 
         <Callout variant="warn" title="The 'I'll use Kafka and Cassandra' antipattern">
-          <p className="m-0">If your first sentence after &quot;Design X&quot; names specific technologies, you&apos;re doing it wrong. Technology choices come <em>after</em> you know the constraints. Naming Kafka before you&apos;ve estimated write QPS is like prescribing a medication before taking the patient&apos;s temperature — it might be the right answer, but you have no way to know yet, and the interviewer can&apos;t evaluate your reasoning because you didn&apos;t do any.</p>
+          <p className="m-0">If your first sentence after &quot;Design X&quot; names specific technologies, you&apos;re doing it wrong. Technology choices come <em>after</em>{" "}you know the constraints. Naming Kafka before you&apos;ve estimated write QPS is like prescribing a medication before taking the patient&apos;s temperature — it might be the right answer, but you have no way to know yet, and the interviewer can&apos;t evaluate your reasoning because you didn&apos;t do any.</p>
         </Callout>
 
         <h3>Pitfall 3 — Skipping the data model</h3>
@@ -292,7 +292,7 @@ public void follow(
 
         <h3>The senior &quot;I would also...&quot; pattern</h3>
         <p>
-          Here&apos;s a power move that costs almost nothing: when you make a choice, mention the thing you&apos;re <em>not</em> doing and why. &quot;I&apos;d use Redis as a write-through cache for the hot timeline. I would also consider write-behind for higher throughput, but it makes failure recovery messier — happy to dig into that if useful.&quot;
+          Here&apos;s a power move that costs almost nothing: when you make a choice, mention the thing you&apos;re <em>not</em>{" "}doing and why. &quot;I&apos;d use Redis as a write-through cache for the hot timeline. I would also consider write-behind for higher throughput, but it makes failure recovery messier — happy to dig into that if useful.&quot;
         </p>
         <p>
           That sentence shows you know the alternative exists, you&apos;ve thought about why you&apos;re not picking it, and you&apos;re willing to go deeper if asked. It signals depth without spending time. Use it 3-4 times in the interview.
@@ -360,10 +360,10 @@ public void follow(
           Your drawing is your shared workspace. Keep it readable. A few rules I&apos;ve seen the strongest candidates follow:
         </p>
         <ul>
-          <li><strong>Boxes for components, arrows for data flow, labels on every arrow.</strong> An unlabeled arrow is just a vibe — what flows through it? &quot;tweet write&quot;, &quot;timeline read&quot;, &quot;async fanout job&quot;.</li>
-          <li><strong>Direction matters.</strong> Single arrow for one-way (writes to a queue), double-headed only when there&apos;s genuinely bidirectional sync request/response.</li>
-          <li><strong>Don&apos;t erase. Strike through.</strong> If you change your mind about a component, cross it out and redraw — the interviewer wants to see your evolving thinking, not a clean final state.</li>
-          <li><strong>Section your space.</strong> Top of the board: requirements + estimation. Middle: API + data. Bottom: architecture diagram. Side: scratch math. Don&apos;t mix.</li>
+          <li><strong>Boxes for components, arrows for data flow, labels on every arrow.</strong>{" "}An unlabeled arrow is just a vibe — what flows through it? &quot;tweet write&quot;, &quot;timeline read&quot;, &quot;async fanout job&quot;.</li>
+          <li><strong>Direction matters.</strong>{" "}Single arrow for one-way (writes to a queue), double-headed only when there&apos;s genuinely bidirectional sync request/response.</li>
+          <li><strong>Don&apos;t erase. Strike through.</strong>{" "}If you change your mind about a component, cross it out and redraw — the interviewer wants to see your evolving thinking, not a clean final state.</li>
+          <li><strong>Section your space.</strong>{" "}Top of the board: requirements + estimation. Middle: API + data. Bottom: architecture diagram. Side: scratch math. Don&apos;t mix.</li>
         </ul>
 
         <h3>Pacing — the 45-minute clock</h3>
@@ -371,7 +371,7 @@ public void follow(
           Roughly track the clock in your head. If you&apos;re 15 minutes in and still clarifying, you&apos;ve over-spent. If you&apos;re 30 minutes in and haven&apos;t deep-dived, you need to move. A useful trick: at every phase boundary, say it out loud. &quot;OK, I think I&apos;ve got the requirements. Let me move to estimation.&quot; That signals to the interviewer (and to yourself) that you&apos;re managing the budget.
         </p>
         <p>
-          If you&apos;re running long on a phase, the interviewer will often help — they&apos;ll redirect you. But don&apos;t wait for them; <strong>self-pace.</strong> Better to wrap a phase 80% complete and move on than to nail one phase and run out of time for the rest.
+          If you&apos;re running long on a phase, the interviewer will often help — they&apos;ll redirect you. But don&apos;t wait for them; <strong>self-pace.</strong>{" "}Better to wrap a phase 80% complete and move on than to nail one phase and run out of time for the rest.
         </p>
 
         <h3>Talking through, not at</h3>
@@ -425,7 +425,7 @@ public void follow(
         </ol>
 
         <Callout variant="insight" title="The hidden grading rubric">
-          <p className="m-0">Interviewers are usually scoring on something like: did the candidate <strong>scope</strong> the problem? Did they <strong>quantify</strong> it? Did they <strong>design</strong> something that matches the scope? Did they <strong>defend</strong> their choices? Did they <strong>recognize</strong> what they didn&apos;t solve? Each of those maps to a phase of the framework. If you walk through the framework, you&apos;re hitting every category by construction.</p>
+          <p className="m-0">Interviewers are usually scoring on something like: did the candidate <strong>scope</strong>{" "}the problem? Did they <strong>quantify</strong>{" "}it? Did they <strong>design</strong>{" "}something that matches the scope? Did they <strong>defend</strong>{" "}their choices? Did they <strong>recognize</strong>{" "}what they didn&apos;t solve? Each of those maps to a phase of the framework. If you walk through the framework, you&apos;re hitting every category by construction.</p>
         </Callout>
 
         <Quiz
@@ -505,7 +505,7 @@ Cross-cutting concerns     Auth, observability, ratelimits   A11y, i18n, respons
         </p>
 
         <Callout variant="warn" title="The most common backend-prep blindspot">
-          <p className="m-0">Backend-trained candidates underestimate how much the network matters on the client side. Between two services in your VPC, a 10ms round trip is a slow day. Between a phone on 3G and your API, 800ms is realistic. <strong>Every interaction has to assume the network might be slow or fail.</strong> Optimistic updates, retries, error states, offline queues — these aren&apos;t edge cases on the frontend; they&apos;re the main path.</p>
+          <p className="m-0">Backend-trained candidates underestimate how much the network matters on the client side. Between two services in your VPC, a 10ms round trip is a slow day. Between a phone on 3G and your API, 800ms is realistic. <strong>Every interaction has to assume the network might be slow or fail.</strong>{" "}Optimistic updates, retries, error states, offline queues — these aren&apos;t edge cases on the frontend; they&apos;re the main path.</p>
         </Callout>
 
         <h3>The frontend interview 45-minute flow</h3>
@@ -552,7 +552,7 @@ Cross-cutting concerns     Auth, observability, ratelimits   A11y, i18n, respons
         </p>
         <ul>
           <li>
-            <strong>Bundle size budget.</strong> &quot;Your app must be interactive in 3 seconds on 3G — what&apos;s your JS budget?&quot; Rough answer: <strong>~170 KB compressed</strong> over the wire (3G ≈ 400 Kbps effective; 3 sec × 50 KB/sec ≈ 150–200 KB). That&apos;s the entire critical-path JS. Anything beyond that is code-split and lazy-loaded.
+            <strong>Bundle size budget.</strong> &quot;Your app must be interactive in 3 seconds on 3G — what&apos;s your JS budget?&quot; Rough answer: <strong>~170 KB compressed</strong>{" "}over the wire (3G ≈ 400 Kbps effective; 3 sec × 50 KB/sec ≈ 150–200 KB). That&apos;s the entire critical-path JS. Anything beyond that is code-split and lazy-loaded.
           </li>
           <li>
             <strong>List rendering cost.</strong> &quot;Feed has 10,000 items, you render them all at once, why is the page locked?&quot; Each DOM node costs memory and layout work. 10k nodes × maybe 50 bytes of layout state each plus reflow time = browser stalls. Fix: <strong>virtualization</strong> — only render the ~20 visible items plus a buffer; recycle nodes as the user scrolls.
@@ -573,19 +573,19 @@ List render                      Don't put more than ~100 nodes in the DOM
         </p>
         <ul>
           <li>
-            <strong>Design Twitter feed (or Instagram, TikTok).</strong> Infinite scroll, virtualization, optimistic likes, image loading. <em>Tests:</em> list perf + state caching + the network-is-hostile mindset (slow images, in-flight likes that fail).
+            <strong>Design Twitter feed (or Instagram, TikTok).</strong>{" "}Infinite scroll, virtualization, optimistic likes, image loading. <em>Tests:</em>{" "}list perf + state caching + the network-is-hostile mindset (slow images, in-flight likes that fail).
           </li>
           <li>
-            <strong>Design Google Docs (or Figma, Notion collab).</strong> Real-time collaboration, conflict resolution, presence indicators. <em>Tests:</em> WebSocket handling + OT or CRDT intuition + how state reconciles when two clients edit the same doc.
+            <strong>Design Google Docs (or Figma, Notion collab).</strong>{" "}Real-time collaboration, conflict resolution, presence indicators. <em>Tests:</em>{" "}WebSocket handling + OT or CRDT intuition + how state reconciles when two clients edit the same doc.
           </li>
           <li>
-            <strong>Design autocomplete / search box.</strong> Debounce input, abort in-flight requests when a new keystroke comes, cache results, render highlights. <em>Tests:</em> async control flow under user-driven event storms.
+            <strong>Design autocomplete / search box.</strong>{" "}Debounce input, abort in-flight requests when a new keystroke comes, cache results, render highlights. <em>Tests:</em>{" "}async control flow under user-driven event storms.
           </li>
           <li>
-            <strong>Design a photo gallery (or e-commerce product grid).</strong> Lazy loading, prefetch on hover, blur-up placeholders, responsive images (srcset). <em>Tests:</em> perceived perf + image loading strategy.
+            <strong>Design a photo gallery (or e-commerce product grid).</strong>{" "}Lazy loading, prefetch on hover, blur-up placeholders, responsive images (srcset). <em>Tests:</em>{" "}perceived perf + image loading strategy.
           </li>
           <li>
-            <strong>Design a dashboard.</strong> Many widgets, each fetching different data, layout responsiveness, mobile breakpoints. <em>Tests:</em> composition + how you orchestrate data fetching across independent widgets without waterfalling.
+            <strong>Design a dashboard.</strong>{" "}Many widgets, each fetching different data, layout responsiveness, mobile breakpoints. <em>Tests:</em>{" "}composition + how you orchestrate data fetching across independent widgets without waterfalling.
           </li>
         </ul>
 
@@ -628,11 +628,11 @@ List render                      Don't put more than ~100 nodes in the DOM
           This is the most-asked deep-dive in frontend rounds, and the answer is rarely &quot;just call fetch.&quot; The interviewer wants to hear you reason about a few axes:
         </p>
         <ul>
-          <li><strong>When to fetch:</strong> on mount, on focus, on stale, on user action, prefetched on hover.</li>
-          <li><strong>What to cache:</strong> by query key (URL + params), normalized by entity id, or both.</li>
-          <li><strong>Invalidation:</strong> after a mutation (write), invalidate which queries? &quot;User likes a post&quot; → invalidate that post&apos;s query key, but probably not the whole feed.</li>
-          <li><strong>Optimistic updates:</strong> apply the mutation locally first, roll back if the server rejects. Critical for likes, follow buttons, anything that needs to feel instant.</li>
-          <li><strong>Refetch on focus / reconnect:</strong> the user came back to the tab after 10 minutes — is your data stale?</li>
+          <li><strong>When to fetch:</strong>{" "}on mount, on focus, on stale, on user action, prefetched on hover.</li>
+          <li><strong>What to cache:</strong>{" "}by query key (URL + params), normalized by entity id, or both.</li>
+          <li><strong>Invalidation:</strong>{" "}after a mutation (write), invalidate which queries? &quot;User likes a post&quot; → invalidate that post&apos;s query key, but probably not the whole feed.</li>
+          <li><strong>Optimistic updates:</strong>{" "}apply the mutation locally first, roll back if the server rejects. Critical for likes, follow buttons, anything that needs to feel instant.</li>
+          <li><strong>Refetch on focus / reconnect:</strong>{" "}the user came back to the tab after 10 minutes — is your data stale?</li>
         </ul>
         <CodeBlock lang="plain" caption="The fetching deep-dive sentence shape (use this verbatim shape)">{`"For the feed I'd use a server cache library (React Query) with the
  query key 'home-feed:{cursor}'. Fresh-while-revalidate strategy:
@@ -671,13 +671,13 @@ What I'd verify:
         </p>
         <ul>
           <li>
-            <strong>Junior signal:</strong> can build it. Misses edge cases — empty state, error state, loading state, what happens when the API is slow. Doesn&apos;t talk about a11y or perf unprompted.
+            <strong>Junior signal:</strong>{" "}can build it. Misses edge cases — empty state, error state, loading state, what happens when the API is slow. Doesn&apos;t talk about a11y or perf unprompted.
           </li>
           <li>
-            <strong>Mid signal:</strong> handles edge cases, perf, a11y. Has a few tradeoff conversations when prompted. Picks reasonable defaults but doesn&apos;t always justify them.
+            <strong>Mid signal:</strong>{" "}handles edge cases, perf, a11y. Has a few tradeoff conversations when prompted. Picks reasonable defaults but doesn&apos;t always justify them.
           </li>
           <li>
-            <strong>Senior signal:</strong> drives the conversation. Asks &quot;what&apos;s the actual goal here?&quot; before designing. Proposes alternatives, knows which patterns apply to which constraints. Brings up monitoring, A/B rollout, feature flags <em>without being asked</em>. Notices ambiguity in the prompt and surfaces it.
+            <strong>Senior signal:</strong>{" "}drives the conversation. Asks &quot;what&apos;s the actual goal here?&quot; before designing. Proposes alternatives, knows which patterns apply to which constraints. Brings up monitoring, A/B rollout, feature flags <em>without being asked</em>. Notices ambiguity in the prompt and surfaces it.
           </li>
         </ul>
         <p>
@@ -693,13 +693,13 @@ What I'd verify:
             <strong>Diving straight into components without clarifying scope.</strong> &quot;OK so I&apos;ll have a Header, a Feed, a Sidebar...&quot; Same mistake as jumping to architecture in the backend round — you&apos;re solving a problem you haven&apos;t scoped.
           </li>
           <li>
-            <strong>No state shape — handwaves &quot;we&apos;ll store it in Redux.&quot;</strong> Show me what&apos;s in the store. If you can&apos;t sketch the JSON, you don&apos;t have a design yet.
+            <strong>No state shape — handwaves &quot;we&apos;ll store it in Redux.&quot;</strong>{" "}Show me what&apos;s in the store. If you can&apos;t sketch the JSON, you don&apos;t have a design yet.
           </li>
           <li>
-            <strong>Forgetting accessibility entirely.</strong> Even one sentence — &quot;I&apos;d make sure the feed is keyboard-navigable and the like button has a clear aria-label and aria-pressed state&quot; — separates you from candidates who don&apos;t mention a11y once.
+            <strong>Forgetting accessibility entirely.</strong>{" "}Even one sentence — &quot;I&apos;d make sure the feed is keyboard-navigable and the like button has a clear aria-label and aria-pressed state&quot; — separates you from candidates who don&apos;t mention a11y once.
           </li>
           <li>
-            <strong>Not addressing what happens when the network fails.</strong> Slow API, dropped request, offline. If you don&apos;t bring it up, the interviewer will, and you&apos;ll be answering reactively instead of leading.
+            <strong>Not addressing what happens when the network fails.</strong>{" "}Slow API, dropped request, offline. If you don&apos;t bring it up, the interviewer will, and you&apos;ll be answering reactively instead of leading.
           </li>
           <li>
             <strong>Picking a stack without justifying it.</strong> &quot;I&apos;ll use Next.js&quot; with no &quot;because&quot; signals memorization, not judgment. Always pair the choice with the reason.
@@ -707,7 +707,7 @@ What I'd verify:
         </ul>
 
         <Callout variant="info" title="The 'because' rule">
-          <p className="m-0">For every technology you name in a frontend round, append a <strong>because</strong> clause naming the constraint that drove the choice. &quot;Next.js because we need SSR for SEO on the public pages.&quot; &quot;React Query because we have a lot of derived server state and want stale-while-revalidate out of the box.&quot; &quot;Tailwind because the team values design-system consistency and we&apos;re not building a CSS framework from scratch.&quot; If you can&apos;t produce the &quot;because,&quot; don&apos;t name the tech — describe the capability instead.</p>
+          <p className="m-0">For every technology you name in a frontend round, append a <strong>because</strong>{" "}clause naming the constraint that drove the choice. &quot;Next.js because we need SSR for SEO on the public pages.&quot; &quot;React Query because we have a lot of derived server state and want stale-while-revalidate out of the box.&quot; &quot;Tailwind because the team values design-system consistency and we&apos;re not building a CSS framework from scratch.&quot; If you can&apos;t produce the &quot;because,&quot; don&apos;t name the tech — describe the capability instead.</p>
         </Callout>
 
         <h3>Pre-interview checklist for the candidate</h3>
@@ -716,19 +716,19 @@ What I'd verify:
         </p>
         <ul>
           <li>
-            <strong>Rendering strategies cold.</strong> SSR, SSG, ISR, CSR — when each. SSR for SEO + first-paint + dynamic per-user content. SSG for content that&apos;s the same for everyone (marketing, docs). ISR for SSG with periodic regeneration. CSR for app-shell after auth wall.
+            <strong>Rendering strategies cold.</strong>{" "}SSR, SSG, ISR, CSR — when each. SSR for SEO + first-paint + dynamic per-user content. SSG for content that&apos;s the same for everyone (marketing, docs). ISR for SSG with periodic regeneration. CSR for app-shell after auth wall.
           </li>
           <li>
-            <strong>One state management lib deeply, not three superficially.</strong> Pick one (React Query, Redux Toolkit, Zustand, Jotai) and know its mental model — when it shines, what it&apos;s bad at. Don&apos;t name three on the whiteboard.
+            <strong>One state management lib deeply, not three superficially.</strong>{" "}Pick one (React Query, Redux Toolkit, Zustand, Jotai) and know its mental model — when it shines, what it&apos;s bad at. Don&apos;t name three on the whiteboard.
           </li>
           <li>
-            <strong>How to virtualize a list — the algorithm, not just the lib.</strong> Compute visible range from scrollTop and item height, render that range plus a buffer, recycle DOM. You should be able to whiteboard this without naming react-window.
+            <strong>How to virtualize a list — the algorithm, not just the lib.</strong>{" "}Compute visible range from scrollTop and item height, render that range plus a buffer, recycle DOM. You should be able to whiteboard this without naming react-window.
           </li>
           <li>
-            <strong>Debounce, throttle, cancel.</strong> Debounce for &quot;wait until they stop typing&quot; (search). Throttle for &quot;limit rate of fires&quot; (scroll handlers). AbortController for canceling in-flight fetches when a new query supersedes them. They will come up.
+            <strong>Debounce, throttle, cancel.</strong>{" "}Debounce for &quot;wait until they stop typing&quot; (search). Throttle for &quot;limit rate of fires&quot; (scroll handlers). AbortController for canceling in-flight fetches when a new query supersedes them. They will come up.
           </li>
           <li>
-            <strong>A default stack you can defend.</strong> Mine: &quot;Next.js + React Query + Tailwind + TypeScript, because Next gives me SSR/ISR for free, React Query handles server state, Tailwind keeps styling co-located with components, and TS catches the prop-shape bugs early.&quot; Have your version ready.
+            <strong>A default stack you can defend.</strong>{" "}Mine: &quot;Next.js + React Query + Tailwind + TypeScript, because Next gives me SSR/ISR for free, React Query handles server state, Tailwind keeps styling co-located with components, and TS catches the prop-shape bugs early.&quot; Have your version ready.
           </li>
         </ul>
 

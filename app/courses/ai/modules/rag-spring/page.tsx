@@ -1022,11 +1022,11 @@ q.addEventListener('keydown', async (e) => {
 
         <ol className="list-decimal pl-6 space-y-2">
           <li>
-            <strong>Ask 10 real questions.</strong> Mix easy (clear single-section answer) with hard
+            <strong>Ask 10 real questions.</strong>{" "}Mix easy (clear single-section answer) with hard
             (multi-section synthesis). Note where it&apos;s weak.
           </li>
           <li>
-            <strong>For one weak answer, check whether retrieval was the problem.</strong> Look at what came
+            <strong>For one weak answer, check whether retrieval was the problem.</strong>{" "}Look at what came
             back as sources. If they&apos;re wrong, your retriever is at fault. If they&apos;re right but the
             answer is bad, your prompt is at fault.
           </li>

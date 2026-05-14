@@ -101,11 +101,11 @@ export default function Page() {
         </ul>
         <h3>Non-functional targets</h3>
         <ul>
-          <li><strong>Correctness:</strong> the ledger must always balance. Sum of debits == sum of credits, always.</li>
-          <li><strong>Idempotency:</strong> same idempotency-key + same request body must produce the same outcome, forever.</li>
-          <li><strong>Latency:</strong> charge p99 under 2s (gateway-bound; you don&apos;t control Stripe).</li>
+          <li><strong>Correctness:</strong>{" "}the ledger must always balance. Sum of debits == sum of credits, always.</li>
+          <li><strong>Idempotency:</strong>{" "}same idempotency-key + same request body must produce the same outcome, forever.</li>
+          <li><strong>Latency:</strong>{" "}charge p99 under 2s (gateway-bound; you don&apos;t control Stripe).</li>
           <li><strong>Availability:</strong> 99.99% on the charge path. A failed charge is a lost sale.</li>
-          <li><strong>Durability:</strong> ledger entries are never deleted, never updated. Append-only.</li>
+          <li><strong>Durability:</strong>{" "}ledger entries are never deleted, never updated. Append-only.</li>
         </ul>
         <h3>Back-of-envelope</h3>
         <p>
@@ -132,7 +132,7 @@ export default function Page() {
       <Checkpoint moduleSlug="design-payments" id="design" title="Part 2 · High-level design" xp={30}>
         <h3>The double-entry ledger</h3>
         <p>
-          Every financial event becomes <strong>two or more</strong> ledger entries that sum to zero. A charge to a rider for $20
+          Every financial event becomes <strong>two or more</strong>{" "}ledger entries that sum to zero. A charge to a rider for $20
           looks like:
         </p>
         <CodeBlock lang="plain" caption="ledger.sql — entries for a charge + payout">{`-- Charge $20 from rider to platform
@@ -203,9 +203,9 @@ public ResponseEntity<Charge> createCharge(
         <h3>The end-to-end flow</h3>
         <Mermaid chart={flowChart} />
         <p>
-          Three things to notice. <strong>One:</strong> the card number never touches your servers. The client tokenizes via
-          Stripe&apos;s SDK; you only see <code>pm_xxx</code> tokens. <strong>Two:</strong> the gateway is the source of truth for
-          &quot;did the charge succeed?&quot; — the webhook is what finalizes your ledger. <strong>Three:</strong> reconciliation is
+          Three things to notice. <strong>One:</strong>{" "}the card number never touches your servers. The client tokenizes via
+          Stripe&apos;s SDK; you only see <code>pm_xxx</code> tokens. <strong>Two:</strong>{" "}the gateway is the source of truth for
+          &quot;did the charge succeed?&quot; — the webhook is what finalizes your ledger. <strong>Three:</strong>{" "}reconciliation is
           a real job, not a belief that the gateway and your books always match.
         </p>
 

@@ -97,7 +97,7 @@ export default function ChatInterfaceModule() {
         </p>
 
         <p>
-          <strong>Option 1: Configure CORS in Spring.</strong> Quick, works, but you have to maintain
+          <strong>Option 1: Configure CORS in Spring.</strong>{" "}Quick, works, but you have to maintain
           an allowlist that grows over time and breaks when devs run on weird ports.
         </p>
 
@@ -119,7 +119,7 @@ public class CorsConfig implements WebMvcConfigurer {
 }`}</CodeBlock>
 
         <p>
-          <strong>Option 2: Next.js rewrites — the dev path.</strong> Next.js can proxy
+          <strong>Option 2: Next.js rewrites — the dev path.</strong>{" "}Next.js can proxy
           <code>/api/*</code> requests to your Spring backend. From the browser&apos;s perspective the
           request is same-origin, so CORS never fires. This is what most teams settle on for dev:
         </p>
@@ -319,7 +319,7 @@ public class ChatController {
         </ul>
 
         <p>
-          When this module says <em>session</em> it means the second one: a server-side record of a
+          When this module says <em>session</em>{" "}it means the second one: a server-side record of a
           conversation, identified by a UUID, with a list of messages.
         </p>
 
@@ -509,16 +509,16 @@ export function useChatSession(userId: string) {
 
         <ul className="list-disc pl-6 space-y-2">
           <li>
-            <strong>Last-N turns.</strong> Keep the last 10 user-assistant pairs. Simple, predictable,
+            <strong>Last-N turns.</strong>{" "}Keep the last 10 user-assistant pairs. Simple, predictable,
             loses information beyond that horizon.
           </li>
           <li>
-            <strong>Last-N + system summary.</strong> Keep the last 10 turns plus a model-generated
+            <strong>Last-N + system summary.</strong>{" "}Keep the last 10 turns plus a model-generated
             summary of everything before. The summary lives in your DB and gets refreshed when the
             window slides.
           </li>
           <li>
-            <strong>Token-budget aware.</strong> Add turns from newest to oldest until you&apos;d
+            <strong>Token-budget aware.</strong>{" "}Add turns from newest to oldest until you&apos;d
             exceed a token budget; stop. Robust to varying message lengths.
           </li>
         </ul>
@@ -675,7 +675,7 @@ private Flux<String> toSseFrames(ChatResponse chatResponse) {
 
         <p>
           Spring AI&apos;s default tool-loop runs the tool, feeds the result back into the model, and
-          continues. By default the tool <em>result</em> doesn&apos;t surface as its own streaming
+          continues. By default the tool <em>result</em>{" "}doesn&apos;t surface as its own streaming
           event — only the next assistant turn (which references the result implicitly) does. To
           surface results explicitly, intercept the tool execution.
         </p>
@@ -918,9 +918,9 @@ if (totalTokens > 50_000) {
         <p>The minimum useful set of fields:</p>
 
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>Always log:</strong> session id, user id, request timestamp, latency to first token, total tokens, total latency, tool calls (name + duration, not arguments), error reason</li>
-          <li><strong>Conditionally log (sampled, redacted):</strong> hash of the prompt for grouping similar queries, length of prompt and response in tokens</li>
-          <li><strong>Never log:</strong> raw prompts, raw responses, raw tool inputs/outputs, anything containing user-supplied content unless redacted</li>
+          <li><strong>Always log:</strong>{" "}session id, user id, request timestamp, latency to first token, total tokens, total latency, tool calls (name + duration, not arguments), error reason</li>
+          <li><strong>Conditionally log (sampled, redacted):</strong>{" "}hash of the prompt for grouping similar queries, length of prompt and response in tokens</li>
+          <li><strong>Never log:</strong>{" "}raw prompts, raw responses, raw tool inputs/outputs, anything containing user-supplied content unless redacted</li>
         </ul>
 
         <Callout variant="warn" title="Log redaction is harder than it looks">
@@ -939,10 +939,10 @@ if (totalTokens > 50_000) {
         </p>
 
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>5xx from the model:</strong> retry once with a small jitter, then surface a clear error to the user with a retry button.</li>
-          <li><strong>API rate limit (429):</strong> queue with a polite delay; if it persists past 30s, fail with &quot;experiencing high load — try again in a moment.&quot;</li>
-          <li><strong>Slow tokens (no token in 30s):</strong> abort with &quot;the model is being slow; here&apos;s what we have so far.&quot;</li>
-          <li><strong>Tool failures:</strong> let Spring AI&apos;s loop see the error; many models will gracefully recover (&quot;I tried to look that up but the search service was down — let me try a different approach&quot;).</li>
+          <li><strong>5xx from the model:</strong>{" "}retry once with a small jitter, then surface a clear error to the user with a retry button.</li>
+          <li><strong>API rate limit (429):</strong>{" "}queue with a polite delay; if it persists past 30s, fail with &quot;experiencing high load — try again in a moment.&quot;</li>
+          <li><strong>Slow tokens (no token in 30s):</strong>{" "}abort with &quot;the model is being slow; here&apos;s what we have so far.&quot;</li>
+          <li><strong>Tool failures:</strong>{" "}let Spring AI&apos;s loop see the error; many models will gracefully recover (&quot;I tried to look that up but the search service was down — let me try a different approach&quot;).</li>
         </ul>
 
         <h3 className="text-xl font-bold mt-8 mb-3">5. The first-token timeout</h3>
@@ -1090,12 +1090,12 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
 
         <ol className="list-decimal pl-6 space-y-2">
           <li>
-            <strong>Backend basics.</strong> Spring Boot with Postgres, Flyway migrations for
+            <strong>Backend basics.</strong>{" "}Spring Boot with Postgres, Flyway migrations for
             <code>conversations</code> + <code>messages</code> + <code>tickets</code>. Seed data.
             Verify with <code>psql</code>.
           </li>
           <li>
-            <strong>Tool service.</strong> Three <code>@Tool</code>-annotated methods on
+            <strong>Tool service.</strong>{" "}Three <code>@Tool</code>-annotated methods on
             <code>ToolService</code> backed by <code>JdbcTemplate</code>. Unit-test them in isolation.
           </li>
           <li>
@@ -1103,15 +1103,15 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
             shape from Part 1, with persistence from Part 2.
           </li>
           <li>
-            <strong>Tool-call events.</strong> Drop to <code>chatResponse()</code> and emit
+            <strong>Tool-call events.</strong>{" "}Drop to <code>chatResponse()</code> and emit
             <code>tool_call</code> SSE frames. Skip <code>tool_result</code> for now.
           </li>
           <li>
-            <strong>Frontend wiring.</strong> Next.js project with the rewrite to localhost:8080. Drop
+            <strong>Frontend wiring.</strong>{" "}Next.js project with the rewrite to localhost:8080. Drop
             in Module 18&apos;s components. Build the demo page with session loading.
           </li>
           <li>
-            <strong>Polish.</strong> Rate limit, TTFT timeout, loading and error states. Try a
+            <strong>Polish.</strong>{" "}Rate limit, TTFT timeout, loading and error states. Try a
             handful of real-feeling queries.
           </li>
         </ol>

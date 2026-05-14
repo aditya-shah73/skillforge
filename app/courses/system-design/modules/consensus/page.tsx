@@ -80,9 +80,9 @@ export default function Page() {
           A consensus algorithm needs three properties:
         </p>
         <ul>
-          <li><strong>Agreement:</strong> all non-faulty nodes decide on the same value.</li>
-          <li><strong>Validity:</strong> the value decided was proposed by some node (not invented out of thin air).</li>
-          <li><strong>Termination:</strong> all non-faulty nodes eventually decide.</li>
+          <li><strong>Agreement:</strong>{" "}all non-faulty nodes decide on the same value.</li>
+          <li><strong>Validity:</strong>{" "}the value decided was proposed by some node (not invented out of thin air).</li>
+          <li><strong>Termination:</strong>{" "}all non-faulty nodes eventually decide.</li>
         </ul>
         <p>
           Sounds simple. The trouble is that the network can lose messages, machines can crash, and you can&apos;t tell the difference between &quot;dead&quot; and &quot;slow.&quot; A node that didn&apos;t reply might come back tomorrow with a different opinion.
@@ -93,11 +93,11 @@ export default function Page() {
           In 1985, Fischer, Lynch, and Paterson proved that in a fully asynchronous network where even one node can crash, no deterministic algorithm can guarantee all three properties. Either you can&apos;t guarantee termination, or you can&apos;t guarantee agreement. There is no clean solution.
         </p>
         <p>
-          That&apos;s a real theorem and it&apos;s a real problem. So why do we use Raft and Paxos? Because real networks are not fully asynchronous — they&apos;re mostly synchronous most of the time. Real consensus algorithms make a softer guarantee: <strong>they preserve safety always (never decide two different values), and they make progress whenever the network is well-behaved enough.</strong> When the network goes haywire, they stall. They don&apos;t lie.
+          That&apos;s a real theorem and it&apos;s a real problem. So why do we use Raft and Paxos? Because real networks are not fully asynchronous — they&apos;re mostly synchronous most of the time. Real consensus algorithms make a softer guarantee: <strong>they preserve safety always (never decide two different values), and they make progress whenever the network is well-behaved enough.</strong>{" "}When the network goes haywire, they stall. They don&apos;t lie.
         </p>
 
         <Callout variant="insight" title="Safety vs liveness">
-          <p className="m-0">Every consensus algorithm splits its guarantees into two camps. <strong>Safety</strong> properties (&quot;we never agree on conflicting values&quot;) hold under any network conditions, no matter how bad. <strong>Liveness</strong> properties (&quot;we eventually decide&quot;) require some assumption about the network — usually &quot;messages eventually get through, eventually.&quot; FLP says you can&apos;t guarantee both without that liveness assumption. Raft and Paxos both pick safety-always, liveness-when-network-is-OK.</p>
+          <p className="m-0">Every consensus algorithm splits its guarantees into two camps. <strong>Safety</strong>{" "}properties (&quot;we never agree on conflicting values&quot;) hold under any network conditions, no matter how bad. <strong>Liveness</strong>{" "}properties (&quot;we eventually decide&quot;) require some assumption about the network — usually &quot;messages eventually get through, eventually.&quot; FLP says you can&apos;t guarantee both without that liveness assumption. Raft and Paxos both pick safety-always, liveness-when-network-is-OK.</p>
         </Callout>
 
         <h3>The two failure modes you have to handle</h3>
@@ -105,8 +105,8 @@ export default function Page() {
           When designing a consensus algorithm, you assume nodes can fail in two ways:
         </p>
         <ul>
-          <li><strong>Crash failures:</strong> a node stops responding. It might come back later with the state it had at crash time. Raft and Paxos handle this.</li>
-          <li><strong>Byzantine failures:</strong> a node lies — sends conflicting messages to different peers, fakes responses, actively misleads. PBFT and blockchain protocols handle this. Raft and Paxos do not.</li>
+          <li><strong>Crash failures:</strong>{" "}a node stops responding. It might come back later with the state it had at crash time. Raft and Paxos handle this.</li>
+          <li><strong>Byzantine failures:</strong>{" "}a node lies — sends conflicting messages to different peers, fakes responses, actively misleads. PBFT and blockchain protocols handle this. Raft and Paxos do not.</li>
         </ul>
         <p>
           Inside a data center, you usually trust your nodes — they&apos;re yours. Crash-fault-tolerant consensus (Raft, Paxos) is the right tool. Across mutually-distrusting parties (cryptocurrency, public consortia), you need Byzantine-fault-tolerant consensus, which is much more expensive. We&apos;ll stay in crash-fault-tolerant land for the rest of this module.
@@ -114,7 +114,7 @@ export default function Page() {
 
         <h3>The quorum trick</h3>
         <p>
-          Here&apos;s the move that makes consensus tractable: <strong>require a majority for every decision.</strong> If decisions need a majority and a majority is at least N/2 + 1 nodes, then any two majorities must overlap by at least one node. That overlap is what prevents two conflicting decisions from being made — there&apos;s always at least one node who participated in both quorums and would have rejected the second one.
+          Here&apos;s the move that makes consensus tractable: <strong>require a majority for every decision.</strong>{" "}If decisions need a majority and a majority is at least N/2 + 1 nodes, then any two majorities must overlap by at least one node. That overlap is what prevents two conflicting decisions from being made — there&apos;s always at least one node who participated in both quorums and would have rejected the second one.
         </p>
         <p>
           A 3-node cluster needs 2 nodes to agree (tolerates 1 failure). A 5-node cluster needs 3 (tolerates 2). A 7-node cluster needs 4 (tolerates 3). Notice the pattern: <strong>you tolerate ⌊(N-1)/2⌋ failures.</strong>
@@ -174,9 +174,9 @@ export default function Page() {
           Raft (Ongaro and Ousterhout, 2014) is Paxos&apos;s pedagogical replacement. It solves the same problem and is provably equivalent in safety, but it was designed deliberately to be understandable. The trick: split consensus into three independent sub-problems, each with a clean solution.
         </p>
         <ul>
-          <li><strong>Leader election:</strong> exactly one node is the leader at any time.</li>
-          <li><strong>Log replication:</strong> the leader appends entries to a log, then replicates to followers.</li>
-          <li><strong>Safety:</strong> a small set of rules that prevent committed entries from ever being lost.</li>
+          <li><strong>Leader election:</strong>{" "}exactly one node is the leader at any time.</li>
+          <li><strong>Log replication:</strong>{" "}the leader appends entries to a log, then replicates to followers.</li>
+          <li><strong>Safety:</strong>{" "}a small set of rules that prevent committed entries from ever being lost.</li>
         </ul>
 
         <h3>The state machine</h3>
@@ -190,7 +190,7 @@ export default function Page() {
 
         <h3>Terms — Raft&apos;s logical clock</h3>
         <p>
-          Raft tags every operation with a <strong>term number</strong>, which is a monotonically increasing integer. Every election starts a new term. Every message includes the sender&apos;s term. The rule: <strong>if you see a message from a higher term than yours, accept that term and step down.</strong> This is what prevents zombie leaders. A leader from term 4 that was partitioned away comes back, sees a message from term 7, and immediately gives up its leadership claim.
+          Raft tags every operation with a <strong>term number</strong>, which is a monotonically increasing integer. Every election starts a new term. Every message includes the sender&apos;s term. The rule: <strong>if you see a message from a higher term than yours, accept that term and step down.</strong>{" "}This is what prevents zombie leaders. A leader from term 4 that was partitioned away comes back, sees a message from term 7, and immediately gives up its leadership claim.
         </p>
 
         <h3>Leader election — the dance</h3>
@@ -206,7 +206,7 @@ export default function Page() {
           <li>If the election times out (split vote — two candidates simultaneously), it starts a new election with a higher term.</li>
         </ol>
         <p>
-          The <strong>randomized timeout</strong> is the key trick that prevents endless split votes. If two followers time out simultaneously and both run for office, neither gets a majority, and they both retry — but with a new random timeout, so one of them is very likely to start its next election earlier and run uncontested.
+          The <strong>randomized timeout</strong>{" "}is the key trick that prevents endless split votes. If two followers time out simultaneously and both run for office, neither gets a majority, and they both retry — but with a new random timeout, so one of them is very likely to start its next election earlier and run uncontested.
         </p>
 
         <CodeBlock lang="java" caption="Sketch of a Raft follower's election timeout (illustrative — do not run consensus in your service)">{`// Real production code lives in libraries (jraft, copycat) — never roll your own.
@@ -250,7 +250,7 @@ public class RaftNode {
 
         <h3>Log replication — the AppendEntries machinery</h3>
         <p>
-          Once a leader is elected, it serves all client writes. Each write becomes a log entry: <code>(term, index, command)</code>. The leader appends to its own log, then sends <code>AppendEntries</code> RPCs to every follower. An entry is <strong>committed</strong> once a majority of nodes have it in their logs — including the leader.
+          Once a leader is elected, it serves all client writes. Each write becomes a log entry: <code>(term, index, command)</code>. The leader appends to its own log, then sends <code>AppendEntries</code> RPCs to every follower. An entry is <strong>committed</strong>{" "}once a majority of nodes have it in their logs — including the leader.
         </p>
         <p>
           Once committed, the leader applies the entry to its state machine and tells clients the write succeeded. The leader also includes the latest committed index in subsequent heartbeats, so followers know which entries are safe to apply locally.
@@ -269,7 +269,7 @@ public class RaftNode {
         </p>
 
         <Callout variant="info" title="Why 'committed' means majority, not all">
-          <p className="m-0">An entry is committed once a majority of nodes have replicated it. That includes the leader. As long as the leader survives long enough to tell <em>any</em> single follower in the next majority, the entry will outlive any subsequent leader change. Waiting for all N nodes would mean a single slow node halts the cluster — defeating the whole purpose of fault tolerance.</p>
+          <p className="m-0">An entry is committed once a majority of nodes have replicated it. That includes the leader. As long as the leader survives long enough to tell <em>any</em>{" "}single follower in the next majority, the entry will outlive any subsequent leader change. Waiting for all N nodes would mean a single slow node halts the cluster — defeating the whole purpose of fault tolerance.</p>
         </Callout>
 
         <h3>The election restriction — the safety jewel</h3>
@@ -324,21 +324,21 @@ public class RaftNode {
 
         <h3>The five canonical use cases</h3>
         <ul>
-          <li><strong>Leader election for stateful services.</strong> Kafka&apos;s controller, Postgres failover orchestration (Patroni), HDFS NameNode HA — all use a consensus service to decide who&apos;s in charge.</li>
-          <li><strong>Service discovery and config.</strong> etcd, Consul, ZooKeeper — store a small amount of strongly-consistent metadata that every node in the cluster reads.</li>
-          <li><strong>Distributed locks.</strong> ZooKeeper&apos;s ephemeral nodes, etcd&apos;s lease-based locks. Used sparingly because lock services are coordination bottlenecks.</li>
-          <li><strong>Strongly-consistent KV / metadata stores.</strong> CockroachDB&apos;s replication, TiKV, FoundationDB — Raft per shard, not per cluster.</li>
+          <li><strong>Leader election for stateful services.</strong>{" "}Kafka&apos;s controller, Postgres failover orchestration (Patroni), HDFS NameNode HA — all use a consensus service to decide who&apos;s in charge.</li>
+          <li><strong>Service discovery and config.</strong>{" "}etcd, Consul, ZooKeeper — store a small amount of strongly-consistent metadata that every node in the cluster reads.</li>
+          <li><strong>Distributed locks.</strong>{" "}ZooKeeper&apos;s ephemeral nodes, etcd&apos;s lease-based locks. Used sparingly because lock services are coordination bottlenecks.</li>
+          <li><strong>Strongly-consistent KV / metadata stores.</strong>{" "}CockroachDB&apos;s replication, TiKV, FoundationDB — Raft per shard, not per cluster.</li>
           <li><strong>Cluster membership.</strong> &quot;Who&apos;s in the cluster?&quot; is itself a consensus problem when you&apos;re adding/removing nodes safely.</li>
         </ul>
 
         <h3>Real systems and what they actually run</h3>
         <ul>
-          <li><strong>etcd:</strong> Raft. Used by Kubernetes for all cluster state. Typically 3 or 5 nodes, in a single region. Sub-millisecond reads from any member, single-digit-ms writes.</li>
-          <li><strong>Consul:</strong> Raft. Service discovery + KV + health checks. Same shape as etcd, different feature surface.</li>
-          <li><strong>ZooKeeper:</strong> ZAB (ZooKeeper Atomic Broadcast) — predates Raft, similar guarantees, different protocol. Used by Kafka (pre-KRaft), HBase, Solr.</li>
-          <li><strong>Kafka KRaft:</strong> Raft replaced ZooKeeper as Kafka&apos;s metadata controller in 3.x+. Same algorithm, baked into Kafka itself instead of an external dependency.</li>
-          <li><strong>CockroachDB / TiKV:</strong> Raft, but per-range (per-shard). A 1-petabyte cluster runs thousands of small Raft groups in parallel — each one for a small chunk of keys.</li>
-          <li><strong>Spanner:</strong> Paxos per tablet. Plus TrueTime to coordinate across Paxos groups for global serializable transactions. Industrial-strength consensus at scale.</li>
+          <li><strong>etcd:</strong>{" "}Raft. Used by Kubernetes for all cluster state. Typically 3 or 5 nodes, in a single region. Sub-millisecond reads from any member, single-digit-ms writes.</li>
+          <li><strong>Consul:</strong>{" "}Raft. Service discovery + KV + health checks. Same shape as etcd, different feature surface.</li>
+          <li><strong>ZooKeeper:</strong>{" "}ZAB (ZooKeeper Atomic Broadcast) — predates Raft, similar guarantees, different protocol. Used by Kafka (pre-KRaft), HBase, Solr.</li>
+          <li><strong>Kafka KRaft:</strong>{" "}Raft replaced ZooKeeper as Kafka&apos;s metadata controller in 3.x+. Same algorithm, baked into Kafka itself instead of an external dependency.</li>
+          <li><strong>CockroachDB / TiKV:</strong>{" "}Raft, but per-range (per-shard). A 1-petabyte cluster runs thousands of small Raft groups in parallel — each one for a small chunk of keys.</li>
+          <li><strong>Spanner:</strong>{" "}Paxos per tablet. Plus TrueTime to coordinate across Paxos groups for global serializable transactions. Industrial-strength consensus at scale.</li>
         </ul>
 
         <Callout variant="warn" title="Consensus is not for data-plane traffic">
@@ -355,10 +355,10 @@ public class RaftNode {
 
         <h3>When NOT to use consensus</h3>
         <ul>
-          <li><strong>High-volume data path.</strong> Don&apos;t put consensus in the hot path of a 100k QPS service. Cache the result of any consensus decision and only re-consult on changes.</li>
-          <li><strong>Across regions for write-heavy workloads.</strong> The latency cost stacks. Consensus across continents is fine for low-frequency metadata (Spanner&apos;s tablet metadata) but a disaster for per-request decisions.</li>
-          <li><strong>When you actually want eventual consistency.</strong> If your workload tolerates eventual, you don&apos;t need to pay for consensus. Use a Dynamo-style replicated KV instead.</li>
-          <li><strong>For a single-instance service.</strong> A leader-elect-among-one is just a single instance with extra steps. Run consensus only when you have at least 3 peers and a real fault-tolerance requirement.</li>
+          <li><strong>High-volume data path.</strong>{" "}Don&apos;t put consensus in the hot path of a 100k QPS service. Cache the result of any consensus decision and only re-consult on changes.</li>
+          <li><strong>Across regions for write-heavy workloads.</strong>{" "}The latency cost stacks. Consensus across continents is fine for low-frequency metadata (Spanner&apos;s tablet metadata) but a disaster for per-request decisions.</li>
+          <li><strong>When you actually want eventual consistency.</strong>{" "}If your workload tolerates eventual, you don&apos;t need to pay for consensus. Use a Dynamo-style replicated KV instead.</li>
+          <li><strong>For a single-instance service.</strong>{" "}A leader-elect-among-one is just a single instance with extra steps. Run consensus only when you have at least 3 peers and a real fault-tolerance requirement.</li>
         </ul>
 
         <h3>Match the use case to the right consensus shape</h3>

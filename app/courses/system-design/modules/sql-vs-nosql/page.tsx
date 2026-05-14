@@ -61,7 +61,7 @@ export default function Page() {
           A real decision framework for &quot;SQL or NoSQL.&quot; The answer is almost never &quot;NoSQL.&quot; You&apos;ll learn why, and the narrow set of cases where it actually is.
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
-          <li>Why OLTP vs OLAP is the question to ask <em>before</em> SQL vs NoSQL</li>
+          <li>Why OLTP vs OLAP is the question to ask <em>before</em>{" "}SQL vs NoSQL</li>
           <li>The four NoSQL families and the genuine workload shape that picks each</li>
           <li>Why Postgres + JSONB + partial indexes covers most &quot;we need NoSQL&quot; cases</li>
           <li>The narrow cliff where Postgres actually breaks — and what to reach for</li>
@@ -77,9 +77,9 @@ export default function Page() {
           Here&apos;s a better framing. Storage choices are about three things, in this order:
         </p>
         <ol>
-          <li><strong>What shape is your workload?</strong> Many small transactions (OLTP), or few huge scans (OLAP)? This is the dividing line.</li>
-          <li><strong>What shape is your data?</strong> Relational rows, deeply nested documents, time series, graphs of relationships, or just key-value lookups?</li>
-          <li><strong>What scale do you actually need?</strong> Most teams overestimate this by 10–100x.</li>
+          <li><strong>What shape is your workload?</strong>{" "}Many small transactions (OLTP), or few huge scans (OLAP)? This is the dividing line.</li>
+          <li><strong>What shape is your data?</strong>{" "}Relational rows, deeply nested documents, time series, graphs of relationships, or just key-value lookups?</li>
+          <li><strong>What scale do you actually need?</strong>{" "}Most teams overestimate this by 10–100x.</li>
         </ol>
         <p>
           SQL vs NoSQL is downstream of those answers. We&apos;re going to work through them in order.
@@ -171,7 +171,7 @@ export default function Page() {
 
         <h3>Family 1: Document stores</h3>
         <p>
-          <strong>Examples:</strong> MongoDB, DynamoDB (used as a document store), Couchbase, Firestore.
+          <strong>Examples:</strong>{" "}MongoDB, DynamoDB (used as a document store), Couchbase, Firestore.
         </p>
         <p>
           The data model is a JSON-ish document. Each document can have its own shape. You query by id (fast) or by a secondary index on a field path (slower, requires planning).
@@ -190,10 +190,10 @@ export default function Page() {
 
         <h3>Family 2: Wide-column stores</h3>
         <p>
-          <strong>Examples:</strong> Cassandra, ScyllaDB, HBase, BigTable.
+          <strong>Examples:</strong>{" "}Cassandra, ScyllaDB, HBase, BigTable.
         </p>
         <p>
-          Confusingly named — these are not the same as columnar OLAP databases. The data model is a sparse 2D map: row key → column family → column name → value. They&apos;re built around <strong>massive write throughput</strong> and <strong>linear horizontal scalability</strong> with tunable consistency. The trade is that queries must be designed around the partition key — cross-partition queries are scatter-gather and slow.
+          Confusingly named — these are not the same as columnar OLAP databases. The data model is a sparse 2D map: row key → column family → column name → value. They&apos;re built around <strong>massive write throughput</strong>{" "}and <strong>linear horizontal scalability</strong>{" "}with tunable consistency. The trade is that queries must be designed around the partition key — cross-partition queries are scatter-gather and slow.
         </p>
         <p>
           <strong>When it wins:</strong>
@@ -209,7 +209,7 @@ export default function Page() {
 
         <h3>Family 3: Graph databases</h3>
         <p>
-          <strong>Examples:</strong> Neo4j, Amazon Neptune, JanusGraph, Memgraph.
+          <strong>Examples:</strong>{" "}Neo4j, Amazon Neptune, JanusGraph, Memgraph.
         </p>
         <p>
           Nodes and edges as first-class citizens. Indexed for fast traversal — &quot;walk from this user, follow knows edges 3 hops out, filter by node property&quot; runs in time proportional to the result, not the graph size.
@@ -219,7 +219,7 @@ export default function Page() {
         </p>
         <ul>
           <li>Your queries are inherently multi-hop traversals. Friend-of-friend recommendations. Fraud detection (find rings of accounts connected through shared payment methods). Knowledge graphs.</li>
-          <li>The relationships <em>are</em> the product, not metadata. LinkedIn&apos;s &quot;you&apos;re connected to X through Y who knows Z.&quot;</li>
+          <li>The relationships <em>are</em>{" "}the product, not metadata. LinkedIn&apos;s &quot;you&apos;re connected to X through Y who knows Z.&quot;</li>
         </ul>
         <p>
           <strong>When teams pick it for the wrong reasons:</strong> &quot;Our data has relationships.&quot; All data has relationships. Postgres handles 2-hop joins fine; graph databases earn their place at 3+ hops at scale, where SQL joins fall off a cliff.
@@ -227,7 +227,7 @@ export default function Page() {
 
         <h3>Family 4: Key-value stores</h3>
         <p>
-          <strong>Examples:</strong> Redis, Memcached, DynamoDB (used as KV), etcd, RocksDB.
+          <strong>Examples:</strong>{" "}Redis, Memcached, DynamoDB (used as KV), etcd, RocksDB.
         </p>
         <p>
           The simplest model: <code>get(key)</code>, <code>set(key, value)</code>. No queries beyond the key. The trade for that simplicity is enormous: in-memory KV stores can do millions of ops/sec from a single node, microseconds-per-op.
@@ -241,7 +241,7 @@ export default function Page() {
           <li>Anywhere the access pattern is genuinely &quot;by key&quot; — a coordinator&apos;s lock table, a feature flag store, a job queue.</li>
         </ul>
         <p>
-          <strong>When teams pick it for the wrong reasons:</strong> Treating Redis as a primary database. We&apos;ll devote a whole module to that one — the short version is that Redis is excellent at being a cache and dangerous as a system of record. Distributed cache deep dive coming up.
+          <strong>When teams pick it for the wrong reasons:</strong>{" "}Treating Redis as a primary database. We&apos;ll devote a whole module to that one — the short version is that Redis is excellent at being a cache and dangerous as a system of record. Distributed cache deep dive coming up.
         </p>
 
         <Callout variant="warn" title="The wrong-reasons pattern">
@@ -341,7 +341,7 @@ WHERE p.attrs ->> 'category' = 'apparel';`}</CodeBlock>
 
         <h3>Partial indexes: the indexing trick most teams don&apos;t know</h3>
         <p>
-          Postgres lets you index a <em>subset</em> of rows. If 99% of queries hit a tiny slice of the data (active orders, current sessions, undeleted records), a partial index is faster, smaller, and cheaper to maintain than a full one.
+          Postgres lets you index a <em>subset</em>{" "}of rows. If 99% of queries hit a tiny slice of the data (active orders, current sessions, undeleted records), a partial index is faster, smaller, and cheaper to maintain than a full one.
         </p>
         <CodeBlock lang="plain" caption="Partial index — only rows that matter to this query">{`-- 200M total orders, but only ~50k 'open' at any moment
 CREATE INDEX idx_orders_open ON orders (user_id, created_at)
@@ -387,11 +387,11 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
           Postgres has real limits. They&apos;re higher than most teams think, but they exist. The honest list:
         </p>
         <ul>
-          <li><strong>Write throughput &gt;~50k QPS sustained on one node.</strong> Postgres&apos;s WAL is single-stream. You can&apos;t scale writes by adding read replicas. Sharding (Citus, Vitess for MySQL, or hand-rolled) gets you past this, but at a real complexity cost.</li>
-          <li><strong>Multi-region active-active with low latency.</strong> Postgres native replication is leader-follower; multi-master extensions exist (BDR) but with caveats. If you genuinely need writes accepted in 5+ regions with sub-100ms latency from each, you&apos;re looking at Spanner, CockroachDB, or Cassandra-class systems.</li>
-          <li><strong>Truly schemaless data as a product requirement.</strong> JSONB covers a lot, but if you&apos;re ingesting a billion documents/day from an unbounded set of upstream schemas (think security event ingestion), document or wide-column stores fit better.</li>
-          <li><strong>Petabyte-scale time series.</strong> TimescaleDB stretches Postgres impressively far, but at the deep end (1B+ events/day, multi-petabyte storage), specialized stores (Cassandra, ClickHouse, InfluxDB) win.</li>
-          <li><strong>Graph traversal at depth 4+.</strong> Postgres can do recursive CTEs, but performance falls off a cliff. Real graph workloads need a graph DB.</li>
+          <li><strong>Write throughput &gt;~50k QPS sustained on one node.</strong>{" "}Postgres&apos;s WAL is single-stream. You can&apos;t scale writes by adding read replicas. Sharding (Citus, Vitess for MySQL, or hand-rolled) gets you past this, but at a real complexity cost.</li>
+          <li><strong>Multi-region active-active with low latency.</strong>{" "}Postgres native replication is leader-follower; multi-master extensions exist (BDR) but with caveats. If you genuinely need writes accepted in 5+ regions with sub-100ms latency from each, you&apos;re looking at Spanner, CockroachDB, or Cassandra-class systems.</li>
+          <li><strong>Truly schemaless data as a product requirement.</strong>{" "}JSONB covers a lot, but if you&apos;re ingesting a billion documents/day from an unbounded set of upstream schemas (think security event ingestion), document or wide-column stores fit better.</li>
+          <li><strong>Petabyte-scale time series.</strong>{" "}TimescaleDB stretches Postgres impressively far, but at the deep end (1B+ events/day, multi-petabyte storage), specialized stores (Cassandra, ClickHouse, InfluxDB) win.</li>
+          <li><strong>Graph traversal at depth 4+.</strong>{" "}Postgres can do recursive CTEs, but performance falls off a cliff. Real graph workloads need a graph DB.</li>
         </ul>
 
         <Callout variant="info" title="A useful question to gate the decision">
@@ -425,9 +425,9 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
           Three rules of thumb that hold up:
         </p>
         <ol>
-          <li><strong>Default to Postgres.</strong> Then justify any departure with a concrete reason and a number.</li>
-          <li><strong>Pick stores per <em>workload axis</em>, not per <em>service</em>.</strong> One service can use Postgres for the durable record, Redis for hot reads, Elasticsearch for free-text search, and a warehouse for analytics. That&apos;s normal.</li>
-          <li><strong>Beware the &quot;single source of truth in a NoSQL store&quot; pitch.</strong> NoSQL stores often relax the kind of constraint you discover you needed. The cost of finding out is hours-long incidents and post-hoc reconciliation pipelines.</li>
+          <li><strong>Default to Postgres.</strong>{" "}Then justify any departure with a concrete reason and a number.</li>
+          <li><strong>Pick stores per <em>workload axis</em>, not per <em>service</em>.</strong>{" "}One service can use Postgres for the durable record, Redis for hot reads, Elasticsearch for free-text search, and a warehouse for analytics. That&apos;s normal.</li>
+          <li><strong>Beware the &quot;single source of truth in a NoSQL store&quot; pitch.</strong>{" "}NoSQL stores often relax the kind of constraint you discover you needed. The cost of finding out is hours-long incidents and post-hoc reconciliation pipelines.</li>
         </ol>
 
         <Quiz

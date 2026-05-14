@@ -175,7 +175,7 @@ flowchart TB
 
         <Callout variant="insight" title="The leap of faith">
           <p>
-            When you write a recursive function, your job is to <strong>assume the recursive call works</strong> for
+            When you write a recursive function, your job is to <strong>assume the recursive call works</strong>{" "}for
             any smaller input — and then build the answer for <code>n</code> from the answer for <code>n-1</code>.
           </p>
           <p>
@@ -204,7 +204,7 @@ flowchart TB
 }`}</CodeBlock>
 
         <p>
-          That&apos;s the entire function. Two lines of logic. Notice what we did <em>not</em> do: simulate
+          That&apos;s the entire function. Two lines of logic. Notice what we did <em>not</em>{" "}do: simulate
           <code>sum(4) → sum(3) → sum(2) → ...</code> in our heads. We picked a single &quot;layer&quot; — &quot;given
           the answer for n-1, build the answer for n&quot; — and trusted recursion to handle the rest.
         </p>
@@ -222,9 +222,9 @@ flowchart TB
         <p>Every recursive function answers three questions in order. Get these right and you&apos;re done:</p>
 
         <ol>
-          <li><strong>What&apos;s the smallest version of the problem I can answer directly?</strong> That&apos;s the base case. For sum, it&apos;s <code>sum(0) = 0</code>. For factorial, <code>factorial(0) = 1</code>. For tree height, <code>height(null) = 0</code>.</li>
-          <li><strong>If I had the answer for a slightly smaller version, how would I build the answer for the current one?</strong> That&apos;s the recursive step. For sum, &quot;add n.&quot; For factorial, &quot;multiply by n.&quot; For tree height, &quot;1 + max of left and right heights.&quot;</li>
-          <li><strong>How do I make &quot;smaller&quot;?</strong> n-1 in the linear cases, n/2 in divide-and-conquer, &quot;a child node&quot; in trees. The choice of how-to-shrink is what shapes the algorithm&apos;s cost.</li>
+          <li><strong>What&apos;s the smallest version of the problem I can answer directly?</strong>{" "}That&apos;s the base case. For sum, it&apos;s <code>sum(0) = 0</code>. For factorial, <code>factorial(0) = 1</code>. For tree height, <code>height(null) = 0</code>.</li>
+          <li><strong>If I had the answer for a slightly smaller version, how would I build the answer for the current one?</strong>{" "}That&apos;s the recursive step. For sum, &quot;add n.&quot; For factorial, &quot;multiply by n.&quot; For tree height, &quot;1 + max of left and right heights.&quot;</li>
+          <li><strong>How do I make &quot;smaller&quot;?</strong>{" "}n-1 in the linear cases, n/2 in divide-and-conquer, &quot;a child node&quot; in trees. The choice of how-to-shrink is what shapes the algorithm&apos;s cost.</li>
         </ol>
 
         <h3>Reverse a string — same recipe</h3>
@@ -284,7 +284,7 @@ flowchart TB
 
         <p>
           Every recursion needs a base case — a value of the input where the function answers directly, without
-          calling itself again. Without a base case, the recursion never terminates. <em>Every</em> infinite recursion
+          calling itself again. Without a base case, the recursion never terminates. <em>Every</em>{" "}infinite recursion
           you ever debug will turn out to be one of two bugs: the base case is missing, or the recursive call
           doesn&apos;t move toward it.
         </p>
@@ -316,7 +316,7 @@ flowchart TB
           <p>
             <strong>Every recursive call must move strictly closer to the base case.</strong> &quot;Closer&quot; has
             to be measured against whatever the base case checks for. If the base case is <code>n == 0</code> and the
-            recursive call is <code>factorial(n - 1)</code>, then for <code>n = -1</code> we move <em>away</em> from
+            recursive call is <code>factorial(n - 1)</code>, then for <code>n = -1</code> we move <em>away</em>{" "}from
             zero. That&apos;s a base-case bug, not a recursion bug.
           </p>
           <p>
@@ -331,11 +331,11 @@ flowchart TB
 
         <ol>
           <li>
-            <strong>Missing or weak base case.</strong> The function recurses forever because no input value short-circuits.{" "}
+            <strong>Missing or weak base case.</strong>{" "}The function recurses forever because no input value short-circuits.{" "}
             <em>Fix: add or broaden the base-case check.</em>
           </li>
           <li>
-            <strong>Recursive call doesn&apos;t shrink the input.</strong> You called <code>solve(n)</code> instead of{" "}
+            <strong>Recursive call doesn&apos;t shrink the input.</strong>{" "}You called <code>solve(n)</code> instead of{" "}
             <code>solve(n - 1)</code>, or you forgot the <code>+ 1</code> on a tree-walk index, or you passed{" "}
             <code>node</code> instead of <code>node.next</code>. <em>Fix: trace one step of the input transformation
             and confirm it&apos;s strictly smaller.</em>
@@ -364,12 +364,12 @@ int badFactorial(int n) {
 
         <ul>
           <li>
-            <strong>Stack:</strong> bounded, default ~512 KB per thread on the JVM. Each call frame for a small
+            <strong>Stack:</strong>{" "}bounded, default ~512 KB per thread on the JVM. Each call frame for a small
             function is roughly 40-80 bytes. <strong>That gives you about 10,000–20,000 levels of recursion depth
             before <code>StackOverflowError</code></strong>.
           </li>
           <li>
-            <strong>Heap:</strong> hundreds of megabytes to gigabytes (controlled by <code>-Xmx</code>). Holds your
+            <strong>Heap:</strong>{" "}hundreds of megabytes to gigabytes (controlled by <code>-Xmx</code>). Holds your
             data structures. <code>OutOfMemoryError</code> is heap exhaustion, not stack.
           </li>
         </ul>
@@ -379,7 +379,7 @@ int badFactorial(int n) {
             10,000 levels sounds like a lot, but it&apos;s closer than you think. A linked list of length 1,000,000 is
             a single &quot;data structure&quot; that will blow the stack on a recursive traversal. A skewed binary
             tree (one that&apos;s effectively a list) does the same. A perfectly balanced tree with <em>2³⁰ = 1
-            billion</em> nodes only has depth 30 — completely safe — but the moment your tree is unbalanced, depth
+            billion</em>{" "}nodes only has depth 30 — completely safe — but the moment your tree is unbalanced, depth
             grows linearly and you&apos;re at risk.
           </p>
           <p>
@@ -393,9 +393,9 @@ int badFactorial(int n) {
         <h3>Tail recursion (and why Java doesn&apos;t care)</h3>
 
         <p>
-          A <strong>tail-recursive</strong> function has the recursive call as its very last action — nothing happens
+          A <strong>tail-recursive</strong>{" "}function has the recursive call as its very last action — nothing happens
           after it returns. Some languages (Scala, Scheme, Kotlin with <code>tailrec</code>) optimize tail calls into
-          loops, eliminating the per-call stack frame. <strong>Java does not.</strong> A tail-recursive function in
+          loops, eliminating the per-call stack frame. <strong>Java does not.</strong>{" "}A tail-recursive function in
           Java still consumes stack just like a non-tail-recursive one, so don&apos;t reach for tail recursion as a
           stack-saving trick on the JVM. If you need depth, rewrite as a loop with an explicit stack.
         </p>
@@ -430,7 +430,7 @@ int badFactorial(int n) {
         <h2 id="tree">The recursion tree, the call stack, and the cost</h2>
 
         <p>
-          Once you have a recursive function, the question is: <em>how expensive is it?</em> The answer comes from
+          Once you have a recursive function, the question is: <em>how expensive is it?</em>{" "}The answer comes from
           drawing the <strong>recursion tree</strong> — every node is one call, every edge is &quot;this call invoked
           that one.&quot; The total work is the sum of work-per-node across the whole tree.
         </p>
@@ -480,7 +480,7 @@ int badFactorial(int n) {
         <p>
           For <code>sum(n)</code> and <code>factorial(n)</code>, recursive and iterative implementations are both
           O(n). The recursive version uses O(n) <em>stack</em> (one frame per level); the iterative version uses{" "}
-          O(1) stack. <em>Time</em> is the same; <em>space</em> differs. That&apos;s the trade.
+          O(1) stack. <em>Time</em>{" "}is the same; <em>space</em>{" "}differs. That&apos;s the trade.
         </p>
 
         <p>
@@ -506,9 +506,9 @@ int fibIter(int n) {
         <p>To turn a recursion tree into a Big-O, ask three questions:</p>
 
         <ol>
-          <li><strong>How many levels deep?</strong> That&apos;s the height of the tree, which equals the maximum recursion depth.</li>
-          <li><strong>How many nodes per level?</strong> If each node makes <em>k</em> recursive calls, level <em>d</em> has up to <em>k^d</em> nodes.</li>
-          <li><strong>How much work per node?</strong> Add up the work outside the recursive calls.</li>
+          <li><strong>How many levels deep?</strong>{" "}That&apos;s the height of the tree, which equals the maximum recursion depth.</li>
+          <li><strong>How many nodes per level?</strong>{" "}If each node makes <em>k</em>{" "}recursive calls, level <em>d</em>{" "}has up to <em>k^d</em>{" "}nodes.</li>
+          <li><strong>How much work per node?</strong>{" "}Add up the work outside the recursive calls.</li>
         </ol>
 
         <p>
@@ -518,7 +518,7 @@ int fibIter(int n) {
 
         <p>
           Total space (just the recursion) is the <em>maximum number of frames live at once</em>, which is the
-          <em>height</em> of the tree, not the total node count. For Fibonacci that&apos;s O(n); for binary search
+          <em>height</em>{" "}of the tree, not the total node count. For Fibonacci that&apos;s O(n); for binary search
           that&apos;s O(log n).
         </p>
 
@@ -552,7 +552,7 @@ int fibIter(int n) {
         <h2 id="dnc">Divide-and-conquer: same idea, with halves</h2>
 
         <p>
-          <strong>Divide-and-conquer</strong> is recursion where the recursive call shrinks the input by a constant
+          <strong>Divide-and-conquer</strong>{" "}is recursion where the recursive call shrinks the input by a constant
           factor — typically half — instead of by one. The contract is the same (&quot;trust the recursive call&quot;),
           but because each level halves the input, the depth is <code>log n</code> instead of <code>n</code>. That
           one change is the difference between O(n) and O(log n), or between O(n²) and O(n log n).
@@ -563,9 +563,9 @@ int fibIter(int n) {
         <p>Every divide-and-conquer algorithm has three steps:</p>
 
         <ol>
-          <li><strong>Divide</strong> the problem into smaller subproblems (usually two halves).</li>
-          <li><strong>Conquer</strong> each subproblem by recursing.</li>
-          <li><strong>Combine</strong> the subproblem answers into the answer for the current problem.</li>
+          <li><strong>Divide</strong>{" "}the problem into smaller subproblems (usually two halves).</li>
+          <li><strong>Conquer</strong>{" "}each subproblem by recursing.</li>
+          <li><strong>Combine</strong>{" "}the subproblem answers into the answer for the current problem.</li>
         </ol>
 
         <p>
@@ -590,7 +590,7 @@ int fibIter(int n) {
 x^n  =  x · (x^((n-1)/2))² for odd n`}</CodeBlock>
 
         <p>
-          Each level <em>halves</em> the exponent instead of decrementing it. Depth is <code>log₂ n</code> instead of{" "}
+          Each level <em>halves</em>{" "}the exponent instead of decrementing it. Depth is <code>log₂ n</code> instead of{" "}
           <code>n</code>. For <code>n = 2^60</code>, that&apos;s 60 multiplications instead of a quintillion.
         </p>
 
@@ -611,7 +611,7 @@ x^n  =  x · (x^((n-1)/2))² for odd n`}</CodeBlock>
             <code>log₂ n</code>.
           </p>
           <p>
-            Crucially we only call <code>pow(x, n / 2)</code> <em>once</em> and store the result. If we wrote{" "}
+            Crucially we only call <code>pow(x, n / 2)</code> <em>once</em>{" "}and store the result. If we wrote{" "}
             <code>pow(x, n / 2) * pow(x, n / 2)</code> we&apos;d branch twice per level, recomputing the same thing,
             and we&apos;d be back to O(n). The single-binding is the whole optimization.
           </p>
@@ -650,7 +650,7 @@ void merge(int[] a, int lo, int mid, int hi) {
         <h3>Binary search — D&amp;C with a single child</h3>
 
         <p>
-          Binary search divides but only conquers <em>one</em> half. There&apos;s no combine — the answer is in the
+          Binary search divides but only conquers <em>one</em>{" "}half. There&apos;s no combine — the answer is in the
           chosen half by construction.
         </p>
 
@@ -716,9 +716,9 @@ where:
         <p>The three cases compare <code>f(n)</code> against <code>n^(log_b a)</code> — the &quot;leaf cost&quot;:</p>
 
         <ul>
-          <li><strong>Case 1 — leaves dominate.</strong> If <code>f(n)</code> grows slower than <code>n^(log_b a)</code>, the work piles up at the bottom of the tree. T(n) = Θ(n^(log_b a)).</li>
-          <li><strong>Case 2 — balanced.</strong> If <code>f(n) = Θ(n^(log_b a))</code>, every level does the same total work. T(n) = Θ(n^(log_b a) · log n).</li>
-          <li><strong>Case 3 — root dominates.</strong> If <code>f(n)</code> grows faster than <code>n^(log_b a)</code>, the top level&apos;s work overwhelms everything below. T(n) = Θ(f(n)).</li>
+          <li><strong>Case 1 — leaves dominate.</strong>{" "}If <code>f(n)</code> grows slower than <code>n^(log_b a)</code>, the work piles up at the bottom of the tree. T(n) = Θ(n^(log_b a)).</li>
+          <li><strong>Case 2 — balanced.</strong>{" "}If <code>f(n) = Θ(n^(log_b a))</code>, every level does the same total work. T(n) = Θ(n^(log_b a) · log n).</li>
+          <li><strong>Case 3 — root dominates.</strong>{" "}If <code>f(n)</code> grows faster than <code>n^(log_b a)</code>, the top level&apos;s work overwhelms everything below. T(n) = Θ(f(n)).</li>
         </ul>
 
         <Mermaid chart={masterDiagram} />
@@ -783,8 +783,8 @@ where:
         </div>
 
         <p>
-          Two patterns dominate practice: <em>halving plus linear merge</em> gives O(n log n), and <em>halving plus
-          constant work</em> gives O(log n). If you see either shape in a recurrence, you can stop solving and write
+          Two patterns dominate practice: <em>halving plus linear merge</em>{" "}gives O(n log n), and <em>halving plus
+          constant work</em>{" "}gives O(log n). If you see either shape in a recurrence, you can stop solving and write
           the answer down.
         </p>
 
@@ -793,7 +793,7 @@ where:
         <p>
           T(n) = 2T(n/2) + O(n). At the top level we do n work. The next level has two subproblems of size n/2; each
           does n/2 work, total n. The level after has four of size n/4, each doing n/4, total n. <strong>Every level
-          does n work, and there are log n levels.</strong> Total: n · log n.
+          does n work, and there are log n levels.</strong>{" "}Total: n · log n.
         </p>
 
         <CodeBlock lang="plain">{`Level 0  · 1 problem of size n     · n work        = n
@@ -893,7 +893,7 @@ private double powLong(double x, long n) {
         <p>
           Given <code>k</code> sorted linked lists with a total of <code>N</code> nodes, merge them into one sorted
           list. The most-known solution is &quot;use a min-heap of <code>k</code> heads.&quot; That&apos;s great, and
-          we&apos;ll cover it in the recap. But the <em>pure recursion</em> solution is even more elegant: pair up
+          we&apos;ll cover it in the recap. But the <em>pure recursion</em>{" "}solution is even more elegant: pair up
           the lists, merge pairs, repeat until one list remains.
         </p>
 

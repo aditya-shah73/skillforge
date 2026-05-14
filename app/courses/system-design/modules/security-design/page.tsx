@@ -126,15 +126,15 @@ export default function Page() {
         <p>Three flavors of authentication state you&apos;ll encounter:</p>
         <ul className="space-y-2">
           <li>
-            <strong>Server sessions.</strong> Cookie holds an opaque ID. State lives in Redis or a session store.
+            <strong>Server sessions.</strong>{" "}Cookie holds an opaque ID. State lives in Redis or a session store.
             Revocation is trivial — delete the row. Downside: shared session store becomes a hot dependency.
           </li>
           <li>
-            <strong>Opaque tokens.</strong> Like sessions but the lookup happens at an auth service via introspection.
+            <strong>Opaque tokens.</strong>{" "}Like sessions but the lookup happens at an auth service via introspection.
             Decoupled from your apps but adds a network hop per request (or a cache).
           </li>
           <li>
-            <strong>JWTs.</strong> Self-contained. Signature proves authenticity, claims carry identity and scopes.
+            <strong>JWTs.</strong>{" "}Self-contained. Signature proves authenticity, claims carry identity and scopes.
             Zero lookup overhead. Downside: revocation is hard. Until expiry, that token is valid.
           </li>
         </ul>
@@ -235,10 +235,10 @@ public class SecurityConfig {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Where secrets do NOT belong</h3>
         <ul className="space-y-2">
-          <li><strong>Source control.</strong> Once it&apos;s in git history, it&apos;s public. Rotate it.</li>
-          <li><strong>Plain config maps / environment files committed to repos.</strong> Same problem.</li>
-          <li><strong>Hardcoded in container images.</strong> Anyone with image pull rights has the secret.</li>
-          <li><strong>Logged.</strong> Yes, this still happens. Scrub headers, redact bodies.</li>
+          <li><strong>Source control.</strong>{" "}Once it&apos;s in git history, it&apos;s public. Rotate it.</li>
+          <li><strong>Plain config maps / environment files committed to repos.</strong>{" "}Same problem.</li>
+          <li><strong>Hardcoded in container images.</strong>{" "}Anyone with image pull rights has the secret.</li>
+          <li><strong>Logged.</strong>{" "}Yes, this still happens. Scrub headers, redact bodies.</li>
         </ul>
 
         <Callout variant="warn" title="Detection beats prevention here">
@@ -280,9 +280,9 @@ spring:
         <Mermaid chart={mtlsFlow} />
 
         <ul className="space-y-2 mt-4">
-          <li><strong>What it gives you:</strong> encryption + mutual authentication, baked into the connection.</li>
-          <li><strong>Cost:</strong> certificate lifecycle. Issuance, rotation, revocation, CA management.</li>
-          <li><strong>Realistic deployment:</strong> Istio / Linkerd handle this transparently via sidecars. Cert-manager + an internal CA if you&apos;re rolling your own.</li>
+          <li><strong>What it gives you:</strong>{" "}encryption + mutual authentication, baked into the connection.</li>
+          <li><strong>Cost:</strong>{" "}certificate lifecycle. Issuance, rotation, revocation, CA management.</li>
+          <li><strong>Realistic deployment:</strong>{" "}Istio / Linkerd handle this transparently via sidecars. Cert-manager + an internal CA if you&apos;re rolling your own.</li>
         </ul>
 
         <Callout variant="info" title="Don't build your own CA">
@@ -464,15 +464,15 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
         <h3 className="text-xl font-semibold mt-8 mb-3">Encryption at rest, in transit, in use</h3>
         <ul className="space-y-2">
           <li>
-            <strong>In transit.</strong> TLS everywhere — between client and edge, between services, between service
+            <strong>In transit.</strong>{" "}TLS everywhere — between client and edge, between services, between service
             and database. No exceptions, even on private networks.
           </li>
           <li>
-            <strong>At rest.</strong> Disk-level encryption is table stakes (every cloud provider does it). Application-
+            <strong>At rest.</strong>{" "}Disk-level encryption is table stakes (every cloud provider does it). Application-
             level encryption for sensitive columns is the next tier — even a stolen DB dump is useless without the key.
           </li>
           <li>
-            <strong>In use.</strong> Hardest. Confidential computing, enclaves, homomorphic encryption are emerging.
+            <strong>In use.</strong>{" "}Hardest. Confidential computing, enclaves, homomorphic encryption are emerging.
             For most systems, you minimize how long PII sits decrypted in memory.
           </li>
         </ul>
@@ -586,23 +586,23 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
 
         <ul className="space-y-2">
           <li>
-            <strong>Authorization Code + PKCE.</strong> The default for SPAs, mobile apps, native desktop apps, and
+            <strong>Authorization Code + PKCE.</strong>{" "}The default for SPAs, mobile apps, native desktop apps, and
             anything else that can&apos;t safely hold a client secret. PKCE replaces the client secret with a per-flow
             verifier the attacker can&apos;t guess.
           </li>
           <li>
-            <strong>Authorization Code (classic).</strong> Server-side web apps that have a real backend with a real
+            <strong>Authorization Code (classic).</strong>{" "}Server-side web apps that have a real backend with a real
             client secret. Still fine. Add PKCE anyway — defense in depth, costs nothing.
           </li>
           <li>
-            <strong>Client Credentials.</strong> Service-to-service. No human in the loop. The service authenticates
+            <strong>Client Credentials.</strong>{" "}Service-to-service. No human in the loop. The service authenticates
             with its own client ID + secret and gets an access token scoped to itself.
           </li>
           <li>
-            <strong>Implicit flow.</strong> Dead. The OAuth 2.1 draft formally removes it. Don&apos;t use it.
+            <strong>Implicit flow.</strong>{" "}Dead. The OAuth 2.1 draft formally removes it. Don&apos;t use it.
           </li>
           <li>
-            <strong>Resource Owner Password (ROPC).</strong> User hands their password to the client. Defeats the whole
+            <strong>Resource Owner Password (ROPC).</strong>{" "}User hands their password to the client. Defeats the whole
             point of OAuth (don&apos;t share passwords with apps). Reserved for legacy migration only.
           </li>
         </ul>
@@ -628,13 +628,13 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
         </p>
         <ul className="space-y-2">
           <li>
-            <strong>ID token (OIDC, &quot;who you are&quot;).</strong> A JWT containing user claims:
+            <strong>ID token (OIDC, &quot;who you are&quot;).</strong>{" "}A JWT containing user claims:
             <code> sub</code>, <code>email</code>, <code>name</code>, <code>iat</code>, <code>aud</code> = your
             client ID. The client consumes this to know who logged in. <strong>Never send an ID token to an
-            API.</strong> It&apos;s addressed to the client app, not the resource server.
+            API.</strong>{" "}It&apos;s addressed to the client app, not the resource server.
           </li>
           <li>
-            <strong>Access token (OAuth, &quot;what you can do&quot;).</strong> A bearer credential the client sends to
+            <strong>Access token (OAuth, &quot;what you can do&quot;).</strong>{" "}A bearer credential the client sends to
             APIs. Carries scopes and an audience claim naming the resource server. The API validates signature, issuer,
             audience, expiry, and required scopes.
           </li>
@@ -742,7 +742,7 @@ JwtDecoder jwtDecoder(@Value("\${app.issuer}") String issuer,
           back. Simple enough.
         </p>
         <p>
-          The interesting part is rotation. Each refresh exchange returns a <em>new</em> refresh token and invalidates
+          The interesting part is rotation. Each refresh exchange returns a <em>new</em>{" "}refresh token and invalidates
           the old one. If the old refresh token is ever presented again, that&apos;s a stolen-token signal — the
           attacker and the legitimate client are both holding copies. The auth server kills the entire token
           family and forces re-login.
@@ -811,20 +811,20 @@ public class RefreshTokenService {
 
         <ul className="space-y-2">
           <li>
-            <strong>SameSite=Lax</strong> still sends cookies on top-level GET navigations. If your app does
+            <strong>SameSite=Lax</strong>{" "}still sends cookies on top-level GET navigations. If your app does
             state-changing GETs (it shouldn&apos;t, but legacy code does), CSRF still works.
           </li>
           <li>
-            <strong>SameSite=Strict</strong> blocks even top-level navigations. Safer, but breaks the &quot;click a
+            <strong>SameSite=Strict</strong>{" "}blocks even top-level navigations. Safer, but breaks the &quot;click a
             link in an email and stay logged in&quot; UX. Often paired with a short-lived &quot;lax&quot; sibling
             cookie for first-request bootstrap.
           </li>
           <li>
-            <strong>SameSite=None</strong> with <code>Secure</code> is required for cross-site cookies (think:
+            <strong>SameSite=None</strong>{" "}with <code>Secure</code> is required for cross-site cookies (think:
             embedded widgets, federated login pop-ups). These are still CSRF-vulnerable and need explicit defenses.
           </li>
           <li>
-            <strong>Same-origin form posts</strong> from a compromised script on your own origin bypass SameSite
+            <strong>Same-origin form posts</strong>{" "}from a compromised script on your own origin bypass SameSite
             entirely — that&apos;s an XSS problem, not a CSRF problem, but the impact looks similar.
           </li>
         </ul>
@@ -874,22 +874,22 @@ public class RefreshTokenService {
 
         <ul className="space-y-2 mt-4">
           <li>
-            <strong>Client (browser/SPA).</strong> Holds an access token in memory and a refresh token in an HttpOnly
+            <strong>Client (browser/SPA).</strong>{" "}Holds an access token in memory and a refresh token in an HttpOnly
             cookie. Or — for first-party apps — holds nothing but a session cookie, and the BFF does all token handling
             server-side. The client&apos;s job is to send credentials, not to mint or validate them.
           </li>
           <li>
-            <strong>Edge / API gateway / CDN.</strong> Cheap, high-volume checks: JWT signature verification against
+            <strong>Edge / API gateway / CDN.</strong>{" "}Cheap, high-volume checks: JWT signature verification against
             cached JWKS, expiry, issuer, basic claim shape. This kills obviously-bogus traffic before it costs you
-            compute. The edge does <em>not</em> do fine-grained authz — it doesn&apos;t know your data model.
+            compute. The edge does <em>not</em>{" "}do fine-grained authz — it doesn&apos;t know your data model.
           </li>
           <li>
-            <strong>BFF (backend-for-frontend).</strong> The trust pivot. Holds the user&apos;s session cookie,
+            <strong>BFF (backend-for-frontend).</strong>{" "}The trust pivot. Holds the user&apos;s session cookie,
             translates it into per-audience service tokens via a token exchange (RFC 8693) or a credentials-grant call.
             The BFF is the only thing that ever sees the user&apos;s long-lived credential.
           </li>
           <li>
-            <strong>Service.</strong> Validates the service-scoped JWT: signature, issuer, audience (= itself), expiry,
+            <strong>Service.</strong>{" "}Validates the service-scoped JWT: signature, issuer, audience (= itself), expiry,
             scopes. Then enforces fine-grained authz against its own data model — &quot;this user owns this order.&quot;
           </li>
         </ul>

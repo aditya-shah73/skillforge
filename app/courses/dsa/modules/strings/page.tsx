@@ -114,7 +114,7 @@ flowchart TB
         <ul>
           <li><strong>Indexable in O(1).</strong> <code>s.charAt(i)</code> is array indexing under the hood — same address arithmetic, same constant-time guarantee as <code>arr[i]</code>.</li>
           <li><strong>Length is cached.</strong> <code>s.length()</code> is O(1). It&apos;s a stored field, not a scan.</li>
-          <li><strong>Immutable.</strong> There is no <code>s.charAt(0) = &apos;X&apos;</code>. There is no <code>s.append(&apos;Y&apos;)</code>. Anything that &ldquo;modifies&rdquo; — <code>toLowerCase</code>, <code>substring</code>, <code>replace</code>, <code>trim</code>, <code>+</code> — allocates a new object.</li>
+          <li><strong>Immutable.</strong>{" "}There is no <code>s.charAt(0) = &apos;X&apos;</code>. There is no <code>s.append(&apos;Y&apos;)</code>. Anything that &ldquo;modifies&rdquo; — <code>toLowerCase</code>, <code>substring</code>, <code>replace</code>, <code>trim</code>, <code>+</code> — allocates a new object.</li>
         </ul>
 
         <Quiz
@@ -133,10 +133,10 @@ flowchart TB
           Java&apos;s designers chose immutability for several practical reasons that all turn out to matter:
         </p>
         <ul>
-          <li><strong>Safe to share.</strong> Two threads reading the same <code>String</code> never need to synchronize — there&apos;s nothing to race on.</li>
-          <li><strong>Safe as a hash key.</strong> A mutable key whose contents change after insertion would corrupt every hash map. Immutability makes <code>String</code> a safe <code>HashMap</code> key.</li>
-          <li><strong>Safe to intern / cache.</strong> The JVM keeps a pool of literal strings — <code>&quot;hello&quot;</code> appearing in two different files refers to the same object. Only possible if it can&apos;t change.</li>
-          <li><strong>Safe to pass to security-critical APIs.</strong> If <code>openFile(path)</code> took a mutable string, an attacker could mutate <code>path</code> after the security check but before the open. (This is a real exploit class.)</li>
+          <li><strong>Safe to share.</strong>{" "}Two threads reading the same <code>String</code> never need to synchronize — there&apos;s nothing to race on.</li>
+          <li><strong>Safe as a hash key.</strong>{" "}A mutable key whose contents change after insertion would corrupt every hash map. Immutability makes <code>String</code> a safe <code>HashMap</code> key.</li>
+          <li><strong>Safe to intern / cache.</strong>{" "}The JVM keeps a pool of literal strings — <code>&quot;hello&quot;</code> appearing in two different files refers to the same object. Only possible if it can&apos;t change.</li>
+          <li><strong>Safe to pass to security-critical APIs.</strong>{" "}If <code>openFile(path)</code> took a mutable string, an attacker could mutate <code>path</code> after the security check but before the open. (This is a real exploit class.)</li>
         </ul>
 
         <h3>String literals vs new String</h3>
@@ -260,7 +260,7 @@ return result;`}</CodeBlock>
 
         <h3>The fix: build mutably, freeze at the end</h3>
         <p>
-          The pattern is: build with a <em>mutable</em> structure (<code>StringBuilder</code>), then call <code>.toString()</code> once at the end to get an immutable <code>String</code> for the rest of your code to use.
+          The pattern is: build with a <em>mutable</em>{" "}structure (<code>StringBuilder</code>), then call <code>.toString()</code> once at the end to get an immutable <code>String</code> for the rest of your code to use.
         </p>
 
         <CodeBlock lang="java">{`// Correct — O(n) total
@@ -375,7 +375,7 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
           <code>StringBuffer</code> exists for historical reasons. It&apos;s thread-safe (every method is <code>synchronized</code>), which sounds nice but costs you a lot of performance in the 99% case where you&apos;re building a string in one thread and immediately throwing the builder away.
         </p>
         <p>
-          <strong>Default to <code>StringBuilder</code>.</strong> Reach for <code>StringBuffer</code> only if you genuinely have multiple threads appending to the same builder, which is rare and usually a design smell — you&apos;d build per-thread builders and merge them.
+          <strong>Default to <code>StringBuilder</code>.</strong>{" "}Reach for <code>StringBuffer</code> only if you genuinely have multiple threads appending to the same builder, which is rare and usually a design smell — you&apos;d build per-thread builders and merge them.
         </p>
 
         <Quiz
@@ -391,7 +391,7 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
 
         <h3>char[] — when you want full control</h3>
         <p>
-          Sometimes you want bare metal: a fixed-size char array you index by hand. The classic case is &ldquo;reverse a string in place&rdquo; — a problem that&apos;s only interesting <em>because</em> Strings are immutable, so you have to convert to <code>char[]</code> first.
+          Sometimes you want bare metal: a fixed-size char array you index by hand. The classic case is &ldquo;reverse a string in place&rdquo; — a problem that&apos;s only interesting <em>because</em>{" "}Strings are immutable, so you have to convert to <code>char[]</code> first.
         </p>
 
         <CodeBlock lang="java">{`String reverse(String s) {
@@ -410,7 +410,7 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
 
         <Callout variant="insight" title="Three tools, one rule">
           <p className="m-0">
-            <strong>String</strong> for handing finished text around. <strong>StringBuilder</strong> for building text in a loop. <strong>char[]</strong> when you need indexed mutation or two-pointer scans. Picking the wrong one usually shows up as bad Big-O.
+            <strong>String</strong>{" "}for handing finished text around. <strong>StringBuilder</strong>{" "}for building text in a loop. <strong>char[]</strong>{" "}when you need indexed mutation or two-pointer scans. Picking the wrong one usually shows up as bad Big-O.
           </p>
         </Callout>
 
@@ -597,7 +597,7 @@ return new ArrayList<>(groups.values());`}</CodeBlock>
         <h2>Part 5: Project — anagram &amp; palindrome lab</h2>
 
         <p>
-          Two pieces. First, a small lab class that demonstrates each of the three patterns from Part 4, with timing instrumentation so you can <em>feel</em> the O(n²) vs O(n) gap. Second, three LeetCode warm-ups that exercise each pattern.
+          Two pieces. First, a small lab class that demonstrates each of the three patterns from Part 4, with timing instrumentation so you can <em>feel</em>{" "}the O(n²) vs O(n) gap. Second, three LeetCode warm-ups that exercise each pattern.
         </p>
 
         <h3>Goal</h3>
@@ -675,7 +675,7 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
 
         <Callout variant="insight" title="Why this lab matters in interviews">
           <p className="m-0">
-            &ldquo;Why is your solution O(n) instead of O(n²)?&rdquo; is one of the most common follow-up questions on string problems. Having actually <em>seen</em> the gap on your own machine — having watched buildBad take 8 seconds on n = 100k while buildGood finishes instantly — is what makes the answer come naturally instead of memorized.
+            &ldquo;Why is your solution O(n) instead of O(n²)?&rdquo; is one of the most common follow-up questions on string problems. Having actually <em>seen</em>{" "}the gap on your own machine — having watched buildBad take 8 seconds on n = 100k while buildGood finishes instantly — is what makes the answer come naturally instead of memorized.
           </p>
         </Callout>
 
@@ -740,7 +740,7 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
             You see the immutable byte array. You feel the O(n²) trap of <code>+</code>. You know the three tools — <code>String</code>, <code>StringBuilder</code>, <code>char[]</code> — and which one to reach for. And you have three named patterns (frequency arrays, two pointers from ends, append-and-build) that handle a remarkable share of string interview questions.
           </p>
           <p className="mb-4 opacity-95">
-            <strong>Up next: Module 6 — Linked lists.</strong> Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
+            <strong>Up next: Module 6 — Linked lists.</strong>{" "}Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
           </p>
           <Link
             href="/courses/dsa/modules/linked-lists"

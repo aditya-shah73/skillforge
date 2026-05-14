@@ -110,7 +110,7 @@ flowchart TB
         <h2 id="setup">What a stack actually is</h2>
 
         <p>
-          A <strong>stack</strong> is the simplest non-trivial data structure: a pile where you can only ever touch the
+          A <strong>stack</strong>{" "}is the simplest non-trivial data structure: a pile where you can only ever touch the
           top. You push something on top. You pop the top off. You peek at what's on top. That's it. It's so restricted
           it sounds useless — and yet entire categories of problems collapse to a stack the moment you see the trick.
         </p>
@@ -124,7 +124,7 @@ flowchart TB
         <p>
           A stack of plates in a cafeteria. You add a clean plate to the top. The next person grabs from the top. The
           plate you washed first is the one taken last — that's the defining property. Computer scientists call this
-          <strong> LIFO</strong> (last in, first out), to contrast with <strong>FIFO</strong> queues (next module).
+          <strong> LIFO</strong> (last in, first out), to contrast with <strong>FIFO</strong>{" "}queues (next module).
         </p>
 
         <Callout variant="spring" title="The whole API in five rows">
@@ -160,7 +160,7 @@ flowchart TB
 
         <p>
           The stack contract is so narrow that it sits comfortably on top of either an <strong>array (dynamic
-          array)</strong> or a <strong>singly-linked list</strong>. Both are O(1) for push, pop, peek. They feel
+          array)</strong>{" "}or a <strong>singly-linked list</strong>. Both are O(1) for push, pop, peek. They feel
           identical from the outside; their cache behaviour and memory overhead differ.
         </p>
 
@@ -265,7 +265,7 @@ flowchart TB
         <h3>Pattern 1 · Bracket / nesting matching</h3>
 
         <p>
-          Whenever you have <em>open-something then close-something</em> rules — parens, HTML tags, function calls,
+          Whenever you have <em>open-something then close-something</em>{" "}rules — parens, HTML tags, function calls,
           XML — you almost certainly want a stack. The rule is mechanical:
         </p>
         <ol>
@@ -325,7 +325,7 @@ public int evalRPN(String[] tokens) {
 
         <Callout variant="warn" title="Operand order matters">
           <p>
-            When you pop two operands, the <em>second</em> pop is the left operand. Hence <code>a - b</code>, not{" "}
+            When you pop two operands, the <em>second</em>{" "}pop is the left operand. Hence <code>a - b</code>, not{" "}
             <code>b - a</code>.
           </p>
           <p>Get this backwards once, suffer for an afternoon.</p>
@@ -334,7 +334,7 @@ public int evalRPN(String[] tokens) {
         <h3>Pattern 3 · Monotonic stack (the unlock pattern)</h3>
 
         <p>
-          A <strong>monotonic stack</strong> is just a stack that you maintain in sorted order — when something
+          A <strong>monotonic stack</strong>{" "}is just a stack that you maintain in sorted order — when something
           arrives that would break the order, you pop until it fits. It sounds too simple to matter, but it solves a
           surprisingly large class of problems in O(n) total: <em>next greater element</em>, <em>daily temperatures</em>,
           <em>largest rectangle in histogram</em>, <em>trapping rain water</em>.
@@ -392,7 +392,7 @@ public int[] dailyTemperatures(int[] T) {
         <h2 id="callstack">The call stack: every program is already using one</h2>
 
         <p>
-          Every time you call a function, the runtime pushes a <strong>stack frame</strong> onto a stack — that's the
+          Every time you call a function, the runtime pushes a <strong>stack frame</strong>{" "}onto a stack — that's the
           one named <em>call stack</em>. The frame holds local variables, the arguments, and the return address. When
           the function returns, its frame is popped. The current function is always whatever's on top.
         </p>
@@ -409,7 +409,7 @@ public int[] dailyTemperatures(int[] T) {
             iteratively using an explicit stack, and vice versa. They are the same machine.
           </li>
           <li>
-            <strong>Stack overflow is real.</strong> Go too deep (~5 000 to 20 000 frames in Java, depending on heap and
+            <strong>Stack overflow is real.</strong>{" "}Go too deep (~5 000 to 20 000 frames in Java, depending on heap and
             frame size) and the JVM throws <code>StackOverflowError</code>. Any time you write recursion on user input,
             ask: could this overflow?
           </li>

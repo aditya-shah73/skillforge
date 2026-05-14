@@ -60,8 +60,8 @@ flowchart LR
           What you&apos;ll walk out with
         </h3>
         <ul className="text-sm text-pink-900/90 dark:text-pink-200/90 mb-0 space-y-1 list-disc pl-5">
-          <li>A <strong>portfolio repo</strong> with 20 solved problems, each with a 1–2 paragraph writeup naming the pattern, the alternatives you ruled out, and the complexity.</li>
-          <li>Reflexive <strong>pattern recognition</strong> on the 20 most common problem shapes — the muscle memory the rest of the course was building.</li>
+          <li>A <strong>portfolio repo</strong>{" "}with 20 solved problems, each with a 1–2 paragraph writeup naming the pattern, the alternatives you ruled out, and the complexity.</li>
+          <li>Reflexive <strong>pattern recognition</strong>{" "}on the 20 most common problem shapes — the muscle memory the rest of the course was building.</li>
           <li>Confidence reading a problem statement and saying out loud, &quot;this is X because Y,&quot; before writing a single line.</li>
           <li>A finished course. The whole arc — Big-O through DP through interview framework — collapses into &quot;recognize the shape, reach for the tool.&quot;</li>
         </ul>
@@ -74,7 +74,7 @@ flowchart LR
 
         <p>
           You&apos;ve spent 33 modules building patterns. This one is the opposite shape: <strong>almost no new
-          theory, all practice.</strong> Twenty curated problems, grouped by difficulty, deliberately mixed across
+          theory, all practice.</strong>{" "}Twenty curated problems, grouped by difficulty, deliberately mixed across
           patterns so you can&apos;t guess based on which module they came from.
         </p>
 
@@ -85,7 +85,7 @@ flowchart LR
         <Mermaid chart={flow} />
 
         <p>
-          The <em>justify out loud</em> step is the one most people skip and the one that makes the difference. In
+          The <em>justify out loud</em>{" "}step is the one most people skip and the one that makes the difference. In
           interviews, the engineer who says &quot;this is a sliding window because the constraint asks for a
           contiguous subarray and the window can only grow or shrink monotonically&quot; is the engineer who gets
           the offer. The engineer who silently types a working solution is harder to evaluate, and often blows
@@ -138,11 +138,11 @@ flowchart LR
 
         <ol>
           <li>
-            <strong>Pattern + justification.</strong> What pattern, and the one or two sentences that ruled it
+            <strong>Pattern + justification.</strong>{" "}What pattern, and the one or two sentences that ruled it
             in. Bonus: name the patterns you ruled out and why.
           </li>
           <li>
-            <strong>Approach + complexity.</strong> A high-level description of the algorithm, time and space
+            <strong>Approach + complexity.</strong>{" "}A high-level description of the algorithm, time and space
             cost, and any non-obvious correctness argument (the loop invariant, why the greedy choice is safe,
             why the DP recurrence covers all cases).
           </li>
@@ -153,7 +153,7 @@ flowchart LR
             The writeup forces you to externalize the thinking. Half the value of solving the problem is gone if
             you can&apos;t articulate why your solution works. In interviews you have to talk while you code; the
             writeup is just a slower-paced version of the same skill. It also doubles as a portfolio artifact —
-            a 20-problem repo with clean solutions <em>and</em> writeups is interview-prep gold.
+            a 20-problem repo with clean solutions <em>and</em>{" "}writeups is interview-prep gold.
           </p>
         </Callout>
 
@@ -215,7 +215,7 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> HashMap (complement lookup). For each element <code>x</code>, check if{" "}
+          <strong>Pattern:</strong>{" "}HashMap (complement lookup). For each element <code>x</code>, check if{" "}
           <code>target − x</code> is already in the map. O(n) time, O(n) space.
         </p>
 
@@ -236,7 +236,7 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> Stack. Push openers; on a closer, pop and verify it matches. The string is
+          <strong>Pattern:</strong>{" "}Stack. Push openers; on a closer, pop and verify it matches. The string is
           valid iff the stack ends empty. O(n) / O(n).
         </p>
 
@@ -262,7 +262,7 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> Tree DFS / tree DP. Each node&apos;s answer is{" "}
+          <strong>Pattern:</strong>{" "}Tree DFS / tree DP. Each node&apos;s answer is{" "}
           <code>1 + max(left, right)</code>. Empty tree has depth 0. O(n) / O(h).
         </p>
 
@@ -298,7 +298,7 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> Linked-list pointer manipulation. Walk the list, flipping each{" "}
+          <strong>Pattern:</strong>{" "}Linked-list pointer manipulation. Walk the list, flipping each{" "}
           <code>next</code> to point at the previous node. Three pointers: <code>prev</code>, <code>cur</code>,{" "}
           <code>next</code>. O(n) / O(1).
         </p>
@@ -353,7 +353,7 @@ flowchart LR
 
         <p>
           Now the meat of pattern recognition. Each of these is a textbook example of one named pattern, but
-          the surface descriptions diverge enough that you have to actually <em>read</em> instead of guess.
+          the surface descriptions diverge enough that you have to actually <em>read</em>{" "}instead of guess.
         </p>
 
         <h3>Problem 6 · 3Sum (LC 15)</h3>
@@ -363,9 +363,9 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> Sort + two pointers, with a fixed outer index. For each <code>i</code>,
+          <strong>Pattern:</strong>{" "}Sort + two pointers, with a fixed outer index. For each <code>i</code>,
           two-pointer search for <code>−nums[i]</code> in the remaining suffix. Skip duplicates at every level
-          to dedupe. <strong>Complexity:</strong> O(n²). <strong>Key insight:</strong> the moment you sort, the
+          to dedupe. <strong>Complexity:</strong>{" "}O(n²). <strong>Key insight:</strong>{" "}the moment you sort, the
           two-pointer technique unlocks O(n) per outer iteration instead of O(n²) for a naive nested search.
         </p>
 
@@ -396,9 +396,9 @@ flowchart LR
         </p>
 
         <p>
-          <strong>Pattern:</strong> Grid DFS (or BFS, or DSU). For each unvisited land cell, run DFS to flood-fill
-          the whole island, count it once. <strong>Complexity:</strong> O(rows × cols). <strong>Key
-          insight:</strong> counting connected components is the canonical &quot;DFS scan a grid&quot; problem
+          <strong>Pattern:</strong>{" "}Grid DFS (or BFS, or DSU). For each unvisited land cell, run DFS to flood-fill
+          the whole island, count it once. <strong>Complexity:</strong>{" "}O(rows × cols). <strong>Key
+          insight:</strong>{" "}counting connected components is the canonical &quot;DFS scan a grid&quot; problem
           — every cell is visited exactly once total across all DFS launches.
         </p>
 
@@ -423,8 +423,8 @@ private void dfs(char[][] g, int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> Topological sort / cycle detection on a directed graph. Either Kahn&apos;s
-          algorithm (BFS over in-degrees) or DFS with a 3-color marking. <strong>Complexity:</strong> O(V + E).{" "}
+          <strong>Pattern:</strong>{" "}Topological sort / cycle detection on a directed graph. Either Kahn&apos;s
+          algorithm (BFS over in-degrees) or DFS with a 3-color marking. <strong>Complexity:</strong>{" "}O(V + E).{" "}
           <strong>Key insight:</strong> &quot;can you finish&quot; ≡ &quot;is there a cycle?&quot; — that
           translation is the whole pattern.
         </p>
@@ -454,8 +454,8 @@ private void dfs(char[][] g, int r, int c) {
 
         <p>
           <strong>Pattern:</strong> 1D DP (unbounded knapsack flavor). <code>dp[a] = 1 + min(dp[a − c])</code>{" "}
-          over all coins <code>c ≤ a</code>. <strong>Complexity:</strong> O(amount × coins). <strong>Key
-          insight:</strong> greedy fails on non-canonical coin sets (e.g. [1, 3, 4] for amount 6: greedy gives
+          over all coins <code>c ≤ a</code>. <strong>Complexity:</strong>{" "}O(amount × coins). <strong>Key
+          insight:</strong>{" "}greedy fails on non-canonical coin sets (e.g. [1, 3, 4] for amount 6: greedy gives
           4+1+1=3 coins, DP gives 3+3=2). Recognize this trap and reach for DP.
         </p>
 
@@ -476,9 +476,9 @@ private void dfs(char[][] g, int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> Sliding window with a HashSet (or HashMap of last-seen index).
+          <strong>Pattern:</strong>{" "}Sliding window with a HashSet (or HashMap of last-seen index).
           Expand right; on a duplicate, shrink left until the duplicate is gone. <strong>Complexity:</strong>{" "}
-          O(n) amortized — each character enters and leaves the window once. <strong>Key insight:</strong> the
+          O(n) amortized — each character enters and leaves the window once. <strong>Key insight:</strong>{" "}the
           window is monotonic in &quot;distinctness,&quot; so the standard expand-then-shrink template applies.
         </p>
 
@@ -499,8 +499,8 @@ private void dfs(char[][] g, int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> HashMap to count + min-heap of size K (or bucket sort for the O(n) version).{" "}
-          <strong>Complexity:</strong> O(n log K) for the heap solution. <strong>Key insight:</strong> two
+          <strong>Pattern:</strong>{" "}HashMap to count + min-heap of size K (or bucket sort for the O(n) version).{" "}
+          <strong>Complexity:</strong>{" "}O(n log K) for the heap solution. <strong>Key insight:</strong>{" "}two
           patterns composed — &quot;count with map&quot; from Phase 3, &quot;top-K with bounded heap&quot; from
           the heaps module.
         </p>
@@ -529,8 +529,8 @@ private void dfs(char[][] g, int r, int c) {
         <p>
           <strong>Pattern:</strong> 1D DP on string positions. <code>dp[i] = true</code> if some prefix ending
           at position <code>i</code> is reachable: <code>dp[i] = OR over j&lt;i of (dp[j] AND s[j..i] in
-          dict)</code>. <strong>Complexity:</strong> O(n² · L) where L is max word length, or O(n²) if you cap
-          inner length at <code>maxWordLen</code>. <strong>Key insight:</strong> backtracking would be
+          dict)</code>. <strong>Complexity:</strong>{" "}O(n² · L) where L is max word length, or O(n²) if you cap
+          inner length at <code>maxWordLen</code>. <strong>Key insight:</strong>{" "}backtracking would be
           exponential; the DP is what makes it tractable.
         </p>
 
@@ -601,16 +601,16 @@ private void dfs(char[][] g, int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> HashMap + Doubly Linked List. The map gives O(1) lookup by key. The doubly
+          <strong>Pattern:</strong>{" "}HashMap + Doubly Linked List. The map gives O(1) lookup by key. The doubly
           linked list maintains usage order with O(1) move-to-front and O(1) tail removal. The two structures
-          are linked: each map value <em>is</em> a node in the list. <strong>Complexity:</strong> O(1) per
+          are linked: each map value <em>is</em>{" "}a node in the list. <strong>Complexity:</strong>{" "}O(1) per
           operation, O(capacity) space.
         </p>
 
         <Callout variant="info" title="The composition you haven&apos;t seen before">
           <p>
             We covered HashMaps and linked lists separately. LRU is the canonical example of joining them — the
-            map points <em>at</em> list nodes, so a key lookup gives you direct pointer access to the position
+            map points <em>at</em>{" "}list nodes, so a key lookup gives you direct pointer access to the position
             in the list. Internalize this combo: it shows up in caches, in &quot;find any element by key in
             O(1) and also remove it in O(1)&quot; problems, and in interview design questions.
           </p>
@@ -659,8 +659,8 @@ private void dfs(char[][] g, int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> DFS with a window of valid bounds, OR in-order traversal checking
-          monotonicity. <strong>Complexity:</strong> O(n) / O(h). <strong>Key insight:</strong> the naive
+          <strong>Pattern:</strong>{" "}DFS with a window of valid bounds, OR in-order traversal checking
+          monotonicity. <strong>Complexity:</strong>{" "}O(n) / O(h). <strong>Key insight:</strong>{" "}the naive
           &quot;left.val &lt; root.val &lt; right.val&quot; check fails — a deep right descendant of a left
           subtree might still violate the BST. The bounded recursion fixes this by passing a (lo, hi) window
           down.
@@ -682,8 +682,8 @@ private boolean dfs(TreeNode n, long lo, long hi) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> Monotonic stack. Maintain a stack of indices whose temperature is
-          decreasing; when you see a warmer day, pop and record the distance. <strong>Complexity:</strong> O(n)
+          <strong>Pattern:</strong>{" "}Monotonic stack. Maintain a stack of indices whose temperature is
+          decreasing; when you see a warmer day, pop and record the distance. <strong>Complexity:</strong>{" "}O(n)
           — each index pushed and popped at most once. <strong>Key insight:</strong> &quot;next greater
           element&quot; is the canonical monotonic-stack signal.
         </p>
@@ -711,7 +711,7 @@ private boolean dfs(TreeNode n, long lo, long hi) {
         <p>
           <strong>Pattern:</strong> 1D DP with two states. <code>dp[i] = max(dp[i−1], dp[i−2] + nums[i])</code>{" "}
           — at each house, either skip and keep the previous best, or rob it and add to the answer two back.
-          Collapse to two scalars for O(1) space. <strong>Complexity:</strong> O(n) / O(1).
+          Collapse to two scalars for O(1) space. <strong>Complexity:</strong>{" "}O(n) / O(1).
         </p>
 
         <CodeBlock lang="java">{`public int rob(int[] nums) {
@@ -731,8 +731,8 @@ private boolean dfs(TreeNode n, long lo, long hi) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> Modified binary search. At each step one half of the array is sorted; figure
-          out which half, then decide whether the target is in that half. <strong>Complexity:</strong> O(log n).{" "}
+          <strong>Pattern:</strong>{" "}Modified binary search. At each step one half of the array is sorted; figure
+          out which half, then decide whether the target is in that half. <strong>Complexity:</strong>{" "}O(log n).{" "}
           <strong>Key insight:</strong> &quot;compare nums[mid] to nums[lo]&quot; tells you which half is the
           sorted one — that&apos;s the whole trick.
         </p>
@@ -815,14 +815,14 @@ private boolean dfs(TreeNode n, long lo, long hi) {
         </p>
 
         <p>
-          <strong>Patterns:</strong> Trie + DFS / backtracking. <strong>Why both:</strong> the naive approach
+          <strong>Patterns:</strong>{" "}Trie + DFS / backtracking. <strong>Why both:</strong>{" "}the naive approach
           would run a separate DFS-search per word — O(W · cells · 4ᴸ). With a Trie you traverse the board
           once, and at each step ask &quot;does this prefix exist in the dictionary?&quot; If not, prune.
           That&apos;s how you handle thousands of words at once.
         </p>
 
         <p>
-          <strong>Why this pattern combination ruled in:</strong> the words list is large (often hundreds), so
+          <strong>Why this pattern combination ruled in:</strong>{" "}the words list is large (often hundreds), so
           per-word DFS is too slow. Tries shine when you need to test many strings against a shared prefix
           structure. DFS is forced because of the 2D board adjacency. Greedy doesn&apos;t work because choices
           are not locally optimal. DP doesn&apos;t apply because there&apos;s no overlapping subproblem on
@@ -877,7 +877,7 @@ private void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
         </p>
 
         <p>
-          <strong>Patterns:</strong> DFS + memoization (equivalently: DP on a DAG). <strong>Why:</strong> from
+          <strong>Patterns:</strong>{" "}DFS + memoization (equivalently: DP on a DAG). <strong>Why:</strong>{" "}from
           each cell, the longest increasing path is <code>1 + max(longest from neighbor n where matrix[n] &gt;
           matrix[cell])</code>. Memoize because many cells share the same suffix path. Note the matrix forms a
           DAG when you orient each edge from smaller to larger — so every cell&apos;s answer depends only on
@@ -885,7 +885,7 @@ private void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
         </p>
 
         <p>
-          <strong>What this is not:</strong> not BFS (BFS gives shortest, not longest, paths). Not Dijkstra
+          <strong>What this is not:</strong>{" "}not BFS (BFS gives shortest, not longest, paths). Not Dijkstra
           (no weights). Not standard DP-on-grid (the recurrence isn&apos;t left-to-right; it follows the value
           ordering). The &quot;DAG-DP via memoized DFS&quot; framing is what unlocks it.
         </p>
@@ -925,7 +925,7 @@ private int dfs(int r, int c) {
         </p>
 
         <p>
-          <strong>Pattern:</strong> Binary search on partition. <strong>Why:</strong> the obvious O(m + n) merge
+          <strong>Pattern:</strong>{" "}Binary search on partition. <strong>Why:</strong>{" "}the obvious O(m + n) merge
           violates the time bound. The trick is to binary-search a partition index <code>i</code> in the smaller
           array; the partition in the larger array is determined by{" "}
           <code>j = (m + n + 1) / 2 − i</code>. The partition is correct iff{" "}
@@ -934,7 +934,7 @@ private int dfs(int r, int c) {
         </p>
 
         <p>
-          <strong>Why this pattern was the only fit:</strong> the time bound forces logarithmic. Anything
+          <strong>Why this pattern was the only fit:</strong>{" "}the time bound forces logarithmic. Anything
           O(m + n) is ruled out. Sorted-input + log-time + &quot;find a boundary&quot; is the binary-search
           signature. The trickiness is recognizing that the boundary is a partition between two arrays, not a
           single index in one.
@@ -1138,7 +1138,7 @@ private int dfs(int r, int c) {
         <p>
           You&apos;ve done the patterns. The remaining question is: <strong>can you keep doing them when
           you&apos;re tired, when you&apos;re nervous, when the problem statement is half a page long and
-          buries the constraint that picks the pattern?</strong> The honest answer is that consistent practice
+          buries the constraint that picks the pattern?</strong>{" "}The honest answer is that consistent practice
           is the only thing that builds that resilience.
         </p>
 
@@ -1153,17 +1153,17 @@ private int dfs(int r, int c) {
             point where pattern recognition is reflexive.
           </li>
           <li>
-            <strong>Every problem gets a writeup.</strong> Two paragraphs, plain English, named pattern, named
+            <strong>Every problem gets a writeup.</strong>{" "}Two paragraphs, plain English, named pattern, named
             alternatives ruled out, complexity. The writeup is what turns clicking through into thinking
             through.
           </li>
           <li>
-            <strong>Spaced repetition on misses.</strong> Any problem you couldn&apos;t solve in 30 minutes
+            <strong>Spaced repetition on misses.</strong>{" "}Any problem you couldn&apos;t solve in 30 minutes
             unaided goes into a queue. Re-attempt it 3 days later, then 1 week later, then 1 month later. By
             the third pass it&apos;s yours.
           </li>
           <li>
-            <strong>Re-derive the patterns from memory monthly.</strong> Sit down with a blank piece of paper
+            <strong>Re-derive the patterns from memory monthly.</strong>{" "}Sit down with a blank piece of paper
             and list all 20 patterns plus one canonical problem for each. If any are fuzzy, that&apos;s your
             week&apos;s study target.
           </li>
@@ -1235,7 +1235,7 @@ private int dfs(int r, int c) {
           </p>
           <p className="text-white/95 mb-3">
             Most engineers who say they &quot;know DSA&quot; have done a fraction of this. You can defend every
-            pattern. You know <em>why</em> sliding window fails on negatives, why heapify is O(n) not O(n log n),
+            pattern. You know <em>why</em>{" "}sliding window fails on negatives, why heapify is O(n) not O(n log n),
             why Dijkstra needs non-negative weights, why DP beats greedy on non-canonical coin sets. You can
             answer the system-design-flavored algorithm questions because you built the structures.
           </p>

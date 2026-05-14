@@ -83,14 +83,14 @@ export default function Page() {
         <h2>Part 1: What idempotency actually means</h2>
 
         <p>
-          The textbook definition: an operation is <strong>idempotent</strong> if performing it multiple times has the same effect as performing it once. <code>SET balance = 100</code> is idempotent — running it twice still leaves balance at 100. <code>balance += 100</code> is not — running it twice doubles the deposit. This distinction is the entire reason for this module.
+          The textbook definition: an operation is <strong>idempotent</strong>{" "}if performing it multiple times has the same effect as performing it once. <code>SET balance = 100</code> is idempotent — running it twice still leaves balance at 100. <code>balance += 100</code> is not — running it twice doubles the deposit. This distinction is the entire reason for this module.
         </p>
 
         <h3>Three categories of operations</h3>
 
         <ul>
-          <li><strong>Naturally idempotent.</strong> <code>GET /users/123</code> doesn&apos;t change state. <code>PUT /users/123 {`{name: "Aria"}`}</code> sets state to a known value — repeating it is a no-op. <code>DELETE /users/123</code> repeated is a no-op (the user is still gone). HTTP&apos;s <em>safe</em> and <em>idempotent</em> method semantics — GET, PUT, DELETE, HEAD — are designed around this.</li>
-          <li><strong>Idempotent with cooperation.</strong> <code>POST /charges</code> creating a new charge is not naturally idempotent — every retry creates another charge. But if the client sends an <em>idempotency key</em> and the server dedupes on it, the operation becomes idempotent. This is the Stripe pattern, and the focus of Part 2.</li>
+          <li><strong>Naturally idempotent.</strong> <code>GET /users/123</code> doesn&apos;t change state. <code>PUT /users/123 {`{name: "Aria"}`}</code> sets state to a known value — repeating it is a no-op. <code>DELETE /users/123</code> repeated is a no-op (the user is still gone). HTTP&apos;s <em>safe</em>{" "}and <em>idempotent</em>{" "}method semantics — GET, PUT, DELETE, HEAD — are designed around this.</li>
+          <li><strong>Idempotent with cooperation.</strong> <code>POST /charges</code> creating a new charge is not naturally idempotent — every retry creates another charge. But if the client sends an <em>idempotency key</em>{" "}and the server dedupes on it, the operation becomes idempotent. This is the Stripe pattern, and the focus of Part 2.</li>
           <li><strong>Inherently non-idempotent.</strong> &quot;Increment the counter,&quot; &quot;append to the log,&quot; &quot;trigger the email send&quot; — operations whose only meaning is &quot;produce a side effect this many times.&quot; These can be made safe with idempotency keys, but you have to think harder about what &quot;same effect&quot; means.</li>
         </ul>
 
@@ -104,11 +104,11 @@ export default function Page() {
           The reason every senior engineer harps on idempotency is that production retries are not optional. They happen because of:
         </p>
         <ul>
-          <li><strong>Network blips.</strong> The request reached the server, the response was lost. The client retries, not knowing the call already succeeded.</li>
-          <li><strong>Client-side timeouts.</strong> The client gave up at 5 seconds, the server kept working and succeeded at 5.1. The client retries.</li>
-          <li><strong>Webhook redelivery.</strong> The webhook receiver returned 500 (or didn&apos;t respond fast enough); the source redelivers. Stripe redelivers webhooks for up to 3 days.</li>
-          <li><strong>Queue redelivery.</strong> Kafka, SQS, RabbitMQ — all guarantee at-least-once delivery. A consumer crash mid-processing means the same message comes back.</li>
-          <li><strong>User-driven retries.</strong> The user sees a spinner, taps the button again. Most clients have a deduplication window of zero.</li>
+          <li><strong>Network blips.</strong>{" "}The request reached the server, the response was lost. The client retries, not knowing the call already succeeded.</li>
+          <li><strong>Client-side timeouts.</strong>{" "}The client gave up at 5 seconds, the server kept working and succeeded at 5.1. The client retries.</li>
+          <li><strong>Webhook redelivery.</strong>{" "}The webhook receiver returned 500 (or didn&apos;t respond fast enough); the source redelivers. Stripe redelivers webhooks for up to 3 days.</li>
+          <li><strong>Queue redelivery.</strong>{" "}Kafka, SQS, RabbitMQ — all guarantee at-least-once delivery. A consumer crash mid-processing means the same message comes back.</li>
+          <li><strong>User-driven retries.</strong>{" "}The user sees a spinner, taps the button again. Most clients have a deduplication window of zero.</li>
         </ul>
         <p>
           In any non-trivial production system, every mutation will eventually be retried. Idempotency is the property that determines whether that retry is safe.

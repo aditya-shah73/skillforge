@@ -88,7 +88,7 @@ export default function Page() {
             <li><strong>US-East to US-West:</strong> 60–80ms RTT. One round trip is your whole p50 budget.</li>
             <li><strong>US to Europe:</strong> 70–100ms RTT.</li>
             <li><strong>US to APAC (Tokyo, Sydney):</strong> 150–200ms RTT.</li>
-            <li><strong>Mobile last-mile:</strong> add 30–100ms on top, more on cellular.</li>
+            <li><strong>Mobile last-mile:</strong>{" "}add 30–100ms on top, more on cellular.</li>
           </ul>
         </Callout>
 
@@ -138,10 +138,10 @@ export default function Page() {
           One region serves all traffic. A second region replicates state asynchronously and sits idle. On disaster, you cut DNS and promote the standby. Simple, cheap, and gives you a recovery time of minutes — not seconds.
         </p>
         <ul>
-          <li><strong>Reads:</strong> all from primary region.</li>
-          <li><strong>Writes:</strong> all to primary region.</li>
-          <li><strong>Failover:</strong> manual or automated DNS flip; promotion of standby DB; expect 1–10 minutes of downtime and possible data loss bounded by replication lag (RPO).</li>
-          <li><strong>Use when:</strong> you need DR but not low-latency global reads. Bank back offices, internal tools.</li>
+          <li><strong>Reads:</strong>{" "}all from primary region.</li>
+          <li><strong>Writes:</strong>{" "}all to primary region.</li>
+          <li><strong>Failover:</strong>{" "}manual or automated DNS flip; promotion of standby DB; expect 1–10 minutes of downtime and possible data loss bounded by replication lag (RPO).</li>
+          <li><strong>Use when:</strong>{" "}you need DR but not low-latency global reads. Bank back offices, internal tools.</li>
         </ul>
 
         <h3>2. Active-active</h3>
@@ -152,10 +152,10 @@ export default function Page() {
         <Mermaid chart={activeActiveDiagram} />
 
         <ul>
-          <li><strong>Reads:</strong> local to each region.</li>
-          <li><strong>Writes:</strong> either local with async replication (eventual consistency, conflict resolution required) or routed to a global leader (one region pays the round trip).</li>
-          <li><strong>Failover:</strong> traffic shifts to surviving regions automatically; little to no data loss if the consensus group is global.</li>
-          <li><strong>Use when:</strong> you need low-latency reads globally and can either tolerate eventual consistency or pay for cross-region consensus (Spanner, CockroachDB, DynamoDB Global Tables).</li>
+          <li><strong>Reads:</strong>{" "}local to each region.</li>
+          <li><strong>Writes:</strong>{" "}either local with async replication (eventual consistency, conflict resolution required) or routed to a global leader (one region pays the round trip).</li>
+          <li><strong>Failover:</strong>{" "}traffic shifts to surviving regions automatically; little to no data loss if the consensus group is global.</li>
+          <li><strong>Use when:</strong>{" "}you need low-latency reads globally and can either tolerate eventual consistency or pay for cross-region consensus (Spanner, CockroachDB, DynamoDB Global Tables).</li>
         </ul>
 
         <Callout variant="warn" title="The active-active conflict trap">
@@ -167,10 +167,10 @@ export default function Page() {
           Each user (or tenant) has a home region. EU users live in eu-west; US users live in us-east. Writes for a user always go to their home region. There&apos;s no cross-region write conflict because no two regions own the same data.
         </p>
         <ul>
-          <li><strong>Reads:</strong> local for users in their home region; cross-region for foreigners (e.g., US user reading EU data).</li>
-          <li><strong>Writes:</strong> always local to home region.</li>
-          <li><strong>Failover:</strong> only that region&apos;s users are affected; you may failover to a paired region.</li>
-          <li><strong>Use when:</strong> users have a clear home (B2B SaaS, regional services); compliance (GDPR data residency) makes this required anyway.</li>
+          <li><strong>Reads:</strong>{" "}local for users in their home region; cross-region for foreigners (e.g., US user reading EU data).</li>
+          <li><strong>Writes:</strong>{" "}always local to home region.</li>
+          <li><strong>Failover:</strong>{" "}only that region&apos;s users are affected; you may failover to a paired region.</li>
+          <li><strong>Use when:</strong>{" "}users have a clear home (B2B SaaS, regional services); compliance (GDPR data residency) makes this required anyway.</li>
         </ul>
 
         <Callout variant="info" title="The honest comparison">
@@ -185,10 +185,10 @@ export default function Page() {
           A few rules that have saved teams:
         </p>
         <ul>
-          <li><strong>Test failover quarterly.</strong> Untested failover doesn&apos;t work; assume nothing.</li>
-          <li><strong>Don&apos;t auto-failover state.</strong> Compute, yes. Databases — humans should approve, especially when split-brain is possible.</li>
-          <li><strong>Watch replication lag like prod.</strong> Page on lag &gt; threshold; that&apos;s your RPO going up in real time.</li>
-          <li><strong>Drain traffic, don&apos;t cut it.</strong> Health-checked weighted routing beats DNS TTL gymnastics.</li>
+          <li><strong>Test failover quarterly.</strong>{" "}Untested failover doesn&apos;t work; assume nothing.</li>
+          <li><strong>Don&apos;t auto-failover state.</strong>{" "}Compute, yes. Databases — humans should approve, especially when split-brain is possible.</li>
+          <li><strong>Watch replication lag like prod.</strong>{" "}Page on lag &gt; threshold; that&apos;s your RPO going up in real time.</li>
+          <li><strong>Drain traffic, don&apos;t cut it.</strong>{" "}Health-checked weighted routing beats DNS TTL gymnastics.</li>
         </ul>
 
         <Quiz
@@ -225,17 +225,17 @@ export default function Page() {
 
         <h3>What CDNs are great at</h3>
         <ul>
-          <li><strong>Static assets:</strong> images, CSS, JS, fonts, video chunks. The classic case.</li>
-          <li><strong>Cacheable API responses:</strong> public, immutable, or short-TTL data. Product catalogs, public profile pages.</li>
-          <li><strong>Origin shielding:</strong> a tier of cache between your PoPs and your origin to absorb traffic spikes.</li>
-          <li><strong>TLS termination + early HTTP/3:</strong> cuts handshake latency before requests even reach your code.</li>
+          <li><strong>Static assets:</strong>{" "}images, CSS, JS, fonts, video chunks. The classic case.</li>
+          <li><strong>Cacheable API responses:</strong>{" "}public, immutable, or short-TTL data. Product catalogs, public profile pages.</li>
+          <li><strong>Origin shielding:</strong>{" "}a tier of cache between your PoPs and your origin to absorb traffic spikes.</li>
+          <li><strong>TLS termination + early HTTP/3:</strong>{" "}cuts handshake latency before requests even reach your code.</li>
         </ul>
 
         <h3>What CDNs are not</h3>
         <ul>
-          <li><strong>Not a write accelerator.</strong> POSTs go to origin. Always.</li>
-          <li><strong>Not a fix for personalized content.</strong> Per-user data has cardinality close to the number of users; cache hit rates approach zero. Use a CDN for the unpersonalized parts only.</li>
-          <li><strong>Not a database.</strong> Cache invalidation is hard. If you put dynamic data in a CDN, you own the invalidation problem.</li>
+          <li><strong>Not a write accelerator.</strong>{" "}POSTs go to origin. Always.</li>
+          <li><strong>Not a fix for personalized content.</strong>{" "}Per-user data has cardinality close to the number of users; cache hit rates approach zero. Use a CDN for the unpersonalized parts only.</li>
+          <li><strong>Not a database.</strong>{" "}Cache invalidation is hard. If you put dynamic data in a CDN, you own the invalidation problem.</li>
         </ul>
 
         <Callout variant="spring" title="The cache key rule">
@@ -265,10 +265,10 @@ export default function Page() {
           The clean architectural answer for global apps:
         </p>
         <ul>
-          <li><strong>Reads of public/cacheable data:</strong> CDN. Aim for 90%+ hit rate.</li>
-          <li><strong>Reads of per-user data (latency-sensitive):</strong> region-local replicas with read-your-writes routing.</li>
-          <li><strong>Writes:</strong> route to the region that owns the user, or to a global consensus group if you need linearizability.</li>
-          <li><strong>Edge compute:</strong> request shaping, auth, personalization shell. Keep it stateless or use edge KV with explicit consistency expectations.</li>
+          <li><strong>Reads of public/cacheable data:</strong>{" "}CDN. Aim for 90%+ hit rate.</li>
+          <li><strong>Reads of per-user data (latency-sensitive):</strong>{" "}region-local replicas with read-your-writes routing.</li>
+          <li><strong>Writes:</strong>{" "}route to the region that owns the user, or to a global consensus group if you need linearizability.</li>
+          <li><strong>Edge compute:</strong>{" "}request shaping, auth, personalization shell. Keep it stateless or use edge KV with explicit consistency expectations.</li>
         </ul>
 
         <ClassifyChallenge
@@ -297,10 +297,10 @@ export default function Page() {
           Imagine you&apos;re building a global SaaS dashboard with a p99 target of 500ms. Your worst-case user is in Sydney; your origin is in us-east-1. The Sydney-Virginia RTT is ~200ms. Here&apos;s how a defensible budget looks:
         </p>
         <ul>
-          <li><strong>Static shell (HTML, JS, CSS):</strong> CDN at Sydney PoP — 30ms TLS + cache hit + transfer.</li>
-          <li><strong>Auth check:</strong> edge compute validates token signature against an embedded JWKS — adds 5ms, no origin round trip.</li>
-          <li><strong>User data fetch:</strong> regional replica in ap-southeast-2 (Sydney) — 20ms RTT + 10ms query.</li>
-          <li><strong>Write (rare on this page):</strong> async POST to home region (us-east-1) — 200ms but doesn&apos;t block first paint.</li>
+          <li><strong>Static shell (HTML, JS, CSS):</strong>{" "}CDN at Sydney PoP — 30ms TLS + cache hit + transfer.</li>
+          <li><strong>Auth check:</strong>{" "}edge compute validates token signature against an embedded JWKS — adds 5ms, no origin round trip.</li>
+          <li><strong>User data fetch:</strong>{" "}regional replica in ap-southeast-2 (Sydney) — 20ms RTT + 10ms query.</li>
+          <li><strong>Write (rare on this page):</strong>{" "}async POST to home region (us-east-1) — 200ms but doesn&apos;t block first paint.</li>
         </ul>
         <p>
           Total time-to-interactive: ~65ms for the synchronous critical path. Compare to the naive design (everything in us-east-1): 200ms RTT before a single byte arrives. That&apos;s the win, and it cost you a CDN bill, an edge worker, and one regional replica.
@@ -350,13 +350,13 @@ export default function Page() {
           LWW lies on three shapes of state:
         </p>
         <ul>
-          <li><strong>Counters.</strong> Two devices both increment a like-count from 5. With LWW, both writes say &quot;the new value is 6&quot;. One increment is lost. The correct final value is 7.</li>
-          <li><strong>Text edits.</strong> Two devices edit a doc title from different starting points. LWW keeps one version verbatim and discards the other entirely — even though both edits were intentional.</li>
-          <li><strong>Sets with concurrent add/remove.</strong> Device A adds tag &quot;urgent&quot;; device B removes tag &quot;urgent&quot;. LWW picks one based on clock skew, not user intent.</li>
+          <li><strong>Counters.</strong>{" "}Two devices both increment a like-count from 5. With LWW, both writes say &quot;the new value is 6&quot;. One increment is lost. The correct final value is 7.</li>
+          <li><strong>Text edits.</strong>{" "}Two devices edit a doc title from different starting points. LWW keeps one version verbatim and discards the other entirely — even though both edits were intentional.</li>
+          <li><strong>Sets with concurrent add/remove.</strong>{" "}Device A adds tag &quot;urgent&quot;; device B removes tag &quot;urgent&quot;. LWW picks one based on clock skew, not user intent.</li>
         </ul>
 
         <Callout variant="warn" title="Clock skew is the hidden enemy">
-          <p className="m-0">LWW assumes timestamps are comparable across devices. They are not. Phones drift, users set their clocks manually, time zones get confused. Production LWW systems use a <em>logical</em> timestamp (a Lamport clock) or a <em>hybrid</em> timestamp (HLC — wall clock plus a logical counter to break ties). Naive wall-clock LWW will betray you the first time a user changes their phone&apos;s time zone mid-flight.</p>
+          <p className="m-0">LWW assumes timestamps are comparable across devices. They are not. Phones drift, users set their clocks manually, time zones get confused. Production LWW systems use a <em>logical</em>{" "}timestamp (a Lamport clock) or a <em>hybrid</em>{" "}timestamp (HLC — wall clock plus a logical counter to break ties). Naive wall-clock LWW will betray you the first time a user changes their phone&apos;s time zone mid-flight.</p>
         </Callout>
 
         <h2>Vector clocks for sync</h2>
@@ -372,7 +372,7 @@ export default function Page() {
           <li>If neither dominates (some components of A are higher, some of B), the writes were concurrent. You have a real conflict — surface it, or apply a deterministic merge rule.</li>
         </ul>
         <p>
-          The win over LWW is honesty: vector clocks tell you <em>that</em> a conflict happened. They don&apos;t tell you how to resolve it; that&apos;s an application choice. But knowing a conflict exists is half the battle — silent data loss is what makes LWW dangerous.
+          The win over LWW is honesty: vector clocks tell you <em>that</em>{" "}a conflict happened. They don&apos;t tell you how to resolve it; that&apos;s an application choice. But knowing a conflict exists is half the battle — silent data loss is what makes LWW dangerous.
         </p>
 
         <CodeBlock lang="plain" caption="Example: phone increments, laptop increments, then they sync">{`Initial state on both:    { phone: 0, laptop: 0 }   value: "draft"
@@ -395,22 +395,22 @@ Resolution (app choice): keep both versions, prompt user, or apply CRDT merge.`}
           Two flavors:
         </p>
         <ul>
-          <li><strong>State-based (CvRDT).</strong> Each replica sends its full state. Merge is a function like <code>max</code> or set union. Heavy on bandwidth, simple on logic.</li>
-          <li><strong>Op-based (CmRDT).</strong> Each replica sends individual operations. Operations must be commutative (<code>add(x)</code> and <code>add(y)</code> can run in any order). Lighter bandwidth, requires reliable broadcast.</li>
+          <li><strong>State-based (CvRDT).</strong>{" "}Each replica sends its full state. Merge is a function like <code>max</code> or set union. Heavy on bandwidth, simple on logic.</li>
+          <li><strong>Op-based (CmRDT).</strong>{" "}Each replica sends individual operations. Operations must be commutative (<code>add(x)</code> and <code>add(y)</code> can run in any order). Lighter bandwidth, requires reliable broadcast.</li>
         </ul>
         <p>
           The greatest hits, by use case:
         </p>
         <ul>
           <li><strong>G-counter</strong> (grow-only counter): each device tracks its own count; the value is the sum. Used for like counts, view counts, anything that only goes up.</li>
-          <li><strong>PN-counter:</strong> a G-counter for increments and another for decrements; value is the difference. Now you can decrement too.</li>
-          <li><strong>LWW-register:</strong> a single value with a timestamp. The honest version of LWW, used inside CRDT toolkits.</li>
+          <li><strong>PN-counter:</strong>{" "}a G-counter for increments and another for decrements; value is the difference. Now you can decrement too.</li>
+          <li><strong>LWW-register:</strong>{" "}a single value with a timestamp. The honest version of LWW, used inside CRDT toolkits.</li>
           <li><strong>OR-set</strong> (observed-remove set): adds win over concurrent removes when the remove didn&apos;t see the add. Used for tag lists, collaborative selections.</li>
-          <li><strong>RGA / Yjs / Automerge:</strong> collaborative text. Each character has a unique ID; concurrent inserts interleave deterministically.</li>
+          <li><strong>RGA / Yjs / Automerge:</strong>{" "}collaborative text. Each character has a unique ID; concurrent inserts interleave deterministically.</li>
         </ul>
 
         <Callout variant="insight" title="When to reach for a CRDT — and when not to">
-          <p className="m-0">Reach for a CRDT when convergence matters more than a hard invariant: collaborative editing (Google Docs, Figma, Linear), shopping carts that sync across devices, social-feed read state, presence aggregation. Do <strong>not</strong> reach for a CRDT when you have a hard invariant the system must never violate — bank balance &gt;= 0, ticket inventory &gt; 0, unique-username constraint. Those need consensus (Paxos, Raft) or a single serializing point. CRDTs guarantee convergence; they do not guarantee invariants.</p>
+          <p className="m-0">Reach for a CRDT when convergence matters more than a hard invariant: collaborative editing (Google Docs, Figma, Linear), shopping carts that sync across devices, social-feed read state, presence aggregation. Do <strong>not</strong>{" "}reach for a CRDT when you have a hard invariant the system must never violate — bank balance &gt;= 0, ticket inventory &gt; 0, unique-username constraint. Those need consensus (Paxos, Raft) or a single serializing point. CRDTs guarantee convergence; they do not guarantee invariants.</p>
         </Callout>
 
         <h2>Two architectures for sync</h2>
@@ -486,9 +486,9 @@ public class SyncController {
           &quot;Online&quot; gets weird when a user has four devices. The honest pattern: each device sends a heartbeat (every 30-60s on Wi-Fi, longer on cellular). The server aggregates per-user:
         </p>
         <ul>
-          <li><strong>Online status:</strong> user is online if <em>any</em> device is online. Set union, expressed as a presence bitmap or simply &quot;max heartbeat across devices &gt; now - threshold&quot;.</li>
-          <li><strong>Last seen:</strong> max heartbeat timestamp across devices. Even after all devices go offline, this gives you the right number.</li>
-          <li><strong>Typing indicators:</strong> per-device, not per-user. A user can type from their phone while their laptop sits idle; aggregating &quot;is typing&quot; across devices produces nonsense (&quot;Alice is typing&quot; that flickers because the laptop briefly thought she stopped).</li>
+          <li><strong>Online status:</strong>{" "}user is online if <em>any</em>{" "}device is online. Set union, expressed as a presence bitmap or simply &quot;max heartbeat across devices &gt; now - threshold&quot;.</li>
+          <li><strong>Last seen:</strong>{" "}max heartbeat timestamp across devices. Even after all devices go offline, this gives you the right number.</li>
+          <li><strong>Typing indicators:</strong>{" "}per-device, not per-user. A user can type from their phone while their laptop sits idle; aggregating &quot;is typing&quot; across devices produces nonsense (&quot;Alice is typing&quot; that flickers because the laptop briefly thought she stopped).</li>
         </ul>
         <p>
           Some apps surface the device explicitly (&quot;Alice — online from iPhone&quot;). Most just unify, because the user already knows which device they have in their hand. Picking one is a UX call, not a systems call — but the underlying aggregation logic is the same either way.
@@ -499,10 +499,10 @@ public class SyncController {
           Mobile adds constraints that pure server-side replication doesn&apos;t face. You can&apos;t treat phones like servers that happen to be small.
         </p>
         <ul>
-          <li><strong>iOS background limits.</strong> Once your app backgrounds, you get a few seconds to clean up and then iOS suspends you. Your sync code is dead. The only way to wake up is a silent push (<code>content-available: 1</code>), and even those are rate-limited and best-effort. Plan for &quot;the device will not sync until the user opens the app or until a push wakes it.&quot;</li>
-          <li><strong>Android Doze.</strong> Same idea, different name. After a period of inactivity, Android batches network and alarm work. Messaging apps can claim a high-priority FCM exemption, but for general apps you&apos;re subject to maintenance windows.</li>
-          <li><strong>Battery.</strong> Aggressive heartbeats and constant socket reconnects drain batteries and get your app uninstalled. Back off when in background; rely on push as a wake signal rather than polling. The honest contract: foreground = real-time; background = best-effort, push-driven.</li>
-          <li><strong>Push as a sync trigger.</strong> The pattern most messaging apps use: send a small &quot;something changed&quot; push, the OS wakes the app for a few seconds, the app pulls the actual deltas, then it goes back to sleep. The push payload is a wake signal, not the data itself — payloads are size-limited and may be dropped.</li>
+          <li><strong>iOS background limits.</strong>{" "}Once your app backgrounds, you get a few seconds to clean up and then iOS suspends you. Your sync code is dead. The only way to wake up is a silent push (<code>content-available: 1</code>), and even those are rate-limited and best-effort. Plan for &quot;the device will not sync until the user opens the app or until a push wakes it.&quot;</li>
+          <li><strong>Android Doze.</strong>{" "}Same idea, different name. After a period of inactivity, Android batches network and alarm work. Messaging apps can claim a high-priority FCM exemption, but for general apps you&apos;re subject to maintenance windows.</li>
+          <li><strong>Battery.</strong>{" "}Aggressive heartbeats and constant socket reconnects drain batteries and get your app uninstalled. Back off when in background; rely on push as a wake signal rather than polling. The honest contract: foreground = real-time; background = best-effort, push-driven.</li>
+          <li><strong>Push as a sync trigger.</strong>{" "}The pattern most messaging apps use: send a small &quot;something changed&quot; push, the OS wakes the app for a few seconds, the app pulls the actual deltas, then it goes back to sleep. The push payload is a wake signal, not the data itself — payloads are size-limited and may be dropped.</li>
         </ul>
 
         <Callout variant="warn" title="Don't treat the phone like a server">

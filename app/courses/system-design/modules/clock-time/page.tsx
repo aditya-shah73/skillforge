@@ -73,14 +73,14 @@ export default function Page() {
           You&apos;ve probably written code like <code>if (eventA.timestamp &lt; eventB.timestamp)</code> and assumed that meant A happened first. In a single-process, single-machine world, that&apos;s mostly fine. The moment two machines are involved, that line of code is a bug.
         </p>
         <p>
-          Wall clocks — <code>System.currentTimeMillis()</code>, <code>time.time()</code>, <code>Date.now()</code> — read from the OS, which gets time from NTP, which slews and steps the clock to keep it close to UTC. Even on well-managed servers, NTP-synced clocks routinely disagree by 10–100ms. Under load, virtualized, or with bad NTP peers, they can disagree by seconds. And clocks can go <em>backwards</em> when NTP steps them.
+          Wall clocks — <code>System.currentTimeMillis()</code>, <code>time.time()</code>, <code>Date.now()</code> — read from the OS, which gets time from NTP, which slews and steps the clock to keep it close to UTC. Even on well-managed servers, NTP-synced clocks routinely disagree by 10–100ms. Under load, virtualized, or with bad NTP peers, they can disagree by seconds. And clocks can go <em>backwards</em>{" "}when NTP steps them.
         </p>
 
         <Callout variant="warn" title="Real failure modes from real outages">
           <ul className="m-0">
-            <li><strong>Cloudflare, 2017:</strong> a leap second caused timestamps to go backwards; some services returned negative durations and panicked.</li>
-            <li><strong>Cassandra last-write-wins:</strong> two writes on different coordinators with skewed clocks — the &quot;newer&quot; write loses because its timestamp is older.</li>
-            <li><strong>JWT expiry:</strong> issuer&apos;s clock is 30s ahead of verifier&apos;s — every newly issued token looks expired for half a minute.</li>
+            <li><strong>Cloudflare, 2017:</strong>{" "}a leap second caused timestamps to go backwards; some services returned negative durations and panicked.</li>
+            <li><strong>Cassandra last-write-wins:</strong>{" "}two writes on different coordinators with skewed clocks — the &quot;newer&quot; write loses because its timestamp is older.</li>
+            <li><strong>JWT expiry:</strong>{" "}issuer&apos;s clock is 30s ahead of verifier&apos;s — every newly issued token looks expired for half a minute.</li>
           </ul>
         </Callout>
 
@@ -102,13 +102,13 @@ export default function Page() {
           You don&apos;t need to know exact numbers — you need to know the <em>order of magnitude</em>, because it determines what you can and can&apos;t safely do with timestamps.
         </p>
         <ul>
-          <li><strong>Same datacenter, well-synced NTP:</strong> typically under 1ms skew. Still not zero.</li>
+          <li><strong>Same datacenter, well-synced NTP:</strong>{" "}typically under 1ms skew. Still not zero.</li>
           <li><strong>Cross-region cloud:</strong> 10–50ms is normal. Spikes to hundreds during NTP rebalancing.</li>
-          <li><strong>Mobile clients:</strong> arbitrary. Users set their phone clocks. Trust nothing.</li>
-          <li><strong>VM clocks under host pressure:</strong> can drift seconds; some hypervisors pause guests entirely.</li>
+          <li><strong>Mobile clients:</strong>{" "}arbitrary. Users set their phone clocks. Trust nothing.</li>
+          <li><strong>VM clocks under host pressure:</strong>{" "}can drift seconds; some hypervisors pause guests entirely.</li>
         </ul>
         <p>
-          The practical lesson: <strong>never use wall-clock timestamps to order events from different machines.</strong> If you need an order, you need a different tool.
+          The practical lesson: <strong>never use wall-clock timestamps to order events from different machines.</strong>{" "}If you need an order, you need a different tool.
         </p>
 
         <Quiz
@@ -140,7 +140,7 @@ export default function Page() {
           In 1978, Leslie Lamport asked a sharper question. Forget what time it &quot;really&quot; is. What we actually care about is: did event A causally influence event B? If yes, A happened before B. If neither caused the other, they are concurrent — and any ordering between them is arbitrary anyway.
         </p>
         <p>
-          He defined a <strong>happens-before</strong> relation (written <code>a → b</code>):
+          He defined a <strong>happens-before</strong>{" "}relation (written <code>a → b</code>):
         </p>
         <ul>
           <li>If <code>a</code> and <code>b</code> are on the same process and <code>a</code> comes first, then <code>a → b</code>.</li>
@@ -246,7 +246,7 @@ export default function Page() {
           Logical clocks are great at &quot;what caused what.&quot; They are terrible at &quot;show me everything that happened in the last 5 minutes.&quot; You can&apos;t look at a Lamport timestamp and know how it relates to UTC. For debugging, audit logs, snapshots, and consistent reads at a wall-clock time, you need something tied to physical time.
         </p>
         <p>
-          So: can we get the causality guarantees of Lamport <em>and</em> stay close to wall time? Two answers ship in production: HLC (anyone can use it) and TrueTime (Google built specialized hardware).
+          So: can we get the causality guarantees of Lamport <em>and</em>{" "}stay close to wall time? Two answers ship in production: HLC (anyone can use it) and TrueTime (Google built specialized hardware).
         </p>
 
         <h2>HLC: Hybrid Logical Clocks</h2>
@@ -323,11 +323,11 @@ public synchronized HLCTimestamp tickReceive(HLCTimestamp msg) {
 
         <h2>The decision tree, compressed</h2>
         <ul>
-          <li><strong>Within one process:</strong> monotonic for durations, wall for &quot;when&quot;. Don&apos;t overthink it.</li>
-          <li><strong>Across machines, you need ordering only:</strong> Lamport. Cheap, simple, total order from causality.</li>
-          <li><strong>Across machines, you need to detect concurrent updates:</strong> vector clocks. Pay the size cost.</li>
-          <li><strong>You need timestamps that look like wall time but respect causality:</strong> HLC. Default for new distributed databases.</li>
-          <li><strong>You need external consistency at global scale and have the budget:</strong> TrueTime, or accept the latency of a single global Raft group.</li>
+          <li><strong>Within one process:</strong>{" "}monotonic for durations, wall for &quot;when&quot;. Don&apos;t overthink it.</li>
+          <li><strong>Across machines, you need ordering only:</strong>{" "}Lamport. Cheap, simple, total order from causality.</li>
+          <li><strong>Across machines, you need to detect concurrent updates:</strong>{" "}vector clocks. Pay the size cost.</li>
+          <li><strong>You need timestamps that look like wall time but respect causality:</strong>{" "}HLC. Default for new distributed databases.</li>
+          <li><strong>You need external consistency at global scale and have the budget:</strong>{" "}TrueTime, or accept the latency of a single global Raft group.</li>
         </ul>
 
         <Quiz

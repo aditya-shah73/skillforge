@@ -222,8 +222,8 @@ export default function Page() {
           A load balancer&apos;s job is to not send requests to a dead node. To know which nodes are dead, it does health checks. The two flavors:
         </p>
         <ul>
-          <li><strong>Active health checks.</strong> The LB pings each backend on a schedule (typically every 5-30 seconds) on a known endpoint like <code>/healthz</code>. If N consecutive pings fail, the backend is marked unhealthy and removed from rotation. Simple, predictable, but high-latency: a node can be dead for tens of seconds before the LB notices.</li>
-          <li><strong>Passive health checks.</strong> The LB watches real traffic. If a backend returns 5xx or times out on N consecutive real requests, it&apos;s marked unhealthy. Faster than active checks for catching real failures, but you&apos;ve already harmed real users when you notice. Most production setups use both.</li>
+          <li><strong>Active health checks.</strong>{" "}The LB pings each backend on a schedule (typically every 5-30 seconds) on a known endpoint like <code>/healthz</code>. If N consecutive pings fail, the backend is marked unhealthy and removed from rotation. Simple, predictable, but high-latency: a node can be dead for tens of seconds before the LB notices.</li>
+          <li><strong>Passive health checks.</strong>{" "}The LB watches real traffic. If a backend returns 5xx or times out on N consecutive real requests, it&apos;s marked unhealthy. Faster than active checks for catching real failures, but you&apos;ve already harmed real users when you notice. Most production setups use both.</li>
         </ul>
 
         <Callout variant="warn" title="The cascading health check failure">
@@ -334,7 +334,7 @@ public class DownstreamHealthIndicator implements HealthIndicator {
         <h3>The N+1 capacity rule</h3>
 
         <p>
-          Here&apos;s the rule that decides how many backends you need: <strong>provision so that your fleet can absorb peak load with one node down.</strong> Not zero nodes down. One. That&apos;s the N+1 rule (sometimes called &quot;tolerate one fault&quot;).
+          Here&apos;s the rule that decides how many backends you need: <strong>provision so that your fleet can absorb peak load with one node down.</strong>{" "}Not zero nodes down. One. That&apos;s the N+1 rule (sometimes called &quot;tolerate one fault&quot;).
         </p>
         <p>
           The math is simple: if peak load is P and one node can handle C, you need ceil(P/C) + 1 nodes. If P=10k QPS and C=2k QPS per node, you need ceil(10k/2k) + 1 = 6 nodes. Five would let you survive peak, but the moment one dies you&apos;re in overload. Six gives you headroom for one death plus normal variance.

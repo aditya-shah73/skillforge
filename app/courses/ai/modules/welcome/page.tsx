@@ -32,10 +32,10 @@ export default function WelcomeModule() {
       <section>
         <h2>Who this is for</h2>
         <p>
-          You&apos;re a working full-stack engineer — comfortable in <strong>Java/Spring</strong> on the backend, <strong>React</strong> on the frontend, maybe <strong>GraphQL</strong> or REST in between. You ship features. You&apos;ve never trained a model and you&apos;re not trying to become an ML researcher.
+          You&apos;re a working full-stack engineer — comfortable in <strong>Java/Spring</strong>{" "}on the backend, <strong>React</strong>{" "}on the frontend, maybe <strong>GraphQL</strong>{" "}or REST in between. You ship features. You&apos;ve never trained a model and you&apos;re not trying to become an ML researcher.
         </p>
         <p>
-          What you want: to <em>actually understand</em> what&apos;s happening when you call Claude, add a vector database, wire up an agent, or stream tokens into a React app — and then ship production-quality AI features at your day job.
+          What you want: to <em>actually understand</em>{" "}what&apos;s happening when you call Claude, add a vector database, wire up an agent, or stream tokens into a React app — and then ship production-quality AI features at your day job.
         </p>
         <p>That&apos;s exactly what this course is for.</p>
       </section>
@@ -43,29 +43,29 @@ export default function WelcomeModule() {
       <section>
         <h2>What this course <em>is</em></h2>
         <ul>
-          <li><strong>Hands-on, not theory-only.</strong> Every module ends with a project you build. Most in Java.</li>
-          <li><strong>Intuition first, math second.</strong> Every concept starts with an analogy, then the formula, then a worked example with real numbers.</li>
-          <li><strong>Interactive.</strong> Quizzes, drills, and checkpoints. You don&apos;t progress by clicking &quot;next&quot; — you progress by answering correctly.</li>
-          <li><strong>Opinionated.</strong> We&apos;ll tell you when to use agents (rarely), when RAG is overkill, and when a plain prompt is the right answer.</li>
+          <li><strong>Hands-on, not theory-only.</strong>{" "}Every module ends with a project you build. Most in Java.</li>
+          <li><strong>Intuition first, math second.</strong>{" "}Every concept starts with an analogy, then the formula, then a worked example with real numbers.</li>
+          <li><strong>Interactive.</strong>{" "}Quizzes, drills, and checkpoints. You don&apos;t progress by clicking &quot;next&quot; — you progress by answering correctly.</li>
+          <li><strong>Opinionated.</strong>{" "}We&apos;ll tell you when to use agents (rarely), when RAG is overkill, and when a plain prompt is the right answer.</li>
         </ul>
       </section>
 
       <section>
         <h2>What this course is <em>not</em></h2>
         <ul>
-          <li><strong>Not a Python/PyTorch course.</strong> You&apos;ll implement ML from scratch in Java to build real intuition, then move to production tools (Spring AI, Claude API) for the rest.</li>
-          <li><strong>Not a prompt-engineering-only course.</strong> Prompting is one module. The rest is backend engineering, retrieval systems, evals, and production concerns.</li>
-          <li><strong>Not a credential.</strong> There&apos;s no certificate. The portfolio project at the end <em>is</em> the credential.</li>
+          <li><strong>Not a Python/PyTorch course.</strong>{" "}You&apos;ll implement ML from scratch in Java to build real intuition, then move to production tools (Spring AI, Claude API) for the rest.</li>
+          <li><strong>Not a prompt-engineering-only course.</strong>{" "}Prompting is one module. The rest is backend engineering, retrieval systems, evals, and production concerns.</li>
+          <li><strong>Not a credential.</strong>{" "}There&apos;s no certificate. The portfolio project at the end <em>is</em>{" "}the credential.</li>
         </ul>
       </section>
 
       <section>
         <h2>What you&apos;ll need</h2>
         <ul>
-          <li><strong>Java 21+</strong> and your IDE of choice (IntelliJ recommended)</li>
-          <li><strong>Node 20.9+</strong> to run this course app locally</li>
+          <li><strong>Java 21+</strong>{" "}and your IDE of choice (IntelliJ recommended)</li>
+          <li><strong>Node 20.9+</strong>{" "}to run this course app locally</li>
           <li>An <strong>Anthropic API key</strong> (from Phase 2 onward) — budget $5–10 for the entire course</li>
-          <li><strong>Docker</strong> for Postgres + pgvector in Phase 3</li>
+          <li><strong>Docker</strong>{" "}for Postgres + pgvector in Phase 3</li>
           <li>Working knowledge of <strong>Spring Boot</strong>, <strong>React</strong>, and either REST or GraphQL</li>
         </ul>
         <Callout variant="info" title="No prior ML experience required">
@@ -90,8 +90,8 @@ export default function WelcomeModule() {
         </p>
         <ul>
           <li>Explain the concept in <strong>2 minutes</strong> (without jargon)</li>
-          <li><strong>Recognize it in code</strong> you didn&apos;t write</li>
-          <li><strong>Implement it from scratch</strong> in Java</li>
+          <li><strong>Recognize it in code</strong>{" "}you didn&apos;t write</li>
+          <li><strong>Implement it from scratch</strong>{" "}in Java</li>
         </ul>
         <p>
           If you can&apos;t do all three, go back. The modules are designed so that skipping the reinforcement wrecks the next module.
@@ -129,9 +129,9 @@ export default function WelcomeModule() {
       <section>
         <h2>How to get the most out of this</h2>
         <ol>
-          <li><strong>Actually do the projects.</strong> Reading Java code that someone else wrote is not the same as writing it. The from-scratch ML code in Phase 1 feels tedious but <em>builds the mental model</em> that makes everything else click.</li>
-          <li><strong>Don&apos;t skip the worked examples.</strong> When a module says &quot;compute this by hand&quot; — pull out paper and do it. Five minutes of arithmetic beats an hour of re-reading theory.</li>
-          <li><strong>Ship the capstone.</strong> Module 27 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
+          <li><strong>Actually do the projects.</strong>{" "}Reading Java code that someone else wrote is not the same as writing it. The from-scratch ML code in Phase 1 feels tedious but <em>builds the mental model</em>{" "}that makes everything else click.</li>
+          <li><strong>Don&apos;t skip the worked examples.</strong>{" "}When a module says &quot;compute this by hand&quot; — pull out paper and do it. Five minutes of arithmetic beats an hour of re-reading theory.</li>
+          <li><strong>Ship the capstone.</strong>{" "}Module 27 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
         </ol>
       </section>
 

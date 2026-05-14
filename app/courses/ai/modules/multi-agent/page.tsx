@@ -85,27 +85,27 @@ export default function MultiAgentModule() {
 
         <ul className="list-disc pl-6 space-y-2 mb-4">
           <li>
-            <strong>Different specialties need different prompts.</strong> A &quot;security
+            <strong>Different specialties need different prompts.</strong>{" "}A &quot;security
             reviewer&quot; system prompt and a &quot;style reviewer&quot; system prompt are
             different things. Smushing them into one agent dilutes both.
           </li>
           <li>
-            <strong>Independent work that can run in parallel.</strong> If three reviewers
+            <strong>Independent work that can run in parallel.</strong>{" "}If three reviewers
             don&apos;t need to see each other&apos;s output, running them concurrently cuts
             wall-clock time 3x — for free.
           </li>
           <li>
-            <strong>Context isolation.</strong> If subagent A reads 100k tokens of code, you
+            <strong>Context isolation.</strong>{" "}If subagent A reads 100k tokens of code, you
             don&apos;t want that polluting subagent B&apos;s context. Separate agents, separate
             windows.
           </li>
           <li>
-            <strong>Different models for different jobs.</strong> A cheap model picks the route;
+            <strong>Different models for different jobs.</strong>{" "}A cheap model picks the route;
             a smart model handles the hard cases. (This is sometimes called &quot;router&quot;
             or &quot;mixture of experts&quot; at the application level.)
           </li>
           <li>
-            <strong>Evaluator-optimizer loops.</strong> One agent generates, another critiques,
+            <strong>Evaluator-optimizer loops.</strong>{" "}One agent generates, another critiques,
             you iterate. Sometimes worth it for hard quality bars.
           </li>
         </ul>
@@ -127,7 +127,7 @@ export default function MultiAgentModule() {
         <p>
           Be honest about the bill before you decide. Each subagent has its own context, its
           own model calls, its own tool turns. A two-agent orchestrator/subagent typically
-          costs <strong>2.5x to 4x</strong> more tokens than the single-agent version of the
+          costs <strong>2.5x to 4x</strong>{" "}more tokens than the single-agent version of the
           same task — because the orchestrator&apos;s context grows with every subagent
           summary it consumes, on top of the subagents&apos; own contexts.
         </p>
@@ -336,7 +336,7 @@ Voting:
               body: (
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Routing.</strong> A small classifier picks a category; each of the 8
+                    <strong>Routing.</strong>{" "}A small classifier picks a category; each of the 8
                     department assistants is a specialized agent. Don&apos;t use orchestrator —
                     there&apos;s no planning, just dispatch.
                   </p>
@@ -348,7 +348,7 @@ Voting:
               body: (
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Orchestrator/subagent.</strong> Variable plan, deep tool use per
+                    <strong>Orchestrator/subagent.</strong>{" "}Variable plan, deep tool use per
                     step, work mostly sequential but with subagents that benefit from context
                     isolation (the data gatherer&apos;s 80k tokens of scraped pages don&apos;t
                     pollute the writer&apos;s context).
@@ -361,7 +361,7 @@ Voting:
               body: (
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Parallelization (sectioning).</strong> Three independent specialty
+                    <strong>Parallelization (sectioning).</strong>{" "}Three independent specialty
                     prompts on the same diff, run concurrently, merged at the end. Cuts
                     wall-clock by 3x and each reviewer gets a sharp specialty prompt.
                   </p>
@@ -373,7 +373,7 @@ Voting:
               body: (
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Prompt chaining (a workflow).</strong> Three sequential structured
+                    <strong>Prompt chaining (a workflow).</strong>{" "}Three sequential structured
                     LLM calls — that&apos;s a pipeline, not multi-agent. Don&apos;t over-build.
                   </p>
                 </>
@@ -384,7 +384,7 @@ Voting:
               body: (
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Parallelization (voting).</strong> Run 3–5 detector calls (different
+                    <strong>Parallelization (voting).</strong>{" "}Run 3–5 detector calls (different
                     prompts or models) in parallel; flag if any one says &quot;injected&quot;.
                     The false-negative cost justifies the redundancy.
                   </p>
@@ -533,16 +533,16 @@ public class ParallelReviewer {
 
         <ol className="list-decimal pl-6 space-y-2 mb-4">
           <li>
-            <strong>All-or-nothing.</strong> Any failure → fail the request. Easiest to reason
+            <strong>All-or-nothing.</strong>{" "}Any failure → fail the request. Easiest to reason
             about. Use when results are tightly coupled (voting needs all votes).
           </li>
           <li>
-            <strong>Best-effort.</strong> Return what succeeded; mark the failed sections as
+            <strong>Best-effort.</strong>{" "}Return what succeeded; mark the failed sections as
             &quot;could not review&quot;. Use when sections are independent (sectioning) and
             users prefer partial info to none.
           </li>
           <li>
-            <strong>Retry-then-degrade.</strong> Retry the failed call once with a cheaper or
+            <strong>Retry-then-degrade.</strong>{" "}Retry the failed call once with a cheaper or
             faster model; only mark as failed if both shots fail. More moving parts, often
             worth it for user-facing flows.
           </li>
@@ -1027,29 +1027,29 @@ public class PrReviewService {
 
         <ol className="list-decimal pl-6 space-y-2 mb-4">
           <li>
-            <strong>Clean diff:</strong> a small, well-written change. All three reviewers
+            <strong>Clean diff:</strong>{" "}a small, well-written change. All three reviewers
             should produce empty findings; verdict = APPROVE.
           </li>
           <li>
-            <strong>SQL injection planted:</strong> a diff that concatenates user input into
+            <strong>SQL injection planted:</strong>{" "}a diff that concatenates user input into
             SQL. Security should flag CRITICAL; verdict = REQUEST_CHANGES.
           </li>
           <li>
-            <strong>N+1 query planted:</strong> a loop that hits the DB inside. Performance
+            <strong>N+1 query planted:</strong>{" "}a loop that hits the DB inside. Performance
             should flag HIGH or MEDIUM.
           </li>
           <li>
-            <strong>Lane discipline:</strong> a diff with a security <em>and</em> a naming
+            <strong>Lane discipline:</strong>{" "}a diff with a security <em>and</em>{" "}a naming
             issue. Confirm only the security reviewer flags the security issue and only the
             style reviewer flags the naming issue.
           </li>
           <li>
-            <strong>Reviewer failure:</strong> stub one of the ChatClients to throw. Confirm
+            <strong>Reviewer failure:</strong>{" "}stub one of the ChatClients to throw. Confirm
             best-effort path works — report comes back with two sections + one
             &quot;unavailable&quot; section.
           </li>
           <li>
-            <strong>Wall-clock comparison:</strong> measure latency vs running the three
+            <strong>Wall-clock comparison:</strong>{" "}measure latency vs running the three
             reviewers sequentially. You should see roughly 3x speedup.
           </li>
         </ol>
@@ -1069,13 +1069,13 @@ public class PrReviewService {
             actually working — it&apos;s the most useful debugging signal you&apos;ll have).
           </p>
           <p className="mt-3">
-            <strong>Stretch goal:</strong> add a fourth reviewer — &quot;test
+            <strong>Stretch goal:</strong>{" "}add a fourth reviewer — &quot;test
             coverage&quot; — that flags new logic added without corresponding tests.
-            Importantly, run with <em>four</em> in parallel and confirm the structured
+            Importantly, run with <em>four</em>{" "}in parallel and confirm the structured
             concurrency scope still gives you 4x speedup vs sequential.
           </p>
           <p className="mt-3">
-            <strong>Bigger stretch:</strong> wire the panel to a webhook that runs on every
+            <strong>Bigger stretch:</strong>{" "}wire the panel to a webhook that runs on every
             new PR in a target repo and posts the merged TL;DR as a PR comment. Now you have
             something that&apos;s genuinely useful, not just instructive.
           </p>
@@ -1091,9 +1091,9 @@ public class PrReviewService {
         <p>That&apos;s Phase 5. You&apos;ve gone from:</p>
 
         <ul className="list-disc pl-6 space-y-1 mb-4">
-          <li><strong>Module 21:</strong> what an agent is, by hand — a loop with tools and stop conditions</li>
-          <li><strong>Module 22:</strong> agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
-          <li><strong>Module 23:</strong> when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
+          <li><strong>Module 21:</strong>{" "}what an agent is, by hand — a loop with tools and stop conditions</li>
+          <li><strong>Module 22:</strong>{" "}agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
+          <li><strong>Module 23:</strong>{" "}when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
         </ul>
 
         <p>

@@ -30,7 +30,7 @@ export default function Home() {
           <h3 className="text-lg font-bold tracking-tight mb-3">Prerequisites</h3>
           <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300 m-0 p-0 list-none">
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java / Spring Boot</strong></span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfortable with <strong>React</strong> and REST or GraphQL</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfortable with <strong>React</strong>{" "}and REST or GraphQL</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>No prior ML experience required — we build up from zero</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>An <strong>Anthropic API key</strong> (from Phase 2 onward, ~$5–10 budget)</span></li>
           </ul>

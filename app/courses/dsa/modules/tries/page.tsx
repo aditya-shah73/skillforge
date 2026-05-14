@@ -178,8 +178,8 @@ List<String> wordsWithPrefix(String prefix) {
 }`}</CodeBlock>
 
         <p>
-          Better: <strong>O(L log N)</strong> to find the first match, then O(K · L) to enumerate K matches. But the
-          <em>find</em> phase is still proportional to log N — every keystroke pays a log factor in N. And if the
+          Better: <strong>O(L log N)</strong>{" "}to find the first match, then O(K · L) to enumerate K matches. But the
+          <em>find</em>{" "}phase is still proportional to log N — every keystroke pays a log factor in N. And if the
           dictionary mutates (autocomplete adds new entries as the user types), keeping the array sorted costs O(N) per
           insert.
         </p>
@@ -188,7 +188,7 @@ List<String> wordsWithPrefix(String prefix) {
 
         <Callout variant="insight" title="The dream complexity">
           <p>
-            <code>wordsWithPrefix(prefix)</code> in <strong>O(L)</strong> to <em>find</em> the matches — independent of N
+            <code>wordsWithPrefix(prefix)</code> in <strong>O(L)</strong>{" "}to <em>find</em>{" "}the matches — independent of N
             — plus O(K · L) to enumerate K matches. Insert in O(L). Mutate freely. The structure should grow with the
             shape of the data, not its size.
           </p>
@@ -235,7 +235,7 @@ List<String> wordsWithPrefix(String prefix) {
         <h2 id="structure">The trie data structure</h2>
 
         <p>
-          A trie is a tree where each <em>edge</em> is labeled with one character. A path from the root to a node
+          A trie is a tree where each <em>edge</em>{" "}is labeled with one character. A path from the root to a node
           spells out a string. Some nodes are marked as &quot;end of word&quot; — meaning &quot;the path that ends here
           is a real word in the dictionary&quot;. Nodes that aren&apos;t marked are still useful: they hold the
           structural backbone for words that pass through them.
@@ -251,14 +251,14 @@ List<String> wordsWithPrefix(String prefix) {
 
         <p>
           Notice what just happened. The three words share the prefix <code>ca</code>, and that prefix appears
-          <strong> exactly once</strong> in the structure. <code>car</code> and <code>card</code> share even more —
+          <strong> exactly once</strong>{" "}in the structure. <code>car</code> and <code>card</code> share even more —
           <code>card</code> is just <code>car</code> with one more character beneath it. This is the structural-sharing
           win that drives every trie advantage:
         </p>
 
         <Mermaid chart={sharing} />
         <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
-          A HashSet stores three independent strings. A trie stores their <em>shared structure</em> once.
+          A HashSet stores three independent strings. A trie stores their <em>shared structure</em>{" "}once.
         </p>
 
         <Callout variant="insight" title="Why the structure is the answer">
@@ -270,7 +270,7 @@ List<String> wordsWithPrefix(String prefix) {
           </p>
           <p>
             Both queries depend on the prefix length, not the dictionary size. The dictionary size shows up only
-            when you actually need to <em>enumerate</em> matches — and even then it&apos;s output-sensitive: you pay
+            when you actually need to <em>enumerate</em>{" "}matches — and even then it&apos;s output-sensitive: you pay
             O(K · L) to list K matches, not O(N).
           </p>
         </Callout>
@@ -391,7 +391,7 @@ List<String> wordsWithPrefix(String prefix) {
 
         <p>
           Walk down the same way, but if you ever hit a missing child, the word isn&apos;t in the trie. At the end,
-          confirm <code>isEnd</code> — because reaching a node only proves the word is a <em>prefix</em> of something in
+          confirm <code>isEnd</code> — because reaching a node only proves the word is a <em>prefix</em>{" "}of something in
           the dictionary, not necessarily a stored word itself.
         </p>
 
@@ -433,7 +433,7 @@ private TrieNode walkDown(String s) {
         <p>
           That tiny one-line difference — checking <code>isEnd</code> or not — is the entire reason tries beat hashmaps
           on autocomplete-style problems. <code>HashMap&lt;String, V&gt;.containsKey</code> can answer
-          <em> &quot;is this exactly a key?&quot;</em> but not <em>&quot;is this a prefix of any key?&quot;</em>. The
+          <em> &quot;is this exactly a key?&quot;</em>{" "}but not <em>&quot;is this a prefix of any key?&quot;</em>. The
           trie answers both with the same machinery.
         </p>
 
@@ -485,16 +485,16 @@ private TrieNode walkDown(String s) {
           <p>
             Notice all three operations share the same <code>walk</code> helper. That&apos;s not just code reuse —
             it&apos;s a design hint. Any operation you add later (delete, count-words-with-prefix, longest-common-prefix)
-            will start with the same walk. The trie&apos;s structure <em>is</em> its API.
+            will start with the same walk. The trie&apos;s structure <em>is</em>{" "}its API.
           </p>
         </Callout>
 
         <h3>Complexity recap</h3>
 
         <ul>
-          <li><code>insert(word)</code>: <strong>O(L)</strong> time, up to L new nodes allocated.</li>
-          <li><code>search(word)</code>: <strong>O(L)</strong> time, no allocations.</li>
-          <li><code>startsWith(prefix)</code>: <strong>O(|prefix|)</strong> time, no allocations.</li>
+          <li><code>insert(word)</code>: <strong>O(L)</strong>{" "}time, up to L new nodes allocated.</li>
+          <li><code>search(word)</code>: <strong>O(L)</strong>{" "}time, no allocations.</li>
+          <li><code>startsWith(prefix)</code>: <strong>O(|prefix|)</strong>{" "}time, no allocations.</li>
           <li><code>wordsWithPrefix(prefix)</code> (enumeration): O(|prefix|) to find, then O(K · L) to walk the subtree and emit K results.</li>
         </ul>
 
@@ -545,12 +545,12 @@ private TrieNode walkDown(String s) {
 }`}</CodeBlock>
 
         <ul>
-          <li><strong>Lookup &quot;does this character go here?&quot;:</strong> O(1), one array index. No hashing, no comparison.</li>
+          <li><strong>Lookup &quot;does this character go here?&quot;:</strong>{" "}O(1), one array index. No hashing, no comparison.</li>
           <li>
             <strong>Memory per node:</strong> 26 reference slots × 8 bytes (on a 64-bit JVM) = 208 bytes — even if the
             node only actually uses one or two slots. Plus header + isEnd. ~220 bytes total.
           </li>
-          <li><strong>Best for:</strong> dense alphabets where most slots are used (English-words tries near the root, especially), and when you want the absolute fastest per-character cost.</li>
+          <li><strong>Best for:</strong>{" "}dense alphabets where most slots are used (English-words tries near the root, especially), and when you want the absolute fastest per-character cost.</li>
         </ul>
 
         <h3>Option B — HashMap children</h3>
@@ -561,13 +561,13 @@ private TrieNode walkDown(String s) {
 }`}</CodeBlock>
 
         <ul>
-          <li><strong>Lookup:</strong> O(1) average, but with the hashmap constant factor — hashCode, equals, bucket walk. Several times slower per character than the array version in practice.</li>
+          <li><strong>Lookup:</strong>{" "}O(1) average, but with the hashmap constant factor — hashCode, equals, bucket walk. Several times slower per character than the array version in practice.</li>
           <li>
-            <strong>Memory per node:</strong> a small HashMap with K entries is roughly 48 + 32·K bytes. A node with 2
+            <strong>Memory per node:</strong>{" "}a small HashMap with K entries is roughly 48 + 32·K bytes. A node with 2
             children: ~112 bytes. A node with 26 children: ~880 bytes. The break-even with the array version is around
             K ≈ 5: below that, HashMap wins on memory; above that, the array wins.
           </li>
-          <li><strong>Best for:</strong> sparse alphabets (Unicode, full ASCII, mixed-case strings, words with digits and punctuation), and the deep parts of a trie where most nodes have just one child.</li>
+          <li><strong>Best for:</strong>{" "}sparse alphabets (Unicode, full ASCII, mixed-case strings, words with digits and punctuation), and the deep parts of a trie where most nodes have just one child.</li>
         </ul>
 
         <h3>How big is a trie, anyway?</h3>
@@ -696,7 +696,7 @@ bytes  ≈ 1,000,000 × ~80 (avg, since most nodes have 1–2 children) = 80 MB`
         </p>
 
         <p>
-          A trie answers <em>that</em> question in O(1). And once we&apos;re at a trie node, we know exactly which next
+          A trie answers <em>that</em>{" "}question in O(1). And once we&apos;re at a trie node, we know exactly which next
           characters could possibly continue a word — they&apos;re the keys of <code>node.children</code>. So:
         </p>
 
@@ -777,7 +777,7 @@ private TrieNode buildTrie(String[] words) {
 
         <ol>
           <li>
-            <strong>Storing the word at terminal nodes</strong> instead of a boolean. When the DFS hits a terminal,
+            <strong>Storing the word at terminal nodes</strong>{" "}instead of a boolean. When the DFS hits a terminal,
             it has the full string in hand and doesn&apos;t need to reconstruct it from the path — saves both code and
             a string-builder allocation per match.
           </li>
@@ -787,7 +787,7 @@ private TrieNode buildTrie(String[] words) {
             and need a HashSet pass at the end.
           </li>
           <li>
-            <strong>In-place visited marking</strong> via <code>board[r][c] = &apos;#&apos;</code> then restore on
+            <strong>In-place visited marking</strong>{" "}via <code>board[r][c] = &apos;#&apos;</code> then restore on
             backtrack. Avoids allocating an explicit visited matrix. The character &apos;#&apos; is outside [a, z] so
             <code>board[r][c] - &apos;a&apos;</code> falls outside the children array&apos;s valid index range — except
             that we check <code>ch == &apos;#&apos;</code> first to short-circuit.
@@ -797,7 +797,7 @@ private TrieNode buildTrie(String[] words) {
         <Callout variant="warn" title="One edge case: what if a node has no children left?">
           <p>
             After reporting a word and continuing the DFS, the trie node we&apos;re at might have no remaining
-            children. A common further optimization is to <strong>prune the trie</strong> as we go: when a node has no
+            children. A common further optimization is to <strong>prune the trie</strong>{" "}as we go: when a node has no
             children left and no word, splice it out of the parent. This means &quot;shrink the search space as words
             are found&quot;. It&apos;s about 5 extra lines and meaningful for large word lists. The skeleton above is
             the cleanest version that passes LC 212; the pruning is a stretch upgrade.
@@ -807,12 +807,12 @@ private TrieNode buildTrie(String[] words) {
         <h3>Complexity</h3>
 
         <ul>
-          <li><strong>Build trie:</strong> O(W · L) time and memory.</li>
-          <li><strong>DFS:</strong> bounded by the number of valid trie-paths through the board. In the worst case still O(M · N · 4<sup>L_max</sup>), but the pruning eliminates most paths early — orders of magnitude faster in practice.</li>
+          <li><strong>Build trie:</strong>{" "}O(W · L) time and memory.</li>
+          <li><strong>DFS:</strong>{" "}bounded by the number of valid trie-paths through the board. In the worst case still O(M · N · 4<sup>L_max</sup>), but the pruning eliminates most paths early — orders of magnitude faster in practice.</li>
         </ul>
 
         <p>
-          The headline win: instead of W independent searches, you do <em>one</em> search that prunes the moment the
+          The headline win: instead of W independent searches, you do <em>one</em>{" "}search that prunes the moment the
           board path diverges from every dictionary word.
         </p>
 
@@ -915,19 +915,19 @@ class TrieNode {
 
         <p>
           The key line is <code>if (n.isEnd) return sb.toString();</code> — the first <code>isEnd</code> we hit during
-          the walk is by construction the <em>shortest</em> root that&apos;s a prefix of the word. We don&apos;t need to
+          the walk is by construction the <em>shortest</em>{" "}root that&apos;s a prefix of the word. We don&apos;t need to
           continue past it.
         </p>
 
         <Callout variant="insight" title="The 'walk until isEnd' pattern">
           <p>
-            This is a recurring trie idiom: walk down character by character; the <em>first</em> isEnd you encounter
+            This is a recurring trie idiom: walk down character by character; the <em>first</em>{" "}isEnd you encounter
             is the answer. It shows up in Replace Words, in detecting whether one word is a prefix of another in a
             dictionary, in spell-checkers (&quot;did the user type a known prefix and stop?&quot;), and in tokenizers
             for compressed encodings like Huffman codes (where the trie is binary and isEnd marks a complete codeword).
           </p>
           <p>
-            The shape: walk down → first isEnd wins. If you ever want the <em>longest</em> matching prefix instead, walk
+            The shape: walk down → first isEnd wins. If you ever want the <em>longest</em>{" "}matching prefix instead, walk
             all the way and remember the deepest isEnd seen. Same trie, different bookkeeping.
           </p>
         </Callout>
@@ -935,9 +935,9 @@ class TrieNode {
         <h3>Complexity</h3>
 
         <ul>
-          <li><strong>Build trie:</strong> O(R · L<sub>r</sub>) for R roots of average length L<sub>r</sub>.</li>
-          <li><strong>Per word in sentence:</strong> O(L<sub>w</sub>) — one trie walk capped at the word&apos;s length.</li>
-          <li><strong>Total:</strong> O(R · L<sub>r</sub> + total characters in sentence). Linear in the input.</li>
+          <li><strong>Build trie:</strong>{" "}O(R · L<sub>r</sub>) for R roots of average length L<sub>r</sub>.</li>
+          <li><strong>Per word in sentence:</strong>{" "}O(L<sub>w</sub>) — one trie walk capped at the word&apos;s length.</li>
+          <li><strong>Total:</strong>{" "}O(R · L<sub>r</sub> + total characters in sentence). Linear in the input.</li>
         </ul>
 
         <h3>The full mental checklist for &quot;is this a trie problem?&quot;</h3>
@@ -946,18 +946,18 @@ class TrieNode {
 
         <ul>
           <li><strong>Prefix matters.</strong> &quot;Find all words starting with X.&quot; &quot;Does any word start with this prefix?&quot; &quot;Shortest/longest matching prefix.&quot; The hashmap can&apos;t do these.</li>
-          <li><strong>Many words checked against many positions.</strong> Word Search II, dictionary-against-grid. The trie consolidates the per-word DFS into one shared traversal.</li>
-          <li><strong>Autocomplete or typeahead.</strong> The product UX literally requires &quot;what continues this prefix?&quot; — a trie answers it natively.</li>
-          <li><strong>Streaming insertions and queries.</strong> Sorted-array binary search needs O(N) per insert; a trie inserts in O(L) and continues to answer prefix queries fast.</li>
+          <li><strong>Many words checked against many positions.</strong>{" "}Word Search II, dictionary-against-grid. The trie consolidates the per-word DFS into one shared traversal.</li>
+          <li><strong>Autocomplete or typeahead.</strong>{" "}The product UX literally requires &quot;what continues this prefix?&quot; — a trie answers it natively.</li>
+          <li><strong>Streaming insertions and queries.</strong>{" "}Sorted-array binary search needs O(N) per insert; a trie inserts in O(L) and continues to answer prefix queries fast.</li>
         </ul>
 
         <p>Don&apos;t reach for a trie when:</p>
 
         <ul>
-          <li><strong>You only need exact membership.</strong> HashMap/HashSet are simpler and use less memory.</li>
-          <li><strong>The strings are very long and rarely share prefixes.</strong> The trie&apos;s structural-sharing payoff vanishes; you&apos;re paying memory for nothing.</li>
-          <li><strong>Memory is tight.</strong> A 26-array trie can use 5-10× the memory of an equivalent HashSet for English words. Compressed variants exist but add code.</li>
-          <li><strong>The problem is fundamentally about word distance or anagrams.</strong> Those are different problem families — sort the characters, or use edit-distance DP, not a trie.</li>
+          <li><strong>You only need exact membership.</strong>{" "}HashMap/HashSet are simpler and use less memory.</li>
+          <li><strong>The strings are very long and rarely share prefixes.</strong>{" "}The trie&apos;s structural-sharing payoff vanishes; you&apos;re paying memory for nothing.</li>
+          <li><strong>Memory is tight.</strong>{" "}A 26-array trie can use 5-10× the memory of an equivalent HashSet for English words. Compressed variants exist but add code.</li>
+          <li><strong>The problem is fundamentally about word distance or anagrams.</strong>{" "}Those are different problem families — sort the characters, or use edit-distance DP, not a trie.</li>
         </ul>
 
         <h3>Project · build it from scratch</h3>
@@ -986,7 +986,7 @@ class TrieNode {
             adding two integer counters per node: a count of word-terminations at this node (incremented in
             <code> insert</code>, used by <code>countWordsEqualTo</code>) and a count of words passing through this
             node (incremented at every step of <code>insert</code>, used by <code>countWordsStartingWith</code>). Both
-            queries become O(L). Don&apos;t forget to <em>decrement</em> in <code>erase</code>.
+            queries become O(L). Don&apos;t forget to <em>decrement</em>{" "}in <code>erase</code>.
           </p>
         </Callout>
 

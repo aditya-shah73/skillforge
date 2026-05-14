@@ -155,7 +155,7 @@ stateDiagram-v2
         </div>
 
         <Callout variant="warn">
-          <strong>The cascading health check failure:</strong> if <code>/healthz</code> hits the database, then when the DB flaps, <em>every</em> backend fails health checks at once and the LB removes them all. Liveness checks must be shallow (&quot;is the JVM up?&quot;). Readiness checks can be deep — but only gate startup, not ongoing rotation.
+          <strong>The cascading health check failure:</strong>{" "}if <code>/healthz</code> hits the database, then when the DB flaps, <em>every</em>{" "}backend fails health checks at once and the LB removes them all. Liveness checks must be shallow (&quot;is the JVM up?&quot;). Readiness checks can be deep — but only gate startup, not ongoing rotation.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -224,7 +224,7 @@ stateDiagram-v2
         </div>
 
         <Callout variant="insight">
-          <strong>Distributed rate limiting = Redis + Lua.</strong> A naive <code>GET</code>/<code>INCR</code>/<code>EXPIRE</code> sequence has a race window where two callers can both pass. The fix is a single Lua script that does check-decrement-set atomically inside Redis. One round trip, no race. Bucket4j has this baked in.
+          <strong>Distributed rate limiting = Redis + Lua.</strong>{" "}A naive <code>GET</code>/<code>INCR</code>/<code>EXPIRE</code> sequence has a race window where two callers can both pass. The fix is a single Lua script that does check-decrement-set atomically inside Redis. One round trip, no race. Bucket4j has this baked in.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -246,7 +246,7 @@ stateDiagram-v2
         </div>
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 mb-6">
-          <li><strong>LB</strong> chooses which backend gets the request. <strong>Rate limiter</strong> decides whether the request gets through at all. <strong>Circuit breaker</strong> short-circuits when the downstream is broken. <strong>Timeout + bulkhead</strong> keep one slow dependency from eating all your threads. <strong>Idempotency</strong> makes retries safe. <strong>Observability</strong> tells you when something&apos;s wrong; the alert wakes <strong>on-call</strong>.</li>
+          <li><strong>LB</strong>{" "}chooses which backend gets the request. <strong>Rate limiter</strong>{" "}decides whether the request gets through at all. <strong>Circuit breaker</strong>{" "}short-circuits when the downstream is broken. <strong>Timeout + bulkhead</strong>{" "}keep one slow dependency from eating all your threads. <strong>Idempotency</strong>{" "}makes retries safe. <strong>Observability</strong>{" "}tells you when something&apos;s wrong; the alert wakes <strong>on-call</strong>.</li>
           <li>Each layer fails in a way the next layer can&apos;t fix. A circuit breaker can&apos;t un-overload an underprovisioned fleet (LB problem). Idempotency can&apos;t recover from missing observability (no one knew the retry happened). Postmortems can&apos;t replace runbooks (you needed the runbook at 3am).</li>
         </ul>
 
@@ -271,31 +271,31 @@ stateDiagram-v2
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Retry</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong> the failure is transient — a brief network blip, a quick DB failover.</p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0"><strong>Hurts when:</strong> the downstream is already overloaded. Retries amplify load and turn a brownout into an outage. Always pair with <em>exponential backoff + jitter</em> and a small max-attempts (3, not 10).</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong>{" "}the failure is transient — a brief network blip, a quick DB failover.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0"><strong>Hurts when:</strong>{" "}the downstream is already overloaded. Retries amplify load and turn a brownout into an outage. Always pair with <em>exponential backoff + jitter</em>{" "}and a small max-attempts (3, not 10).</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-rose-50/40 dark:bg-rose-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Circuit breaker</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong> the downstream is broken and you want to fail fast instead of piling up threads.</p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0"><strong>Without a fallback,</strong> opening the breaker just trades one error for another (now you 5xx faster). Pair with a degraded-mode fallback — cached response, default value, queued for retry — whenever a real one exists.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong>{" "}the downstream is broken and you want to fail fast instead of piling up threads.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0"><strong>Without a fallback,</strong>{" "}opening the breaker just trades one error for another (now you 5xx faster). Pair with a degraded-mode fallback — cached response, default value, queued for retry — whenever a real one exists.</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Bulkhead</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong> one slow dependency can starve every thread in your service.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong>{" "}one slow dependency can starve every thread in your service.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Cap concurrent calls per downstream so &quot;payments is slow&quot; doesn&apos;t turn into &quot;the whole service is down.&quot; The bulkhead is what prevents thread-pool exhaustion cascading sideways.</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-sky-50/40 dark:bg-sky-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Timeout</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong> always. Every remote call must have a timeout shorter than your caller&apos;s timeout.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0 mb-2"><strong>Helps when:</strong>{" "}always. Every remote call must have a timeout shorter than your caller&apos;s timeout.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300 m-0">The most common reliability bug is &quot;no timeout configured, so we waited forever.&quot; If you remember one Resilience4j rule, make it this one.</p>
           </div>
         </div>
 
         <Callout variant="insight">
-          <strong>Composition order (outer to inner):</strong> Retry → CircuitBreaker → RateLimiter → TimeLimiter → Bulkhead → call. Retry on the outside so it sees the breaker&apos;s short-circuit and doesn&apos;t retry into an open breaker. Timeout inside so each attempt is bounded. Inverting this order is one of the classic Resilience4j bugs.
+          <strong>Composition order (outer to inner):</strong>{" "}Retry → CircuitBreaker → RateLimiter → TimeLimiter → Bulkhead → call. Retry on the outside so it sees the breaker&apos;s short-circuit and doesn&apos;t retry into an open breaker. Timeout inside so each attempt is bounded. Inverting this order is one of the classic Resilience4j bugs.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -316,7 +316,7 @@ stateDiagram-v2
           <h3 className="text-base font-semibold mb-3 mt-0">The standard pattern</h3>
           <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-decimal pl-5 mb-0">
             <li>Client sends <code>Idempotency-Key: &lt;uuid&gt;</code> header (and re-sends the same key on retry).</li>
-            <li>Server checks a <strong>dedupe table</strong> keyed by <code>(account_id, idempotency_key)</code>. Per-account scoping is non-negotiable — never global.</li>
+            <li>Server checks a <strong>dedupe table</strong>{" "}keyed by <code>(account_id, idempotency_key)</code>. Per-account scoping is non-negotiable — never global.</li>
             <li>If key is new: process the request, cache the full response (status + body) in the dedupe row.</li>
             <li>If key exists: skip processing, replay the cached response. Same status, same body, same headers.</li>
             <li>TTL the row (24h–7d is typical). Long enough to cover all reasonable client retries; short enough to not bloat the table forever.</li>
@@ -326,7 +326,7 @@ stateDiagram-v2
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">The trap</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Client retries with the <em>same</em> idempotency key but a <strong>different request body</strong>. Naive servers will silently replay the old response and the user thinks the new request succeeded. Always fingerprint the body (hash it, store the hash with the row) and 422 if the fingerprint changed.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 m-0">Client retries with the <em>same</em>{" "}idempotency key but a <strong>different request body</strong>. Naive servers will silently replay the old response and the user thinks the new request succeeded. Always fingerprint the body (hash it, store the hash with the row) and 422 if the fingerprint changed.</p>
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">The deeper truth</div>
@@ -472,7 +472,7 @@ stateDiagram-v2
         </div>
 
         <Callout variant="warn">
-          <strong>Runbooks are written when nothing&apos;s on fire, used when everything is.</strong> Every page-able alert should link to a runbook with: what this alert means, what to check first, common causes, who to escalate to. If you&apos;re writing the runbook at 3am, the alert was misconfigured. And error budgets — the inverse of your SLO — are how you decide between &quot;ship faster&quot; and &quot;invest in reliability&quot; without it becoming a feelings debate.
+          <strong>Runbooks are written when nothing&apos;s on fire, used when everything is.</strong>{" "}Every page-able alert should link to a runbook with: what this alert means, what to check first, common causes, who to escalate to. If you&apos;re writing the runbook at 3am, the alert was misconfigured. And error budgets — the inverse of your SLO — are how you decide between &quot;ship faster&quot; and &quot;invest in reliability&quot; without it becoming a feelings debate.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -677,7 +677,7 @@ if (cached.isPresent()) {
           Load balancing, rate limiting, the Resilience4j patterns, idempotency, the three pillars of observability, and the human side of on-call. That&apos;s the reliability toolkit. The patterns from here on out will assume you reach for them automatically.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Distributed Systems Deep.</strong> Consensus, Raft &amp; Paxos, when you actually need them, leader election. The theory under the systems you&apos;ve been building.
+          <strong>Up next: Phase 5 — Distributed Systems Deep.</strong>{" "}Consensus, Raft &amp; Paxos, when you actually need them, leader election. The theory under the systems you&apos;ve been building.
         </p>
         <Link
           href="/courses/system-design/modules/consensus"

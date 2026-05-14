@@ -124,7 +124,7 @@ flowchart TD
             </p>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
               <li>Rubric-driven, not free-form &quot;rate 1–10&quot;</li>
-              <li><strong>Pairwise &gt; absolute</strong> for subtle quality</li>
+              <li><strong>Pairwise &gt; absolute</strong>{" "}for subtle quality</li>
               <li>Judge model ≠ generation model (avoid self-preference)</li>
               <li>Calibrate judge against ~50 human-rated cases</li>
             </ul>
@@ -207,7 +207,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight" title="The pairwise advantage">
-          Absolute scoring (&quot;rate this 1–5&quot;) drifts: the judge&apos;s scale calibration moves with the prompt, the time of day, the model version. <strong>Pairwise (A vs B)</strong> sidesteps all of that — you&apos;re only asking which is better, not how good either is. Use pairwise whenever you&apos;re comparing two versions of a prompt or model. Use absolute only when there&apos;s no &quot;other version&quot; to compare against.
+          Absolute scoring (&quot;rate this 1–5&quot;) drifts: the judge&apos;s scale calibration moves with the prompt, the time of day, the model version. <strong>Pairwise (A vs B)</strong>{" "}sidesteps all of that — you&apos;re only asking which is better, not how good either is. Use pairwise whenever you&apos;re comparing two versions of a prompt or model. Use absolute only when there&apos;s no &quot;other version&quot; to compare against.
         </Callout>
 
         <Callout variant="warn" title="Never let the model judge itself">
@@ -336,7 +336,7 @@ flowchart TD
         </ul>
 
         <Callout variant="warn" title="The rule you must internalize">
-          <strong>User input is data, not instruction. Retrieved content is data, not instruction. Tool output is data, not instruction.</strong> The only thing in the prompt that holds instruction authority is the system prompt you wrote. Every defense in this card is a different way to enforce that.
+          <strong>User input is data, not instruction. Retrieved content is data, not instruction. Tool output is data, not instruction.</strong>{" "}The only thing in the prompt that holds instruction authority is the system prompt you wrote. Every defense in this card is a different way to enforce that.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -405,7 +405,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight" title="The 90% rule">
-          <strong>Prompt engineering + RAG handles ~90% of production cases.</strong> Fine-tuning is the right answer when (a) style/voice is a hard product requirement, (b) you have a curated dataset of ≥ a few thousand high-quality examples, or (c) you&apos;re distilling a big model into a small one for cost. If none of those apply, fine-tuning is almost always premature optimization — and you&apos;ll re-pay the cost every time the base model improves.
+          <strong>Prompt engineering + RAG handles ~90% of production cases.</strong>{" "}Fine-tuning is the right answer when (a) style/voice is a hard product requirement, (b) you have a curated dataset of ≥ a few thousand high-quality examples, or (c) you&apos;re distilling a big model into a small one for cost. If none of those apply, fine-tuning is almost always premature optimization — and you&apos;ll re-pay the cost every time the base model improves.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -640,7 +640,7 @@ public Response chat(ChatRequest req, User u) {
           Evals, security, the fine-tune-vs-RAG-vs-prompt decision, the readiness checklist — that&apos;s the production AI mental model in one card. The capstone is where you wire all of it together into a single end-to-end system. Take the checklist with you; treat every item as a hard requirement, not an aspiration.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: the capstone.</strong> One project, end-to-end AI engineering assistant, every concept from Phases 1–6 on the line.
+          <strong>Up next: the capstone.</strong>{" "}One project, end-to-end AI engineering assistant, every concept from Phases 1–6 on the line.
         </p>
         <Link
           href="/courses/ai/modules/capstone"

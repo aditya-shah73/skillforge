@@ -81,9 +81,9 @@ export default function Page() {
         <Mermaid chart={cbStateMachine} />
 
         <ul>
-          <li><strong>CLOSED.</strong> Normal operation. Calls pass through. Resilience4j tracks success/failure on a sliding window.</li>
-          <li><strong>OPEN.</strong> Calls fail-fast with <code>CallNotPermittedException</code>. The breaker stays open for a configured wait duration (typically 30-60s).</li>
-          <li><strong>HALF_OPEN.</strong> A small number of trial calls (configurable, default 10) are permitted. If they meet the success threshold, the breaker closes; if not, it returns to OPEN for another wait period.</li>
+          <li><strong>CLOSED.</strong>{" "}Normal operation. Calls pass through. Resilience4j tracks success/failure on a sliding window.</li>
+          <li><strong>OPEN.</strong>{" "}Calls fail-fast with <code>CallNotPermittedException</code>. The breaker stays open for a configured wait duration (typically 30-60s).</li>
+          <li><strong>HALF_OPEN.</strong>{" "}A small number of trial calls (configurable, default 10) are permitted. If they meet the success threshold, the breaker closes; if not, it returns to OPEN for another wait period.</li>
         </ul>
 
         <h3>The metrics that drive transitions</h3>
@@ -92,12 +92,12 @@ export default function Page() {
           Resilience4j supports two sliding-window strategies:
         </p>
         <ul>
-          <li><strong>Count-based.</strong> Look at the last N calls. Trip if the failure rate exceeds the threshold. Predictable but biased toward recent past.</li>
-          <li><strong>Time-based.</strong> Look at the last N seconds. Trip on the windowed failure rate. Better for low-traffic services where the count-based window can take a long time to fill.</li>
+          <li><strong>Count-based.</strong>{" "}Look at the last N calls. Trip if the failure rate exceeds the threshold. Predictable but biased toward recent past.</li>
+          <li><strong>Time-based.</strong>{" "}Look at the last N seconds. Trip on the windowed failure rate. Better for low-traffic services where the count-based window can take a long time to fill.</li>
         </ul>
 
         <p>
-          The threshold itself is a percentage, not a count — usually 50%. The <em>minimum number of calls</em> setting prevents tripping on a single failure when traffic is low: don&apos;t evaluate the breaker until you&apos;ve seen at least N calls.
+          The threshold itself is a percentage, not a count — usually 50%. The <em>minimum number of calls</em>{" "}setting prevents tripping on a single failure when traffic is low: don&apos;t evaluate the breaker until you&apos;ve seen at least N calls.
         </p>
 
         <CodeBlock lang="java" caption="Configuring a circuit breaker">{`import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
@@ -129,7 +129,7 @@ CircuitBreaker breaker = registry.circuitBreaker("payments");`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="recordExceptions vs ignoreExceptions: get this right">
-          <p className="m-0">By default, the breaker counts <em>every</em> exception as a failure. That&apos;s wrong for any exception that represents a business outcome — &quot;user not found,&quot; &quot;invalid input,&quot; &quot;duplicate key.&quot; If your service throws <code>BusinessRuleException</code> on every malformed request, every malformed request will trip the breaker on the downstream that didn&apos;t do anything wrong. Either set <code>recordExceptions</code> to a small allowlist of real failures (IOException, TimeoutException, the downstream-specific exceptions you care about), or set <code>ignoreExceptions</code> to exclude business outcomes. Forgetting this is the #1 source of phantom breaker trips.</p>
+          <p className="m-0">By default, the breaker counts <em>every</em>{" "}exception as a failure. That&apos;s wrong for any exception that represents a business outcome — &quot;user not found,&quot; &quot;invalid input,&quot; &quot;duplicate key.&quot; If your service throws <code>BusinessRuleException</code> on every malformed request, every malformed request will trip the breaker on the downstream that didn&apos;t do anything wrong. Either set <code>recordExceptions</code> to a small allowlist of real failures (IOException, TimeoutException, the downstream-specific exceptions you care about), or set <code>ignoreExceptions</code> to exclude business outcomes. Forgetting this is the #1 source of phantom breaker trips.</p>
         </Callout>
 
         <h3>Spring Boot starter integration</h3>
@@ -219,7 +219,7 @@ public class PaymentsClient {
         <h3>Retry</h3>
 
         <p>
-          Retry is the second-most-used building block, and the second-most-misused. The right intuition: <strong>retry is for transient failures, not for &quot;the call didn&apos;t work.&quot;</strong> A transient failure is a network blip, a brief deployment, a momentary GC pause on a downstream. A non-transient failure is &quot;the user doesn&apos;t exist,&quot; &quot;authentication failed,&quot; &quot;the request was malformed.&quot; Retrying the second class is pure waste — it will fail the same way every time, and you&apos;ve multiplied the load on a service that wasn&apos;t struggling.
+          Retry is the second-most-used building block, and the second-most-misused. The right intuition: <strong>retry is for transient failures, not for &quot;the call didn&apos;t work.&quot;</strong>{" "}A transient failure is a network blip, a brief deployment, a momentary GC pause on a downstream. A non-transient failure is &quot;the user doesn&apos;t exist,&quot; &quot;authentication failed,&quot; &quot;the request was malformed.&quot; Retrying the second class is pure waste — it will fail the same way every time, and you&apos;ve multiplied the load on a service that wasn&apos;t struggling.
         </p>
 
         <CodeBlock lang="java" caption="Retry with exponential backoff and jitter">{`import io.github.resilience4j.retry.Retry;
@@ -266,8 +266,8 @@ Retry retry = Retry.of("payments", retryConfig);`}</CodeBlock>
           Resilience4j ships two bulkhead implementations:
         </p>
         <ul>
-          <li><strong>SemaphoreBulkhead.</strong> A counter that tracks in-flight calls; new calls are rejected (or wait briefly) when the limit is reached. Lightweight, the standard choice for synchronous code.</li>
-          <li><strong>ThreadPoolBulkhead.</strong> A bounded thread pool that the call runs on. Stronger isolation (calls don&apos;t even consume the calling thread) but more overhead. Use when you need true isolation, e.g. CPU-intensive work or untrusted dependencies.</li>
+          <li><strong>SemaphoreBulkhead.</strong>{" "}A counter that tracks in-flight calls; new calls are rejected (or wait briefly) when the limit is reached. Lightweight, the standard choice for synchronous code.</li>
+          <li><strong>ThreadPoolBulkhead.</strong>{" "}A bounded thread pool that the call runs on. Stronger isolation (calls don&apos;t even consume the calling thread) but more overhead. Use when you need true isolation, e.g. CPU-intensive work or untrusted dependencies.</li>
         </ul>
 
         <CodeBlock lang="java" caption="Semaphore bulkhead — cap concurrent calls to a downstream">{`import io.github.resilience4j.bulkhead.Bulkhead;
@@ -381,10 +381,10 @@ PaymentStatus status = timeLimiter.executeFutureSupplier(() -> future);
           The reasoning, layer by layer, going from outermost wrapper to the actual call:
         </p>
         <ol>
-          <li><strong>Retry (outermost).</strong> Each retry attempt should re-enter the rest of the stack fresh — including a fresh circuit-breaker check. If retry were inside the breaker, a retry storm during a brief glitch would happen entirely inside the breaker before it had a chance to trip.</li>
-          <li><strong>Circuit breaker.</strong> Once retry decides it&apos;s going to attempt, the breaker decides whether the dependency is healthy enough to even try. A tripped breaker fails fast without consuming bulkhead slots or thread pool budget.</li>
-          <li><strong>Bulkhead.</strong> Among the calls that pass the breaker, the bulkhead caps concurrency. This stops a successful breaker (CLOSED) from letting unlimited calls pile up against a slow downstream.</li>
-          <li><strong>Time limiter.</strong> Inside the bulkhead, the time limiter bounds individual call duration so a stuck call doesn&apos;t hold its bulkhead slot forever.</li>
+          <li><strong>Retry (outermost).</strong>{" "}Each retry attempt should re-enter the rest of the stack fresh — including a fresh circuit-breaker check. If retry were inside the breaker, a retry storm during a brief glitch would happen entirely inside the breaker before it had a chance to trip.</li>
+          <li><strong>Circuit breaker.</strong>{" "}Once retry decides it&apos;s going to attempt, the breaker decides whether the dependency is healthy enough to even try. A tripped breaker fails fast without consuming bulkhead slots or thread pool budget.</li>
+          <li><strong>Bulkhead.</strong>{" "}Among the calls that pass the breaker, the bulkhead caps concurrency. This stops a successful breaker (CLOSED) from letting unlimited calls pile up against a slow downstream.</li>
+          <li><strong>Time limiter.</strong>{" "}Inside the bulkhead, the time limiter bounds individual call duration so a stuck call doesn&apos;t hold its bulkhead slot forever.</li>
           <li><strong>The actual call (innermost).</strong></li>
         </ol>
 

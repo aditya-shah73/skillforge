@@ -250,7 +250,7 @@ flowchart TB
         <Callout variant="insight" title="The DP smell">
           <p>
             <strong>If your recursion has way more calls than there are distinct subproblems, you&apos;ve found a DP
-            problem.</strong> That ratio — total calls divided by distinct subproblems — is the slack. Caching turns
+            problem.</strong>{" "}That ratio — total calls divided by distinct subproblems — is the slack. Caching turns
             that ratio into 1. Every distinct subproblem gets computed exactly once, and every revisit is a O(1)
             lookup.
           </p>
@@ -279,7 +279,7 @@ flowchart TB
 
         <p>
           This is O(n) time, O(1) space. It runs in microseconds for any <code>n</code> the int type can hold. Why is
-          it so much faster? Because it computes each <code>fib(i)</code> <em>exactly once</em> and then reuses the
+          it so much faster? Because it computes each <code>fib(i)</code> <em>exactly once</em>{" "}and then reuses the
           value by name. The naive recursion forgets every result the moment the call returns.
         </p>
 
@@ -318,7 +318,7 @@ flowchart TB
         <h2 id="memo">Memoization: top-down DP</h2>
 
         <p>
-          <strong>Memoization</strong> is the trick: cache the result of every recursive call the first time you
+          <strong>Memoization</strong>{" "}is the trick: cache the result of every recursive call the first time you
           compute it, and on every subsequent call for the same input, return the cached value instead of recursing.
           The recursion stays the same — the math is unchanged. We&apos;re just adding a layer of memory.
         </p>
@@ -353,7 +353,7 @@ int fibMemo(int n, Integer[] memo) {
         <p>
           The naive tree had <code>Θ(φⁿ)</code> nodes. The memoized version has{" "}
           <strong>at most n+1 distinct nodes</strong> — every other &quot;call&quot; is short-circuited at the cache
-          check. The structure is no longer a tree; it&apos;s a <strong>directed acyclic graph (DAG)</strong> where
+          check. The structure is no longer a tree; it&apos;s a <strong>directed acyclic graph (DAG)</strong>{" "}where
           shared subproblems literally share a node:
         </p>
 
@@ -367,7 +367,7 @@ int fibMemo(int n, Integer[] memo) {
 
         <Callout variant="insight" title="Memoization = caching pure-function calls">
           <p>
-            A function is <strong>pure</strong> if its return value depends only on its arguments — same input always
+            A function is <strong>pure</strong>{" "}if its return value depends only on its arguments — same input always
             gives same output, no side effects. <code>fib</code> is pure: <code>fib(7)</code> is <code>13</code>, today,
             tomorrow, every time.
           </p>
@@ -389,15 +389,15 @@ int fibMemo(int n, Integer[] memo) {
         <ul>
           <li>Each of the n+1 distinct subproblems is computed exactly once.</li>
           <li>Each computation does O(1) non-recursive work (one comparison, one cache lookup, one addition, one store).</li>
-          <li>Total: <strong>O(n)</strong> time.</li>
+          <li>Total: <strong>O(n)</strong>{" "}time.</li>
         </ul>
 
         <p>Space complexity:</p>
 
         <ul>
           <li>Memo array: <strong>O(n)</strong>.</li>
-          <li>Recursion stack at peak: the longest chain in the DAG is from <code>fib(n)</code> down to <code>fib(0)</code>, depth n. So <strong>O(n)</strong> stack.</li>
-          <li>Total: <strong>O(n)</strong> auxiliary space.</li>
+          <li>Recursion stack at peak: the longest chain in the DAG is from <code>fib(n)</code> down to <code>fib(0)</code>, depth n. So <strong>O(n)</strong>{" "}stack.</li>
+          <li>Total: <strong>O(n)</strong>{" "}auxiliary space.</li>
         </ul>
 
         <p>
@@ -476,7 +476,7 @@ int fibMap(int n) {
         <h2 id="tab">Tabulation: bottom-up DP</h2>
 
         <p>
-          Memoization is one face of dynamic programming. <strong>Tabulation</strong> is the other.
+          Memoization is one face of dynamic programming. <strong>Tabulation</strong>{" "}is the other.
         </p>
 
         <p>
@@ -508,10 +508,10 @@ int fibMap(int n) {
         <h3>Why bottom-up is often the cleaner end state</h3>
 
         <ul>
-          <li><strong>No recursion stack.</strong> The memoized version uses O(n) stack frames at peak. The tabulated version uses O(1) stack and O(n) heap (the <code>dp</code> array). For deep recursions on the JVM (n in the millions), bottom-up is the only viable form.</li>
-          <li><strong>No null checks, no cache hit/miss logic.</strong> The order of computation is explicit; every entry is filled in exactly the right order.</li>
-          <li><strong>Cache-friendlier.</strong> Sequential array access streams beautifully through CPU caches. The recursive version jumps around a HashMap or boxed-Integer array and pays for it.</li>
-          <li><strong>Easier to space-optimize.</strong> Once you see that <code>dp[i]</code> only depends on the last two entries, you can throw away the array and keep two variables — which is exactly the <code>fibIter</code> we started with.</li>
+          <li><strong>No recursion stack.</strong>{" "}The memoized version uses O(n) stack frames at peak. The tabulated version uses O(1) stack and O(n) heap (the <code>dp</code> array). For deep recursions on the JVM (n in the millions), bottom-up is the only viable form.</li>
+          <li><strong>No null checks, no cache hit/miss logic.</strong>{" "}The order of computation is explicit; every entry is filled in exactly the right order.</li>
+          <li><strong>Cache-friendlier.</strong>{" "}Sequential array access streams beautifully through CPU caches. The recursive version jumps around a HashMap or boxed-Integer array and pays for it.</li>
+          <li><strong>Easier to space-optimize.</strong>{" "}Once you see that <code>dp[i]</code> only depends on the last two entries, you can throw away the array and keep two variables — which is exactly the <code>fibIter</code> we started with.</li>
         </ul>
 
         <h3>Space optimization: O(n) → O(1)</h3>
@@ -544,7 +544,7 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
 
         <p>
           That progression is the standard arc of every DP problem: <em>get the recursion right, memoize, tabulate,
-          space-optimize.</em> You don&apos;t have to do all four steps in an interview, but knowing the path means you
+          space-optimize.</em>{" "}You don&apos;t have to do all four steps in an interview, but knowing the path means you
           can stop at whatever level the interviewer pushes you toward.
         </p>
 
@@ -552,7 +552,7 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
 
         <Callout variant="info" title="Top-down (memo) vs bottom-up (tab) — pragmatic guidance">
           <p>
-            <strong>Start with top-down memoization.</strong> It&apos;s a tiny edit on top of the naive recursion: you
+            <strong>Start with top-down memoization.</strong>{" "}It&apos;s a tiny edit on top of the naive recursion: you
             already have correct base cases and a correct recurrence; you just add a cache. The hardest part of any DP
             problem is finding the recurrence, and recursion is how most people find it.
           </p>
@@ -608,13 +608,13 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
         <h3>Tell #1 — Overlapping subproblems</h3>
 
         <p>
-          A problem has <strong>overlapping subproblems</strong> if the recursive decomposition revisits the same
+          A problem has <strong>overlapping subproblems</strong>{" "}if the recursive decomposition revisits the same
           subproblem more than once. Fibonacci is the textbook case: <code>fib(3)</code> shows up in both the{" "}
           <code>fib(5) → fib(4)</code> branch and the <code>fib(5) → fib(3)</code> branch.
         </p>
 
         <p>
-          A problem <strong>without</strong> overlapping subproblems is one where every recursive call is on disjoint
+          A problem <strong>without</strong>{" "}overlapping subproblems is one where every recursive call is on disjoint
           input. Merge sort splits an array into the left half and the right half — and those two halves never share
           any element, so they never compute the same subresult. There is nothing to cache. That&apos;s why merge sort
           is divide-and-conquer, not DP.
@@ -631,7 +631,7 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
         <h3>Tell #2 — Optimal substructure</h3>
 
         <p>
-          A problem has <strong>optimal substructure</strong> if the optimal solution to the whole can be built from
+          A problem has <strong>optimal substructure</strong>{" "}if the optimal solution to the whole can be built from
           optimal solutions to its parts. Fibonacci has this trivially: <code>fib(n)</code> equals{" "}
           <code>fib(n-1) + fib(n-2)</code>, where each piece is itself the (one and only) correct answer to its
           subproblem.
@@ -648,7 +648,7 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
         <Callout variant="warn" title="Counter-example: longest simple path in a graph (no optimal substructure)">
           <p>
             Consider &quot;find the longest path between two vertices in an undirected graph that visits no vertex
-            twice.&quot; This <em>doesn&apos;t</em> have optimal substructure: the longest s-t path doesn&apos;t
+            twice.&quot; This <em>doesn&apos;t</em>{" "}have optimal substructure: the longest s-t path doesn&apos;t
             decompose into the longest s-v path plus the longest v-t path, because those two paths might share
             vertices, violating the &quot;simple&quot; constraint.
           </p>
@@ -666,8 +666,8 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
         </p>
 
         <ul>
-          <li><strong>Overlapping without optimal substructure</strong> means you can cache, but the cached values aren&apos;t the right thing to combine. You&apos;d compute the right subproblem answers but produce a wrong global answer.</li>
-          <li><strong>Optimal substructure without overlapping</strong> means caching is pointless — every subproblem is visited once anyway. This is the divide-and-conquer regime: merge sort, binary search, pow(x, n).</li>
+          <li><strong>Overlapping without optimal substructure</strong>{" "}means you can cache, but the cached values aren&apos;t the right thing to combine. You&apos;d compute the right subproblem answers but produce a wrong global answer.</li>
+          <li><strong>Optimal substructure without overlapping</strong>{" "}means caching is pointless — every subproblem is visited once anyway. This is the divide-and-conquer regime: merge sort, binary search, pow(x, n).</li>
         </ul>
 
         <p>
@@ -716,7 +716,7 @@ Tabulation (rolling)  O(n)  time, O(1) total space`}</CodeBlock>
         <h2 id="stairs">Climbing Stairs — same recurrence, new framing</h2>
 
         <p>
-          <strong>LC 70 · Climbing Stairs.</strong> You&apos;re at the bottom of a staircase with <code>n</code> steps.
+          <strong>LC 70 · Climbing Stairs.</strong>{" "}You&apos;re at the bottom of a staircase with <code>n</code> steps.
           Each move you can climb 1 step or 2 steps. How many distinct ways are there to reach the top?
         </p>
 
@@ -878,7 +878,7 @@ private int climb(int n, Integer[] memo) {
         <h2 id="robber">House Robber — when the recurrence isn&apos;t a sum</h2>
 
         <p>
-          <strong>LC 198 · House Robber.</strong> You&apos;re a thief planning to rob houses along a street. Each
+          <strong>LC 198 · House Robber.</strong>{" "}You&apos;re a thief planning to rob houses along a street. Each
           house has a non-negative amount of gold inside. The catch: if you rob two adjacent houses, an alarm goes
           off. Given <code>nums[]</code>, find the maximum gold you can rob without triggering an alarm.
         </p>
@@ -903,9 +903,9 @@ private int climb(int n, Integer[] memo) {
         </p>
 
         <ul>
-          <li><strong>Skip house <code>i</code>.</strong> Then your best from <code>0..i</code> is just your best from
+          <li><strong>Skip house <code>i</code>.</strong>{" "}Then your best from <code>0..i</code> is just your best from
           <code>0..i-1</code>. That&apos;s <code>dp[i-1]</code>.</li>
-          <li><strong>Rob house <code>i</code>.</strong> You pick up <code>nums[i]</code> gold. But you can&apos;t have
+          <li><strong>Rob house <code>i</code>.</strong>{" "}You pick up <code>nums[i]</code> gold. But you can&apos;t have
           robbed house <code>i-1</code> (that&apos;s the adjacency constraint), so the rest of your loot must come from
           houses <code>0..i-2</code>: <code>dp[i-2] + nums[i]</code>.</li>
         </ul>
@@ -968,13 +968,13 @@ private int climb(int n, Integer[] memo) {
             shows up in almost every 1D and 2D optimization DP:
           </p>
           <ul>
-            <li><strong>0/1 Knapsack:</strong> at item <code>i</code>, max value = max(skip <code>i</code>, take{" "}
+            <li><strong>0/1 Knapsack:</strong>{" "}at item <code>i</code>, max value = max(skip <code>i</code>, take{" "}
             <code>i</code> if it fits). Same shape; the &quot;take&quot; case has a capacity constraint.</li>
-            <li><strong>Longest Common Subsequence:</strong> at <code>(i, j)</code>, length = match (use both chars,
+            <li><strong>Longest Common Subsequence:</strong>{" "}at <code>(i, j)</code>, length = match (use both chars,
             recurse on prefixes) or skip one of the two strings.</li>
-            <li><strong>Coin Change:</strong> at amount <code>k</code>, fewest coins = min over each coin{" "}
+            <li><strong>Coin Change:</strong>{" "}at amount <code>k</code>, fewest coins = min over each coin{" "}
             <code>c</code> of <code>1 + dp[k - c]</code>.</li>
-            <li><strong>Jump Game II:</strong> at index <code>i</code>, fewest jumps = 1 + min over reachable next
+            <li><strong>Jump Game II:</strong>{" "}at index <code>i</code>, fewest jumps = 1 + min over reachable next
             indices.</li>
           </ul>
           <p>
@@ -1002,22 +1002,22 @@ private int climb(int n, Integer[] memo) {
 
         <Callout variant="info" title="The four-step recipe, summarized">
           <p>
-            <strong>1. Define the state.</strong> What does <code>dp[...]</code> mean? Be precise — &quot;dp[i] = max
+            <strong>1. Define the state.</strong>{" "}What does <code>dp[...]</code> mean? Be precise — &quot;dp[i] = max
             gold from houses 0..i inclusive&quot; or &quot;dp[i] = number of distinct ways to reach step i.&quot;
             Vagueness here corrupts every later step.
           </p>
           <p>
-            <strong>2. Write the recurrence.</strong> How does <code>dp[i]</code> relate to{" "}
+            <strong>2. Write the recurrence.</strong>{" "}How does <code>dp[i]</code> relate to{" "}
             <code>dp[smaller indices]</code>? The standard move is to decompose by the last decision: at index{" "}
             <code>i</code>, what choices lead here, and what does each choice cost / contribute?
           </p>
           <p>
-            <strong>3. Pin the base cases.</strong> What are the values where the recurrence doesn&apos;t apply? Make
+            <strong>3. Pin the base cases.</strong>{" "}What are the values where the recurrence doesn&apos;t apply? Make
             sure they&apos;re consistent with the recurrence — running the recurrence on the smallest non-base index
             should produce the right answer.
           </p>
           <p>
-            <strong>4. Choose an order of computation.</strong> Top-down memoization (recursion + cache) or bottom-up
+            <strong>4. Choose an order of computation.</strong>{" "}Top-down memoization (recursion + cache) or bottom-up
             tabulation (iterative fill)? For 1D constant-lookback DPs, also consider the O(1) rolling rewrite once the
             tabulation is correct.
           </p>

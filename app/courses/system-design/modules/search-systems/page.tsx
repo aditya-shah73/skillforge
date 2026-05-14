@@ -108,8 +108,8 @@ export default function Page() {
         </p>
         <ul>
           <li><strong>Leading wildcard:</strong> <code>%wool%</code> means &quot;any string containing wool.&quot; B-tree indexes can&apos;t help — they&apos;re sorted, but you&apos;re asking for substring matches at every position.</li>
-          <li><strong>Full table scan:</strong> the planner has no choice but to read every row and run a substring check.</li>
-          <li><strong>No ranking:</strong> all matches are equal. There&apos;s no notion of &quot;more relevant.&quot;</li>
+          <li><strong>Full table scan:</strong>{" "}the planner has no choice but to read every row and run a substring check.</li>
+          <li><strong>No ranking:</strong>{" "}all matches are equal. There&apos;s no notion of &quot;more relevant.&quot;</li>
           <li><strong>No tokenization:</strong> &quot;wool socks&quot; doesn&apos;t match &quot;socks made of wool.&quot; Token order matters; word matching doesn&apos;t exist.</li>
           <li><strong>No stemming:</strong> &quot;running&quot; doesn&apos;t match &quot;run&quot; or &quot;ran.&quot;</li>
           <li><strong>No typo tolerance:</strong> &quot;wol socks&quot; finds nothing.</li>
@@ -154,11 +154,11 @@ LIMIT 20;`}</CodeBlock>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">When Postgres FTS stops being enough</h3>
         <ul>
-          <li><strong>Multi-language tokenization with quality.</strong> Postgres ships English, Spanish, etc., but Chinese/Japanese/Korean tokenization is weak compared to ES analyzers.</li>
+          <li><strong>Multi-language tokenization with quality.</strong>{" "}Postgres ships English, Spanish, etc., but Chinese/Japanese/Korean tokenization is weak compared to ES analyzers.</li>
           <li><strong>Real-time scoring with custom ranking signals.</strong> &quot;Boost recent items 2x, in-stock items 3x, sponsored items by ad bid.&quot; Possible in Postgres but contortions; native in ES.</li>
           <li><strong>Aggregations / faceting at scale.</strong> &quot;How many results in each category?&quot; Across 100M docs, ES wins easily.</li>
-          <li><strong>Vector search alongside text.</strong> Hybrid retrieval (BM25 + embeddings) is native in ES, doable but bolted-on in Postgres (pgvector).</li>
-          <li><strong>Index size or write rate.</strong> Hundreds of millions of documents, thousands of writes per second to the index — ES is built for this; Postgres FTS struggles.</li>
+          <li><strong>Vector search alongside text.</strong>{" "}Hybrid retrieval (BM25 + embeddings) is native in ES, doable but bolted-on in Postgres (pgvector).</li>
+          <li><strong>Index size or write rate.</strong>{" "}Hundreds of millions of documents, thousands of writes per second to the index — ES is built for this; Postgres FTS struggles.</li>
         </ul>
 
         <Quiz
@@ -227,11 +227,11 @@ LIMIT 20;`}</CodeBlock>
           Before indexing, documents go through an <em>analyzer</em>:
         </p>
         <ul>
-          <li><strong>Tokenize:</strong> split on whitespace + punctuation. &quot;Wool socks!&quot; → [&quot;Wool&quot;, &quot;socks&quot;].</li>
+          <li><strong>Tokenize:</strong>{" "}split on whitespace + punctuation. &quot;Wool socks!&quot; → [&quot;Wool&quot;, &quot;socks&quot;].</li>
           <li><strong>Lowercase:</strong> [&quot;wool&quot;, &quot;socks&quot;].</li>
-          <li><strong>Remove stopwords:</strong> drop &quot;the&quot;, &quot;a&quot;, &quot;and&quot; — words that match everything and rank nothing.</li>
+          <li><strong>Remove stopwords:</strong>{" "}drop &quot;the&quot;, &quot;a&quot;, &quot;and&quot; — words that match everything and rank nothing.</li>
           <li><strong>Stem:</strong> &quot;running&quot; → &quot;run&quot;, &quot;socks&quot; → &quot;sock&quot;. Tradeoffs: improves recall, hurts precision.</li>
-          <li><strong>Synonyms / lemmatization:</strong> optional, for cases where domain-specific synonyms matter.</li>
+          <li><strong>Synonyms / lemmatization:</strong>{" "}optional, for cases where domain-specific synonyms matter.</li>
         </ul>
         <p>
           The analyzer at index time and query time must match — otherwise &quot;Wool Socks&quot; in a doc and
@@ -244,9 +244,9 @@ LIMIT 20;`}</CodeBlock>
           formula needed):
         </p>
         <ul>
-          <li><strong>Term frequency:</strong> a doc that mentions &quot;wool&quot; ten times is more about wool than one that mentions it once. But not 10x more — diminishing returns kick in fast.</li>
-          <li><strong>Inverse document frequency:</strong> rare terms are more discriminative. &quot;Wool&quot; in a clothing catalog is informative; &quot;the&quot; is not. Rare terms get weighted higher.</li>
-          <li><strong>Document length normalization:</strong> a 1000-word doc that mentions &quot;wool&quot; once is less &quot;about&quot; wool than a 50-word doc that mentions it once. BM25 normalizes for length.</li>
+          <li><strong>Term frequency:</strong>{" "}a doc that mentions &quot;wool&quot; ten times is more about wool than one that mentions it once. But not 10x more — diminishing returns kick in fast.</li>
+          <li><strong>Inverse document frequency:</strong>{" "}rare terms are more discriminative. &quot;Wool&quot; in a clothing catalog is informative; &quot;the&quot; is not. Rare terms get weighted higher.</li>
+          <li><strong>Document length normalization:</strong>{" "}a 1000-word doc that mentions &quot;wool&quot; once is less &quot;about&quot; wool than a 50-word doc that mentions it once. BM25 normalizes for length.</li>
         </ul>
 
         <Callout variant="insight" title="Why BM25 has stuck around since 1994">
@@ -306,8 +306,8 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
           Two practical implications:
         </p>
         <ul>
-          <li><strong>Shard count is hard to change later.</strong> Pick wisely up front. Default of 1 shard is fine for &lt;50M docs; bump to 5–10 shards for larger indexes.</li>
-          <li><strong>Replicas multiply read throughput.</strong> Each replica can serve queries; replicas are how you scale read-heavy search.</li>
+          <li><strong>Shard count is hard to change later.</strong>{" "}Pick wisely up front. Default of 1 shard is fine for &lt;50M docs; bump to 5–10 shards for larger indexes.</li>
+          <li><strong>Replicas multiply read throughput.</strong>{" "}Each replica can serve queries; replicas are how you scale read-heavy search.</li>
         </ul>
 
         <Quiz
@@ -351,16 +351,16 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
           The pattern that&apos;s won:
         </p>
         <ul>
-          <li><strong>Postgres is the system of record.</strong> Transactions, foreign keys, joins, the truth.</li>
-          <li><strong>Elasticsearch is the query engine.</strong> Tokenized search, faceting, ranking, scale.</li>
-          <li><strong>A pipeline keeps ES in sync.</strong> Either CDC (Debezium → Kafka → indexer → ES) or dual-write from the application.</li>
+          <li><strong>Postgres is the system of record.</strong>{" "}Transactions, foreign keys, joins, the truth.</li>
+          <li><strong>Elasticsearch is the query engine.</strong>{" "}Tokenized search, faceting, ranking, scale.</li>
+          <li><strong>A pipeline keeps ES in sync.</strong>{" "}Either CDC (Debezium → Kafka → indexer → ES) or dual-write from the application.</li>
         </ul>
 
         <Mermaid chart={cdcPipelineDiagram} />
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Dual-write vs CDC</h3>
 
-        <p><strong>Dual-write (application-level):</strong> the service that writes to Postgres also writes to ES. Simple, easy to reason about. <em>Doesn&apos;t survive failures.</em> If the ES write fails after the Postgres write commits, your two stores are now inconsistent. Retry queues help but don&apos;t fully solve it.</p>
+        <p><strong>Dual-write (application-level):</strong>{" "}the service that writes to Postgres also writes to ES. Simple, easy to reason about. <em>Doesn&apos;t survive failures.</em>{" "}If the ES write fails after the Postgres write commits, your two stores are now inconsistent. Retry queues help but don&apos;t fully solve it.</p>
 
         <CodeBlock lang="java" caption="Naive dual-write — has consistency holes">{`@Transactional
 public Product create(CreateProductRequest req) {
@@ -383,7 +383,7 @@ public Product create(CreateProductRequest req) {
           timed out; ES quietly accepted it. Postgres rolls back. Now ES has an orphan.
         </p>
 
-        <p><strong>CDC (change data capture):</strong> a separate service tails Postgres&apos;s WAL (Debezium reads logical replication slots), publishes change events to Kafka, an indexer consumes from Kafka and writes to ES. Postgres is always the source of truth; ES is always derived. If ES drifts, you can rebuild it from Postgres.</p>
+        <p><strong>CDC (change data capture):</strong>{" "}a separate service tails Postgres&apos;s WAL (Debezium reads logical replication slots), publishes change events to Kafka, an indexer consumes from Kafka and writes to ES. Postgres is always the source of truth; ES is always derived. If ES drifts, you can rebuild it from Postgres.</p>
 
         <Callout variant="info" title="Why CDC wins for any non-trivial system">
           <p className="m-0">
@@ -415,7 +415,7 @@ public Product create(CreateProductRequest req) {
           Two implications:
         </p>
         <ul>
-          <li><strong>Read-your-writes problem (again).</strong> User creates a product and immediately searches for it; doesn&apos;t find it. Standard fix: route the post-create read through Postgres, not search. Or display the new item from a known-good source until indexing catches up.</li>
+          <li><strong>Read-your-writes problem (again).</strong>{" "}User creates a product and immediately searches for it; doesn&apos;t find it. Standard fix: route the post-create read through Postgres, not search. Or display the new item from a known-good source until indexing catches up.</li>
           <li><strong>Stale facets.</strong> &quot;42 results&quot; might be 41 by the time the user clicks through. Usually acceptable, occasionally not.</li>
         </ul>
 

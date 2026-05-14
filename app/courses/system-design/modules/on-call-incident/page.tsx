@@ -79,10 +79,10 @@ export default function Page() {
           Most companies use some variant of SEV1 / SEV2 / SEV3 (and sometimes SEV4 for tracking-only). The numbers matter less than what each one <em>triggers</em>:
         </p>
         <ul>
-          <li><strong>SEV1 — major customer impact.</strong> The product is down or seriously degraded for many users. Pages on-call immediately. Wakes people up at 3am. Triggers customer comms within 30 minutes.</li>
-          <li><strong>SEV2 — significant impact.</strong> A meaningful subset of users affected, or a key feature degraded. Pages during business hours, may not page overnight. Customer comms if outage is visible.</li>
-          <li><strong>SEV3 — minor impact.</strong> Internal degradation or small visible issue. Filed as a ticket, worked next business day. Not a page.</li>
-          <li><strong>SEV4 — informational / latent.</strong> Tracking only — &quot;we noticed this; we should fix it; not urgent.&quot;</li>
+          <li><strong>SEV1 — major customer impact.</strong>{" "}The product is down or seriously degraded for many users. Pages on-call immediately. Wakes people up at 3am. Triggers customer comms within 30 minutes.</li>
+          <li><strong>SEV2 — significant impact.</strong>{" "}A meaningful subset of users affected, or a key feature degraded. Pages during business hours, may not page overnight. Customer comms if outage is visible.</li>
+          <li><strong>SEV3 — minor impact.</strong>{" "}Internal degradation or small visible issue. Filed as a ticket, worked next business day. Not a page.</li>
+          <li><strong>SEV4 — informational / latent.</strong>{" "}Tracking only — &quot;we noticed this; we should fix it; not urgent.&quot;</li>
         </ul>
         <p>
           The two most useful properties of a severity scheme: it&apos;s applied consistently (so SEV2 means the same thing across teams) and the response is calibrated to it (SEV1 actually wakes people up; SEV3 actually doesn&apos;t). Get either wrong and severity becomes meaningless theater.
@@ -103,11 +103,11 @@ export default function Page() {
         <Mermaid chart={incRoles} />
 
         <ul>
-          <li><strong>Incident Commander (IC).</strong> Owns the incident. Coordinates the response. Does not fix things personally. Their job is to keep the team focused, declare next steps, manage scope, and decide when to escalate. The IC is the &quot;single throat to choke&quot; — one person to whom updates flow and from whom decisions come.</li>
-          <li><strong>Communications Lead.</strong> Owns external messaging — status page updates, customer comms, exec notifications. The IC and Ops Lead are heads-down on the problem; the Comms Lead translates &quot;we know what&apos;s happening&quot; into &quot;customers know what to expect.&quot;</li>
-          <li><strong>Operations Lead.</strong> Drives the technical fix. Coordinates SMEs, runs the diagnose-and-mitigate loop, owns the deploy / rollback / config change. On small incidents the IC and Ops Lead can be the same person; on large ones, never.</li>
-          <li><strong>Scribe (optional but valuable).</strong> Keeps a running timeline of what happened, what was tried, what worked. Saves the post-mortem from depending on memory.</li>
-          <li><strong>SMEs.</strong> Subject matter experts pulled in by the Ops Lead. They have deep knowledge of one piece of the system. They do not run the incident; they do specific deep-dives at the Ops Lead&apos;s direction.</li>
+          <li><strong>Incident Commander (IC).</strong>{" "}Owns the incident. Coordinates the response. Does not fix things personally. Their job is to keep the team focused, declare next steps, manage scope, and decide when to escalate. The IC is the &quot;single throat to choke&quot; — one person to whom updates flow and from whom decisions come.</li>
+          <li><strong>Communications Lead.</strong>{" "}Owns external messaging — status page updates, customer comms, exec notifications. The IC and Ops Lead are heads-down on the problem; the Comms Lead translates &quot;we know what&apos;s happening&quot; into &quot;customers know what to expect.&quot;</li>
+          <li><strong>Operations Lead.</strong>{" "}Drives the technical fix. Coordinates SMEs, runs the diagnose-and-mitigate loop, owns the deploy / rollback / config change. On small incidents the IC and Ops Lead can be the same person; on large ones, never.</li>
+          <li><strong>Scribe (optional but valuable).</strong>{" "}Keeps a running timeline of what happened, what was tried, what worked. Saves the post-mortem from depending on memory.</li>
+          <li><strong>SMEs.</strong>{" "}Subject matter experts pulled in by the Ops Lead. They have deep knowledge of one piece of the system. They do not run the incident; they do specific deep-dives at the Ops Lead&apos;s direction.</li>
         </ul>
 
         <Callout variant="insight" title={`The IC's superpower is saying "not now"`}>
@@ -120,11 +120,11 @@ export default function Page() {
           A page fires. Here&apos;s the standard opening:
         </p>
         <ol>
-          <li><strong>Acknowledge the page.</strong> Within ~5 minutes. Tells the system &quot;a human is on it&quot; — and stops the escalation timer.</li>
-          <li><strong>Open the incident channel.</strong> A dedicated Slack channel (or whatever your tool is). All discussion goes there; no DMs, no other channels.</li>
-          <li><strong>Read the runbook.</strong> The alert linked one (we covered this in observability). Even if you wrote it. Read it again — you&apos;re bleary, you&apos;ll miss things you wrote yesterday.</li>
-          <li><strong>Confirm scope.</strong> Is this affecting one customer, one region, one feature, or everyone? This number drives whether you escalate to a SEV1.</li>
-          <li><strong>Declare an incident if needed.</strong> If the issue is bigger than &quot;I can fix this in 5 minutes by myself,&quot; declare an incident, page the IC and Comms Lead, and start the formal response.</li>
+          <li><strong>Acknowledge the page.</strong>{" "}Within ~5 minutes. Tells the system &quot;a human is on it&quot; — and stops the escalation timer.</li>
+          <li><strong>Open the incident channel.</strong>{" "}A dedicated Slack channel (or whatever your tool is). All discussion goes there; no DMs, no other channels.</li>
+          <li><strong>Read the runbook.</strong>{" "}The alert linked one (we covered this in observability). Even if you wrote it. Read it again — you&apos;re bleary, you&apos;ll miss things you wrote yesterday.</li>
+          <li><strong>Confirm scope.</strong>{" "}Is this affecting one customer, one region, one feature, or everyone? This number drives whether you escalate to a SEV1.</li>
+          <li><strong>Declare an incident if needed.</strong>{" "}If the issue is bigger than &quot;I can fix this in 5 minutes by myself,&quot; declare an incident, page the IC and Comms Lead, and start the formal response.</li>
         </ol>
 
         <Quiz
@@ -171,18 +171,18 @@ export default function Page() {
         <h3>Mitigate before you diagnose</h3>
 
         <p>
-          The single highest-leverage rule in incident response: <strong>stop the bleeding before you understand it.</strong> If you know how to make the symptom go away, do that, even if you don&apos;t yet know why the symptom appeared. Restore service first; debug second. The customer is suffering during diagnosis; the customer is not suffering during a clean rollback.
+          The single highest-leverage rule in incident response: <strong>stop the bleeding before you understand it.</strong>{" "}If you know how to make the symptom go away, do that, even if you don&apos;t yet know why the symptom appeared. Restore service first; debug second. The customer is suffering during diagnosis; the customer is not suffering during a clean rollback.
         </p>
 
         <p>
           The classic mitigations, in rough order of preference:
         </p>
         <ol>
-          <li><strong>Roll back the deploy.</strong> If the incident started after a deploy, roll back. If it might have started after a deploy, roll back. Diagnosis later. Rolling back a healthy deploy is cheap; investigating an incident in progress is expensive.</li>
-          <li><strong>Revert the config change.</strong> Same logic for config flags. Many outages are configuration changes, not code changes — and reverting a config flag is faster than rolling back a deploy.</li>
-          <li><strong>Failover.</strong> Switch to the standby region, the standby database, the standby cache. Most fleets have failover capability; most teams don&apos;t exercise it; most teams therefore don&apos;t trust it during an incident. Practicing failover during calm times is upstream of using it in real outages.</li>
-          <li><strong>Shed load.</strong> Turn down rate limits, drop low-priority traffic, disable non-essential features. Buys time at the cost of partial service.</li>
-          <li><strong>Scale up.</strong> Add capacity. Slow (autoscaling has a multi-minute lag) but sometimes the only option for a saturation incident.</li>
+          <li><strong>Roll back the deploy.</strong>{" "}If the incident started after a deploy, roll back. If it might have started after a deploy, roll back. Diagnosis later. Rolling back a healthy deploy is cheap; investigating an incident in progress is expensive.</li>
+          <li><strong>Revert the config change.</strong>{" "}Same logic for config flags. Many outages are configuration changes, not code changes — and reverting a config flag is faster than rolling back a deploy.</li>
+          <li><strong>Failover.</strong>{" "}Switch to the standby region, the standby database, the standby cache. Most fleets have failover capability; most teams don&apos;t exercise it; most teams therefore don&apos;t trust it during an incident. Practicing failover during calm times is upstream of using it in real outages.</li>
+          <li><strong>Shed load.</strong>{" "}Turn down rate limits, drop low-priority traffic, disable non-essential features. Buys time at the cost of partial service.</li>
+          <li><strong>Scale up.</strong>{" "}Add capacity. Slow (autoscaling has a multi-minute lag) but sometimes the only option for a saturation incident.</li>
         </ol>
 
         <Callout variant="warn" title="The investigation trap">
@@ -208,7 +208,7 @@ export default function Page() {
         <h3>Escalate early, escalate often</h3>
 
         <p>
-          The cost of escalating someone who didn&apos;t need to be is one mildly-annoyed teammate. The cost of <em>not</em> escalating someone who did need to be is a longer outage. Escalate at the slightest doubt. The expert who got pulled in to find &quot;oh, you already had this&quot; is fine; the IC who doesn&apos;t pull them in and discovers 30 minutes later they were the one who could&apos;ve fixed it in 2 minutes is not.
+          The cost of escalating someone who didn&apos;t need to be is one mildly-annoyed teammate. The cost of <em>not</em>{" "}escalating someone who did need to be is a longer outage. Escalate at the slightest doubt. The expert who got pulled in to find &quot;oh, you already had this&quot; is fine; the IC who doesn&apos;t pull them in and discovers 30 minutes later they were the one who could&apos;ve fixed it in 2 minutes is not.
         </p>
 
         <ClassifyChallenge
@@ -277,12 +277,12 @@ export default function Page() {
           Within 1-5 days of a SEV1 or SEV2, the team writes a postmortem (sometimes called a &quot;learnings&quot; or &quot;incident review&quot; doc). The format is roughly:
         </p>
         <ul>
-          <li><strong>Summary.</strong> One paragraph: what happened, who was affected, how long.</li>
-          <li><strong>Timeline.</strong> Bullet points with timestamps. What happened, what was tried, what worked. Mostly assembled from the incident channel by the scribe.</li>
-          <li><strong>Root cause(s).</strong> The actual reason this happened. Often plural — &quot;the bug shipped because the test suite didn&apos;t cover this case, and it stayed broken in production for 3 hours because the alert didn&apos;t fire because the metric was named wrong.&quot;</li>
-          <li><strong>What went well.</strong> Genuinely include this. Detection was fast? Failover worked? The right person was paged? Note it. Without &quot;what went well,&quot; postmortems become demoralizing rituals of failure.</li>
-          <li><strong>What didn&apos;t go well.</strong> Honest list, no blame.</li>
-          <li><strong>Action items.</strong> Specific, owned, dated. Not &quot;improve testing&quot; — &quot;add integration test for the X scenario, owner: Aria, due: Friday.&quot;</li>
+          <li><strong>Summary.</strong>{" "}One paragraph: what happened, who was affected, how long.</li>
+          <li><strong>Timeline.</strong>{" "}Bullet points with timestamps. What happened, what was tried, what worked. Mostly assembled from the incident channel by the scribe.</li>
+          <li><strong>Root cause(s).</strong>{" "}The actual reason this happened. Often plural — &quot;the bug shipped because the test suite didn&apos;t cover this case, and it stayed broken in production for 3 hours because the alert didn&apos;t fire because the metric was named wrong.&quot;</li>
+          <li><strong>What went well.</strong>{" "}Genuinely include this. Detection was fast? Failover worked? The right person was paged? Note it. Without &quot;what went well,&quot; postmortems become demoralizing rituals of failure.</li>
+          <li><strong>What didn&apos;t go well.</strong>{" "}Honest list, no blame.</li>
+          <li><strong>Action items.</strong>{" "}Specific, owned, dated. Not &quot;improve testing&quot; — &quot;add integration test for the X scenario, owner: Aria, due: Friday.&quot;</li>
         </ul>
 
         <Callout variant="insight" title={`"Blameless" doesn't mean "consequence-free"`}>
@@ -306,16 +306,16 @@ export default function Page() {
         <ul>
           <li><strong>Make them specific.</strong> &quot;Add monitoring on X&quot; is a wish; &quot;Add a Prometheus alert that fires when downstream Y returns 5xx for &gt;2 minutes, owned by Aria, due Friday&quot; is a ticket.</li>
           <li><strong>Cap the count.</strong> 5-10 action items per postmortem, max. A list of 30 means nothing will get done. Pick the highest-leverage ones; let the rest live in the backlog.</li>
-          <li><strong>Track to completion.</strong> A weekly or biweekly review of open postmortem actions. If something keeps slipping, escalate or kill it explicitly. Slipping silently is the failure mode.</li>
+          <li><strong>Track to completion.</strong>{" "}A weekly or biweekly review of open postmortem actions. If something keeps slipping, escalate or kill it explicitly. Slipping silently is the failure mode.</li>
         </ul>
 
         <h3>Reliability metrics worth tracking</h3>
 
         <ul>
-          <li><strong>MTTD — Mean Time To Detect.</strong> From incident start to alert firing. Improving this means better signals (covered in Module 21).</li>
-          <li><strong>MTTR — Mean Time To Recover.</strong> From alert to service restored. Most of this is the time spent diagnosing and mitigating; runbooks, practiced failover, and good incident process all reduce it.</li>
-          <li><strong>MTBF — Mean Time Between Failures.</strong> How long between SEV1s. Driven by deeper architecture and process changes.</li>
-          <li><strong>Incidents per quarter / pages per week.</strong> Volume metrics. A team trending up on pages-per-week is heading toward burnout regardless of MTTR.</li>
+          <li><strong>MTTD — Mean Time To Detect.</strong>{" "}From incident start to alert firing. Improving this means better signals (covered in Module 21).</li>
+          <li><strong>MTTR — Mean Time To Recover.</strong>{" "}From alert to service restored. Most of this is the time spent diagnosing and mitigating; runbooks, practiced failover, and good incident process all reduce it.</li>
+          <li><strong>MTBF — Mean Time Between Failures.</strong>{" "}How long between SEV1s. Driven by deeper architecture and process changes.</li>
+          <li><strong>Incidents per quarter / pages per week.</strong>{" "}Volume metrics. A team trending up on pages-per-week is heading toward burnout regardless of MTTR.</li>
         </ul>
 
         <h3>Sustainable on-call rotation</h3>

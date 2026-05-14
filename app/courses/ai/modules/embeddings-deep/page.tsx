@@ -55,10 +55,10 @@ export default function EmbeddingsDeepModule() {
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
           <li>Pick an embedding model with confidence — by <strong>dimension, cost, latency, and quality</strong>.</li>
-          <li>Wire one up in <strong>Spring AI 1.0.x</strong> and batch your calls so you don&apos;t go broke.</li>
-          <li>Understand <strong>Matryoshka embeddings</strong> and when truncating dimensions is free money.</li>
-          <li>Feel the <strong>curse of dimensionality</strong> with real numbers — and know exactly when brute force breaks.</li>
-          <li>Ship a Spring Boot <strong>semantic bookmark search</strong> that works on a corpus of 30+ items.</li>
+          <li>Wire one up in <strong>Spring AI 1.0.x</strong>{" "}and batch your calls so you don&apos;t go broke.</li>
+          <li>Understand <strong>Matryoshka embeddings</strong>{" "}and when truncating dimensions is free money.</li>
+          <li>Feel the <strong>curse of dimensionality</strong>{" "}with real numbers — and know exactly when brute force breaks.</li>
+          <li>Ship a Spring Boot <strong>semantic bookmark search</strong>{" "}that works on a corpus of 30+ items.</li>
         </ol>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
           This is the on-ramp for the rest of Phase 3. Module 15 introduces pgvector to fix the brute-force problem you
@@ -139,7 +139,7 @@ export default function EmbeddingsDeepModule() {
 
         <Callout variant="info" title="Wait — Anthropic doesn't make an embedding model?">
           <p>
-            Correct. Anthropic recommends <strong>Voyage AI</strong> for embeddings (and acquired them in 2024). The
+            Correct. Anthropic recommends <strong>Voyage AI</strong>{" "}for embeddings (and acquired them in 2024). The
             Claude API does not have an <code>/v1/embeddings</code> endpoint. If you&apos;re building on Claude, your
             embedding call goes to a different vendor — most production stacks pair Claude (generation) with Voyage,
             OpenAI, or an open-source embedder.
@@ -156,7 +156,7 @@ export default function EmbeddingsDeepModule() {
         <ol className="list-decimal pl-6 space-y-2">
           <li>
             <strong>Quality</strong> — how often does the right document end up in your top-k results? Measured on
-            benchmarks like MTEB, but the only number that matters is your own <em>recall@k</em> on your own data.
+            benchmarks like MTEB, but the only number that matters is your own <em>recall@k</em>{" "}on your own data.
           </li>
           <li>
             <strong>Dimension</strong> — bigger vectors carry more information but cost more storage, more memory, and
@@ -185,11 +185,11 @@ export default function EmbeddingsDeepModule() {
 
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            <strong>Benchmark contamination is real.</strong> A model fine-tuned on (or near) MTEB tasks will look
+            <strong>Benchmark contamination is real.</strong>{" "}A model fine-tuned on (or near) MTEB tasks will look
             artificially strong. Suspicious when a tiny no-name model tops the list.
           </li>
           <li>
-            <strong>Your domain isn&apos;t MTEB.</strong> If your corpus is Java stack traces or pediatric oncology
+            <strong>Your domain isn&apos;t MTEB.</strong>{" "}If your corpus is Java stack traces or pediatric oncology
             papers, the average MTEB score tells you almost nothing. Run a small eval on your own data — even 50
             hand-labeled (query, correct-doc) pairs is enough to discriminate between candidates.
           </li>
@@ -198,7 +198,7 @@ export default function EmbeddingsDeepModule() {
         <Callout variant="insight" title="The 50-pair eval">
           <p>
             Before you spend a dollar embedding 10 million documents, do this: pick 50 representative queries from
-            your application. For each, write down the document ID that <em>should</em> come back first. Embed your
+            your application. For each, write down the document ID that <em>should</em>{" "}come back first. Embed your
             corpus with two candidate models, run the queries, and count how often the correct doc lands in the top
             5. That number — recall@5 — is the only model-selection metric you actually care about.
           </p>
@@ -207,8 +207,8 @@ export default function EmbeddingsDeepModule() {
         <h3 className="text-xl font-semibold mt-8 mb-3">Matryoshka embeddings — free dimension reduction</h3>
 
         <p>
-          Some modern embedders (OpenAI&apos;s v3, Nomic, Voyage) are trained as <strong>Matryoshka</strong> models —
-          named after the Russian nesting dolls. The trick: the model is trained so that <em>truncating</em> the
+          Some modern embedders (OpenAI&apos;s v3, Nomic, Voyage) are trained as <strong>Matryoshka</strong>{" "}models —
+          named after the Russian nesting dolls. The trick: the model is trained so that <em>truncating</em>{" "}the
           vector still leaves a useful embedding. You can take a 1536-dim vector, keep only the first 512, and lose
           surprisingly little quality.
         </p>
@@ -224,7 +224,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
         <p>
           Why does this work? During training, the loss is computed at multiple prefix lengths simultaneously
           (typically 64, 128, 256, 512, 768, 1024, 1536). Gradients flow back through every prefix. The model
-          learns to <em>front-load</em> the most important information into the early dimensions. Later dimensions
+          learns to <em>front-load</em>{" "}the most important information into the early dimensions. Later dimensions
           add refinement; the front already carries the gist.
         </p>
 
@@ -275,7 +275,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
                     Constraints: data cannot leave the hospital network. Reasonable hardware budget.
                   </p>
                   <p className="text-sm mt-2">
-                    <strong>Pick:</strong> Self-hosted <code>BAAI/bge-large-en-v1.5</code> via Ollama or a Triton
+                    <strong>Pick:</strong>{" "}Self-hosted <code>BAAI/bge-large-en-v1.5</code> via Ollama or a Triton
                     server. The hosted-API options are off the table by policy. Run a 50-pair eval against
                     BioBERT-derived alternatives if recall is weak; medical text often benefits from
                     domain-specific embedders.
@@ -364,7 +364,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
         <h3 className="text-xl font-semibold mt-6 mb-3">Picking a provider in pom.xml</h3>
 
         <p>
-          You add <em>one</em> starter dep. Spring Boot autoconfigures an <code>EmbeddingModel</code> bean from it.
+          You add <em>one</em>{" "}starter dep. Spring Boot autoconfigures an <code>EmbeddingModel</code> bean from it.
           Switching providers is a one-line change.
         </p>
 
@@ -397,7 +397,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
 
         <Callout variant="spring" title="Note: server-side truncation">
           <p>
-            The <code>dimensions</code> option above tells <em>OpenAI</em> to truncate before sending the vector
+            The <code>dimensions</code> option above tells <em>OpenAI</em>{" "}to truncate before sending the vector
             back. That saves bandwidth, not just storage. If your provider doesn&apos;t support server-side
             truncation, do it client-side (and re-normalize, as we showed in Part 1).
           </p>
@@ -477,7 +477,7 @@ public class EmbeddingService {
                 <div>
                   <p className="text-sm">
                     Providers cap batch size — OpenAI&apos;s v3 embedders accept up to 2048 inputs per call, but
-                    will reject a request whose <em>token total</em> exceeds 300k. A safe default is batch=100 with
+                    will reject a request whose <em>token total</em>{" "}exceeds 300k. A safe default is batch=100 with
                     a fallback that splits if you hit a token-limit error. Bigger batches also mean longer
                     tail-latency p99s, which hurts if you&apos;re embedding live.
                   </p>
@@ -506,7 +506,7 @@ public class EmbeddingService {
         <h3 className="text-xl font-semibold mt-8 mb-3">L2 normalization — what Spring AI does for you</h3>
 
         <p>
-          Cosine similarity and dot product produce identical rankings <em>if</em> both vectors are unit-length
+          Cosine similarity and dot product produce identical rankings <em>if</em>{" "}both vectors are unit-length
           (L2-normalized). Most production embedders return L2-normalized vectors out of the box — but not all,
           and the contract isn&apos;t always documented loudly.
         </p>
@@ -533,13 +533,13 @@ public class EmbeddingService {
           <li><strong>Voyage</strong> — returns L2-normalized vectors.</li>
           <li><strong>Cohere <code>embed-*-v3</code></strong> — returns L2-normalized vectors.</li>
           <li><strong>Self-hosted (BGE, Nomic via Ollama)</strong> — sometimes yes, sometimes no. Check, or normalize defensively.</li>
-          <li><strong>After Matryoshka truncation</strong> — never normalized. <em>You</em> must re-normalize.</li>
+          <li><strong>After Matryoshka truncation</strong> — never normalized. <em>You</em>{" "}must re-normalize.</li>
         </ul>
 
         <Callout variant="warn" title="The bug you'll see at 2 a.m.">
           <p>
             Symptoms: cosine scores that should be in [-1, 1] are returning values like 0.43 between documents you
-            <em>know</em> are nearly identical. Cause: somewhere a vector got truncated, multiplied, averaged, or
+            <em>know</em>{" "}are nearly identical. Cause: somewhere a vector got truncated, multiplied, averaged, or
             otherwise mangled, and isn&apos;t unit-length anymore. Fix: re-normalize at the boundary, then never
             mutate vectors in place.
           </p>
@@ -548,7 +548,7 @@ public class EmbeddingService {
         <h3 className="text-xl font-semibold mt-8 mb-3">Caching embeddings — yes, you should</h3>
 
         <p>
-          This is a <em>different</em> caching from Module 13&apos;s prompt caching. Embedding caching is purely
+          This is a <em>different</em>{" "}caching from Module 13&apos;s prompt caching. Embedding caching is purely
           client-side: if you&apos;ve already embedded the string &quot;refund policy for international orders,&quot;
           and the same string comes in again, hit your cache instead of re-paying $0.02 per million tokens.
         </p>
@@ -641,8 +641,8 @@ public class CachedEmbeddingService {
         </p>
 
         <ol className="list-decimal pl-6 space-y-2">
-          <li><strong>Distances concentrate.</strong> In very high dimensions, the &quot;nearest&quot; and &quot;farthest&quot; points in a random cloud become almost the same distance away.</li>
-          <li><strong>Brute force scales linearly.</strong> Comparing a query to N vectors of dimension d costs O(N·d). For N=100M and d=1024, that&apos;s ~100 billion floating-point ops <em>per query</em>.</li>
+          <li><strong>Distances concentrate.</strong>{" "}In very high dimensions, the &quot;nearest&quot; and &quot;farthest&quot; points in a random cloud become almost the same distance away.</li>
+          <li><strong>Brute force scales linearly.</strong>{" "}Comparing a query to N vectors of dimension d costs O(N·d). For N=100M and d=1024, that&apos;s ~100 billion floating-point ops <em>per query</em>.</li>
         </ol>
 
         <p>
@@ -654,7 +654,7 @@ public class CachedEmbeddingService {
 
         <p>
           Generate N random points in a unit cube of dimension d. For each point, compute its distance to every
-          other point. Look at the ratio of the <em>nearest</em> distance to the <em>farthest</em> distance. In
+          other point. Look at the ratio of the <em>nearest</em>{" "}distance to the <em>farthest</em>{" "}distance. In
           intuitive low-D space, this ratio is small — your nearest neighbor is much closer than your farthest. As
           d grows, the ratio creeps toward 1. Everything is the same distance away.
         </p>
@@ -704,9 +704,9 @@ public class CachedEmbeddingService {
               body: (
                 <div>
                   <p className="text-sm">
-                    Because real embeddings <em>aren&apos;t</em> uniformly random. Trained embedders cluster
+                    Because real embeddings <em>aren&apos;t</em>{" "}uniformly random. Trained embedders cluster
                     semantically-related text in narrow regions of the unit hypersphere. The vectors live on a
-                    much lower-dimensional <em>manifold</em> inside the 1024-D space — local neighborhoods stay
+                    much lower-dimensional <em>manifold</em>{" "}inside the 1024-D space — local neighborhoods stay
                     informative. The curse explains why pure random search fails; the saving grace is that
                     semantic structure breaks the randomness assumption.
                   </p>

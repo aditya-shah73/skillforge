@@ -55,7 +55,7 @@ export default function PgvectorModule() {
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
           <li>Why you&apos;d add a vector column to your existing Postgres instead of running Pinecone</li>
-          <li>The two pgvector indexes — <strong>HNSW</strong> and <strong>IVFFlat</strong> — what each does, when each wins</li>
+          <li>The two pgvector indexes — <strong>HNSW</strong>{" "}and <strong>IVFFlat</strong> — what each does, when each wins</li>
           <li>How to tune <code>m</code>, <code>ef_construction</code>, <code>ef_search</code>, <code>lists</code>, <code>probes</code> without flailing</li>
           <li>How &quot;recall&quot; gets reported, and how to measure it on your own data</li>
           <li>A working duplicate-issue detector — Spring Boot + Postgres + pgvector, indexed and queried</li>
@@ -77,17 +77,17 @@ export default function PgvectorModule() {
 
         <ol className="list-decimal pl-6 space-y-3">
           <li>
-            <strong>Restart cost.</strong> Your in-memory store is empty when the JVM boots. With 100k vectors
+            <strong>Restart cost.</strong>{" "}Your in-memory store is empty when the JVM boots. With 100k vectors
             at 1024 dims, that&apos;s 400 MB to re-embed on every deploy — and a bill from your embedding
             provider every time.
           </li>
           <li>
-            <strong>Query latency.</strong> Brute-force is O(N · d). At 1M vectors × 1024 dims, that&apos;s ~1B
+            <strong>Query latency.</strong>{" "}Brute-force is O(N · d). At 1M vectors × 1024 dims, that&apos;s ~1B
             float multiplications per query. Even SIMD-accelerated, you&apos;re looking at hundreds of milliseconds
             per request and a CPU pegged at 100% under any real traffic.
           </li>
           <li>
-            <strong>Joins.</strong> Your search results almost always need to be filtered or joined with other
+            <strong>Joins.</strong>{" "}Your search results almost always need to be filtered or joined with other
             data — &quot;only bookmarks owned by this user&quot;, &quot;only issues in project X opened in the last 30 days&quot;.
             If your vectors live in one system and your business data in another, you&apos;re writing glue code
             forever.
@@ -134,7 +134,7 @@ export default function PgvectorModule() {
 
         <Callout variant="info" title="Why this course teaches pgvector">
           <p className="text-sm m-0">
-            For 90% of the apps a Spring Boot team ships, the vectors are <em>secondary</em> to the actual
+            For 90% of the apps a Spring Boot team ships, the vectors are <em>secondary</em>{" "}to the actual
             domain — bookmarks belong to users, issues belong to projects, docs belong to spaces. You already
             have a Postgres for that. Adding <code>CREATE EXTENSION vector;</code> is a one-line change.
             Operating a second specialized database isn&apos;t.
@@ -331,15 +331,15 @@ LIMIT 5;`}</CodeBlock>
 
         <p>
           Without an index, pgvector does a sequential scan: every row, every query. That&apos;s fine for
-          10k rows; it falls apart at a million. ANN indexes (<em>Approximate</em> Nearest Neighbor) trade a
-          tiny bit of recall for a 10–100× speedup. pgvector ships two: <strong>HNSW</strong> and
+          10k rows; it falls apart at a million. ANN indexes (<em>Approximate</em>{" "}Nearest Neighbor) trade a
+          tiny bit of recall for a 10–100× speedup. pgvector ships two: <strong>HNSW</strong>{" "}and
           <strong> IVFFlat</strong>.
         </p>
 
         <Callout variant="warn" title='"Approximate" means you might miss a true top-k result'>
           <p className="text-sm m-0">
             ANN indexes don&apos;t guarantee they&apos;ll find the literal closest vector — they aim for
-            <em> recall@10 </em> in the 95–99% range. For a search UI, that&apos;s invisible. For exact-match
+            <em> recall@10 </em>{" "}in the 95–99% range. For a search UI, that&apos;s invisible. For exact-match
             de-duplication or compliance use cases where missing one means a bug, you may want to keep a
             sequential scan or post-verify the top-k with brute force.
           </p>
@@ -374,7 +374,7 @@ SET hnsw.ef_search = 40;`}</CodeBlock>
             a one-time index of an important corpus.
           </li>
           <li>
-            <strong><code>ef_search</code></strong> — candidate list size at <em>query</em> time. Higher =
+            <strong><code>ef_search</code></strong> — candidate list size at <em>query</em>{" "}time. Higher =
             slower queries, better recall. Default 40. This is the dial you use to tune the latency/recall
             trade-off without rebuilding.
           </li>
@@ -397,7 +397,7 @@ SET ivfflat.probes = 10;`}</CodeBlock>
         <Callout variant="warn" title="IVFFlat needs data before you build it">
           <p className="text-sm m-0">
             IVFFlat clusters during <code>CREATE INDEX</code>. If you build the index on an empty table and
-            then insert, the partitions are garbage. Build IVFFlat <em>after</em> a representative bulk load,
+            then insert, the partitions are garbage. Build IVFFlat <em>after</em>{" "}a representative bulk load,
             or rebuild it after major data changes. HNSW doesn&apos;t have this problem — it&apos;s
             incremental.
           </p>
@@ -488,7 +488,7 @@ SET ivfflat.probes = 10;`}</CodeBlock>
                     <code>ef_construction = 200</code> bakes more recall into the index permanently. The
                     rebuild takes longer (maybe 20 min for 2M rows on a beefy machine) but you get a free
                     couple of points of recall at query time forever — and that recall budget can pay for
-                    a <em>lower</em> ef_search, claiming back latency.
+                    a <em>lower</em>{" "}ef_search, claiming back latency.
                   </p>
                 </>
               ),
@@ -525,7 +525,7 @@ LIMIT 10;`}</CodeBlock>
 
         <p>
           When the <code>WHERE</code> clause is highly selective (e.g., user_id = 42 narrows 10M rows to 200),
-          Postgres may pick a <em>sequential scan + sort</em> over those 200 rows instead of using the HNSW
+          Postgres may pick a <em>sequential scan + sort</em>{" "}over those 200 rows instead of using the HNSW
           index — and that&apos;s the right call. But when the filter narrows to, say, 50k rows, the planner
           can pick wrong: HNSW returns 10 candidates but maybe none of them match user_id = 42, so pgvector
           has to over-fetch and re-filter. <code>EXPLAIN ANALYZE</code> is your friend here.

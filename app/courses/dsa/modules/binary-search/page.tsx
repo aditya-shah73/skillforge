@@ -140,7 +140,7 @@ flowchart LR
 
         <ul>
           <li>The input is a <strong>sorted array</strong>, and you&apos;re looking for a target value, OR</li>
-          <li>There&apos;s a <strong>monotonic predicate</strong> over the answer space — a function <code>P(x)</code> such that <code>P</code> goes from <code>false</code> to <code>true</code> exactly once (or stays one or the other) as <code>x</code> increases.</li>
+          <li>There&apos;s a <strong>monotonic predicate</strong>{" "}over the answer space — a function <code>P(x)</code> such that <code>P</code> goes from <code>false</code> to <code>true</code> exactly once (or stays one or the other) as <code>x</code> increases.</li>
         </ul>
 
         <p>
@@ -221,7 +221,7 @@ Convention B · Half-open interval [l, r)
 
         <Callout variant="warn" title="Why l + (r - l) / 2 instead of (l + r) / 2">
           <p>
-            They&apos;re mathematically identical for non-negative <code>l, r</code>. They&apos;re <em>not</em> identical
+            They&apos;re mathematically identical for non-negative <code>l, r</code>. They&apos;re <em>not</em>{" "}identical
             in fixed-width integer arithmetic. <code>(l + r)</code> can overflow when the array is huge —{" "}
             <code>l + r &gt; Integer.MAX_VALUE</code> wraps to a negative number, and you index into negative
             territory. <code>l + (r - l) / 2</code> never overflows because <code>r - l</code> is bounded by the
@@ -266,7 +266,7 @@ Convention B · Half-open interval [l, r)
 
         <p>
           Now we get into the weeds. Most binary-search bugs cluster around three decisions: <strong>strictly-less or
-          less-or-equal</strong> in the loop condition, <strong>where the midpoint goes</strong>, and <strong>how you
+          less-or-equal</strong>{" "}in the loop condition, <strong>where the midpoint goes</strong>, and <strong>how you
           shrink the boundaries</strong>. Get any of these wrong and you either skip the answer or spin forever.
         </p>
 
@@ -357,7 +357,7 @@ while (l <= r) {
             doesn&apos;t shrink — same two elements, same midpoint, same decision. Infinite loop.
           </p>
           <p>
-            <strong>The rule:</strong> if you might compute <code>mid = l</code>, you must use{" "}
+            <strong>The rule:</strong>{" "}if you might compute <code>mid = l</code>, you must use{" "}
             <code>l = mid + 1</code> on the &quot;go right&quot; branch. Symmetrically, if you might compute{" "}
             <code>mid = r</code> (which doesn&apos;t happen with floor-division), you&apos;d need <code>r = mid - 1</code>.
             With Convention A (<code>l &lt;= r</code>, <code>mid</code> is floor), the invariants are:{" "}
@@ -400,13 +400,13 @@ while (l <= r) {
         <h3>The mental checklist before you write the loop</h3>
 
         <ol>
-          <li><strong>Pick a convention.</strong> Closed <code>[l, r]</code> or half-open <code>[l, r)</code>. Don&apos;t mix.</li>
-          <li><strong>Initialize correctly.</strong> Closed: <code>r = n - 1</code>. Half-open: <code>r = n</code>.</li>
-          <li><strong>Loop condition matches.</strong> Closed: <code>l &lt;= r</code>. Half-open: <code>l &lt; r</code>.</li>
+          <li><strong>Pick a convention.</strong>{" "}Closed <code>[l, r]</code> or half-open <code>[l, r)</code>. Don&apos;t mix.</li>
+          <li><strong>Initialize correctly.</strong>{" "}Closed: <code>r = n - 1</code>. Half-open: <code>r = n</code>.</li>
+          <li><strong>Loop condition matches.</strong>{" "}Closed: <code>l &lt;= r</code>. Half-open: <code>l &lt; r</code>.</li>
           <li><strong>Use overflow-safe midpoint.</strong> <code>l + (r - l) / 2</code>, always.</li>
-          <li><strong>Shrink correctly on &quot;go right.&quot;</strong> Both conventions: <code>l = mid + 1</code>.</li>
-          <li><strong>Shrink correctly on &quot;go left.&quot;</strong> Closed: <code>r = mid - 1</code>. Half-open: <code>r = mid</code>.</li>
-          <li><strong>Termination.</strong> Closed: loop exits with <code>l = r + 1</code>; <code>l</code> is insertion point. Half-open: loop exits with <code>l = r</code>; same.</li>
+          <li><strong>Shrink correctly on &quot;go right.&quot;</strong>{" "}Both conventions: <code>l = mid + 1</code>.</li>
+          <li><strong>Shrink correctly on &quot;go left.&quot;</strong>{" "}Closed: <code>r = mid - 1</code>. Half-open: <code>r = mid</code>.</li>
+          <li><strong>Termination.</strong>{" "}Closed: loop exits with <code>l = r + 1</code>; <code>l</code> is insertion point. Half-open: loop exits with <code>l = r</code>; same.</li>
         </ol>
 
         <Quiz
@@ -525,7 +525,7 @@ if (idx >= 0) {
 
         <Callout variant="warn" title="Don't use Arrays.binarySearch for first/last occurrence">
           <p>
-            <code>Arrays.binarySearch</code> guarantees only that it returns <em>some</em> matching index when the
+            <code>Arrays.binarySearch</code> guarantees only that it returns <em>some</em>{" "}matching index when the
             target exists with duplicates. It does not promise leftmost, rightmost, or any specific position. If you
             need first or last occurrence, write <code>lowerBound</code> / <code>upperBound</code> yourself; the JDK
             doesn&apos;t expose them directly.
@@ -606,7 +606,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
         <p>
           This is the pattern that promotes binary search from &quot;sorted-array helper&quot; to &quot;Swiss army
           knife.&quot; The setup: instead of searching an array for a value, you&apos;re searching an{" "}
-          <strong>integer range</strong> for the smallest (or largest) value that satisfies a predicate. The trick:
+          <strong>integer range</strong>{" "}for the smallest (or largest) value that satisfies a predicate. The trick:
           if the predicate is monotonic, binary search applies — and the search reduces to <em>O(log(range))</em>{" "}
           calls of the predicate, regardless of how complicated the predicate is.
         </p>
@@ -646,8 +646,8 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
         <ul>
           <li><strong>Answer space:</strong> <code>K ∈ [1, max(piles)]</code>. K = 1 is the slowest possible; K = max(piles) means each pile takes exactly one hour, so total time = piles.length, which is always ≤ H (problem guarantees).</li>
           <li><strong>Predicate:</strong> <code>canFinish(K)</code> = &quot;at speed K, total hours needed ≤ H&quot;.</li>
-          <li><strong>Monotonicity:</strong> if she can finish at speed K, she can certainly finish at any faster speed. So <code>canFinish</code> is false-then-true as K increases — exactly the lower-bound shape.</li>
-          <li><strong>Goal:</strong> smallest K with <code>canFinish(K) = true</code>.</li>
+          <li><strong>Monotonicity:</strong>{" "}if she can finish at speed K, she can certainly finish at any faster speed. So <code>canFinish</code> is false-then-true as K increases — exactly the lower-bound shape.</li>
+          <li><strong>Goal:</strong>{" "}smallest K with <code>canFinish(K) = true</code>.</li>
         </ul>
 
         <CodeBlock lang="java">{`public int minEatingSpeed(int[] piles, int H) {
@@ -701,7 +701,7 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <p>
           Look at what the predicate hides: a full simulation. <code>canFinish</code> walks every pile, does division,
-          and checks a sum — it&apos;s O(piles.length). That&apos;s the work for <em>one</em> midpoint check. We do
+          and checks a sum — it&apos;s O(piles.length). That&apos;s the work for <em>one</em>{" "}midpoint check. We do
           that O(log(max(piles))) ≈ 30 times. Total work: O(n log m) where n = piles.length, m = max pile size. The
           predicate can be arbitrarily complex — it just has to be monotonic — and the binary-search wrapper
           slashes the search to logarithmic.
@@ -712,21 +712,21 @@ private boolean canFinish(int[] piles, int K, int H) {
         <p>When you suspect a problem might be answer-search, ask:</p>
 
         <ol>
-          <li><strong>Is the answer an integer (or a real you can round)?</strong> If yes, the search space is an interval.</li>
-          <li><strong>What are the bounds?</strong> Often <code>[1, something_max]</code> or <code>[0, sum_total]</code>.</li>
-          <li><strong>Can I write a predicate that takes a candidate answer and says yes/no?</strong> If yes, you have the kernel.</li>
-          <li><strong>Is the predicate monotonic in the candidate?</strong> If yes (FFFFTTT or TTTFFFF), binary search applies.</li>
-          <li><strong>Smallest yes or largest no?</strong> Lower-bound for the smallest yes; for largest no, run lower-bound and subtract one.</li>
+          <li><strong>Is the answer an integer (or a real you can round)?</strong>{" "}If yes, the search space is an interval.</li>
+          <li><strong>What are the bounds?</strong>{" "}Often <code>[1, something_max]</code> or <code>[0, sum_total]</code>.</li>
+          <li><strong>Can I write a predicate that takes a candidate answer and says yes/no?</strong>{" "}If yes, you have the kernel.</li>
+          <li><strong>Is the predicate monotonic in the candidate?</strong>{" "}If yes (FFFFTTT or TTTFFFF), binary search applies.</li>
+          <li><strong>Smallest yes or largest no?</strong>{" "}Lower-bound for the smallest yes; for largest no, run lower-bound and subtract one.</li>
         </ol>
 
         <h3>Other problems that fit</h3>
 
         <ul>
-          <li><strong>LC 1011 · Capacity to Ship Packages.</strong> Smallest ship capacity such that all packages ship in D days. Predicate: canShip(cap). Range: [max(weights), sum(weights)].</li>
-          <li><strong>LC 1482 · Minimum Days to Make M Bouquets.</strong> Smallest day d such that we have m bouquets of k adjacent flowers. Predicate: enoughBouquets(d).</li>
-          <li><strong>LC 410 · Split Array Largest Sum.</strong> Smallest max-subarray-sum when splitting into k contiguous chunks. Predicate: canSplit(maxSum, k).</li>
-          <li><strong>LC 69 · Sqrt(x).</strong> Largest int r such that r*r ≤ x. Range: [0, x]. Predicate: r*r ≤ x.</li>
-          <li><strong>LC 1283 · Find the Smallest Divisor Given a Threshold.</strong> Smallest divisor such that sum of ⌈nums[i] / div⌉ ≤ threshold.</li>
+          <li><strong>LC 1011 · Capacity to Ship Packages.</strong>{" "}Smallest ship capacity such that all packages ship in D days. Predicate: canShip(cap). Range: [max(weights), sum(weights)].</li>
+          <li><strong>LC 1482 · Minimum Days to Make M Bouquets.</strong>{" "}Smallest day d such that we have m bouquets of k adjacent flowers. Predicate: enoughBouquets(d).</li>
+          <li><strong>LC 410 · Split Array Largest Sum.</strong>{" "}Smallest max-subarray-sum when splitting into k contiguous chunks. Predicate: canSplit(maxSum, k).</li>
+          <li><strong>LC 69 · Sqrt(x).</strong>{" "}Largest int r such that r*r ≤ x. Range: [0, x]. Predicate: r*r ≤ x.</li>
+          <li><strong>LC 1283 · Find the Smallest Divisor Given a Threshold.</strong>{" "}Smallest divisor such that sum of ⌈nums[i] / div⌉ ≤ threshold.</li>
         </ul>
 
         <Callout variant="insight" title="Recognition: 'minimize the maximum,' 'maximize the minimum,' 'fewest X such that Y'">
@@ -833,7 +833,7 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <p>
           The array is no longer globally sorted, but it has a hidden invariant: <strong>at least one of the two
-          halves around any midpoint is still sorted.</strong> That&apos;s what makes binary search applicable. The
+          halves around any midpoint is still sorted.</strong>{" "}That&apos;s what makes binary search applicable. The
           algorithm: find the midpoint, decide which side is sorted, then check whether the target lies in that
           sorted side. If it does, recurse into it; if not, recurse into the other side.
         </p>
@@ -868,7 +868,7 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <Callout variant="warn" title="The boundary comparators are precise — get them wrong and you'll search in circles">
           <p>
-            <code>nums[lo] &lt;= nums[mid]</code> with the <strong>≤</strong> matters: when <code>lo == mid</code>{" "}
+            <code>nums[lo] &lt;= nums[mid]</code> with the <strong>≤</strong>{" "}matters: when <code>lo == mid</code>{" "}
             (interval of size 1), we want to call the left half &quot;sorted&quot; (it trivially is). Using strict{" "}
             <code>&lt;</code> would falsely send the search into the wrong branch on degenerate inputs.
           </p>
@@ -884,8 +884,8 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <p>
           Some folks find the &quot;decide which half is sorted&quot; logic too subtle and prefer a two-step
-          approach: <strong>(1)</strong> binary-search for the pivot index (the smallest element), then{" "}
-          <strong>(2)</strong> binary-search for the target in whichever sub-array contains it. Two clean log-n
+          approach: <strong>(1)</strong>{" "}binary-search for the pivot index (the smallest element), then{" "}
+          <strong>(2)</strong>{" "}binary-search for the target in whichever sub-array contains it. Two clean log-n
           searches; same total complexity; arguably easier to debug.
         </p>
 
@@ -946,7 +946,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
 
         <p>
           Counterintuitive at first — the array isn&apos;t sorted, so how can binary search apply? Because the
-          predicate &quot;<code>a[mid] &lt; a[mid+1]</code>&quot; <em>is</em> monotonic in a useful sense: if it&apos;s
+          predicate &quot;<code>a[mid] &lt; a[mid+1]</code>&quot; <em>is</em>{" "}monotonic in a useful sense: if it&apos;s
           true, a peak must lie strictly to the right of <code>mid</code> (you&apos;re climbing). If it&apos;s false,
           a peak must lie at <code>mid</code> or to its left (you&apos;re descending or at the top). One comparison,
           half the search space gone.

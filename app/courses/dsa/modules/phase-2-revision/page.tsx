@@ -249,7 +249,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 1 · Prefix sums</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              <strong>Tell:</strong> repeated range-sum queries on an immutable array — &quot;sum from i to j&quot;, &quot;average over window&quot;, &quot;subarray sum equals k&quot;. Precompute once in O(n), answer each query in O(1).
+              <strong>Tell:</strong>{" "}repeated range-sum queries on an immutable array — &quot;sum from i to j&quot;, &quot;average over window&quot;, &quot;subarray sum equals k&quot;. Precompute once in O(n), answer each query in O(1).
             </p>
             <CodeBlock lang="java" caption="Range sum in O(1) after O(n) precompute">{`int n = a.length;
 int[] prefix = new int[n + 1];          // prefix[0] = 0
@@ -264,7 +264,7 @@ int rangeSum(int l, int r) { return prefix[r + 1] - prefix[l]; }`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 2 · Two pointers on sorted data</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              <strong>Tell:</strong> array is sorted (or you can sort it) and you&apos;re looking for a <em>pair / triplet</em> that satisfies a sum or difference condition. Two pointers collapse what would be O(n²) into O(n).
+              <strong>Tell:</strong>{" "}array is sorted (or you can sort it) and you&apos;re looking for a <em>pair / triplet</em>{" "}that satisfies a sum or difference condition. Two pointers collapse what would be O(n²) into O(n).
             </p>
             <CodeBlock lang="java" caption="Two-sum on a sorted array">{`// Returns indices [l, r] such that a[l] + a[r] == target, or null.
 int[] twoSumSorted(int[] a, int target) {
@@ -283,7 +283,7 @@ int[] twoSumSorted(int[] a, int target) {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 3 · Dummy-head sentinel</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              <strong>Tell:</strong> you&apos;re writing linked-list code where the answer might require <em>removing or replacing the head</em>. Add a fake first node — every real node is now <code>.next</code> of <em>some</em> node, so insert-at-front and insert-at-middle use the same code.
+              <strong>Tell:</strong>{" "}you&apos;re writing linked-list code where the answer might require <em>removing or replacing the head</em>. Add a fake first node — every real node is now <code>.next</code> of <em>some</em>{" "}node, so insert-at-front and insert-at-middle use the same code.
             </p>
             <CodeBlock lang="java" caption="LC 203 — remove all nodes with value v">{`ListNode removeElements(ListNode head, int v) {
     ListNode dummy = new ListNode(0);
@@ -301,7 +301,7 @@ int[] twoSumSorted(int[] a, int target) {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 4 · Fast / slow pointers</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              <strong>Tell:</strong> linked-list problem about <em>middle</em>, <em>cycle</em>, or <em>kᵗʰ-from-end</em>. Walk two pointers, slow steps 1, fast steps 2. When fast falls off, slow is at the middle. If they collide, there&apos;s a cycle.
+              <strong>Tell:</strong>{" "}linked-list problem about <em>middle</em>, <em>cycle</em>, or <em>kᵗʰ-from-end</em>. Walk two pointers, slow steps 1, fast steps 2. When fast falls off, slow is at the middle. If they collide, there&apos;s a cycle.
             </p>
             <CodeBlock lang="java" caption="LC 141 — cycle detection via Floyd's tortoise &amp; hare">{`boolean hasCycle(ListNode head) {
     ListNode slow = head, fast = head;
@@ -318,7 +318,7 @@ int[] twoSumSorted(int[] a, int target) {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 5 · Monotonic stack</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              <strong>Tell:</strong> &quot;for each element, find the next/previous greater/smaller&quot; — daily temperatures, next greater element, largest rectangle, trapping rain water. Maintain a stack of <em>indices</em> in sorted order; each index pushes and pops at most once → O(n) total.
+              <strong>Tell:</strong> &quot;for each element, find the next/previous greater/smaller&quot; — daily temperatures, next greater element, largest rectangle, trapping rain water. Maintain a stack of <em>indices</em>{" "}in sorted order; each index pushes and pops at most once → O(n) total.
             </p>
             <CodeBlock lang="java" caption="LC 739 — Daily Temperatures">{`int[] dailyTemperatures(int[] T) {
     int n = T.length;
@@ -653,7 +653,7 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
           Five structures, one Big-O table, five named patterns, the immutability trap, the linked-list dance, and the ArrayDeque rule. That&apos;s the entire linear-structure toolkit — every problem from here on out will either compose these or move on to non-linear shapes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Hashing &amp; Trees.</strong> HashMap from the ground up, hash collisions, then binary trees and BSTs. The structures where lookup becomes O(1) or O(log n) instead of O(n).
+          <strong>Up next: Phase 3 — Hashing &amp; Trees.</strong>{" "}HashMap from the ground up, hash collisions, then binary trees and BSTs. The structures where lookup becomes O(1) or O(log n) instead of O(n).
         </p>
         <Link
           href="/courses/dsa/modules/hashmaps"

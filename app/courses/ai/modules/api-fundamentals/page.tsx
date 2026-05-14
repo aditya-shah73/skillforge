@@ -137,7 +137,7 @@ flowchart LR
 
         <Callout variant="warn" title="Stateless. Every call. Always.">
           <p className="m-0">
-            The API does not remember a thing between calls. If you want a conversation, <em>you</em> append the assistant&apos;s reply to your <code>messages</code> array and re-send the whole thing next turn. The &quot;memory&quot; lives in your code, not on Anthropic&apos;s servers. (This is also why long chats get expensive — every turn re-bills for all prior turns as input tokens.)
+            The API does not remember a thing between calls. If you want a conversation, <em>you</em>{" "}append the assistant&apos;s reply to your <code>messages</code> array and re-send the whole thing next turn. The &quot;memory&quot; lives in your code, not on Anthropic&apos;s servers. (This is also why long chats get expensive — every turn re-bills for all prior turns as input tokens.)
           </p>
         </Callout>
 
@@ -191,7 +191,7 @@ flowchart LR
 
         <Callout variant="warn" title="Never hardcode the key">
           <p className="m-0">
-            <strong>Treat it like a credit card.</strong> Read it from an environment variable (<code>ANTHROPIC_API_KEY</code>), a secret manager, or your config server — never commit it. If you push a key to GitHub, Anthropic&apos;s scanners will detect it within minutes and auto-revoke. Then you&apos;ve had a bad afternoon.
+            <strong>Treat it like a credit card.</strong>{" "}Read it from an environment variable (<code>ANTHROPIC_API_KEY</code>), a secret manager, or your config server — never commit it. If you push a key to GitHub, Anthropic&apos;s scanners will detect it within minutes and auto-revoke. Then you&apos;ve had a bad afternoon.
           </p>
         </Callout>
 
@@ -235,7 +235,7 @@ flowchart LR
           <ol className="list-decimal pl-5 space-y-1 m-0">
             <li>Build everything on <strong>Sonnet</strong>.</li>
             <li>Once it works, try Haiku for the high-volume paths and see if quality holds.</li>
-            <li>Drop to Opus <em>only</em> for the specific call where Sonnet visibly fails.</li>
+            <li>Drop to Opus <em>only</em>{" "}for the specific call where Sonnet visibly fails.</li>
           </ol>
           <p className="mt-3 mb-0">
             Most teams over-spend by reaching for Opus by default and over-suffer by reaching for Haiku for things it can&apos;t handle. Sonnet first, always.
@@ -249,7 +249,7 @@ flowchart LR
 
         <ul>
           <li><strong>Family, then tier, then version</strong> — <code>claude-{`{tier}`}-{`{version}`}</code>.</li>
-          <li><strong>Old models don&apos;t auto-upgrade.</strong> If you pin <code>claude-3-5-sonnet-20241022</code>, you keep getting that exact snapshot until Anthropic deprecates it. New behavior = new model string.</li>
+          <li><strong>Old models don&apos;t auto-upgrade.</strong>{" "}If you pin <code>claude-3-5-sonnet-20241022</code>, you keep getting that exact snapshot until Anthropic deprecates it. New behavior = new model string.</li>
           <li><strong>Wrong string → 404 not_found_error</strong>. Typos here are the most common &quot;why doesn&apos;t my call work&quot; bug.</li>
         </ul>
 
@@ -330,7 +330,7 @@ flowchart LR
         <h3><code>stop_sequences</code> — make the model stop early</h3>
 
         <p>
-          Pass an array of strings. The moment the model produces any of them, generation stops (and the stop string is <em>not</em> included in the reply). Useful when:
+          Pass an array of strings. The moment the model produces any of them, generation stops (and the stop string is <em>not</em>{" "}included in the reply). Useful when:
         </p>
 
         <ul>
@@ -366,8 +366,8 @@ flowchart LR
         </p>
 
         <ul>
-          <li><strong>The model treats it as higher priority</strong> than user turns. (Not bulletproof — see Module 25 on prompt injection — but a meaningful nudge.)</li>
-          <li><strong>It doesn&apos;t count as a turn</strong> in the messages array, so you can use it to set tone without polluting the conversation history.</li>
+          <li><strong>The model treats it as higher priority</strong>{" "}than user turns. (Not bulletproof — see Module 25 on prompt injection — but a meaningful nudge.)</li>
+          <li><strong>It doesn&apos;t count as a turn</strong>{" "}in the messages array, so you can use it to set tone without polluting the conversation history.</li>
           <li><strong>It&apos;s where prompt caching applies most cleanly</strong> (Module 13) — long stable system prompts get cached server-side.</li>
         </ul>
 
@@ -431,7 +431,7 @@ flowchart LR
         <h3>Step 0: Prerequisites</h3>
 
         <ul>
-          <li><strong>Java 21 JDK</strong> installed and on your PATH. Verify: <code>java --version</code> should print <code>21</code> or higher. If you don&apos;t have it, install via <a href="https://sdkman.io/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">SDKMAN</a> (macOS/Linux: <code>sdk install java 21-tem</code>) or <a href="https://adoptium.net/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">Adoptium Temurin 21</a> (any OS, installer-based).</li>
+          <li><strong>Java 21 JDK</strong>{" "}installed and on your PATH. Verify: <code>java --version</code> should print <code>21</code> or higher. If you don&apos;t have it, install via <a href="https://sdkman.io/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">SDKMAN</a> (macOS/Linux: <code>sdk install java 21-tem</code>) or <a href="https://adoptium.net/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">Adoptium Temurin 21</a> (any OS, installer-based).</li>
           <li><strong>An Anthropic API key</strong> — get one at <a href="https://console.anthropic.com/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">console.anthropic.com</a>. Sign up, go to <em>Settings → API Keys → Create Key</em>, copy the <code>sk-ant-...</code> string somewhere safe. New accounts get a small free credit — more than enough for this module.</li>
           <li><strong>An IDE</strong> — IntelliJ IDEA Community Edition is free and has the smoothest Spring Boot UX. VS Code with the &quot;Extension Pack for Java&quot; works too. We&apos;ll show IntelliJ paths below; VS Code users, the file paths and Maven commands are identical, you just open the folder instead.</li>
           <li><strong>No global Maven needed</strong> — the project ships with Maven Wrapper (<code>mvnw</code>), which downloads the right Maven version on first run.</li>
@@ -451,21 +451,21 @@ flowchart LR
 
         <ol>
           <li>Open <a href="https://start.spring.io" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">start.spring.io</a> in your browser.</li>
-          <li>In the left panel, set <strong>Project</strong> to <code>Maven</code> and <strong>Language</strong> to <code>Java</code>.</li>
+          <li>In the left panel, set <strong>Project</strong>{" "}to <code>Maven</code> and <strong>Language</strong>{" "}to <code>Java</code>.</li>
           <li><strong>Spring Boot</strong>: pick the latest <code>3.4.x</code> stable release (avoid <code>SNAPSHOT</code> and <code>M*</code> milestones — those are pre-release).</li>
           <li>In <strong>Project Metadata</strong>, set:
             <ul>
               <li><strong>Group:</strong> <code>com.example</code></li>
               <li><strong>Artifact:</strong> <code>claude-code-reviewer</code></li>
               <li><strong>Name:</strong> <code>claude-code-reviewer</code> (auto-fills from Artifact)</li>
-              <li><strong>Description:</strong> anything, e.g. <code>AI code reviewer CLI</code></li>
+              <li><strong>Description:</strong>{" "}anything, e.g. <code>AI code reviewer CLI</code></li>
               <li><strong>Package name:</strong> <code>com.example.codereviewer</code> (auto-fills, but double-check — this becomes the Java package)</li>
               <li><strong>Packaging:</strong> <code>Jar</code></li>
               <li><strong>Java:</strong> <code>21</code></li>
             </ul>
           </li>
           <li>On the right, click <strong>ADD DEPENDENCIES</strong>. Search for <code>Anthropic</code> and select <strong>Anthropic Claude</strong> (this is Spring AI&apos;s Anthropic starter). That&apos;s the only dependency we need — Spring AI&apos;s autoconfig pulls in everything else.</li>
-          <li>Click <strong>GENERATE</strong> at the bottom. A <code>claude-code-reviewer.zip</code> downloads.</li>
+          <li>Click <strong>GENERATE</strong>{" "}at the bottom. A <code>claude-code-reviewer.zip</code> downloads.</li>
           <li>Unzip it somewhere (e.g. <code>~/projects/claude-code-reviewer</code>). Open that folder in IntelliJ via <em>File → Open</em> (point it at the <strong>folder</strong>, not the pom.xml — IntelliJ auto-detects Maven). Wait for IntelliJ to finish indexing and downloading dependencies; you&apos;ll see &quot;Maven: ... downloading&quot; in the bottom status bar. Could take 1–3 minutes the first time.</li>
         </ol>
 
@@ -480,7 +480,7 @@ flowchart LR
             >
               start.spring.io/#!...&dependencies=spring-ai-anthropic
             </a>
-            . Click <strong>GENERATE</strong> and you&apos;re done.
+            . Click <strong>GENERATE</strong>{" "}and you&apos;re done.
           </p>
         </Callout>
 
@@ -526,7 +526,7 @@ flowchart LR
                 └── CodeReviewerApplicationTests.java    ← leave it; the empty test still runs`}</CodeBlock>
 
         <p>
-          You&apos;ll need to <strong>create two new files</strong> alongside <code>CodeReviewerApplication.java</code>: <code>ReviewService.java</code> and <code>CliRunner.java</code>. We&apos;ll write those in Steps 6 and 7.
+          You&apos;ll need to <strong>create two new files</strong>{" "}alongside <code>CodeReviewerApplication.java</code>: <code>ReviewService.java</code> and <code>CliRunner.java</code>. We&apos;ll write those in Steps 6 and 7.
         </p>
 
         <Callout variant="warn" title="Sanity check before continuing">
@@ -542,7 +542,7 @@ flowchart LR
         <h3>Step 3: Set the API key as an env var</h3>
 
         <p>
-          The scaffolded <code>application.properties</code> will read the key via <code>${"${ANTHROPIC_API_KEY}"}</code>, so set it in your shell <em>before</em> you run the app:
+          The scaffolded <code>application.properties</code> will read the key via <code>${"${ANTHROPIC_API_KEY}"}</code>, so set it in your shell <em>before</em>{" "}you run the app:
         </p>
 
         <CodeBlock lang="plain" caption="macOS / Linux (bash, zsh)">{`export ANTHROPIC_API_KEY="sk-ant-api03-..."
@@ -557,7 +557,7 @@ echo $env:ANTHROPIC_API_KEY`}</CodeBlock>
 
         <Callout variant="info" title="Persisting the env var (optional)">
           <p className="m-0">
-            <code>export</code> only lasts for the current shell session. To make it stick across reboots, add the line to <code>~/.zshrc</code> (zsh, the macOS default since Catalina) or <code>~/.bashrc</code> (bash). On Windows, use <em>System Properties → Environment Variables → New</em> for permanent. <strong>But:</strong> a permanent var means any process on your machine can read your key. The cleaner pattern is the IntelliJ Run Config option below — scoped to one run, never touches the shell.
+            <code>export</code> only lasts for the current shell session. To make it stick across reboots, add the line to <code>~/.zshrc</code> (zsh, the macOS default since Catalina) or <code>~/.bashrc</code> (bash). On Windows, use <em>System Properties → Environment Variables → New</em>{" "}for permanent. <strong>But:</strong>{" "}a permanent var means any process on your machine can read your key. The cleaner pattern is the IntelliJ Run Config option below — scoped to one run, never touches the shell.
           </p>
         </Callout>
 
@@ -568,7 +568,7 @@ echo $env:ANTHROPIC_API_KEY`}</CodeBlock>
           <ol className="m-0 text-sm">
             <li>In IntelliJ, open <code>CodeReviewerApplication.java</code> and click the green ▶ in the gutter next to <code>main(...)</code> once. This creates a Run Configuration named &quot;CodeReviewerApplication&quot;.</li>
             <li>Top-right of IntelliJ, click the dropdown showing &quot;CodeReviewerApplication&quot; → <em>Edit Configurations…</em></li>
-            <li>Find the <strong>Environment variables</strong> field (you may need to expand &quot;Modify options&quot; on newer IntelliJ versions). Set it to: <code>ANTHROPIC_API_KEY=sk-ant-api03-...</code></li>
+            <li>Find the <strong>Environment variables</strong>{" "}field (you may need to expand &quot;Modify options&quot; on newer IntelliJ versions). Set it to: <code>ANTHROPIC_API_KEY=sk-ant-api03-...</code></li>
             <li>Click OK. Your key is now bound to that one run config — never touches your shell, never lands in a commit.</li>
           </ol>
           <p className="mt-3 mb-0 text-sm">
@@ -865,7 +865,7 @@ EOF
 
         <Callout variant="info" title="Running from IntelliJ instead">
           <p className="m-0">
-            If you set up the IntelliJ Run Config in Step 3, you can run it from the IDE: open <em>Edit Configurations…</em>, set <strong>Program arguments</strong> to <code>Calculator.java</code> (and place a <code>Calculator.java</code> file in the project root), then click ▶. Same result, no terminal needed. The first run will take 10–15 seconds while Spring Boot starts up; subsequent runs are faster.
+            If you set up the IntelliJ Run Config in Step 3, you can run it from the IDE: open <em>Edit Configurations…</em>, set <strong>Program arguments</strong>{" "}to <code>Calculator.java</code> (and place a <code>Calculator.java</code> file in the project root), then click ▶. Same result, no terminal needed. The first run will take 10–15 seconds while Spring Boot starts up; subsequent runs are faster.
           </p>
         </Callout>
 

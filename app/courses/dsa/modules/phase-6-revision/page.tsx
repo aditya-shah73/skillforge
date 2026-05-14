@@ -100,7 +100,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight" title="Reading the tree">
-          The tree is greedy left-to-right: take the <em>first</em> match. &quot;Sorted&quot; beats everything because two-pointer / binary-search collapse the problem instantly. &quot;Contiguous&quot; is the next strongest signal because it lets you drop from O(n²) to O(n) with a window. If nothing else fits, sorting the input is almost always a productive first move — it changes which sub-tree applies.
+          The tree is greedy left-to-right: take the <em>first</em>{" "}match. &quot;Sorted&quot; beats everything because two-pointer / binary-search collapse the problem instantly. &quot;Contiguous&quot; is the next strongest signal because it lets you drop from O(n²) to O(n) with a window. If nothing else fits, sorting the input is almost always a productive first move — it changes which sub-tree applies.
         </Callout>
       </section>
 
@@ -141,7 +141,7 @@ flowchart TD
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-emerald-600">Binary search</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Sorted input, OR a <em>monotone</em> predicate over an answer range (&quot;smallest x such that feasible(x)&quot;)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Sorted input, OR a <em>monotone</em>{" "}predicate over an answer range (&quot;smallest x such that feasible(x)&quot;)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">while (l &lt; r) mid = l + (r-l)/2</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(log n) or O(n log m)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 704 Binary Search, LC 875 Koko Eating Bananas</td>
@@ -192,7 +192,7 @@ flowchart TD
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">3. Two pointers — opposite-end vs same-direction</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Two flavors. They look similar in code but they answer different questions. The <strong>sorted-array tell</strong> is what tips you into opposite-end; partition / dedup / fast-slow is same-direction.
+          Two flavors. They look similar in code but they answer different questions. The <strong>sorted-array tell</strong>{" "}is what tips you into opposite-end; partition / dedup / fast-slow is same-direction.
         </p>
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -315,7 +315,7 @@ flowchart TD
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">5. Binary search — the off-by-one minefield</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Pick <em>one</em> convention and stick to it. The convention rules below are for half-open <code>[l, r)</code> — the one that&apos;s easiest to extend to lower/upper bound.
+          Pick <em>one</em>{" "}convention and stick to it. The convention rules below are for half-open <code>[l, r)</code> — the one that&apos;s easiest to extend to lower/upper bound.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
@@ -364,7 +364,7 @@ flowchart TD
 
         <h3 className="text-base font-semibold mt-4 mb-2">Binary-search the answer (LC 875 — Koko Eating Bananas)</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-          When the array isn&apos;t sorted but the <em>answer</em> lives in a known range and there&apos;s a monotone predicate <code>feasible(x)</code>, you binary-search over the answer range. Total time is <code>O(n · log(max))</code>.
+          When the array isn&apos;t sorted but the <em>answer</em>{" "}lives in a known range and there&apos;s a monotone predicate <code>feasible(x)</code>, you binary-search over the answer range. Total time is <code>O(n · log(max))</code>.
         </p>
         <CodeBlock lang="java" caption="Smallest eating speed k such that all piles finish in ≤ h hours">{`int minEatingSpeed(int[] piles, int h) {
     int lo = 1, hi = 1;
@@ -495,7 +495,7 @@ boolean canFinish(int[] piles, int k, int h) {
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">7. Recursion &amp; backtracking — the choose/explore/unchoose pattern</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Recursion is the <em>trust-the-recursive-call</em> contract. Backtracking is recursion plus mutation that you undo. The template is the same skeleton every time.
+          Recursion is the <em>trust-the-recursive-call</em>{" "}contract. Backtracking is recursion plus mutation that you undo. The template is the same skeleton every time.
         </p>
 
         <h3 className="text-base font-semibold mt-4 mb-2">The pseudocode template</h3>
@@ -927,7 +927,7 @@ int partition(int[] a, int lo, int hi) {
           Two pointers (sorted-array tell), sliding window (contiguous tell), binary search (sorted OR monotone-predicate tell), sorting (the unlock), recursion &amp; D&amp;C (self-similar tell), backtracking (combinatorial-enumeration tell), greedy (local-is-global tell), and bit manipulation (the small-state / XOR tell). That&apos;s the whole pattern vocabulary you&apos;ll need to discuss approaches in 90% of interview problems.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 7 — Dynamic Programming.</strong> The pattern that subsumes recursion, backtracking, AND greedy when those don&apos;t cut it. Memoization, tabulation, 1D and 2D state, and the &quot;overlapping subproblems&quot; tell.
+          <strong>Up next: Phase 7 — Dynamic Programming.</strong>{" "}The pattern that subsumes recursion, backtracking, AND greedy when those don&apos;t cut it. Memoization, tabulation, 1D and 2D state, and the &quot;overlapping subproblems&quot; tell.
         </p>
         <Link
           href="/courses/dsa/modules/dp-intro"

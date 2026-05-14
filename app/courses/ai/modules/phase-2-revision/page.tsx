@@ -348,13 +348,13 @@ class TerseSummarizer {
         <h3 className="text-base font-semibold mt-6 mb-2">Observability — what Spring AI gives you free</h3>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
           <li>
-            <strong>Micrometer metrics</strong> on every call: <code>spring.ai.chat.client</code> timer with tags for model and gen_ai operation. Tokens are recorded as <code>gen_ai.token.usage</code> counters.
+            <strong>Micrometer metrics</strong>{" "}on every call: <code>spring.ai.chat.client</code> timer with tags for model and gen_ai operation. Tokens are recorded as <code>gen_ai.token.usage</code> counters.
           </li>
           <li>
-            <strong>OpenTelemetry traces</strong> with one span per ChatClient call, child spans for advisors and tool invocations.
+            <strong>OpenTelemetry traces</strong>{" "}with one span per ChatClient call, child spans for advisors and tool invocations.
           </li>
           <li>
-            <strong>Structured logs</strong> via <code>SimpleLoggerAdvisor</code> — drop it in <code>defaultAdvisors</code> during local dev, never ship it to prod (PII leak).
+            <strong>Structured logs</strong>{" "}via <code>SimpleLoggerAdvisor</code> — drop it in <code>defaultAdvisors</code> during local dev, never ship it to prod (PII leak).
           </li>
         </ul>
 
@@ -378,13 +378,13 @@ class TerseSummarizer {
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
           <li>
-            <strong>Spring AI drives the loop for you.</strong> When you call <code>.tools(myService)</code> and the model returns <code>tool_use</code>, Spring AI finds the matching <code>@Tool</code> method, invokes it, packages the return value as <code>tool_result</code>, and re-calls the API — all before your <code>chatClient.call()</code> returns.
+            <strong>Spring AI drives the loop for you.</strong>{" "}When you call <code>.tools(myService)</code> and the model returns <code>tool_use</code>, Spring AI finds the matching <code>@Tool</code> method, invokes it, packages the return value as <code>tool_result</code>, and re-calls the API — all before your <code>chatClient.call()</code> returns.
           </li>
           <li>
             <strong>Loop termination:</strong> <code>stop_reason: end_turn</code> means &quot;no more tool calls, done.&quot; <code>stop_reason: tool_use</code> means &quot;execute and call me back.&quot; <code>stop_reason: max_tokens</code> means &quot;I ran out of room mid-thought&quot; — bump max_tokens or shorten the work.
           </li>
           <li>
-            <strong>Parallel tool calls</strong> are a single assistant turn containing multiple <code>tool_use</code> blocks. You execute all of them, then send back a single user turn with multiple <code>tool_result</code> blocks (one per <code>tool_use_id</code>).
+            <strong>Parallel tool calls</strong>{" "}are a single assistant turn containing multiple <code>tool_use</code> blocks. You execute all of them, then send back a single user turn with multiple <code>tool_result</code> blocks (one per <code>tool_use_id</code>).
           </li>
         </ul>
 
@@ -407,7 +407,7 @@ class TerseSummarizer {
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Use a tool when…</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
               <li>The data is small, structured, and on-demand (look up one user by email).</li>
-              <li>The model decides <em>whether</em> to fetch — not every turn needs it.</li>
+              <li>The model decides <em>whether</em>{" "}to fetch — not every turn needs it.</li>
               <li>You need a side effect (send email, create ticket, write a row).</li>
               <li>Multiple lookups are required, dynamically composed.</li>
             </ul>
@@ -437,7 +437,7 @@ class TerseSummarizer {
 }`}</CodeBlock>
 
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-3">
-          The <strong>description is the prompt</strong>. The model picks tools by reading their descriptions, not by reading your code. Be specific about inputs, outputs, side effects, and when <em>not</em> to use the tool.
+          The <strong>description is the prompt</strong>. The model picks tools by reading their descriptions, not by reading your code. Be specific about inputs, outputs, side effects, and when <em>not</em>{" "}to use the tool.
         </p>
 
         <h3 className="text-base font-semibold mt-4 mb-2">Spring AI equivalent — @Tool annotation</h3>
@@ -604,7 +604,7 @@ class StreamController {
         </div>
 
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3">
-          <strong>Break-even rule of thumb:</strong> if you&apos;ll reuse the same prefix at least twice within the TTL, caching is already a win. The premium write is amortized away on hit #2.
+          <strong>Break-even rule of thumb:</strong>{" "}if you&apos;ll reuse the same prefix at least twice within the TTL, caching is already a win. The premium write is amortized away on hit #2.
         </p>
 
         <h3 className="text-base font-semibold mt-6 mb-2">What to cache (and what not to)</h3>
@@ -615,8 +615,8 @@ class StreamController {
               <li><strong>System prompt</strong> — long, stable, sent on every call</li>
               <li><strong>Tool definitions</strong> — same input_schema on every turn</li>
               <li><strong>Few-shot examples</strong> — your demonstrations don&apos;t change call-to-call</li>
-              <li><strong>Large pasted documents</strong> on a chat tab — same doc, many user questions</li>
-              <li><strong>Early conversation turns</strong> in a long chat — they&apos;re replayed every turn</li>
+              <li><strong>Large pasted documents</strong>{" "}on a chat tab — same doc, many user questions</li>
+              <li><strong>Early conversation turns</strong>{" "}in a long chat — they&apos;re replayed every turn</li>
             </ul>
           </div>
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
@@ -633,7 +633,7 @@ class StreamController {
 
         <h3 className="text-base font-semibold mt-6 mb-2">Invalidation rules — the byte-exact gotcha</h3>
         <Callout variant="warn" title="The cache is keyed on exact bytes up to the marker">
-          One whitespace difference, one timestamp, one user&apos;s name interpolated in — and you have a cache miss. Treat cached prefixes like <em>immutable strings</em>: change them only via deliberate releases. If your system prompt contains <code>&quot;Today is 2026-05-13&quot;</code>, your hit rate is 0% on day two. Move volatile content into the <em>user</em> message, not the system prompt.
+          One whitespace difference, one timestamp, one user&apos;s name interpolated in — and you have a cache miss. Treat cached prefixes like <em>immutable strings</em>: change them only via deliberate releases. If your system prompt contains <code>&quot;Today is 2026-05-13&quot;</code>, your hit rate is 0% on day two. Move volatile content into the <em>user</em>{" "}message, not the system prompt.
         </Callout>
 
         <h3 className="text-base font-semibold mt-4 mb-2">TTL</h3>
@@ -661,7 +661,7 @@ class StreamController {
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · System prompt jammed into a user message</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Putting persona / rules in the first <em>user</em> message instead of the <code>system</code> field works, but it kills cache reuse, weakens the &quot;mode&quot; signal to the model, and breaks Spring AI&apos;s <code>defaultSystem</code> pattern.
+              Putting persona / rules in the first <em>user</em>{" "}message instead of the <code>system</code> field works, but it kills cache reuse, weakens the &quot;mode&quot; signal to the model, and breaks Spring AI&apos;s <code>defaultSystem</code> pattern.
             </p>
             <CodeBlock lang="java" caption="BAD — system instructions disguised as user text">{`chatClient.prompt()
     .user("You are a senior Java reviewer. Be terse. Review this: " + code)
@@ -697,7 +697,7 @@ class StreamController {
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Streaming &quot;works on localhost, hangs in prod&quot;</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Tokens stream perfectly in dev. In staging behind nginx / ALB, the user sees nothing until the full response is done, then everything at once. The proxy is buffering. SSE needs explicit no-buffer headers <em>and</em> a heartbeat to survive idle timeouts.
+              Tokens stream perfectly in dev. In staging behind nginx / ALB, the user sees nothing until the full response is done, then everything at once. The proxy is buffering. SSE needs explicit no-buffer headers <em>and</em>{" "}a heartbeat to survive idle timeouts.
             </p>
             <CodeBlock lang="java" caption="BAD — relying on defaults, no keepalive">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public Flux<String> stream(@RequestParam String q) {
@@ -838,7 +838,7 @@ public String classify(String text) {
           The messages API, the Spring AI ChatClient pattern, the tool-use loop, SSE streaming, prompt caching — the whole backend toolkit. Every module from here on assumes you can already wire these together.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Vector Search &amp; RAG.</strong> You&apos;ll go past tool-use lookups into semantic retrieval: embeddings as the bridge between meaning and math, vector databases as the index, RAG as the architecture pattern that lets you ground answers in your own documents.
+          <strong>Up next: Phase 3 — Vector Search &amp; RAG.</strong>{" "}You&apos;ll go past tool-use lookups into semantic retrieval: embeddings as the bridge between meaning and math, vector databases as the index, RAG as the architecture pattern that lets you ground answers in your own documents.
         </p>
         <Link
           href="/courses/ai/modules/embeddings-deep"

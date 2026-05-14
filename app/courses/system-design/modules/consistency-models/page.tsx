@@ -47,7 +47,7 @@ export default function Page() {
           The vocabulary to specify exactly what guarantee your code is relying on. By the end you&apos;ll be able to tell when a bug is &quot;eventual consistency working as designed&quot; vs &quot;the system promised more and broke.&quot;
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
-          <li>Linearizability, sequential, causal, eventual — what each <em>actually</em> guarantees</li>
+          <li>Linearizability, sequential, causal, eventual — what each <em>actually</em>{" "}guarantees</li>
           <li>Session guarantees: read-your-writes, monotonic reads, monotonic writes, writes-follow-reads</li>
           <li>Concrete bugs each model prevents — and the ones it lets through</li>
           <li>How to pick the right model per call site, not per database</li>
@@ -57,7 +57,7 @@ export default function Page() {
       <section>
         <h2>&quot;Eventually consistent&quot; isn&apos;t a guarantee, it&apos;s a punt</h2>
         <p>
-          When a database advertises &quot;eventual consistency,&quot; what it&apos;s really saying is: <em>if writes stop forever, all replicas will eventually agree.</em> That&apos;s technically true and operationally useless. It says nothing about what your application sees in the meantime — and the meantime is where every interesting bug lives.
+          When a database advertises &quot;eventual consistency,&quot; what it&apos;s really saying is: <em>if writes stop forever, all replicas will eventually agree.</em>{" "}That&apos;s technically true and operationally useless. It says nothing about what your application sees in the meantime — and the meantime is where every interesting bug lives.
         </p>
         <p>
           The good news: there&apos;s a precise hierarchy of consistency models, each adding specific guarantees on top of &quot;eventual.&quot; The senior skill is naming which one you need at each call site, then verifying your stack actually delivers it.
@@ -77,11 +77,11 @@ export default function Page() {
         <p>
           This is the model your code naturally assumes when you don&apos;t think about it. It&apos;s what a single-node database gives you. It&apos;s also expensive to provide in a distributed system — every write has to round-trip to a quorum before it&apos;s considered done.
         </p>
-        <p><strong>Where you find it:</strong> single-node databases, Spanner, etcd, ZooKeeper, single-leader replication where you only read from the leader.</p>
+        <p><strong>Where you find it:</strong>{" "}single-node databases, Spanner, etcd, ZooKeeper, single-leader replication where you only read from the leader.</p>
 
         <h3>Sequential consistency</h3>
         <p>
-          All operations appear in some total order, and every process sees that same order. The order doesn&apos;t have to match real time — if write W happens at 10:00:01 on server A, processes might see read R at 10:00:00 still get the new value, or vice versa, as long as everyone agrees on <em>some</em> consistent order.
+          All operations appear in some total order, and every process sees that same order. The order doesn&apos;t have to match real time — if write W happens at 10:00:01 on server A, processes might see read R at 10:00:00 still get the new value, or vice versa, as long as everyone agrees on <em>some</em>{" "}consistent order.
         </p>
         <p>
           Sequential consistency is theoretically interesting but rarely the explicit goal in practice. It&apos;s what you get from some consensus systems internally, but most user-facing databases either offer linearizability (strong) or something weaker.
@@ -118,16 +118,16 @@ export default function Page() {
           The fastest way to internalize the hierarchy is to look at what each model lets you see. Consider three writes happening to a counter at user_id=42, all at roughly the same time:
         </p>
         <ul>
-          <li><strong>W1:</strong> set counter = 1 (at 10:00:00.000)</li>
-          <li><strong>W2:</strong> set counter = 2 (at 10:00:00.050)</li>
-          <li><strong>W3:</strong> set counter = 3 (at 10:00:00.100)</li>
+          <li><strong>W1:</strong>{" "}set counter = 1 (at 10:00:00.000)</li>
+          <li><strong>W2:</strong>{" "}set counter = 2 (at 10:00:00.050)</li>
+          <li><strong>W3:</strong>{" "}set counter = 3 (at 10:00:00.100)</li>
         </ul>
         <p>What can a read see at 10:00:01.000?</p>
         <ul>
-          <li><strong>Linearizable:</strong> Always 3.</li>
-          <li><strong>Sequential:</strong> Either 3 (if everyone agrees on real-time order) or one of 1, 2, or 3 — as long as all subsequent reads agree on the same total order.</li>
-          <li><strong>Causal:</strong> Depends on what writes are causally related. If W2 read W1 first, you can&apos;t see counter=2 without also having seen counter=1.</li>
-          <li><strong>Eventual:</strong> Anything from <code>null</code> to 3, in any order. The only guarantee is &quot;eventually 3.&quot;</li>
+          <li><strong>Linearizable:</strong>{" "}Always 3.</li>
+          <li><strong>Sequential:</strong>{" "}Either 3 (if everyone agrees on real-time order) or one of 1, 2, or 3 — as long as all subsequent reads agree on the same total order.</li>
+          <li><strong>Causal:</strong>{" "}Depends on what writes are causally related. If W2 read W1 first, you can&apos;t see counter=2 without also having seen counter=1.</li>
+          <li><strong>Eventual:</strong>{" "}Anything from <code>null</code> to 3, in any order. The only guarantee is &quot;eventually 3.&quot;</li>
         </ul>
 
         <Quiz
@@ -173,10 +173,10 @@ export default function Page() {
         </p>
         <p>The four session guarantees, all due to the Bayou paper (1995):</p>
         <ol>
-          <li><strong>Read-your-writes (RYW):</strong> If you wrote it, your next read sees it.</li>
-          <li><strong>Monotonic reads:</strong> Successive reads from the same session never go backward in time.</li>
-          <li><strong>Monotonic writes:</strong> Your writes are applied in the order you issued them.</li>
-          <li><strong>Writes-follow-reads:</strong> If you read a value and then write a new one, the write is ordered after whatever you read.</li>
+          <li><strong>Read-your-writes (RYW):</strong>{" "}If you wrote it, your next read sees it.</li>
+          <li><strong>Monotonic reads:</strong>{" "}Successive reads from the same session never go backward in time.</li>
+          <li><strong>Monotonic writes:</strong>{" "}Your writes are applied in the order you issued them.</li>
+          <li><strong>Writes-follow-reads:</strong>{" "}If you read a value and then write a new one, the write is ordered after whatever you read.</li>
         </ol>
 
         <h3>Read-your-writes</h3>
@@ -185,9 +185,9 @@ export default function Page() {
         </p>
         <p>This is the bug that ships to production constantly. Common fixes:</p>
         <ul>
-          <li><strong>Pin reads to the leader for a window after a write.</strong> Often called &quot;read-your-writes via sticky session.&quot; The simplest fix.</li>
+          <li><strong>Pin reads to the leader for a window after a write.</strong>{" "}Often called &quot;read-your-writes via sticky session.&quot; The simplest fix.</li>
           <li><strong>Track the version of the write client-side</strong> (a logical timestamp / LSN), and require any read to wait until at least that version is replicated.</li>
-          <li><strong>Read from the cache the user&apos;s own writes wrote to</strong> if you&apos;re using write-through caching.</li>
+          <li><strong>Read from the cache the user&apos;s own writes wrote to</strong>{" "}if you&apos;re using write-through caching.</li>
         </ul>
 
         <CodeBlock lang="java" caption="RYW: pin the post-write read to the primary">{`// Naive write-then-read — vulnerable to RYW violation if reads go to a replica.
@@ -238,7 +238,7 @@ public ProfileResponse updateName(Long userId, String newName) {
           A system that gives you all four session guarantees is sometimes called &quot;session-causal&quot; or just &quot;session consistent.&quot; It&apos;s strictly weaker than full causal consistency (it only tracks one user&apos;s causality, not cross-user causality), but it catches most of the bugs users actually notice.
         </p>
         <p>
-          Critically: <strong>most popular eventually-consistent stores do not give you any of these by default.</strong> Cassandra, DynamoDB (eventual reads), and Postgres async replicas can all violate all four if you&apos;re not careful. You have to build the guarantees in at the application layer or pin reads explicitly.
+          Critically: <strong>most popular eventually-consistent stores do not give you any of these by default.</strong>{" "}Cassandra, DynamoDB (eventual reads), and Postgres async replicas can all violate all four if you&apos;re not careful. You have to build the guarantees in at the application layer or pin reads explicitly.
         </p>
 
         <Callout variant="warn" title="The 'we use Postgres so we're consistent' trap">
@@ -314,31 +314,31 @@ public ProfileResponse updateName(Long userId, String newName) {
         <p>
           E-commerce inventory: 10 units of a hot item. Two app servers each read &quot;10 available,&quot; each accept an order, each decrement to 9. You sold 11 items, but inventory says 9. Classic lost-update under concurrent writes.
         </p>
-        <p><strong>What model would have caught it:</strong> Linearizability on the inventory key, or a compare-and-swap (&quot;decrement only if current value is X&quot;), or a transaction with row-level locks. This is a workload that genuinely needs strong consistency on the inventory variable. Don&apos;t cache it. Don&apos;t replicate it eventually. Pay the latency cost.</p>
+        <p><strong>What model would have caught it:</strong>{" "}Linearizability on the inventory key, or a compare-and-swap (&quot;decrement only if current value is X&quot;), or a transaction with row-level locks. This is a workload that genuinely needs strong consistency on the inventory variable. Don&apos;t cache it. Don&apos;t replicate it eventually. Pay the latency cost.</p>
 
         <h3>Bug 2: The disappearing comment</h3>
         <p>
           User posts a comment. Comment is written to primary. Page refreshes; reads go to a replica that hasn&apos;t replicated yet. User thinks the comment failed and posts again. Now there are two comments.
         </p>
-        <p><strong>What model would have caught it:</strong> Read-your-writes. The fix is to route the post-write read to the primary, or to wait for the replica to catch up to the write&apos;s LSN. This is the most common consistency bug on the planet.</p>
+        <p><strong>What model would have caught it:</strong>{" "}Read-your-writes. The fix is to route the post-write read to the primary, or to wait for the replica to catch up to the write&apos;s LSN. This is the most common consistency bug on the planet.</p>
 
         <h3>Bug 3: The receding inbox</h3>
         <p>
           User opens their inbox, sees 12 messages. Refreshes, sees 9. Refreshes again, sees 14. They&apos;re bouncing between three replicas at different lag levels. Inbox count is not monotonic.
         </p>
-        <p><strong>What model would have caught it:</strong> Monotonic reads. Fix by pinning the user&apos;s session to one replica. They&apos;ll see slightly stale data, but it won&apos;t go backward.</p>
+        <p><strong>What model would have caught it:</strong>{" "}Monotonic reads. Fix by pinning the user&apos;s session to one replica. They&apos;ll see slightly stale data, but it won&apos;t go backward.</p>
 
         <h3>Bug 4: The reply-before-question</h3>
         <p>
           Forum: Alice posts a question. Bob reads it, posts a reply. Carol opens the thread and sees Bob&apos;s reply before Alice&apos;s question — Carol&apos;s page is reading from a replica that has Bob&apos;s reply but not Alice&apos;s question (wild, but possible under eventual replication).
         </p>
-        <p><strong>What model would have caught it:</strong> Causal consistency. Bob&apos;s write causally depends on Alice&apos;s; the system has to preserve that order. Fix is either causal consistency (vector clocks / version vectors), or — pragmatically — making sure thread reads always go through a path that sees writes in causal order (e.g., reading the whole thread from one replica that has both).</p>
+        <p><strong>What model would have caught it:</strong>{" "}Causal consistency. Bob&apos;s write causally depends on Alice&apos;s; the system has to preserve that order. Fix is either causal consistency (vector clocks / version vectors), or — pragmatically — making sure thread reads always go through a path that sees writes in causal order (e.g., reading the whole thread from one replica that has both).</p>
 
         <h3>Bug 5: The stale balance after a transfer</h3>
         <p>
           User transfers $50 from Account A to Account B. The bank confirms the transfer. The user opens their app and sees A&apos;s balance updated but B&apos;s still showing the old amount. Half-applied state.
         </p>
-        <p><strong>What model would have caught it:</strong> Linearizability on the transaction itself, or read-your-writes plus knowledge that both accounts were modified. The fix in practice: the transfer&apos;s confirmation page reads both balances <em>through the primary</em> in the same transaction context as the write, ensuring consistency for the post-transfer view.</p>
+        <p><strong>What model would have caught it:</strong>{" "}Linearizability on the transaction itself, or read-your-writes plus knowledge that both accounts were modified. The fix in practice: the transfer&apos;s confirmation page reads both balances <em>through the primary</em>{" "}in the same transaction context as the write, ensuring consistency for the post-transfer view.</p>
 
         <Callout variant="insight" title="The pattern across all five">
           <p className="m-0">Every one of these bugs is &quot;the database is doing what it promised, but the application assumed something stronger.&quot; The fix is never &quot;make the database stronger&quot; — it&apos;s either route the read carefully (RYW, monotonic) or pick the right model for the call site (linearizability for inventory and transfers, causal for forums).</p>
@@ -346,18 +346,18 @@ public ProfileResponse updateName(Long userId, String newName) {
 
         <h3>The senior framing: per call site, not per database</h3>
         <p>
-          The most useful mental shift in this whole module: <strong>consistency is a property of a code path, not a property of a database.</strong> The same Postgres can serve linearizable reads (from primary) and eventually-consistent reads (from a replica) in the same minute. The same Cassandra can serve eventual reads (consistency=ONE) and quorum reads (consistency=QUORUM) on adjacent queries.
+          The most useful mental shift in this whole module: <strong>consistency is a property of a code path, not a property of a database.</strong>{" "}The same Postgres can serve linearizable reads (from primary) and eventually-consistent reads (from a replica) in the same minute. The same Cassandra can serve eventual reads (consistency=ONE) and quorum reads (consistency=QUORUM) on adjacent queries.
         </p>
         <p>
           The senior question is, for each read in your codebase: <em>what guarantee does this read need?</em>
         </p>
         <ul>
-          <li><strong>Inventory check before order:</strong> linearizable. Pay the cost.</li>
-          <li><strong>Profile name on the user&apos;s own page after editing:</strong> read-your-writes. Pin to primary briefly.</li>
-          <li><strong>Profile name on someone else&apos;s page:</strong> eventual is fine. Use the replica.</li>
-          <li><strong>Trending posts list:</strong> eventual is fine. Stale by 30s is invisible.</li>
-          <li><strong>Bank balance after a transaction:</strong> linearizable on that read for that user. Pay the cost.</li>
-          <li><strong>Bank balance for a passive dashboard glance:</strong> read-your-writes is enough.</li>
+          <li><strong>Inventory check before order:</strong>{" "}linearizable. Pay the cost.</li>
+          <li><strong>Profile name on the user&apos;s own page after editing:</strong>{" "}read-your-writes. Pin to primary briefly.</li>
+          <li><strong>Profile name on someone else&apos;s page:</strong>{" "}eventual is fine. Use the replica.</li>
+          <li><strong>Trending posts list:</strong>{" "}eventual is fine. Stale by 30s is invisible.</li>
+          <li><strong>Bank balance after a transaction:</strong>{" "}linearizable on that read for that user. Pay the cost.</li>
+          <li><strong>Bank balance for a passive dashboard glance:</strong>{" "}read-your-writes is enough.</li>
         </ul>
 
         <Callout variant="warn" title="The most common mistake">

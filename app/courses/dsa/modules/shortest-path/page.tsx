@@ -115,7 +115,7 @@ flowchart LR
 Bottom path: A ───────── 100 ────────── B    (1 edge,  total weight 100)`}</CodeBlock>
 
         <p>
-          BFS reaches B via the bottom edge in <em>one</em> step and reports &quot;distance 1.&quot; In edge count
+          BFS reaches B via the bottom edge in <em>one</em>{" "}step and reports &quot;distance 1.&quot; In edge count
           that&apos;s correct — but the actual path cost is 100, while the 4-edge top path costs only 4. BFS counts
           edges; the question wants total weight. Different optimization, different answer.
         </p>
@@ -171,7 +171,7 @@ Dijkstra:  min-heap          →   process by accumulated weight`}</CodeBlock>
         <h3>The invariant</h3>
 
         <p>
-          At every step, Dijkstra picks the unvisited node with the smallest <em>tentative distance</em> from the
+          At every step, Dijkstra picks the unvisited node with the smallest <em>tentative distance</em>{" "}from the
           source and &quot;finalizes&quot; it — that distance is now known to be optimal. Then it relaxes all of that
           node&apos;s outgoing edges: for each neighbor, check whether going through the just-finalized node gives a
           shorter route, and if so, update the neighbor&apos;s tentative distance.
@@ -270,7 +270,7 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
         <h2 id="topo">Topological sort — Kahn&apos;s algorithm</h2>
 
         <p>
-          A <strong>topological sort</strong> is a linear ordering of a DAG&apos;s nodes such that every edge u→v has
+          A <strong>topological sort</strong>{" "}is a linear ordering of a DAG&apos;s nodes such that every edge u→v has
           u before v in the ordering. Concretely: build order, course prerequisites, task dependencies, spreadsheet
           recalculation order. If the graph has a cycle, no topo order exists — and a good algorithm tells you so.
         </p>
@@ -278,7 +278,7 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
         <h3>Kahn&apos;s algorithm — BFS over in-degrees</h3>
 
         <p>
-          The DFS post-order version exists (you saw it last module), but <strong>Kahn&apos;s algorithm</strong> is
+          The DFS post-order version exists (you saw it last module), but <strong>Kahn&apos;s algorithm</strong>{" "}is
           usually more popular in practice because it&apos;s iterative (no recursion-depth issues) and naturally
           detects cycles. The idea:
         </p>
@@ -337,8 +337,8 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
         <h3>Complexity</h3>
 
         <p>
-          <strong>Time:</strong> O(V + E). Building in-degrees is O(V + E); the BFS itself does O(V) pops and O(E)
-          decrements. <strong>Space:</strong> O(V) for the in-degree array, queue, and output.
+          <strong>Time:</strong>{" "}O(V + E). Building in-degrees is O(V + E); the BFS itself does O(V) pops and O(E)
+          decrements. <strong>Space:</strong>{" "}O(V) for the in-degree array, queue, and output.
         </p>
 
         <Quiz
@@ -384,7 +384,7 @@ The B→C=-10 edge would have improved C's distance, but B is already finalized.
         <h3>The remedy: Bellman-Ford</h3>
 
         <p>
-          <strong>Bellman-Ford</strong> handles negative weights by being more pessimistic: it relaxes <em>every
+          <strong>Bellman-Ford</strong>{" "}handles negative weights by being more pessimistic: it relaxes <em>every
           edge</em>, V−1 times. Each pass might improve some distances; after V−1 passes, all simple-path improvements
           are accounted for. A V-th pass that still finds an improvement signals a <strong>negative cycle</strong> —
           a cycle whose total weight is negative, which makes &quot;shortest path&quot; meaningless (you can keep
@@ -547,7 +547,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
 
         <p>
           The signal reaches every node at its shortest-path distance from <code>k</code>. The answer is the
-          <em>maximum</em> of those shortest paths (the slowest one to receive). Pure Dijkstra.
+          <em>maximum</em>{" "}of those shortest paths (the slowest one to receive). Pure Dijkstra.
         </p>
 
         <CodeBlock lang="java">{`public int networkDelayTime(int[][] times, int n, int k) {

@@ -123,7 +123,7 @@ flowchart LR
         </p>
 
         <p>
-          A <strong>hash table</strong> says: what if lookup were just <em>array indexing</em>? An array gives you
+          A <strong>hash table</strong>{" "}says: what if lookup were just <em>array indexing</em>? An array gives you
           O(1) random access — <code>arr[i]</code> is one CPU instruction. The trick is turning a key (a string,
           an object, a tuple) into an index. That converter is called a <strong>hash function</strong>.
         </p>
@@ -142,7 +142,7 @@ flowchart LR
           <li><code>containsKey(key)</code> — average O(1).</li>
         </ul>
         <p>
-          That word <strong>average</strong> is doing heavy lifting. Worst case is O(n) — and we&apos;ll see exactly
+          That word <strong>average</strong>{" "}is doing heavy lifting. Worst case is O(n) — and we&apos;ll see exactly
           when. But for sane keys with a sane hash function, the worst case basically never happens.
         </p>
 
@@ -188,9 +188,9 @@ int index = h(key) & (capacity - 1);`}</CodeBlock>
         <h3>What makes a hash function &quot;good&quot;</h3>
         <ul>
           <li><strong>Deterministic.</strong> <code>h(x) == h(x)</code> across calls. (Otherwise you&apos;d never find what you stored.)</li>
-          <li><strong>Uniform.</strong> Spreads outputs evenly across the integer range. Bad hashes cluster.</li>
-          <li><strong>Fast.</strong> The hash is computed on every put/get/remove. If <code>h</code> is O(k) for a key of length k, your &quot;O(1)&quot; is really O(k).</li>
-          <li><strong>Avalanche-y.</strong> Tiny input changes flip many output bits, scattering similar keys.</li>
+          <li><strong>Uniform.</strong>{" "}Spreads outputs evenly across the integer range. Bad hashes cluster.</li>
+          <li><strong>Fast.</strong>{" "}The hash is computed on every put/get/remove. If <code>h</code> is O(k) for a key of length k, your &quot;O(1)&quot; is really O(k).</li>
+          <li><strong>Avalanche-y.</strong>{" "}Tiny input changes flip many output bits, scattering similar keys.</li>
         </ul>
 
         <p>
@@ -222,7 +222,7 @@ int index = h(key) & (capacity - 1);`}</CodeBlock>
           lose data. You need a way for one bucket to hold multiple entries.
         </p>
 
-        <p>The two main strategies are <strong>separate chaining</strong> and <strong>open addressing</strong>.</p>
+        <p>The two main strategies are <strong>separate chaining</strong>{" "}and <strong>open addressing</strong>.</p>
 
         <h3>Separate chaining (Java&apos;s choice)</h3>
         <p>
@@ -247,7 +247,7 @@ V get(K key) {
 }`}</CodeBlock>
 
         <p>
-          If the hash function is uniform and you have <em>n</em> entries in <em>m</em> buckets, the expected chain
+          If the hash function is uniform and you have <em>n</em>{" "}entries in <em>m</em>{" "}buckets, the expected chain
           length is <code>n / m</code>. That ratio has a name: the <strong>load factor</strong> α = n/m. Lookup
           cost is O(1 + α) on average.
         </p>
@@ -256,7 +256,7 @@ V get(K key) {
           <p>
             Instead of chains, open addressing stores entries directly in the array and probes (linear, quadratic,
             double-hashing) for the next free slot when the target is taken. It has better cache behavior (no pointer
-            chasing) but suffers from <em>clustering</em> and is fiddlier to delete from.
+            chasing) but suffers from <em>clustering</em>{" "}and is fiddlier to delete from.
           </p>
           <p>
             Python&apos;s <code>dict</code> and Go&apos;s <code>map</code> use variants of open addressing. Java&apos;s{" "}
@@ -288,7 +288,7 @@ V get(K key) {
         <p>
           Resize doubles capacity, so the sequence is <code>16, 32, 64, 128, ...</code>. Each resize is O(n) — every
           entry has to be re-bucketed under the new capacity. But resizes happen geometrically less often as the
-          map grows, so the <strong>amortized</strong> cost of <code>put</code> is still O(1) — exactly the
+          map grows, so the <strong>amortized</strong>{" "}cost of <code>put</code> is still O(1) — exactly the
           ArrayList argument from Module 3.
         </p>
 
@@ -384,7 +384,7 @@ static final int MIN_TREEIFY_CAPACITY = 64;           // resize first if smaller
 
         <p>
           When <code>size &gt; threshold</code>, Java doubles the table. The clever bit: with power-of-two
-          capacities, every entry goes to <em>either</em> its original index <em>or</em> that index plus the old
+          capacities, every entry goes to <em>either</em>{" "}its original index <em>or</em>{" "}that index plus the old
           capacity, depending on a single high bit. So Java doesn&apos;t even rehash the keys — it just splits each
           old chain into two new chains based on that bit. This makes resize roughly 2× faster than a naive rehash.
         </p>
@@ -486,7 +486,7 @@ System.out.println(seen.contains(a));  // probably false!
                                         // goes to a different bucket`}</CodeBlock>
 
         <p>
-          <strong>Rule: never mutate a key after putting it in a hash-based collection.</strong> If you need
+          <strong>Rule: never mutate a key after putting it in a hash-based collection.</strong>{" "}If you need
           mutable-feeling keys, copy them into immutable form (e.g. <code>List.copyOf</code>, or a record) before
           inserting.
         </p>
@@ -510,7 +510,7 @@ public int hashCode() {
         <Callout variant="warn" title="Don't get cute">
           <p>
             <code>hashCode</code> just needs to be fast, deterministic, and reasonably uniform. It does{" "}
-            <strong>not</strong> need to be cryptographic.
+            <strong>not</strong>{" "}need to be cryptographic.
           </p>
           <p>
             Don&apos;t reach for SHA-256. <code>Objects.hash(...)</code> is right 95% of the time. Profile before

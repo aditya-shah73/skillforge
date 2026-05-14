@@ -62,7 +62,7 @@ flowchart LR
 
       <Callout variant="insight" title="What changes from Module 9">
         <p className="m-0">
-          Module 9 was &quot;one prompt in, one string out&quot; — the API at its simplest. This module is the rest of Spring AI: keeping conversation history without rebuilding it by hand, getting <em>typed Java objects</em> back instead of raw strings, and intercepting calls with advisors (Spring AI&apos;s middleware). By the end you&apos;ll have a multi-turn journal assistant that remembers what you wrote, returns sentiment as a typed record, and logs every call through an advisor.
+          Module 9 was &quot;one prompt in, one string out&quot; — the API at its simplest. This module is the rest of Spring AI: keeping conversation history without rebuilding it by hand, getting <em>typed Java objects</em>{" "}back instead of raw strings, and intercepting calls with advisors (Spring AI&apos;s middleware). By the end you&apos;ll have a multi-turn journal assistant that remembers what you wrote, returns sentiment as a typed record, and logs every call through an advisor.
         </p>
       </Callout>
 
@@ -105,7 +105,7 @@ flowchart LR
         <h3>Why <code>ChatClient.Builder</code>, not <code>ChatClient</code> directly?</h3>
 
         <p>
-          Notice the constructor in Module 9 took <code>ChatClient.Builder builder</code>, not <code>ChatClient</code>. Why? Because <code>ChatClient</code> instances are <strong>configured up front</strong> with defaults — default system prompt, default options, default advisors. Different parts of your app might want different defaults. Spring autoconfigures the <em>builder</em> as a singleton bean; each <code>@Service</code> calls <code>.build()</code> to mint its own configured client.
+          Notice the constructor in Module 9 took <code>ChatClient.Builder builder</code>, not <code>ChatClient</code>. Why? Because <code>ChatClient</code> instances are <strong>configured up front</strong>{" "}with defaults — default system prompt, default options, default advisors. Different parts of your app might want different defaults. Spring autoconfigures the <em>builder</em>{" "}as a singleton bean; each <code>@Service</code> calls <code>.build()</code> to mint its own configured client.
         </p>
 
         <CodeBlock lang="java" caption="One builder, many configured clients">{`@Service
@@ -170,7 +170,7 @@ public class CreativeWriter {
         <h2>Part 2: Conversation memory (without doing it by hand)</h2>
 
         <p>
-          Recall from Module 9: the API is stateless. To hold a conversation, <em>you</em> have to keep the message array and re-send it every turn. Doing this by hand is annoying and error-prone — you have to thread the list through your code, append the assistant&apos;s reply, manage truncation when it gets long.
+          Recall from Module 9: the API is stateless. To hold a conversation, <em>you</em>{" "}have to keep the message array and re-send it every turn. Doing this by hand is annoying and error-prone — you have to thread the list through your code, append the assistant&apos;s reply, manage truncation when it gets long.
         </p>
 
         <p>
@@ -209,7 +209,7 @@ public class CreativeWriter {
         <h3>Window vs message-count memory</h3>
 
         <p>
-          Once you have a repository, you wrap it with a <code>ChatMemory</code> implementation that decides <em>which</em> messages to include in the next call:
+          Once you have a repository, you wrap it with a <code>ChatMemory</code> implementation that decides <em>which</em>{" "}messages to include in the next call:
         </p>
 
         <ul>
@@ -549,7 +549,7 @@ public class LoggingAdvisor implements CallAdvisor {
 
         <Callout variant="insight" title="The mental model: advisor = aspect">
           <p className="m-0">
-            If you&apos;ve written Spring AOP <code>@Around</code> aspects, advisors are the same concept scoped to <code>ChatClient</code>. Pre-call hook, post-call hook, ability to mutate both. Use them for anything that should apply to <em>every</em> call without duplicating the logic across services.
+            If you&apos;ve written Spring AOP <code>@Around</code> aspects, advisors are the same concept scoped to <code>ChatClient</code>. Pre-call hook, post-call hook, ability to mutate both. Use them for anything that should apply to <em>every</em>{" "}call without duplicating the logic across services.
           </p>
         </Callout>
 
@@ -586,14 +586,14 @@ public class LoggingAdvisor implements CallAdvisor {
         <h2>Part 5: Project — Personal journal assistant</h2>
 
         <p>
-          You&apos;re going to build a CLI journal assistant. The user types a journal entry. The app: (1) asks Claude to analyze sentiment and return a typed <code>Sentiment</code> record, (2) asks Claude to give a brief reflective response that <em>references previous entries</em> via memory, (3) logs every call through your custom advisor. All four Part-1-through-4 concepts in one project.
+          You&apos;re going to build a CLI journal assistant. The user types a journal entry. The app: (1) asks Claude to analyze sentiment and return a typed <code>Sentiment</code> record, (2) asks Claude to give a brief reflective response that <em>references previous entries</em>{" "}via memory, (3) logs every call through your custom advisor. All four Part-1-through-4 concepts in one project.
         </p>
 
         <h3>Step 0: Prerequisites</h3>
 
         <ul>
           <li>Same as Module 9: <strong>Java 21</strong>, <strong>Anthropic API key</strong> (export it as <code>ANTHROPIC_API_KEY</code>), an IDE (IntelliJ recommended).</li>
-          <li>You&apos;ll set up a <em>new</em> project — separate from the code reviewer. We&apos;re keeping each phase project independent so you can come back to any of them cleanly.</li>
+          <li>You&apos;ll set up a <em>new</em>{" "}project — separate from the code reviewer. We&apos;re keeping each phase project independent so you can come back to any of them cleanly.</li>
         </ul>
 
         <h3>Step 1: Scaffold the project</h3>
@@ -603,9 +603,9 @@ public class LoggingAdvisor implements CallAdvisor {
         </p>
 
         <ul>
-          <li><strong>Project:</strong> Maven · <strong>Language:</strong> Java · <strong>Spring Boot:</strong> latest 3.4.x stable</li>
+          <li><strong>Project:</strong>{" "}Maven · <strong>Language:</strong>{" "}Java · <strong>Spring Boot:</strong>{" "}latest 3.4.x stable</li>
           <li><strong>Group:</strong> <code>com.example</code> · <strong>Artifact:</strong> <code>journal-assistant</code> · <strong>Package name:</strong> <code>com.example.journal</code></li>
-          <li><strong>Java:</strong> 21 · <strong>Packaging:</strong> Jar</li>
+          <li><strong>Java:</strong> 21 · <strong>Packaging:</strong>{" "}Jar</li>
           <li><strong>Dependencies:</strong> <em>Anthropic Claude</em></li>
         </ul>
 

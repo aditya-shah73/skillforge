@@ -80,7 +80,7 @@ export default function Page() {
           When a system gets slow, you go through these rungs roughly in order: <strong>make the box bigger</strong>, <strong>add more boxes behind a load balancer</strong>, <strong>make the boxes stateless so adding more is cheap</strong>, <strong>cache hot reads</strong>, <strong>shard the database</strong>, and finally <strong>move slow work off the request path with async</strong>. That&apos;s it. Six moves. Most production systems live somewhere between rungs 3 and 5 forever and never need 6.
         </p>
         <p>
-          The ladder isn&apos;t a checklist — it&apos;s a diagnostic. When someone says &quot;we&apos;re going to add Kafka,&quot; the right reaction is: <em>which rung is that, and have we exhausted the cheaper rungs?</em> Half the over-engineered systems you&apos;ll inherit skipped rungs because the team that built them found rung 6 more interesting than rung 1.
+          The ladder isn&apos;t a checklist — it&apos;s a diagnostic. When someone says &quot;we&apos;re going to add Kafka,&quot; the right reaction is: <em>which rung is that, and have we exhausted the cheaper rungs?</em>{" "}Half the over-engineered systems you&apos;ll inherit skipped rungs because the team that built them found rung 6 more interesting than rung 1.
         </p>
         <Callout variant="insight" title="The senior reflex">
           <p className="m-0">When I get paged for a slow service, I don&apos;t reach for a queue first. I look at CPU, memory, and connection pool on a single box. Most outages — like, the actual majority — turn out to be one bad SQL query, one undersized pool, or one missing index. The ladder starts at the bottom for a reason.</p>
@@ -95,18 +95,18 @@ export default function Page() {
         <p>
           Vertical scaling is fast, cheap, and risk-free in a way horizontal scaling never is. You change one number in a config file. You don&apos;t re-architect anything. You don&apos;t introduce a new failure mode. You don&apos;t teach the team about leader election. You just buy a bigger box.
         </p>
-        <p>The argument <em>against</em> vertical that you should know:</p>
+        <p>The argument <em>against</em>{" "}vertical that you should know:</p>
         <ul>
-          <li><strong>There&apos;s a ceiling.</strong> AWS&apos;s biggest EC2 instance has hundreds of cores and terabytes of RAM, but it&apos;s expensive per-vCPU and you eventually hit it.</li>
-          <li><strong>It&apos;s a single point of failure.</strong> One big box has the same blast radius as one small box. You need at least two for availability.</li>
-          <li><strong>Cost curve is non-linear.</strong> A 64-core box typically costs more than 8x an 8-core box. At some point horizontal beats vertical on price alone.</li>
+          <li><strong>There&apos;s a ceiling.</strong>{" "}AWS&apos;s biggest EC2 instance has hundreds of cores and terabytes of RAM, but it&apos;s expensive per-vCPU and you eventually hit it.</li>
+          <li><strong>It&apos;s a single point of failure.</strong>{" "}One big box has the same blast radius as one small box. You need at least two for availability.</li>
+          <li><strong>Cost curve is non-linear.</strong>{" "}A 64-core box typically costs more than 8x an 8-core box. At some point horizontal beats vertical on price alone.</li>
         </ul>
         <p>
           But — and this is the part juniors miss — none of those reasons say &quot;skip vertical and go straight to horizontal.&quot; They say &quot;vertical has a ceiling.&quot; Until you&apos;re near the ceiling, vertical is the cheapest move that works.
         </p>
 
         <Callout variant="warn" title="The instinct to over-engineer">
-          <p className="m-0">If your service is at 30% CPU and someone wants to add a Kafka cluster to &quot;handle scale,&quot; that&apos;s the conversation where you say: <em>we have 3x headroom on the box, what problem are we solving?</em> Don&apos;t add complexity to systems that are bored.</p>
+          <p className="m-0">If your service is at 30% CPU and someone wants to add a Kafka cluster to &quot;handle scale,&quot; that&apos;s the conversation where you say: <em>we have 3x headroom on the box, what problem are we solving?</em>{" "}Don&apos;t add complexity to systems that are bored.</p>
         </Callout>
 
         <h3>The real first move: profile</h3>
@@ -114,7 +114,7 @@ export default function Page() {
           Before any scaling decision, figure out what&apos;s slow. Is it CPU? Is it I/O wait on the database? Is it a thread pool that&apos;s saturated? Is it network? The ladder you climb depends entirely on the bottleneck. Adding more replicas of a service that&apos;s blocked on a slow query just means more replicas blocked on the same slow query.
         </p>
         <p>
-          The most common bottleneck in Java services I&apos;ve seen: <strong>database connection pool exhaustion</strong>. The app is fine, the DB is fine, but the pool is too small and threads are queuing for connections. Bumping HikariCP from 10 to 30 connections often buys you 3x throughput with zero architectural change. <em>That&apos;s</em> rung 1 thinking.
+          The most common bottleneck in Java services I&apos;ve seen: <strong>database connection pool exhaustion</strong>. The app is fine, the DB is fine, but the pool is too small and threads are queuing for connections. Bumping HikariCP from 10 to 30 connections often buys you 3x throughput with zero architectural change. <em>That&apos;s</em>{" "}rung 1 thinking.
         </p>
 
         <h3>From one box to two: the load balancer</h3>
@@ -122,7 +122,7 @@ export default function Page() {
           Once vertical hits a real wall — or you need redundancy for availability — you put a load balancer in front of two or more app servers. This is the cheapest horizontal move. It&apos;s the move that buys you availability, not just throughput. With two boxes behind an LB, you can lose one without going down.
         </p>
         <p>
-          The load balancer adds one new question: <strong>where does session state live?</strong> If user A&apos;s session is in box 1&apos;s memory, and the LB sends request 2 to box 2, you&apos;ve broken the session. The naive fix is sticky sessions (the LB pins each user to the same box). The real fix is making the box stateless, which is exactly the next rung.
+          The load balancer adds one new question: <strong>where does session state live?</strong>{" "}If user A&apos;s session is in box 1&apos;s memory, and the LB sends request 2 to box 2, you&apos;ve broken the session. The naive fix is sticky sessions (the LB pins each user to the same box). The real fix is making the box stateless, which is exactly the next rung.
         </p>
 
         <Quiz
@@ -208,9 +208,9 @@ export default function Page() {
         </p>
         <ul>
           <li><strong>Cross-shard queries are painful.</strong> &quot;List all premium users&quot; now means hitting every shard.</li>
-          <li><strong>Joins across shards mostly don&apos;t work.</strong> You denormalize or move work to the application layer.</li>
-          <li><strong>Re-sharding is hard.</strong> Once data is partitioned by user_id mod 16, going to 32 shards is a migration.</li>
-          <li><strong>Hot shards happen.</strong> If one celebrity user has 10x the traffic of normal users, that shard is hot and the others are bored.</li>
+          <li><strong>Joins across shards mostly don&apos;t work.</strong>{" "}You denormalize or move work to the application layer.</li>
+          <li><strong>Re-sharding is hard.</strong>{" "}Once data is partitioned by user_id mod 16, going to 32 shards is a migration.</li>
+          <li><strong>Hot shards happen.</strong>{" "}If one celebrity user has 10x the traffic of normal users, that shard is hot and the others are bored.</li>
         </ul>
         <p>
           This is why sharding is rung 5, not rung 2. You sharded last because every other rung was cheaper. We&apos;ll cover sharding strategies in detail in the storage phase.
@@ -273,23 +273,23 @@ export default function Page() {
           Even after you&apos;ve gone stateless, cached, and sharded, some operations don&apos;t belong on the request path. Sending a welcome email. Generating a thumbnail. Updating a search index. Recomputing a recommendation. Calling a flaky third-party API. These are all things where the user shouldn&apos;t wait for the result, and your service shouldn&apos;t fail because the downstream did.
         </p>
         <p>
-          That&apos;s rung 6: <strong>move slow, optional, or unreliable work off the request path.</strong> The pattern has many names — async processing, queue-based load leveling, fire-and-forget, event-driven — but they all have the same shape. The request handler does the minimum work needed to acknowledge the user (write the row, return 200), then drops a message on a queue. A separate worker pool consumes from the queue and does the rest, on its own time.
+          That&apos;s rung 6: <strong>move slow, optional, or unreliable work off the request path.</strong>{" "}The pattern has many names — async processing, queue-based load leveling, fire-and-forget, event-driven — but they all have the same shape. The request handler does the minimum work needed to acknowledge the user (write the row, return 200), then drops a message on a queue. A separate worker pool consumes from the queue and does the rest, on its own time.
         </p>
 
         <h3>What async actually buys you</h3>
         <ul>
-          <li><strong>Smoothed traffic.</strong> Bursty load hits the queue, not the slow downstream. If you get 10x traffic for an hour, the queue grows; the workers chew through it at their own steady rate. The system absorbs the spike instead of melting.</li>
-          <li><strong>Decoupling from downstream failure.</strong> If the email provider is down, requests still succeed. The email message sits in the queue and retries until the provider recovers.</li>
-          <li><strong>Latency wins for the user.</strong> The user&apos;s POST returns in 50ms instead of 2 seconds because they&apos;re no longer waiting for thumbnail generation.</li>
-          <li><strong>Backpressure as a feature.</strong> Queue depth is a number you can monitor and alert on. Sync systems hide their backlog inside thread pools.</li>
+          <li><strong>Smoothed traffic.</strong>{" "}Bursty load hits the queue, not the slow downstream. If you get 10x traffic for an hour, the queue grows; the workers chew through it at their own steady rate. The system absorbs the spike instead of melting.</li>
+          <li><strong>Decoupling from downstream failure.</strong>{" "}If the email provider is down, requests still succeed. The email message sits in the queue and retries until the provider recovers.</li>
+          <li><strong>Latency wins for the user.</strong>{" "}The user&apos;s POST returns in 50ms instead of 2 seconds because they&apos;re no longer waiting for thumbnail generation.</li>
+          <li><strong>Backpressure as a feature.</strong>{" "}Queue depth is a number you can monitor and alert on. Sync systems hide their backlog inside thread pools.</li>
         </ul>
 
         <h3>What async costs you</h3>
         <ul>
-          <li><strong>Eventual consistency on the user side.</strong> The user signs up; they&apos;re a real user immediately, but the welcome email arrives in 30 seconds. That&apos;s usually fine. Sometimes it isn&apos;t.</li>
-          <li><strong>Operational complexity.</strong> You now have a broker (Kafka, SQS, RabbitMQ) to run, monitor, scale, and patch.</li>
-          <li><strong>At-least-once delivery.</strong> Most queues guarantee delivery but not exactly-once. Workers must be idempotent — processing the same message twice can&apos;t corrupt state.</li>
-          <li><strong>Debugging is harder.</strong> The flow is now: user request → DB write → message on queue → worker picks up → side effect happens. A lot more places for things to go wrong silently.</li>
+          <li><strong>Eventual consistency on the user side.</strong>{" "}The user signs up; they&apos;re a real user immediately, but the welcome email arrives in 30 seconds. That&apos;s usually fine. Sometimes it isn&apos;t.</li>
+          <li><strong>Operational complexity.</strong>{" "}You now have a broker (Kafka, SQS, RabbitMQ) to run, monitor, scale, and patch.</li>
+          <li><strong>At-least-once delivery.</strong>{" "}Most queues guarantee delivery but not exactly-once. Workers must be idempotent — processing the same message twice can&apos;t corrupt state.</li>
+          <li><strong>Debugging is harder.</strong>{" "}The flow is now: user request → DB write → message on queue → worker picks up → side effect happens. A lot more places for things to go wrong silently.</li>
         </ul>
 
         <Callout variant="warn" title="Async is not a free 'make it scale' lever">
@@ -334,7 +334,7 @@ public class AsyncConfig {
   }
 }`}</CodeBlock>
         <p>
-          But <code>@Async</code> has a critical limitation: <strong>if the JVM crashes before the email is sent, the message is lost.</strong> The work was queued in memory, not on disk. For anything that has to actually happen — billing, notifications, audit logs — you need durable async, which means a real broker.
+          But <code>@Async</code> has a critical limitation: <strong>if the JVM crashes before the email is sent, the message is lost.</strong>{" "}The work was queued in memory, not on disk. For anything that has to actually happen — billing, notifications, audit logs — you need durable async, which means a real broker.
         </p>
         <p>
           The next step up is publishing to a queue (SQS, RabbitMQ) or a log (Kafka). The handler writes to the DB and publishes a message in the same transaction (or via the outbox pattern, which we&apos;ll cover in Phase 3). A worker process consumes the message and does the side effect. Crashes are recoverable because the message is durable.
@@ -425,16 +425,16 @@ public class SignupService {
       <section>
         <h2>The whole ladder, one more time</h2>
         <ol>
-          <li><strong>Profile.</strong> Know what&apos;s actually slow before you reach for a tool.</li>
-          <li><strong>Vertical.</strong> Bigger box. Larger pool. Cheap, fast, low-risk.</li>
-          <li><strong>Horizontal + LB.</strong> Two boxes for availability, more for throughput.</li>
-          <li><strong>Stateless.</strong> Externalize session, files, in-process state. Now adding boxes is mechanical.</li>
-          <li><strong>Cache.</strong> The highest-leverage move on the ladder. Read-heavy systems get 10–20x effective scale.</li>
-          <li><strong>Shard.</strong> When the DB itself is the wall. Pay the cross-shard tax knowingly.</li>
-          <li><strong>Async.</strong> For deferrable work only. Durable broker, idempotent workers, outbox at the source.</li>
+          <li><strong>Profile.</strong>{" "}Know what&apos;s actually slow before you reach for a tool.</li>
+          <li><strong>Vertical.</strong>{" "}Bigger box. Larger pool. Cheap, fast, low-risk.</li>
+          <li><strong>Horizontal + LB.</strong>{" "}Two boxes for availability, more for throughput.</li>
+          <li><strong>Stateless.</strong>{" "}Externalize session, files, in-process state. Now adding boxes is mechanical.</li>
+          <li><strong>Cache.</strong>{" "}The highest-leverage move on the ladder. Read-heavy systems get 10–20x effective scale.</li>
+          <li><strong>Shard.</strong>{" "}When the DB itself is the wall. Pay the cross-shard tax knowingly.</li>
+          <li><strong>Async.</strong>{" "}For deferrable work only. Durable broker, idempotent workers, outbox at the source.</li>
         </ol>
         <p>
-          When someone proposes a scale move, locate it on this ladder and ask: <em>which rungs did we skip, and why?</em> Half of senior system-design judgement is just refusing to skip cheap rungs.
+          When someone proposes a scale move, locate it on this ladder and ask: <em>which rungs did we skip, and why?</em>{" "}Half of senior system-design judgement is just refusing to skip cheap rungs.
         </p>
       </section>
 

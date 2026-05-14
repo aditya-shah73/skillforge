@@ -99,12 +99,12 @@ flowchart TB
 
         <h3>The other half of Big-O</h3>
         <p>
-          Every algorithm has a time complexity <em>and</em> a space complexity. We usually quote the time, because the space is often "obvious" or "small enough to ignore." Both of those assumptions break in production:
+          Every algorithm has a time complexity <em>and</em>{" "}a space complexity. We usually quote the time, because the space is often "obvious" or "small enough to ignore." Both of those assumptions break in production:
         </p>
         <ul>
-          <li><strong>Big inputs.</strong> A 1 MB array is invisible. A 10 GB array is a question of whether your service stays up.</li>
-          <li><strong>Many concurrent users.</strong> One request that allocates 100 MB is fine. A thousand of them at once is an OOM.</li>
-          <li><strong>Recursion.</strong> Each recursive call adds a frame to the call stack. Recurse a million times and the JVM kills your thread with <code>StackOverflowError</code> — even though your <em>logical</em> work was modest.</li>
+          <li><strong>Big inputs.</strong>{" "}A 1 MB array is invisible. A 10 GB array is a question of whether your service stays up.</li>
+          <li><strong>Many concurrent users.</strong>{" "}One request that allocates 100 MB is fine. A thousand of them at once is an OOM.</li>
+          <li><strong>Recursion.</strong>{" "}Each recursive call adds a frame to the call stack. Recurse a million times and the JVM kills your thread with <code>StackOverflowError</code> — even though your <em>logical</em>{" "}work was modest.</li>
         </ul>
 
         <Callout variant="insight" title="Time and space trade off, constantly">
@@ -118,9 +118,9 @@ flowchart TB
           Imagine you&apos;re processing paperwork. You have a small desk (your CPU + cache + stack) and a large warehouse out back (the heap).
         </p>
         <ul>
-          <li>Items on your <strong>desk</strong> are instant to access — but the desk is tiny. You can fit a few documents.</li>
-          <li>Items in the <strong>warehouse</strong> are slower to retrieve — but it&apos;s effectively unlimited.</li>
-          <li>Every time you call a function, you put a fresh sticky note on your desk: <em>"working on this now, come back to it after."</em> When the function returns, you peel the sticky note off.</li>
+          <li>Items on your <strong>desk</strong>{" "}are instant to access — but the desk is tiny. You can fit a few documents.</li>
+          <li>Items in the <strong>warehouse</strong>{" "}are slower to retrieve — but it&apos;s effectively unlimited.</li>
+          <li>Every time you call a function, you put a fresh sticky note on your desk: <em>"working on this now, come back to it after."</em>{" "}When the function returns, you peel the sticky note off.</li>
         </ul>
         <p>
           Recursion is what happens when you keep stacking sticky notes without ever peeling one off. Eventually the desk is buried — that&apos;s a stack overflow.
@@ -147,7 +147,7 @@ flowchart TB
         <h2>Part 2: Auxiliary vs total space</h2>
 
         <p>
-          When someone asks "what&apos;s the space complexity of this algorithm?" they almost always mean <em>auxiliary</em> space — the extra memory the algorithm allocates beyond its input.
+          When someone asks "what&apos;s the space complexity of this algorithm?" they almost always mean <em>auxiliary</em>{" "}space — the extra memory the algorithm allocates beyond its input.
         </p>
         <p>
           But there are actually two numbers, and you should know which one you&apos;re reporting.
@@ -159,7 +159,7 @@ flowchart TB
             <strong>Total space</strong> = the input size + the auxiliary space. If your input is an int[] of length n, that&apos;s already n ints of memory you can&apos;t avoid. Total space includes that.
           </li>
           <li>
-            <strong>Auxiliary space</strong> = the memory the algorithm allocates <em>on top of</em> the input. This is what you control. This is what people mean by "space complexity" 99% of the time.
+            <strong>Auxiliary space</strong> = the memory the algorithm allocates <em>on top of</em>{" "}the input. This is what you control. This is what people mean by "space complexity" 99% of the time.
           </li>
         </ul>
 
@@ -167,7 +167,7 @@ flowchart TB
 
         <Callout variant="info" title="Convention: 'space complexity' means auxiliary space">
           <p className="m-0">
-            Unless someone explicitly says "total space," assume the question is about <strong>auxiliary</strong> space. Some textbooks are pedantic about it. Interviewers almost never are — they want to know what you allocate.
+            Unless someone explicitly says "total space," assume the question is about <strong>auxiliary</strong>{" "}space. Some textbooks are pedantic about it. Interviewers almost never are — they want to know what you allocate.
           </p>
         </Callout>
 
@@ -299,10 +299,10 @@ int sumC(int[] arr, int i) {
 
         <ul>
           <li>
-            <strong>The stack.</strong> Per-thread, small (default ~512 KB to 1 MB). Holds <strong>stack frames</strong> — one per active method call. A frame contains the method&apos;s local variables, parameters, and the return address. When the method returns, its frame is popped.
+            <strong>The stack.</strong>{" "}Per-thread, small (default ~512 KB to 1 MB). Holds <strong>stack frames</strong> — one per active method call. A frame contains the method&apos;s local variables, parameters, and the return address. When the method returns, its frame is popped.
           </li>
           <li>
-            <strong>The heap.</strong> Shared across all threads, large (gigabytes). Holds every object you create with <code>new</code>: arrays, ArrayLists, every <code>Integer</code>, every <code>String</code>. Garbage-collected when nothing references it.
+            <strong>The heap.</strong>{" "}Shared across all threads, large (gigabytes). Holds every object you create with <code>new</code>: arrays, ArrayLists, every <code>Integer</code>, every <code>String</code>. Garbage-collected when nothing references it.
           </li>
         </ul>
 
@@ -322,7 +322,7 @@ int sumC(int[] arr, int i) {
 }`}</CodeBlock>
 
         <p>
-          Call <code>factorial(4)</code>. Before <em>any</em> multiplication can happen, the JVM has to push four frames onto the stack:
+          Call <code>factorial(4)</code>. Before <em>any</em>{" "}multiplication can happen, the JVM has to push four frames onto the stack:
         </p>
 
         <Mermaid chart={recursionStack} />
@@ -382,7 +382,7 @@ int sumC(int[] arr, int i) {
 
         <Callout variant="warn" title="Java has no TCO — this trips up Scala/Scheme refugees">
           <p className="m-0">
-            In some languages, a tail-recursive call (the recursive call is the last thing the method does) gets optimized into a loop, using O(1) stack. The JVM does <em>not</em> do this. Every recursive call costs a frame, period. If you&apos;re used to relying on TCO, retrain — in Java, deep linear recursion is a bug.
+            In some languages, a tail-recursive call (the recursive call is the last thing the method does) gets optimized into a loop, using O(1) stack. The JVM does <em>not</em>{" "}do this. Every recursive call costs a frame, period. If you&apos;re used to relying on TCO, retrain — in Java, deep linear recursion is a bug.
           </p>
         </Callout>
 
@@ -434,9 +434,9 @@ int sumC(int[] arr, int i) {
 
         <Callout variant="info" title="The three rules of reading auxiliary space">
           <ol className="mb-0">
-            <li><strong>Count what you allocate.</strong> Every <code>new</code>, every <code>ArrayList</code>, every map, every set. Add up their sizes as a function of n.</li>
-            <li><strong>Count the recursion depth.</strong> If the method recurses, the maximum depth contributes to auxiliary space (one frame per level of depth).</li>
-            <li><strong>Don&apos;t double-count loop variables.</strong> A <code>for</code> loop reuses its index variable. It&apos;s O(1), not O(n), no matter how many times it iterates.</li>
+            <li><strong>Count what you allocate.</strong>{" "}Every <code>new</code>, every <code>ArrayList</code>, every map, every set. Add up their sizes as a function of n.</li>
+            <li><strong>Count the recursion depth.</strong>{" "}If the method recurses, the maximum depth contributes to auxiliary space (one frame per level of depth).</li>
+            <li><strong>Don&apos;t double-count loop variables.</strong>{" "}A <code>for</code> loop reuses its index variable. It&apos;s O(1), not O(n), no matter how many times it iterates.</li>
           </ol>
         </Callout>
 
@@ -502,7 +502,7 @@ int sumC(int[] arr, int i) {
 
         <Callout variant="warn" title="Iteration is cheap; allocation is not">
           <p className="m-0">
-            A loop, no matter how nested, is O(1) auxiliary space — unless something inside the loop allocates. <code>new int[n]</code> inside an outer n-loop? <em>That</em> is O(n²) space.
+            A loop, no matter how nested, is O(1) auxiliary space — unless something inside the loop allocates. <code>new int[n]</code> inside an outer n-loop? <em>That</em>{" "}is O(n²) space.
           </p>
         </Callout>
 
@@ -694,10 +694,10 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
 
         <h3>Stretch goals (optional)</h3>
         <ul>
-          <li><strong>Raise the stack size.</strong> Run with <code>java -Xss8m com.skillforge.StackVisualizer</code> and see how much deeper you can recurse. (Then think about how many threads × that size your service can afford.)</li>
-          <li><strong>Add fib.</strong> Implement recursive fib(n) and print peak stack depth. Confirm it&apos;s O(n), not O(2ⁿ) — even though TIME is exponential.</li>
-          <li><strong>Memoize fib.</strong> Add a <code>Map&lt;Integer, Long&gt;</code> cache. Watch the time complexity drop from O(2ⁿ) to O(n) — but space goes from O(n) (just stack) to O(n) heap + O(n) stack. You traded one kind of space for time.</li>
-          <li><strong>Memory profile.</strong> Run with <code>-Xlog:gc</code> to see heap allocations. The recursive version barely allocates on the heap (it&apos;s all stack). The memoized version fills the heap proportionally.</li>
+          <li><strong>Raise the stack size.</strong>{" "}Run with <code>java -Xss8m com.skillforge.StackVisualizer</code> and see how much deeper you can recurse. (Then think about how many threads × that size your service can afford.)</li>
+          <li><strong>Add fib.</strong>{" "}Implement recursive fib(n) and print peak stack depth. Confirm it&apos;s O(n), not O(2ⁿ) — even though TIME is exponential.</li>
+          <li><strong>Memoize fib.</strong>{" "}Add a <code>Map&lt;Integer, Long&gt;</code> cache. Watch the time complexity drop from O(2ⁿ) to O(n) — but space goes from O(n) (just stack) to O(n) heap + O(n) stack. You traded one kind of space for time.</li>
+          <li><strong>Memory profile.</strong>{" "}Run with <code>-Xlog:gc</code> to see heap allocations. The recursive version barely allocates on the heap (it&apos;s all stack). The memoized version fills the heap proportionally.</li>
         </ul>
       </section>
       </Checkpoint>
@@ -784,7 +784,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           You can read a Java method and call out its time AND space complexity at sight. You know why deep linear recursion crashes the JVM, and you&apos;ve watched it happen with your own debugger. You can articulate the time-vs-space trade-off — the move that turns most "can you optimize this?" interview questions into a clean conversation.
         </p>
         <p className="mb-0 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Module 3 — Best, average, worst & amortized analysis.</strong> Why <code>ArrayList.add</code> is O(1) "on average" even though some calls trigger an O(n) resize. The doubling trick. The accounting and aggregate methods. The last piece of the complexity foundation before we start meeting actual data structures in Phase 2.
+          <strong>Up next: Module 3 — Best, average, worst & amortized analysis.</strong>{" "}Why <code>ArrayList.add</code> is O(1) "on average" even though some calls trigger an O(n) resize. The doubling trick. The accounting and aggregate methods. The last piece of the complexity foundation before we start meeting actual data structures in Phase 2.
         </p>
         <div className="mt-5">
           <Link

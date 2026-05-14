@@ -151,7 +151,7 @@ flowchart TD
         <Callout variant="insight" title="The central question of DP — and why state design is the whole game">
           <p>
             Every DP problem, simple or hard, hinges on one question: <strong>what does the state need to capture so
-            that the answer for one state depends only on smaller states?</strong> Once the state is right, the
+            that the answer for one state depends only on smaller states?</strong>{" "}Once the state is right, the
             recurrence almost writes itself — the transition is just &quot;try every choice from this state, recurse
             on the resulting smaller states, combine.&quot; The hard part of advanced DP isn&apos;t the recurrence; it&apos;s
             picking a state that makes the recurrence well-defined.
@@ -251,7 +251,7 @@ flowchart TD
         </p>
 
         <p>
-          The clever move is to iterate over which balloon <code>k</code> is the <strong>last</strong> one to burst
+          The clever move is to iterate over which balloon <code>k</code> is the <strong>last</strong>{" "}one to burst
           inside the open interval <code>(i, j)</code>. When <code>k</code> is the last one inside that interval, by
           definition every other balloon between <code>i</code> and <code>j</code> is already gone. So just before{" "}
           <code>k</code> pops, its only neighbors are <code>nums[i]</code> and <code>nums[j]</code> — the boundaries.
@@ -270,7 +270,7 @@ final answer: dp[0][n+1] after padding nums with sentinel 1's at both ends`}</Co
 
         <Callout variant="insight" title="Why 'last to burst' beats 'first to burst'">
           <p>
-            If you tried to iterate over which balloon is the <em>first</em> to burst in (i, j), the two
+            If you tried to iterate over which balloon is the <em>first</em>{" "}to burst in (i, j), the two
             sub-intervals you create afterward (the left and right halves) wouldn&apos;t be independent — their
             boundary balloons are missing or changed, depending on what burst between them. By picking the LAST one
             to pop, the boundary of each sub-interval is fixed (it&apos;s <code>nums[i]</code> and{" "}
@@ -440,13 +440,13 @@ private int[] robSub(TreeNode node) {
 
         <Callout variant="insight" title="Why post-order — and why the pair">
           <p>
-            <strong>Post-order</strong> because the parent&apos;s answer depends on its children — so we have to
+            <strong>Post-order</strong>{" "}because the parent&apos;s answer depends on its children — so we have to
             answer for the children first, then combine at the parent. This is the same reason DFS&apos;s post-order
             traversal is the natural fit for any &quot;answer for each subtree&quot; computation.
           </p>
           <p>
-            <strong>Pair return</strong> because if we returned just the best amount per subtree, we&apos;d lose
-            information: the parent needs to know what the child&apos;s best is <em>conditional</em> on whether the
+            <strong>Pair return</strong>{" "}because if we returned just the best amount per subtree, we&apos;d lose
+            information: the parent needs to know what the child&apos;s best is <em>conditional</em>{" "}on whether the
             child was robbed. The pair encodes both alternatives. This is the tree-DP equivalent of carrying
             multiple states along an axis — exactly like how Best Time to Buy and Sell Stock with Cooldown carries
             (held, sold) per index.
@@ -457,12 +457,12 @@ private int[] robSub(TreeNode node) {
 
         <ul>
           <li>Each node visited once. Constant work per node.</li>
-          <li>Time: <strong>O(n)</strong>. Space: <strong>O(h)</strong> for the recursion stack, where h is tree height.</li>
+          <li>Time: <strong>O(n)</strong>. Space: <strong>O(h)</strong>{" "}for the recursion stack, where h is tree height.</li>
         </ul>
 
         <p>
           A naive recursion without memoization (returning a single value per node, then re-recursing on grandchildren
-          when the current node is robbed) is <strong>O(2^h)</strong> in the worst case — exponential. The pair-return
+          when the current node is robbed) is <strong>O(2^h)</strong>{" "}in the worst case — exponential. The pair-return
           trick collapses that to linear by computing both branches in parallel.
         </p>
 
@@ -470,7 +470,7 @@ private int[] robSub(TreeNode node) {
 
         <ul>
           <li>
-            <strong>Diameter of a Binary Tree (LC 543)</strong> — return the longest <em>downward path</em> per
+            <strong>Diameter of a Binary Tree (LC 543)</strong> — return the longest <em>downward path</em>{" "}per
             node; the longest path through this node is left + right + 1, tracked in a side variable.
           </li>
           <li>
@@ -829,7 +829,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
 
         <Callout variant="warn" title="Why TSP is bitmask DP's natural home">
           <p>
-            TSP&apos;s state has to remember <em>which</em> cities have been visited (not just how many) and{" "}
+            TSP&apos;s state has to remember <em>which</em>{" "}cities have been visited (not just how many) and{" "}
             <em>where you currently are</em>. The first part is what kills 1D and 2D DP — &quot;which cities&quot;
             is a subset, and there&apos;s no smaller structure to compress it. Bitmask is the only way to encode it
             efficiently for small n. When you see &quot;visit every X exactly once&quot; in a problem, that&apos;s
@@ -913,7 +913,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
 
         <ul>
           <li>
-            <strong>&quot;Optimal way to split / merge / multiply / burst&quot;</strong> on a contiguous array →
+            <strong>&quot;Optimal way to split / merge / multiply / burst&quot;</strong>{" "}on a contiguous array →
             interval DP.
           </li>
           <li>
@@ -925,7 +925,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
             The small-n constraint is almost always the giveaway.
           </li>
           <li>
-            <strong>&quot;Sum / capacity / count&quot;</strong> with a target value, even when n is large → 1D or
+            <strong>&quot;Sum / capacity / count&quot;</strong>{" "}with a target value, even when n is large → 1D or
             2D &quot;knapsack-style&quot; DP.
           </li>
           <li>

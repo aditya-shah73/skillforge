@@ -95,7 +95,7 @@ flowchart TB
 
         <p>
           You&apos;ve been using <code>ArrayList</code>, <code>HashMap</code>, <code>ArrayDeque</code> for sixteen
-          modules. This module is the synthesis: <em>which container do I reach for, and why?</em> Phase 5 is one
+          modules. This module is the synthesis: <em>which container do I reach for, and why?</em>{" "}Phase 5 is one
           module long because it&apos;s a decision framework, not a new data structure. By the end you should be able
           to look at any collection scenario and pick the right concrete class in five seconds.
         </p>
@@ -316,7 +316,7 @@ counts.computeIfAbsent("banana", k -> new ArrayList<>());`}</CodeBlock>
 
         <p>
           The killer feature: pass <code>accessOrder = true</code> to the constructor and the linked list reorders on
-          every <em>access</em>, not just insertion. That gives you an <strong>LRU cache</strong> in about ten lines
+          every <em>access</em>, not just insertion. That gives you an <strong>LRU cache</strong>{" "}in about ten lines
           by overriding <code>removeEldestEntry</code>:
         </p>
 

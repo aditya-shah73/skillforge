@@ -51,7 +51,7 @@ export default function RecapModule() {
           <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          By the end of this module you should be able to walk a teammate through <em>what actually happens</em> between pressing Enter on a Claude query and the first token streaming back — grounded in every concept you&apos;ve seen so far:
+          By the end of this module you should be able to walk a teammate through <em>what actually happens</em>{" "}between pressing Enter on a Claude query and the first token streaming back — grounded in every concept you&apos;ve seen so far:
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
           <li><strong>Module 1</strong> — tokenization, BPE, context windows</li>
@@ -137,7 +137,7 @@ Why is String immutable in Java?
 After BPE:       ["Why", " is", " String", " imm", "utable", " in", " Java", "?"]
 Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         <p>
-          Plus the system prompt tokens, plus role markers, plus the trailing assistant marker. Let&apos;s call it ~45 tokens in total. That&apos;s counted against your context window <em>and</em> your bill.
+          Plus the system prompt tokens, plus role markers, plus the trailing assistant marker. Let&apos;s call it ~45 tokens in total. That&apos;s counted against your context window <em>and</em>{" "}your bill.
         </p>
 
         <Callout variant="info" title="Why the leading spaces">
@@ -178,7 +178,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 
         <Callout variant="insight" title="'Embeddings' everywhere are the same idea">
           <p className="m-0">
-            When you call an OpenAI/Voyage <em>embedding API</em> in Phase 3, you&apos;re getting a single pooled vector summarizing a whole sentence. When Claude embeds your prompt in stage 2, it&apos;s the <em>first layer</em> of a much bigger network that keeps transforming those vectors. Same concept, different position in the pipeline.
+            When you call an OpenAI/Voyage <em>embedding API</em>{" "}in Phase 3, you&apos;re getting a single pooled vector summarizing a whole sentence. When Claude embeds your prompt in stage 2, it&apos;s the <em>first layer</em>{" "}of a much bigger network that keeps transforming those vectors. Same concept, different position in the pipeline.
           </p>
         </Callout>
 
@@ -187,7 +187,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           One quirk of attention (Module 5): if you shuffle the tokens, the math gives the same output. Attention is <em>permutation-invariant</em>. But word order matters! So models add <strong>positional information</strong> — a per-position vector baked in so the model knows &quot;this token is at index 3&quot;.
         </p>
         <p>
-          Modern models (including Claude) use <strong>RoPE</strong> (Rotary Position Embedding), which rotates query and key vectors by a position-dependent angle inside each attention head. You don&apos;t need the math — just the intuition: after this step, every token embedding knows both <em>what</em> it is and <em>where</em> it is.
+          Modern models (including Claude) use <strong>RoPE</strong> (Rotary Position Embedding), which rotates query and key vectors by a position-dependent angle inside each attention head. You don&apos;t need the math — just the intuition: after this step, every token embedding knows both <em>what</em>{" "}it is and <em>where</em>{" "}it is.
         </p>
 
         <Quiz
@@ -209,7 +209,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       <section>
         <h2>Stage 3: transformer blocks do the heavy lifting (Modules 4 &amp; 5)</h2>
         <p>
-          Those 45 vectors now run through <em>dozens</em> of transformer blocks in sequence. In Module 5 you built one attention computation from scratch. Claude runs roughly <strong>80</strong> blocks. Each block does two things:
+          Those 45 vectors now run through <em>dozens</em>{" "}of transformer blocks in sequence. In Module 5 you built one attention computation from scratch. Claude runs roughly <strong>80</strong>{" "}blocks. Each block does two things:
         </p>
 
         <h3>Sub-layer 1: multi-head self-attention</h3>
@@ -225,7 +225,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 
         <h3>Causal masking — so the model can&apos;t cheat</h3>
         <p>
-          Because the model is going to be asked to <em>predict the next token</em>, training has to set up the game so position <code>i</code> never gets to peek at positions <code>i+1, i+2, ...</code>. That&apos;s the <strong>causal mask</strong> you saw: set attention scores to −∞ for future positions before softmax. You already wrote that one line in the Module 5 project.
+          Because the model is going to be asked to <em>predict the next token</em>, training has to set up the game so position <code>i</code> never gets to peek at positions <code>i+1, i+2, ...</code>. That&apos;s the <strong>causal mask</strong>{" "}you saw: set attention scores to −∞ for future positions before softmax. You already wrote that one line in the Module 5 project.
         </p>
 
         <h3>Sub-layer 2: the feed-forward network (Module 4)</h3>
@@ -239,13 +239,13 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 
         <Callout variant="info" title="Wait — GELU? I built ReLU in Module 4">
           <p className="m-0">
-            Modern transformers use <strong>GELU</strong> (Gaussian Error Linear Unit) — think of it as a smooth ReLU with no kink at zero. Same dead-zone-for-negatives, dead-simple-for-positives shape; just differentiable everywhere. Every intuition you built around ReLU (sparsity, vanishing gradients in deep stacks, dying-neuron risk) carries over. Module 4&apos;s ReLU MLP <em>is</em> the FFN — the activation just got a smoother cousin in production.
+            Modern transformers use <strong>GELU</strong> (Gaussian Error Linear Unit) — think of it as a smooth ReLU with no kink at zero. Same dead-zone-for-negatives, dead-simple-for-positives shape; just differentiable everywhere. Every intuition you built around ReLU (sparsity, vanishing gradients in deep stacks, dying-neuron risk) carries over. Module 4&apos;s ReLU MLP <em>is</em>{" "}the FFN — the activation just got a smoother cousin in production.
           </p>
         </Callout>
 
         <h3>Residuals + LayerNorm — to keep training stable</h3>
         <p>
-          Each sub-layer&apos;s output is <em>added</em> to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks — direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
+          Each sub-layer&apos;s output is <em>added</em>{" "}to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks — direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
         </p>
 
         <div className="not-prose my-6 p-5 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/20">
@@ -314,7 +314,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 
         <h3>The unembedding: vector → logits</h3>
         <p>
-          After 80 blocks, the model has a big d_model-dim vector at every position. For next-token prediction we only care about the <em>last</em> position (the one after <code>&lt;|assistant|&gt;</code>). That vector gets multiplied by the transpose of the embedding table:
+          After 80 blocks, the model has a big d_model-dim vector at every position. For next-token prediction we only care about the <em>last</em>{" "}position (the one after <code>&lt;|assistant|&gt;</code>). That vector gets multiplied by the transpose of the embedding table:
         </p>
         <CodeBlock lang="plain">{`logits = h_last · E^T          // shape [1, vocab_size] ≈ [1, 200_000]`}</CodeBlock>
         <p>
@@ -340,10 +340,10 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         <h3>The sampler picks one — this is where &quot;temperature&quot; lives</h3>
         <p>You have three realistic strategies:</p>
         <ul>
-          <li><strong>Greedy (temperature = 0):</strong> always pick the argmax. Deterministic. Can be robotic.</li>
-          <li><strong>Temperature sampling:</strong> divide logits by <code>T</code> before softmax. <code>T &lt; 1</code> sharpens (more predictable), <code>T &gt; 1</code> flattens (more creative, more risk of nonsense).</li>
-          <li><strong>Top-p / nucleus:</strong> restrict to the smallest set of tokens whose total probability exceeds <code>p</code> (e.g. 0.9), then sample from just those. Cuts off the long tail of nonsense without being overly rigid.</li>
-          <li><strong>Beam search:</strong> instead of committing to one token at each step, keep the top-<code>k</code> partial sequences (&quot;beams&quot;) and expand each. At the end, return the highest-scoring full sequence. Common in translation and summarization, where a globally fluent output beats a locally greedy one. Rare in modern chat decoders — it tends to produce bland, repetitive text and doesn&apos;t mix well with sampling.</li>
+          <li><strong>Greedy (temperature = 0):</strong>{" "}always pick the argmax. Deterministic. Can be robotic.</li>
+          <li><strong>Temperature sampling:</strong>{" "}divide logits by <code>T</code> before softmax. <code>T &lt; 1</code> sharpens (more predictable), <code>T &gt; 1</code> flattens (more creative, more risk of nonsense).</li>
+          <li><strong>Top-p / nucleus:</strong>{" "}restrict to the smallest set of tokens whose total probability exceeds <code>p</code> (e.g. 0.9), then sample from just those. Cuts off the long tail of nonsense without being overly rigid.</li>
+          <li><strong>Beam search:</strong>{" "}instead of committing to one token at each step, keep the top-<code>k</code> partial sequences (&quot;beams&quot;) and expand each. At the end, return the highest-scoring full sequence. Common in translation and summarization, where a globally fluent output beats a locally greedy one. Rare in modern chat decoders — it tends to produce bland, repetitive text and doesn&apos;t mix well with sampling.</li>
         </ul>
 
         <p>The math behind temperature is one line:</p>
@@ -374,7 +374,7 @@ T → ∞:   all logits get squashed toward equality
 
         <Callout variant="warn" title="KV caching — the reason re-running isn't O(n²) per token">
           <p className="m-0">
-            Naively, generating token 46 means re-running all 45 previous positions through all 80 blocks again. In practice, the <strong>Key and Value</strong> tensors for previous positions are <em>cached</em>. Only the new token actually flows through. This turns a quadratic blow-up into linear. It&apos;s the engineering secret to making streaming fast.
+            Naively, generating token 46 means re-running all 45 previous positions through all 80 blocks again. In practice, the <strong>Key and Value</strong>{" "}tensors for previous positions are <em>cached</em>. Only the new token actually flows through. This turns a quadratic blow-up into linear. It&apos;s the engineering secret to making streaming fast.
           </p>
         </Callout>
 
@@ -407,7 +407,7 @@ T → ∞:   all logits get squashed toward equality
       <section>
         <h2>Where does Modules 2–3&apos;s training loop fit in?</h2>
         <p>
-          Everything we just walked through is <strong>inference</strong>. It happens in milliseconds on Anthropic&apos;s servers and does <em>not</em> change the weights. Those weights came from training — months of the process you learned in Modules 2 and 3, just at a mind-bending scale.
+          Everything we just walked through is <strong>inference</strong>. It happens in milliseconds on Anthropic&apos;s servers and does <em>not</em>{" "}change the weights. Those weights came from training — months of the process you learned in Modules 2 and 3, just at a mind-bending scale.
         </p>
 
         <div className="not-prose my-6 grid md:grid-cols-2 gap-4">
@@ -465,7 +465,7 @@ T → ∞:   all logits get squashed toward equality
         <div className="not-prose my-6 p-5 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20">
           <p className="text-sm m-0 leading-relaxed">
             <em>
-              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong> it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong> let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm kept training stable way back when. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong> over the 200k-token vocabulary, and the <strong>sampler</strong> picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong> were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
+              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm kept training stable way back when. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
             </em>
           </p>
         </div>
@@ -642,7 +642,7 @@ T → ∞:   all logits get squashed toward equality
               You can describe the entire Phase 1 stack — tokens, weights, training, neural networks, attention, embeddings, prompt assembly, decode loop — without notes. That&apos;s the bar for moving on.
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300 m-0">
-              <strong>5–6 right?</strong> Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong> Don&apos;t skip — Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
+              <strong>5–6 right?</strong>{" "}Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong>{" "}Don&apos;t skip — Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
             </p>
           </div>
         </section>

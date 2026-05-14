@@ -82,9 +82,9 @@ export default function Page() {
           The cleanest mental model:
         </p>
         <ul>
-          <li><strong>Event-driven architecture:</strong> services communicate by publishing and subscribing to events. Loose coupling between producer and consumer. Cheap, common, often the right answer.</li>
-          <li><strong>Event sourcing:</strong> instead of storing the current state of an entity, store the sequence of events that produced it. State is derived by replay. Powerful, expensive in operational complexity.</li>
-          <li><strong>CQRS:</strong> separate the model used to write data from the model(s) used to read data. Different storage, different shape. Useful when read and write have very different patterns.</li>
+          <li><strong>Event-driven architecture:</strong>{" "}services communicate by publishing and subscribing to events. Loose coupling between producer and consumer. Cheap, common, often the right answer.</li>
+          <li><strong>Event sourcing:</strong>{" "}instead of storing the current state of an entity, store the sequence of events that produced it. State is derived by replay. Powerful, expensive in operational complexity.</li>
+          <li><strong>CQRS:</strong>{" "}separate the model used to write data from the model(s) used to read data. Different storage, different shape. Useful when read and write have very different patterns.</li>
         </ul>
         <p>
           You can do event-driven without event sourcing, and CQRS without either. You can also stack all three — that&apos;s where the legendary complexity comes from.
@@ -112,8 +112,8 @@ export default function Page() {
           Once you go event-driven, you have a choice in how multi-step workflows run:
         </p>
         <ul>
-          <li><strong>Choreography:</strong> services publish events and react to other services&apos; events. No central coordinator. Each service knows its own rules.</li>
-          <li><strong>Orchestration:</strong> a central orchestrator (workflow engine, saga) sends commands to services in sequence and reacts to their responses.</li>
+          <li><strong>Choreography:</strong>{" "}services publish events and react to other services&apos; events. No central coordinator. Each service knows its own rules.</li>
+          <li><strong>Orchestration:</strong>{" "}a central orchestrator (workflow engine, saga) sends commands to services in sequence and reacts to their responses.</li>
         </ul>
 
         <Mermaid chart={choreography} />
@@ -139,12 +139,12 @@ export default function Page() {
           Production-grade event-driven systems treat the schema as a versioned, evolution-aware contract:
         </p>
         <ul>
-          <li><strong>Backward compatibility:</strong> never remove or rename a field. Add new optional fields. Old consumers keep working.</li>
-          <li><strong>Forward compatibility:</strong> consumers ignore unknown fields. New producers can add fields without breaking old consumers.</li>
-          <li><strong>Schema registry:</strong> Confluent Schema Registry or similar. Producers and consumers agree on the schema; the registry enforces compatibility rules at write time.</li>
+          <li><strong>Backward compatibility:</strong>{" "}never remove or rename a field. Add new optional fields. Old consumers keep working.</li>
+          <li><strong>Forward compatibility:</strong>{" "}consumers ignore unknown fields. New producers can add fields without breaking old consumers.</li>
+          <li><strong>Schema registry:</strong>{" "}Confluent Schema Registry or similar. Producers and consumers agree on the schema; the registry enforces compatibility rules at write time.</li>
         </ul>
         <p>
-          Format-wise: <strong>Avro</strong> with schema registry is the canonical pairing for Kafka. JSON works but lacks schema enforcement (you can use JSON Schema + a registry). Protobuf is also popular when you&apos;re already on gRPC elsewhere.
+          Format-wise: <strong>Avro</strong>{" "}with schema registry is the canonical pairing for Kafka. JSON works but lacks schema enforcement (you can use JSON Schema + a registry). Protobuf is also popular when you&apos;re already on gRPC elsewhere.
         </p>
 
         <h3>A simple event with a versioned envelope</h3>
@@ -199,11 +199,11 @@ public class OrderEventPublisher {
           A saga is a long-running transaction implemented as a sequence of local transactions, each with a compensation. If step 3 fails, run the compensations for steps 1 and 2. Sagas are the practical answer to &quot;we can&apos;t use a distributed transaction.&quot;
         </p>
         <ul>
-          <li><strong>Choreographed saga:</strong> each service listens for the previous step&apos;s success/failure event and decides what to do. No central coordinator.</li>
-          <li><strong>Orchestrated saga:</strong> a saga orchestrator drives the flow with explicit steps and compensations.</li>
+          <li><strong>Choreographed saga:</strong>{" "}each service listens for the previous step&apos;s success/failure event and decides what to do. No central coordinator.</li>
+          <li><strong>Orchestrated saga:</strong>{" "}a saga orchestrator drives the flow with explicit steps and compensations.</li>
         </ul>
         <p>
-          For 2-3 step sagas, choreography is fine. Beyond that, orchestration earns its keep — you can <em>see</em> the flow, you can pause it, you can monitor stuck instances, you can add retry policies per step.
+          For 2-3 step sagas, choreography is fine. Beyond that, orchestration earns its keep — you can <em>see</em>{" "}the flow, you can pause it, you can monitor stuck instances, you can add retry policies per step.
         </p>
 
         <Quiz
@@ -244,7 +244,7 @@ public class OrderEventPublisher {
           In a traditional CRUD system, you store current state. The user table has a <code>balance</code> column with the current balance. When the balance changes, you UPDATE that column. The history (how the balance got there) is gone unless you separately log it.
         </p>
         <p>
-          In an event-sourced system, you store the events. <code>AccountOpened(initialBalance: 0)</code>, <code>Deposited(amount: 100)</code>, <code>Withdrawn(amount: 30)</code>. Current state is <em>derived</em> by replaying these events. The events are the truth; state is a computation over them.
+          In an event-sourced system, you store the events. <code>AccountOpened(initialBalance: 0)</code>, <code>Deposited(amount: 100)</code>, <code>Withdrawn(amount: 30)</code>. Current state is <em>derived</em>{" "}by replaying these events. The events are the truth; state is a computation over them.
         </p>
 
         <Callout variant="insight" title="Event sourcing is a database design choice, not an architecture style">
@@ -255,10 +255,10 @@ public class OrderEventPublisher {
 
         <h3>The four operations</h3>
         <ul>
-          <li><strong>Append events.</strong> When a command succeeds, append the resulting events to the event store, keyed by aggregate ID, with a version number for optimistic concurrency.</li>
-          <li><strong>Load aggregate.</strong> Read all events for an aggregate, fold them into current state.</li>
-          <li><strong>Snapshot.</strong> Periodically save a snapshot of folded state at a known version. Subsequent loads start from the snapshot and replay only events since.</li>
-          <li><strong>Project.</strong> Subscribe to the event stream and build read-side views (in DBs, search indexes, caches).</li>
+          <li><strong>Append events.</strong>{" "}When a command succeeds, append the resulting events to the event store, keyed by aggregate ID, with a version number for optimistic concurrency.</li>
+          <li><strong>Load aggregate.</strong>{" "}Read all events for an aggregate, fold them into current state.</li>
+          <li><strong>Snapshot.</strong>{" "}Periodically save a snapshot of folded state at a known version. Subsequent loads start from the snapshot and replay only events since.</li>
+          <li><strong>Project.</strong>{" "}Subscribe to the event stream and build read-side views (in DBs, search indexes, caches).</li>
         </ul>
 
         <h3>A minimal aggregate</h3>
@@ -361,9 +361,9 @@ public Account loadAccount(String accountId) {
           Events are forever. If you stored 5 years of <code>OrderPlaced</code> events with a field called <code>customer_email</code>, and today you rename it to <code>buyer_email</code>, every replay path has to handle both shapes. The options:
         </p>
         <ul>
-          <li><strong>Upcasters / event versioning:</strong> on read, transform old event versions into the latest. Pay the migration cost in code, not in storage.</li>
-          <li><strong>Weak schema (JSON, optional fields):</strong> pretend you have flexibility. You don&apos;t — you just delay finding out about the bugs.</li>
-          <li><strong>Rewriting history:</strong> compaction or migration to rewrite old events into the new shape. Operationally heavy, controversial (events are supposed to be immutable).</li>
+          <li><strong>Upcasters / event versioning:</strong>{" "}on read, transform old event versions into the latest. Pay the migration cost in code, not in storage.</li>
+          <li><strong>Weak schema (JSON, optional fields):</strong>{" "}pretend you have flexibility. You don&apos;t — you just delay finding out about the bugs.</li>
+          <li><strong>Rewriting history:</strong>{" "}compaction or migration to rewrite old events into the new shape. Operationally heavy, controversial (events are supposed to be immutable).</li>
         </ul>
         <p>
           Production event-sourced systems plan for this from day one — versioned events, upcasters, contract reviews before any event change ships. It&apos;s a real cost, and it&apos;s why event sourcing isn&apos;t free.
@@ -371,10 +371,10 @@ public Account loadAccount(String accountId) {
 
         <h3>When event sourcing is genuinely worth it</h3>
         <ul>
-          <li><strong>Audit and compliance is a hard requirement.</strong> Banking, healthcare, anywhere &quot;why is the balance this number?&quot; must always be answerable. Event sourcing makes audit a feature of the design, not a bolt-on log.</li>
+          <li><strong>Audit and compliance is a hard requirement.</strong>{" "}Banking, healthcare, anywhere &quot;why is the balance this number?&quot; must always be answerable. Event sourcing makes audit a feature of the design, not a bolt-on log.</li>
           <li><strong>Temporal queries matter.</strong> &quot;What was the inventory at 3pm yesterday?&quot; A current-state DB needs a separate history table; an event-sourced system replays to that point.</li>
-          <li><strong>You need to derive new views from history.</strong> Bootstrapping a search index from a CRUD DB requires backfill jobs. From an event log, you replay the stream.</li>
-          <li><strong>The aggregate boundary has high write contention.</strong> Event sourcing&apos;s append-only writes scale better than UPDATE-heavy workloads (no row-level lock contention on hot rows).</li>
+          <li><strong>You need to derive new views from history.</strong>{" "}Bootstrapping a search index from a CRUD DB requires backfill jobs. From an event log, you replay the stream.</li>
+          <li><strong>The aggregate boundary has high write contention.</strong>{" "}Event sourcing&apos;s append-only writes scale better than UPDATE-heavy workloads (no row-level lock contention on hot rows).</li>
         </ul>
 
         <Callout variant="warn" title="When event sourcing is the wrong call">
@@ -424,7 +424,7 @@ public Account loadAccount(String accountId) {
         <Mermaid chart={cqrsDiagram} />
 
         <p>
-          The point isn&apos;t that the read side is &quot;a cache.&quot; The point is that read and write usually have <em>genuinely different</em> shapes. Writes are about &quot;a single user placed an order&quot;; reads are about &quot;show me revenue by region by month.&quot; Forcing both through the same model means one (or both) is awkward. CQRS lets each be exactly the shape it needs.
+          The point isn&apos;t that the read side is &quot;a cache.&quot; The point is that read and write usually have <em>genuinely different</em>{" "}shapes. Writes are about &quot;a single user placed an order&quot;; reads are about &quot;show me revenue by region by month.&quot; Forcing both through the same model means one (or both) is awkward. CQRS lets each be exactly the shape it needs.
         </p>
 
         <h3>CQRS without event sourcing (the common case)</h3>
@@ -505,9 +505,9 @@ public class OrderProjector {
           The read side lags the write side. A user places an order, then immediately queries &quot;my orders&quot; — and the projection hasn&apos;t caught up yet, so the new order isn&apos;t in the response. Three coping strategies:
         </p>
         <ul>
-          <li><strong>Read your writes from the write side.</strong> For &quot;just placed&quot; queries, route to the write DB. Bypass the projection delay for the user&apos;s own most-recent activity.</li>
-          <li><strong>Optimistic UI.</strong> Show the user&apos;s newly-placed order from the local response, before the projection catches up. The next page refresh shows the projection&apos;s view.</li>
-          <li><strong>Wait-for-projection.</strong> The write returns a version token; the read includes the version and waits up to N ms for the projection to reach it. Adds latency, but provides a strong-ish read-after-write contract.</li>
+          <li><strong>Read your writes from the write side.</strong>{" "}For &quot;just placed&quot; queries, route to the write DB. Bypass the projection delay for the user&apos;s own most-recent activity.</li>
+          <li><strong>Optimistic UI.</strong>{" "}Show the user&apos;s newly-placed order from the local response, before the projection catches up. The next page refresh shows the projection&apos;s view.</li>
+          <li><strong>Wait-for-projection.</strong>{" "}The write returns a version token; the read includes the version and waits up to N ms for the projection to reach it. Adds latency, but provides a strong-ish read-after-write contract.</li>
         </ul>
 
         <Callout variant="warn" title="Eventual consistency is a UX problem, not just a tech one">
@@ -532,9 +532,9 @@ public class OrderProjector {
 
         <h3>When CQRS is overkill</h3>
         <ul>
-          <li><strong>Read and write patterns are similar.</strong> CRUD apps where reads are &quot;show me what I just wrote&quot; don&apos;t benefit. The same model serves both fine.</li>
-          <li><strong>Throughput is moderate.</strong> Without scale pressure, the operational cost of a separate read pipeline isn&apos;t worth the modeling cleanliness.</li>
-          <li><strong>Eventual consistency would surprise users.</strong> Some flows genuinely need read-after-write within the same DB. Forcing them through eventual consistency creates UX problems.</li>
+          <li><strong>Read and write patterns are similar.</strong>{" "}CRUD apps where reads are &quot;show me what I just wrote&quot; don&apos;t benefit. The same model serves both fine.</li>
+          <li><strong>Throughput is moderate.</strong>{" "}Without scale pressure, the operational cost of a separate read pipeline isn&apos;t worth the modeling cleanliness.</li>
+          <li><strong>Eventual consistency would surprise users.</strong>{" "}Some flows genuinely need read-after-write within the same DB. Forcing them through eventual consistency creates UX problems.</li>
         </ul>
 
         <Callout variant="insight" title="Test for CQRS need: how often do queries differ from the write shape?">

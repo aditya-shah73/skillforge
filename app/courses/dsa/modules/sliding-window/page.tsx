@@ -132,14 +132,14 @@ flowchart LR
 
         <p>
           Sliding window is the technique you reach for when the question is about a{" "}
-          <strong>contiguous subarray or substring</strong> and the brute force is &quot;try every
+          <strong>contiguous subarray or substring</strong>{" "}and the brute force is &quot;try every
           subarray.&quot; The brute force is O(n²) because there are n² subarrays. The window is O(n)
           because each element enters the window once and leaves once — a 2n bound on the total work, no
           matter how the indices wiggle.
         </p>
 
         <p>
-          The mental shift is from <em>recomputing</em> to <em>patching</em>. When the window slides one
+          The mental shift is from <em>recomputing</em>{" "}to <em>patching</em>. When the window slides one
           step right, you don&apos;t recalculate the sum (or count, or whatever) from scratch. You add the
           one new element and subtract the one that just left. Constant work per step. n steps. Done.
         </p>
@@ -153,15 +153,15 @@ flowchart LR
         </p>
 
         <ul>
-          <li>&quot;<strong>contiguous</strong> subarray of length k&quot;</li>
-          <li>&quot;<strong>substring</strong> with property P&quot;</li>
-          <li>&quot;longest / shortest / max / min <strong>window</strong> such that…&quot;</li>
+          <li>&quot;<strong>contiguous</strong>{" "}subarray of length k&quot;</li>
+          <li>&quot;<strong>substring</strong>{" "}with property P&quot;</li>
+          <li>&quot;longest / shortest / max / min <strong>window</strong>{" "}such that…&quot;</li>
           <li>&quot;at most K distinct&quot; / &quot;exactly K&quot; / &quot;all unique&quot;</li>
           <li>&quot;sum / average / count of a sliding range&quot;</li>
         </ul>
 
         <p>
-          The word <em>contiguous</em> is the load-bearing one. If the problem allows non-contiguous
+          The word <em>contiguous</em>{" "}is the load-bearing one. If the problem allows non-contiguous
           subsets (e.g., &quot;pick any K elements&quot;), this technique does not apply — you&apos;re
           probably looking at a heap, a sort, or DP. The window only works because the indices move
           monotonically: <code>l</code> never goes left, <code>r</code> never goes left.
@@ -171,7 +171,7 @@ flowchart LR
 
         <p>
           Every sliding-window solution can be expressed in one sentence:
-          <strong> &quot;the window <code>[l..r]</code> always satisfies property P.&quot;</strong> P is
+          <strong> &quot;the window <code>[l..r]</code> always satisfies property P.&quot;</strong>{" "}P is
           something like &quot;all characters distinct,&quot; &quot;sum ≤ target,&quot; or &quot;contains
           at most K distinct values.&quot; The whole algorithm is just two moves that maintain P:
         </p>
@@ -184,7 +184,7 @@ flowchart LR
         <p>
           The choice of when to expand vs contract is what distinguishes the &quot;fixed&quot; and
           &quot;variable&quot; flavors. Fixed: expand once per step, then contract once if the window is
-          too big. Variable: expand always, contract <em>while</em> P is broken.
+          too big. Variable: expand always, contract <em>while</em>{" "}P is broken.
         </p>
 
         <Callout variant="insight" title="Why the amortized cost is O(n), not O(n²)">
@@ -204,8 +204,8 @@ flowchart LR
 
         <ul>
           <li><strong>Not for non-contiguous problems.</strong> &quot;Pick any K elements summing to X&quot; — no window. Subsets aren&apos;t contiguous.</li>
-          <li><strong>Not for problems where the answer involves arbitrary index pairs.</strong> Two Sum on an unsorted array is hash table, not window.</li>
-          <li><strong>Not always the right tool even for contiguous problems.</strong> &quot;Subarray with sum equal to K&quot; with <em>negative numbers</em> can&apos;t use a window — adding a number doesn&apos;t monotonically grow the sum, so you can&apos;t decide when to contract. Prefix sums + hash map is the move there.</li>
+          <li><strong>Not for problems where the answer involves arbitrary index pairs.</strong>{" "}Two Sum on an unsorted array is hash table, not window.</li>
+          <li><strong>Not always the right tool even for contiguous problems.</strong> &quot;Subarray with sum equal to K&quot; with <em>negative numbers</em>{" "}can&apos;t use a window — adding a number doesn&apos;t monotonically grow the sum, so you can&apos;t decide when to contract. Prefix sums + hash map is the move there.</li>
         </ul>
 
         <Quiz
@@ -240,7 +240,7 @@ flowchart LR
         <p>
           Fixed-size window problems hand you a number K up front: &quot;subarray of length exactly
           K.&quot; The window never grows or shrinks — it just slides. The algorithm has two phases:
-          <em> prime</em> the first K elements to compute the initial value, then <em>slide</em> by
+          <em> prime</em>{" "}the first K elements to compute the initial value, then <em>slide</em>{" "}by
           repeatedly adding the new element on the right and subtracting the one falling off on the left.
         </p>
 
@@ -299,7 +299,7 @@ for (int r = k; r < nums.length; r++) {
 
         <p>
           The <code>state</code> can be a sum, a count, a HashMap of frequencies, a multiset, anything —
-          as long as <em>add</em> and <em>remove</em> are O(1) (or amortized O(1)). That&apos;s what
+          as long as <em>add</em>{" "}and <em>remove</em>{" "}are O(1) (or amortized O(1)). That&apos;s what
           keeps the whole loop linear.
         </p>
 
@@ -320,7 +320,7 @@ for (int r = k; r < nums.length; r++) {
             That&apos;s O(k) per slide — back to O(n·k).
           </p>
           <p>
-            The <em>whole point</em> of the window is that you maintain the state incrementally with one
+            The <em>whole point</em>{" "}of the window is that you maintain the state incrementally with one
             addition and one subtraction per step. If your inner loop touches more than a constant number
             of elements, you&apos;ve lost the win.
           </p>
@@ -364,7 +364,7 @@ for (int r = k; r < nums.length; r++) {
 
         <p>
           Given a string <code>s</code>, return the length of the longest substring with no repeated
-          characters. The invariant: <strong>the window contains no duplicates.</strong> Detection: a
+          characters. The invariant: <strong>the window contains no duplicates.</strong>{" "}Detection: a
           HashSet (or a HashMap of last-seen indices). When admitting <code>s[r]</code> creates a
           duplicate, contract from the left until it&apos;s gone.
         </p>
@@ -391,7 +391,7 @@ for (int r = k; r < nums.length; r++) {
         <h3>The expand-then-contract order</h3>
 
         <p>
-          Read the loop carefully. The contract step happens <em>before</em> we commit the admission of{" "}
+          Read the loop carefully. The contract step happens <em>before</em>{" "}we commit the admission of{" "}
           <code>s[r]</code>. That order matters: we&apos;re asking &quot;if I admit this, does the
           invariant break?&quot; and shrinking proactively until it won&apos;t.
         </p>
@@ -451,33 +451,33 @@ for (int r = k; r < nums.length; r++) {
 }`}</CodeBlock>
 
         <p>
-          The <code>&gt;= l</code> guard matters: a stale entry (last-seen <em>before</em> the current
+          The <code>&gt;= l</code> guard matters: a stale entry (last-seen <em>before</em>{" "}the current
           window) shouldn&apos;t pull <code>l</code> backwards. The pointer must move only right.
         </p>
 
         <h3>Variations on the variable theme</h3>
 
         <ul>
-          <li><strong>LC 209 · Minimum Size Subarray Sum.</strong> Invariant: window sum ≥ target. Expand to grow the sum; once invariant holds, contract while it still holds, recording the minimum length.</li>
-          <li><strong>LC 904 · Fruit Into Baskets.</strong> Invariant: window has at most 2 distinct values. Classic &quot;at most K distinct&quot; for K=2.</li>
-          <li><strong>LC 1004 · Max Consecutive Ones III.</strong> Given a binary array and budget K, find the longest window with at most K zeros. Invariant: zero count ≤ K.</li>
-          <li><strong>LC 159 / LC 340 · Longest Substring with At Most K Distinct.</strong> The &quot;at most K distinct&quot; pattern in its purest form.</li>
+          <li><strong>LC 209 · Minimum Size Subarray Sum.</strong>{" "}Invariant: window sum ≥ target. Expand to grow the sum; once invariant holds, contract while it still holds, recording the minimum length.</li>
+          <li><strong>LC 904 · Fruit Into Baskets.</strong>{" "}Invariant: window has at most 2 distinct values. Classic &quot;at most K distinct&quot; for K=2.</li>
+          <li><strong>LC 1004 · Max Consecutive Ones III.</strong>{" "}Given a binary array and budget K, find the longest window with at most K zeros. Invariant: zero count ≤ K.</li>
+          <li><strong>LC 159 / LC 340 · Longest Substring with At Most K Distinct.</strong>{" "}The &quot;at most K distinct&quot; pattern in its purest form.</li>
         </ul>
 
         <Callout variant="warn" title="Be careful: 'longest' vs 'shortest' record the answer at different moments">
           <p>
-            For <strong>longest valid window</strong>: record the answer <em>after</em> contracting,
+            For <strong>longest valid window</strong>: record the answer <em>after</em>{" "}contracting,
             when the window is at its largest valid extent for this <code>r</code>.
           </p>
           <p>
-            For <strong>shortest valid window</strong>: record the answer <em>during</em> contraction —
+            For <strong>shortest valid window</strong>: record the answer <em>during</em>{" "}contraction —
             each step where the window is still valid is a candidate for the new minimum. You stop
             contracting only when the invariant is about to break.
           </p>
           <p>
             Mixing these up is the most common bug in variable-window code. When the question says
-            &quot;longest,&quot; you contract <em>away</em> from validity and record after. When it says
-            &quot;shortest,&quot; you contract <em>through</em> validity and record during.
+            &quot;longest,&quot; you contract <em>away</em>{" "}from validity and record after. When it says
+            &quot;shortest,&quot; you contract <em>through</em>{" "}validity and record during.
           </p>
         </Callout>
 
@@ -754,7 +754,7 @@ for (int r = 0; r < s.length(); r++) {
 
         <Callout variant="warn" title="The .intValue() comparisons are not optional">
           <p>
-            <code>have.get(c) == need.get(c)</code> compares <em>Integer references</em> in Java, not
+            <code>have.get(c) == need.get(c)</code> compares <em>Integer references</em>{" "}in Java, not
             int values. For boxed integers outside Java&apos;s small-Integer cache (-128 to 127), this
             silently returns false when the values are equal — a brutal bug that passes test cases with
             small inputs and fails on real ones.
@@ -779,10 +779,10 @@ for (int r = 0; r < s.length(); r++) {
         <h3>Stretch goals</h3>
 
         <ul>
-          <li><strong>LC 159 · Longest Substring with At Most Two Distinct Characters.</strong> The &quot;at most K distinct&quot; pattern with K=2. ~20 lines.</li>
-          <li><strong>LC 340 · Longest Substring with At Most K Distinct.</strong> Same pattern, parameterized K.</li>
-          <li><strong>LC 567 · Permutation in String.</strong> Fixed-window anagram check with a 26-int frequency array.</li>
-          <li><strong>LC 30 · Substring with Concatenation of All Words.</strong> A vicious one — sliding window, but the &quot;atom&quot; is a word, not a character. Worth attempting once you&apos;re comfortable.</li>
+          <li><strong>LC 159 · Longest Substring with At Most Two Distinct Characters.</strong>{" "}The &quot;at most K distinct&quot; pattern with K=2. ~20 lines.</li>
+          <li><strong>LC 340 · Longest Substring with At Most K Distinct.</strong>{" "}Same pattern, parameterized K.</li>
+          <li><strong>LC 567 · Permutation in String.</strong>{" "}Fixed-window anagram check with a 26-int frequency array.</li>
+          <li><strong>LC 30 · Substring with Concatenation of All Words.</strong>{" "}A vicious one — sliding window, but the &quot;atom&quot; is a word, not a character. Worth attempting once you&apos;re comfortable.</li>
         </ul>
       </section>
       </Checkpoint>

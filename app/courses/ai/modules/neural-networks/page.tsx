@@ -55,9 +55,9 @@ export default function NeuralNetworksModule() {
           with a squiggle between them — which turns out to be <em>literally every modern AI model</em>. By the end you&apos;ll:
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
-          <li>Explain why a 1000-layer linear network is the <em>same</em> as a 1-layer linear network — and what fixes that.</li>
+          <li>Explain why a 1000-layer linear network is the <em>same</em>{" "}as a 1-layer linear network — and what fixes that.</li>
           <li>Know ReLU, sigmoid, and softmax cold — when to use each and why.</li>
-          <li>Do a forward pass through a 2-layer network <em>by hand</em> with real numbers.</li>
+          <li>Do a forward pass through a 2-layer network <em>by hand</em>{" "}with real numbers.</li>
           <li>Derive backpropagation for that network — the chain rule, just organized.</li>
           <li>Ship a Java MLP that classifies handwritten digits with &gt;90% accuracy. No library. Just arrays.</li>
         </ol>
@@ -95,21 +95,21 @@ export default function NeuralNetworksModule() {
           Your job: draw a single straight line that puts all blue houses on one side and all red houses on the other.
         </p>
         <p>
-          <strong>You can&apos;t.</strong> Any straight line you draw will get at most three right. The blue points sit on opposite corners.
+          <strong>You can&apos;t.</strong>{" "}Any straight line you draw will get at most three right. The blue points sit on opposite corners.
           This is the famous <em>XOR problem</em>, and it&apos;s the thing that killed the first wave of AI enthusiasm in 1969.
         </p>
 
         <Callout variant="insight" title="The only thing linear regression can learn">
           <p className="m-0">
             A linear model — like the one you built in Module 3 — can only draw <strong>straight lines</strong> (or in higher dimensions, flat hyperplanes).
-            If the pattern in your data is a curve, a zigzag, a spiral, or an XOR, <em>no amount of training</em> will make a linear model learn it.
+            If the pattern in your data is a curve, a zigzag, a spiral, or an XOR, <em>no amount of training</em>{" "}will make a linear model learn it.
             More data won&apos;t help. More features won&apos;t help. The model&apos;s shape is fundamentally wrong.
           </p>
         </Callout>
 
         <h3>The fix: stack models, bend the space</h3>
         <p>
-          Here&apos;s the idea: what if instead of drawing one line, we first <em>transform</em> the input into a new space where a line <em>does</em> work?
+          Here&apos;s the idea: what if instead of drawing one line, we first <em>transform</em>{" "}the input into a new space where a line <em>does</em>{" "}work?
           Feed those transformed features through a second linear model, and now you can carve up patterns the first couldn&apos;t touch.
         </p>
         <p>
@@ -118,7 +118,7 @@ export default function NeuralNetworksModule() {
 
         <ol>
           <li>Run the input through a linear layer (matrix multiply + bias).</li>
-          <li>Apply a <strong>non-linear squish</strong> to the output of each neuron (the activation function).</li>
+          <li>Apply a <strong>non-linear squish</strong>{" "}to the output of each neuron (the activation function).</li>
           <li>Repeat — each new layer can now reshape space in ways the previous one couldn&apos;t.</li>
         </ol>
 
@@ -151,7 +151,7 @@ export default function NeuralNetworksModule() {
               body: (
                 <p className="m-0">
                   <code>W₂ · W₁</code> is just some matrix — call it <code>W_eff</code>. <code>W₂ · b₁ + b₂</code> is just some vector — call it <code>b_eff</code>.
-                  The two-layer network is <em>mathematically identical</em> to a single linear layer <code>y = W_eff · x + b_eff</code>. No extra expressive power.
+                  The two-layer network is <em>mathematically identical</em>{" "}to a single linear layer <code>y = W_eff · x + b_eff</code>. No extra expressive power.
                   You could stack a thousand layers and it&apos;d still just be one.
                 </p>
               ),
@@ -165,7 +165,7 @@ export default function NeuralNetworksModule() {
 {`y = W₂ · σ(W₁ · x + b₁) + b₂`}
                   </CodeBlock>
                   <p className="m-0">
-                    You <em>cannot</em> collapse this. <code>σ</code> is non-linear, so <code>W₂</code> can&apos;t distribute into it.
+                    You <em>cannot</em>{" "}collapse this. <code>σ</code> is non-linear, so <code>W₂</code> can&apos;t distribute into it.
                     The two layers now do genuinely different work. Universal approximation is back on the menu.
                   </p>
                 </>
@@ -176,7 +176,7 @@ export default function NeuralNetworksModule() {
 
         <Callout variant="info" title="Universal approximation theorem (informally)">
           <p className="m-0">
-            A neural network with <em>just one hidden layer</em> — given enough neurons and a non-linear activation — can approximate <em>any</em> continuous function
+            A neural network with <em>just one hidden layer</em> — given enough neurons and a non-linear activation — can approximate <em>any</em>{" "}continuous function
             to arbitrary precision. One layer is enough <em>in theory</em>. In practice, deeper networks learn more efficiently, which is why we use many layers, not one fat one.
           </p>
         </Callout>
@@ -197,8 +197,8 @@ where:
         </CodeBlock>
 
         <p>
-          That&apos;s it. One weighted sum, one scalar bias, one non-linearity. A <strong>layer</strong> is a bunch of neurons side-by-side, each reading the same inputs but with different weights.
-          A <strong>network</strong> is a stack of layers.
+          That&apos;s it. One weighted sum, one scalar bias, one non-linearity. A <strong>layer</strong>{" "}is a bunch of neurons side-by-side, each reading the same inputs but with different weights.
+          A <strong>network</strong>{" "}is a stack of layers.
         </p>
 
         <Quiz
@@ -267,7 +267,7 @@ where:
               f(z) = 1 / (1 + e⁻ᶻ)
             </p>
             <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
-              S-curve from 0 to 1. Used for <em>output</em> of binary classifiers (&quot;probability of spam&quot;). Rare in hidden layers today.
+              S-curve from 0 to 1. Used for <em>output</em>{" "}of binary classifiers (&quot;probability of spam&quot;). Rare in hidden layers today.
             </p>
           </div>
           <div className="rounded-xl border border-violet-300 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/40 p-4 text-sm">
@@ -303,9 +303,9 @@ public static double reluDerivative(double z) {
         </p>
 
         <ul>
-          <li><strong>Cheap.</strong> One comparison, one branch. On a GPU, that&apos;s basically free.</li>
-          <li><strong>Gradient-friendly.</strong> Derivative is 0 or 1. No exponentials, no vanishing (for positive inputs).</li>
-          <li><strong>Sparse.</strong> About half the neurons output exactly 0 at any moment, which empirically helps generalization.</li>
+          <li><strong>Cheap.</strong>{" "}One comparison, one branch. On a GPU, that&apos;s basically free.</li>
+          <li><strong>Gradient-friendly.</strong>{" "}Derivative is 0 or 1. No exponentials, no vanishing (for positive inputs).</li>
+          <li><strong>Sparse.</strong>{" "}About half the neurons output exactly 0 at any moment, which empirically helps generalization.</li>
         </ul>
 
         <Callout variant="warn" title="The dying ReLU problem">
@@ -424,16 +424,16 @@ p(bird) = 1.105 / 11.212 ≈ 0.099`}
 
         <div className="grid gap-2 my-4 not-prose text-sm">
           <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
-            <strong>Hidden layers:</strong> ReLU (or Leaky ReLU if you see dead neurons). Don&apos;t overthink it — this is the default for 95% of networks.
+            <strong>Hidden layers:</strong>{" "}ReLU (or Leaky ReLU if you see dead neurons). Don&apos;t overthink it — this is the default for 95% of networks.
           </div>
           <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
-            <strong>Output — binary classification:</strong> Sigmoid (1 output neuron).
+            <strong>Output — binary classification:</strong>{" "}Sigmoid (1 output neuron).
           </div>
           <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
-            <strong>Output — multi-class classification:</strong> Softmax (one neuron per class).
+            <strong>Output — multi-class classification:</strong>{" "}Softmax (one neuron per class).
           </div>
           <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
-            <strong>Output — regression:</strong> No activation (linear). You want the raw output.
+            <strong>Output — regression:</strong>{" "}No activation (linear). You want the raw output.
           </div>
         </div>
 
@@ -480,7 +480,7 @@ p(bird) = 1.105 / 11.212 ≈ 0.099`}
         <h2>Part 3: Forward pass — a network is just matmul + squash</h2>
 
         <p>
-          The <strong>forward pass</strong> is what happens when you ask a trained network to make a prediction. It&apos;s just the network&apos;s formula, evaluated.
+          The <strong>forward pass</strong>{" "}is what happens when you ask a trained network to make a prediction. It&apos;s just the network&apos;s formula, evaluated.
           No mystery, no magic. A sequence of matrix multiplies interleaved with activation functions.
         </p>
 
@@ -812,7 +812,7 @@ L  = (0.75 − 1.0)² = 0.0625`}
             = -0.5`}
                   </CodeBlock>
                   <p className="m-0 text-xs italic">
-                    Negative δ₂ means: to reduce loss, we want <em>more</em> of z₂ (i.e. bigger ŷ). Makes sense — we predicted 0.75, truth was 1.0.
+                    Negative δ₂ means: to reduce loss, we want <em>more</em>{" "}of z₂ (i.e. bigger ŷ). Makes sense — we predicted 0.75, truth was 1.0.
                   </p>
                 </>
               ),
@@ -949,7 +949,7 @@ public void trainStep(double[] x, double[] y, double lr) {
 
         <Callout variant="warn" title="The most common backprop bug">
           <p className="m-0">
-            <strong>Using the wrong layer&apos;s values.</strong> When updating W[ℓ], the weight gradient is <code>δ[ℓ] · a[ℓ−1]ᵀ</code> — it uses δ from the <em>current</em> layer and activations from the <em>previous</em> layer.
+            <strong>Using the wrong layer&apos;s values.</strong>{" "}When updating W[ℓ], the weight gradient is <code>δ[ℓ] · a[ℓ−1]ᵀ</code> — it uses δ from the <em>current</em>{" "}layer and activations from the <em>previous</em>{" "}layer.
             It&apos;s easy to accidentally use <code>a[ℓ]</code> instead of <code>a[ℓ−1]</code>, especially in longer networks. When backprop is &quot;almost working&quot; but not quite, check your indices.
           </p>
         </Callout>
@@ -1020,7 +1020,7 @@ public void trainStep(double[] x, double[] y, double lr) {
           You need random initialization to break this symmetry.
         </p>
         <p>
-          But big random weights cause exploding activations. Tiny random weights cause vanishing ones. The fix is a <em>scale-aware</em> initialization:
+          But big random weights cause exploding activations. Tiny random weights cause vanishing ones. The fix is a <em>scale-aware</em>{" "}initialization:
         </p>
 
         <Callout variant="info" title="Kaiming (He) initialization — the default for ReLU networks">
@@ -1034,7 +1034,7 @@ where n_in is the number of inputs feeding into the neuron.`}
           </CodeBlock>
           <p className="m-0">
             This keeps the variance of activations roughly constant from layer to layer, so signals neither explode nor vanish. Biases can start at 0.
-            For tanh/sigmoid layers, use <strong>Xavier/Glorot</strong> init instead: <code>std = sqrt(1 / n_in)</code>.
+            For tanh/sigmoid layers, use <strong>Xavier/Glorot</strong>{" "}init instead: <code>std = sqrt(1 / n_in)</code>.
           </p>
         </Callout>
 
@@ -1070,14 +1070,14 @@ public static double[][] kaimingInit(int nOut, int nIn, Random rng) {
         </p>
 
         <ul>
-          <li><strong>Lower noise.</strong> Averaging smooths out the per-example randomness — steps are more consistent.</li>
-          <li><strong>Hardware efficiency.</strong> A batch matmul on 32 inputs at once is way faster than 32 separate ones on a GPU.</li>
-          <li><strong>Generalization.</strong> A little batch noise turns out to help the model find flatter minima, which generalize better.</li>
+          <li><strong>Lower noise.</strong>{" "}Averaging smooths out the per-example randomness — steps are more consistent.</li>
+          <li><strong>Hardware efficiency.</strong>{" "}A batch matmul on 32 inputs at once is way faster than 32 separate ones on a GPU.</li>
+          <li><strong>Generalization.</strong>{" "}A little batch noise turns out to help the model find flatter minima, which generalize better.</li>
         </ul>
 
         <Callout variant="warn" title="Don't forget to zero gradients">
           <p className="m-0">
-            In frameworks like PyTorch, you have to call <code>optimizer.zero_grad()</code> before each batch. If you don&apos;t, gradients <em>accumulate</em> across batches and your updates become nonsense.
+            In frameworks like PyTorch, you have to call <code>optimizer.zero_grad()</code> before each batch. If you don&apos;t, gradients <em>accumulate</em>{" "}across batches and your updates become nonsense.
             In the Java project you&apos;ll write, you&apos;re accumulating explicitly into a buffer you reset each batch — same idea, just visible.
           </p>
         </Callout>
@@ -1178,21 +1178,21 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
           <div className="font-bold mb-3">Build an MLP that hits ≥ 90% accuracy on the MNIST test set.</div>
           <ol className="list-decimal ml-5 space-y-2">
             <li>
-              <strong>Load the data.</strong> Use the standard MNIST files (<code>train-images-idx3-ubyte</code>, <code>train-labels-idx1-ubyte</code>, and the test counterparts).
+              <strong>Load the data.</strong>{" "}Use the standard MNIST files (<code>train-images-idx3-ubyte</code>, <code>train-labels-idx1-ubyte</code>, and the test counterparts).
               Parse by hand — it&apos;s ~30 lines. Normalize pixel values to <code>[0, 1]</code> by dividing by 255.
             </li>
             <li>
               <strong>Network architecture.</strong> 784 → 128 (ReLU) → 10 (softmax). 101,770 parameters total.
             </li>
             <li>
-              <strong>Loss.</strong> Cross-entropy. For one example with one-hot label y and softmax output p: <code>L = −Σ yᵢ · log(pᵢ)</code>.
+              <strong>Loss.</strong>{" "}Cross-entropy. For one example with one-hot label y and softmax output p: <code>L = −Σ yᵢ · log(pᵢ)</code>.
               The gradient <code>∂L/∂z[L] = p − y</code> — convenient! (You can derive this as a bonus, or trust it.)
             </li>
             <li>
-              <strong>Optimizer.</strong> Plain SGD with mini-batches. Batch size 32, learning rate 0.1, 10 epochs. Kaiming init.
+              <strong>Optimizer.</strong>{" "}Plain SGD with mini-batches. Batch size 32, learning rate 0.1, 10 epochs. Kaiming init.
             </li>
             <li>
-              <strong>Evaluation.</strong> Log training loss each epoch. At the end, compute test accuracy. Also dump 10 examples of misclassified digits (ASCII art is fine) — seeing them is part of the lesson.
+              <strong>Evaluation.</strong>{" "}Log training loss each epoch. At the end, compute test accuracy. Also dump 10 examples of misclassified digits (ASCII art is fine) — seeing them is part of the lesson.
             </li>
           </ol>
         </div>
@@ -1213,19 +1213,19 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
 
         <ul>
           <li>
-            <strong>Softmax overflow.</strong> Always subtract the max before exponentiating. If you see NaN in your losses, this is almost certainly why.
+            <strong>Softmax overflow.</strong>{" "}Always subtract the max before exponentiating. If you see NaN in your losses, this is almost certainly why.
           </li>
           <li>
-            <strong>Cross-entropy + log(0).</strong> If a predicted probability is 0 and its true label is 1, you get <code>log(0) = −∞</code>. Clamp probabilities to <code>[1e−12, 1 − 1e−12]</code> before taking the log.
+            <strong>Cross-entropy + log(0).</strong>{" "}If a predicted probability is 0 and its true label is 1, you get <code>log(0) = −∞</code>. Clamp probabilities to <code>[1e−12, 1 − 1e−12]</code> before taking the log.
           </li>
           <li>
-            <strong>Label encoding.</strong> Convert integer labels (0–9) to one-hot vectors (length 10, single 1) for cross-entropy. Keep the integer around too, for evaluating accuracy.
+            <strong>Label encoding.</strong>{" "}Convert integer labels (0–9) to one-hot vectors (length 10, single 1) for cross-entropy. Keep the integer around too, for evaluating accuracy.
           </li>
           <li>
-            <strong>Shuffling.</strong> Shuffle the training indices every epoch. If you don&apos;t, you&apos;ll see a weird zigzag in loss as the model oscillates between over-fitting to one class and the next.
+            <strong>Shuffling.</strong>{" "}Shuffle the training indices every epoch. If you don&apos;t, you&apos;ll see a weird zigzag in loss as the model oscillates between over-fitting to one class and the next.
           </li>
           <li>
-            <strong>Numerical check.</strong> Before trusting your backprop, do a <em>gradient check</em>: compute <code>∂L/∂w</code> numerically as <code>(L(w+ε) − L(w−ε)) / (2ε)</code> with ε = 1e−5, and compare to your analytical gradient. They should match to 5+ decimal places. If not, your backprop is wrong somewhere.
+            <strong>Numerical check.</strong>{" "}Before trusting your backprop, do a <em>gradient check</em>: compute <code>∂L/∂w</code> numerically as <code>(L(w+ε) − L(w−ε)) / (2ε)</code> with ε = 1e−5, and compare to your analytical gradient. They should match to 5+ decimal places. If not, your backprop is wrong somewhere.
           </li>
         </ul>
 
@@ -1234,7 +1234,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
             The project is a checklist, not a sprint. Target these milestones in order:
           </p>
           <ol className="list-decimal ml-5 m-0 space-y-1 text-sm">
-            <li><strong>Forward pass runs</strong> — random weights, get <em>some</em> output per image. No training yet.</li>
+            <li><strong>Forward pass runs</strong> — random weights, get <em>some</em>{" "}output per image. No training yet.</li>
             <li><strong>Gradient check passes</strong> — your backprop matches numerical gradients on one example.</li>
             <li><strong>Overfits a single batch</strong> — train on the same 32 examples over and over; loss should hit near-zero. If not, your code is broken.</li>
             <li><strong>Trains on the full set</strong> — loss drops each epoch. Test accuracy &gt; 85% after 5 epochs.</li>
@@ -1247,7 +1247,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
 
         <Callout variant="warn" title="Only mark this checkpoint done when the model actually runs">
           <p className="m-0">
-            You can claim the XP by clicking the button below — nobody&apos;s watching — but Modules 5 and onward <em>assume</em> you&apos;ve built this.
+            You can claim the XP by clicking the button below — nobody&apos;s watching — but Modules 5 and onward <em>assume</em>{" "}you&apos;ve built this.
             The feel for gradient check passing, the satisfaction of misclassified digits that actually look ambiguous, the surprise when your 90%-accurate model confidently mislabels a clear 4 as a 9 — those are worth more than any XP number.
           </p>
         </Callout>

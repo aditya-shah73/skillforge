@@ -85,10 +85,10 @@ export default function Page() {
 
         <h3>2. The device is constrained</h3>
         <p>
-          A modern phone advertises &quot;3 GHz, 8 cores&quot; and that sounds like a lot. It isn&apos;t — for JavaScript. JS is single-threaded for the work that matters (parsing, layout, hydration, your component tree), thermal throttling kicks in within seconds of sustained load, and the V8 (or JSC) engine takes time per kilobyte to <em>parse</em> JS before it can run. A median Android in 2024 parses about 1MB of JS per second on the main thread. So your 800KB bundle isn&apos;t just an 8-second download on 3G — it&apos;s an additional ~800ms of parse time blocking the main thread before anything is interactive.
+          A modern phone advertises &quot;3 GHz, 8 cores&quot; and that sounds like a lot. It isn&apos;t — for JavaScript. JS is single-threaded for the work that matters (parsing, layout, hydration, your component tree), thermal throttling kicks in within seconds of sustained load, and the V8 (or JSC) engine takes time per kilobyte to <em>parse</em>{" "}JS before it can run. A median Android in 2024 parses about 1MB of JS per second on the main thread. So your 800KB bundle isn&apos;t just an 8-second download on 3G — it&apos;s an additional ~800ms of parse time blocking the main thread before anything is interactive.
         </p>
         <p>
-          The implication: the bottleneck on most apps is not network OR CPU in isolation, it&apos;s the <strong>combination</strong> on the slowest device class you ship to. Optimizing for your dev machine misses the entire problem.
+          The implication: the bottleneck on most apps is not network OR CPU in isolation, it&apos;s the <strong>combination</strong>{" "}on the slowest device class you ship to. Optimizing for your dev machine misses the entire problem.
         </p>
 
         <h3>3. The user notices every 100ms</h3>
@@ -153,7 +153,7 @@ export default function Page() {
           The user sees a blank page until the JS downloads, parses, executes, fetches data, and renders. On a fast connection and machine that&apos;s 500-1000ms. On a slow phone on cellular, that&apos;s 3-6 seconds. <strong>CSR&apos;s problem is the time-to-content for the first visit</strong> — there&apos;s nothing the user can read before the JS lands.
         </p>
         <p>
-          Where CSR <em>is</em> the right answer: apps behind login, where the user has an established session, the content is fully personalized, SEO doesn&apos;t matter, and the per-user dashboard isn&apos;t worth pre-rendering on the server. Internal tools, admin consoles, authenticated dashboards — CSR is fine. The user is willing to wait once for the &quot;app&quot; to load and then operate inside it; they&apos;re not arriving from Google search expecting an article.
+          Where CSR <em>is</em>{" "}the right answer: apps behind login, where the user has an established session, the content is fully personalized, SEO doesn&apos;t matter, and the per-user dashboard isn&apos;t worth pre-rendering on the server. Internal tools, admin consoles, authenticated dashboards — CSR is fine. The user is willing to wait once for the &quot;app&quot; to load and then operate inside it; they&apos;re not arriving from Google search expecting an article.
         </p>
 
         <h3>SSR — Server-Side Rendering</h3>
@@ -179,7 +179,7 @@ export default function Page() {
 </html>`}</CodeBlock>
 
         <p>
-          Now the first paint shows real content within a single round trip. The cost: every request hits your server, your server runs React for each one, and your server has to connect to whatever data sources the page needs before it can respond. SSR adds <strong>~100-300ms of server time</strong> per request compared to CSR, but it saves <strong>1-3 seconds of perceived load</strong> on slow phones because the user sees content before the JS bundle parses.
+          Now the first paint shows real content within a single round trip. The cost: every request hits your server, your server runs React for each one, and your server has to connect to whatever data sources the page needs before it can respond. SSR adds <strong>~100-300ms of server time</strong>{" "}per request compared to CSR, but it saves <strong>1-3 seconds of perceived load</strong>{" "}on slow phones because the user sees content before the JS bundle parses.
         </p>
         <p>
           SSR is the right answer when content is personalized AND SEO matters AND first-paint speed matters. Search results pages, personalized feeds with public URLs, e-commerce product pages with user-specific pricing. Anywhere a search engine or social-media unfurler needs to read the page, but the content varies per user.
@@ -198,7 +198,7 @@ export default function Page() {
 
         <h3>ISR — Incremental Static Regeneration</h3>
         <p>
-          Vercel&apos;s contribution to the menu, now generic across most modern frameworks. ISR is SSG with a revalidation interval: pages are statically generated, served from the CDN, but <strong>regenerated on demand</strong> when stale. The flow:
+          Vercel&apos;s contribution to the menu, now generic across most modern frameworks. ISR is SSG with a revalidation interval: pages are statically generated, served from the CDN, but <strong>regenerated on demand</strong>{" "}when stale. The flow:
         </p>
 
         <CodeBlock lang="plain" caption="The ISR request lifecycle">{`Request 1 (after deploy):       CDN miss → render at server → cache → respond
@@ -251,7 +251,7 @@ On-demand revalidate (webhook): CDN cache invalidated, next request regenerates`
           <li>&quot;Hydrate&quot; — match the in-memory tree against the existing DOM and attach event listeners</li>
         </ol>
         <p>
-          This is hydration, and it&apos;s the new bottleneck on SSR&apos;d apps. The user can <em>see</em> content fast, but they can&apos;t <em>tap</em> it until the bundle hydrates. On a slow phone, you can stare at a fully-rendered page for 4 seconds, tap a button, and have nothing happen. That gap is the worst kind of broken — the page looks ready and isn&apos;t.
+          This is hydration, and it&apos;s the new bottleneck on SSR&apos;d apps. The user can <em>see</em>{" "}content fast, but they can&apos;t <em>tap</em>{" "}it until the bundle hydrates. On a slow phone, you can stare at a fully-rendered page for 4 seconds, tap a button, and have nothing happen. That gap is the worst kind of broken — the page looks ready and isn&apos;t.
         </p>
         <p>
           Hydration cost scales with the size of the React tree, not the size of the screen. A page with 500 components hydrates slower than a page with 50, even if the visible UI is identical. This is why &quot;just SSR everything&quot; isn&apos;t the answer — the bundle and the hydration cost still come for you.
@@ -445,7 +445,7 @@ observer.observe({ type: "largest-contentful-paint", buffered: true });`}</CodeB
           <li><strong>Lighthouse</strong> (in Chrome DevTools, or CLI) — first stop for a single-page audit. Lab data, reproducible, great for &quot;why did my LCP regress this week?&quot;</li>
           <li><strong><code>web-vitals</code> library + a RUM backend</strong> — what you actually ship to production. Field data from real users on real connections. Datadog RUM, Sentry, or a homegrown endpoint all work.</li>
           <li><strong>Chrome User Experience Report (CrUX)</strong> — Google&apos;s public dataset of field vitals for every popular site. PageSpeed Insights surfaces it. Useful for benchmarking against competitors.</li>
-          <li><strong>Performance tab in Chrome DevTools</strong> — when you need to see <em>why</em> a long task happened. Flamechart of every JS function call, every layout, every paint.</li>
+          <li><strong>Performance tab in Chrome DevTools</strong> — when you need to see <em>why</em>{" "}a long task happened. Flamechart of every JS function call, every layout, every paint.</li>
         </ul>
 
         <Callout variant="warn" title="Lab data lies, sometimes">
@@ -493,7 +493,7 @@ observer.observe({ type: "largest-contentful-paint", buffered: true });`}</CodeB
       <Checkpoint moduleSlug="frontend-fundamentals" id="bundles" title="Part 4 · Bundle size — the budget you don't see" xp={20}>
         <h2>The 170KB number nobody told you about</h2>
         <p>
-          Here&apos;s the budget. On a 3G connection (1.6 Mbps, ~150ms RTT), with a 3-second target for first interaction, accounting for TCP slow start and the time to <em>parse</em> the JS on a median Android, you have <strong>about 170KB of compressed JS</strong> on the critical path. Above that, the math doesn&apos;t close. You&apos;ll be late no matter what else you do.
+          Here&apos;s the budget. On a 3G connection (1.6 Mbps, ~150ms RTT), with a 3-second target for first interaction, accounting for TCP slow start and the time to <em>parse</em>{" "}the JS on a median Android, you have <strong>about 170KB of compressed JS</strong>{" "}on the critical path. Above that, the math doesn&apos;t close. You&apos;ll be late no matter what else you do.
         </p>
         <p>
           Most apps blow it. The default Create React App template was over 200KB before you wrote any code. A typical mid-stage React app with the usual dependencies (a UI library, a date library, a charting library, a state library, a router) lands at 800KB-1.5MB compressed before you ship a single feature. That&apos;s 5-10x over budget, and the symptoms are the LCP and INP problems from the last part — they&apos;re not separate problems, they&apos;re downstream of bundle size.
@@ -611,10 +611,10 @@ const HeavyChart = dynamic(() => import("@/components/HeavyChart"), {
 
         <h3>The senior workflow on a slow app</h3>
         <ol>
-          <li><strong>Measure first.</strong> Bundle analyzer on a production build. Don&apos;t optimize without seeing the actual bytes.</li>
-          <li><strong>Spot the easy wins.</strong> moment.js, lodash without scoped imports, polyfills for browsers you don&apos;t target. These are 50KB+ each, no architecture changes needed.</li>
-          <li><strong>Find duplicates.</strong> Two versions of React because of a transitive dependency. Two date libraries because two teams disagreed. <code>npm dedupe</code>, then if it persists, the bundle analyzer will show two entries with similar names.</li>
-          <li><strong>Code-split the heavy components on conditional paths.</strong> Modals, settings pages, anything behind a tab.</li>
+          <li><strong>Measure first.</strong>{" "}Bundle analyzer on a production build. Don&apos;t optimize without seeing the actual bytes.</li>
+          <li><strong>Spot the easy wins.</strong>{" "}moment.js, lodash without scoped imports, polyfills for browsers you don&apos;t target. These are 50KB+ each, no architecture changes needed.</li>
+          <li><strong>Find duplicates.</strong>{" "}Two versions of React because of a transitive dependency. Two date libraries because two teams disagreed. <code>npm dedupe</code>, then if it persists, the bundle analyzer will show two entries with similar names.</li>
+          <li><strong>Code-split the heavy components on conditional paths.</strong>{" "}Modals, settings pages, anything behind a tab.</li>
           <li><strong>Set a budget in CI.</strong> <code>bundlesize</code> or framework-native size checks. If a PR pushes the shared chunk over 150KB, the build fails. The point isn&apos;t to be strict — it&apos;s to make growth visible before it ships.</li>
         </ol>
 
@@ -665,9 +665,9 @@ const HeavyChart = dynamic(() => import("@/components/HeavyChart"), {
         <ul>
           <li>It can be <strong>stale</strong> — someone else can change it without you knowing.</li>
           <li>It needs to be <strong>fetched</strong>, with loading and error states.</li>
-          <li>It can be <strong>refetched</strong> on focus, on reconnect, on a polling interval, or on a mutation.</li>
+          <li>It can be <strong>refetched</strong>{" "}on focus, on reconnect, on a polling interval, or on a mutation.</li>
           <li>It supports <strong>optimistic updates</strong> — render the predicted result, fall back if the server rejects.</li>
-          <li>It needs <strong>retry</strong> on transient failure (network blip, 503).</li>
+          <li>It needs <strong>retry</strong>{" "}on transient failure (network blip, 503).</li>
           <li>Multiple components viewing the same data should <strong>share one cache entry</strong>, not refetch independently.</li>
         </ul>
 
@@ -903,8 +903,8 @@ function useDeletePost() {
           Two themes from the answers, both worth internalizing:
         </p>
         <ol>
-          <li><strong>Personalization is the watershed.</strong> Once a page varies per user, SSG and ISR are out — you need either SSR or CSR. Beyond that, SEO and freshness pick between them.</li>
-          <li><strong>The default for non-personalized public content is ISR, not SSG.</strong> ISR is a strict superset of SSG&apos;s capabilities (it falls back to SSG behavior with infinite TTL) and removes the &quot;rebuild the world to fix a typo&quot; failure mode. Most modern frameworks make ISR the default; that&apos;s why.</li>
+          <li><strong>Personalization is the watershed.</strong>{" "}Once a page varies per user, SSG and ISR are out — you need either SSR or CSR. Beyond that, SEO and freshness pick between them.</li>
+          <li><strong>The default for non-personalized public content is ISR, not SSG.</strong>{" "}ISR is a strict superset of SSG&apos;s capabilities (it falls back to SSG behavior with infinite TTL) and removes the &quot;rebuild the world to fix a typo&quot; failure mode. Most modern frameworks make ISR the default; that&apos;s why.</li>
         </ol>
       </section>
 

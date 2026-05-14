@@ -29,19 +29,19 @@ export default function SystemDesignHome() {
         <div className="border-l-2 border-cyan-500 dark:border-cyan-400 pl-5">
           <h3 className="text-lg font-bold tracking-tight mb-3">Prerequisites</h3>
           <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300 m-0 p-0 list-none">
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfortable shipping a <strong>Java/Spring service</strong> end-to-end</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfortable shipping a <strong>Java/Spring service</strong>{" "}end-to-end</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You&apos;ve touched a database, a queue, and an HTTP API <em>in production</em></span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Curiosity for the <strong>why</strong> behind architectural choices, not just the what</span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>sketch designs on paper</strong> before reading the answer</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Curiosity for the <strong>why</strong>{" "}behind architectural choices, not just the what</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>sketch designs on paper</strong>{" "}before reading the answer</span></li>
           </ul>
         </div>
         <div className="border-l-2 border-blue-500 dark:border-blue-400 pl-5">
           <h3 className="text-lg font-bold tracking-tight mb-3">What you&apos;ll get</h3>
           <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300 m-0 p-0 list-none">
-            <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>Mental models for <em>every</em> distributed-systems tradeoff</span></li>
+            <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>Mental models for <em>every</em>{" "}distributed-systems tradeoff</span></li>
             <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>Production-grade Java/Spring labs (Kafka, Redis, Resilience4j, OpenTelemetry)</span></li>
             <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>End-to-end design walkthroughs of 7 classic systems</span></li>
-            <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>Interview-ready frameworks <em>and</em> production-ready instincts</span></li>
+            <li className="flex gap-2"><span className="text-cyan-500 dark:text-cyan-400 font-bold select-none">✓</span><span>Interview-ready frameworks <em>and</em>{" "}production-ready instincts</span></li>
           </ul>
         </div>
       </section>

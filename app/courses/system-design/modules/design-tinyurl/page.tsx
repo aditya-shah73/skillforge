@@ -57,7 +57,7 @@ export default function Page() {
           <span className="text-xs uppercase tracking-wider font-bold text-fuchsia-700 dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="text-base leading-relaxed m-0">
-          The interviewer says: <em>&quot;Design a URL shortener. Like TinyURL or bit.ly.&quot;</em> You smile, because this is the canonical warm-up. It looks easy and it&apos;s a trap. The naive version is two endpoints and a hash table — which the interviewer will absolutely follow up with: <em>&quot;OK, now serve 100 million links a day with sub-100ms p99.&quot;</em> The whole point of TinyURL as an interview is that the surface area is small enough for you to actually finish in 45 minutes — but only if you do the math, pick a sane key strategy, and notice that this is a 100:1 read-heavy workload.
+          The interviewer says: <em>&quot;Design a URL shortener. Like TinyURL or bit.ly.&quot;</em>{" "}You smile, because this is the canonical warm-up. It looks easy and it&apos;s a trap. The naive version is two endpoints and a hash table — which the interviewer will absolutely follow up with: <em>&quot;OK, now serve 100 million links a day with sub-100ms p99.&quot;</em>{" "}The whole point of TinyURL as an interview is that the surface area is small enough for you to actually finish in 45 minutes — but only if you do the math, pick a sane key strategy, and notice that this is a 100:1 read-heavy workload.
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
           We&apos;ll walk this with the framework from Module 28: clarify, estimate, API + data, high-level, deep-dives. By the end you should be able to give this design end-to-end in 35 minutes and have time to discuss two extensions.
@@ -82,10 +82,10 @@ export default function Page() {
 
         <h3>Non-functional requirements</h3>
         <ul>
-          <li><strong>Read-heavy.</strong> Shorten once, click many times. I&apos;ll assume 100:1 reads to writes — that one number drives everything.</li>
-          <li><strong>Low latency on redirect.</strong> p99 &lt; 100ms is table stakes; users abandon links that feel slow.</li>
-          <li><strong>High availability on read.</strong> If the redirect breaks, every embedded link breaks. Four nines minimum.</li>
-          <li><strong>Eventually consistent is fine.</strong> A 5-second propagation delay on a new code is acceptable.</li>
+          <li><strong>Read-heavy.</strong>{" "}Shorten once, click many times. I&apos;ll assume 100:1 reads to writes — that one number drives everything.</li>
+          <li><strong>Low latency on redirect.</strong>{" "}p99 &lt; 100ms is table stakes; users abandon links that feel slow.</li>
+          <li><strong>High availability on read.</strong>{" "}If the redirect breaks, every embedded link breaks. Four nines minimum.</li>
+          <li><strong>Eventually consistent is fine.</strong>{" "}A 5-second propagation delay on a new code is acceptable.</li>
           <li><strong>Codes must be unique and unguessable</strong> (so you can&apos;t enumerate them and harvest links).</li>
         </ul>
 
@@ -251,8 +251,8 @@ Sharding:
           The flow:
         </p>
         <ol>
-          <li><strong>Write path:</strong> Client POSTs long URL → API service → reserves a code from the Key Generation Service (KGS) or generates one inline → writes to DB → populates cache → returns the short URL. ~120 QPS peak; one box handles it.</li>
-          <li><strong>Read path:</strong> Client GETs <code>/aZ3kP9</code> → API service → check Redis cache (LRU, ~10GB hot working set) → on miss, read from DB and warm the cache → return 302. ~12k QPS peak; cache absorbs &gt;95% of it.</li>
+          <li><strong>Write path:</strong>{" "}Client POSTs long URL → API service → reserves a code from the Key Generation Service (KGS) or generates one inline → writes to DB → populates cache → returns the short URL. ~120 QPS peak; one box handles it.</li>
+          <li><strong>Read path:</strong>{" "}Client GETs <code>/aZ3kP9</code> → API service → check Redis cache (LRU, ~10GB hot working set) → on miss, read from DB and warm the cache → return 302. ~12k QPS peak; cache absorbs &gt;95% of it.</li>
         </ol>
 
         <Callout variant="insight" title="Why the cache hit rate is so high">
@@ -301,9 +301,9 @@ Sharding:
           When you reach Phase 5 of the framework, your move is to name the 2-3 hard subproblems out loud and ask the interviewer which to dig into. For TinyURL the canonical hard parts are:
         </p>
         <ol>
-          <li><strong>Key generation.</strong> How do we mint codes that are unique, short, and unguessable, at the rate we need, without coordination overhead?</li>
-          <li><strong>Read path scale.</strong> Cache topology, DB read replicas, and what happens during a cache cold-start.</li>
-          <li><strong>Custom aliases.</strong> The collision and reservation problem, plus the abuse vector.</li>
+          <li><strong>Key generation.</strong>{" "}How do we mint codes that are unique, short, and unguessable, at the rate we need, without coordination overhead?</li>
+          <li><strong>Read path scale.</strong>{" "}Cache topology, DB read replicas, and what happens during a cache cold-start.</li>
+          <li><strong>Custom aliases.</strong>{" "}The collision and reservation problem, plus the abuse vector.</li>
         </ol>
         <p>
           We&apos;ll go deep on key generation (the most interesting one) and cover the others tighter.
@@ -330,7 +330,7 @@ Sharding:
         </p>
 
         <p>
-          <strong>My pick: KGS.</strong> It solves both the guessability problem (random codes) and the coordination problem (batches amortize the round-trip). The complexity cost is a single small service — and at 120 writes/sec a tiny KGS easily keeps up. Hashing is out because we want to support multiple short links to the same URL. Auto-increment is out because of guessability.
+          <strong>My pick: KGS.</strong>{" "}It solves both the guessability problem (random codes) and the coordination problem (batches amortize the round-trip). The complexity cost is a single small service — and at 120 writes/sec a tiny KGS easily keeps up. Hashing is out because we want to support multiple short links to the same URL. Auto-increment is out because of guessability.
         </p>
 
         <CodeBlock lang="java" caption="KGS sketch — request a batch of pre-minted keys">{`@Service
@@ -370,8 +370,8 @@ public class KeyGenerationService {
         </p>
         <ul>
           <li><strong>What:</strong> <code>code → long_url</code>. That&apos;s it. ~100 bytes per entry.</li>
-          <li><strong>Eviction:</strong> LRU. We size the cache for the working set — say 10M hot codes × 100B = 1GB. Comfortable for one Redis node; a small cluster handles 10x.</li>
-          <li><strong>Cold start:</strong> if the cache is wiped (deploy, failure), every read goes to the DB. That&apos;s 12k DB QPS for a few minutes — survivable on a sharded Postgres or DynamoDB, painful on a single small node. Mitigation: <strong>warm the cache from the DB on boot</strong> by reading the hot codes (e.g. last week&apos;s most-accessed) before accepting traffic.</li>
+          <li><strong>Eviction:</strong>{" "}LRU. We size the cache for the working set — say 10M hot codes × 100B = 1GB. Comfortable for one Redis node; a small cluster handles 10x.</li>
+          <li><strong>Cold start:</strong>{" "}if the cache is wiped (deploy, failure), every read goes to the DB. That&apos;s 12k DB QPS for a few minutes — survivable on a sharded Postgres or DynamoDB, painful on a single small node. Mitigation: <strong>warm the cache from the DB on boot</strong>{" "}by reading the hot codes (e.g. last week&apos;s most-accessed) before accepting traffic.</li>
         </ul>
 
         <h2>Deep-dive: custom aliases</h2>
@@ -427,17 +427,17 @@ public class KeyGenerationService {
           A clean wrap names what you punted on, what you&apos;re worried about, and what you&apos;d monitor. For TinyURL:
         </p>
         <ul>
-          <li><strong>Click analytics.</strong> Probably an async pipeline: API writes a click event to Kafka, a stream processor aggregates per-code into a hot counter (Redis) and a long-term store (e.g. ClickHouse). I didn&apos;t design it but I&apos;d build it as a separate service so the redirect path stays fast.</li>
-          <li><strong>Multi-region.</strong> Reads can be regionally cached (Redis per region, eventually-consistent DB replication). Writes can be either single-region with global replication, or active-active with code-prefix-based routing. The latter is more complex than this design needs at our scale.</li>
-          <li><strong>Abuse and content moderation.</strong> Scan submitted long URLs against malware/phishing feeds asynchronously. If a URL is flagged after creation, set the code to &quot;blocked&quot; and serve a warning page on redirect. Mention but don&apos;t design.</li>
-          <li><strong>Expiry sweeper.</strong> A background worker that scans <code>WHERE expires_at &lt; now()</code> and either soft-deletes or moves rows to cold storage. Uses the secondary index from the schema.</li>
+          <li><strong>Click analytics.</strong>{" "}Probably an async pipeline: API writes a click event to Kafka, a stream processor aggregates per-code into a hot counter (Redis) and a long-term store (e.g. ClickHouse). I didn&apos;t design it but I&apos;d build it as a separate service so the redirect path stays fast.</li>
+          <li><strong>Multi-region.</strong>{" "}Reads can be regionally cached (Redis per region, eventually-consistent DB replication). Writes can be either single-region with global replication, or active-active with code-prefix-based routing. The latter is more complex than this design needs at our scale.</li>
+          <li><strong>Abuse and content moderation.</strong>{" "}Scan submitted long URLs against malware/phishing feeds asynchronously. If a URL is flagged after creation, set the code to &quot;blocked&quot; and serve a warning page on redirect. Mention but don&apos;t design.</li>
+          <li><strong>Expiry sweeper.</strong>{" "}A background worker that scans <code>WHERE expires_at &lt; now()</code> and either soft-deletes or moves rows to cold storage. Uses the secondary index from the schema.</li>
         </ul>
 
         <h3>Failure modes I&apos;m worried about</h3>
         <ul>
-          <li><strong>KGS down:</strong> mitigated by per-node local batches.</li>
-          <li><strong>Redis down:</strong> read path falls back to DB, which absorbs 12k QPS only if it&apos;s sharded or replicated. Worth specifying the DB topology can handle it.</li>
-          <li><strong>Hot-link DDoS:</strong> a single viral code might attract 100k QPS. Cache absorbs it, but the network layer needs a per-code rate limiter to prevent the long URL&apos;s origin from getting hammered.</li>
+          <li><strong>KGS down:</strong>{" "}mitigated by per-node local batches.</li>
+          <li><strong>Redis down:</strong>{" "}read path falls back to DB, which absorbs 12k QPS only if it&apos;s sharded or replicated. Worth specifying the DB topology can handle it.</li>
+          <li><strong>Hot-link DDoS:</strong>{" "}a single viral code might attract 100k QPS. Cache absorbs it, but the network layer needs a per-code rate limiter to prevent the long URL&apos;s origin from getting hammered.</li>
         </ul>
 
         <h3>What I&apos;d monitor</h3>
@@ -450,7 +450,7 @@ public class KeyGenerationService {
         </ul>
 
         <Callout variant="spring" title="The senior 'I would also' moves">
-          When you propose a choice, mention the alternative and why you&apos;re not picking it. <em>&quot;I&apos;d use Postgres for the canonical store; I would also consider DynamoDB for managed sharding, but the team&apos;s ops familiarity with Postgres outweighs the scaling ceiling at this size.&quot;</em> Three of these in the interview signal depth without spending time. The interviewer can pull the thread on any of them.
+          When you propose a choice, mention the alternative and why you&apos;re not picking it. <em>&quot;I&apos;d use Postgres for the canonical store; I would also consider DynamoDB for managed sharding, but the team&apos;s ops familiarity with Postgres outweighs the scaling ceiling at this size.&quot;</em>{" "}Three of these in the interview signal depth without spending time. The interviewer can pull the thread on any of them.
         </Callout>
 
         <p>

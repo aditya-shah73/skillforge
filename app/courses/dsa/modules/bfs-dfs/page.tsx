@@ -127,7 +127,7 @@ flowchart TB
 
         <p>
           Every graph traversal answers some flavor of: <em>starting from this node, what can I reach, in what
-          order, and how far?</em> Two strategies dominate. They use the same template — visit a node, mark it,
+          order, and how far?</em>{" "}Two strategies dominate. They use the same template — visit a node, mark it,
           enqueue its neighbors, repeat — and differ by one thing: the data structure that holds the frontier.
         </p>
 
@@ -145,10 +145,10 @@ DFS (Depth-First Search)     →   stack   →   visit one path to its end first
         <Mermaid chart={bfsLevels} />
 
         <ul>
-          <li><strong>Shortest path on unweighted graphs.</strong> BFS visits nodes in order of distance from the start, so the first time you see the target, you&apos;re looking at the shortest path. This is the single most useful property in interviews.</li>
-          <li><strong>Level-by-level processing.</strong> Anything that thinks in &quot;rings&quot; from a source — rotting oranges spreading, fire spreading, BFS from a tree root level-by-level — is BFS.</li>
-          <li><strong>Bipartite checking.</strong> Two-color the graph in BFS layers; a conflict means non-bipartite.</li>
-          <li><strong>Word ladder, shortest transformations.</strong> Each word is a node, valid one-letter changes are edges, BFS finds the minimum number of changes.</li>
+          <li><strong>Shortest path on unweighted graphs.</strong>{" "}BFS visits nodes in order of distance from the start, so the first time you see the target, you&apos;re looking at the shortest path. This is the single most useful property in interviews.</li>
+          <li><strong>Level-by-level processing.</strong>{" "}Anything that thinks in &quot;rings&quot; from a source — rotting oranges spreading, fire spreading, BFS from a tree root level-by-level — is BFS.</li>
+          <li><strong>Bipartite checking.</strong>{" "}Two-color the graph in BFS layers; a conflict means non-bipartite.</li>
+          <li><strong>Word ladder, shortest transformations.</strong>{" "}Each word is a node, valid one-letter changes are edges, BFS finds the minimum number of changes.</li>
         </ul>
 
         <h3>What DFS is good at</h3>
@@ -157,10 +157,10 @@ DFS (Depth-First Search)     →   stack   →   visit one path to its end first
 
         <ul>
           <li><strong>Connectivity questions.</strong> &quot;Is everything reachable from here?&quot;, &quot;How many connected components?&quot;, &quot;Number of islands?&quot;. You don&apos;t care about distance, just about visiting everything.</li>
-          <li><strong>Cycle detection.</strong> DFS naturally exposes cycles via &quot;back edges&quot; — an edge to an ancestor on the current path.</li>
-          <li><strong>Topological sort.</strong> Postorder DFS, reversed, gives a valid topo order.</li>
-          <li><strong>Backtracking problems.</strong> Permutations, subsets, N-Queens — all DFS over an implicit graph of partial states. (Phase 6 territory.)</li>
-          <li><strong>Tree problems.</strong> Almost every recursive tree solution from Phase 3 was DFS. The pattern carries over directly.</li>
+          <li><strong>Cycle detection.</strong>{" "}DFS naturally exposes cycles via &quot;back edges&quot; — an edge to an ancestor on the current path.</li>
+          <li><strong>Topological sort.</strong>{" "}Postorder DFS, reversed, gives a valid topo order.</li>
+          <li><strong>Backtracking problems.</strong>{" "}Permutations, subsets, N-Queens — all DFS over an implicit graph of partial states. (Phase 6 territory.)</li>
+          <li><strong>Tree problems.</strong>{" "}Almost every recursive tree solution from Phase 3 was DFS. The pattern carries over directly.</li>
         </ul>
 
         <Callout variant="insight" title="The one-sentence test">
@@ -333,7 +333,7 @@ while (!queue.isEmpty()) {
         <h3>Multi-source BFS</h3>
 
         <p>
-          Sometimes you have many starting points and want the distance from <em>any</em> source to each node. The
+          Sometimes you have many starting points and want the distance from <em>any</em>{" "}source to each node. The
           rotting-oranges problem is the canonical example: every initially-rotten orange is a source; you want how
           long until everything is rotten. The trick is to seed the queue with all sources at once.
         </p>
@@ -394,14 +394,14 @@ void dfs(int u) {
 }`}</CodeBlock>
 
         <p>
-          The <em>pre-order</em> slot fires when you arrive at a node; the <em>post-order</em> slot fires when
+          The <em>pre-order</em>{" "}slot fires when you arrive at a node; the <em>post-order</em>{" "}slot fires when
           you&apos;ve finished all of its descendants. This split powers a lot of DFS algorithms:
         </p>
 
         <ul>
-          <li><strong>Counting connected components:</strong> pre-order increment a counter when you find an unvisited node from the outer loop.</li>
-          <li><strong>Cycle detection (directed):</strong> use three colors — WHITE/GRAY/BLACK — and check for back-edges to GRAY nodes (still on the recursion stack).</li>
-          <li><strong>Topological sort:</strong> push to a list <em>in post-order</em>, then reverse. The post-order moment is &quot;all my dependencies are done.&quot;</li>
+          <li><strong>Counting connected components:</strong>{" "}pre-order increment a counter when you find an unvisited node from the outer loop.</li>
+          <li><strong>Cycle detection (directed):</strong>{" "}use three colors — WHITE/GRAY/BLACK — and check for back-edges to GRAY nodes (still on the recursion stack).</li>
+          <li><strong>Topological sort:</strong>{" "}push to a list <em>in post-order</em>, then reverse. The post-order moment is &quot;all my dependencies are done.&quot;</li>
         </ul>
 
         <h3>Iterative DFS — when recursion would blow the stack</h3>
@@ -421,7 +421,7 @@ void dfs(int u) {
 
         <Callout variant="warn" title="Iterative DFS visit order isn't identical to recursive">
           Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS using a
-          stack visits them in <em>reverse</em> order, because the last one pushed comes off first. If exact order
+          stack visits them in <em>reverse</em>{" "}order, because the last one pushed comes off first. If exact order
           matters (rare in interview problems, common in &quot;reproduce my output&quot; problems), push children in
           reverse order to match recursion.
         </Callout>
@@ -468,7 +468,7 @@ void topo(int u) {
 Collections.reverse(order);    // post-order reversed = topological order`}</CodeBlock>
 
         <p>
-          The reversal is the key insight: in post-order, dependencies are visited <em>before</em> the things that
+          The reversal is the key insight: in post-order, dependencies are visited <em>before</em>{" "}the things that
           depend on them. So the natural post-order is &quot;leaves first&quot; — reverse it to get &quot;roots
           first,&quot; which is the topo order. Phase 4&apos;s next module covers the iterative alternative
           (Kahn&apos;s algorithm), which avoids recursion and reads more directly.
@@ -585,9 +585,9 @@ int[][] DIRS_8 = {
         </p>
 
         <ol>
-          <li><strong>No explicit adjacency structure.</strong> Neighbors are implicit in the grid layout. Once you internalize the deltas pattern, this stops being a stumbling block.</li>
-          <li><strong>The &quot;node&quot; is a coordinate, not an integer.</strong> You either pack it into a single int (<code>r * cols + c</code>) or pass it as <code>int[]</code> in the queue. Both work; coord-pack is faster and avoids per-cell allocations.</li>
-          <li><strong>The traversal often modifies the grid.</strong> Flood fill literally rewrites cells. Number of islands counts components, which is just a side effect of the outer loop. The action is in <em>which cells you visit</em>, not in returning a path.</li>
+          <li><strong>No explicit adjacency structure.</strong>{" "}Neighbors are implicit in the grid layout. Once you internalize the deltas pattern, this stops being a stumbling block.</li>
+          <li><strong>The &quot;node&quot; is a coordinate, not an integer.</strong>{" "}You either pack it into a single int (<code>r * cols + c</code>) or pass it as <code>int[]</code> in the queue. Both work; coord-pack is faster and avoids per-cell allocations.</li>
+          <li><strong>The traversal often modifies the grid.</strong>{" "}Flood fill literally rewrites cells. Number of islands counts components, which is just a side effect of the outer loop. The action is in <em>which cells you visit</em>, not in returning a path.</li>
         </ol>
 
         <p>
@@ -654,7 +654,7 @@ void sink(char[][] grid, int r, int c) {
 
         <p>
           Given a node in an undirected connected graph, return a deep copy. The trick is keeping a map from{" "}
-          <em>original node → cloned node</em> so that when you encounter an already-cloned node, you reuse the clone
+          <em>original node → cloned node</em>{" "}so that when you encounter an already-cloned node, you reuse the clone
           instead of making a new one (which would create infinitely many copies through the cycles).
         </p>
 

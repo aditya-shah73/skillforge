@@ -240,7 +240,7 @@ anthropic-version: 2023-06-01
           Two things to notice. First, the message <code>content</code> is now an array, not a
           string — text-only messages can use a string for convenience, but as soon as you add an
           image, you must use the array form. Second, ordering matters: putting the image
-          <em> before</em> the question is the recommended pattern. The model&apos;s attention
+          <em> before</em>{" "}the question is the recommended pattern. The model&apos;s attention
           tends to ground better that way.
         </p>
 
@@ -424,7 +424,7 @@ public class ImageResizer {
 
         <p>
           Reading text from an image is easy. Getting the model to spit out a JSON object you can
-          actually <em>use</em> is where the work is. This is the same problem as Module 7&apos;s
+          actually <em>use</em>{" "}is where the work is. This is the same problem as Module 7&apos;s
           structured output — but with images, the failure modes are sneakier.
         </p>
 
@@ -504,7 +504,7 @@ public record Receipt(
         <h3 className="text-xl font-bold mt-8 mb-3">Validation: never trust the extraction</h3>
 
         <p>
-          The schema gives you type safety. It does <em>not</em> give you truth. The model can return
+          The schema gives you type safety. It does <em>not</em>{" "}give you truth. The model can return
           a perfectly-shaped JSON that says the total is $42.00 when the receipt clearly shows
           $43.50. You must validate.
         </p>
@@ -659,7 +659,7 @@ var response = chat.prompt()
 
         <p>
           Multipart upload from the browser is a well-trodden path. The interesting bit is what you
-          do with the file <em>before</em> it touches the model: validate type, resize, scan for
+          do with the file <em>before</em>{" "}it touches the model: validate type, resize, scan for
           malware (in production), and only then call the vision service.
         </p>
 
@@ -828,8 +828,8 @@ export function ReceiptUploader() {
         <p>A two-page app:</p>
 
         <ul className="list-disc pl-6 space-y-1 my-4">
-          <li><strong>Upload page:</strong> drag-and-drop or file picker. Shows a preview, then the spinner, then the parsed receipt.</li>
-          <li><strong>History page:</strong> list of receipts you&apos;ve parsed, total spent per merchant, total per month.</li>
+          <li><strong>Upload page:</strong>{" "}drag-and-drop or file picker. Shows a preview, then the spinner, then the parsed receipt.</li>
+          <li><strong>History page:</strong>{" "}list of receipts you&apos;ve parsed, total spent per merchant, total per month.</li>
         </ul>
 
         <p>
@@ -968,11 +968,11 @@ ORDER BY 1 DESC;`}</CodeBlock>
         <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
 
         <ul className="list-disc pl-6 space-y-1 my-4">
-          <li><strong>Categorize line items.</strong> Add a follow-up call: given the line items, classify each into &quot;food&quot;/&quot;drink&quot;/&quot;tip&quot;/etc. (Single LLM call, structured output, batched.)</li>
-          <li><strong>Currency conversion.</strong> Convert non-USD totals using a public FX API. Store both raw and converted.</li>
-          <li><strong>Duplicate detection.</strong> Beyond the SHA hash — embed a normalized fingerprint (merchant + date + total) and warn if two receipts within 24 hours look identical.</li>
-          <li><strong>Bulk upload.</strong> Drop a folder of 50 receipts. Process in parallel with a bounded concurrency (max 5 at a time so you don&apos;t blow up your rate limit).</li>
-          <li><strong>Export.</strong> CSV or QIF for tax season.</li>
+          <li><strong>Categorize line items.</strong>{" "}Add a follow-up call: given the line items, classify each into &quot;food&quot;/&quot;drink&quot;/&quot;tip&quot;/etc. (Single LLM call, structured output, batched.)</li>
+          <li><strong>Currency conversion.</strong>{" "}Convert non-USD totals using a public FX API. Store both raw and converted.</li>
+          <li><strong>Duplicate detection.</strong>{" "}Beyond the SHA hash — embed a normalized fingerprint (merchant + date + total) and warn if two receipts within 24 hours look identical.</li>
+          <li><strong>Bulk upload.</strong>{" "}Drop a folder of 50 receipts. Process in parallel with a bounded concurrency (max 5 at a time so you don&apos;t blow up your rate limit).</li>
+          <li><strong>Export.</strong>{" "}CSV or QIF for tax season.</li>
         </ul>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Acceptance criteria</h3>

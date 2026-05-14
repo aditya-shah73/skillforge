@@ -95,7 +95,7 @@ flowchart LR
         <h2 id="setup">FIFO: the mirror image of LIFO</h2>
 
         <p>
-          A <strong>queue</strong> is the stack's photographic negative. You add at one end (<em>back</em>) and
+          A <strong>queue</strong>{" "}is the stack's photographic negative. You add at one end (<em>back</em>) and
           remove from the other end (<em>front</em>). The first element added is the first one removed —{" "}
           <strong>FIFO</strong>, first in first out. It's how a real queue at a coffee shop works, and it's why we
           named the data structure after it.
@@ -109,19 +109,19 @@ flowchart LR
         <h3>Where queues actually show up</h3>
         <ul>
           <li>
-            <strong>BFS (breadth-first search).</strong> Level-order traversal of trees and shortest paths in
+            <strong>BFS (breadth-first search).</strong>{" "}Level-order traversal of trees and shortest paths in
             unweighted graphs are queue-shaped.
           </li>
           <li>
-            <strong>Task / job queues.</strong> Workers pull from the front; producers push to the back. The whole
+            <strong>Task / job queues.</strong>{" "}Workers pull from the front; producers push to the back. The whole
             world runs on this — Kafka, SQS, Celery, ExecutorService.
           </li>
           <li>
-            <strong>Sliding-window algorithms.</strong> A monotonic <em>deque</em> (the next thing we'll meet) gives
+            <strong>Sliding-window algorithms.</strong>{" "}A monotonic <em>deque</em> (the next thing we'll meet) gives
             you O(n) maximum-of-window. (LC 239.)
           </li>
           <li>
-            <strong>Buffering and pipelines.</strong> Ring buffers between producer and consumer threads, audio sample
+            <strong>Buffering and pipelines.</strong>{" "}Ring buffers between producer and consumer threads, audio sample
             queues, frame buffers in graphics.
           </li>
         </ul>
@@ -138,7 +138,7 @@ flowchart LR
             </tbody>
           </table>
           <p className="mt-2 mb-0 text-xs">
-            <strong>offer/poll vs add/remove.</strong> The first pair returns false / null on capacity issues; the
+            <strong>offer/poll vs add/remove.</strong>{" "}The first pair returns false / null on capacity issues; the
             second throws. Use offer/poll unless you specifically want exceptions.
           </p>
         </Callout>
@@ -194,11 +194,11 @@ flowchart LR
         </p>
         <ol>
           <li>
-            <strong>Track size explicitly.</strong> Carry a <code>size</code> field. Empty when <code>size == 0</code>,
+            <strong>Track size explicitly.</strong>{" "}Carry a <code>size</code> field. Empty when <code>size == 0</code>,
             full when <code>size == capacity</code>. Costs one int.
           </li>
           <li>
-            <strong>Always leave one slot unused.</strong> Treat full as <code>(tail + 1) % capacity == head</code>.
+            <strong>Always leave one slot unused.</strong>{" "}Treat full as <code>(tail + 1) % capacity == head</code>.
             Costs one slot of capacity. Common in low-level / lock-free implementations because there's no shared
             mutable size variable.
           </li>
@@ -247,9 +247,9 @@ flowchart LR
         </p>
 
         <ul>
-          <li><strong>As a stack:</strong> push/pop on one end. Use <code>push</code>/<code>pop</code> on ArrayDeque.</li>
-          <li><strong>As a queue:</strong> add at one end, remove from the other. Use <code>offer</code>/<code>poll</code>.</li>
-          <li><strong>As a deque:</strong> the full sliding-window superset.</li>
+          <li><strong>As a stack:</strong>{" "}push/pop on one end. Use <code>push</code>/<code>pop</code> on ArrayDeque.</li>
+          <li><strong>As a queue:</strong>{" "}add at one end, remove from the other. Use <code>offer</code>/<code>poll</code>.</li>
+          <li><strong>As a deque:</strong>{" "}the full sliding-window superset.</li>
         </ul>
 
         <Callout variant="insight" title="The single Java rule you need">
@@ -598,7 +598,7 @@ class RecentCounter {
           <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Phase 2 complete · Linear data structures</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Arrays, strings, linked lists, stacks, queues — five modules of building blocks. Phase 3 cracks open the
-            structures that power most of modern software: hash tables (the <em>O(1) lookup</em> miracle) and trees
+            structures that power most of modern software: hash tables (the <em>O(1) lookup</em>{" "}miracle) and trees
             (where binary search, BSTs, and heaps live).
           </p>
           <Link

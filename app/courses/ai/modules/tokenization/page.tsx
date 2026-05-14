@@ -136,13 +136,13 @@ flowchart TD
 
         <Callout variant="warn" title="The tokenizer is welded to the model — you can't swap them">
           <p className="m-0">
-            Each model ships with one specific tokenizer. The vocabulary it learned (which token IDs map to which chunks of text) is baked into <em>both</em> the embedding table at the model&apos;s input and the projection matrix at its output. Swap the tokenizer and every ID points to the wrong row — the model produces gibberish. This is why Anthropic&apos;s tokenizer ≠ OpenAI&apos;s tokenizer ≠ Llama&apos;s tokenizer, and why your token counts will differ between providers for the exact same prompt. When you switch models, you switch tokenizers — they come as a pair.
+            Each model ships with one specific tokenizer. The vocabulary it learned (which token IDs map to which chunks of text) is baked into <em>both</em>{" "}the embedding table at the model&apos;s input and the projection matrix at its output. Swap the tokenizer and every ID points to the wrong row — the model produces gibberish. This is why Anthropic&apos;s tokenizer ≠ OpenAI&apos;s tokenizer ≠ Llama&apos;s tokenizer, and why your token counts will differ between providers for the exact same prompt. When you switch models, you switch tokenizers — they come as a pair.
           </p>
         </Callout>
 
         <Callout variant="info" title='"Tokenizer" vs "encoder" — two different things, often confused'>
           <p className="m-0">
-            <strong>Tokenizer</strong> = text → integer IDs (BPE; what we&apos;re doing in this module). <strong>Encoder</strong> = integer IDs (or one-hot vectors) → dense float vectors (what the embedding layer + transformer stack do, starting in Module 6). The tokenizer is a fixed lookup; the encoder is a trained neural network. People say &quot;encode the text&quot; for both, which is where the confusion comes from. From here on we&apos;ll keep them straight: <em>tokenize</em> first, then <em>embed</em>, then <em>encode</em> through the transformer.
+            <strong>Tokenizer</strong> = text → integer IDs (BPE; what we&apos;re doing in this module). <strong>Encoder</strong> = integer IDs (or one-hot vectors) → dense float vectors (what the embedding layer + transformer stack do, starting in Module 6). The tokenizer is a fixed lookup; the encoder is a trained neural network. People say &quot;encode the text&quot; for both, which is where the confusion comes from. From here on we&apos;ll keep them straight: <em>tokenize</em>{" "}first, then <em>embed</em>, then <em>encode</em>{" "}through the transformer.
           </p>
         </Callout>
 
@@ -177,7 +177,7 @@ flowchart TD
         <h3>Quirk #1: Spaces matter</h3>
         <ul className="list-disc ml-6 space-y-1 my-3">
           <li><code>&quot;hello&quot;</code> → 1 token</li>
-          <li><code>&quot; hello&quot;</code> (with a leading space) → 1 token, but a <strong>different</strong> token</li>
+          <li><code>&quot; hello&quot;</code> (with a leading space) → 1 token, but a <strong>different</strong>{" "}token</li>
         </ul>
         <p>
           The model literally sees <code>hello</code> at the start of a sentence and <code>hello</code> mid-sentence as different tokens. Weird, right? But it&apos;s why the model learned to capitalize the first word.
@@ -363,7 +363,7 @@ public class SafeChatService {
     }
 }`}</CodeBlock>
           <p className="mt-3 text-xs">
-            <strong>Why <code>@Service</code> here?</strong> Standard Spring pattern — stateless, injected, testable. The <code>TokenCountEstimator</code> bean is auto-configured by <code>spring-ai-anthropic</code>, so you just autowire it.
+            <strong>Why <code>@Service</code> here?</strong>{" "}Standard Spring pattern — stateless, injected, testable. The <code>TokenCountEstimator</code> bean is auto-configured by <code>spring-ai-anthropic</code>, so you just autowire it.
           </p>
         </Callout>
 

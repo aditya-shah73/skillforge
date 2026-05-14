@@ -99,7 +99,7 @@ Cross-region (US East ↔ US West)     ~70 ms      slow     ~4ms per 1000km × r
 Cross-continent (US ↔ EU)            ~150 ms     slow     Half a second for a few round trips`}</CodeBlock>
 
         <Callout variant="insight" title="The three jumps that matter">
-          <p className="m-0">99% of design discussions are really about one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong> Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers and you can reason about feasibility in 10 seconds.</p>
+          <p className="m-0">99% of design discussions are really about one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong>{" "}Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers and you can reason about feasibility in 10 seconds.</p>
         </Callout>
 
         <h3 className="text-base font-semibold mt-6 mb-2">Capacity math — the four conversions</h3>
@@ -237,7 +237,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <Callout variant="warn" title="The senior reflex">
-          <p className="m-0">When someone says &quot;let&apos;s add Kafka,&quot; ask: <em>which rung is that, and have we exhausted the cheaper rungs?</em> Most slow services I&apos;ve been paged for were one bad query, one undersized pool, or one missing index. The ladder starts at the bottom for a reason. <strong>If your service is at 30% CPU and someone wants to add a queue, the answer is no.</strong></p>
+          <p className="m-0">When someone says &quot;let&apos;s add Kafka,&quot; ask: <em>which rung is that, and have we exhausted the cheaper rungs?</em>{" "}Most slow services I&apos;ve been paged for were one bad query, one undersized pool, or one missing index. The ladder starts at the bottom for a reason. <strong>If your service is at 30% CPU and someone wants to add a queue, the answer is no.</strong></p>
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -259,10 +259,10 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
-          <li><strong>Rungs 1–3 are reversible.</strong> Bigger box, more boxes, externalize session — all undo cleanly. Do them aggressively.</li>
-          <li><strong>Rung 4 (cache) is the first one-way door.</strong> Once your reads depend on cache hit rate, your invalidation strategy becomes part of your contract. Pick cache-aside until you have a reason not to.</li>
-          <li><strong>Rung 5 (sharding) reshapes your schema.</strong> Joins across shards either die or get pushed to the app layer. Resharding is one of the hardest operations in distributed systems.</li>
-          <li><strong>Rung 6 (async) reshapes the user contract.</strong> Your API stops being &quot;the work is done&quot; and starts being &quot;the work is queued.&quot; That&apos;s a UX change and an at-least-once delivery problem.</li>
+          <li><strong>Rungs 1–3 are reversible.</strong>{" "}Bigger box, more boxes, externalize session — all undo cleanly. Do them aggressively.</li>
+          <li><strong>Rung 4 (cache) is the first one-way door.</strong>{" "}Once your reads depend on cache hit rate, your invalidation strategy becomes part of your contract. Pick cache-aside until you have a reason not to.</li>
+          <li><strong>Rung 5 (sharding) reshapes your schema.</strong>{" "}Joins across shards either die or get pushed to the app layer. Resharding is one of the hardest operations in distributed systems.</li>
+          <li><strong>Rung 6 (async) reshapes the user contract.</strong>{" "}Your API stops being &quot;the work is done&quot; and starts being &quot;the work is queued.&quot; That&apos;s a UX change and an at-least-once delivery problem.</li>
         </ul>
       </section>
 
@@ -276,7 +276,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </p>
 
         <Callout variant="insight" title="The corrected one-liner">
-          <p className="m-0"><strong>CAP:</strong> during a network partition, a distributed system must give up either linearizability (C) or per-request availability (A). Partition tolerance isn&apos;t a choice — networks fail. <strong>PACELC:</strong> and when there&apos;s no partition, you still have to choose between latency (L) and consistency (C). The &quot;else&quot; clause is where 99% of real design lives, because partitions are rare.</p>
+          <p className="m-0"><strong>CAP:</strong>{" "}during a network partition, a distributed system must give up either linearizability (C) or per-request availability (A). Partition tolerance isn&apos;t a choice — networks fail. <strong>PACELC:</strong>{" "}and when there&apos;s no partition, you still have to choose between latency (L) and consistency (C). The &quot;else&quot; clause is where 99% of real design lives, because partitions are rare.</p>
         </Callout>
 
         <h3 className="text-base font-semibold mt-6 mb-2">Where the popular datastores sit</h3>
@@ -346,7 +346,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <Callout variant="warn" title="The three questions that place any datastore">
-          <p className="m-0">Don&apos;t ask &quot;CP or AP?&quot; — ask three concrete questions: <strong>(1)</strong> What happens to a write during a partition? <strong>(2)</strong> What happens to a read during a partition? <strong>(3)</strong> In normal operation, does a write wait for replicas? Three answers and you&apos;ve placed the system on the matrix.</p>
+          <p className="m-0">Don&apos;t ask &quot;CP or AP?&quot; — ask three concrete questions: <strong>(1)</strong>{" "}What happens to a write during a partition? <strong>(2)</strong>{" "}What happens to a read during a partition? <strong>(3)</strong>{" "}In normal operation, does a write wait for replicas? Three answers and you&apos;ve placed the system on the matrix.</p>
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -394,7 +394,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-emerald-600">Read-your-writes (session)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">If <em>you</em> wrote it, your next read sees it</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">If <em>you</em>{" "}wrote it, your next read sees it</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;I just updated my name and it shows the old one&quot;</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Profile updates, settings pages, anything user-edited</td>
               </tr>
@@ -467,7 +467,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <Callout variant="warn" title="The silent failure">
-          <p className="m-0">When you pick AP/eventual for a workload that needed CP/linearizable, you don&apos;t find out at deploy time. You find out six months later when a duplicate row appears, a customer gets double-charged, or two users get the same username. <strong>Inconsistency bugs are silent until they aren&apos;t.</strong> Pick the weakest model that&apos;s safe — but be honest about &quot;safe.&quot;</p>
+          <p className="m-0">When you pick AP/eventual for a workload that needed CP/linearizable, you don&apos;t find out at deploy time. You find out six months later when a duplicate row appears, a customer gets double-charged, or two users get the same username. <strong>Inconsistency bugs are silent until they aren&apos;t.</strong>{" "}Pick the weakest model that&apos;s safe — but be honest about &quot;safe.&quot;</p>
         </Callout>
       </section>
 
@@ -648,7 +648,7 @@ public ProfileResponse updateName(Long userId, String newName) {
           The numbers, the ladder, the CAP/PACELC matrix, the consistency hierarchy. Every later module — sharding, replication, caching patterns, the case studies — will assume you can do back-of-envelope arithmetic, place a datastore on the PACELC matrix, and name the consistency model a call site needs. That&apos;s the entire Phase 1 toolkit, and it&apos;s the toolkit every senior interviewer expects in the first 10 minutes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 2 — Storage Layer.</strong> SQL vs NoSQL, indexing (B-tree vs LSM), partitioning &amp; sharding, replication strategies, caching patterns, distributed cache deep-dive, search systems. Real datastores, real decision trees, real Java/Spring labs.
+          <strong>Up next: Phase 2 — Storage Layer.</strong>{" "}SQL vs NoSQL, indexing (B-tree vs LSM), partitioning &amp; sharding, replication strategies, caching patterns, distributed cache deep-dive, search systems. Real datastores, real decision trees, real Java/Spring labs.
         </p>
         <Link
           href="/courses/system-design/modules/sql-vs-nosql"

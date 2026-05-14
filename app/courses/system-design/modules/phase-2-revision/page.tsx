@@ -70,7 +70,7 @@ flowchart TB
         </p>
 
         <Callout variant="info" title="What this card covers">
-          Six decisions, in the order you make them on a whiteboard: <strong>(1)</strong> pick the datastore family, <strong>(2)</strong> decide indexing strategy, <strong>(3)</strong> pick a partitioning scheme, <strong>(4)</strong> pick a replication topology, <strong>(5)</strong> pick a caching pattern, <strong>(6)</strong> bolt on search if you need it. Each section is a card you can answer from in 60 seconds.
+          Six decisions, in the order you make them on a whiteboard: <strong>(1)</strong>{" "}pick the datastore family, <strong>(2)</strong>{" "}decide indexing strategy, <strong>(3)</strong>{" "}pick a partitioning scheme, <strong>(4)</strong>{" "}pick a replication topology, <strong>(5)</strong>{" "}pick a caching pattern, <strong>(6)</strong>{" "}bolt on search if you need it. Each section is a card you can answer from in 60 seconds.
         </Callout>
       </section>
 
@@ -247,14 +247,14 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
               <li>Even load distribution by default</li>
               <li>Zero range scans (keys are scrambled)</li>
-              <li>Resharding moves <em>most</em> keys unless you use consistent hashing</li>
+              <li>Resharding moves <em>most</em>{" "}keys unless you use consistent hashing</li>
               <li>Default for KV stores: DynamoDB, Cassandra, Redis Cluster</li>
             </ul>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Range sharding</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>How:</strong> contiguous key ranges per shard.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>How:</strong>{" "}contiguous key ranges per shard.</p>
             <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
               <li>Range scans / time-series queries are cheap</li>
               <li>Hotspots on monotonic keys (timestamps, autoincrement) — all writes hit one shard</li>
@@ -265,7 +265,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-blue-50/40 dark:bg-blue-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300 mb-2">Directory / lookup</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>How:</strong> a service maps key → shard.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>How:</strong>{" "}a service maps key → shard.</p>
             <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
               <li>Most flexible — rebalance one tenant at a time</li>
               <li>Extra hop on every read (cache the directory aggressively)</li>
@@ -276,7 +276,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
         </div>
 
         <Callout variant="insight" title="Consistent hashing in one paragraph">
-          Plain <code>hash(k) % N</code> means changing N reshuffles almost everything. Consistent hashing puts both nodes and keys on a ring; a key goes to the next node clockwise. Adding a node only steals keys from <em>one</em> neighbour. Always pair with <strong>virtual nodes</strong> (100–500 vnodes per physical node) — without them, the ring is uneven and you get hot shards. Skew falls as ~1/√(V·N).
+          Plain <code>hash(k) % N</code> means changing N reshuffles almost everything. Consistent hashing puts both nodes and keys on a ring; a key goes to the next node clockwise. Adding a node only steals keys from <em>one</em>{" "}neighbour. Always pair with <strong>virtual nodes</strong> (100–500 vnodes per physical node) — without them, the ring is uneven and you get hot shards. Skew falls as ~1/√(V·N).
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -356,14 +356,14 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 
         <h3 className="text-base font-semibold mb-2">The R + W &gt; N quorum rule (leaderless)</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
-          With N replicas, if writes require W acks and reads require R acks, then <strong>R + W &gt; N</strong> guarantees at least one overlapping node — i.e. you read the latest write. <code>N=3, W=2, R=2</code> is the canonical setting; tune W up for write durability, R up for read freshness, both down for availability.
+          With N replicas, if writes require W acks and reads require R acks, then <strong>R + W &gt; N</strong>{" "}guarantees at least one overlapping node — i.e. you read the latest write. <code>N=3, W=2, R=2</code> is the canonical setting; tune W up for write durability, R up for read freshness, both down for availability.
         </p>
 
         <h3 className="text-base font-semibold mb-2">Read-your-writes — three strategies</h3>
         <ol className="text-sm text-slate-600 dark:text-slate-400 space-y-1 list-decimal pl-5 mb-3">
-          <li><strong>Sticky session:</strong> route a user&apos;s reads to the same replica for N seconds after a write. Cheapest fix.</li>
-          <li><strong>Read from leader after write:</strong> for X seconds post-write, send that user&apos;s reads to the leader.</li>
-          <li><strong>Causal token:</strong> client receives an LSN/timestamp on write, sends it on subsequent reads; replica blocks until caught up.</li>
+          <li><strong>Sticky session:</strong>{" "}route a user&apos;s reads to the same replica for N seconds after a write. Cheapest fix.</li>
+          <li><strong>Read from leader after write:</strong>{" "}for X seconds post-write, send that user&apos;s reads to the leader.</li>
+          <li><strong>Causal token:</strong>{" "}client receives an LSN/timestamp on write, sends it on subsequent reads; replica blocks until caught up.</li>
         </ol>
 
         <Callout variant="warn" title="The classic outage shape">
@@ -432,10 +432,10 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 
         <h3 className="text-base font-semibold mb-2">TTL, jitter, and the stampede</h3>
         <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2 list-disc pl-5 mb-3">
-          <li><strong>TTL is the laziest correct invalidation.</strong> If staleness for N seconds is acceptable, TTL alone is enough. Most data is.</li>
-          <li><strong>Always add ±10% jitter</strong> to TTLs. Without jitter, every key cached at deploy time expires at the same millisecond → simultaneous miss storm → DB falls over.</li>
-          <li><strong>Single-flight kills thundering herd.</strong> Per-key lock so only one request refills on miss; everyone else waits and gets the populated value. Memcache calls this &quot;dogpile prevention&quot;; Caffeine has <code>loadingCache</code>.</li>
-          <li><strong>Negative caching</strong> for misses (cache &quot;not found&quot; with a short TTL) prevents repeated DB hits for a known-missing key — the classic &quot;keys that don&apos;t exist&quot; attack.</li>
+          <li><strong>TTL is the laziest correct invalidation.</strong>{" "}If staleness for N seconds is acceptable, TTL alone is enough. Most data is.</li>
+          <li><strong>Always add ±10% jitter</strong>{" "}to TTLs. Without jitter, every key cached at deploy time expires at the same millisecond → simultaneous miss storm → DB falls over.</li>
+          <li><strong>Single-flight kills thundering herd.</strong>{" "}Per-key lock so only one request refills on miss; everyone else waits and gets the populated value. Memcache calls this &quot;dogpile prevention&quot;; Caffeine has <code>loadingCache</code>.</li>
+          <li><strong>Negative caching</strong>{" "}for misses (cache &quot;not found&quot; with a short TTL) prevents repeated DB hits for a known-missing key — the classic &quot;keys that don&apos;t exist&quot; attack.</li>
         </ul>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -454,7 +454,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 
         <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2 list-disc pl-5 mb-4">
           <li><strong>Inverted index</strong>: term → posting list of doc IDs. Query = intersect/union posting lists, then score.</li>
-          <li><strong>Tokenization &amp; analysis</strong> is half the battle: lowercase, stemming, stopwords, language-specific analyzers. Wrong analyzer = no recall.</li>
+          <li><strong>Tokenization &amp; analysis</strong>{" "}is half the battle: lowercase, stemming, stopwords, language-specific analyzers. Wrong analyzer = no recall.</li>
           <li><strong>Eventual consistency by default</strong>: refresh interval is 1s in Elasticsearch. Don&apos;t read-your-writes through search.</li>
           <li><strong>Sharding for search</strong>: more shards = parallelism on read but coordinator must merge results. Over-sharding (&gt;100 shards/node) hurts.</li>
           <li><strong>Relevance tuning</strong>: BM25 by default; boost by recency / popularity / business signals. Often a second pass over a candidate set from a cheaper retriever.</li>
@@ -482,7 +482,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Composite index column order</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              The index can only seek on its <em>leftmost prefix</em>. Range columns come <strong>after</strong> equality columns — putting them first turns the index into a glorified sequential scan.
+              The index can only seek on its <em>leftmost prefix</em>. Range columns come <strong>after</strong>{" "}equality columns — putting them first turns the index into a glorified sequential scan.
             </p>
             <CodeBlock lang="plain">{`-- Query: WHERE user_id = ? AND created_at > ? ORDER BY created_at DESC
 
@@ -662,7 +662,7 @@ public List<Order> recentOrders(long userId) {
           Six families, six index types, three partitioning strategies, three replication topologies, four caching patterns, and an inverted-index search tier. That&apos;s the entire storage decision toolkit — and you can now reason about latency, throughput, and consistency for any of them on the spot.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Communication.</strong> APIs, gateways, message queues, event streams, Kafka, distributed transactions. The wire between services.
+          <strong>Up next: Phase 3 — Communication.</strong>{" "}APIs, gateways, message queues, event streams, Kafka, distributed transactions. The wire between services.
         </p>
         <Link
           href="/courses/system-design/modules/api-design"

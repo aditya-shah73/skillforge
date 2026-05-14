@@ -85,7 +85,7 @@ export default function Phase3RevisionModule() {
 
         <div className="mt-5">
           <Callout variant="insight">
-            <strong>What this card covers:</strong> the embedding model marketplace, vector index trade-offs (HNSW vs IVFFlat), the full RAG pipeline as one diagram, chunking strategies with the right knobs, retrieval/re-ranking/context-window budgeting, the Spring AI primitives (<code>VectorStore</code>, <code>EmbeddingModel</code>, <code>QuestionAnswerAdvisor</code>), and four BAD/GOOD pairs for the bugs that actually bite in production.
+            <strong>What this card covers:</strong>{" "}the embedding model marketplace, vector index trade-offs (HNSW vs IVFFlat), the full RAG pipeline as one diagram, chunking strategies with the right knobs, retrieval/re-ranking/context-window budgeting, the Spring AI primitives (<code>VectorStore</code>, <code>EmbeddingModel</code>, <code>QuestionAnswerAdvisor</code>), and four BAD/GOOD pairs for the bugs that actually bite in production.
           </Callout>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function Phase3RevisionModule() {
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">1. Embeddings cheat-sheet</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          An embedding is a <strong>fixed-length vector of floats</strong> that places a piece of text at a coordinate in a learned semantic space. Two texts that mean similar things land near each other; the distance metric is how you measure &quot;near&quot;.
+          An embedding is a <strong>fixed-length vector of floats</strong>{" "}that places a piece of text at a coordinate in a learned semantic space. Two texts that mean similar things land near each other; the distance metric is how you measure &quot;near&quot;.
         </p>
 
         <h3 className="text-base font-semibold mb-2">Pick a model — dimensions vs quality vs cost</h3>
@@ -180,7 +180,7 @@ export default function Phase3RevisionModule() {
         </div>
 
         <Callout variant="insight">
-          <strong>The L2-normalization trick:</strong> OpenAI, Voyage, Cohere, BGE all return L2-normalized vectors (length 1). On normalized vectors, <em>cosine and inner product give the same ranking</em>, but inner product is ~30% faster because there&apos;s no division. Use <code>{`<#>`}</code> over <code>{`<=>`}</code> when you know your vectors are normalized — and remember to <em>negate</em> the result if your code expects &quot;smaller is closer&quot;, since pgvector returns negative inner product.
+          <strong>The L2-normalization trick:</strong>{" "}OpenAI, Voyage, Cohere, BGE all return L2-normalized vectors (length 1). On normalized vectors, <em>cosine and inner product give the same ranking</em>, but inner product is ~30% faster because there&apos;s no division. Use <code>{`<#>`}</code> over <code>{`<=>`}</code> when you know your vectors are normalized — and remember to <em>negate</em>{" "}the result if your code expects &quot;smaller is closer&quot;, since pgvector returns negative inner product.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -286,7 +286,7 @@ ORDER  BY embedding <=> $1::vector
 LIMIT  10;`}</CodeBlock>
 
         <Callout variant="warn">
-          <strong>The metadata-filter gotcha:</strong> a <code>WHERE tenant_id = ?</code> on top of an ANN index can blow up recall — pgvector applies the ANN search first, then filters, so you can lose most of your candidates. Fix: <strong>partial indexes per tenant</strong> if you have few tenants, or use the iterative-scan feature (pgvector 0.8+) to keep scanning until you have enough post-filter results. Always pre-filter on cheap columns; never trust top-K to survive an aggressive WHERE clause.
+          <strong>The metadata-filter gotcha:</strong>{" "}a <code>WHERE tenant_id = ?</code> on top of an ANN index can blow up recall — pgvector applies the ANN search first, then filters, so you can lose most of your candidates. Fix: <strong>partial indexes per tenant</strong>{" "}if you have few tenants, or use the iterative-scan feature (pgvector 0.8+) to keep scanning until you have enough post-filter results. Always pre-filter on cheap columns; never trust top-K to survive an aggressive WHERE clause.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -311,7 +311,7 @@ LIMIT  10;`}</CodeBlock>
           <li><strong>Ingest is offline</strong>: load documents, split into chunks, embed (batched!), write to the vector store with metadata.</li>
           <li><strong>Query is online</strong>: embed the user&apos;s question with the <em>same model</em>, retrieve top-K by similarity, optionally re-rank with a cross-encoder, assemble a grounded prompt, generate.</li>
           <li><strong>Citations close the loop</strong>: every chunk that made it into the prompt should round-trip back to the user as a source link — both for trust and for debugging your retrieval.</li>
-          <li><strong>The two failure modes you should always be debugging:</strong> the right chunk didn&apos;t make it into top-K (retrieval bug — fix chunking, top-K, or the embedding model), or it did and the LLM ignored it (generation bug — fix the prompt template or re-rank harder).</li>
+          <li><strong>The two failure modes you should always be debugging:</strong>{" "}the right chunk didn&apos;t make it into top-K (retrieval bug — fix chunking, top-K, or the embedding model), or it did and the LLM ignored it (generation bug — fix the prompt template or re-rank harder).</li>
         </ul>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -421,7 +421,7 @@ LIMIT  10;`}</CodeBlock>
               <li><strong>K = 1</strong>: fragile. One bad nearest neighbor and the answer is wrong.</li>
               <li><strong>K = 4–10</strong>: the practical range. Diversity + headroom for re-ranking.</li>
               <li><strong>K &gt; 20</strong>: only if you re-rank aggressively or expand into &quot;parent&quot; documents afterward.</li>
-              <li>If you can&apos;t re-rank, prefer the <strong>lower</strong> K and tighter chunks.</li>
+              <li>If you can&apos;t re-rank, prefer the <strong>lower</strong>{" "}K and tighter chunks.</li>
             </ul>
           </div>
 
@@ -549,13 +549,13 @@ public class AnswerService {
 
         <h3 className="text-lg font-semibold mt-8 mb-2">When to use the advisor vs roll your own</h3>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 not-prose">
-          <li><strong>Advisor:</strong> internal tools, chatbots, prototypes — anywhere you don&apos;t need explicit citation control or custom prompt assembly.</li>
-          <li><strong>Hand-rolled (retrieve + prompt yourself):</strong> when you need numbered citations, structured output, a custom rerank step, or hybrid (BM25 + vector) retrieval. Drop to <code>JdbcTemplate</code> for the hybrid query; keep <code>VectorStore</code> for ingest.</li>
-          <li><strong>The 80/20 split:</strong> advisor handles the easy 80%; the hard 20% always wants direct control.</li>
+          <li><strong>Advisor:</strong>{" "}internal tools, chatbots, prototypes — anywhere you don&apos;t need explicit citation control or custom prompt assembly.</li>
+          <li><strong>Hand-rolled (retrieve + prompt yourself):</strong>{" "}when you need numbered citations, structured output, a custom rerank step, or hybrid (BM25 + vector) retrieval. Drop to <code>JdbcTemplate</code> for the hybrid query; keep <code>VectorStore</code> for ingest.</li>
+          <li><strong>The 80/20 split:</strong>{" "}advisor handles the easy 80%; the hard 20% always wants direct control.</li>
         </ul>
 
         <Callout variant="warn">
-          <strong>Same model on both sides.</strong> Whatever <code>EmbeddingModel</code> you embed your corpus with, the <code>VectorStore</code> must use the <em>same one</em> for query embeddings. Mismatched models = vectors in different spaces = retrieval returns garbage. If you change models, you must <strong>re-embed the entire corpus</strong>.
+          <strong>Same model on both sides.</strong>{" "}Whatever <code>EmbeddingModel</code> you embed your corpus with, the <code>VectorStore</code> must use the <em>same one</em>{" "}for query embeddings. Mismatched models = vectors in different spaces = retrieval returns garbage. If you change models, you must <strong>re-embed the entire corpus</strong>.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-6 not-prose">
@@ -619,7 +619,7 @@ List<Document> top = reranker.rerank(q, candidates, 5);  // cohere/bge/voyage`}<
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Re-embedding the corpus on every query</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Embed corpus chunks <strong>once</strong> at ingest, store the vectors, reuse forever. Re-embedding the corpus per query torches your embedding budget and turns p99 latency into seconds.
+              Embed corpus chunks <strong>once</strong>{" "}at ingest, store the vectors, reuse forever. Re-embedding the corpus per query torches your embedding budget and turns p99 latency into seconds.
             </p>
             <CodeBlock lang="java" caption="BAD — embeds all docs on every query">{`public List<Document> search(String q, List<String> allDocs) {
     float[] qVec = model.embed(q);
@@ -717,7 +717,7 @@ public List<Document> search(String q) {
         <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 via-white to-green-50 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30 p-6">
           <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-none pl-0">
             <li>✓ You can pick an embedding model on the cost / dimensions / recall axes without thinking twice — and you know why text-embedding-3-small with matryoshka truncation is the sane default.</li>
-            <li>✓ You reach for <strong>HNSW</strong> by default, know how to tune <code>ef_search</code> at query time, and know which pgvector operator (<code>{`<=>`}</code>, <code>{`<#>`}</code>, <code>{`<->`}</code>) matches your operator class.</li>
+            <li>✓ You reach for <strong>HNSW</strong>{" "}by default, know how to tune <code>ef_search</code> at query time, and know which pgvector operator (<code>{`<=>`}</code>, <code>{`<#>`}</code>, <code>{`<->`}</code>) matches your operator class.</li>
             <li>✓ You can draw the full RAG pipeline on a whiteboard: <strong>load → split → embed → store → embed-query → retrieve → re-rank → assemble → generate</strong>, and explain which stage owns which failure mode.</li>
             <li>✓ You can defend a chunking choice: which strategy, what size, how much overlap, what metadata.</li>
             <li>✓ You know the over-fetch + re-rank pattern (K=30–50, re-rank to 5–8), can fuse vector + BM25 with RRF, and understand lost-in-the-middle ordering.</li>
@@ -739,7 +739,7 @@ public List<Document> search(String q) {
           Embeddings as geometry, HNSW vs IVFFlat as a trade-off, the four chunking strategies, hybrid retrieval, re-ranking, lost-in-the-middle, and the Spring AI primitives. That&apos;s the retrieval stack — every &quot;chat with my docs&quot; product you&apos;ll see is some specialization of what you just consolidated.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Frontend AI Integration.</strong> Streaming SSE into React, optimistic updates, rendering tool calls, and the UX patterns that make AI features feel responsive instead of laggy.
+          <strong>Up next: Phase 4 — Frontend AI Integration.</strong>{" "}Streaming SSE into React, optimistic updates, rendering tool calls, and the UX patterns that make AI features feel responsive instead of laggy.
         </p>
         <Link
           href="/courses/ai/modules/react-streaming"

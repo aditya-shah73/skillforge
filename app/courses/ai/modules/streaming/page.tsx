@@ -73,7 +73,7 @@ sequenceDiagram
         <h2 className="text-2xl font-bold mt-12 mb-4">Part 1 — Why stream at all</h2>
 
         <p>
-          Time-to-first-token vs. time-to-completion. They&apos;re wildly different. With <code>.call()</code> they look identical to the user — both are the same wait. With streaming you collapse <em>perceived</em> latency to the time-to-first-token, while total generation time stays the same.
+          Time-to-first-token vs. time-to-completion. They&apos;re wildly different. With <code>.call()</code> they look identical to the user — both are the same wait. With streaming you collapse <em>perceived</em>{" "}latency to the time-to-first-token, while total generation time stays the same.
         </p>
 
         <CodeBlock lang="plain">{`Reply: 500 tokens, model speed: ~50 tok/s
@@ -82,7 +82,7 @@ sequenceDiagram
 .stream()-> [first word at ~300ms][... continues word-by-word for 10s]`}</CodeBlock>
 
         <p className="mt-4">
-          Users perceive the streamed version as <strong>3-5x faster</strong> in usability studies, even though total generation is unchanged. The cost of <em>not</em> streaming a chat UI is a product that feels broken next to a competitor that does stream.
+          Users perceive the streamed version as <strong>3-5x faster</strong>{" "}in usability studies, even though total generation is unchanged. The cost of <em>not</em>{" "}streaming a chat UI is a product that feels broken next to a competitor that does stream.
         </p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">When NOT to stream</h3>
@@ -247,7 +247,7 @@ String full = chunks.collect(Collectors.joining()).block();`}</CodeBlock>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Returning a Flux from a Spring controller</h3>
         <p>
-          This is where it all clicks. Spring WebFlux and Spring MVC both let you <strong>return a <code>Flux</code> directly</strong> from a controller method, and Spring serializes it as SSE for you:
+          This is where it all clicks. Spring WebFlux and Spring MVC both let you <strong>return a <code>Flux</code> directly</strong>{" "}from a controller method, and Spring serializes it as SSE for you:
         </p>
 
         <CodeBlock lang="java" caption="The whole streaming endpoint, in 12 lines">{`@RestController
@@ -401,7 +401,7 @@ es.onerror = (err) => {
         <h3 className="text-xl font-semibold mt-8 mb-3">Step 1 — Scaffold</h3>
         <Callout variant="info" title="Path A — Browser (start.spring.io)">
           <ol className="list-decimal pl-6 space-y-1 mt-2">
-            <li>Open the <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=story-stream&name=story-stream&description=Streaming%20story%20generator&packageName=com.example.story&dependencies=spring-ai-anthropic,web" target="_blank" rel="noreferrer">pre-filled link</a> (note: this one includes <strong>Spring Web</strong> in addition to Anthropic — we&apos;re running an HTTP server now).</li>
+            <li>Open the <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=story-stream&name=story-stream&description=Streaming%20story%20generator&packageName=com.example.story&dependencies=spring-ai-anthropic,web" target="_blank" rel="noreferrer">pre-filled link</a> (note: this one includes <strong>Spring Web</strong>{" "}in addition to Anthropic — we&apos;re running an HTTP server now).</li>
             <li>Click <strong>GENERATE</strong>, unzip to <code>~/code/story-stream</code>.</li>
           </ol>
         </Callout>
@@ -409,7 +409,7 @@ es.onerror = (err) => {
         <Callout variant="info" title="Path B — IntelliJ Initializr">
           <ol className="list-decimal pl-6 space-y-1 mt-2">
             <li><strong>File → New → Project → Spring Initializr</strong>. Group <code>com.example</code>, Artifact <code>story-stream</code>, Maven, Java 21, Jar.</li>
-            <li>In Dependencies pick <strong>Spring Web</strong> AND <strong>Anthropic (Spring AI)</strong>.</li>
+            <li>In Dependencies pick <strong>Spring Web</strong>{" "}AND <strong>Anthropic (Spring AI)</strong>.</li>
             <li>Finish.</li>
           </ol>
         </Callout>
@@ -542,7 +542,7 @@ data:  time
 
         <Checkpoint moduleSlug="streaming" id="project" title="Ship the streamer" xp={50} manual manualLabel="It streams!">
           <p>
-            Open dev tools → Network tab while it streams. You&apos;ll see the <code>/story/stream</code> request stay <em>pending</em> with bytes accumulating in real time — that&apos;s SSE in action. You now have the foundational pattern for every chat UI in Phase 4.
+            Open dev tools → Network tab while it streams. You&apos;ll see the <code>/story/stream</code> request stay <em>pending</em>{" "}with bytes accumulating in real time — that&apos;s SSE in action. You now have the foundational pattern for every chat UI in Phase 4.
           </p>
         </Checkpoint>
       </section>

@@ -174,7 +174,7 @@ What Dijkstra does:
   combine longer paths with negative edges further out.`}</CodeBlock>
 
         <p>
-          On this tiny example the lazy-deletion version of Dijkstra <em>can</em> stumble into the right answer,
+          On this tiny example the lazy-deletion version of Dijkstra <em>can</em>{" "}stumble into the right answer,
           because C is never finalized before its distance is lowered. But the moment you add another node downstream
           of a finalized vertex, the bug surfaces. The algorithm&apos;s correctness proof leans on a monotonicity
           assumption — adding edges to a confirmed path can only make it longer — which negative weights destroy.
@@ -286,7 +286,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
         <h3>Detecting negative cycles</h3>
 
         <p>
-          After V−1 passes, a correct Bellman-Ford has stabilized. If a V-th pass <em>still</em> improves a distance,
+          After V−1 passes, a correct Bellman-Ford has stabilized. If a V-th pass <em>still</em>{" "}improves a distance,
           that improvement could only come from a path with V or more edges — meaning a node was visited twice — meaning
           a cycle was used — meaning the cycle&apos;s total weight is negative. That&apos;s the entire detection trick.
         </p>
@@ -329,7 +329,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
         <ul>
           <li><strong>Time:</strong> <code>O(V · E)</code>. On a dense graph (E ~ V²), that&apos;s O(V³) — much slower than Dijkstra&apos;s O((V+E) log V).</li>
           <li><strong>Space:</strong> <code>O(V)</code> for the distance array. Edge list is O(E) input.</li>
-          <li><strong>Use when:</strong> negative weights are real, OR you need negative-cycle detection, OR the graph is small enough that O(V·E) is fine and you want the simpler implementation.</li>
+          <li><strong>Use when:</strong>{" "}negative weights are real, OR you need negative-cycle detection, OR the graph is small enough that O(V·E) is fine and you want the simpler implementation.</li>
         </ul>
 
         <ClassifyChallenge
@@ -398,7 +398,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
         <h3>The snapshot trick</h3>
 
         <p>
-          There&apos;s a subtle trap. If during pass i you both <em>read</em> and <em>write</em> the same dist array,
+          There&apos;s a subtle trap. If during pass i you both <em>read</em>{" "}and <em>write</em>{" "}the same dist array,
           a relaxation in this pass can pick up a value that was just written in this pass — meaning your &quot;one
           more hop&quot; effectively becomes &quot;maybe two more.&quot; Within a single pass, you must read from a
           <strong>snapshot of the previous pass&apos;s distances</strong>.
@@ -486,7 +486,7 @@ With snapshot:
         <h2 id="floyd">Floyd-Warshall — all-pairs shortest paths</h2>
 
         <p>
-          Sometimes you need shortest paths between <em>every</em> pair of nodes. You could run Dijkstra V times
+          Sometimes you need shortest paths between <em>every</em>{" "}pair of nodes. You could run Dijkstra V times
           (O(V · (V+E) log V)), but for a small dense graph there&apos;s a stunningly simple alternative:{" "}
           <strong>Floyd-Warshall</strong>, three nested loops, O(V³). For V ≲ 500 it&apos;s usually the right answer,
           and the code fits in ten lines.
@@ -581,7 +581,7 @@ With snapshot:
         <ul>
           <li><strong>Time:</strong> <code>O(V³)</code>. V=500 → 125M ops — about a second in Java. V=1000 → 1B ops — too slow for most online judges.</li>
           <li><strong>Space:</strong> <code>O(V²)</code> for the distance matrix. V=1000 already needs ~4MB; V=10000 needs 400MB and is impractical.</li>
-          <li><strong>Sweet spot:</strong> V ≤ ~500, dense or sparse, weights any sign. The simplicity often beats running V Dijkstras even when Dijkstra is asymptotically faster.</li>
+          <li><strong>Sweet spot:</strong>{" "}V ≤ ~500, dense or sparse, weights any sign. The simplicity often beats running V Dijkstras even when Dijkstra is asymptotically faster.</li>
         </ul>
 
         <Quiz
@@ -634,7 +634,7 @@ With snapshot:
 
         <p>
           The proof rests on the <strong>cut property</strong>: for any cut of the graph (a partition of vertices into
-          two sets), the cheapest edge crossing the cut belongs to <em>some</em> MST. Kruskal&apos;s sorted order picks
+          two sets), the cheapest edge crossing the cut belongs to <em>some</em>{" "}MST. Kruskal&apos;s sorted order picks
           exactly such cheapest-crossing edges every time it accepts: when (u, v) is the first edge in sorted order
           that connects two different components, it&apos;s the cheapest crossing of the cut between those components.
           The cut property guarantees an MST contains it.
@@ -644,7 +644,7 @@ With snapshot:
 
         <p>
           The &quot;are u and v in the same component?&quot; check is exactly the operation that{" "}
-          <strong>Union-Find / Disjoint Set Union (DSU)</strong> exists for. With path compression and union-by-rank,
+          <strong>Union-Find / Disjoint Set Union (DSU)</strong>{" "}exists for. With path compression and union-by-rank,
           each <code>find</code> and <code>union</code> is effectively O(1). If you haven&apos;t internalized DSU,
           Kruskal is a strong second look — the algorithm doesn&apos;t even make sense without it.
         </p>

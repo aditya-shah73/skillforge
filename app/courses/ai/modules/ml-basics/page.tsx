@@ -55,12 +55,12 @@ export default function MLBasicsModule() {
           <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          By the end of this module, for <em>every</em> concept below, you should be able to do three things:
+          By the end of this module, for <em>every</em>{" "}concept below, you should be able to do three things:
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
-          <li><strong>Explain it</strong> out loud in 2 minutes to a friend over coffee.</li>
-          <li><strong>Recognize it</strong> when you see it in real code (Python, Java, whatever).</li>
-          <li><strong>Implement a toy version</strong> of it from scratch in Java.</li>
+          <li><strong>Explain it</strong>{" "}out loud in 2 minutes to a friend over coffee.</li>
+          <li><strong>Recognize it</strong>{" "}when you see it in real code (Python, Java, whatever).</li>
+          <li><strong>Implement a toy version</strong>{" "}of it from scratch in Java.</li>
         </ol>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
           Throughout the module, you&apos;ll see orange &quot;Confidence check&quot; boxes. Use them. If you can&apos;t hit all three bars on a concept, re-read that section — don&apos;t let it slip.
@@ -82,15 +82,15 @@ export default function MLBasicsModule() {
           She can&apos;t write down the rule. There&apos;s no formula in her notebook. But somewhere in her head, she&apos;s absorbed a pattern from thousands of <strong>examples</strong> — size, location, year, condition — and learned to map them onto a number.
         </p>
         <p>
-          <strong>That&apos;s what a machine learning model does.</strong> Except instead of 20 years and a brain, we use a pile of data and some math. The goal is identical: take a bunch of past examples where we know the answer, and end up with something that can give good answers on new, unseen inputs.
+          <strong>That&apos;s what a machine learning model does.</strong>{" "}Except instead of 20 years and a brain, we use a pile of data and some math. The goal is identical: take a bunch of past examples where we know the answer, and end up with something that can give good answers on new, unseen inputs.
         </p>
 
         <Callout variant="insight" title="Programming, inverted">
           <p className="mb-2">
-            <strong>Traditional programming:</strong> you write rules. Computer applies them to inputs to produce outputs.
+            <strong>Traditional programming:</strong>{" "}you write rules. Computer applies them to inputs to produce outputs.
           </p>
           <p className="m-0">
-            <strong>Machine learning:</strong> you provide inputs and outputs. Computer figures out the rules.
+            <strong>Machine learning:</strong>{" "}you provide inputs and outputs. Computer figures out the rules.
           </p>
         </Callout>
 
@@ -136,7 +136,7 @@ export default function MLBasicsModule() {
 
         <Callout variant="info" title="Where do LLMs fit?">
           <p className="m-0">
-            The big secret: LLMs like Claude are trained <em>supervised</em> (next-token prediction on internet text is just a giant classification problem — &quot;given these 2000 tokens, which is the 2001st?&quot;), then fine-tuned with <em>reinforcement</em> learning from human feedback (RLHF) to be helpful. So they touch two of the three flavors. We&apos;ll demystify that in Module 6.
+            The big secret: LLMs like Claude are trained <em>supervised</em> (next-token prediction on internet text is just a giant classification problem — &quot;given these 2000 tokens, which is the 2001st?&quot;), then fine-tuned with <em>reinforcement</em>{" "}learning from human feedback (RLHF) to be helpful. So they touch two of the three flavors. We&apos;ll demystify that in Module 6.
           </p>
         </Callout>
 
@@ -207,7 +207,7 @@ export default function MLBasicsModule() {
           points={[
             {
               takeaway: "Supervised: every training example comes with the correct answer.",
-              detail: <>You feed in <code>(features, label)</code> pairs — 10,000 past house sales <em>plus</em> what they sold for — and the model learns the mapping. Spam filters, price prediction, image classification, and (mostly) LLMs all fit here.</>,
+              detail: <>You feed in <code>(features, label)</code> pairs — 10,000 past house sales <em>plus</em>{" "}what they sold for — and the model learns the mapping. Spam filters, price prediction, image classification, and (mostly) LLMs all fit here.</>,
             },
             {
               takeaway: "Unsupervised: only inputs, no answers — the model finds structure.",
@@ -244,10 +244,10 @@ export default function MLBasicsModule() {
         <h3>Analogy: the thermostat vs the light switch</h3>
 
         <p>
-          A <strong>thermostat</strong> outputs a temperature — some number on a continuous scale. 68.3°F. 71.4°F. 72.0°F. There&apos;s a whole smooth range of valid answers, and answers close to the right one are <em>almost</em> right.
+          A <strong>thermostat</strong>{" "}outputs a temperature — some number on a continuous scale. 68.3°F. 71.4°F. 72.0°F. There&apos;s a whole smooth range of valid answers, and answers close to the right one are <em>almost</em>{" "}right.
         </p>
         <p>
-          A <strong>light switch</strong> outputs one of two states: on or off. There&apos;s nothing &quot;in between.&quot; Either you&apos;re right or you&apos;re wrong — no &quot;close enough.&quot;
+          A <strong>light switch</strong>{" "}outputs one of two states: on or off. There&apos;s nothing &quot;in between.&quot; Either you&apos;re right or you&apos;re wrong — no &quot;close enough.&quot;
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 my-6 not-prose">
@@ -257,7 +257,7 @@ export default function MLBasicsModule() {
               <h4 className="font-bold text-sky-900 dark:text-sky-200 m-0">Regression</h4>
             </div>
             <p className="text-sm text-sky-950 dark:text-sky-100 m-0 mb-2">
-              <strong>Output is a number</strong> on a continuous scale.
+              <strong>Output is a number</strong>{" "}on a continuous scale.
             </p>
             <ul className="text-xs text-sky-900 dark:text-sky-200 list-disc ml-4 space-y-1 m-0">
               <li>House price ($425,000)</li>
@@ -275,7 +275,7 @@ export default function MLBasicsModule() {
               <h4 className="font-bold text-rose-900 dark:text-rose-200 m-0">Classification</h4>
             </div>
             <p className="text-sm text-rose-950 dark:text-rose-100 m-0 mb-2">
-              <strong>Output is a category</strong> from a fixed set.
+              <strong>Output is a category</strong>{" "}from a fixed set.
             </p>
             <ul className="text-xs text-rose-900 dark:text-rose-200 list-disc ml-4 space-y-1 m-0">
               <li>Spam / not spam</li>
@@ -291,7 +291,7 @@ export default function MLBasicsModule() {
 
         <Callout variant="warn" title="The trap: numeric labels that aren't really numbers">
           <p className="mb-2">
-            A <em>priority level</em> of P0, P1, P2, P3 <em>looks</em> numeric, but it&apos;s really four categories. Predicting &quot;P1.4&quot; is nonsense. This is <strong>classification</strong>, not regression — even though the labels are numbers.
+            A <em>priority level</em>{" "}of P0, P1, P2, P3 <em>looks</em>{" "}numeric, but it&apos;s really four categories. Predicting &quot;P1.4&quot; is nonsense. This is <strong>classification</strong>, not regression — even though the labels are numbers.
           </p>
           <p className="m-0">
             Rule of thumb: if &quot;halfway between two labels&quot; makes sense (68.5°F is halfway between 68 and 69) → regression. If it doesn&apos;t (halfway between &quot;spam&quot; and &quot;not-spam&quot;?) → classification.
@@ -363,7 +363,7 @@ export default function MLBasicsModule() {
 
         <Callout variant="info" title="You can sometimes convert between them — carefully">
           <p className="m-0">
-            You <em>could</em> phrase &quot;predict user rating 1–5&quot; as regression (output: a float like 3.7) or classification (output: which of 5 buckets). Both work; they optimize slightly different things. Regression cares about &quot;close to right&quot;; classification cares about &quot;exactly right.&quot; Pick based on what your downstream consumer actually needs.
+            You <em>could</em>{" "}phrase &quot;predict user rating 1–5&quot; as regression (output: a float like 3.7) or classification (output: which of 5 buckets). Both work; they optimize slightly different things. Regression cares about &quot;close to right&quot;; classification cares about &quot;exactly right.&quot; Pick based on what your downstream consumer actually needs.
           </p>
         </Callout>
 
@@ -440,7 +440,7 @@ export default function MLBasicsModule() {
             },
             {
               takeaway: "Probability outputs (0.0–1.0) are usually classification too.",
-              detail: <>A CTR predictor outputs a number in [0, 1], but that number is &quot;P(click)&quot; — a probability over two classes (click / no-click). Loss is cross-entropy, not MSE. The output <em>looks</em> continuous but the target is categorical.</>,
+              detail: <>A CTR predictor outputs a number in [0, 1], but that number is &quot;P(click)&quot; — a probability over two classes (click / no-click). Loss is cross-entropy, not MSE. The output <em>looks</em>{" "}continuous but the target is categorical.</>,
             },
             {
               takeaway: 'Pinning down "regression or classification?" is the first thing you do on any new ML problem.',
@@ -466,9 +466,9 @@ export default function MLBasicsModule() {
 
         <p>You have three piles of practice problems:</p>
         <ul>
-          <li><strong>Training set:</strong> the problems you grind through over and over, with the answer key visible. This is how you learn.</li>
-          <li><strong>Validation set:</strong> mock exams — you don&apos;t peek at answers while solving, you use your score to tune <em>how</em> you&apos;re studying (more flashcards? more sleep?).</li>
-          <li><strong>Test set:</strong> the real exam. You see it once. The grade is your honest performance on unseen questions.</li>
+          <li><strong>Training set:</strong>{" "}the problems you grind through over and over, with the answer key visible. This is how you learn.</li>
+          <li><strong>Validation set:</strong>{" "}mock exams — you don&apos;t peek at answers while solving, you use your score to tune <em>how</em>{" "}you&apos;re studying (more flashcards? more sleep?).</li>
+          <li><strong>Test set:</strong>{" "}the real exam. You see it once. The grade is your honest performance on unseen questions.</li>
         </ul>
         <p>
           If you studied by memorizing the training problems exactly, you&apos;d ace training but bomb the test. That&apos;s <strong>overfitting</strong> — and it&apos;s why we split our data. (Deep-dive on overfitting is in Module 3.)
@@ -505,7 +505,7 @@ export default function MLBasicsModule() {
             </div>
           </AnatomyCard>
           <AnatomyCard n={4} title="Validation set" color="sky">
-            ~10–15%. Used <em>during</em> training to pick hyperparameters (model size, learning rate) without touching the test set.
+            ~10–15%. Used <em>during</em>{" "}training to pick hyperparameters (model size, learning rate) without touching the test set.
             <div className="mt-2 text-xs opacity-80 font-mono">
               (same shape, different rows)
             </div>
@@ -623,7 +623,7 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
             },
             {
               takeaway: "A model is a function with adjustable weights; training is the process of choosing those weights.",
-              detail: <>Before training, weights are random. During training, an algorithm nudges them so the model&apos;s predictions get closer to the real labels. The weights <em>are</em> what a trained model is.</>,
+              detail: <>Before training, weights are random. During training, an algorithm nudges them so the model&apos;s predictions get closer to the real labels. The weights <em>are</em>{" "}what a trained model is.</>,
             },
             {
               takeaway: "Feature engineering — picking and shaping the inputs — often matters more than the model.",
@@ -661,7 +661,7 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
 
         <Callout variant="insight" title="Why bother with something this simple?">
           <p className="m-0">
-            Linear regression is the hydrogen atom of ML. Once you understand it deeply, every more complex model is just a variation: logistic regression adds a sigmoid, neural nets stack many of these with non-linearities in between, transformers are fancy arrangements of them with attention. The update rule in this tiny model is the <em>same</em> update rule used in GPT-4 training.
+            Linear regression is the hydrogen atom of ML. Once you understand it deeply, every more complex model is just a variation: logistic regression adds a sigmoid, neural nets stack many of these with non-linearities in between, transformers are fancy arrangements of them with attention. The update rule in this tiny model is the <em>same</em>{" "}update rule used in GPT-4 training.
           </p>
         </Callout>
 
@@ -698,7 +698,7 @@ For a house with features [size, bedrooms, age]:
           ]}
         />
 
-        <h3>So what <em>is</em> a trained model, on disk?</h3>
+        <h3>So what <em>is</em>{" "}a trained model, on disk?</h3>
 
         <p>
           We&apos;ve been saying &quot;the model is <code>w</code> and <code>b</code>&quot; a lot. Let&apos;s make that physical. A trained model, on disk, is <strong>literally a file full of floating-point numbers</strong>. That&apos;s it. No magic.
@@ -717,7 +717,7 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
 (Yes. The entire "trained model" for this problem fits in 32 bytes.)`}</CodeBlock>
 
         <p>
-          Save those four numbers to a file and your model is &quot;deployed.&quot; Load them back up and you can predict forever. <em>Training</em> is the process that chooses the specific values; <em>the model</em> is the chosen values.
+          Save those four numbers to a file and your model is &quot;deployed.&quot; Load them back up and you can predict forever. <em>Training</em>{" "}is the process that chooses the specific values; <em>the model</em>{" "}is the chosen values.
         </p>
 
         <Callout variant="insight" title="This scales all the way up to GPT-4">
@@ -743,8 +743,8 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
           <ul className="list-disc ml-5 space-y-1 m-0 text-sm">
             <li><strong>Model files live in S3 / artifact stores</strong>, not in your git repo. They&apos;re big binary blobs.</li>
             <li><strong>Loading is slow</strong> (hundreds of MB → minutes). Always do it once at startup, never per-request. That&apos;s why our Spring service puts it behind an <code>@Bean</code>.</li>
-            <li><strong>Inference is memory-bound.</strong> A 16 GB model can&apos;t fit on a laptop GPU. This is why &quot;quantization&quot; (store floats as 4-bit ints instead of 16-bit floats) is a huge deal — it shrinks the file 4×.</li>
-            <li><strong>A &quot;fine-tuned model&quot; is just the original weights with small adjustments.</strong> LoRA fine-tuning means &quot;only adjust a few million numbers out of the billions, save just those.&quot;</li>
+            <li><strong>Inference is memory-bound.</strong>{" "}A 16 GB model can&apos;t fit on a laptop GPU. This is why &quot;quantization&quot; (store floats as 4-bit ints instead of 16-bit floats) is a huge deal — it shrinks the file 4×.</li>
+            <li><strong>A &quot;fine-tuned model&quot; is just the original weights with small adjustments.</strong>{" "}LoRA fine-tuning means &quot;only adjust a few million numbers out of the billions, save just those.&quot;</li>
           </ul>
         </Callout>
 
@@ -824,7 +824,7 @@ MSE: 0  ← perfect fit!`}</CodeBlock>
                     <li>Measured again (MSE = 0 → done).</li>
                   </ol>
                   <p>
-                    In this module we&apos;re doing step 4 by eyeballing. <strong>In Module 3 we&apos;ll automate step 4</strong> with gradient descent — a formula that tells you exactly which direction to nudge <em>w</em> and <em>b</em> to reduce loss.
+                    In this module we&apos;re doing step 4 by eyeballing. <strong>In Module 3 we&apos;ll automate step 4</strong>{" "}with gradient descent — a formula that tells you exactly which direction to nudge <em>w</em>{" "}and <em>b</em>{" "}to reduce loss.
                   </p>
                 </>
               ),
@@ -962,10 +962,10 @@ public final class LinearRegression {
         <h3>What makes a good loss function?</h3>
 
         <ul>
-          <li><strong>Zero when perfect.</strong> If predictions match labels exactly, loss = 0.</li>
-          <li><strong>Bigger for worse predictions.</strong> Wrongness should map monotonically to loss.</li>
-          <li><strong>Smooth.</strong> A tiny tweak to weights should cause a tiny change to loss, not a jump. (This is what lets gradient descent work — the derivatives have to exist.)</li>
-          <li><strong>Matches your cost of wrongness.</strong> If being off by $20k is twice as bad as being off by $10k, you want a loss that reflects that. If being off by $20k is <em>four</em> times as bad, you want a different loss.</li>
+          <li><strong>Zero when perfect.</strong>{" "}If predictions match labels exactly, loss = 0.</li>
+          <li><strong>Bigger for worse predictions.</strong>{" "}Wrongness should map monotonically to loss.</li>
+          <li><strong>Smooth.</strong>{" "}A tiny tweak to weights should cause a tiny change to loss, not a jump. (This is what lets gradient descent work — the derivatives have to exist.)</li>
+          <li><strong>Matches your cost of wrongness.</strong>{" "}If being off by $20k is twice as bad as being off by $10k, you want a loss that reflects that. If being off by $20k is <em>four</em>{" "}times as bad, you want a different loss.</li>
         </ul>
 
         <h3>Loss #1: Mean Squared Error (MSE) — the regression workhorse</h3>
@@ -996,9 +996,9 @@ public final class LinearRegression {
 
         <Callout variant="insight" title="Why square specifically? Three reasons.">
           <ul className="list-disc ml-5 space-y-1 m-0">
-            <li><strong>Sign problem fixed.</strong> Squares are non-negative, so +5 and −5 don&apos;t cancel.</li>
-            <li><strong>Differentiable everywhere.</strong> Unlike <code>|x|</code> (absolute value, which has a kink at zero), <code>x²</code> is smooth — essential for gradient descent.</li>
-            <li><strong>Matches the Gaussian assumption.</strong> If you believe the noise in your data is normally distributed (a bell curve), then maximum-likelihood estimation literally gives you MSE. This is why it&apos;s the default.</li>
+            <li><strong>Sign problem fixed.</strong>{" "}Squares are non-negative, so +5 and −5 don&apos;t cancel.</li>
+            <li><strong>Differentiable everywhere.</strong>{" "}Unlike <code>|x|</code> (absolute value, which has a kink at zero), <code>x²</code> is smooth — essential for gradient descent.</li>
+            <li><strong>Matches the Gaussian assumption.</strong>{" "}If you believe the noise in your data is normally distributed (a bell curve), then maximum-likelihood estimation literally gives you MSE. This is why it&apos;s the default.</li>
           </ul>
         </Callout>
 
@@ -1088,7 +1088,7 @@ Where:
               </tr>
               <tr className="bg-slate-50 dark:bg-slate-950">
                 <td className="p-2 border border-slate-300 dark:border-slate-700">Regression with outliers you don&apos;t trust</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>MAE</strong> or <strong>Huber</strong></td>
+                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>MAE</strong>{" "}or <strong>Huber</strong></td>
               </tr>
               <tr>
                 <td className="p-2 border border-slate-300 dark:border-slate-700">Binary classification (spam/not, fraud/not)</td>
@@ -1100,7 +1100,7 @@ Where:
               </tr>
               <tr>
                 <td className="p-2 border border-slate-300 dark:border-slate-700">Next-token prediction (LLMs)</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>Cross-entropy</strong> over the vocabulary</td>
+                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>Cross-entropy</strong>{" "}over the vocabulary</td>
               </tr>
             </tbody>
           </table>
@@ -1248,10 +1248,10 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
         </p>
 
         <Callout variant="spring" title="How this section works">
-          <p className="m-0 mb-2"><strong>Run first, build second.</strong> You&apos;ll do it in two passes:</p>
+          <p className="m-0 mb-2"><strong>Run first, build second.</strong>{" "}You&apos;ll do it in two passes:</p>
           <ol className="list-decimal ml-5 space-y-1 m-0 text-sm">
-            <li><strong>Pass 1 — run the reference code.</strong> Copy three files, compile, run, watch it print predictions. Get a feel for the shape.</li>
-            <li><strong>Pass 2 — implement the core methods yourself.</strong> Three small exercises where you re-build <code>predict()</code>, <code>mse()</code>, and the OOD guard without peeking. Compare your version to the reference.</li>
+            <li><strong>Pass 1 — run the reference code.</strong>{" "}Copy three files, compile, run, watch it print predictions. Get a feel for the shape.</li>
+            <li><strong>Pass 2 — implement the core methods yourself.</strong>{" "}Three small exercises where you re-build <code>predict()</code>, <code>mse()</code>, and the OOD guard without peeking. Compare your version to the reference.</li>
           </ol>
         </Callout>
 
@@ -1523,7 +1523,7 @@ RMSE ≈ 8.7  (off by ~$8–9k on average)`}</CodeBlock>
           title="Exercise 3: implement the out-of-distribution guard"
           prompt={
             <p className="m-0">
-              Our training data only contains houses between <strong>1.0 and 10.0</strong> thousand sqft. If a caller asks to price a 50,000 sqft building, the model will cheerfully extrapolate and return a nonsense number. Write <code>estimateKUsd(double sizeInThousandsOfSqft)</code> so it throws <code>IllegalArgumentException</code> for out-of-range sizes, and otherwise returns <code>model.predict([size])</code>.
+              Our training data only contains houses between <strong>1.0 and 10.0</strong>{" "}thousand sqft. If a caller asks to price a 50,000 sqft building, the model will cheerfully extrapolate and return a nonsense number. Write <code>estimateKUsd(double sizeInThousandsOfSqft)</code> so it throws <code>IllegalArgumentException</code> for out-of-range sizes, and otherwise returns <code>model.predict([size])</code>.
             </p>
           }
           stub={`@Service
@@ -1559,7 +1559,7 @@ public class HousePriceService {
 
         <Callout variant="insight" title="Why this order?">
           <p className="m-0">
-            &quot;Run first, build second&quot; sounds backward, but it&apos;s how most engineers actually learn unfamiliar territory. Seeing it work gives you a mental model of the API surface and the expected output — so when you re-implement, you&apos;re not guessing in the dark, you&apos;re reconstructing something concrete. The <em>second</em> pass is where the understanding locks in.
+            &quot;Run first, build second&quot; sounds backward, but it&apos;s how most engineers actually learn unfamiliar territory. Seeing it work gives you a mental model of the API surface and the expected output — so when you re-implement, you&apos;re not guessing in the dark, you&apos;re reconstructing something concrete. The <em>second</em>{" "}pass is where the understanding locks in.
           </p>
         </Callout>
 

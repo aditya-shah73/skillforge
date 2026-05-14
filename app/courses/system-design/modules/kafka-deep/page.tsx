@@ -93,7 +93,7 @@ export default function Page() {
       <Checkpoint moduleSlug="kafka-deep" id="model" title="Part 1 · The log model" xp={25}>
         <h3>Topics, partitions, segments</h3>
         <p>
-          A <strong>topic</strong> is a logical category, like <code>orders</code>. Inside a topic are one or more <strong>partitions</strong>, each an independent append-only log. Each partition lives on disk as a series of <strong>segment files</strong>; old segments age out by retention policy.
+          A <strong>topic</strong>{" "}is a logical category, like <code>orders</code>. Inside a topic are one or more <strong>partitions</strong>, each an independent append-only log. Each partition lives on disk as a series of <strong>segment files</strong>; old segments age out by retention policy.
         </p>
         <p>
           Producers append to the tail of a partition. Each record gets an <strong>offset</strong> — a monotonically increasing integer that identifies its position. Within a single partition, ordering is total. Across partitions, there is no ordering.
@@ -116,7 +116,7 @@ export default function Page() {
 
         <h3>Replication and ISRs</h3>
         <p>
-          Each partition has a <strong>replication factor</strong> (typical: 3). One replica is the <strong>leader</strong>; the others are <strong>followers</strong> that pull from the leader. Producers write to the leader; the leader replicates to followers.
+          Each partition has a <strong>replication factor</strong> (typical: 3). One replica is the <strong>leader</strong>; the others are <strong>followers</strong>{" "}that pull from the leader. Producers write to the leader; the leader replicates to followers.
         </p>
         <p>
           The set of replicas that are caught up with the leader is the <strong>in-sync replicas</strong> (ISR). When the leader fails, Kafka elects a new leader from the ISR. Replicas that fall too far behind are kicked out of the ISR until they catch up.
@@ -235,7 +235,7 @@ public class OrderProducer {
       <Checkpoint moduleSlug="kafka-deep" id="consumers" title="Part 2 · Consumer groups & offsets" xp={30}>
         <h3>Consumer groups: the parallelism unit</h3>
         <p>
-          A <strong>consumer group</strong> is a set of consumers that cooperate to consume a topic. Kafka assigns partitions to consumers in the group such that <strong>each partition is consumed by exactly one consumer in the group at a time</strong>. This is the key invariant.
+          A <strong>consumer group</strong>{" "}is a set of consumers that cooperate to consume a topic. Kafka assigns partitions to consumers in the group such that <strong>each partition is consumed by exactly one consumer in the group at a time</strong>. This is the key invariant.
         </p>
         <p>
           Consequence 1: max consumer parallelism = number of partitions. If a topic has 6 partitions, a consumer group can have up to 6 active consumers; a 7th sits idle until one of the others fails.
@@ -246,15 +246,15 @@ public class OrderProducer {
 
         <h3>Offsets: who decides what&apos;s been consumed</h3>
         <p>
-          Each consumer group has a <strong>committed offset</strong> per partition — the highest offset it has acknowledged processing. On rebalance, restart, or new consumer joining, Kafka resumes from the committed offset. Anything not yet committed will be re-delivered.
+          Each consumer group has a <strong>committed offset</strong>{" "}per partition — the highest offset it has acknowledged processing. On rebalance, restart, or new consumer joining, Kafka resumes from the committed offset. Anything not yet committed will be re-delivered.
         </p>
         <p>
           Three commit strategies, in increasing order of correctness:
         </p>
         <ul>
           <li><strong>Auto-commit</strong> (<code>enable.auto.commit=true</code>, default in raw Kafka). Background thread commits the consumer&apos;s position every <code>auto.commit.interval.ms</code> (default 5s). Easy. Almost always wrong: a crash within the interval, after processing but before commit, replays. A crash after commit but before processing, loses.</li>
-          <li><strong>Sync commit after batch.</strong> Process a poll batch fully, then <code>consumer.commitSync()</code>. Crashes between processing and commit replay (at-least-once). Safe but blocks the consumer thread on each commit.</li>
-          <li><strong>Async commit after batch.</strong> Same idea, non-blocking <code>commitAsync()</code>. Higher throughput, slightly looser durability. Use a sync commit at shutdown to flush.</li>
+          <li><strong>Sync commit after batch.</strong>{" "}Process a poll batch fully, then <code>consumer.commitSync()</code>. Crashes between processing and commit replay (at-least-once). Safe but blocks the consumer thread on each commit.</li>
+          <li><strong>Async commit after batch.</strong>{" "}Same idea, non-blocking <code>commitAsync()</code>. Higher throughput, slightly looser durability. Use a sync commit at shutdown to flush.</li>
         </ul>
 
         <Callout variant="warn" title="Auto-commit is the source of most Kafka bugs you’ll see">
@@ -407,7 +407,7 @@ public DefaultErrorHandler errorHandler(KafkaTemplate<String, Object> template) 
           Kafka&apos;s exactly-once semantics (EOS) apply to a specific pattern: <strong>read from Kafka, process, write to Kafka, atomically</strong>. The transactional producer makes the produce-side records and the offset commits visible together — either both happen or neither does. Combined with <code>read_committed</code> isolation on downstream consumers, you get a correct exactly-once chain entirely within Kafka.
         </p>
         <p>
-          What EOS does <strong>not</strong> cover: side effects to non-Kafka systems. Sending an email, calling an HTTP API, writing to a database that isn&apos;t inside the Kafka transaction. For those, you&apos;re back to at-least-once + idempotency, or transactional outbox patterns.
+          What EOS does <strong>not</strong>{" "}cover: side effects to non-Kafka systems. Sending an email, calling an HTTP API, writing to a database that isn&apos;t inside the Kafka transaction. For those, you&apos;re back to at-least-once + idempotency, or transactional outbox patterns.
         </p>
 
         <Mermaid chart={eosFlow} />
@@ -416,7 +416,7 @@ public DefaultErrorHandler errorHandler(KafkaTemplate<String, Object> template) 
         <ul>
           <li><strong>Idempotent producer</strong> (<code>enable.idempotence=true</code>) — covered in Part 1. Eliminates duplicate-on-retry within a producer session.</li>
           <li><strong>Transactional producer</strong> (<code>transactional.id</code> + <code>initTransactions()</code>) — group multiple sends and offset commits into a single atomic transaction.</li>
-          <li><strong>read_committed isolation</strong> on consumers — only see records that are part of committed transactions.</li>
+          <li><strong>read_committed isolation</strong>{" "}on consumers — only see records that are part of committed transactions.</li>
         </ul>
 
         <h3>Spring Kafka: <code>KafkaTransactionManager</code></h3>
@@ -503,8 +503,8 @@ public class OrderEnrichmentListener {
           Real services usually need to write to a database too. Two patterns:
         </p>
         <ul>
-          <li><strong>Outbox pattern.</strong> Write the business state and a row in an <code>outbox</code> table in the same DB transaction. A separate process polls the outbox and publishes to Kafka. Bullet-proof, decoupled, but adds a moving part.</li>
-          <li><strong>Chained transactions (don&apos;t).</strong> Begin a DB transaction, do the work, send to Kafka, commit DB, commit Kafka. This is XA-style two-phase commit territory — error-prone, low-throughput, and basically unsupported in modern Spring + Kafka. Avoid.</li>
+          <li><strong>Outbox pattern.</strong>{" "}Write the business state and a row in an <code>outbox</code> table in the same DB transaction. A separate process polls the outbox and publishes to Kafka. Bullet-proof, decoupled, but adds a moving part.</li>
+          <li><strong>Chained transactions (don&apos;t).</strong>{" "}Begin a DB transaction, do the work, send to Kafka, commit DB, commit Kafka. This is XA-style two-phase commit territory — error-prone, low-throughput, and basically unsupported in modern Spring + Kafka. Avoid.</li>
         </ul>
 
         <CodeBlock lang="java">{`// The outbox pattern in Spring + JPA
@@ -563,9 +563,9 @@ public class OutboxPublisher {
         <ul>
           <li><strong>Batching:</strong> <code>linger.ms=5-20</code> and <code>batch.size=64KB-1MB</code> let the producer pack records into bigger requests. Throughput up, latency up slightly. Pair with <code>compression.type=lz4</code> (or <code>zstd</code>) for ~2-5× smaller wire size.</li>
           <li><strong>Consumer batch size:</strong> <code>max.poll.records</code> controls how many records each <code>poll()</code> returns. Bigger batches = fewer round-trips but more work to do before committing.</li>
-          <li><strong>max.poll.interval.ms:</strong> how long Kafka waits for the consumer to call <code>poll()</code> again before evicting it. If your processing is slow, raise this — otherwise rebalances happen mid-batch.</li>
-          <li><strong>Retention:</strong> per-topic <code>retention.ms</code> and <code>retention.bytes</code>. For event-sourced topics, set retention to forever (-1) and rely on log compaction.</li>
-          <li><strong>Log compaction:</strong> for keyed topics where only the latest value per key matters (e.g. account state), compaction garbage-collects superseded records, keeping the topic small while preserving full history of the latest values.</li>
+          <li><strong>max.poll.interval.ms:</strong>{" "}how long Kafka waits for the consumer to call <code>poll()</code> again before evicting it. If your processing is slow, raise this — otherwise rebalances happen mid-batch.</li>
+          <li><strong>Retention:</strong>{" "}per-topic <code>retention.ms</code> and <code>retention.bytes</code>. For event-sourced topics, set retention to forever (-1) and rely on log compaction.</li>
+          <li><strong>Log compaction:</strong>{" "}for keyed topics where only the latest value per key matters (e.g. account state), compaction garbage-collects superseded records, keeping the topic small while preserving full history of the latest values.</li>
         </ul>
 
         <Quiz

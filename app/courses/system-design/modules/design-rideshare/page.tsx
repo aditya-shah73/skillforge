@@ -114,10 +114,10 @@ export default function Page() {
         </ul>
         <h3>Non-functional targets</h3>
         <ul>
-          <li><strong>Match latency:</strong> p95 under 1s from request to first offer.</li>
-          <li><strong>Location update throughput:</strong> a single dense city (say SF) has ~30k drivers online at peak, pinging every 4s — 7.5k writes/sec for one city.</li>
-          <li><strong>Availability:</strong> ride-request path is 99.99%. Location pings can drop a few; a missed match is a customer-visible failure.</li>
-          <li><strong>Geo-distribution:</strong> regional sharding. A rider in Berlin doesn&apos;t need to know about drivers in Tokyo.</li>
+          <li><strong>Match latency:</strong>{" "}p95 under 1s from request to first offer.</li>
+          <li><strong>Location update throughput:</strong>{" "}a single dense city (say SF) has ~30k drivers online at peak, pinging every 4s — 7.5k writes/sec for one city.</li>
+          <li><strong>Availability:</strong>{" "}ride-request path is 99.99%. Location pings can drop a few; a missed match is a customer-visible failure.</li>
+          <li><strong>Geo-distribution:</strong>{" "}regional sharding. A rider in Berlin doesn&apos;t need to know about drivers in Tokyo.</li>
         </ul>
         <h3>Back-of-envelope</h3>
         <p>
@@ -142,11 +142,11 @@ export default function Page() {
       <Checkpoint moduleSlug="design-rideshare" id="design" title="Part 2 · High-level design" xp={30}>
         <h3>The core services</h3>
         <ul>
-          <li><strong>Location Service:</strong> ingests driver pings, writes to the geo index, fans out to map UI for nearby riders.</li>
-          <li><strong>Matching Service:</strong> consumes ride requests, runs radius queries, scores candidates, dispatches offers.</li>
-          <li><strong>Trip Service:</strong> owns the trip state machine. Source of truth for &quot;what happened.&quot;</li>
-          <li><strong>Pricing Service:</strong> quotes fares pre-ride, applies surge per geohash, computes final fare on completion.</li>
-          <li><strong>Payment Service:</strong> charges the rider, settles the driver. (We&apos;ll go deeper on this in the next module.)</li>
+          <li><strong>Location Service:</strong>{" "}ingests driver pings, writes to the geo index, fans out to map UI for nearby riders.</li>
+          <li><strong>Matching Service:</strong>{" "}consumes ride requests, runs radius queries, scores candidates, dispatches offers.</li>
+          <li><strong>Trip Service:</strong>{" "}owns the trip state machine. Source of truth for &quot;what happened.&quot;</li>
+          <li><strong>Pricing Service:</strong>{" "}quotes fares pre-ride, applies surge per geohash, computes final fare on completion.</li>
+          <li><strong>Payment Service:</strong>{" "}charges the rider, settles the driver. (We&apos;ll go deeper on this in the next module.)</li>
         </ul>
 
         <h3>API surface</h3>
@@ -175,9 +175,9 @@ trip.matched | trip.en_route | trip.arrived | trip.completed | trip.cancelled`}<
 
         <h3>Geo indexing — pick one and own it</h3>
         <ul>
-          <li><strong>Geohash:</strong> string prefix encoding of (lat, lng). Easy to shard. Prefix length controls cell size. Fine for &quot;within radius R&quot; if you query the cell plus its 8 neighbors.</li>
-          <li><strong>S2 cells (Google):</strong> hierarchical, projection-distortion-free. Uber uses H3 (hex grid) which is a sibling — same idea, hexagons play nicer for radius queries.</li>
-          <li><strong>Redis GEO:</strong> ZSET-backed, sorted by 52-bit geohash. <code>GEOADD</code>, <code>GEORADIUS</code>. Excellent for the hot index. Not durable storage — you back it with Cassandra or DynamoDB for replay.</li>
+          <li><strong>Geohash:</strong>{" "}string prefix encoding of (lat, lng). Easy to shard. Prefix length controls cell size. Fine for &quot;within radius R&quot; if you query the cell plus its 8 neighbors.</li>
+          <li><strong>S2 cells (Google):</strong>{" "}hierarchical, projection-distortion-free. Uber uses H3 (hex grid) which is a sibling — same idea, hexagons play nicer for radius queries.</li>
+          <li><strong>Redis GEO:</strong>{" "}ZSET-backed, sorted by 52-bit geohash. <code>GEOADD</code>, <code>GEORADIUS</code>. Excellent for the hot index. Not durable storage — you back it with Cassandra or DynamoDB for replay.</li>
         </ul>
 
         <Callout variant="spring" title="Why Redis GEO and not a database">
@@ -207,7 +207,7 @@ trip.matched | trip.en_route | trip.arrived | trip.completed | trip.cancelled`}<
       <Checkpoint moduleSlug="design-rideshare" id="deep" title="Part 3 · Deep dives" xp={30}>
         <h3>The matching algorithm</h3>
         <p>
-          A radius query gives you a candidate set. You don&apos;t want the closest driver — you want the <em>best</em> driver. Score
+          A radius query gives you a candidate set. You don&apos;t want the closest driver — you want the <em>best</em>{" "}driver. Score
           candidates on: ETA to pickup (not straight-line distance, real driving time), driver rating, time online without a fare
           (fairness), and a small randomization tiebreaker. Ship the offer to one driver at a time with a 15-second TTL. If they
           decline or don&apos;t respond, fall through to the next.

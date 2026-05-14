@@ -86,7 +86,7 @@ stateDiagram-v2
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">2 · Log replication</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              All writes flow through the leader. The leader appends to its log, replicates to followers, and commits only when a <em>majority</em> has acknowledged. Followers apply in log order.
+              All writes flow through the leader. The leader appends to its log, replicates to followers, and commits only when a <em>majority</em>{" "}has acknowledged. Followers apply in log order.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
               Reads can go to the leader for linearizability, or to followers for stale-but-fast.
@@ -170,7 +170,7 @@ stateDiagram-v2
         </div>
 
         <Callout variant="insight">
-          <strong>The senior-engineer move:</strong> consensus is a control-plane tool. If you find yourself reaching for Raft to coordinate every user write, you&apos;re on the wrong path — push the consensus into a small metadata layer (shard assignments, leader leases) and let the data plane be eventually consistent or sharded with single-writer per shard.
+          <strong>The senior-engineer move:</strong>{" "}consensus is a control-plane tool. If you find yourself reaching for Raft to coordinate every user write, you&apos;re on the wrong path — push the consensus into a small metadata layer (shard assignments, leader leases) and let the data plane be eventually consistent or sharded with single-writer per shard.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -191,10 +191,10 @@ stateDiagram-v2
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">2PC — why we avoid it</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
-              <li><strong>Blocking:</strong> a participant that voted YES is locked until the coordinator decides — could be forever if the coordinator crashes.</li>
-              <li><strong>Coordinator SPOF:</strong> coordinator failure between phase 1 and 2 leaves participants in limbo.</li>
+              <li><strong>Blocking:</strong>{" "}a participant that voted YES is locked until the coordinator decides — could be forever if the coordinator crashes.</li>
+              <li><strong>Coordinator SPOF:</strong>{" "}coordinator failure between phase 1 and 2 leaves participants in limbo.</li>
               <li><strong>Locks span network round-trips</strong> — kills throughput. Lock duration = max(participant latency).</li>
-              <li><strong>Heterogeneous resource managers</strong> need XA support — most modern services don&apos;t.</li>
+              <li><strong>Heterogeneous resource managers</strong>{" "}need XA support — most modern services don&apos;t.</li>
             </ul>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
               Acceptable inside a single DB cluster. Across services? Almost never.
@@ -206,9 +206,9 @@ stateDiagram-v2
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
               <li><strong>A sequence of local transactions</strong>, each with a compensating action.</li>
               <li>If step k fails, run compensations for steps k−1, k−2, … 1 in reverse.</li>
-              <li><strong>No global lock.</strong> Each local transaction commits independently.</li>
-              <li><strong>You give up atomicity</strong> for availability — the system passes through inconsistent intermediate states.</li>
-              <li>Pairs with the <strong>outbox pattern</strong> to emit events reliably from each local transaction.</li>
+              <li><strong>No global lock.</strong>{" "}Each local transaction commits independently.</li>
+              <li><strong>You give up atomicity</strong>{" "}for availability — the system passes through inconsistent intermediate states.</li>
+              <li>Pairs with the <strong>outbox pattern</strong>{" "}to emit events reliably from each local transaction.</li>
             </ul>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
               The compensation is part of the design, not an afterthought.
@@ -294,21 +294,21 @@ COMMIT;
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
           <li>
-            <strong>Follower</strong> is the default. It accepts AppendEntries from the leader and resets its election timer on every valid heartbeat.
+            <strong>Follower</strong>{" "}is the default. It accepts AppendEntries from the leader and resets its election timer on every valid heartbeat.
           </li>
           <li>
-            <strong>Candidate</strong> happens when the election timer fires — &quot;I haven&apos;t heard from the leader, maybe it&apos;s gone.&quot; The candidate bumps the term, votes for itself, and requests votes from peers.
+            <strong>Candidate</strong>{" "}happens when the election timer fires — &quot;I haven&apos;t heard from the leader, maybe it&apos;s gone.&quot; The candidate bumps the term, votes for itself, and requests votes from peers.
           </li>
           <li>
-            <strong>Leader</strong> is whoever won majority votes in some term. Only one leader per term. Sends heartbeats; replicates the log; falls back to follower the moment it sees a higher term.
+            <strong>Leader</strong>{" "}is whoever won majority votes in some term. Only one leader per term. Sends heartbeats; replicates the log; falls back to follower the moment it sees a higher term.
           </li>
           <li>
-            <strong>Split vote</strong> resolves because election timeouts are randomized — one candidate&apos;s next timeout fires first, so it starts a new term and tries again before the others.
+            <strong>Split vote</strong>{" "}resolves because election timeouts are randomized — one candidate&apos;s next timeout fires first, so it starts a new term and tries again before the others.
           </li>
         </ul>
 
         <Callout variant="warn">
-          <strong>The term is the source of truth.</strong> If any RPC sees a term higher than its own, it steps down immediately. This is the entire safety mechanism for &quot;two leaders at once&quot; — the older one finds out and resigns the next time it talks to anyone.
+          <strong>The term is the source of truth.</strong>{" "}If any RPC sees a term higher than its own, it steps down immediately. This is the entire safety mechanism for &quot;two leaders at once&quot; — the older one finds out and resigns the next time it talks to anyone.
         </Callout>
       </section>
 
@@ -325,9 +325,9 @@ COMMIT;
           <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Wall clocks lie</div>
           <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
             <li><strong>NTP skew:</strong> ~10–100ms across well-synced hosts; seconds across regions; minutes on a misconfigured box.</li>
-            <li><strong>Leap seconds:</strong> wall clock can jump backwards. Linux can repeat a second. Both have broken production code.</li>
-            <li><strong>VM pauses / GC stalls:</strong> the process can be frozen for hundreds of ms; the wall clock keeps ticking around it.</li>
-            <li><strong>Clock drift</strong> on cheap hardware — a watch crystal can drift by seconds per day if NTP fails.</li>
+            <li><strong>Leap seconds:</strong>{" "}wall clock can jump backwards. Linux can repeat a second. Both have broken production code.</li>
+            <li><strong>VM pauses / GC stalls:</strong>{" "}the process can be frozen for hundreds of ms; the wall clock keeps ticking around it.</li>
+            <li><strong>Clock drift</strong>{" "}on cheap hardware — a watch crystal can drift by seconds per day if NTP fails.</li>
           </ul>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
             Rule: never use a wall-clock timestamp as the source of truth for ordering, conflict resolution, or distributed correctness.
@@ -381,7 +381,7 @@ COMMIT;
         </div>
 
         <Callout variant="insight">
-          <strong>Lamport vs vector in one sentence:</strong> Lamport tells you <em>if A came before B</em>; vector tells you <em>whether A and B are even related</em>. If you need to detect concurrent writes (for conflict resolution), Lamport is not enough.
+          <strong>Lamport vs vector in one sentence:</strong>{" "}Lamport tells you <em>if A came before B</em>; vector tells you <em>whether A and B are even related</em>. If you need to detect concurrent writes (for conflict resolution), Lamport is not enough.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -440,13 +440,13 @@ COMMIT;
           <h3 className="text-base font-semibold mt-0 mb-2">k-Nearest Neighbors — two approaches</h3>
           <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 m-0">
             <li>
-              <strong>Geohash + 8-neighbor scan:</strong> compute the geohash cell of the query point, fetch points in that cell AND its 8 neighbors, then sort by exact distance. The neighbor scan is the part everyone forgets — without it, you miss points just across a cell boundary.
+              <strong>Geohash + 8-neighbor scan:</strong>{" "}compute the geohash cell of the query point, fetch points in that cell AND its 8 neighbors, then sort by exact distance. The neighbor scan is the part everyone forgets — without it, you miss points just across a cell boundary.
             </li>
             <li>
-              <strong>Quadtree bucket scan:</strong> walk the tree to the leaf containing the query point, scan that bucket, expand to siblings until you have k candidates, then refine by exact distance.
+              <strong>Quadtree bucket scan:</strong>{" "}walk the tree to the leaf containing the query point, scan that bucket, expand to siblings until you have k candidates, then refine by exact distance.
             </li>
             <li>
-              <strong>The trick both share:</strong> the index narrows the candidate set; exact distance is computed only on the candidates. Don&apos;t compute Haversine over every point in your database.
+              <strong>The trick both share:</strong>{" "}the index narrows the candidate set; exact distance is computed only on the candidates. Don&apos;t compute Haversine over every point in your database.
             </li>
           </ul>
         </div>
@@ -571,11 +571,11 @@ COMMIT;
         </div>
 
         <Callout variant="insight">
-          <strong>The portfolio approach:</strong> reserve enough capacity to cover your P50 traffic (steady baseline) → fill peaks with on-demand → run batch/async workloads on spot. A mature shop blends all three and tracks blended $/QPS as a KPI.
+          <strong>The portfolio approach:</strong>{" "}reserve enough capacity to cover your P50 traffic (steady baseline) → fill peaks with on-demand → run batch/async workloads on spot. A mature shop blends all three and tracks blended $/QPS as a KPI.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
-          <strong>Overprovision discipline:</strong> target P99 latency under SLO with headroom (typically 30–50%) for traffic spikes, deploys, and AZ failures. Running &quot;hot&quot; (90%+ utilization) saves money until the first incident, then costs you ten times what you saved.
+          <strong>Overprovision discipline:</strong>{" "}target P99 latency under SLO with headroom (typically 30–50%) for traffic spikes, deploys, and AZ failures. Running &quot;hot&quot; (90%+ utilization) saves money until the first incident, then costs you ten times what you saved.
         </p>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -662,7 +662,7 @@ results = sortByHaversine(candidates, query)[:k]`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Autoscaling on CPU instead of queue depth</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              For an async worker reading from a queue, CPU is a lagging indicator — by the time it spikes you&apos;re already minutes behind. Scale on queue depth (or message age) so capacity grows <em>before</em> the backlog hurts.
+              For an async worker reading from a queue, CPU is a lagging indicator — by the time it spikes you&apos;re already minutes behind. Scale on queue depth (or message age) so capacity grows <em>before</em>{" "}the backlog hurts.
             </p>
             <CodeBlock lang="plain">{`# BAD — CPU-based autoscale on a queue worker
 metric: cpu_utilization > 70%
@@ -766,7 +766,7 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           Consensus and its limits, sagas and the outbox, the clock models and when each one matters, spatial indexing, and the cost/capacity portfolio. That&apos;s the senior-systems toolkit. Every case study from here lands on combinations of these primitives.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Case Studies.</strong> Start with the interview framework that puts everything you&apos;ve learned into a 45-minute structure: requirements → estimation → API → data model → high-level design → deep dives → trade-offs.
+          <strong>Up next: Phase 6 — Case Studies.</strong>{" "}Start with the interview framework that puts everything you&apos;ve learned into a 45-minute structure: requirements → estimation → API → data model → high-level design → deep dives → trade-offs.
         </p>
         <Link
           href="/courses/system-design/modules/interview-framework"

@@ -85,10 +85,10 @@ export default function Page() {
           Google&apos;s SRE book popularized this list, and it stuck because it&apos;s genuinely useful. For any service, four metrics together tell you almost everything you need at the top level:
         </p>
         <ul>
-          <li><strong>Latency.</strong> How long requests take. Always look at percentiles — p50, p95, p99 — never averages. Average latency is meaningless when 99% of requests take 10ms and 1% take 5 seconds.</li>
-          <li><strong>Traffic.</strong> How much demand the service is seeing. Requests per second, queries per second, messages consumed per second. Without traffic context, the other three numbers can&apos;t be interpreted.</li>
-          <li><strong>Errors.</strong> Rate of failed requests. Both explicit failures (5xx, exceptions) and implicit ones (200 OK that returned the wrong answer). The implicit ones are why you also need business-level metrics.</li>
-          <li><strong>Saturation.</strong> How &quot;full&quot; the service is. CPU utilization, memory pressure, queue depth, connection pool usage. Saturation usually moves before latency does — it&apos;s the leading indicator for impending breakdown.</li>
+          <li><strong>Latency.</strong>{" "}How long requests take. Always look at percentiles — p50, p95, p99 — never averages. Average latency is meaningless when 99% of requests take 10ms and 1% take 5 seconds.</li>
+          <li><strong>Traffic.</strong>{" "}How much demand the service is seeing. Requests per second, queries per second, messages consumed per second. Without traffic context, the other three numbers can&apos;t be interpreted.</li>
+          <li><strong>Errors.</strong>{" "}Rate of failed requests. Both explicit failures (5xx, exceptions) and implicit ones (200 OK that returned the wrong answer). The implicit ones are why you also need business-level metrics.</li>
+          <li><strong>Saturation.</strong>{" "}How &quot;full&quot; the service is. CPU utilization, memory pressure, queue depth, connection pool usage. Saturation usually moves before latency does — it&apos;s the leading indicator for impending breakdown.</li>
         </ul>
 
         <h3>RED — for request-driven services</h3>
@@ -97,9 +97,9 @@ export default function Page() {
           RED is a pragmatic subset of the four golden signals, designed for HTTP/RPC services:
         </p>
         <ul>
-          <li><strong>Rate.</strong> Requests per second.</li>
-          <li><strong>Errors.</strong> Failed requests per second.</li>
-          <li><strong>Duration.</strong> Latency distribution.</li>
+          <li><strong>Rate.</strong>{" "}Requests per second.</li>
+          <li><strong>Errors.</strong>{" "}Failed requests per second.</li>
+          <li><strong>Duration.</strong>{" "}Latency distribution.</li>
         </ul>
         <p>
           Notice what&apos;s missing: saturation. RED assumes you&apos;re fronting a request-handling service where saturation is captured indirectly through duration (saturated services get slow). For a typical Spring REST service, RED is the right top-level dashboard.
@@ -111,9 +111,9 @@ export default function Page() {
           USE applies to things that aren&apos;t request-driven — pools, queues, caches, disks:
         </p>
         <ul>
-          <li><strong>Utilization.</strong> Percentage of time the resource is busy.</li>
-          <li><strong>Saturation.</strong> Amount of queued/extra work waiting.</li>
-          <li><strong>Errors.</strong> Failed operations on the resource.</li>
+          <li><strong>Utilization.</strong>{" "}Percentage of time the resource is busy.</li>
+          <li><strong>Saturation.</strong>{" "}Amount of queued/extra work waiting.</li>
+          <li><strong>Errors.</strong>{" "}Failed operations on the resource.</li>
         </ul>
         <p>
           USE is the right model for a database connection pool, a Kafka consumer, a cache, a thread pool. RED would be the wrong frame — there&apos;s no &quot;request rate&quot; for a thread pool. USE is the &quot;is the resource healthy?&quot; checklist.
@@ -125,9 +125,9 @@ export default function Page() {
           Metrics, logs, and traces all let you observe systems but they answer different questions. Picking the right pillar for the question is most of the skill.
         </p>
         <ul>
-          <li><strong>Metrics.</strong> Aggregates over time. &quot;What is the p99 latency right now?&quot; &quot;How many 500s in the last 5 minutes?&quot; Cheap to store at scale; cheap to query. Useless for &quot;why did <em>this</em> request fail?&quot; — they&apos;ve aggregated away the per-request detail.</li>
-          <li><strong>Logs.</strong> Per-event records. &quot;What did this specific request do?&quot; Rich context, expensive at volume. Structured logging (JSON, queryable fields) beats unstructured every time.</li>
-          <li><strong>Traces.</strong> The path of a single request through multiple services. &quot;Where did the time go?&quot; &quot;Which downstream is the slow one?&quot; The unique value of traces is showing the cross-service shape of latency.</li>
+          <li><strong>Metrics.</strong>{" "}Aggregates over time. &quot;What is the p99 latency right now?&quot; &quot;How many 500s in the last 5 minutes?&quot; Cheap to store at scale; cheap to query. Useless for &quot;why did <em>this</em>{" "}request fail?&quot; — they&apos;ve aggregated away the per-request detail.</li>
+          <li><strong>Logs.</strong>{" "}Per-event records. &quot;What did this specific request do?&quot; Rich context, expensive at volume. Structured logging (JSON, queryable fields) beats unstructured every time.</li>
+          <li><strong>Traces.</strong>{" "}The path of a single request through multiple services. &quot;Where did the time go?&quot; &quot;Which downstream is the slow one?&quot; The unique value of traces is showing the cross-service shape of latency.</li>
         </ul>
 
         <Callout variant="insight" title="Pick the pillar that matches the question">
@@ -406,21 +406,21 @@ public class CorrelationIdFilter implements Filter {
         <h3>Symptoms vs causes</h3>
 
         <p>
-          A <em>symptom</em> is something the user experiences: requests are failing, requests are slow, requests are 5xx&apos;ing. A <em>cause</em> is a system-internal state that may or may not produce a symptom: CPU is high, memory is high, queue is deep, replica count is low. Cause-based alerts page you for things like &quot;CPU &gt; 80%&quot; — but if CPU is 80% and the system is meeting its SLO, who cares? Symptom-based alerts page you only when the user is suffering, regardless of which internal state caused it.
+          A <em>symptom</em>{" "}is something the user experiences: requests are failing, requests are slow, requests are 5xx&apos;ing. A <em>cause</em>{" "}is a system-internal state that may or may not produce a symptom: CPU is high, memory is high, queue is deep, replica count is low. Cause-based alerts page you for things like &quot;CPU &gt; 80%&quot; — but if CPU is 80% and the system is meeting its SLO, who cares? Symptom-based alerts page you only when the user is suffering, regardless of which internal state caused it.
         </p>
 
         <Callout variant="warn" title="The classic 3am page that didn't need to happen">
-          <p className="m-0">CPU goes over 80% for 5 minutes → page. The on-call wakes up, logs in, finds the service is serving traffic happily because the CPU spike was a backfill job that doesn&apos;t affect SLO. They go back to sleep, but they&apos;re irritable for the rest of the week and they trust alerts a tiny bit less. Multiply by every cause-based alert in the system and you&apos;ve created an on-call rotation everyone hates. The fix is to let CPU be a <em>symptom-driving</em> signal — page only when high CPU coincides with elevated latency or error rate. The cause is interesting, but only when it produces user pain.</p>
+          <p className="m-0">CPU goes over 80% for 5 minutes → page. The on-call wakes up, logs in, finds the service is serving traffic happily because the CPU spike was a backfill job that doesn&apos;t affect SLO. They go back to sleep, but they&apos;re irritable for the rest of the week and they trust alerts a tiny bit less. Multiply by every cause-based alert in the system and you&apos;ve created an on-call rotation everyone hates. The fix is to let CPU be a <em>symptom-driving</em>{" "}signal — page only when high CPU coincides with elevated latency or error rate. The cause is interesting, but only when it produces user pain.</p>
         </Callout>
 
         <h3>SLOs and error budgets</h3>
 
         <p>
-          A <strong>service-level objective (SLO)</strong> is a target you commit to: &quot;99.9% of requests succeed in under 300ms over a 30-day window.&quot; The complement is the <strong>error budget</strong>: 0.1% of requests are allowed to fail or be slow. If you&apos;re below budget — under-spending on errors — you can take more risk (ship faster, run experiments). If you&apos;re burning budget too fast, you stop shipping risky changes until you recover.
+          A <strong>service-level objective (SLO)</strong>{" "}is a target you commit to: &quot;99.9% of requests succeed in under 300ms over a 30-day window.&quot; The complement is the <strong>error budget</strong>: 0.1% of requests are allowed to fail or be slow. If you&apos;re below budget — under-spending on errors — you can take more risk (ship faster, run experiments). If you&apos;re burning budget too fast, you stop shipping risky changes until you recover.
         </p>
 
         <p>
-          The alerts that make the most sense are <em>error-budget burn rate</em> alerts: page when you&apos;re burning the budget so fast that you&apos;ll exhaust it before the window ends. A common pattern is multi-window multi-burn-rate (MWMBR) alerts: a fast burn-rate alert (over 1h, page when burning 14x normal) and a slow burn-rate alert (over 6h, page when burning 6x normal). The fast one catches catastrophic failures; the slow one catches sustained degradations.
+          The alerts that make the most sense are <em>error-budget burn rate</em>{" "}alerts: page when you&apos;re burning the budget so fast that you&apos;ll exhaust it before the window ends. A common pattern is multi-window multi-burn-rate (MWMBR) alerts: a fast burn-rate alert (over 1h, page when burning 14x normal) and a slow burn-rate alert (over 6h, page when burning 6x normal). The fast one catches catastrophic failures; the slow one catches sustained degradations.
         </p>
 
         <h3>Dashboards that answer questions, not display data</h3>

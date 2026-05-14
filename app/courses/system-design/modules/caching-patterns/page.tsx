@@ -121,11 +121,11 @@ public class UserService {
 }`}</CodeBlock>
 
         <p>
-          <strong>Strengths:</strong> only what gets read ends up in the cache. Resilient — if the cache goes
+          <strong>Strengths:</strong>{" "}only what gets read ends up in the cache. Resilient — if the cache goes
           down, the DB takes the hit but the system keeps working. Easy to reason about.
         </p>
         <p>
-          <strong>Weaknesses:</strong> first read of every key is slow (cache miss penalty). Race conditions during
+          <strong>Weaknesses:</strong>{" "}first read of every key is slow (cache miss penalty). Race conditions during
           writes (more on this in Part 2). Stale data lives in the cache until TTL or invalidation.
         </p>
 
@@ -138,11 +138,11 @@ public class UserService {
         <Mermaid chart={writeThroughDiagram} />
 
         <p>
-          <strong>Strengths:</strong> reads are fast and the cache is never staler than the DB. Good for read-heavy
+          <strong>Strengths:</strong>{" "}reads are fast and the cache is never staler than the DB. Good for read-heavy
           data that&apos;s also written through a single path.
         </p>
         <p>
-          <strong>Weaknesses:</strong> writes are slower (cache + DB latency). Doesn&apos;t help if writes happen via
+          <strong>Weaknesses:</strong>{" "}writes are slower (cache + DB latency). Doesn&apos;t help if writes happen via
           paths the cache can&apos;t observe (other services, batch jobs). Most caches don&apos;t support
           write-through natively — you&apos;re building a custom layer.
         </p>
@@ -153,10 +153,10 @@ public class UserService {
           wildly dangerous. If the cache crashes before flushing, you lose data.
         </p>
         <p>
-          <strong>Strengths:</strong> absurd write throughput. The cache absorbs bursts.
+          <strong>Strengths:</strong>{" "}absurd write throughput. The cache absorbs bursts.
         </p>
         <p>
-          <strong>Weaknesses:</strong> data loss on cache failure. Hard to query the &quot;real&quot; state — DB might
+          <strong>Weaknesses:</strong>{" "}data loss on cache failure. Hard to query the &quot;real&quot; state — DB might
           be minutes behind cache. Used for metrics, counters, view counts — things where dropping a few percent on
           a bad day is acceptable.
         </p>
@@ -167,11 +167,11 @@ public class UserService {
           from the user&apos;s perspective.
         </p>
         <p>
-          <strong>Strengths:</strong> zero miss latency for popular data. Smooths out load spikes (no thundering
+          <strong>Strengths:</strong>{" "}zero miss latency for popular data. Smooths out load spikes (no thundering
           herd when a popular key expires).
         </p>
         <p>
-          <strong>Weaknesses:</strong> wasted refreshes for data nobody&apos;s going to read. Only worth it for
+          <strong>Weaknesses:</strong>{" "}wasted refreshes for data nobody&apos;s going to read. Only worth it for
           predictable hot keys. Most teams approximate this with longer TTLs and a stale-while-revalidate pattern.
         </p>
 
@@ -237,7 +237,7 @@ public class UserService {
           <p className="m-0">
             If you set every entry to expire in exactly 5 minutes, and you populate the cache during a deploy, every
             entry expires at the same moment 5 minutes later. The cache goes empty in one tick, the DB gets hit by
-            every user simultaneously, and you have a stampede. <strong>Add ±10% jitter to TTLs</strong> so expirations
+            every user simultaneously, and you have a stampede. <strong>Add ±10% jitter to TTLs</strong>{" "}so expirations
             spread out. <code>TTL = base + random(-base*0.1, base*0.1)</code>.
           </p>
         </Callout>
@@ -247,7 +247,7 @@ public class UserService {
           Almost every caching bug fits into one of these:
         </p>
 
-        <p><strong>1. Forgot to invalidate.</strong> The update path didn&apos;t call the invalidate. Now the cache is wrong until TTL.</p>
+        <p><strong>1. Forgot to invalidate.</strong>{" "}The update path didn&apos;t call the invalidate. Now the cache is wrong until TTL.</p>
 
         <p><strong>2. Stale read repopulates after invalidate (the race).</strong></p>
         <ol>
@@ -263,9 +263,9 @@ public class UserService {
           solve the race but reduces the window.
         </p>
 
-        <p><strong>3. Updating the cache instead of invalidating.</strong> Two writers W1 and W2 both update the same row, then both update the cache. If W1&apos;s cache update lands after W2&apos;s, the cache has W1&apos;s old value while the DB has W2&apos;s new one. <strong>Always invalidate, don&apos;t update.</strong> Let the next reader repopulate.</p>
+        <p><strong>3. Updating the cache instead of invalidating.</strong>{" "}Two writers W1 and W2 both update the same row, then both update the cache. If W1&apos;s cache update lands after W2&apos;s, the cache has W1&apos;s old value while the DB has W2&apos;s new one. <strong>Always invalidate, don&apos;t update.</strong>{" "}Let the next reader repopulate.</p>
 
-        <p><strong>4. Cache stampede / thundering herd.</strong> Hot key expires; thousands of concurrent readers all miss; all hit the DB simultaneously. Fixes: a per-key lock so only one reader refills (others wait); a probabilistic early refresh; or stale-while-revalidate (return stale data while one reader refreshes in the background).</p>
+        <p><strong>4. Cache stampede / thundering herd.</strong>{" "}Hot key expires; thousands of concurrent readers all miss; all hit the DB simultaneously. Fixes: a per-key lock so only one reader refills (others wait); a probabilistic early refresh; or stale-while-revalidate (return stale data while one reader refreshes in the background).</p>
 
         <CodeBlock lang="java" caption="Stampede protection with a per-key lock">{`public User getWithStampedeProtection(long id) {
     String key = "user:" + id;
@@ -367,28 +367,28 @@ public class UserService {
         </p>
 
         <ol>
-          <li><strong>Is it read-heavy?</strong> Read:write ratio of at least 10:1, ideally 100:1+.</li>
-          <li><strong>Does it tolerate staleness?</strong> If yes, by how long?</li>
-          <li><strong>Is the upstream slow or expensive?</strong> If your DB query is 2ms and Redis lookup is 1ms, you&apos;re saving nothing meaningful.</li>
-          <li><strong>Is the cache hit rate going to be high?</strong> If you have a long tail of unique queries, hit rate stays low and the cache adds latency without benefit.</li>
+          <li><strong>Is it read-heavy?</strong>{" "}Read:write ratio of at least 10:1, ideally 100:1+.</li>
+          <li><strong>Does it tolerate staleness?</strong>{" "}If yes, by how long?</li>
+          <li><strong>Is the upstream slow or expensive?</strong>{" "}If your DB query is 2ms and Redis lookup is 1ms, you&apos;re saving nothing meaningful.</li>
+          <li><strong>Is the cache hit rate going to be high?</strong>{" "}If you have a long tail of unique queries, hit rate stays low and the cache adds latency without benefit.</li>
         </ol>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Good cache candidates</h3>
         <ul>
-          <li><strong>User profile data.</strong> Read on every page load, changes rarely, staleness of seconds to minutes is fine.</li>
-          <li><strong>Configuration / feature flags.</strong> Read on every request, changes via deploys, stale-by-minutes is fine.</li>
+          <li><strong>User profile data.</strong>{" "}Read on every page load, changes rarely, staleness of seconds to minutes is fine.</li>
+          <li><strong>Configuration / feature flags.</strong>{" "}Read on every request, changes via deploys, stale-by-minutes is fine.</li>
           <li><strong>Computed aggregates.</strong> &quot;Top 10 products today,&quot; &quot;trending tags.&quot; Expensive to compute, read often.</li>
-          <li><strong>External API responses.</strong> Currency rates, weather, anything you pay per call for.</li>
-          <li><strong>Authorization decisions.</strong> Permission checks done on every request; underlying data changes rarely.</li>
-          <li><strong>HTML fragments / page sections.</strong> Rendering cost &gt; cache lookup cost.</li>
+          <li><strong>External API responses.</strong>{" "}Currency rates, weather, anything you pay per call for.</li>
+          <li><strong>Authorization decisions.</strong>{" "}Permission checks done on every request; underlying data changes rarely.</li>
+          <li><strong>HTML fragments / page sections.</strong>{" "}Rendering cost &gt; cache lookup cost.</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Bad cache candidates</h3>
         <ul>
-          <li><strong>Anything where staleness causes correctness bugs.</strong> Inventory counts, account balances, fraud-detection state. Cache the read path at your peril.</li>
-          <li><strong>Low-cardinality data already cached by the DB.</strong> Postgres has a buffer cache. If your &quot;hot&quot; query is on a small table that fits in shared_buffers, Postgres is already serving it from RAM at sub-millisecond latency.</li>
-          <li><strong>Per-user data with no read amplification.</strong> If user 42 is the only one ever reading user:42&apos;s feed, and they read it once per session, caching it costs more than it saves.</li>
-          <li><strong>Data with extremely high cardinality and low hit rate.</strong> Caching every search query with no overlap is just turning your cache into a slow database.</li>
+          <li><strong>Anything where staleness causes correctness bugs.</strong>{" "}Inventory counts, account balances, fraud-detection state. Cache the read path at your peril.</li>
+          <li><strong>Low-cardinality data already cached by the DB.</strong>{" "}Postgres has a buffer cache. If your &quot;hot&quot; query is on a small table that fits in shared_buffers, Postgres is already serving it from RAM at sub-millisecond latency.</li>
+          <li><strong>Per-user data with no read amplification.</strong>{" "}If user 42 is the only one ever reading user:42&apos;s feed, and they read it once per session, caching it costs more than it saves.</li>
+          <li><strong>Data with extremely high cardinality and low hit rate.</strong>{" "}Caching every search query with no overlap is just turning your cache into a slow database.</li>
         </ul>
 
         <Callout variant="warn" title="The 'we just cache everything' antipattern">
@@ -517,8 +517,8 @@ public class UserService {
 
         <ul>
           <li><strong>Global cache:</strong> 1 entry, ~100% hit rate, KB of memory. Good for anything that does not depend on identity.</li>
-          <li><strong>Per-user cache:</strong> N entries, hit rate bounded by user re-visit rate. Memory grows linearly with active users.</li>
-          <li><strong>Per-user × per-context cache:</strong> N × M entries. Memory and miss rate both go through the roof if M is not controlled.</li>
+          <li><strong>Per-user cache:</strong>{" "}N entries, hit rate bounded by user re-visit rate. Memory grows linearly with active users.</li>
+          <li><strong>Per-user × per-context cache:</strong>{" "}N × M entries. Memory and miss rate both go through the roof if M is not controlled.</li>
         </ul>
 
         <Callout variant="insight" title="Run the numbers before you cache per-user">
@@ -539,7 +539,7 @@ public class UserService {
           hit rate that asymptotes to zero.
         </p>
         <p>
-          The anti-pattern is putting <em>every</em> request parameter into the key. The pattern is to be deliberate
+          The anti-pattern is putting <em>every</em>{" "}request parameter into the key. The pattern is to be deliberate
           about which dimensions actually change the response, and hash the rest into a single bounded fingerprint:
         </p>
 
@@ -571,9 +571,9 @@ public class UserService {
           in increasing order of complexity:
         </p>
         <ol>
-          <li><strong>Pre-warm on signup.</strong> Kick a background job when the account is created. By the time the user lands on the home feed, the cache is already populated. Works well for predictable post-signup flows.</li>
-          <li><strong>Serve the global fallback.</strong> Render the &quot;popular for everyone&quot; feed for new users until you have enough signal to personalize. This doubles as a cold-start solution and as the answer to the new-user model problem in any recommender system.</li>
-          <li><strong>Async upgrade.</strong> Send the global feed immediately, then push or poll for the personalized version and swap it in client-side. Faster first byte, slightly more frontend complexity.</li>
+          <li><strong>Pre-warm on signup.</strong>{" "}Kick a background job when the account is created. By the time the user lands on the home feed, the cache is already populated. Works well for predictable post-signup flows.</li>
+          <li><strong>Serve the global fallback.</strong>{" "}Render the &quot;popular for everyone&quot; feed for new users until you have enough signal to personalize. This doubles as a cold-start solution and as the answer to the new-user model problem in any recommender system.</li>
+          <li><strong>Async upgrade.</strong>{" "}Send the global feed immediately, then push or poll for the personalized version and swap it in client-side. Faster first byte, slightly more frontend complexity.</li>
         </ol>
         <p>
           The tradeoff is real: faster first byte versus less personalized first impression. Most teams default to
@@ -612,9 +612,9 @@ public class UserService {
           Three mitigations, often combined:
         </p>
         <ul>
-          <li><strong>Replicate hot keys to N nodes.</strong> Detect keys above a traffic threshold and write copies to several shards. Reads pick a random copy. Memory cost is N×, but per-node load is 1/N×.</li>
-          <li><strong>Client-side cache for top-K hot users.</strong> Each app instance keeps an in-process Caffeine cache of the few hundred hottest user IDs. Sub-microsecond reads, no Redis hop. Pair with pub/sub invalidation as covered in Part 3.</li>
-          <li><strong>Don&apos;t personalize at all for these accounts.</strong> A celebrity feed is read by millions of strangers; personalizing the celebrity-side response makes no sense. Serve the global, denormalized version and skip the per-user computation.</li>
+          <li><strong>Replicate hot keys to N nodes.</strong>{" "}Detect keys above a traffic threshold and write copies to several shards. Reads pick a random copy. Memory cost is N×, but per-node load is 1/N×.</li>
+          <li><strong>Client-side cache for top-K hot users.</strong>{" "}Each app instance keeps an in-process Caffeine cache of the few hundred hottest user IDs. Sub-microsecond reads, no Redis hop. Pair with pub/sub invalidation as covered in Part 3.</li>
+          <li><strong>Don&apos;t personalize at all for these accounts.</strong>{" "}A celebrity feed is read by millions of strangers; personalizing the celebrity-side response makes no sense. Serve the global, denormalized version and skip the per-user computation.</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Stale-while-revalidate for personalization</h3>

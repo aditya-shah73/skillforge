@@ -135,7 +135,7 @@ flowchart LR
           <div className="rounded-xl border border-sky-200 dark:border-sky-900 p-5 bg-sky-50/40 dark:bg-sky-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">BFS · queue · nearest first</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Reach for BFS when the problem says <strong>shortest</strong>, <strong>minimum number of steps</strong>, <strong>fewest moves</strong>, or asks about <strong>levels</strong> from a source.
+              Reach for BFS when the problem says <strong>shortest</strong>, <strong>minimum number of steps</strong>, <strong>fewest moves</strong>, or asks about <strong>levels</strong>{" "}from a source.
             </p>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-3">
               <li>Shortest path on unweighted graphs</li>
@@ -162,7 +162,7 @@ while (!queue.isEmpty()) {
           <div className="rounded-xl border border-indigo-200 dark:border-indigo-900 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">DFS · stack/recursion · deepest first</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Reach for DFS when the problem is about <strong>connectivity</strong>, <strong>cycles</strong>, <strong>topological order</strong>, or <strong>backtracking</strong> over an implicit tree of states.
+              Reach for DFS when the problem is about <strong>connectivity</strong>, <strong>cycles</strong>, <strong>topological order</strong>, or <strong>backtracking</strong>{" "}over an implicit tree of states.
             </p>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-3">
               <li>Connected components (Number of Islands)</li>
@@ -234,7 +234,7 @@ void dfs(int u) {
         </div>
 
         <Callout variant="warn" title="Visit order isn't identical">
-          Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS visits them in <em>reverse</em> order (last-pushed comes off first). If the problem expects a specific output order, push children in reverse to match recursion. Not a correctness issue for connectivity / cycle / topo — only for problems that grade by exact sequence.
+          Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS visits them in <em>reverse</em>{" "}order (last-pushed comes off first). If the problem expects a specific output order, push children in reverse to match recursion. Not a correctness issue for connectivity / cycle / topo — only for problems that grade by exact sequence.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -248,7 +248,7 @@ void dfs(int u) {
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">4. The shortest-path family</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Four algorithms. The right one is dictated by two questions: <strong>are edges weighted?</strong> and <strong>can weights be negative?</strong>
+          Four algorithms. The right one is dictated by two questions: <strong>are edges weighted?</strong>{" "}and <strong>can weights be negative?</strong>
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -421,7 +421,7 @@ Collections.reverse(order);`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 2 · Level-by-level BFS (multi-source)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>The tell:</strong> &quot;how many minutes / steps until [thing] spreads everywhere?&quot; Seed the queue with <em>every</em> initial source at level 0, freeze <code>queue.size()</code> at the top of each level, increment a counter per level.
+              <strong>The tell:</strong> &quot;how many minutes / steps until [thing] spreads everywhere?&quot; Seed the queue with <em>every</em>{" "}initial source at level 0, freeze <code>queue.size()</code> at the top of each level, increment a counter per level.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 994 · Rotting Oranges</strong>, <strong>LC 542 · 01 Matrix</strong>, <strong>LC 286 · Walls and Gates</strong>.</p>
           </div>
@@ -437,7 +437,7 @@ Collections.reverse(order);`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 4 · Dijkstra with PriorityQueue</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>The tell:</strong> weighted edges, non-negative, &quot;shortest&quot; or &quot;cheapest&quot; or &quot;minimum time&quot;. Min-heap of <code>(dist, node)</code>, lazy deletion via the staleness check <code>if (d &gt; dist[u]) continue;</code>.
+              <strong>The tell:</strong>{" "}weighted edges, non-negative, &quot;shortest&quot; or &quot;cheapest&quot; or &quot;minimum time&quot;. Min-heap of <code>(dist, node)</code>, lazy deletion via the staleness check <code>if (d &gt; dist[u]) continue;</code>.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 743 · Network Delay Time</strong>, <strong>LC 787 · Cheapest Flights Within K Stops</strong>, <strong>LC 1631 · Path With Minimum Effort</strong>.</p>
           </div>
@@ -484,7 +484,7 @@ void dfs(int u) {
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Using DFS for shortest path on an unweighted graph</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              DFS finds <em>a</em> path. It doesn&apos;t find the <em>shortest</em> one — it can dive deep into the wrong branch and return a 50-edge path when a 3-edge path exists. For unweighted shortest path, always BFS.
+              DFS finds <em>a</em>{" "}path. It doesn&apos;t find the <em>shortest</em>{" "}one — it can dive deep into the wrong branch and return a 50-edge path when a 3-edge path exists. For unweighted shortest path, always BFS.
             </p>
             <CodeBlock lang="java">{`// BAD — DFS reports "first path found", not shortest
 int dfsShortest(int u, int target) {
@@ -650,7 +650,7 @@ for (int[] e : edges) {
           Adjacency list by default, matrix in the three specific cases. BFS for shortest/level/fewest, DFS for connectivity/cycle/topo. Dijkstra for non-negative weighted; Bellman-Ford when negatives appear; Kahn&apos;s for dependencies. The five named patterns — flood fill, level BFS, bidirectional BFS, Dijkstra with PriorityQueue, topo-sort schedule — cover most of the LeetCode graph surface.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Java Collections in depth.</strong> Every container you&apos;ve been using — ArrayList, HashMap, TreeMap, ArrayDeque, PriorityQueue — gets the deep treatment. When to pick which, what the JDK is actually doing under the hood, and the decision framework that ties Phases 2-4 together.
+          <strong>Up next: Phase 5 — Java Collections in depth.</strong>{" "}Every container you&apos;ve been using — ArrayList, HashMap, TreeMap, ArrayDeque, PriorityQueue — gets the deep treatment. When to pick which, what the JDK is actually doing under the hood, and the decision framework that ties Phases 2-4 together.
         </p>
         <Link
           href="/courses/dsa/modules/java-collections"

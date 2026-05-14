@@ -174,9 +174,9 @@ flowchart TB
         <h2 id="setup">What greedy means — and why it fails</h2>
 
         <p>
-          A <strong>greedy algorithm</strong> follows one rule: at each step, take the locally optimal choice and never
+          A <strong>greedy algorithm</strong>{" "}follows one rule: at each step, take the locally optimal choice and never
           revisit it. No backtracking, no remembering alternative branches, no lookahead. You commit to the choice that
-          looks best <em>right now</em> and march forward.
+          looks best <em>right now</em>{" "}and march forward.
         </p>
 
         <p>
@@ -209,7 +209,7 @@ flowchart TB
             <code>{`{1, 3, 4}`}</code>, or to many real-world currencies — and greedy breaks.
           </p>
           <p>
-            This is the trap: greedy <em>often</em> works on small examples, so it looks correct after a few hand
+            This is the trap: greedy <em>often</em>{" "}works on small examples, so it looks correct after a few hand
             traces. The bug only appears on a specific input pattern. Without a proof, you don&apos;t know if your
             greedy passes 99% of test cases or 100%.
           </p>
@@ -271,7 +271,7 @@ flowchart TB
 
         <ol>
           <li>Assume some optimal solution exists (we don&apos;t know what it looks like).</li>
-          <li>Show that wherever the greedy and the optimal disagree, you can <em>swap</em> the optimal&apos;s choice for the greedy&apos;s choice without making the optimal worse.</li>
+          <li>Show that wherever the greedy and the optimal disagree, you can <em>swap</em>{" "}the optimal&apos;s choice for the greedy&apos;s choice without making the optimal worse.</li>
           <li>Repeat the swap until the optimal looks exactly like greedy. Greedy is therefore at least as good as optimal — i.e., greedy is also optimal.</li>
         </ol>
 
@@ -303,7 +303,7 @@ flowchart TB
 
         <p>
           Find the first position where they differ. Greedy&apos;s rule guarantees <code>g₁</code> has the earliest end
-          time among <em>all</em> intervals — so <code>g₁.end ≤ o₁.end</code>. If greedy and optimal already agree on
+          time among <em>all</em>{" "}intervals — so <code>g₁.end ≤ o₁.end</code>. If greedy and optimal already agree on
           interval 1, look at interval 2; same argument applies among the remaining intervals.
         </p>
 
@@ -323,7 +323,7 @@ flowchart TB
         <ul>
           <li><strong>No conflict before:</strong> <code>g_k</code> doesn&apos;t conflict with <code>g_{`{k-1}`} = o_{`{k-1}`}</code>, by greedy&apos;s rule.</li>
           <li><strong>No conflict after:</strong> <code>g_k.end ≤ o_k.end</code>, so anything that started after <code>o_k</code> ended also starts after <code>g_k</code> ends. Future intervals are still compatible.</li>
-          <li><strong>Same size:</strong> we swapped one interval for one interval. <code>|O&apos;| = |O|</code>.</li>
+          <li><strong>Same size:</strong>{" "}we swapped one interval for one interval. <code>|O&apos;| = |O|</code>.</li>
         </ul>
 
         <p>
@@ -349,10 +349,10 @@ flowchart TB
         <h3>The recipe for any exchange argument</h3>
 
         <ul>
-          <li><strong>Define what greedy picks</strong> in terms of a sortable property (end-time, frequency, deadline).</li>
+          <li><strong>Define what greedy picks</strong>{" "}in terms of a sortable property (end-time, frequency, deadline).</li>
           <li><strong>Take an optimal solution</strong>, sort it the same way.</li>
-          <li><strong>Find the first disagreement</strong> and show greedy&apos;s pick is &quot;at least as good&quot; on the sortable property.</li>
-          <li><strong>Swap and verify</strong> nothing breaks: no new conflicts, same size or better.</li>
+          <li><strong>Find the first disagreement</strong>{" "}and show greedy&apos;s pick is &quot;at least as good&quot; on the sortable property.</li>
+          <li><strong>Swap and verify</strong>{" "}nothing breaks: no new conflicts, same size or better.</li>
           <li><strong>Iterate</strong>: greedy = (modified) optimal, so greedy&apos;s size ≥ optimal&apos;s size.</li>
         </ul>
 
@@ -412,7 +412,7 @@ flowchart TB
         <h3>LC 435 · Non-overlapping Intervals (the inverse problem)</h3>
 
         <p>
-          LeetCode 435 asks for the <em>minimum number of intervals to remove</em> so the rest don&apos;t overlap.
+          LeetCode 435 asks for the <em>minimum number of intervals to remove</em>{" "}so the rest don&apos;t overlap.
           That&apos;s just <code>n - maxCompatible</code>: if greedy keeps <code>k</code>, you must have removed{" "}
           <code>n - k</code>. Same code, different return value.
         </p>
@@ -467,10 +467,10 @@ flowchart TB
         <h3>The interval family at a glance</h3>
 
         <ul>
-          <li><strong>Max compatible (LC 435 inverse):</strong> sort by end, count picks.</li>
-          <li><strong>Min removals (LC 435):</strong> n − max compatible.</li>
-          <li><strong>Min arrows (LC 452):</strong> max compatible with strict <code>&gt;</code>.</li>
-          <li><strong>Meeting rooms II:</strong> different beast — count concurrent intervals at any moment. Sort by start, use a min-heap of active end-times. Not the same template; mentioned here so you don&apos;t mis-classify it.</li>
+          <li><strong>Max compatible (LC 435 inverse):</strong>{" "}sort by end, count picks.</li>
+          <li><strong>Min removals (LC 435):</strong>{" "}n − max compatible.</li>
+          <li><strong>Min arrows (LC 452):</strong>{" "}max compatible with strict <code>&gt;</code>.</li>
+          <li><strong>Meeting rooms II:</strong>{" "}different beast — count concurrent intervals at any moment. Sort by start, use a min-heap of active end-times. Not the same template; mentioned here so you don&apos;t mis-classify it.</li>
         </ul>
 
         <Quiz
@@ -492,13 +492,13 @@ flowchart TB
         <h2 id="jump">Jump Game: tracking the reachable frontier</h2>
 
         <p>
-          <strong>LC 55 · Jump Game.</strong> You&apos;re given an array <code>nums</code> where <code>nums[i]</code> is
+          <strong>LC 55 · Jump Game.</strong>{" "}You&apos;re given an array <code>nums</code> where <code>nums[i]</code> is
           the maximum jump length from position <code>i</code>. Starting at index 0, can you reach the last index?
         </p>
 
         <p>
           The brute-force DP solution is O(n²): from every position, try every jump length. The greedy insight collapses
-          this to O(n): you don&apos;t need to know <em>how</em> you got to position <code>i</code>; you only need to
+          this to O(n): you don&apos;t need to know <em>how</em>{" "}you got to position <code>i</code>; you only need to
           know whether <code>i</code> is reachable, and what&apos;s the farthest position you can reach from anywhere
           you&apos;ve been so far.
         </p>
@@ -535,7 +535,7 @@ flowchart TB
             from <code>i</code> means &quot;we can also reach <code>i + nums[i]</code> via <code>i</code>.&quot;
           </p>
           <p>
-            The greedy commitment: we don&apos;t care <em>which</em> path got us to <code>i</code>. The reachable set
+            The greedy commitment: we don&apos;t care <em>which</em>{" "}path got us to <code>i</code>. The reachable set
             from the start is fully characterized by a single number — the right endpoint. That&apos;s the win.
           </p>
         </Callout>
@@ -544,7 +544,7 @@ flowchart TB
 
         <p>
           The same problem with a twist: return the minimum number of jumps to reach the end. The trick is to think in{" "}
-          <em>BFS levels</em> over the array. From <code>[0]</code>, you can reach indices <code>[1..nums[0]]</code> in
+          <em>BFS levels</em>{" "}over the array. From <code>[0]</code>, you can reach indices <code>[1..nums[0]]</code> in
           one jump. From any of those, the union of one-more-jump reaches some farther <code>currEnd</code>. Each
           &quot;level boundary&quot; is one more jump.
         </p>
@@ -614,19 +614,19 @@ flowchart TB
         </p>
 
         <ul>
-          <li><strong>Interval scheduling:</strong> picking the earliest-ending interval doesn&apos;t change what intervals exist later. The future is unchanged.</li>
-          <li><strong>Jump Game:</strong> the reachable frontier only ever extends. Decisions don&apos;t close off positions you could otherwise reach.</li>
-          <li><strong>Huffman coding:</strong> merging the two least-frequent symbols never changes the frequencies of the others.</li>
+          <li><strong>Interval scheduling:</strong>{" "}picking the earliest-ending interval doesn&apos;t change what intervals exist later. The future is unchanged.</li>
+          <li><strong>Jump Game:</strong>{" "}the reachable frontier only ever extends. Decisions don&apos;t close off positions you could otherwise reach.</li>
+          <li><strong>Huffman coding:</strong>{" "}merging the two least-frequent symbols never changes the frequencies of the others.</li>
         </ul>
 
         <p>
-          Greedy <em>fails</em> when a local choice constrains the future in a way that can be globally suboptimal:
+          Greedy <em>fails</em>{" "}when a local choice constrains the future in a way that can be globally suboptimal:
         </p>
 
         <ul>
-          <li><strong>Coin change with arbitrary denominations:</strong> picking the largest coin shifts the remaining target in a way that may have no good follow-up. The global structure of the denomination set matters.</li>
-          <li><strong>0/1 Knapsack:</strong> picking the highest value-per-weight item first can leave you with a remaining capacity that can&apos;t be filled efficiently. (Fractional knapsack is greedy; 0/1 needs DP.)</li>
-          <li><strong>Longest increasing subsequence:</strong> picking the smallest element greedily doesn&apos;t maximize length. You need DP because a small element might block a longer chain that started with a larger one.</li>
+          <li><strong>Coin change with arbitrary denominations:</strong>{" "}picking the largest coin shifts the remaining target in a way that may have no good follow-up. The global structure of the denomination set matters.</li>
+          <li><strong>0/1 Knapsack:</strong>{" "}picking the highest value-per-weight item first can leave you with a remaining capacity that can&apos;t be filled efficiently. (Fractional knapsack is greedy; 0/1 needs DP.)</li>
+          <li><strong>Longest increasing subsequence:</strong>{" "}picking the smallest element greedily doesn&apos;t maximize length. You need DP because a small element might block a longer chain that started with a larger one.</li>
         </ul>
 
         <Callout variant="warn" title="The 'too good to be true' test">
@@ -713,11 +713,11 @@ public static void stressTest() {
         <h3>The decision flow in interviews</h3>
 
         <ol>
-          <li><strong>See an optimization problem.</strong> Note: greedy <em>or</em> DP candidate.</li>
-          <li><strong>Try to spot a greedy rule.</strong> Sort by something? Pick the extreme? Often the &quot;right&quot; key is end-time, deadline, frequency, or value-per-weight.</li>
-          <li><strong>Test on a few inputs by hand.</strong> If it produces wrong answers immediately, abandon greedy.</li>
-          <li><strong>Try a quick exchange argument.</strong> Can you swap a greedy choice for an optimal one without breaking anything? If yes, you have proof. If no, suspect DP.</li>
-          <li><strong>If unsure, default to DP.</strong> DP is harder to write but harder to get wrong. A correct O(n²) DP beats a buggy O(n) greedy every time.</li>
+          <li><strong>See an optimization problem.</strong>{" "}Note: greedy <em>or</em>{" "}DP candidate.</li>
+          <li><strong>Try to spot a greedy rule.</strong>{" "}Sort by something? Pick the extreme? Often the &quot;right&quot; key is end-time, deadline, frequency, or value-per-weight.</li>
+          <li><strong>Test on a few inputs by hand.</strong>{" "}If it produces wrong answers immediately, abandon greedy.</li>
+          <li><strong>Try a quick exchange argument.</strong>{" "}Can you swap a greedy choice for an optimal one without breaking anything? If yes, you have proof. If no, suspect DP.</li>
+          <li><strong>If unsure, default to DP.</strong>{" "}DP is harder to write but harder to get wrong. A correct O(n²) DP beats a buggy O(n) greedy every time.</li>
         </ol>
 
         <Quiz

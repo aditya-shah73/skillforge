@@ -101,15 +101,15 @@ export default function Page() {
           When a database says &quot;B-tree index,&quot; it almost always means a B+ tree. The structure has two kinds of nodes:
         </p>
         <ul>
-          <li><strong>Internal nodes</strong> hold ordered key boundaries that route the search to a child. They contain no row data.</li>
-          <li><strong>Leaf nodes</strong> hold the actual key → row-pointer entries, in sorted order, and are linked to their neighbors so range scans walk a linked list.</li>
+          <li><strong>Internal nodes</strong>{" "}hold ordered key boundaries that route the search to a child. They contain no row data.</li>
+          <li><strong>Leaf nodes</strong>{" "}hold the actual key → row-pointer entries, in sorted order, and are linked to their neighbors so range scans walk a linked list.</li>
         </ul>
 
         <Mermaid chart={btreeDiagram} />
 
         <h3>Why it stays shallow</h3>
         <p>
-          A node is a <em>page</em> on disk — typically 4 KB or 8 KB in Postgres. That page can hold hundreds of routing entries. The technical term is <strong>fan-out</strong>: how many children one node points at. With a fan-out of around 200, the tree height grows logarithmically with absurd slowness.
+          A node is a <em>page</em>{" "}on disk — typically 4 KB or 8 KB in Postgres. That page can hold hundreds of routing entries. The technical term is <strong>fan-out</strong>: how many children one node points at. With a fan-out of around 200, the tree height grows logarithmically with absurd slowness.
         </p>
         <p>Concrete numbers (Postgres, 8 KB pages, integer keys, fan-out ~250):</p>
         <ul>
@@ -127,7 +127,7 @@ export default function Page() {
 
         <h3>How writes happen</h3>
         <p>
-          A B-tree write finds the right leaf (same path as a read), inserts the new entry, and may need to <strong>split the page</strong> if it&apos;s full — half the entries go to a new sibling, the parent gets a new boundary. Splits cascade upward in the worst case, but rarely past the second level.
+          A B-tree write finds the right leaf (same path as a read), inserts the new entry, and may need to <strong>split the page</strong>{" "}if it&apos;s full — half the entries go to a new sibling, the parent gets a new boundary. Splits cascade upward in the worst case, but rarely past the second level.
         </p>
         <p>
           The cost: every write does an in-place page modification, which means random I/O. SSDs make this much cheaper than it was on spinning disks, but it&apos;s still &quot;modify a page that&apos;s probably not the page you wrote a millisecond ago.&quot; That random write pattern is the trade-off LSM trees attack head-on.
@@ -140,7 +140,7 @@ export default function Page() {
 
         <h3>Covering indexes and index-only scans</h3>
         <p>
-          A normal index points at row locations. After finding the matching index entries, the database has to fetch the full row from the table heap — one extra I/O per row. A <strong>covering index</strong> includes additional columns in the index itself, so the query can be answered without touching the heap at all.
+          A normal index points at row locations. After finding the matching index entries, the database has to fetch the full row from the table heap — one extra I/O per row. A <strong>covering index</strong>{" "}includes additional columns in the index itself, so the query can be answered without touching the heap at all.
         </p>
         <CodeBlock lang="plain" caption="Postgres covering index — INCLUDE clause">{`-- Plain index — finds rows by user_id, but heap fetch needed for status, total
 CREATE INDEX idx_orders_user ON orders(user_id);
@@ -178,7 +178,7 @@ SELECT * FROM orders WHERE user_id = 12345;
     (actual time=0.08..0.41 rows=37 loops=1)
     Index Cond: (user_id = 12345)`}</CodeBlock>
         <p>
-          Two numbers tell the story: <strong>Rows Removed by Filter: 4,999,963</strong> in the seq scan (that&apos;s the work the index lets you skip), and <strong>actual time</strong> dropping from 52ms to 0.4ms. 100x improvement from one index. This is the easy case — the index transforms a full scan into a 4-page tree walk.
+          Two numbers tell the story: <strong>Rows Removed by Filter: 4,999,963</strong>{" "}in the seq scan (that&apos;s the work the index lets you skip), and <strong>actual time</strong>{" "}dropping from 52ms to 0.4ms. 100x improvement from one index. This is the easy case — the index transforms a full scan into a 4-page tree walk.
         </p>
 
         <h3>Composite indexes and column order</h3>
@@ -188,10 +188,10 @@ SELECT * FROM orders WHERE user_id = 12345;
         <ul>
           <li>It can serve <code>WHERE a = ?</code>, <code>WHERE a = ? AND b = ?</code>, and <code>WHERE a = ? AND b = ? AND c = ?</code>.</li>
           <li>It can serve <code>WHERE a = ? ORDER BY b</code> without a sort.</li>
-          <li>It <strong>cannot</strong> efficiently serve <code>WHERE b = ?</code> alone — there&apos;s no entry point in the tree.</li>
+          <li>It <strong>cannot</strong>{" "}efficiently serve <code>WHERE b = ?</code> alone — there&apos;s no entry point in the tree.</li>
         </ul>
         <p>
-          Rule of thumb for column order: <strong>most selective equality columns first, then range columns last.</strong> An index on <code>(status, created_at)</code> is great for <code>WHERE status = &apos;open&apos; AND created_at &gt; ?</code>; flipping it to <code>(created_at, status)</code> would make the same query much slower.
+          Rule of thumb for column order: <strong>most selective equality columns first, then range columns last.</strong>{" "}An index on <code>(status, created_at)</code> is great for <code>WHERE status = &apos;open&apos; AND created_at &gt; ?</code>; flipping it to <code>(created_at, status)</code> would make the same query much slower.
         </p>
 
         <Quiz
@@ -240,9 +240,9 @@ SELECT * FROM orders WHERE user_id = 12345;
         <Mermaid chart={lsmDiagram} />
         <p>The structure has three parts:</p>
         <ol>
-          <li><strong>Memtable.</strong> An in-memory sorted map (typically a skip list or red-black tree). Every write goes here first. It&apos;s also written to a write-ahead log on disk for durability.</li>
-          <li><strong>SSTables (Sorted String Tables).</strong> When the memtable is full, it&apos;s flushed to disk as a single immutable, sorted file. New writes start in a fresh memtable; the SSTable is never modified.</li>
-          <li><strong>Compaction.</strong> A background process merges multiple SSTables into bigger, sorted, deduplicated SSTables, organized into levels. L0 SSTables are small and recent; L1 is ~10x bigger; L2 is ~10x bigger again, etc.</li>
+          <li><strong>Memtable.</strong>{" "}An in-memory sorted map (typically a skip list or red-black tree). Every write goes here first. It&apos;s also written to a write-ahead log on disk for durability.</li>
+          <li><strong>SSTables (Sorted String Tables).</strong>{" "}When the memtable is full, it&apos;s flushed to disk as a single immutable, sorted file. New writes start in a fresh memtable; the SSTable is never modified.</li>
+          <li><strong>Compaction.</strong>{" "}A background process merges multiple SSTables into bigger, sorted, deduplicated SSTables, organized into levels. L0 SSTables are small and recent; L1 is ~10x bigger; L2 is ~10x bigger again, etc.</li>
         </ol>
 
         <h3>Why writes are fast</h3>
@@ -259,25 +259,25 @@ SELECT * FROM orders WHERE user_id = 12345;
         </p>
         <p>Several mitigations make reads usable:</p>
         <ul>
-          <li><strong>Bloom filters.</strong> Each SSTable has a Bloom filter — a small probabilistic structure that says &quot;this key is definitely not here&quot; (or &quot;maybe here&quot;). A miss-by-Bloom skips the SSTable entirely. Crucial for negative lookups.</li>
-          <li><strong>Block indexes inside SSTables.</strong> Each SSTable has its own sparse index pointing at sorted blocks; you only read the relevant block.</li>
-          <li><strong>Caching.</strong> Recent / hot SSTable blocks live in a block cache, similar to a buffer pool.</li>
+          <li><strong>Bloom filters.</strong>{" "}Each SSTable has a Bloom filter — a small probabilistic structure that says &quot;this key is definitely not here&quot; (or &quot;maybe here&quot;). A miss-by-Bloom skips the SSTable entirely. Crucial for negative lookups.</li>
+          <li><strong>Block indexes inside SSTables.</strong>{" "}Each SSTable has its own sparse index pointing at sorted blocks; you only read the relevant block.</li>
+          <li><strong>Caching.</strong>{" "}Recent / hot SSTable blocks live in a block cache, similar to a buffer pool.</li>
         </ul>
 
         <Callout variant="info" title="Read, write, space — pick a side">
-          <p className="m-0">LSMs introduce three amplifications you have to reason about. <strong>Write amplification:</strong> data gets written multiple times as it&apos;s compacted up through levels — typical LSM has 10–30x write amplification. <strong>Read amplification:</strong> a read may probe several SSTables — typical 2–5x. <strong>Space amplification:</strong> tombstones (deletes) and old versions hang around until compaction. B-trees have lower amplifications across all three but cap your write throughput. There&apos;s no free lunch.</p>
+          <p className="m-0">LSMs introduce three amplifications you have to reason about. <strong>Write amplification:</strong>{" "}data gets written multiple times as it&apos;s compacted up through levels — typical LSM has 10–30x write amplification. <strong>Read amplification:</strong>{" "}a read may probe several SSTables — typical 2–5x. <strong>Space amplification:</strong>{" "}tombstones (deletes) and old versions hang around until compaction. B-trees have lower amplifications across all three but cap your write throughput. There&apos;s no free lunch.</p>
         </Callout>
 
         <h3>Compaction strategies</h3>
         <p>Compaction is where LSM systems differ. The two main strategies:</p>
         <ul>
-          <li><strong>Size-tiered (Cassandra default until recently).</strong> Merge SSTables of similar size. Lower write amplification, higher read amplification. Good for write-heavy workloads where reads are rare.</li>
-          <li><strong>Leveled (RocksDB, ScyllaDB, modern Cassandra option).</strong> Each level has a strict size budget. Compaction is more aggressive, write amplification higher, but read amplification much lower because each level has at most one SSTable per key. Good for mixed workloads.</li>
+          <li><strong>Size-tiered (Cassandra default until recently).</strong>{" "}Merge SSTables of similar size. Lower write amplification, higher read amplification. Good for write-heavy workloads where reads are rare.</li>
+          <li><strong>Leveled (RocksDB, ScyllaDB, modern Cassandra option).</strong>{" "}Each level has a strict size budget. Compaction is more aggressive, write amplification higher, but read amplification much lower because each level has at most one SSTable per key. Good for mixed workloads.</li>
         </ul>
 
         <h3>Tombstones and the delete problem</h3>
         <p>
-          LSMs don&apos;t do in-place updates, including deletes. A delete is a special record called a <strong>tombstone</strong> that says &quot;this key is gone.&quot; Reads have to honor tombstones (return &quot;not found&quot; even if older SSTables still hold the key). Tombstones only physically disappear when compaction has merged through every level that contained the key.
+          LSMs don&apos;t do in-place updates, including deletes. A delete is a special record called a <strong>tombstone</strong>{" "}that says &quot;this key is gone.&quot; Reads have to honor tombstones (return &quot;not found&quot; even if older SSTables still hold the key). Tombstones only physically disappear when compaction has merged through every level that contained the key.
         </p>
         <p>
           Real production gotcha: if you delete millions of rows but compaction is slow, reads have to scan past all those tombstones until they&apos;re cleaned up. Cassandra has had outages caused by tombstone storms — &quot;range query returned 1M tombstones and 5 actual rows.&quot; The fix is operational: faster compaction, smaller TTLs, or schema redesign to avoid mass deletes in the first place.
@@ -285,10 +285,10 @@ SELECT * FROM orders WHERE user_id = 12345;
 
         <h3>Real systems</h3>
         <ul>
-          <li><strong>RocksDB.</strong> Embeddable LSM library. Used as the storage engine in MyRocks, CockroachDB, TiKV, and Kafka Streams state stores. The de facto LSM library.</li>
-          <li><strong>Cassandra / ScyllaDB.</strong> Distributed wide-column stores built around LSM internals.</li>
-          <li><strong>BigTable / HBase.</strong> Google&apos;s original LSM-backed wide-column store, and the Apache clone.</li>
-          <li><strong>LevelDB.</strong> The original public LSM library from Google, ancestor of RocksDB.</li>
+          <li><strong>RocksDB.</strong>{" "}Embeddable LSM library. Used as the storage engine in MyRocks, CockroachDB, TiKV, and Kafka Streams state stores. The de facto LSM library.</li>
+          <li><strong>Cassandra / ScyllaDB.</strong>{" "}Distributed wide-column stores built around LSM internals.</li>
+          <li><strong>BigTable / HBase.</strong>{" "}Google&apos;s original LSM-backed wide-column store, and the Apache clone.</li>
+          <li><strong>LevelDB.</strong>{" "}The original public LSM library from Google, ancestor of RocksDB.</li>
         </ul>
 
         <Callout variant="warn" title="Why your B-tree database has LSM-shaped problems">
@@ -334,7 +334,7 @@ SELECT * FROM orders WHERE user_id = 12345;
       <Checkpoint moduleSlug="indexing-deep" id="indexes-hurt" title="Part 3 · When indexes hurt — and which index type to pick" xp={25}>
         <h2>Every index makes writes slower</h2>
         <p>
-          The first thing senior engineers internalize about indexing: <strong>indexes are not free.</strong> Every secondary index is another tree the database has to update on every insert, update, and delete. A table with 8 indexes turns each <code>INSERT</code> into 1 row write + 8 index writes. That&apos;s a real cost, and it&apos;s the hidden tax behind the &quot;we&apos;ll just add an index for that&quot; anti-pattern.
+          The first thing senior engineers internalize about indexing: <strong>indexes are not free.</strong>{" "}Every secondary index is another tree the database has to update on every insert, update, and delete. A table with 8 indexes turns each <code>INSERT</code> into 1 row write + 8 index writes. That&apos;s a real cost, and it&apos;s the hidden tax behind the &quot;we&apos;ll just add an index for that&quot; anti-pattern.
         </p>
 
         <CodeBlock lang="plain" caption="The 'one more index' anti-pattern, measured">{`-- Table with PK only — 38k inserts/sec single-threaded
@@ -363,7 +363,7 @@ INSERT INTO orders (...) VALUES (...);
           An index helps when the query returns a small fraction of the table. If a query returns more than ~5–10% of rows, a sequential scan is often faster than an index scan + heap fetch — fewer random I/Os, better prefetching. The Postgres planner knows this and switches strategies, which is why you sometimes see &quot;I added an index and it&apos;s not being used&quot; — the planner decided your query wasn&apos;t selective enough.
         </p>
         <p>
-          A column with two distinct values (boolean <code>is_deleted</code>, for example) is rarely worth a plain B-tree. A <em>partial</em> index on the rare value (<code>WHERE is_deleted = false</code> when only 1% are deleted) can be tiny and great. Same data, very different index design.
+          A column with two distinct values (boolean <code>is_deleted</code>, for example) is rarely worth a plain B-tree. A <em>partial</em>{" "}index on the rare value (<code>WHERE is_deleted = false</code> when only 1% are deleted) can be tiny and great. Same data, very different index design.
         </p>
 
         <h3>Postgres index types beyond B-tree</h3>
@@ -371,10 +371,10 @@ INSERT INTO orders (...) VALUES (...);
           B-tree is the default and serves equality + range queries on ordinary columns. For other shapes, Postgres has specialized index types:
         </p>
         <ul>
-          <li><strong>GIN (Generalized Inverted Index).</strong> For columns where each row has many values: full-text (<code>tsvector</code>), JSONB, arrays. The index maps each value to the list of rows containing it. Slow to build, slow to update, fast to query for &quot;contains&quot; semantics.</li>
-          <li><strong>GiST (Generalized Search Tree).</strong> A framework for tree indexes over types where ordering is non-trivial: geometry (PostGIS), ranges, full-text with rank ordering. Use when you&apos;re doing nearest-neighbor or geometric containment queries.</li>
-          <li><strong>BRIN (Block Range Index).</strong> Stores summaries of value ranges per block of pages. Tiny on disk (megabytes for a billion-row table). Useful when data is naturally clustered in insertion order — typical for time-series. Trade: less precise than B-tree, but the size advantage is enormous.</li>
-          <li><strong>Hash.</strong> Equality only, no range. Rarely worth it over B-tree in modern Postgres.</li>
+          <li><strong>GIN (Generalized Inverted Index).</strong>{" "}For columns where each row has many values: full-text (<code>tsvector</code>), JSONB, arrays. The index maps each value to the list of rows containing it. Slow to build, slow to update, fast to query for &quot;contains&quot; semantics.</li>
+          <li><strong>GiST (Generalized Search Tree).</strong>{" "}A framework for tree indexes over types where ordering is non-trivial: geometry (PostGIS), ranges, full-text with rank ordering. Use when you&apos;re doing nearest-neighbor or geometric containment queries.</li>
+          <li><strong>BRIN (Block Range Index).</strong>{" "}Stores summaries of value ranges per block of pages. Tiny on disk (megabytes for a billion-row table). Useful when data is naturally clustered in insertion order — typical for time-series. Trade: less precise than B-tree, but the size advantage is enormous.</li>
+          <li><strong>Hash.</strong>{" "}Equality only, no range. Rarely worth it over B-tree in modern Postgres.</li>
         </ul>
 
         <CodeBlock lang="plain" caption="Picking the right index type">{`-- Full-text search on article body
@@ -432,11 +432,11 @@ public class Order {
 
         <h3>Anti-patterns to memorize</h3>
         <ul>
-          <li><strong>Indexing every column.</strong> Each index = write amplification. Audit regularly; drop indexes with zero scans.</li>
-          <li><strong>Wrong column order in composite indexes.</strong> Most-selective equality first, range last. <code>(status, created_at)</code> ≠ <code>(created_at, status)</code>.</li>
-          <li><strong>Indexing a low-selectivity column with B-tree.</strong> Boolean columns and small enums rarely benefit. Use partial indexes for the rare value.</li>
-          <li><strong>Forgetting that <code>LIKE &apos;%foo%&apos;</code> can&apos;t use a B-tree.</strong> Leading wildcards defeat ordering. Use GIN with <code>pg_trgm</code> for substring search, or move full-text to Elasticsearch (search-systems module is coming up).</li>
-          <li><strong>Over-INCLUDE in covering indexes.</strong> Each included column inflates the index. A 1 KB-per-row covering index across a 5M-row table costs gigabytes; weigh that vs. the heap fetch you saved.</li>
+          <li><strong>Indexing every column.</strong>{" "}Each index = write amplification. Audit regularly; drop indexes with zero scans.</li>
+          <li><strong>Wrong column order in composite indexes.</strong>{" "}Most-selective equality first, range last. <code>(status, created_at)</code> ≠ <code>(created_at, status)</code>.</li>
+          <li><strong>Indexing a low-selectivity column with B-tree.</strong>{" "}Boolean columns and small enums rarely benefit. Use partial indexes for the rare value.</li>
+          <li><strong>Forgetting that <code>LIKE &apos;%foo%&apos;</code> can&apos;t use a B-tree.</strong>{" "}Leading wildcards defeat ordering. Use GIN with <code>pg_trgm</code> for substring search, or move full-text to Elasticsearch (search-systems module is coming up).</li>
+          <li><strong>Over-INCLUDE in covering indexes.</strong>{" "}Each included column inflates the index. A 1 KB-per-row covering index across a 5M-row table costs gigabytes; weigh that vs. the heap fetch you saved.</li>
           <li><strong>Creating indexes during a release.</strong> <code>CREATE INDEX</code> takes a strong lock; use <code>CREATE INDEX CONCURRENTLY</code> on production tables. (Real outage source.)</li>
         </ul>
 

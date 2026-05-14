@@ -108,7 +108,7 @@ flowchart LR
           ending at index <code>i</code>, and the recurrence wires <code>dp[i]</code> to a few earlier{" "}
           <code>dp[j]</code> values. That works beautifully when the problem has a single sweeping axis — usually
           &quot;position in a sequence.&quot; But there&apos;s a whole family of problems where 1D{" "}
-          <em>cannot</em> capture the answer, and trying to force it in produces a recurrence that needs information
+          <em>cannot</em>{" "}capture the answer, and trying to force it in produces a recurrence that needs information
           you didn&apos;t save.
         </p>
 
@@ -124,7 +124,7 @@ flowchart LR
             shortest common supersequence, regex match.)
           </li>
           <li>
-            <strong>A grid.</strong> The state is a 2D position <code>(i, j)</code>. (Unique paths, minimum path sum,
+            <strong>A grid.</strong>{" "}The state is a 2D position <code>(i, j)</code>. (Unique paths, minimum path sum,
             dungeon game, longest increasing path.)
           </li>
           <li>
@@ -159,13 +159,13 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
 
         <Callout variant="insight" title="Two flavors that account for ~80% of 2D DP">
           <p>
-            <strong>Two-string family:</strong> the indices <code>i, j</code> are pointers into two different
+            <strong>Two-string family:</strong>{" "}the indices <code>i, j</code> are pointers into two different
             sequences, and you compare <code>A[i-1]</code> to <code>B[j-1]</code> at every cell. LCS and edit
             distance are the canonical members. Almost every problem in this family has the same cell-shape: a
             match-or-don&apos;t-match branch.
           </p>
           <p>
-            <strong>Grid family:</strong> the indices are literal <code>(row, col)</code> coordinates and you walk
+            <strong>Grid family:</strong>{" "}the indices are literal <code>(row, col)</code> coordinates and you walk
             from <code>(0,0)</code> to <code>(m-1,n-1)</code>. Unique paths and minimum path sum are the canonical
             members. The recurrence is whatever the &quot;allowed moves&quot; rule says — usually right and down.
           </p>
@@ -182,10 +182,10 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
         </p>
 
         <p>
-          Ironically, several 2D DPs <em>can</em> be space-optimized back down to 1D — because in the recurrence,
+          Ironically, several 2D DPs <em>can</em>{" "}be space-optimized back down to 1D — because in the recurrence,
           <code>dp[i][j]</code> only depends on row <code>i-1</code>, so you only need to keep one previous row.
           We&apos;ll do this twice in this module: once for unique paths, once for knapsack. But the{" "}
-          <em>conceptual</em> state is still 2D, and getting the 2D version right comes first.
+          <em>conceptual</em>{" "}state is still 2D, and getting the 2D version right comes first.
         </p>
 
         <Quiz
@@ -218,7 +218,7 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
         <h2 id="unique-paths">Unique Paths — the cleanest grid DP there is</h2>
 
         <p>
-          <strong>LC 62 · Unique Paths.</strong> A robot stands on the top-left of an <code>m × n</code> grid. It can
+          <strong>LC 62 · Unique Paths.</strong>{" "}A robot stands on the top-left of an <code>m × n</code> grid. It can
           move only right or down. How many distinct paths bring it to the bottom-right?
         </p>
 
@@ -300,11 +300,11 @@ answer: dp[m-1][n-1]`}</CodeBlock>
 
         <Callout variant="warn" title="Why the sweep direction matters here">
           <p>
-            We sweep <em>left to right</em> within each row, and that ordering is load-bearing. <code>dp[j-1]</code>{" "}
+            We sweep <em>left to right</em>{" "}within each row, and that ordering is load-bearing. <code>dp[j-1]</code>{" "}
             must already be the new row&apos;s value when we read it (we want the &quot;left&quot; neighbor in the
             current row), and <code>dp[j]</code> must still be the old row&apos;s value (the &quot;up&quot;
             neighbor). Reverse the sweep and you&apos;d break one of those invariants. We&apos;ll see the same
-            ordering question pop up — with the <em>opposite</em> answer — in 0/1 knapsack.
+            ordering question pop up — with the <em>opposite</em>{" "}answer — in 0/1 knapsack.
           </p>
         </Callout>
 
@@ -381,7 +381,7 @@ answer: dp[m-1][n-1]`}</CodeBlock>
         <h2 id="lcs">Longest Common Subsequence — the 2D template</h2>
 
         <p>
-          <strong>LC 1143 · Longest Common Subsequence.</strong> Given strings <code>A</code> and <code>B</code>,
+          <strong>LC 1143 · Longest Common Subsequence.</strong>{" "}Given strings <code>A</code> and <code>B</code>,
           return the length of the longest sequence of characters that appears in both, in order, but not
           necessarily contiguously. <code>&quot;ABCBDAB&quot;</code> and <code>&quot;BDCAB&quot;</code> share{" "}
           <code>&quot;BCAB&quot;</code> and <code>&quot;BDAB&quot;</code>, both length 4 — so the answer is 4.
@@ -470,7 +470,7 @@ answer: dp[m][n]`}</CodeBlock>
         <p>
           Notice the &quot;staircase of matches&quot; running down the diagonal: <code>a→a</code>,{" "}
           <code>c→c</code>, <code>e→e</code>. Every match bumps the value by exactly 1 over the diagonal predecessor,
-          and every mismatch is the max of up and left. If you ever want to <em>recover</em> the LCS string itself
+          and every mismatch is the max of up and left. If you ever want to <em>recover</em>{" "}the LCS string itself
           (not just its length), you walk this table backwards from <code>dp[m][n]</code>: at each match step go
           diagonal and emit the character; otherwise step in the direction of the larger neighbor.
         </p>
@@ -480,24 +480,24 @@ answer: dp[m][n]`}</CodeBlock>
         <p>
           LCS is foundational because it&apos;s the abstract heart of <strong>diff</strong>. When{" "}
           <code>git diff</code> shows you the differences between two file versions, it&apos;s computing the LCS of
-          the two line sequences and reporting everything <em>not</em> on the LCS as inserts or deletes. The same
+          the two line sequences and reporting everything <em>not</em>{" "}on the LCS as inserts or deletes. The same
           algorithm shows up in:
         </p>
 
         <ul>
           <li>
-            <strong>Bioinformatics.</strong> Aligning DNA/RNA/protein sequences. The Needleman-Wunsch algorithm
+            <strong>Bioinformatics.</strong>{" "}Aligning DNA/RNA/protein sequences. The Needleman-Wunsch algorithm
             (1970) is LCS with weighted match/mismatch costs.
           </li>
           <li>
-            <strong>Spell checkers and autocomplete.</strong> Edit distance — which we&apos;ll do next — builds
+            <strong>Spell checkers and autocomplete.</strong>{" "}Edit distance — which we&apos;ll do next — builds
             directly on LCS&apos;s skeleton.
           </li>
           <li>
-            <strong>File-version reconciliation.</strong> Three-way merges, patch tools, version control internals.
+            <strong>File-version reconciliation.</strong>{" "}Three-way merges, patch tools, version control internals.
           </li>
           <li>
-            <strong>Plagiarism detection.</strong> What two documents share, in order.
+            <strong>Plagiarism detection.</strong>{" "}What two documents share, in order.
           </li>
         </ul>
 
@@ -536,7 +536,7 @@ answer: dp[m][n]`}</CodeBlock>
         <h2 id="edit-distance">Edit Distance — the LCS shape with three operations</h2>
 
         <p>
-          <strong>LC 72 · Edit Distance (Levenshtein distance).</strong> Given strings <code>A</code> and{" "}
+          <strong>LC 72 · Edit Distance (Levenshtein distance).</strong>{" "}Given strings <code>A</code> and{" "}
           <code>B</code>, find the minimum number of single-character operations to transform <code>A</code> into{" "}
           <code>B</code>. The operations are <strong>insert</strong>, <strong>delete</strong>, and{" "}
           <strong>replace</strong>, each with cost 1.
@@ -577,7 +577,7 @@ answer: dp[m][n]`}</CodeBlock>
           </p>
           <p>
             When you can map your DP transitions onto concrete operations like this, your reasoning is much harder
-            to mess up — the recurrence just <em>has</em> to be that shape.
+            to mess up — the recurrence just <em>has</em>{" "}to be that shape.
           </p>
         </Callout>
 
@@ -659,12 +659,12 @@ answer: dp[m][n]`}</CodeBlock>
             full DP — a linear scan with a single mismatch is enough. Worth knowing the shortcut.
           </p>
           <p>
-            <strong>Weighted edit distance:</strong> change the +1 to operation-specific costs. The DP shape is
+            <strong>Weighted edit distance:</strong>{" "}change the +1 to operation-specific costs. The DP shape is
             identical; only the constants change. Used in spell-correction systems where, e.g., adjacent-key typos
             cost less than far-key swaps.
           </p>
           <p>
-            <strong>Damerau-Levenshtein:</strong> add a fourth operation, &quot;swap adjacent characters,&quot; for
+            <strong>Damerau-Levenshtein:</strong>{" "}add a fourth operation, &quot;swap adjacent characters,&quot; for
             <code>O(1)</code> cost. The recurrence gets one extra branch reading <code>dp[i-2][j-2]</code> — same
             shape, longer formula.
           </p>
@@ -702,7 +702,7 @@ answer: dp[m][n]`}</CodeBlock>
         <p>
           You have <code>N</code> items, each with a weight <code>wt[i]</code> and a value <code>val[i]</code>, and
           a knapsack of capacity <code>W</code>. Pick a subset that maximizes total value without exceeding the
-          weight limit. <strong>0/1</strong> means each item is either taken or not — no fractional pieces, no
+          weight limit. <strong>0/1</strong>{" "}means each item is either taken or not — no fractional pieces, no
           duplicates.
         </p>
 
@@ -781,12 +781,12 @@ answer: dp[N][W]`}</CodeBlock>
           <p>
             <strong>0/1 (each item once)</strong> → high to low. Reading{" "}
             <code>dp[w - wt[i]]</code> from <code>w-wt[i] &lt; w</code> means we read a slot we{" "}
-            <em>haven&apos;t touched yet</em> on this row — the old row&apos;s value, where item <code>i</code> was
+            <em>haven&apos;t touched yet</em>{" "}on this row — the old row&apos;s value, where item <code>i</code> was
             not yet present. Correct.
           </p>
           <p>
             <strong>Unbounded (each item any number of times — Coin Change shape)</strong> → low to high. Reading{" "}
-            <code>dp[w - wt[i]]</code> means we read a slot we <em>just updated</em> with item <code>i</code>{" "}
+            <code>dp[w - wt[i]]</code> means we read a slot we <em>just updated</em>{" "}with item <code>i</code>{" "}
             already counted, which is exactly what &quot;take item i again&quot; needs. Also correct — but
             different problem.
           </p>
@@ -834,15 +834,15 @@ answer: dp[N][W]`}</CodeBlock>
 
         <Callout variant="insight" title="The knapsack family is one DP wearing different costumes">
           <p>
-            <strong>Subset Sum (LC 416 partition):</strong> dp[i][w] = boolean &quot;can we make weight w with
+            <strong>Subset Sum (LC 416 partition):</strong>{" "}dp[i][w] = boolean &quot;can we make weight w with
             first i items.&quot; Recurrence: <code>dp[i][w] = dp[i-1][w] || dp[i-1][w-wt[i]]</code>. 1D form
             sweeps high to low.
           </p>
           <p>
-            <strong>Target Sum (LC 494):</strong> reduce to subset sum (each ± choice = pick that subset to add).
+            <strong>Target Sum (LC 494):</strong>{" "}reduce to subset sum (each ± choice = pick that subset to add).
           </p>
           <p>
-            <strong>Number of ways instead of yes/no:</strong> swap the OR for a sum:{" "}
+            <strong>Number of ways instead of yes/no:</strong>{" "}swap the OR for a sum:{" "}
             <code>dp[i][w] = dp[i-1][w] + dp[i-1][w-wt[i]]</code>. Same 0/1 sweep direction.
           </p>
           <p>
@@ -906,13 +906,13 @@ answer: dp[N][W]`}</CodeBlock>
 
         <ul>
           <li>
-            <strong>&quot;Two strings (or sequences)&quot;</strong> in the problem statement → Two-string family.
+            <strong>&quot;Two strings (or sequences)&quot;</strong>{" "}in the problem statement → Two-string family.
             The state shape is always &quot;dp over prefixes,&quot; the recurrence always has a
             match-or-don&apos;t-match branch, and the off-by-one trick (dp index = prefix length, not character
             index) is universal.
           </li>
           <li>
-            <strong>&quot;Grid&quot; or &quot;m × n&quot;</strong> with constrained moves → Grid family. The state
+            <strong>&quot;Grid&quot; or &quot;m × n&quot;</strong>{" "}with constrained moves → Grid family. The state
             is the position; the recurrence is the move rule run backwards. Always check the boundary first.
           </li>
           <li>
@@ -983,7 +983,7 @@ answer: dp[N][W]`}</CodeBlock>
 
         <ul>
           <li>
-            <strong>Off-by-one in two-string DPs.</strong> When <code>dp[i][j]</code> indexes by{" "}
+            <strong>Off-by-one in two-string DPs.</strong>{" "}When <code>dp[i][j]</code> indexes by{" "}
             <em>prefix length</em>, you compare <code>A.charAt(i-1)</code> to <code>B.charAt(j-1)</code>, not{" "}
             <code>A.charAt(i)</code> to <code>B.charAt(j)</code>. Get this wrong and the table looks plausible but
             the answer is off by one.
@@ -994,17 +994,17 @@ answer: dp[N][W]`}</CodeBlock>
             small tests.
           </li>
           <li>
-            <strong>Missing boundary in grid DP with obstacles.</strong> An obstacle in the top row should{" "}
-            <em>terminate</em> all 1s after it, not propagate them. Initialize the boundary explicitly with the
+            <strong>Missing boundary in grid DP with obstacles.</strong>{" "}An obstacle in the top row should{" "}
+            <em>terminate</em>{" "}all 1s after it, not propagate them. Initialize the boundary explicitly with the
             obstacle check.
           </li>
           <li>
-            <strong>Forgetting that &quot;empty prefix&quot; is a valid base case.</strong> In LCS and edit distance,
+            <strong>Forgetting that &quot;empty prefix&quot; is a valid base case.</strong>{" "}In LCS and edit distance,
             <code>dp[0][*]</code> and <code>dp[*][0]</code> describe an empty string on one side; they have to be
             seeded correctly or the recurrence reads garbage.
           </li>
           <li>
-            <strong>Trying to space-optimize before the 2D version is correct.</strong> Always write the full 2D
+            <strong>Trying to space-optimize before the 2D version is correct.</strong>{" "}Always write the full 2D
             version first, run it, then collapse. Trying to write the 1D version directly is the single fastest way
             to introduce a bug under interview pressure.
           </li>

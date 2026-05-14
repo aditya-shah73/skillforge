@@ -107,11 +107,11 @@ export default function Page() {
 
         <h3>Non-functional requirements</h3>
         <ul>
-          <li><strong>p99 send-to-deliver latency under 500ms</strong> when both parties are online and on a normal network. This is the headline number that pins the design.</li>
+          <li><strong>p99 send-to-deliver latency under 500ms</strong>{" "}when both parties are online and on a normal network. This is the headline number that pins the design.</li>
           <li><strong>~50M DAU</strong>, with peak concurrent users about a third of that — call it 17M concurrent.</li>
-          <li><strong>~40 messages per active user per day</strong> on average. That gives us 50M × 40 = 2B messages/day.</li>
+          <li><strong>~40 messages per active user per day</strong>{" "}on average. That gives us 50M × 40 = 2B messages/day.</li>
           <li><strong>Durability matters</strong> — once we ack a message, it must not vanish. But strict ordering is per-conversation, not global.</li>
-          <li><strong>End-to-end encryption</strong> is a yes/no the interviewer should make explicit. Saying &quot;yes E2EE&quot; changes server-side search and many other things; we&apos;ll assume transport encryption only for this round.</li>
+          <li><strong>End-to-end encryption</strong>{" "}is a yes/no the interviewer should make explicit. Saying &quot;yes E2EE&quot; changes server-side search and many other things; we&apos;ll assume transport encryption only for this round.</li>
         </ul>
 
         <h3>Back of the envelope</h3>
@@ -122,7 +122,7 @@ export default function Page() {
           <li><strong>Messages per day:</strong> 50M DAU × 40 msgs = 2B messages/day.</li>
           <li><strong>Average write QPS:</strong> 2B / 86,400s ≈ 23k QPS. Peak 3-4× average → ~80-100k QPS at peak.</li>
           <li><strong>Read QPS</strong> (delivery, not history scrolls): every message is delivered to ~1.5 recipients on average (mostly 1:1, some groups), so ~120-150k delivery events/sec at peak.</li>
-          <li><strong>Storage:</strong> assume an average message is 200 bytes payload + 200 bytes metadata = 400 bytes. 2B × 400B = 800GB/day. Over a year, ~290TB. That&apos;s the message log; attachments live in object storage and are an order of magnitude more.</li>
+          <li><strong>Storage:</strong>{" "}assume an average message is 200 bytes payload + 200 bytes metadata = 400 bytes. 2B × 400B = 800GB/day. Over a year, ~290TB. That&apos;s the message log; attachments live in object storage and are an order of magnitude more.</li>
           <li><strong>Concurrent connections:</strong> 17M sticky websockets. If a single gateway box can hold 100k connections (memory-bound, ~10KB per connection in good implementations), that&apos;s 170 gateway boxes minimum, double that for headroom and rolling deploys.</li>
         </ul>
 
@@ -169,7 +169,7 @@ export default function Page() {
       <Checkpoint moduleSlug="design-chat" id="design" title="Part 2 · High-level design" xp={30}>
         <h2>Three layers that show up in every chat design</h2>
         <p>
-          Every credible chat architecture has the same three layers: the <strong>gateway layer</strong> that owns persistent connections, a <strong>message bus</strong> (Kafka in 2026) that decouples ingest from fanout, and a <strong>storage layer</strong> for the durable message log plus a presence cache. Let&apos;s draw it once and then justify every box.
+          Every credible chat architecture has the same three layers: the <strong>gateway layer</strong>{" "}that owns persistent connections, a <strong>message bus</strong> (Kafka in 2026) that decouples ingest from fanout, and a <strong>storage layer</strong>{" "}for the durable message log plus a presence cache. Let&apos;s draw it once and then justify every box.
         </p>
 
         <Mermaid chart={chatArchitectureDiagram} />
@@ -376,7 +376,7 @@ public class FanoutConsumer {
         </p>
         <ul>
           <li><strong>Inbox queue per user</strong> (Kafka topic, or a per-user list in storage) populated by the fanout service when the recipient is offline. On reconnect, the gateway drains the inbox to the client. Bounded size — usually capped at last 7 days or 1000 messages.</li>
-          <li><strong>History pull-on-demand</strong> for older content. The client tracks the last <code>msgId</code> it has per conversation; when the user opens the conversation, it requests <code>GET /conversations/{`{id}`}/messages?cursor=lastMsgId</code> and gets the gap.</li>
+          <li><strong>History pull-on-demand</strong>{" "}for older content. The client tracks the last <code>msgId</code> it has per conversation; when the user opens the conversation, it requests <code>GET /conversations/{`{id}`}/messages?cursor=lastMsgId</code> and gets the gap.</li>
         </ul>
         <p>
           The inbox queue handles &quot;just came back online,&quot; the history API handles &quot;reinstalled the app on a new phone.&quot; Trying to cover both with one mechanism either bloats the inbox or kills the user experience.
@@ -457,8 +457,8 @@ public class FanoutConsumer {
           Chat is a fantastic abuse vector. Two things are non-optional:
         </p>
         <ul>
-          <li><strong>Per-user rate limits at the gateway.</strong> A token bucket per <code>userId</code>, refilled at, say, 30 messages/minute. Lifted for trusted accounts, blocked entirely for accounts in a flagged state.</li>
-          <li><strong>Anti-abuse signals on the message bus.</strong> A separate consumer reads the <code>messages</code> Kafka topic, scores for spam (URL patterns, message similarity across recipients, send velocity), and writes verdicts back. Bad actors get throttled or unsubscribed without touching the hot send path.</li>
+          <li><strong>Per-user rate limits at the gateway.</strong>{" "}A token bucket per <code>userId</code>, refilled at, say, 30 messages/minute. Lifted for trusted accounts, blocked entirely for accounts in a flagged state.</li>
+          <li><strong>Anti-abuse signals on the message bus.</strong>{" "}A separate consumer reads the <code>messages</code> Kafka topic, scores for spam (URL patterns, message similarity across recipients, send velocity), and writes verdicts back. Bad actors get throttled or unsubscribed without touching the hot send path.</li>
         </ul>
 
         <h3>Observability: the questions that catch outages early</h3>

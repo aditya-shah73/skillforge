@@ -194,7 +194,7 @@ flowchart LR
 
         <h3 className="text-lg font-semibold mt-8 mb-2">Rule 3 — Multiply nested loops</h3>
         <p className="text-slate-700 dark:text-slate-300 not-prose">
-          Inner runs once <em>per</em> outer iteration. Multiply the bounds. If they&apos;re both <code>n</code> → <code>O(n²)</code>. If outer is <code>n</code> and inner is <code>m</code> → <code>O(n·m)</code>.
+          Inner runs once <em>per</em>{" "}outer iteration. Multiply the bounds. If they&apos;re both <code>n</code> → <code>O(n²)</code>. If outer is <code>n</code> and inner is <code>m</code> → <code>O(n·m)</code>.
         </p>
         <CodeBlock lang="java" caption="Two different bounds — keep them separate">{`boolean hasPair(int[] users, int[] orders) {
     for (int u : users) {           // n
@@ -265,7 +265,7 @@ flowchart LR
         </div>
 
         <Callout variant="insight">
-          <strong>The shortcut:</strong> when you see a recursive call, the time complexity is roughly <em>branching factor</em> ^ <em>depth</em>. One call per frame → linear. Two calls per frame, depth n → 2ⁿ. Memoization cuts this to <em>distinct subproblems × work per subproblem</em>.
+          <strong>The shortcut:</strong>{" "}when you see a recursive call, the time complexity is roughly <em>branching factor</em> ^ <em>depth</em>. One call per frame → linear. Two calls per frame, depth n → 2ⁿ. Memoization cuts this to <em>distinct subproblems × work per subproblem</em>.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -279,14 +279,14 @@ flowchart LR
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">4. Space complexity cheat sheet</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          When an interviewer asks &quot;and what&apos;s the space complexity?&quot;, they almost always mean <em>auxiliary</em> space.
+          When an interviewer asks &quot;and what&apos;s the space complexity?&quot;, they almost always mean <em>auxiliary</em>{" "}space.
         </p>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Auxiliary space</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Extra memory <em>beyond the input</em> that your algorithm allocates. This is what the interviewer cares about.
+              Extra memory <em>beyond the input</em>{" "}that your algorithm allocates. This is what the interviewer cares about.
             </p>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
               <li>In-place sort → O(1) auxiliary</li>
@@ -368,7 +368,7 @@ flowchart LR
         </div>
 
         <Callout variant="warn">
-          <strong>The Java-specific gotcha:</strong> recursion depth past ~5,000–10,000 frames will throw <code>StackOverflowError</code>. For tree algorithms on a skewed tree of n = 10⁶ nodes, you need an iterative version with an explicit stack on the heap.
+          <strong>The Java-specific gotcha:</strong>{" "}recursion depth past ~5,000–10,000 frames will throw <code>StackOverflowError</code>. For tree algorithms on a skewed tree of n = 10⁶ nodes, you need an iterative version with an explicit stack on the heap.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -426,7 +426,7 @@ flowchart LR
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong> for a hot path in a production service with P99 latency requirements, <em>only worst-case matters</em>. For a one-shot script over random data, average is fine. Best case is only interesting when describing a particular structure&apos;s adaptive behavior (like insertion sort being O(n) on already-sorted data — that&apos;s why TimSort starts with insertion sort on small runs).
+          <strong>Decision rule:</strong>{" "}for a hot path in a production service with P99 latency requirements, <em>only worst-case matters</em>. For a one-shot script over random data, average is fine. Best case is only interesting when describing a particular structure&apos;s adaptive behavior (like insertion sort being O(n) on already-sorted data — that&apos;s why TimSort starts with insertion sort on small runs).
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -455,18 +455,18 @@ flowchart LR
             <strong>The expensive ones get rarer as n grows</strong> — resizes happen at sizes 1, 2, 4, 8, 16, 32… That&apos;s log n resizes total. The sum of resize costs over n adds is roughly <code>1 + 2 + 4 + … + n ≈ 2n</code> (geometric series).
           </li>
           <li>
-            <strong>Total work for n adds ≈ 2n.</strong> Amortized cost per add = 2n / n = 2 → <strong>O(1)</strong>.
+            <strong>Total work for n adds ≈ 2n.</strong>{" "}Amortized cost per add = 2n / n = 2 → <strong>O(1)</strong>.
           </li>
           <li>
-            <strong>Banker&apos;s (accounting) method:</strong> charge each add 3 &quot;coins&quot; — 1 pays for the write, 2 are deposited as credits. When a resize happens, every previously-stored element has accumulated enough credits to pay for its own copy. The math works out exactly, and that&apos;s why you can claim O(1) per add with a clean conscience.
+            <strong>Banker&apos;s (accounting) method:</strong>{" "}charge each add 3 &quot;coins&quot; — 1 pays for the write, 2 are deposited as credits. When a resize happens, every previously-stored element has accumulated enough credits to pay for its own copy. The math works out exactly, and that&apos;s why you can claim O(1) per add with a clean conscience.
           </li>
           <li>
-            <strong>What kills the trick:</strong> arithmetic growth (e.g. <code>capacity + 10</code> each resize). That gives <code>O(n²)</code> total work, which means amortized <code>O(n)</code> per add. Geometric growth (factor &gt; 1, typically 1.5× or 2×) is what makes amortized O(1) possible.
+            <strong>What kills the trick:</strong>{" "}arithmetic growth (e.g. <code>capacity + 10</code> each resize). That gives <code>O(n²)</code> total work, which means amortized <code>O(n)</code> per add. Geometric growth (factor &gt; 1, typically 1.5× or 2×) is what makes amortized O(1) possible.
           </li>
         </ul>
 
         <Callout variant="warn">
-          <strong>Amortized O(1) ≠ worst-case O(1).</strong> A single <code>add()</code> can still take O(n). For P99-sensitive systems (real-time games, trading, latency-critical APIs), pre-size your buffer or accept the spike — don&apos;t rely on the amortized number to hold per-call.
+          <strong>Amortized O(1) ≠ worst-case O(1).</strong>{" "}A single <code>add()</code> can still take O(n). For P99-sensitive systems (real-time games, trading, latency-critical APIs), pre-size your buffer or accept the spike — don&apos;t rely on the amortized number to hold per-call.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -480,7 +480,7 @@ flowchart LR
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">7. Java Collections Big-O cheat sheet</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Memorize the rows you actually use. The ones marked <em>amortized</em> are the gotcha rows.
+          Memorize the rows you actually use. The ones marked <em>amortized</em>{" "}are the gotcha rows.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -726,7 +726,7 @@ int sum(TreeNode root) {
           The seven curves, the four calculation rules, the five code patterns, the auxiliary-vs-stack distinction, the three cases, and the amortized trick. That&apos;s the entire mental model — every data structure from here on out will be described in terms you already know.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 2 — Linear Data Structures.</strong> Arrays, dynamic arrays (you already know how those work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
+          <strong>Up next: Phase 2 — Linear Data Structures.</strong>{" "}Arrays, dynamic arrays (you already know how those work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
         </p>
         <Link
           href="/courses/dsa/modules/arrays"

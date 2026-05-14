@@ -118,10 +118,10 @@ flowchart TB
         <h2 id="setup">What two-pointers is — and the sorted-array tell</h2>
 
         <p>
-          <strong>Two pointers</strong> is the technique where you maintain two indices into an array (or two
+          <strong>Two pointers</strong>{" "}is the technique where you maintain two indices into an array (or two
           references into a string, or two cursors into a linked list) and move them according to some rule that
           shrinks the search space at every step. That&apos;s the whole idea. The trick is the rule — and the rule
-          almost always exploits some <em>monotonic structure</em> in the data, most commonly sortedness.
+          almost always exploits some <em>monotonic structure</em>{" "}in the data, most commonly sortedness.
         </p>
 
         <p>
@@ -148,12 +148,12 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
 
         <Callout variant="insight" title="The mental rule">
           <p>
-            <strong>Sorted + pair/triple/sum question → two pointers.</strong> The sortedness gives you a
+            <strong>Sorted + pair/triple/sum question → two pointers.</strong>{" "}The sortedness gives you a
             comparison-driven move rule that brute force doesn&apos;t exploit.
           </p>
           <p>
             <strong>Same-direction filtering, in-place rewrite, or &quot;keep good, drop bad&quot; → two
-            pointers.</strong> The slow pointer marks the write head; the fast pointer scans for what to keep.
+            pointers.</strong>{" "}The slow pointer marks the write head; the fast pointer scans for what to keep.
           </p>
         </Callout>
 
@@ -182,7 +182,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
           Here&apos;s the deeper view. The brute-force search space is the set of all index pairs{" "}
           <code>(i, j)</code> with <code>i &lt; j</code> — there are <code>n(n-1)/2</code> of them, the upper triangle
           of an <code>n × n</code> grid. Each comparison in the two-pointer walk is a single cell of that grid, but
-          the move rule guarantees that we never revisit a cell <em>and</em> we never skip the answer. Net effect:
+          the move rule guarantees that we never revisit a cell <em>and</em>{" "}we never skip the answer. Net effect:
           we visit a path of length <code>≤ 2n</code> through that triangle and we&apos;re done.
         </p>
 
@@ -561,7 +561,7 @@ for (int fast = 0; fast < n; fast++) {
 
         <p>
           Here&apos;s the proof. Say <code>height[l] &lt; height[r]</code> at some step. Consider what happens if we
-          move the <em>taller</em> side instead — that is, <code>r--</code> while keeping <code>l</code> fixed:
+          move the <em>taller</em>{" "}side instead — that is, <code>r--</code> while keeping <code>l</code> fixed:
         </p>
 
         <ul>
@@ -572,7 +572,7 @@ for (int fast = 0; fast < n; fast++) {
 
         <p>
           In other words: <strong>moving the taller side strictly reduces the area — it can never
-          improve it.</strong> Every pair containing the current shorter line on the shorter side has been examined
+          improve it.</strong>{" "}Every pair containing the current shorter line on the shorter side has been examined
           (or strictly dominated by what we just computed). So we&apos;re safe to throw away that line — increment
           <code>l</code> — and continue.
         </p>
@@ -677,10 +677,10 @@ for (int fast = 0; fast < n; fast++) {
         <h3>The plan</h3>
 
         <ol>
-          <li><strong>Sort</strong> the array. This is what makes the two-pointer inner loop possible at all.</li>
+          <li><strong>Sort</strong>{" "}the array. This is what makes the two-pointer inner loop possible at all.</li>
           <li><strong>Outer loop</strong>: pick the first element <code>nums[i]</code>.</li>
           <li><strong>Inner two-pointer</strong>: in the suffix <code>nums[i+1 ... n-1]</code>, find pairs that sum to <code>-nums[i]</code>.</li>
-          <li><strong>Skip duplicates</strong> at three places: the outer <code>i</code>, and the inner <code>l</code> and <code>r</code> after a successful match.</li>
+          <li><strong>Skip duplicates</strong>{" "}at three places: the outer <code>i</code>, and the inner <code>l</code> and <code>r</code> after a successful match.</li>
         </ol>
 
         <h3>Step 1 · The skeleton without dedup</h3>
@@ -769,8 +769,8 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
 
         <p>
           Sort: <strong>O(n log n)</strong>. Outer loop: <strong>O(n)</strong>. Inner two-pointer: <strong>O(n)</strong>.
-          Total: <strong>O(n²)</strong>. Space: <strong>O(log n)</strong> for the sort&apos;s recursion (Java&apos;s
-          <code>Arrays.sort</code> on primitives), or <strong>O(1)</strong> if you ignore the sort&apos;s stack.
+          Total: <strong>O(n²)</strong>. Space: <strong>O(log n)</strong>{" "}for the sort&apos;s recursion (Java&apos;s
+          <code>Arrays.sort</code> on primitives), or <strong>O(1)</strong>{" "}if you ignore the sort&apos;s stack.
         </p>
 
         <p>

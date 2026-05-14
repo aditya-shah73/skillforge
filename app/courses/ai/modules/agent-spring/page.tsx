@@ -50,7 +50,7 @@ export default function AgentSpringModule() {
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
           The Module 21 research agent rebuilt the Spring AI way — same loop, same stopping
           conditions, but with the framework doing the boring parts. Plus the trick that
-          matters most in production: knowing exactly when to <em>turn off</em> the framework
+          matters most in production: knowing exactly when to <em>turn off</em>{" "}the framework
           and run the loop yourself.
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
@@ -137,7 +137,7 @@ public class ResearchTools {
         </ul>
 
         <Callout variant="warn" title="Tool descriptions are prompts">
-          A vague description like <em>&quot;Search the web&quot;</em> will get called for
+          A vague description like <em>&quot;Search the web&quot;</em>{" "}will get called for
           every question. A precise one — <em>&quot;Search the web for current news; do NOT use
           for math, code, or programming docs&quot;</em> — gates the model&apos;s behavior. Spend
           time on these strings. They&apos;re where most agent tuning happens.
@@ -312,7 +312,7 @@ ChatResponse response = chat.prompt()
           Spring AI&apos;s tool API has been moving fast across releases. The flag
           <code>internalToolExecutionEnabled</code>, the <code>ToolCallback</code> resolver,
           and the message types in this snippet match Spring AI 1.0.x. If you&apos;re on a
-          different minor version, the names may shift. The <em>concept</em> doesn&apos;t —
+          different minor version, the names may shift. The <em>concept</em>{" "}doesn&apos;t —
           there&apos;s always a way to disable auto-execution.
         </Callout>
 
@@ -331,7 +331,7 @@ ChatResponse response = chat.prompt()
                     times, then answers. No streaming, no audit log, no destructive ops.
                   </p>
                   <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
-                    <strong>Auto-loop.</strong> The default does exactly what you want.
+                    <strong>Auto-loop.</strong>{" "}The default does exactly what you want.
                     Manual loop would just be more code with no benefit.
                   </p>
                 </>
@@ -346,7 +346,7 @@ ChatResponse response = chat.prompt()
                     behaved 99% of the time, you need to inspect tool calls before they fire.
                   </p>
                   <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
-                    <strong>Manual loop.</strong> Add a check between &quot;model emitted tool
+                    <strong>Manual loop.</strong>{" "}Add a check between &quot;model emitted tool
                     call&quot; and &quot;execute&quot;. For destructive tools, gate on a confirm
                     step or human approval.
                   </p>
@@ -362,7 +362,7 @@ ChatResponse response = chat.prompt()
                     article 1&quot;, &quot;cross-checking&quot;. The agent might run 6 turns.
                   </p>
                   <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
-                    <strong>Manual loop.</strong> You need to emit SSE events between turns —
+                    <strong>Manual loop.</strong>{" "}You need to emit SSE events between turns —
                     impossible to do cleanly when the loop is hidden inside Spring.
                   </p>
                 </>
@@ -377,7 +377,7 @@ ChatResponse response = chat.prompt()
                     workflow, not an agent.
                   </p>
                   <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
-                    <strong>Neither — write a workflow.</strong> Two structured-output LLM
+                    <strong>Neither — write a workflow.</strong>{" "}Two structured-output LLM
                     calls and direct service-method invocations. No loop needed.
                   </p>
                 </>
@@ -588,7 +588,7 @@ public class Scratchpad {
         <Callout variant="insight" title="Patterns over types">
           Notice how all three memory mechanisms — chat memory, vector store, scratchpad — are
           just different applications of &quot;persist some bytes, retrieve some bytes&quot;.
-          The mental separation is about <em>lifetime</em> and <em>scope</em>, not about
+          The mental separation is about <em>lifetime</em>{" "}and <em>scope</em>, not about
           fundamentally different technology. Pick the right one for the lifetime you need.
         </Callout>
 
@@ -1050,20 +1050,20 @@ Never:
             <code>Foo</code> to <code>Bar</code>&quot;. Should converge in &lt;15 iterations.
           </li>
           <li>
-            <strong>JUnit 4 → 5 on a small repo:</strong> verify it understands annotation
+            <strong>JUnit 4 → 5 on a small repo:</strong>{" "}verify it understands annotation
             differences, doesn&apos;t miss imports.
           </li>
           <li>
-            <strong>Sabotage test:</strong> introduce a syntax error in one file before
+            <strong>Sabotage test:</strong>{" "}introduce a syntax error in one file before
             starting. The agent should hit a build failure, read it, and recover.
           </li>
           <li>
-            <strong>Cap-hit case:</strong> drop <code>MAX_ITER</code> to 5 on a 20-file
+            <strong>Cap-hit case:</strong>{" "}drop <code>MAX_ITER</code> to 5 on a 20-file
             migration. Confirm <code>capHit</code> result is returned cleanly with the partial
             diff.
           </li>
           <li>
-            <strong>Cancellation:</strong> start a long migration, set <code>cancelled.set(true)</code>
+            <strong>Cancellation:</strong>{" "}start a long migration, set <code>cancelled.set(true)</code>
             from another thread mid-run, confirm the loop exits within one iteration.
           </li>
         </ol>
@@ -1083,7 +1083,7 @@ Never:
             that proves you actually own the loop, not the framework.
           </p>
           <p className="mt-3">
-            <strong>Stretch goal:</strong> add a human-approval gate. Before each
+            <strong>Stretch goal:</strong>{" "}add a human-approval gate. Before each
             <code>write_file</code> call, the loop pauses and prints the diff to a small UI (or
             stdin prompt) and waits for y/n. This is exactly the pattern you&apos;d need for any
             production agent that touches money or production data.
@@ -1108,7 +1108,7 @@ Never:
         </ul>
 
         <p>
-          <strong>Module 23</strong> goes wider: when one agent isn&apos;t enough.
+          <strong>Module 23</strong>{" "}goes wider: when one agent isn&apos;t enough.
           Orchestrator/subagent patterns, parallel fanout, and the part nobody mentions —
           how to keep multi-agent systems from devolving into distributed-systems debugging.
         </p>

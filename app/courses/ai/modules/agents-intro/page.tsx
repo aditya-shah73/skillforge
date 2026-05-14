@@ -82,7 +82,7 @@ export default function AgentsIntroModule() {
         </p>
 
         <Callout variant="insight" title="The course's working definition">
-          An <strong>agent</strong> is an LLM in a loop, given a goal and a set of tools, that
+          An <strong>agent</strong>{" "}is an LLM in a loop, given a goal and a set of tools, that
           decides on each step whether to call a tool, what to call, or to stop. The loop
           terminates when the model emits a final answer (no tool call) or a stopping condition
           fires.
@@ -103,8 +103,8 @@ export default function AgentsIntroModule() {
 
         <p>
           The most useful distinction (borrowed from Anthropic&apos;s &quot;Building Effective
-          Agents&quot;): a <strong>workflow</strong> is when <em>you</em> decide the steps and the
-          LLM fills in pieces. An <strong>agent</strong> is when <em>the LLM</em> decides the steps
+          Agents&quot;): a <strong>workflow</strong>{" "}is when <em>you</em>{" "}decide the steps and the
+          LLM fills in pieces. An <strong>agent</strong>{" "}is when <em>the LLM</em>{" "}decides the steps
           and you provide the tools.
         </p>
 
@@ -220,7 +220,7 @@ while True:
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — The ReAct loop, by hand</h2>
 
         <p>
-          ReAct is the canonical pattern: <strong>Reason</strong> then <strong>Act</strong>, in a
+          ReAct is the canonical pattern: <strong>Reason</strong>{" "}then <strong>Act</strong>, in a
           loop. It&apos;s from a 2022 paper that quietly became the default agent design. The
           name is unfortunate (it has nothing to do with React.js), but the idea is small:
           interleave thinking with acting.
@@ -252,7 +252,7 @@ while True:
         <p>
           Let&apos;s actually walk one of these. Pretend we&apos;re building a research agent and
           the user asks: <em>&quot;What was the GDP of Japan in 2023, and how did it compare to
-          Germany?&quot;</em> The agent has two tools: <code>web_search(query)</code> and
+          Germany?&quot;</em>{" "}The agent has two tools: <code>web_search(query)</code> and
           <code>fetch_url(url)</code>.
         </p>
 
@@ -360,7 +360,7 @@ THE MODEL provides:
 
         <Callout variant="warn" title="The model never executes anything">
           This catches new agent builders constantly: the model emits a tool call as JSON. It
-          doesn&apos;t run anything. <em>You</em> run the tool, get the result, and append it to
+          doesn&apos;t run anything. <em>You</em>{" "}run the tool, get the result, and append it to
           the conversation. The agent &quot;loop&quot; lives in your code, not the model&apos;s.
         </Callout>
 
@@ -536,13 +536,13 @@ system_prompt = base_prompt + "\\n\\nRelevant context about this user:\\n" +
     format(relevant_memories)`}</CodeBlock>
 
         <p>
-          The hard part isn&apos;t the retrieval — it&apos;s deciding <em>what</em> to write to
+          The hard part isn&apos;t the retrieval — it&apos;s deciding <em>what</em>{" "}to write to
           long-term memory and <em>when</em>. Two patterns:
         </p>
 
         <ul className="list-disc pl-6 space-y-2 mb-4">
           <li><strong>Explicit save tool</strong> — give the agent a <code>remember(fact)</code> tool. The agent decides what&apos;s worth saving. Simple, transparent, sometimes too sparse.</li>
-          <li><strong>End-of-session distillation</strong> — when the agent run ends, run a separate &quot;reflector&quot; LLM call: <em>&quot;Given this transcript, what facts about the user should we save?&quot;</em> More thorough, more expensive.</li>
+          <li><strong>End-of-session distillation</strong> — when the agent run ends, run a separate &quot;reflector&quot; LLM call: <em>&quot;Given this transcript, what facts about the user should we save?&quot;</em>{" "}More thorough, more expensive.</li>
         </ul>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Scratchpad: the trick people miss</h3>
@@ -637,14 +637,14 @@ Scratchpad (cheap):
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — When NOT to use an agent</h2>
 
         <p>
-          This is the most undervalued skill in agent engineering: knowing when to <em>not</em>
+          This is the most undervalued skill in agent engineering: knowing when to <em>not</em>{" "}
           reach for the agent hammer. Skip this lesson and you&apos;ll ship slow, expensive,
           unreliable systems that a 50-line workflow could replace.
         </p>
 
         <Callout variant="insight" title="The decision matrix">
-          Two questions, in order: <strong>(1) Are the steps enumerable?</strong> If yes, write
-          a workflow. <strong>(2) Are the steps the same every time?</strong> If yes, write
+          Two questions, in order: <strong>(1) Are the steps enumerable?</strong>{" "}If yes, write
+          a workflow. <strong>(2) Are the steps the same every time?</strong>{" "}If yes, write
           straight code. Reach for an agent only when the answer to both is no.
         </Callout>
 
@@ -689,7 +689,7 @@ Scratchpad (cheap):
           </li>
           <li>
             <strong>Open-ended customer support resolution</strong> — &quot;help this user with
-            <em> whatever</em> they&apos;re trying to do&quot;. If you&apos;ve enumerated 30 paths
+            <em> whatever</em>{" "}they&apos;re trying to do&quot;. If you&apos;ve enumerated 30 paths
             and there&apos;s a long tail, the long tail is where the agent earns its keep.
           </li>
           <li>
@@ -794,7 +794,7 @@ Scratchpad (cheap):
         </p>
 
         <p>
-          We&apos;re building the <em>core loop</em> by hand here, not using Spring AI&apos;s
+          We&apos;re building the <em>core loop</em>{" "}by hand here, not using Spring AI&apos;s
           built-in agent abstractions. That comes in Module 22. The point of this project is to
           have the loop fully in front of you, with no magic.
         </p>
@@ -974,7 +974,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
             the cap.
           </li>
           <li>
-            <strong>Cap-hit case:</strong> Drop <code>MAX_ITERATIONS</code> to 2 and ask a
+            <strong>Cap-hit case:</strong>{" "}Drop <code>MAX_ITERATIONS</code> to 2 and ask a
             multi-hop question. Confirm your error path is clean.
           </li>
         </ol>
@@ -1001,10 +1001,10 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
             should be able to defend why the agent did each thing it did.
           </p>
           <p className="mt-3">
-            <strong>Stretch goal:</strong> add the duplicate-tool-call detector from Part 2. If
+            <strong>Stretch goal:</strong>{" "}add the duplicate-tool-call detector from Part 2. If
             the agent calls <code>web_search</code> with the same query twice in a row, inject a
             tool result like <em>&quot;You already searched this and got the same results.
-            Consider trying a different angle or stopping.&quot;</em> Watch how the trace
+            Consider trying a different angle or stopping.&quot;</em>{" "}Watch how the trace
             changes.
           </p>
         </Checkpoint>
@@ -1029,14 +1029,14 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         </ul>
 
         <p>
-          <strong>Module 22</strong> takes everything you built by hand here and rebuilds it
+          <strong>Module 22</strong>{" "}takes everything you built by hand here and rebuilds it
           using Spring AI&apos;s native abstractions — including how to keep control of the
           iteration count, observability, and stopping logic when the framework is doing some
           of it for you.
         </p>
 
         <p>
-          <strong>Module 23</strong> goes one level up: when one agent isn&apos;t enough,
+          <strong>Module 23</strong>{" "}goes one level up: when one agent isn&apos;t enough,
           and how to coordinate multiple agents without it becoming a distributed-systems
           nightmare.
         </p>

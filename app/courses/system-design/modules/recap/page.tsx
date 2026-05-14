@@ -101,27 +101,27 @@ export default function Page() {
         <h3 className="text-xl font-semibold mt-8 mb-3">The six layers</h3>
         <ol className="space-y-3">
           <li>
-            <strong>Foundations.</strong> Latency budgets, throughput targets, SLOs, consistency requirements.
+            <strong>Foundations.</strong>{" "}Latency budgets, throughput targets, SLOs, consistency requirements.
             Modules 1–6 lived here. If you skip foundations, every later choice is guesswork.
           </li>
           <li>
-            <strong>Data plane.</strong> Where the bytes actually live. Replication for availability, sharding for
+            <strong>Data plane.</strong>{" "}Where the bytes actually live. Replication for availability, sharding for
             scale, indexes for access patterns. Modules 7–14.
           </li>
           <li>
-            <strong>Traffic plane.</strong> How requests reach the data. Load balancers, caches, queues, streams.
+            <strong>Traffic plane.</strong>{" "}How requests reach the data. Load balancers, caches, queues, streams.
             Modules 15–22.
           </li>
           <li>
-            <strong>Reliability.</strong> What keeps the system honest under stress. Idempotency, retries,
+            <strong>Reliability.</strong>{" "}What keeps the system honest under stress. Idempotency, retries,
             backpressure, circuit breakers, observability. Modules 23–30.
           </li>
           <li>
-            <strong>Evolution.</strong> How the system changes without breaking. Migrations, dual-writes,
+            <strong>Evolution.</strong>{" "}How the system changes without breaking. Migrations, dual-writes,
             blue/green, feature flags. Module 36.
           </li>
           <li>
-            <strong>Security.</strong> The cross-cutting concern that touches every layer. Module 37.
+            <strong>Security.</strong>{" "}The cross-cutting concern that touches every layer. Module 37.
           </li>
         </ol>
 
@@ -133,12 +133,12 @@ export default function Page() {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">First-pass questions for any new design</h3>
         <ol className="space-y-2">
-          <li><strong>Read or write heavy?</strong> Drives caching strategy, DB choice, replication shape.</li>
-          <li><strong>What&apos;s the consistency requirement?</strong> Strong, read-your-writes, eventual? Different stacks.</li>
-          <li><strong>What&apos;s the access pattern?</strong> Single-key lookups (KV), range scans (LSM), graph traversal (Neo4j)?</li>
-          <li><strong>What fails when this is unavailable?</strong> Drives retries, fallbacks, circuit breakers.</li>
-          <li><strong>What&apos;s the failure mode you can&apos;t afford?</strong> Drives idempotency, exactly-once semantics, durability tier.</li>
-          <li><strong>Where does this run in five years?</strong> Drives schema evolution, API versioning, migration patterns.</li>
+          <li><strong>Read or write heavy?</strong>{" "}Drives caching strategy, DB choice, replication shape.</li>
+          <li><strong>What&apos;s the consistency requirement?</strong>{" "}Strong, read-your-writes, eventual? Different stacks.</li>
+          <li><strong>What&apos;s the access pattern?</strong>{" "}Single-key lookups (KV), range scans (LSM), graph traversal (Neo4j)?</li>
+          <li><strong>What fails when this is unavailable?</strong>{" "}Drives retries, fallbacks, circuit breakers.</li>
+          <li><strong>What&apos;s the failure mode you can&apos;t afford?</strong>{" "}Drives idempotency, exactly-once semantics, durability tier.</li>
+          <li><strong>Where does this run in five years?</strong>{" "}Drives schema evolution, API versioning, migration patterns.</li>
         </ol>
 
         <Checkpoint moduleSlug="recap" id="compass" title="Compass checkpoint" xp={20}>
@@ -211,19 +211,19 @@ export default function Page() {
             collapses under load. Use a real queue.
           </li>
           <li>
-            <strong>Cache as system of record.</strong> Redis without persistence + AWS reboots = data loss. Caches are
+            <strong>Cache as system of record.</strong>{" "}Redis without persistence + AWS reboots = data loss. Caches are
             caches.
           </li>
           <li>
-            <strong>Search index as primary store.</strong> Elasticsearch is fantastic at search, mediocre at
+            <strong>Search index as primary store.</strong>{" "}Elasticsearch is fantastic at search, mediocre at
             durability and consistency. Always have an upstream source of truth.
           </li>
           <li>
-            <strong>Object storage as live database.</strong> S3 is durable but eventually consistent and slow per-op.
+            <strong>Object storage as live database.</strong>{" "}S3 is durable but eventually consistent and slow per-op.
             Don&apos;t put it in a hot path.
           </li>
           <li>
-            <strong>Kafka as RPC.</strong> It&apos;s a log, not a request/response system. Don&apos;t pretend.
+            <strong>Kafka as RPC.</strong>{" "}It&apos;s a log, not a request/response system. Don&apos;t pretend.
           </li>
         </ul>
 
@@ -368,7 +368,7 @@ export default function Page() {
           You have the patterns. You have the compass. The last gap is what a real senior interview <em>sounds</em>{" "}
           like — the cadence, the clarifying questions, the moment a candidate pauses and says &quot;let me think about
           that for a second.&quot; Below are two annotated transcripts (one backend-heavy, one frontend-heavy), each
-          followed by a short contrast showing the same problem answered <em>without</em> the senior signals.
+          followed by a short contrast showing the same problem answered <em>without</em>{" "}the senior signals.
         </p>
 
         <Callout variant="info" title="How to read these">
@@ -553,7 +553,7 @@ export default function Page() {
         <Callout variant="spring" title="What made this senior-bar">
           <ul className="m-0 space-y-1">
             <li>
-              <strong>Self-driven scope.</strong> The candidate asked five clarifying questions before drawing
+              <strong>Self-driven scope.</strong>{" "}The candidate asked five clarifying questions before drawing
               anything. The interviewer didn&apos;t have to pry the requirements out of them.
             </li>
             <li>
@@ -561,17 +561,17 @@ export default function Page() {
               QPS. Math drove the architecture, not vibes.
             </li>
             <li>
-              <strong>Pushed back with reasoning.</strong> When the interviewer suggested hashing for slug generation,
-              the candidate articulated <em>why</em> counter-based was better — not dogmatically, but with the
+              <strong>Pushed back with reasoning.</strong>{" "}When the interviewer suggested hashing for slug generation,
+              the candidate articulated <em>why</em>{" "}counter-based was better — not dogmatically, but with the
               tradeoff named.
             </li>
             <li>
-              <strong>Tradeoff conversations under pressure.</strong> Cache invalidation question: candidate paused,
+              <strong>Tradeoff conversations under pressure.</strong>{" "}Cache invalidation question: candidate paused,
               gave two real options, named the axis (operational complexity vs. staleness), and recommended a phased
               approach.
             </li>
             <li>
-              <strong>Production-readiness mindset.</strong> Named SLOs, named what fails first, named
+              <strong>Production-readiness mindset.</strong>{" "}Named SLOs, named what fails first, named
               fail-open-with-circuit-breaker, flagged abuse and GDPR before being asked. The system in their head
               already had a runbook.
             </li>
@@ -829,11 +829,11 @@ export default function Page() {
         <Callout variant="spring" title="What made this senior-bar">
           <ul className="m-0 space-y-1">
             <li>
-              <strong>Same scope-first opening as the backend interview.</strong> Five clarifying questions before
+              <strong>Same scope-first opening as the backend interview.</strong>{" "}Five clarifying questions before
               a line of code or a single component name.
             </li>
             <li>
-              <strong>State shape sketched explicitly.</strong> Three buckets named (server cache, UI state,
+              <strong>State shape sketched explicitly.</strong>{" "}Three buckets named (server cache, UI state,
               optimistic mutations) with reasoning for the split — not a vague &quot;use Redux.&quot;
             </li>
             <li>
@@ -841,11 +841,11 @@ export default function Page() {
               react-virtuoso for variable heights. Specifics, not adjectives.
             </li>
             <li>
-              <strong>End-to-end coherence on offline/flaky.</strong> Reads and writes both addressed, mutation IDs
+              <strong>End-to-end coherence on offline/flaky.</strong>{" "}Reads and writes both addressed, mutation IDs
               tied back to the like flow, draft persistence flagged. No piece left dangling.
             </li>
             <li>
-              <strong>Accessibility as a real product requirement.</strong> Live regions, focus traps, keyboard
+              <strong>Accessibility as a real product requirement.</strong>{" "}Live regions, focus traps, keyboard
               shortcuts, alt text on compose. Not bolted on at the end — woven through.
             </li>
           </ul>
@@ -913,7 +913,7 @@ export default function Page() {
         <h3 className="text-xl font-semibold mt-12 mb-3">The five senior signals you saw in both transcripts</h3>
         <ol className="space-y-2">
           <li>
-            <strong>Scope clarification before solution.</strong> Five questions in the first 90 seconds. Both
+            <strong>Scope clarification before solution.</strong>{" "}Five questions in the first 90 seconds. Both
             candidates pinned down read:write ratio (or its UI equivalent), feature flags, and constraints before
             drawing anything.
           </li>
@@ -922,17 +922,17 @@ export default function Page() {
             200k–500k DOM nodes, 30 visible, react-virtuoso for variable heights. Math drives architecture.
           </li>
           <li>
-            <strong>State of the world before solution.</strong> Component tree first, then state shape, then data
+            <strong>State of the world before solution.</strong>{" "}Component tree first, then state shape, then data
             fetching, then perf, then resilience. Storage shape and SLOs first, then redirect path, then write path.
             Order matters.
           </li>
           <li>
-            <strong>Tradeoff conversations under pressure.</strong> When pushed (cache invalidation; flaky network),
+            <strong>Tradeoff conversations under pressure.</strong>{" "}When pushed (cache invalidation; flaky network),
             the candidate paused, named two real options with explicit axes, and recommended a phased approach. They
             didn&apos;t defend one design — they articulated the space.
           </li>
           <li>
-            <strong>Production-readiness thinking unprompted.</strong> SLOs, fail-open with circuit breaker, abuse,
+            <strong>Production-readiness thinking unprompted.</strong>{" "}SLOs, fail-open with circuit breaker, abuse,
             GDPR, CLS, battery, accessibility. The system in their head already had a runbook attached.
           </li>
         </ol>
@@ -944,7 +944,7 @@ export default function Page() {
             the surest tell of a candidate who hasn&apos;t internalized that constraints come before solutions.
           </li>
           <li>
-            <strong>Defend one design, never offer alternatives.</strong> Even when a question invites a tradeoff
+            <strong>Defend one design, never offer alternatives.</strong>{" "}Even when a question invites a tradeoff
             (&quot;what about X?&quot;), the answer is a stronger version of the same design — not a real comparison.
           </li>
           <li>

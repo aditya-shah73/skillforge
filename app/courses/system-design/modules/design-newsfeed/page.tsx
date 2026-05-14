@@ -102,7 +102,7 @@ export default function Page() {
           <span className="text-xs uppercase tracking-wider font-bold text-fuchsia-700 dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="text-base leading-relaxed m-0">
-          The interviewer says: <em>&quot;Design a news feed. Like Instagram or Facebook home.&quot;</em> The whole problem is one sentence: <strong>given a user, return the most recent posts from the people they follow, ranked, in &lt;200ms.</strong> The hard part is the asymmetry — most users have a few hundred followers, but a celebrity has 50 million, and the strategy that works for the average user breaks for the celebrity. The senior signal is recognizing that no single fanout strategy works for both, and proposing a <strong>hybrid</strong>.
+          The interviewer says: <em>&quot;Design a news feed. Like Instagram or Facebook home.&quot;</em>{" "}The whole problem is one sentence: <strong>given a user, return the most recent posts from the people they follow, ranked, in &lt;200ms.</strong>{" "}The hard part is the asymmetry — most users have a few hundred followers, but a celebrity has 50 million, and the strategy that works for the average user breaks for the celebrity. The senior signal is recognizing that no single fanout strategy works for both, and proposing a <strong>hybrid</strong>.
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
           We&apos;ll use the framework: clarify, estimate, API + data, high-level, deep-dive on the fanout choice. The fanout decision IS the interview here — get it right and the rest follows.
@@ -115,9 +115,9 @@ export default function Page() {
           Feed surfaces are wildly different across products. I&apos;ll lock the scope:
         </p>
         <ul>
-          <li><strong>Post.</strong> User creates a post (text + optional image URL). Persisted with author + timestamp.</li>
-          <li><strong>Follow / Unfollow.</strong> User follows other users; following is the input to the feed query.</li>
-          <li><strong>Home feed.</strong> User opens the app, gets ~50 most recent posts from people they follow, in reverse-chronological order.</li>
+          <li><strong>Post.</strong>{" "}User creates a post (text + optional image URL). Persisted with author + timestamp.</li>
+          <li><strong>Follow / Unfollow.</strong>{" "}User follows other users; following is the input to the feed query.</li>
+          <li><strong>Home feed.</strong>{" "}User opens the app, gets ~50 most recent posts from people they follow, in reverse-chronological order.</li>
         </ul>
         <p>
           Out of scope: ranking by ML, ads, comments/likes, stories, search, push notifications. I&apos;ll mention ranking at wrap because in real products the feed is ranked, not chronological — but the architecture for chronological is the foundation.
@@ -125,10 +125,10 @@ export default function Page() {
 
         <h3>Non-functional requirements</h3>
         <ul>
-          <li><strong>Read-heavy.</strong> Users scroll the feed many times for every post they create. ~100:1 reads to writes is reasonable.</li>
-          <li><strong>Latency budget on read: &lt;200ms p99.</strong> Below ~300ms feels &quot;instant&quot;; above feels broken.</li>
-          <li><strong>Eventual consistency on the feed is fine.</strong> A 5-10 second delay before a friend&apos;s post shows up is acceptable.</li>
-          <li><strong>Durability matters.</strong> Posts must survive failures even if the feed is briefly stale.</li>
+          <li><strong>Read-heavy.</strong>{" "}Users scroll the feed many times for every post they create. ~100:1 reads to writes is reasonable.</li>
+          <li><strong>Latency budget on read: &lt;200ms p99.</strong>{" "}Below ~300ms feels &quot;instant&quot;; above feels broken.</li>
+          <li><strong>Eventual consistency on the feed is fine.</strong>{" "}A 5-10 second delay before a friend&apos;s post shows up is acceptable.</li>
+          <li><strong>Durability matters.</strong>{" "}Posts must survive failures even if the feed is briefly stale.</li>
         </ul>
 
         <Callout variant="info" title="Questions I'd ask the interviewer">
@@ -142,7 +142,7 @@ export default function Page() {
 
         <h2>Estimation</h2>
         <p>
-          Let me anchor on Instagram-ish scale: <strong>500M DAU</strong>, average user posts ~0.5 times/day, opens the feed ~10 times/day, follows ~200 people, and median follower count is ~200. <em>But</em> there are ~10k celebrities with &gt;1M followers, and ~100 mega-celebs with &gt;50M followers.
+          Let me anchor on Instagram-ish scale: <strong>500M DAU</strong>, average user posts ~0.5 times/day, opens the feed ~10 times/day, follows ~200 people, and median follower count is ~200. <em>But</em>{" "}there are ~10k celebrities with &gt;1M followers, and ~100 mega-celebs with &gt;50M followers.
         </p>
 
         <CodeBlock lang="plain" caption="Capacity estimation">{`Writes (new posts):
@@ -168,7 +168,7 @@ Storage (timelines):
   Posts table: 500M × 0.5/day × 365 days × 3 yrs × ~1KB = ~270 TB (cold-tier candidates)`}</CodeBlock>
 
         <p>
-          Two takeaways: (1) the average user&apos;s fanout is fine — 1.8M writes/sec across a sharded Redis cluster is routine. (2) <strong>The celebrity case is structurally broken under fanout-on-write.</strong> One celebrity post = 50M timeline writes; that single event can saturate a fanout queue. This is the canonical hot-key problem and it&apos;s why a hybrid is the right answer.
+          Two takeaways: (1) the average user&apos;s fanout is fine — 1.8M writes/sec across a sharded Redis cluster is routine. (2) <strong>The celebrity case is structurally broken under fanout-on-write.</strong>{" "}One celebrity post = 50M timeline writes; that single event can saturate a fanout queue. This is the canonical hot-key problem and it&apos;s why a hybrid is the right answer.
         </p>
 
         <Quiz
@@ -309,9 +309,9 @@ Celebrity flag (in user metadata):
           The flow:
         </p>
         <ul>
-          <li><strong>Write path:</strong> Post API persists to DB, enqueues a fanout job, returns immediately.</li>
-          <li><strong>Fanout worker:</strong> dequeues a job, looks up the author&apos;s followers, ZADDs the post into each follower&apos;s timeline ZSET. <strong>Skips celebrity authors</strong> — their followers will pull at read time.</li>
-          <li><strong>Read path:</strong> Feed API ZREVRANGEs the user&apos;s timeline (precomputed for non-celeb authors) AND pulls recent posts from each celebrity the user follows. Merge, sort, return.</li>
+          <li><strong>Write path:</strong>{" "}Post API persists to DB, enqueues a fanout job, returns immediately.</li>
+          <li><strong>Fanout worker:</strong>{" "}dequeues a job, looks up the author&apos;s followers, ZADDs the post into each follower&apos;s timeline ZSET. <strong>Skips celebrity authors</strong> — their followers will pull at read time.</li>
+          <li><strong>Read path:</strong>{" "}Feed API ZREVRANGEs the user&apos;s timeline (precomputed for non-celeb authors) AND pulls recent posts from each celebrity the user follows. Merge, sort, return.</li>
         </ul>
 
         <Quiz
@@ -361,19 +361,19 @@ Celebrity flag (in user metadata):
           On post, write the post_id into every follower&apos;s precomputed timeline ZSET. Read is fast — one ZREVRANGE and you&apos;re done. Write is expensive — proportional to follower count.
         </p>
         <ul>
-          <li><strong>Best for:</strong> users with small follower counts (the vast majority).</li>
-          <li><strong>Worst for:</strong> celebrities. 50M timeline writes per post is a single hot event that overloads queues.</li>
-          <li><strong>Trade:</strong> writes pay, reads are cheap.</li>
+          <li><strong>Best for:</strong>{" "}users with small follower counts (the vast majority).</li>
+          <li><strong>Worst for:</strong>{" "}celebrities. 50M timeline writes per post is a single hot event that overloads queues.</li>
+          <li><strong>Trade:</strong>{" "}writes pay, reads are cheap.</li>
         </ul>
 
         <h3>B. Fanout-on-read (pull)</h3>
         <p>
-          On post, write only the post itself. On read, query each followed user&apos;s recent posts and merge by timestamp. Writes are cheap. Reads are expensive — proportional to <em>following</em> count.
+          On post, write only the post itself. On read, query each followed user&apos;s recent posts and merge by timestamp. Writes are cheap. Reads are expensive — proportional to <em>following</em>{" "}count.
         </p>
         <ul>
-          <li><strong>Best for:</strong> users who follow few people, or for the celebrity branch where push doesn&apos;t scale.</li>
-          <li><strong>Worst for:</strong> users who follow thousands. 1,000 SELECTs per feed load is unacceptable.</li>
-          <li><strong>Trade:</strong> writes cheap, reads pay.</li>
+          <li><strong>Best for:</strong>{" "}users who follow few people, or for the celebrity branch where push doesn&apos;t scale.</li>
+          <li><strong>Worst for:</strong>{" "}users who follow thousands. 1,000 SELECTs per feed load is unacceptable.</li>
+          <li><strong>Trade:</strong>{" "}writes cheap, reads pay.</li>
         </ul>
 
         <h3>C. Hybrid (push + pull)</h3>
@@ -382,7 +382,7 @@ Celebrity flag (in user metadata):
         </p>
 
         <p>
-          <strong>This is the right answer.</strong> Push is wrong for celebrities; pull is wrong for normal users; hybrid does the right thing for each.
+          <strong>This is the right answer.</strong>{" "}Push is wrong for celebrities; pull is wrong for normal users; hybrid does the right thing for each.
         </p>
 
         <Callout variant="warn" title="The threshold question — name it before they ask">
@@ -511,10 +511,10 @@ public class TimelineService {
       <Checkpoint moduleSlug={mod.slug} id="ranking-layer" title="Part 4 · Ranking layer (the ML systems lens)" xp={14}>
         <h2>Why ranking exists at all</h2>
         <p>
-          The system we just built returns the most recent posts from people you follow. That&apos;s how Facebook actually worked until ~2009, and it broke at scale for a boring reason: <strong>users have too many friends</strong>. If you follow 500 people who collectively post 2,000 times a day, your reverse-chronological feed pushes your sister&apos;s wedding photos off the top within minutes — buried under random lunch pics from acquaintances. The fanout system worked perfectly; the <em>product</em> was failing.
+          The system we just built returns the most recent posts from people you follow. That&apos;s how Facebook actually worked until ~2009, and it broke at scale for a boring reason: <strong>users have too many friends</strong>. If you follow 500 people who collectively post 2,000 times a day, your reverse-chronological feed pushes your sister&apos;s wedding photos off the top within minutes — buried under random lunch pics from acquaintances. The fanout system worked perfectly; the <em>product</em>{" "}was failing.
         </p>
         <p>
-          The fix is to score every candidate post by predicted engagement and reorder. Controversial in the abstract, but for the interview it&apos;s the constraint: <strong>ranking optimizes for engagement (time spent, interactions)</strong>, and that&apos;s the metric the system is graded on. Note the second-order architectural consequence: <strong>without ranking, fanout strategy stops mattering past N≈200 friends.</strong> If you only ever read the top 50 of your timeline anyway, it doesn&apos;t matter whether the bottom 9,950 candidates were precomputed or not. Ranking makes candidate <em>generation</em> matter more than candidate <em>delivery</em>.
+          The fix is to score every candidate post by predicted engagement and reorder. Controversial in the abstract, but for the interview it&apos;s the constraint: <strong>ranking optimizes for engagement (time spent, interactions)</strong>, and that&apos;s the metric the system is graded on. Note the second-order architectural consequence: <strong>without ranking, fanout strategy stops mattering past N≈200 friends.</strong>{" "}If you only ever read the top 50 of your timeline anyway, it doesn&apos;t matter whether the bottom 9,950 candidates were precomputed or not. Ranking makes candidate <em>generation</em>{" "}matter more than candidate <em>delivery</em>.
         </p>
 
         <Callout variant="info" title="The architecture above doesn't change — ranking is an addition">
@@ -532,7 +532,7 @@ public class TimelineService {
 
         <h3>Stage 1 · Candidate generation (~10,000 candidates)</h3>
         <p>
-          The question this stage answers is <em>&quot;what could this user plausibly see?&quot;</em> It&apos;s recall-oriented — false negatives are catastrophic (a great post you never considered), false positives are cheap (the next stage filters them). Candidates come from multiple parallel <strong>retrieval sources</strong>:
+          The question this stage answers is <em>&quot;what could this user plausibly see?&quot;</em>{" "}It&apos;s recall-oriented — false negatives are catastrophic (a great post you never considered), false positives are cheap (the next stage filters them). Candidates come from multiple parallel <strong>retrieval sources</strong>:
         </p>
         <ul>
           <li><strong>Friends&apos; recent posts</strong> — the hybrid timeline we built in Parts 2-3.</li>
@@ -543,22 +543,22 @@ public class TimelineService {
           <li><strong>Ads inventory</strong> — separate retrieval system, joined in here so ads compete with organic in ranking.</li>
         </ul>
         <p>
-          Each source is a <strong>separate retrieval system</strong> with its own latency and cache budget. They run in parallel and union their outputs. Latency budget per source: ~10-30ms.
+          Each source is a <strong>separate retrieval system</strong>{" "}with its own latency and cache budget. They run in parallel and union their outputs. Latency budget per source: ~10-30ms.
         </p>
 
         <h3>Stage 2 · Ranking (~500 survivors)</h3>
         <p>
-          The question here is <em>&quot;which 500 of these 10,000 are the best?&quot;</em> This is where the heavy ML lives — a neural network scores each candidate against the user. Modern ranking is <strong>multi-task</strong>: a single network predicts P(like), P(comment), P(share), P(skip), P(report), and a final score is a weighted sum tuned by the product team.
+          The question here is <em>&quot;which 500 of these 10,000 are the best?&quot;</em>{" "}This is where the heavy ML lives — a neural network scores each candidate against the user. Modern ranking is <strong>multi-task</strong>: a single network predicts P(like), P(comment), P(share), P(skip), P(report), and a final score is a weighted sum tuned by the product team.
         </p>
         <ul>
-          <li><strong>Features per candidate:</strong> user history embedding, post content embedding, post age, author affinity (how often you engage with this author), recent CTR on similar content.</li>
+          <li><strong>Features per candidate:</strong>{" "}user history embedding, post content embedding, post age, author affinity (how often you engage with this author), recent CTR on similar content.</li>
           <li><strong>Compute cost:</strong> 10,000 candidates × one forward pass each. Either batched on a GPU or distilled into a lighter model. Latency budget: 30-50ms total.</li>
-          <li><strong>Why a neural net and not a heuristic?</strong> Heuristics work until they don&apos;t — &quot;recent + popular&quot; was the rule for years; it lost to learned models because the interaction effects (this user, this author, this time of day, this content type) are too combinatorial to hand-tune.</li>
+          <li><strong>Why a neural net and not a heuristic?</strong>{" "}Heuristics work until they don&apos;t — &quot;recent + popular&quot; was the rule for years; it lost to learned models because the interaction effects (this user, this author, this time of day, this content type) are too combinatorial to hand-tune.</li>
         </ul>
 
         <h3>Stage 3 · Re-ranking (~50 final posts)</h3>
         <p>
-          The question here is <em>&quot;of the top 500, which final 50 do we show, and in what order?&quot;</em> This stage is rule-based, not learned. It enforces:
+          The question here is <em>&quot;of the top 500, which final 50 do we show, and in what order?&quot;</em>{" "}This stage is rule-based, not learned. It enforces:
         </p>
         <ul>
           <li><strong>Diversity</strong> — don&apos;t show 5 cat photos in a row even if the model loves them. Cap consecutive items by author, topic, content type.</li>
@@ -584,20 +584,20 @@ public class TimelineService {
 
         <h2>Caching the funnel</h2>
         <p>
-          A user scrolls 50-100 posts before bailing. If we re-run the entire 10K-candidate funnel on every page request, we&apos;re doing roughly <strong>200x</strong> the work the user actually consumes. Caching at each stage of the funnel is how this becomes affordable.
+          A user scrolls 50-100 posts before bailing. If we re-run the entire 10K-candidate funnel on every page request, we&apos;re doing roughly <strong>200x</strong>{" "}the work the user actually consumes. Caching at each stage of the funnel is how this becomes affordable.
         </p>
         <ul>
-          <li><strong>Candidate gen cache:</strong> per-user, TTL 5-15 minutes. Refreshing 10K candidates every scroll is wasteful; nothing about the candidate <em>set</em> changes minute-to-minute for most users.</li>
-          <li><strong>Top-N ranked cache:</strong> cache the ranked top 500 for the session. Serve pages of 50 from this cache as the user scrolls. Recompute only when they exhaust it.</li>
-          <li><strong>Feature cache:</strong> user-side features (profile embedding, recent activity vector) cached at session start. Post-side features cached per post for ~5 minutes.</li>
+          <li><strong>Candidate gen cache:</strong>{" "}per-user, TTL 5-15 minutes. Refreshing 10K candidates every scroll is wasteful; nothing about the candidate <em>set</em>{" "}changes minute-to-minute for most users.</li>
+          <li><strong>Top-N ranked cache:</strong>{" "}cache the ranked top 500 for the session. Serve pages of 50 from this cache as the user scrolls. Recompute only when they exhaust it.</li>
+          <li><strong>Feature cache:</strong>{" "}user-side features (profile embedding, recent activity vector) cached at session start. Post-side features cached per post for ~5 minutes.</li>
         </ul>
         <p>
-          The reason this works: <strong>the user&apos;s scroll behavior is the cache eviction policy</strong>. They&apos;ll see the top 50 and bail; recomputing past position 50 is wasted compute most of the time. Reality check on scale: Facebook serves ~1B feed loads/day. At that volume, re-running the full funnel on every load is impossible by a factor of ~100x — caching <em>is</em> the architecture.
+          The reason this works: <strong>the user&apos;s scroll behavior is the cache eviction policy</strong>. They&apos;ll see the top 50 and bail; recomputing past position 50 is wasted compute most of the time. Reality check on scale: Facebook serves ~1B feed loads/day. At that volume, re-running the full funnel on every load is impossible by a factor of ~100x — caching <em>is</em>{" "}the architecture.
         </p>
 
         <Callout variant="warn" title="What you cache vs what you don't">
           <p className="m-0">
-            Cache the <em>candidate set</em> and the <em>ranked order</em>. Don&apos;t cache the final assembled response — re-ranking constraints (ads cadence, diversity windows, floor rules) depend on what the user has already seen <em>this session</em>, which the cache doesn&apos;t know. Re-ranking is cheap; run it fresh on every page request against the cached ranked top 500.
+            Cache the <em>candidate set</em>{" "}and the <em>ranked order</em>. Don&apos;t cache the final assembled response — re-ranking constraints (ads cadence, diversity windows, floor rules) depend on what the user has already seen <em>this session</em>, which the cache doesn&apos;t know. Re-ranking is cheap; run it fresh on every page request against the cached ranked top 500.
           </p>
         </Callout>
 
@@ -606,13 +606,13 @@ public class TimelineService {
           You don&apos;t ship a new ranking model the way you ship a backend change — you ship it to 1% of users, watch metrics for a week, and ramp from there. The infrastructure for this lives next to the ranking service and you should be ready to talk about it.
         </p>
         <ul>
-          <li><strong>Bucketing:</strong> consistent hashing on user_id maps every user to a stable bucket. The same user always gets the same experiment cell unless explicitly rerolled.</li>
-          <li><strong>Why you can&apos;t change buckets mid-experiment:</strong> selection bias. If you move a user from cell A to cell B because A is &quot;not working for them&quot;, you&apos;ve broken the random-assignment invariant and the metric comparison is meaningless.</li>
-          <li><strong>Metrics to watch:</strong> short-term engagement (sessions, time spent, interactions) AND long-term retention (D7, D28). A model that boosts short-term engagement but tanks D28 retention is shipping outrage-bait — not what you want.</li>
-          <li><strong>Holdouts:</strong> a small population (1-5%) that <em>never</em> gets new ranking changes. Compare their long-run engagement to the rest of the user base. If holdouts show better retention than the main population, you&apos;ve been over-fitting on short-term metrics — a slow-burn quality regression you can only see with a stable control.</li>
+          <li><strong>Bucketing:</strong>{" "}consistent hashing on user_id maps every user to a stable bucket. The same user always gets the same experiment cell unless explicitly rerolled.</li>
+          <li><strong>Why you can&apos;t change buckets mid-experiment:</strong>{" "}selection bias. If you move a user from cell A to cell B because A is &quot;not working for them&quot;, you&apos;ve broken the random-assignment invariant and the metric comparison is meaningless.</li>
+          <li><strong>Metrics to watch:</strong>{" "}short-term engagement (sessions, time spent, interactions) AND long-term retention (D7, D28). A model that boosts short-term engagement but tanks D28 retention is shipping outrage-bait — not what you want.</li>
+          <li><strong>Holdouts:</strong>{" "}a small population (1-5%) that <em>never</em>{" "}gets new ranking changes. Compare their long-run engagement to the rest of the user base. If holdouts show better retention than the main population, you&apos;ve been over-fitting on short-term metrics — a slow-burn quality regression you can only see with a stable control.</li>
         </ul>
         <p>
-          Real number: Meta runs roughly 1,000 concurrent A/B tests on feed ranking at any given time. Each user is in dozens of tests simultaneously. The ranking service has to know <em>which</em> tests this user is in and <em>which model variant</em> to call — usually via a feature flag service queried at the start of the request.
+          Real number: Meta runs roughly 1,000 concurrent A/B tests on feed ranking at any given time. Each user is in dozens of tests simultaneously. The ranking service has to know <em>which</em>{" "}tests this user is in and <em>which model variant</em>{" "}to call — usually via a feature flag service queried at the start of the request.
         </p>
 
         <h2>Cold start for ranking</h2>
@@ -620,10 +620,10 @@ public class TimelineService {
           A new user has no history — no likes, no prior sessions, no engagement signal. Every candidate looks equally good to the model, which is the same as ranking randomly. You need explicit fallbacks:
         </p>
         <ul>
-          <li><strong>Demographic similarity:</strong> bootstrap the user&apos;s embedding from users with similar declared attributes (age range, region, language). Rough but usable.</li>
-          <li><strong>Popular content fallback:</strong> for the first N sessions, lean heavily on the global viral pool. Universally engaging content is universally engaging.</li>
-          <li><strong>Friend-engagement proxy:</strong> rank candidates by what the new user&apos;s <em>friends</em> are engaging with. Good cold-start signal because new users typically follow people they know.</li>
-          <li><strong>Active onboarding:</strong> first-session prompts (&quot;pick 3 topics&quot;) generate explicit signal you can feed into the model immediately.</li>
+          <li><strong>Demographic similarity:</strong>{" "}bootstrap the user&apos;s embedding from users with similar declared attributes (age range, region, language). Rough but usable.</li>
+          <li><strong>Popular content fallback:</strong>{" "}for the first N sessions, lean heavily on the global viral pool. Universally engaging content is universally engaging.</li>
+          <li><strong>Friend-engagement proxy:</strong>{" "}rank candidates by what the new user&apos;s <em>friends</em>{" "}are engaging with. Good cold-start signal because new users typically follow people they know.</li>
+          <li><strong>Active onboarding:</strong>{" "}first-session prompts (&quot;pick 3 topics&quot;) generate explicit signal you can feed into the model immediately.</li>
         </ul>
         <p>
           This connects to the broader cold-start pattern from the caching-patterns module — same principle (no historical signal, fall back to a population prior), different surface area.
@@ -631,7 +631,7 @@ public class TimelineService {
 
         <h2>What the full-stack engineer actually builds</h2>
         <p>
-          Important boundary to know in interviews: <strong>the ranking model itself is owned by the ML team</strong>. You&apos;re not training neural networks at the whiteboard. What you <em>are</em> building is the serving infrastructure around the model — and that&apos;s where most of the interesting systems work lives.
+          Important boundary to know in interviews: <strong>the ranking model itself is owned by the ML team</strong>. You&apos;re not training neural networks at the whiteboard. What you <em>are</em>{" "}building is the serving infrastructure around the model — and that&apos;s where most of the interesting systems work lives.
         </p>
         <ul>
           <li><strong>Feature store</strong> — low-latency reads of user features (recent activity, embedding) and post features (engagement counters, content embedding) at request time. Redis or an in-memory feature server. p99 read budget: ~5ms across hundreds of features.</li>
@@ -643,7 +643,7 @@ public class TimelineService {
 
         <Callout variant="warn" title="Training-serving skew is the silent killer">
           <p className="m-0">
-            The most common production ML bug is <strong>training-serving skew</strong>: a feature is computed one way in the offline training pipeline (say, &quot;total likes in last 7 days&quot; computed from a batch query at midnight) and a different way at serving time (the same feature, but read from a real-time counter that&apos;s been updated incrementally). The two values disagree, the model trained on the offline distribution sees a different distribution at serving time, and quality silently regresses. Fix: compute features in <em>one</em> place and snapshot them into both pipelines. This is what &quot;feature store&quot; literally means as a discipline, not just as a Redis instance.
+            The most common production ML bug is <strong>training-serving skew</strong>: a feature is computed one way in the offline training pipeline (say, &quot;total likes in last 7 days&quot; computed from a batch query at midnight) and a different way at serving time (the same feature, but read from a real-time counter that&apos;s been updated incrementally). The two values disagree, the model trained on the offline distribution sees a different distribution at serving time, and quality silently regresses. Fix: compute features in <em>one</em>{" "}place and snapshot them into both pipelines. This is what &quot;feature store&quot; literally means as a discipline, not just as a Redis instance.
           </p>
         </Callout>
 
@@ -740,16 +740,16 @@ public class RankedFeedController {
       <Checkpoint moduleSlug={mod.slug} id="wrap" title="Part 5 · Wrap and what I'd revisit" xp={6}>
         <h2>What I&apos;d revisit if I had more time</h2>
         <ul>
-          <li><strong>Multi-region.</strong> Posts table replicates cross-region with conflict resolution (last-write-wins on post_id is fine because post_ids are immutable). Timelines are per-region — a user&apos;s feed is computed in their home region against the local replica of the posts table.</li>
-          <li><strong>Backpressure on the fanout queue.</strong> If queue lag exceeds threshold, we should either drop the celebrity threshold dynamically (more authors go pull, less push load) or shed non-critical fanout (e.g. for inactive followers). Naming this as a control mechanism is a senior signal.</li>
-          <li><strong>Inactive user GC.</strong> Storing precomputed timelines for users who haven&apos;t opened the app in 6 months is wasted memory. Periodically evict inactive timelines and lazily rebuild on next login (which is a one-time pull).</li>
+          <li><strong>Multi-region.</strong>{" "}Posts table replicates cross-region with conflict resolution (last-write-wins on post_id is fine because post_ids are immutable). Timelines are per-region — a user&apos;s feed is computed in their home region against the local replica of the posts table.</li>
+          <li><strong>Backpressure on the fanout queue.</strong>{" "}If queue lag exceeds threshold, we should either drop the celebrity threshold dynamically (more authors go pull, less push load) or shed non-critical fanout (e.g. for inactive followers). Naming this as a control mechanism is a senior signal.</li>
+          <li><strong>Inactive user GC.</strong>{" "}Storing precomputed timelines for users who haven&apos;t opened the app in 6 months is wasted memory. Periodically evict inactive timelines and lazily rebuild on next login (which is a one-time pull).</li>
         </ul>
 
         <h3>Failure modes I&apos;m worried about</h3>
         <ul>
-          <li><strong>Fanout queue backlog:</strong> a celebrity threshold misconfiguration could send a 50M-follower post through push, saturating the queue and delaying everyone else&apos;s posts. Mitigation: hard cap on per-job fanout size with auto-fallback to pull.</li>
-          <li><strong>Redis cluster failure:</strong> wipes precomputed timelines. Read path can fall back to pull-only mode (slower but functional) while timelines rebuild from posts table.</li>
-          <li><strong>Posts DB shard hot-spotting:</strong> a viral celebrity&apos;s shard takes all the pull traffic. Add a CDN-cached layer for celebrity posts (they&apos;re public, recent, and re-read by millions).</li>
+          <li><strong>Fanout queue backlog:</strong>{" "}a celebrity threshold misconfiguration could send a 50M-follower post through push, saturating the queue and delaying everyone else&apos;s posts. Mitigation: hard cap on per-job fanout size with auto-fallback to pull.</li>
+          <li><strong>Redis cluster failure:</strong>{" "}wipes precomputed timelines. Read path can fall back to pull-only mode (slower but functional) while timelines rebuild from posts table.</li>
+          <li><strong>Posts DB shard hot-spotting:</strong>{" "}a viral celebrity&apos;s shard takes all the pull traffic. Add a CDN-cached layer for celebrity posts (they&apos;re public, recent, and re-read by millions).</li>
         </ul>
 
         <h3>What I&apos;d monitor</h3>
@@ -762,7 +762,7 @@ public class RankedFeedController {
         </ul>
 
         <Callout variant="spring" title="The senior 'I would also' moves for feed">
-          <em>&quot;I&apos;d use Redis ZSETs for timelines; I would also consider a custom in-memory store for the very hottest celebrity working set, but at our scale the ZSET overhead is fine.&quot;</em> Or: <em>&quot;I&apos;d run fanout via Kafka; I would also consider Pulsar for the larger-message use case if posts grow to multi-MB media-rich, but Kafka is fine for the lightweight {`{post_id, author_id}`} job we&apos;re fanning out.&quot;</em> Three of these and the interviewer knows you&apos;ve thought past the first answer.
+          <em>&quot;I&apos;d use Redis ZSETs for timelines; I would also consider a custom in-memory store for the very hottest celebrity working set, but at our scale the ZSET overhead is fine.&quot;</em>{" "}Or: <em>&quot;I&apos;d run fanout via Kafka; I would also consider Pulsar for the larger-message use case if posts grow to multi-MB media-rich, but Kafka is fine for the lightweight {`{post_id, author_id}`} job we&apos;re fanning out.&quot;</em>{" "}Three of these and the interviewer knows you&apos;ve thought past the first answer.
         </Callout>
 
         <p>

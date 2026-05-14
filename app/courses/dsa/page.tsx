@@ -32,7 +32,7 @@ export default function DsaHome() {
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java</strong> (loops, classes, generics — that&apos;s it)</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You studied DSA <em>once</em>, years ago, and most of it has faded</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>A LeetCode account (free tier is plenty)</span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>solve by hand on paper</strong> before touching the keyboard</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>solve by hand on paper</strong>{" "}before touching the keyboard</span></li>
           </ul>
         </div>
         <div className="border-l-2 border-teal-500 dark:border-teal-400 pl-5">

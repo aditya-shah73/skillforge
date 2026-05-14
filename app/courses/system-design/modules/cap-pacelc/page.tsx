@@ -54,7 +54,7 @@ export default function Page() {
           The actual definition of CAP — not the bumper-sticker one — and PACELC, which is the dimension CAP completely misses. By the end you&apos;ll be able to look at any datastore and place it on the matrix in a sentence.
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
-          <li>What &quot;consistency&quot; and &quot;availability&quot; in CAP <em>actually</em> mean (it&apos;s narrower than you think)</li>
+          <li>What &quot;consistency&quot; and &quot;availability&quot; in CAP <em>actually</em>{" "}mean (it&apos;s narrower than you think)</li>
           <li>Why &quot;you can only pick two&quot; is misleading — partitions are not optional</li>
           <li>PACELC: what your system does when there&apos;s no partition</li>
           <li>Where Postgres, Cassandra, DynamoDB, MongoDB, and Spanner land on the matrix</li>
@@ -67,12 +67,12 @@ export default function Page() {
           You&apos;ve seen the meme: &quot;CAP — pick any two: Consistency, Availability, Partition tolerance.&quot; It&apos;s on a thousand whiteboards and it&apos;s misleading enough that getting it wrong is one of the fastest ways to fail a senior interview. Let&apos;s fix it.
         </p>
         <p>
-          CAP — Eric Brewer&apos;s theorem, formalized by Gilbert and Lynch — says: <strong>when a network partition happens, a distributed system must give up either consistency or availability.</strong> That&apos;s the entire claim. Three letters, but it&apos;s really a two-way choice that only kicks in during a partition.
+          CAP — Eric Brewer&apos;s theorem, formalized by Gilbert and Lynch — says: <strong>when a network partition happens, a distributed system must give up either consistency or availability.</strong>{" "}That&apos;s the entire claim. Three letters, but it&apos;s really a two-way choice that only kicks in during a partition.
         </p>
         <p>The corrected reading:</p>
         <ul>
-          <li><strong>Partition tolerance is not a choice.</strong> Networks fail. Switches reboot, cables get unplugged, a whole AZ goes dark. If your system spans more than one machine, you will see partitions. P is a fact of life.</li>
-          <li><strong>The real choice is C-vs-A during a P.</strong> When the network splits, do you keep accepting writes (and risk replicas diverging — give up C), or do you refuse to serve some requests (give up A) until the partition heals?</li>
+          <li><strong>Partition tolerance is not a choice.</strong>{" "}Networks fail. Switches reboot, cables get unplugged, a whole AZ goes dark. If your system spans more than one machine, you will see partitions. P is a fact of life.</li>
+          <li><strong>The real choice is C-vs-A during a P.</strong>{" "}When the network splits, do you keep accepting writes (and risk replicas diverging — give up C), or do you refuse to serve some requests (give up A) until the partition heals?</li>
         </ul>
         <p>
           So &quot;pick two&quot; is technically true but practically misleading. Everyone picks P implicitly. The real architectural decision is C vs A under partition.
@@ -92,7 +92,7 @@ export default function Page() {
 
         <h3>A — Availability</h3>
         <p>
-          CAP&apos;s &quot;availability&quot; is also narrower than it sounds. It means: <strong>every non-failing node returns a non-error response in finite time.</strong> No timeouts, no &quot;please try later,&quot; no 503s. If you can reach any healthy node, that node will answer.
+          CAP&apos;s &quot;availability&quot; is also narrower than it sounds. It means: <strong>every non-failing node returns a non-error response in finite time.</strong>{" "}No timeouts, no &quot;please try later,&quot; no 503s. If you can reach any healthy node, that node will answer.
         </p>
         <p>
           This is more demanding than the &quot;four nines uptime&quot; everyone calls availability in operations. CAP-availability is per-request: every request to a working node gets a real answer, always.
@@ -109,8 +109,8 @@ export default function Page() {
         </p>
         <Mermaid chart={partitionDiagram} />
         <ol>
-          <li><strong>Refuse the request to keep replicas consistent (CP).</strong> Node 1 took the write. Node 2 doesn&apos;t know about it. If Client B asks Node 2, Node 2 either has to refuse (give up A) or check with Node 1 (which it can&apos;t reach). CP systems prefer to fail the request rather than serve stale data.</li>
-          <li><strong>Serve the request and accept divergence (AP).</strong> Node 2 says &quot;I&apos;ll answer with what I know,&quot; possibly returning an old value. Both nodes keep accepting writes. They&apos;ll have to reconcile when the partition heals — the data may have diverged. This is an AP choice.</li>
+          <li><strong>Refuse the request to keep replicas consistent (CP).</strong>{" "}Node 1 took the write. Node 2 doesn&apos;t know about it. If Client B asks Node 2, Node 2 either has to refuse (give up A) or check with Node 1 (which it can&apos;t reach). CP systems prefer to fail the request rather than serve stale data.</li>
+          <li><strong>Serve the request and accept divergence (AP).</strong>{" "}Node 2 says &quot;I&apos;ll answer with what I know,&quot; possibly returning an old value. Both nodes keep accepting writes. They&apos;ll have to reconcile when the partition heals — the data may have diverged. This is an AP choice.</li>
         </ol>
         <p>
           You cannot have both linearizability and full availability when nodes can&apos;t communicate. That&apos;s the mathematical content of CAP. Not &quot;pick two of three.&quot; <strong>&quot;When P happens, pick C or A.&quot;</strong>
@@ -125,8 +125,8 @@ export default function Page() {
           Imagine a banking system with two replicas in two regions. A partition splits them. A user has $100 in their account.
         </p>
         <ul>
-          <li><strong>CP choice:</strong> The replica that doesn&apos;t have a quorum refuses writes and refuses reads. The user can&apos;t check their balance from that side until the partition heals. Frustrating, but the bank never shows two different balances at the same time.</li>
-          <li><strong>AP choice:</strong> Both replicas keep accepting writes. The user transfers $80 from the left replica and $80 from the right replica. Each side thinks it succeeded. When the partition heals, the bank discovers it allowed $160 of withdrawals on a $100 balance. Now there&apos;s a reconciliation problem and possibly an angry phone call.</li>
+          <li><strong>CP choice:</strong>{" "}The replica that doesn&apos;t have a quorum refuses writes and refuses reads. The user can&apos;t check their balance from that side until the partition heals. Frustrating, but the bank never shows two different balances at the same time.</li>
+          <li><strong>AP choice:</strong>{" "}Both replicas keep accepting writes. The user transfers $80 from the left replica and $80 from the right replica. Each side thinks it succeeded. When the partition heals, the bank discovers it allowed $160 of withdrawals on a $100 balance. Now there&apos;s a reconciliation problem and possibly an angry phone call.</li>
         </ul>
         <p>
           For a bank, CP is the right call. For a social media &quot;like&quot; counter, AP is fine — being slightly off on a like count for ten seconds during a partition is invisible to users, and rejecting likes during a partition is more painful than the inconsistency.
@@ -184,7 +184,7 @@ export default function Page() {
           <li><strong>E</strong>lse (no partition): choose <strong>L</strong>atency or <strong>C</strong>onsistency.</li>
         </ul>
         <p>
-          That second clause is where most of the actual design lives. When the network is healthy, your system <em>still</em> has to choose: do I synchronously confirm every write across replicas (slower, stronger consistency), or do I respond fast and replicate in the background (lower latency, weaker consistency)?
+          That second clause is where most of the actual design lives. When the network is healthy, your system <em>still</em>{" "}has to choose: do I synchronously confirm every write across replicas (slower, stronger consistency), or do I respond fast and replicate in the background (lower latency, weaker consistency)?
         </p>
 
         <h3>The four quadrants</h3>
@@ -223,7 +223,7 @@ export default function Page() {
           Cassandra defaults to <strong>PA/EL</strong>. It&apos;s tunable per-query, but the design center is &quot;stay up, stay fast.&quot; A write with <code>consistency=ONE</code> returns as soon as any replica accepts it. A read with <code>consistency=ONE</code> reads from any replica, which may not have the latest write yet. The Cassandra team is explicit: this is the trade.
         </p>
         <p>
-          You <em>can</em> tune Cassandra toward consistency by using quorum reads and writes (<code>R + W &gt; N</code>), and at that point you&apos;ve effectively turned it into a PC/EC system at the cost of latency. The flexibility is the point — same database, different operational stances per query.
+          You <em>can</em>{" "}tune Cassandra toward consistency by using quorum reads and writes (<code>R + W &gt; N</code>), and at that point you&apos;ve effectively turned it into a PC/EC system at the cost of latency. The flexibility is the point — same database, different operational stances per query.
         </p>
 
         <h3>Spanner: the canonical PC/EC system</h3>
@@ -283,13 +283,13 @@ export default function Page() {
 
         <h3>Where the popular datastores actually sit</h3>
         <ul>
-          <li><strong>PostgreSQL (single primary, async replicas):</strong> Writes go to the primary; replicas may lag. PA/EL-leaning when reads go to replicas. Switch to sync replication and you&apos;re PC/EC at the cost of write latency.</li>
-          <li><strong>Cassandra:</strong> Tunable. Default <code>ONE/ONE</code> is PA/EL. Quorum-quorum (<code>R + W &gt; N</code>) approximates PC/EC.</li>
-          <li><strong>DynamoDB:</strong> Default reads eventual (PA/EL). Strongly-consistent reads on demand (PC/EC) at 2x the read units.</li>
-          <li><strong>MongoDB:</strong> With <code>writeConcern majority + readConcern majority</code> it&apos;s PA/EC — it stays up under partition (the majority wins) but in normal operation it ensures reads see committed data.</li>
-          <li><strong>Spanner / CockroachDB:</strong> PC/EC. Globally serializable. Pays the cross-region round-trip on every write.</li>
-          <li><strong>Redis (single node):</strong> Strongly consistent. Not really in CAP — there&apos;s nothing to partition. Redis Cluster with replicas under partition gets messy and is closer to AP than CP.</li>
-          <li><strong>etcd / ZooKeeper / Consul:</strong> PC/EC. They&apos;re built on Raft / Paxos, which means they sacrifice availability on the minority side of any partition.</li>
+          <li><strong>PostgreSQL (single primary, async replicas):</strong>{" "}Writes go to the primary; replicas may lag. PA/EL-leaning when reads go to replicas. Switch to sync replication and you&apos;re PC/EC at the cost of write latency.</li>
+          <li><strong>Cassandra:</strong>{" "}Tunable. Default <code>ONE/ONE</code> is PA/EL. Quorum-quorum (<code>R + W &gt; N</code>) approximates PC/EC.</li>
+          <li><strong>DynamoDB:</strong>{" "}Default reads eventual (PA/EL). Strongly-consistent reads on demand (PC/EC) at 2x the read units.</li>
+          <li><strong>MongoDB:</strong>{" "}With <code>writeConcern majority + readConcern majority</code> it&apos;s PA/EC — it stays up under partition (the majority wins) but in normal operation it ensures reads see committed data.</li>
+          <li><strong>Spanner / CockroachDB:</strong>{" "}PC/EC. Globally serializable. Pays the cross-region round-trip on every write.</li>
+          <li><strong>Redis (single node):</strong>{" "}Strongly consistent. Not really in CAP — there&apos;s nothing to partition. Redis Cluster with replicas under partition gets messy and is closer to AP than CP.</li>
+          <li><strong>etcd / ZooKeeper / Consul:</strong>{" "}PC/EC. They&apos;re built on Raft / Paxos, which means they sacrifice availability on the minority side of any partition.</li>
         </ul>
 
         <Callout variant="insight" title="The actual question to ask any datastore">
@@ -324,9 +324,9 @@ export default function Page() {
         </p>
         <p>The senior judgement is:</p>
         <ol>
-          <li><strong>Name the slot the workload actually needs.</strong> What goes wrong if a write isn&apos;t immediately visible? What goes wrong if a write is rejected during a partition?</li>
-          <li><strong>Pick the database whose default is closest to that slot.</strong> You can always tune in the other direction; you can&apos;t cheaply tune a PA/EL database into being PC/EC, or vice versa.</li>
-          <li><strong>Verify the failure mode you didn&apos;t pick is acceptable.</strong> If you picked PA, write down what your system does when replicas diverge. If you picked PC, write down what your users see when the system rejects their requests.</li>
+          <li><strong>Name the slot the workload actually needs.</strong>{" "}What goes wrong if a write isn&apos;t immediately visible? What goes wrong if a write is rejected during a partition?</li>
+          <li><strong>Pick the database whose default is closest to that slot.</strong>{" "}You can always tune in the other direction; you can&apos;t cheaply tune a PA/EL database into being PC/EC, or vice versa.</li>
+          <li><strong>Verify the failure mode you didn&apos;t pick is acceptable.</strong>{" "}If you picked PA, write down what your system does when replicas diverge. If you picked PC, write down what your users see when the system rejects their requests.</li>
         </ol>
 
         <Callout variant="warn" title="The real cost of picking wrong">

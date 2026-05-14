@@ -96,7 +96,7 @@ flowchart TB
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-          Phase 5 is one module long: the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Java Collections Framework deep dive</Link>. That makes this revision card different from Phase 1&apos;s — instead of consolidating three modules, we&apos;re going <em>deeper</em> on one. The goal is to lock in the <strong>pick-the-right-collection</strong> mental model: hierarchy, Big-O, ordering rules, the <code>equals/hashCode</code> contract, <code>Comparable</code> vs <code>Comparator</code>, and the thread-safety options.
+          Phase 5 is one module long: the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Java Collections Framework deep dive</Link>. That makes this revision card different from Phase 1&apos;s — instead of consolidating three modules, we&apos;re going <em>deeper</em>{" "}on one. The goal is to lock in the <strong>pick-the-right-collection</strong>{" "}mental model: hierarchy, Big-O, ordering rules, the <code>equals/hashCode</code> contract, <code>Comparable</code> vs <code>Comparator</code>, and the thread-safety options.
         </p>
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
           If anything here looks unfamiliar, the deep dive is one click away. Otherwise: this is the page you re-read before an interview, before a code review, before you reach for <code>new ArrayList&lt;&gt;()</code> on autopilot.
@@ -109,7 +109,7 @@ flowchart TB
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">1. The full Collections hierarchy</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Sketch this from memory. <code>Iterable</code> at the top; <code>Map</code> deliberately off to the side because it is <em>not</em> a <code>Collection</code>.
+          Sketch this from memory. <code>Iterable</code> at the top; <code>Map</code> deliberately off to the side because it is <em>not</em>{" "}a <code>Collection</code>.
         </p>
 
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
@@ -117,7 +117,7 @@ flowchart TB
         </div>
 
         <Callout variant="warn" title="Map is not a Collection">
-          <code>Map&lt;K,V&gt;</code> sits in its own subtree of <code>java.util</code>. You cannot pass a <code>HashMap</code> where a <code>Collection</code> is expected. You <em>can</em> get collection-views from it: <code>map.keySet()</code>, <code>map.values()</code>, <code>map.entrySet()</code>. That is the bridge.
+          <code>Map&lt;K,V&gt;</code> sits in its own subtree of <code>java.util</code>. You cannot pass a <code>HashMap</code> where a <code>Collection</code> is expected. You <em>can</em>{" "}get collection-views from it: <code>map.keySet()</code>, <code>map.values()</code>, <code>map.entrySet()</code>. That is the bridge.
         </Callout>
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mt-4">
@@ -138,7 +138,7 @@ flowchart TB
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">2. The complete Big-O table</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Every implementation you&apos;ll see in production code. Eleven rows. The <em>Key gotcha</em> column is what separates a junior answer from a senior one.
+          Every implementation you&apos;ll see in production code. Eleven rows. The <em>Key gotcha</em>{" "}column is what separates a junior answer from a senior one.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -247,7 +247,7 @@ flowchart TB
         </div>
 
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
-          Read the rows you actually use first. <strong>ArrayList, HashMap, ArrayDeque, HashSet</strong> cover 80% of production code; everything else is opt-in for a reason.
+          Read the rows you actually use first. <strong>ArrayList, HashMap, ArrayDeque, HashSet</strong>{" "}cover 80% of production code; everything else is opt-in for a reason.
         </p>
       </section>
 
@@ -277,7 +277,7 @@ flowchart TB
             <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
               <li><strong>None</strong> (fastest) → <code>HashMap</code> / <code>HashSet</code></li>
               <li><strong>Insertion order</strong> → <code>LinkedHashMap</code> / <code>LinkedHashSet</code></li>
-              <li><strong>Sorted</strong> by key → <code>TreeMap</code> / <code>TreeSet</code></li>
+              <li><strong>Sorted</strong>{" "}by key → <code>TreeMap</code> / <code>TreeSet</code></li>
             </ul>
           </div>
 
@@ -293,7 +293,7 @@ flowchart TB
         </div>
 
         <Callout variant="insight" title="The 80% answer">
-          When in doubt: <code>ArrayList</code> for ordered/indexed, <code>HashMap</code> for lookup, <code>HashSet</code> for membership, <code>ArrayDeque</code> for LIFO/FIFO. The other six implementations are special-purpose and you should be able to name <em>why</em> you reached for them.
+          When in doubt: <code>ArrayList</code> for ordered/indexed, <code>HashMap</code> for lookup, <code>HashSet</code> for membership, <code>ArrayDeque</code> for LIFO/FIFO. The other six implementations are special-purpose and you should be able to name <em>why</em>{" "}you reached for them.
         </Callout>
       </section>
 
@@ -328,8 +328,8 @@ flowchart TB
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-slate-500">Concept</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">The <em>natural</em> ordering — &quot;there is one obvious way to sort these&quot;</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">An <em>alternative</em> ordering — &quot;here&apos;s how I want them sorted right now&quot;</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">The <em>natural</em>{" "}ordering — &quot;there is one obvious way to sort these&quot;</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">An <em>alternative</em>{" "}ordering — &quot;here&apos;s how I want them sorted right now&quot;</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-slate-500">How many?</td>
@@ -407,11 +407,11 @@ PriorityQueue<Employee> pq =
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Rule 4 · Consistent</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300">Repeated calls return the same result <em>as long as the fields used haven&apos;t changed.</em> Mutating a key after putting it in a map is the disaster scenario.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300">Repeated calls return the same result <em>as long as the fields used haven&apos;t changed.</em>{" "}Mutating a key after putting it in a map is the disaster scenario.</p>
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 md:col-span-2">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Rule 5 · equals → hashCode</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300">If <code>a.equals(b)</code> is true, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong> be true. The converse is <em>not</em> required (collisions are fine). Break this and HashMap looks in the wrong bucket and silently &quot;loses&quot; your key.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300">If <code>a.equals(b)</code> is true, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong>{" "}be true. The converse is <em>not</em>{" "}required (collisions are fine). Break this and HashMap looks in the wrong bucket and silently &quot;loses&quot; your key.</p>
           </div>
         </div>
 
@@ -454,7 +454,7 @@ map.put(new UserId("u1"), "Alice");
 System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
 
         <Callout variant="warn" title="Use records when you can">
-          Java 16+ <code>record</code> types auto-generate <code>equals</code> and <code>hashCode</code> from <em>all</em> components, by the book. <code>record UserId(String value) {}</code> is the one-line version of the GOOD example above. Reach for records before writing the boilerplate.
+          Java 16+ <code>record</code> types auto-generate <code>equals</code> and <code>hashCode</code> from <em>all</em>{" "}components, by the book. <code>record UserId(String value) {}</code> is the one-line version of the GOOD example above. Reach for records before writing the boilerplate.
         </Callout>
       </section>
 
@@ -490,7 +490,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">LinkedHashMap / LinkedHashSet</td>
                 <td className="px-4 py-3 text-emerald-600">Insertion order</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Doubly-linked list of entries threads through the hash table. Optional <em>access-order</em> mode (LRU cache pattern).</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Doubly-linked list of entries threads through the hash table. Optional <em>access-order</em>{" "}mode (LRU cache pattern).</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">TreeMap / TreeSet</td>
@@ -505,7 +505,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">PriorityQueue</td>
                 <td className="px-4 py-3 text-rose-600">No useful order!</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Iteration walks the heap array — <em>not</em> in sorted order. Only <code>poll()</code> returns elements in priority order. This catches everyone once.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Iteration walks the heap array — <em>not</em>{" "}in sorted order. Only <code>poll()</code> returns elements in priority order. This catches everyone once.</td>
               </tr>
             </tbody>
           </table>
@@ -522,7 +522,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">7. Thread safety quick reference</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          Standard collections (<code>ArrayList</code>, <code>HashMap</code>, etc.) are <strong>not</strong> thread-safe. Here are the four options when you need them to be.
+          Standard collections (<code>ArrayList</code>, <code>HashMap</code>, etc.) are <strong>not</strong>{" "}thread-safe. Here are the four options when you need them to be.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -546,7 +546,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
                 <td className="px-4 py-3 font-mono font-semibold">ConcurrentHashMap</td>
                 <td className="px-4 py-3 text-emerald-600 font-semibold">Yes</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lock striping / CAS on individual buckets. Reads are mostly lock-free.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Default choice</strong> for shared mutable maps. High concurrency, low contention.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Default choice</strong>{" "}for shared mutable maps. High concurrency, low contention.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">Collections.synchronizedMap(m)</td>
@@ -558,7 +558,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
                 <td className="px-4 py-3 font-mono font-semibold">Hashtable</td>
                 <td className="px-4 py-3 text-amber-600 font-semibold">Yes (legacy)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Every method <code>synchronized</code>. Same global-lock model as <code>synchronizedMap</code>.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Don&apos;t use.</strong> Pre-collections-framework. <code>ConcurrentHashMap</code> is strictly better.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Don&apos;t use.</strong>{" "}Pre-collections-framework. <code>ConcurrentHashMap</code> is strictly better.</td>
               </tr>
             </tbody>
           </table>
@@ -653,7 +653,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           Hierarchy, the 11-row Big-O table, the four decision questions, Comparable vs Comparator, the equals/hashCode contract, iteration order rules, thread safety. That&apos;s the entire framework — every container choice you make from now on should be a conscious one.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Algorithmic Techniques.</strong> Two pointers, sliding window, binary search patterns, recursion, backtracking. The shapes that show up over and over in interviews — implemented on top of the data structures you now understand cold.
+          <strong>Up next: Phase 6 — Algorithmic Techniques.</strong>{" "}Two pointers, sliding window, binary search patterns, recursion, backtracking. The shapes that show up over and over in interviews — implemented on top of the data structures you now understand cold.
         </p>
         <Link
           href="/courses/dsa/modules/two-pointers"

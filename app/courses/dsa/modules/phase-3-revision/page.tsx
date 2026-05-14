@@ -178,7 +178,7 @@ flowchart TB
         </p>
 
         <Callout variant="insight">
-          <strong>Decision tree in one line:</strong> need fastest lookup → HashMap. Need sorted/range → TreeMap. Need &quot;biggest&quot; or &quot;smallest&quot; on a stream → PriorityQueue. Need uniqueness → swap the Map suffix for Set.
+          <strong>Decision tree in one line:</strong>{" "}need fastest lookup → HashMap. Need sorted/range → TreeMap. Need &quot;biggest&quot; or &quot;smallest&quot; on a stream → PriorityQueue. Need uniqueness → swap the Map suffix for Set.
         </Callout>
       </section>
 
@@ -203,21 +203,21 @@ flowchart TB
             <strong>Index formula:</strong> <code>index = h &amp; (capacity - 1)</code>. Works because capacity is always a power of two — that AND is equivalent to <code>h % capacity</code> but much faster.
           </li>
           <li>
-            <strong>Chaining:</strong> each bucket holds a linked list of entries. New entries appended at the tail. Lookup walks the list comparing with <code>equals</code>.
+            <strong>Chaining:</strong>{" "}each bucket holds a linked list of entries. New entries appended at the tail. Lookup walks the list comparing with <code>equals</code>.
           </li>
           <li>
-            <strong>Load factor 0.75:</strong> once <code>size &gt; capacity × 0.75</code>, resize to 2× and rehash everything. Amortized O(1), worst-case O(n) on the resize call.
+            <strong>Load factor 0.75:</strong>{" "}once <code>size &gt; capacity × 0.75</code>, resize to 2× and rehash everything. Amortized O(1), worst-case O(n) on the resize call.
           </li>
           <li>
-            <strong>Treeify threshold 8 + MIN_TREEIFY_CAPACITY 64:</strong> a single bucket with ≥ 8 entries on a table with capacity ≥ 64 converts that bucket from a list to a red-black tree. Keeps worst-case bucket cost at O(log n) instead of O(n) under hash attacks.
+            <strong>Treeify threshold 8 + MIN_TREEIFY_CAPACITY 64:</strong>{" "}a single bucket with ≥ 8 entries on a table with capacity ≥ 64 converts that bucket from a list to a red-black tree. Keeps worst-case bucket cost at O(log n) instead of O(n) under hash attacks.
           </li>
         </ul>
 
         <h3 className="text-base font-semibold mt-6 mb-2">The <code>equals</code> / <code>hashCode</code> contract</h3>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-decimal pl-5 mb-4">
-          <li>If <code>a.equals(b)</code> is <code>true</code>, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong> hold. Break this and your keys will be silently lost in HashMap.</li>
+          <li>If <code>a.equals(b)</code> is <code>true</code>, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong>{" "}hold. Break this and your keys will be silently lost in HashMap.</li>
           <li>If <code>a.hashCode() == b.hashCode()</code>, <code>equals</code> may or may not be true (collisions are legal).</li>
-          <li>Both methods must use <em>only</em> immutable fields. Mutate a field that&apos;s in <code>hashCode</code> and the key is now in the wrong bucket — invisible to <code>get</code>.</li>
+          <li>Both methods must use <em>only</em>{" "}immutable fields. Mutate a field that&apos;s in <code>hashCode</code> and the key is now in the wrong bucket — invisible to <code>get</code>.</li>
         </ol>
 
         <CodeBlock lang="java" caption="Canonical equals/hashCode pair">{`@Override
@@ -260,7 +260,7 @@ public int hashCode() {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Inorder · L, root, R</div>
             <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">4 → 2 → 5 → 1 → 6 → 3 → 7</code>
-            <div className="text-xs text-slate-500">On a BST: yields sorted keys. <em>The</em> BST verifier.</div>
+            <div className="text-xs text-slate-500">On a BST: yields sorted keys. <em>The</em>{" "}BST verifier.</div>
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Postorder · L, R, root</div>
@@ -330,7 +330,7 @@ void postorder(TreeNode n, List<Integer> out) {
 }`}</CodeBlock>
 
         <Callout variant="insight">
-          <strong>Complexity for all four:</strong> O(n) time (every node touched once). Space is O(h) for DFS (recursion or explicit stack — proportional to tree height) and O(w) for BFS (queue holds the widest level, up to ~n/2 for a perfect tree).
+          <strong>Complexity for all four:</strong>{" "}O(n) time (every node touched once). Space is O(h) for DFS (recursion or explicit stack — proportional to tree height) and O(w) for BFS (queue holds the widest level, up to ~n/2 for a perfect tree).
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -351,7 +351,7 @@ void postorder(TreeNode n, List<Integer> out) {
           <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">The invariant — global, not local</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              For every node <code>n</code>: <em>every</em> key in <code>n.left</code> &lt; <code>n.key</code> &lt; <em>every</em> key in <code>n.right</code>. Not just the immediate children — the whole subtree.
+              For every node <code>n</code>: <em>every</em>{" "}key in <code>n.left</code> &lt; <code>n.key</code> &lt; <em>every</em>{" "}key in <code>n.right</code>. Not just the immediate children — the whole subtree.
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Verifier: an inorder traversal produces a strictly increasing sequence. If it doesn&apos;t, it&apos;s not a BST.
@@ -364,7 +364,7 @@ void postorder(TreeNode n, List<Integer> out) {
               Insert <code>1, 2, 3, 4, 5</code> into a plain BST: it becomes a linked list to the right. Height = n. Search/insert/delete all O(n).
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              That&apos;s why production code uses <strong>self-balancing</strong> variants — AVL and red-black trees — that rotate on insert to keep height O(log n).
+              That&apos;s why production code uses <strong>self-balancing</strong>{" "}variants — AVL and red-black trees — that rotate on insert to keep height O(log n).
             </p>
           </div>
         </div>
@@ -421,10 +421,10 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
 
         <h3 className="text-base font-semibold mt-4 mb-2">TreeMap vs HashMap — the picker</h3>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
-          <li><strong>Just key → value lookup?</strong> HashMap. It&apos;s ~5× faster on average.</li>
-          <li><strong>Need sorted iteration?</strong> TreeMap. HashMap&apos;s iteration order is unspecified.</li>
-          <li><strong>Range queries (&quot;all keys between A and B&quot;)?</strong> TreeMap. HashMap can&apos;t do this without scanning.</li>
-          <li><strong>floor/ceiling/predecessor/successor?</strong> TreeMap, O(log n). HashMap doesn&apos;t support these.</li>
+          <li><strong>Just key → value lookup?</strong>{" "}HashMap. It&apos;s ~5× faster on average.</li>
+          <li><strong>Need sorted iteration?</strong>{" "}TreeMap. HashMap&apos;s iteration order is unspecified.</li>
+          <li><strong>Range queries (&quot;all keys between A and B&quot;)?</strong>{" "}TreeMap. HashMap can&apos;t do this without scanning.</li>
+          <li><strong>floor/ceiling/predecessor/successor?</strong>{" "}TreeMap, O(log n). HashMap doesn&apos;t support these.</li>
         </ul>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -461,8 +461,8 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">The shape invariant</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
-              <li><strong>Complete:</strong> every level full except possibly the last, which fills left-to-right.</li>
-              <li><strong>Heap order:</strong> every parent ≤ both children (min-heap), or ≥ both (max-heap).</li>
+              <li><strong>Complete:</strong>{" "}every level full except possibly the last, which fills left-to-right.</li>
+              <li><strong>Heap order:</strong>{" "}every parent ≤ both children (min-heap), or ≥ both (max-heap).</li>
               <li>No ordering between siblings. The root is the min/max — nothing else is guaranteed.</li>
             </ul>
           </div>
@@ -491,7 +491,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
 // O(log n). Key detail: swap with the SMALLER child, not just any child.`}</CodeBlock>
 
         <Callout variant="warn">
-          <strong>PriorityQueue is NOT FIFO.</strong> The name is misleading. It&apos;s &quot;extract-min-first.&quot; <code>poll()</code> returns the smallest element by natural ordering or the supplied comparator. For max-heap, pass <code>Comparator.reverseOrder()</code>. For top-K largest, use a min-heap of size K (counterintuitive but right).
+          <strong>PriorityQueue is NOT FIFO.</strong>{" "}The name is misleading. It&apos;s &quot;extract-min-first.&quot; <code>poll()</code> returns the smallest element by natural ordering or the supplied comparator. For max-heap, pass <code>Comparator.reverseOrder()</code>. For top-K largest, use a min-heap of size K (counterintuitive but right).
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -563,7 +563,7 @@ for (char c : s.toCharArray()) {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pattern 4 · Lowest Common Ancestor via recursion</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Recurse left and right. If both children return non-null, the current node <em>is</em> the LCA. Otherwise return whichever side found one of the targets. O(n) time, O(h) space.
+              Recurse left and right. If both children return non-null, the current node <em>is</em>{" "}the LCA. Otherwise return whichever side found one of the targets. O(n) time, O(h) space.
             </p>
             <CodeBlock lang="java">{`TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
     if (root == null || root == p || root == q) return root;
@@ -654,7 +654,7 @@ Deque<Integer> q = new ArrayDeque<>();`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Validating BST by only checking immediate children</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              The invariant is global, not local. A node with <code>left.val &lt; root.val &lt; right.val</code> can still violate BST if a <em>descendant</em> of <code>left</code> exceeds <code>root.val</code>. Validate by passing down (min, max) bounds.
+              The invariant is global, not local. A node with <code>left.val &lt; root.val &lt; right.val</code> can still violate BST if a <em>descendant</em>{" "}of <code>left</code> exceeds <code>root.val</code>. Validate by passing down (min, max) bounds.
             </p>
             <CodeBlock lang="java">{`// BAD — only checks parent vs immediate children
 boolean isBST(TreeNode n) {
@@ -753,7 +753,7 @@ boolean isBST(TreeNode n, Long min, Long max) {
           HashMap mechanics, the equals/hashCode contract, four tree walks, the BST invariant and its self-balancing rescue, the heap array trick, and the four patterns — top-K, frequency, anagram grouping, LCA. That&apos;s the entire &quot;keyed lookup and tree-shaped data&quot; chapter compressed.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Graphs.</strong> Nodes and edges, BFS/DFS on graphs, shortest paths, union-find, advanced graph algorithms. The structures you just learned (queue, stack, heap, HashMap for visited) are the building blocks.
+          <strong>Up next: Phase 4 — Graphs.</strong>{" "}Nodes and edges, BFS/DFS on graphs, shortest paths, union-find, advanced graph algorithms. The structures you just learned (queue, stack, heap, HashMap for visited) are the building blocks.
         </p>
         <Link
           href="/courses/dsa/modules/graphs-intro"

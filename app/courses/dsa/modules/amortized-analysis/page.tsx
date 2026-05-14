@@ -85,7 +85,7 @@ flowchart LR
           Until now, "what&apos;s the Big-O?" has been a single answer: O(n), O(log n), O(n²). One value.
         </p>
         <p>
-          The truth is messier. Most algorithms have <em>different</em> Big-O depending on what you put into them. A linear search through a million elements: O(n) if the target is at the end, O(1) if it&apos;s at the start. Same algorithm. Two answers.
+          The truth is messier. Most algorithms have <em>different</em>{" "}Big-O depending on what you put into them. A linear search through a million elements: O(n) if the target is at the end, O(1) if it&apos;s at the start. Same algorithm. Two answers.
         </p>
 
         <Quiz
@@ -225,7 +225,7 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
             {
               title: "What we say instead",
               body: (
-                <p><strong>"O(1) average, O(n) worst."</strong> Both numbers, with context. That&apos;s the honest answer. In practice, you&apos;ll write "O(1)" on a whiteboard and add the worst-case footnote if asked.</p>
+                <p><strong>"O(1) average, O(n) worst."</strong>{" "}Both numbers, with context. That&apos;s the honest answer. In practice, you&apos;ll write "O(1)" on a whiteboard and add the worst-case footnote if asked.</p>
               ),
             },
           ]}
@@ -276,7 +276,7 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
           There&apos;s a fourth Big-O number, and it&apos;s the one you&apos;ll actually need to defend in interviews: <strong>amortized cost</strong>.
         </p>
         <p>
-          Amortized analysis answers: <em>over a sequence of n operations, what&apos;s the average cost per operation?</em> Not "average over inputs" (that&apos;s average case). Not "worst single operation" (that&apos;s worst case). Average <em>over time</em>, across a series of operations on the same data structure.
+          Amortized analysis answers: <em>over a sequence of n operations, what&apos;s the average cost per operation?</em>{" "}Not "average over inputs" (that&apos;s average case). Not "worst single operation" (that&apos;s worst case). Average <em>over time</em>, across a series of operations on the same data structure.
         </p>
 
         <h3>The motivating example: ArrayList.add</h3>
@@ -285,9 +285,9 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
 
         <p>Here&apos;s how Java&apos;s <code>ArrayList</code> works:</p>
         <ul>
-          <li>It holds an internal <code>Object[]</code> array, with a <em>capacity</em> bigger than its current size.</li>
+          <li>It holds an internal <code>Object[]</code> array, with a <em>capacity</em>{" "}bigger than its current size.</li>
           <li>Most adds just write to the next empty slot. <strong>O(1)</strong>.</li>
-          <li>When the array is full, ArrayList allocates a NEW array — typically 1.5× or 2× the size — and copies every element over. <strong>O(n)</strong> for that one call.</li>
+          <li>When the array is full, ArrayList allocates a NEW array — typically 1.5× or 2× the size — and copies every element over. <strong>O(n)</strong>{" "}for that one call.</li>
         </ul>
 
         <Callout variant="warn" title="Wait — so add() is O(n)?">
@@ -327,7 +327,7 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
               body: (
                 <>
                   <p>Doing n adds (assume n is a power of 2 for clean arithmetic), resizes happen when the array fills at sizes 1, 2, 4, 8, ..., n/2. The resize at size k copies k elements into a new array of capacity 2k.</p>
-                  <p>So the total <em>copy</em> work across all resizes is:</p>
+                  <p>So the total <em>copy</em>{" "}work across all resizes is:</p>
                   <CodeBlock lang="plain">{`1 + 2 + 4 + 8 + ... + n/2
    = n - 1   (geometric series: 2^0 + 2^1 + ... + 2^(k-1) = 2^k - 1, with 2^k = n)`}</CodeBlock>
                   <p>Plus n simple writes (one per add — every add writes its element into the array). Grand total:</p>
@@ -341,7 +341,7 @@ m.get(key);   // what's the Big-O?`}</CodeBlock>
                 <>
                   <p>The amortized cost per add is the total work divided by the number of operations:</p>
                   <CodeBlock lang="plain">{`Amortized cost per add  ≈  2n / n  =  2  =  O(1)`}</CodeBlock>
-                  <p>Constant. That&apos;s the magic. <strong>Even though some calls do O(n) work, the average over n calls is O(1).</strong> You&apos;ll see this exact ratio (~2) when you run the simulator in Part 5.</p>
+                  <p>Constant. That&apos;s the magic. <strong>Even though some calls do O(n) work, the average over n calls is O(1).</strong>{" "}You&apos;ll see this exact ratio (~2) when you run the simulator in Part 5.</p>
                 </>
               ),
             },
@@ -371,7 +371,7 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
         <h3>The accountant's view</h3>
 
         <p>
-          There&apos;s a slick mental model called the <strong>accounting method</strong> that gives a clean (slightly looser) upper bound. Pretend every cheap add "saves up credit" for the future expensive resize.
+          There&apos;s a slick mental model called the <strong>accounting method</strong>{" "}that gives a clean (slightly looser) upper bound. Pretend every cheap add "saves up credit" for the future expensive resize.
         </p>
         <p>
           Charge each add a flat 3 units of cost. 1 unit pays for the write. The other 2 units go into a savings account, pinned to that element. Between resizes, the array doubles in size — so when the array is full at capacity c, the c/2 most recent adds (the ones inserted since the last resize) have each saved 2 units. That&apos;s c/2 × 2 = c credits in the bank — exactly enough to pay for the c-element copy.
@@ -381,7 +381,7 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
         </p>
         <Callout variant="info" title="Aggregate gave us 2, accounting gave us 3 — both are O(1)">
           <p className="m-0">
-            Aggregate analysis (summing the actual costs) gives the tight bound of <strong>~2 per add</strong>. The accounting method gives a looser <strong>3 per add</strong> upper bound, but with a beautiful credit-and-savings argument. Both are O(1), which is all we care about asymptotically. You&apos;ll meet the third technique — the <em>potential method</em> — if you take a graduate algorithms class. For interviews, aggregate is enough.
+            Aggregate analysis (summing the actual costs) gives the tight bound of <strong>~2 per add</strong>. The accounting method gives a looser <strong>3 per add</strong>{" "}upper bound, but with a beautiful credit-and-savings argument. Both are O(1), which is all we care about asymptotically. You&apos;ll meet the third technique — the <em>potential method</em> — if you take a graduate algorithms class. For interviews, aggregate is enough.
           </p>
         </Callout>
 
@@ -443,19 +443,19 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
 
         <ul>
           <li>
-            <strong>Dynamic array (ArrayList, ArrayDeque, StringBuilder).</strong> Resizes geometrically. <code>add</code>, <code>append</code>, <code>offerLast</code> are amortized O(1). Worst single call is O(n).
+            <strong>Dynamic array (ArrayList, ArrayDeque, StringBuilder).</strong>{" "}Resizes geometrically. <code>add</code>, <code>append</code>, <code>offerLast</code> are amortized O(1). Worst single call is O(n).
           </li>
           <li>
-            <strong>HashMap (and HashSet).</strong> When the load factor exceeds a threshold (0.75 in Java), the table doubles in capacity and rehashes every entry. <code>put</code> and <code>get</code> are amortized O(1). Worst single call is O(n).
+            <strong>HashMap (and HashSet).</strong>{" "}When the load factor exceeds a threshold (0.75 in Java), the table doubles in capacity and rehashes every entry. <code>put</code> and <code>get</code> are amortized O(1). Worst single call is O(n).
           </li>
           <li>
-            <strong>Splay trees.</strong> A self-adjusting BST. Single operations can be O(n), but any sequence of m operations is O(m log n) — so amortized O(log n) per op.
+            <strong>Splay trees.</strong>{" "}A self-adjusting BST. Single operations can be O(n), but any sequence of m operations is O(m log n) — so amortized O(log n) per op.
           </li>
           <li>
-            <strong>Union-Find with path compression.</strong> Each individual operation can be slow, but amortized cost per op is nearly O(1) (technically inverse Ackermann, which is &le; 4 for any conceivable n).
+            <strong>Union-Find with path compression.</strong>{" "}Each individual operation can be slow, but amortized cost per op is nearly O(1) (technically inverse Ackermann, which is &le; 4 for any conceivable n).
           </li>
           <li>
-            <strong>Stacks with multipop.</strong> A classic textbook example: <code>multipop(k)</code> pops k items, costing O(k). But across a sequence, the total pop work is bounded by the total push work — so push and multipop are both amortized O(1).
+            <strong>Stacks with multipop.</strong>{" "}A classic textbook example: <code>multipop(k)</code> pops k items, costing O(k). But across a sequence, the total pop work is bounded by the total push work — so push and multipop are both amortized O(1).
           </li>
         </ul>
 
@@ -471,9 +471,9 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
           For most code, amortized O(1) is fine — your throughput is what matters. But for some systems, the worst-case spike is itself the problem.
         </p>
         <ul>
-          <li><strong>Real-time systems.</strong> A pacemaker can&apos;t tolerate a 50ms hiccup once every 1000 operations, even if the throughput is great.</li>
-          <li><strong>P99 latency targets.</strong> If 1 in 1000 requests takes 100× longer, your P99 is dominated by the resize. Amortized math doesn&apos;t care about percentiles; production does.</li>
-          <li><strong>GC-sensitive workloads.</strong> The resize allocates a fresh array, and the old one becomes garbage. Big resizes mean big GC pauses.</li>
+          <li><strong>Real-time systems.</strong>{" "}A pacemaker can&apos;t tolerate a 50ms hiccup once every 1000 operations, even if the throughput is great.</li>
+          <li><strong>P99 latency targets.</strong>{" "}If 1 in 1000 requests takes 100× longer, your P99 is dominated by the resize. Amortized math doesn&apos;t care about percentiles; production does.</li>
+          <li><strong>GC-sensitive workloads.</strong>{" "}The resize allocates a fresh array, and the old one becomes garbage. Big resizes mean big GC pauses.</li>
         </ul>
         <p>
           The fix in those cases: pre-size the structure (<code>new ArrayList&lt;&gt;(expectedSize)</code>) so no resize ever happens, or pick a different data structure with a better worst case.
@@ -545,7 +545,7 @@ Amortized cost per add  ≈  (n²/20) / n  =  n/20  =  O(n)   ❌`}</CodeBlock>
         <h2>Part 5: Project — amortized-cost simulator</h2>
 
         <p>
-          You&apos;re going to build a simple dynamic-array clone in Java, log the cost of every operation, and plot the rolling average. The goal: <em>see</em> the amortized line flatten while individual operations spike.
+          You&apos;re going to build a simple dynamic-array clone in Java, log the cost of every operation, and plot the rolling average. The goal: <em>see</em>{" "}the amortized line flatten while individual operations spike.
         </p>
 
         <h3>The setup</h3>
@@ -674,10 +674,10 @@ i      this op    total        amortized avg
         <p>Two things should jump out at you:</p>
         <ol>
           <li>
-            With <strong>doubling</strong>, the amortized average converges to <strong>~2</strong> and stays there, no matter how big n gets. (The "this op" column shows mostly 1s at our power-of-2 watchpoints because resizes happen at sizes 2, 3, 5, 9, 17, … — feel free to print every i and watch the spikes if you want a visceral feel.) <em>That converging average is the proof.</em>
+            With <strong>doubling</strong>, the amortized average converges to <strong>~2</strong>{" "}and stays there, no matter how big n gets. (The "this op" column shows mostly 1s at our power-of-2 watchpoints because resizes happen at sizes 2, 3, 5, 9, 17, … — feel free to print every i and watch the spikes if you want a visceral feel.) <em>That converging average is the proof.</em>
           </li>
           <li>
-            With <strong>add-ten</strong> growth, the amortized average <strong>climbs forever</strong>. At n = 10,000 it&apos;s ~500. At n = 100,000 it&apos;d be ~5,000. That&apos;s O(n) per add — the bad math we predicted.
+            With <strong>add-ten</strong>{" "}growth, the amortized average <strong>climbs forever</strong>. At n = 10,000 it&apos;s ~500. At n = 100,000 it&apos;d be ~5,000. That&apos;s O(n) per add — the bad math we predicted.
           </li>
         </ol>
 
@@ -703,10 +703,10 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
 
         <h3>Stretch goals (optional)</h3>
         <ul>
-          <li><strong>Try 1.5× growth.</strong> Java&apos;s ArrayList actually grows by 1.5×, not 2×. Implement <code>newCap = data.length + (data.length &gt;&gt; 1)</code> and confirm the amortized average converges (slightly higher than 2).</li>
-          <li><strong>Add shrink.</strong> When size drops below capacity/4, halve the capacity. What&apos;s the amortized cost now? (Hint: still O(1), but you have to halve at /4, not /2 — otherwise you&apos;d be ping-ponging.)</li>
-          <li><strong>Plot it.</strong> Pipe the output to CSV and graph in Excel. Two lines: per-op cost (spiky), amortized average (flat). The picture is the lesson.</li>
-          <li><strong>Compare to ArrayList.</strong> Time 10 million adds to a fresh <code>ArrayList&lt;Integer&gt;</code> vs your DynamicArray. They should be in the same ballpark — the JVM and ArrayList are doing exactly what you just built.</li>
+          <li><strong>Try 1.5× growth.</strong>{" "}Java&apos;s ArrayList actually grows by 1.5×, not 2×. Implement <code>newCap = data.length + (data.length &gt;&gt; 1)</code> and confirm the amortized average converges (slightly higher than 2).</li>
+          <li><strong>Add shrink.</strong>{" "}When size drops below capacity/4, halve the capacity. What&apos;s the amortized cost now? (Hint: still O(1), but you have to halve at /4, not /2 — otherwise you&apos;d be ping-ponging.)</li>
+          <li><strong>Plot it.</strong>{" "}Pipe the output to CSV and graph in Excel. Two lines: per-op cost (spiky), amortized average (flat). The picture is the lesson.</li>
+          <li><strong>Compare to ArrayList.</strong>{" "}Time 10 million adds to a fresh <code>ArrayList&lt;Integer&gt;</code> vs your DynamicArray. They should be in the same ballpark — the JVM and ArrayList are doing exactly what you just built.</li>
         </ul>
       </section>
       </Checkpoint>
@@ -799,7 +799,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           That&apos;s the foundation. Every data structure you meet from here on out comes with a complexity table — and now you can read those tables critically. You know which numbers are real guarantees, which are amortized, and which are statistical bets.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 2 — Linear Data Structures.</strong> We start meeting the structures themselves: arrays, dynamic arrays (now you know how they really work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
+          <strong>Up next: Phase 2 — Linear Data Structures.</strong>{" "}We start meeting the structures themselves: arrays, dynamic arrays (now you know how they really work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
         </p>
         <Link
           href="/courses/dsa/modules/arrays"

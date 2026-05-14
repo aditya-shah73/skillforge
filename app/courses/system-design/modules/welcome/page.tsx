@@ -49,8 +49,8 @@ export default function Page() {
           You want two things from this course, and you can have both:
         </p>
         <ul>
-          <li><strong>Pass a senior system-design interview cleanly.</strong> Walk in, ask the right clarifying questions, do the back-of-envelope math out loud, propose an architecture, defend the tradeoffs. No memorized templates.</li>
-          <li><strong>Make better calls at work.</strong> Pick the right datastore. Know when to add a queue. Recognize when someone&apos;s proposing a saga because it&apos;s genuinely needed vs because they read a blog post.</li>
+          <li><strong>Pass a senior system-design interview cleanly.</strong>{" "}Walk in, ask the right clarifying questions, do the back-of-envelope math out loud, propose an architecture, defend the tradeoffs. No memorized templates.</li>
+          <li><strong>Make better calls at work.</strong>{" "}Pick the right datastore. Know when to add a queue. Recognize when someone&apos;s proposing a saga because it&apos;s genuinely needed vs because they read a blog post.</li>
         </ul>
       </section>
 
@@ -81,11 +81,11 @@ export default function Page() {
           Every module after this one follows the same shape:
         </p>
         <ol>
-          <li><strong>Concept first.</strong> The intuition, the analogy, the &quot;why does this exist&quot; — before any code or names.</li>
-          <li><strong>Names of the patterns.</strong> CAP. Saga. Outbox. Quorum. Token bucket. The names matter because they&apos;re how senior engineers communicate. When you say &quot;we&apos;ll do read-your-writes via sticky session,&quot; the room knows the shape of your fix in five words.</li>
-          <li><strong>Java where it matters.</strong> If a pattern has a clean Spring expression — <code>@Async</code>, Resilience4j, Spring Kafka, Caffeine — we&apos;ll show it. We won&apos;t pad with toy code that doesn&apos;t earn its place.</li>
-          <li><strong>Tradeoffs, named.</strong> Every &quot;best practice&quot; depends on context. Every module ends with the conditions under which the pattern is wrong.</li>
-          <li><strong>Quizzes and recaps.</strong> Active recall, not passive reading. The course progresses when you answer correctly, not when you scroll.</li>
+          <li><strong>Concept first.</strong>{" "}The intuition, the analogy, the &quot;why does this exist&quot; — before any code or names.</li>
+          <li><strong>Names of the patterns.</strong>{" "}CAP. Saga. Outbox. Quorum. Token bucket. The names matter because they&apos;re how senior engineers communicate. When you say &quot;we&apos;ll do read-your-writes via sticky session,&quot; the room knows the shape of your fix in five words.</li>
+          <li><strong>Java where it matters.</strong>{" "}If a pattern has a clean Spring expression — <code>@Async</code>, Resilience4j, Spring Kafka, Caffeine — we&apos;ll show it. We won&apos;t pad with toy code that doesn&apos;t earn its place.</li>
+          <li><strong>Tradeoffs, named.</strong>{" "}Every &quot;best practice&quot; depends on context. Every module ends with the conditions under which the pattern is wrong.</li>
+          <li><strong>Quizzes and recaps.</strong>{" "}Active recall, not passive reading. The course progresses when you answer correctly, not when you scroll.</li>
         </ol>
         <Callout variant="info" title="Concept-first, not Java-first">
           <p className="m-0">Phase 1 is conceptual on purpose. CAP isn&apos;t a Java thing — it&apos;s a property of distributed systems. We don&apos;t force-feed it through a code example. Once we hit Phase 2, the Java tilt picks up sharply. By Phase 4 most modules ship with a small Spring lab.</p>
@@ -100,42 +100,42 @@ export default function Page() {
         <ul>
           <li><strong>Tradeoffs over rules.</strong> &quot;Always do X&quot; is the mark of someone who hasn&apos;t been bitten by X yet. The whole game is knowing when each pattern is right and when it&apos;s overkill.</li>
           <li><strong>Numbers over vibes.</strong> &quot;A lot of QPS&quot; is not a design input. &quot;~30k peak QPS, 5KB payloads, p99 under 200ms&quot; is. We&apos;ll do the math, in writing, every time.</li>
-          <li><strong>Boring tech wins.</strong> Postgres, Kafka, Redis, S3, a load balancer, a queue. Most real systems are 80% boring and 20% interesting. The interesting parts only earn their complexity when the boring stack runs out of room.</li>
+          <li><strong>Boring tech wins.</strong>{" "}Postgres, Kafka, Redis, S3, a load balancer, a queue. Most real systems are 80% boring and 20% interesting. The interesting parts only earn their complexity when the boring stack runs out of room.</li>
           <li><strong>Names matter.</strong> &quot;Add a saga&quot; is a complete sentence to a senior engineer. Building the shared vocabulary is half of why this course exists.</li>
-          <li><strong>Production reality, not whiteboard reality.</strong> A design that wins the interview but melts under real load is not a design. We&apos;ll always close the loop on what production-grade looks like.</li>
+          <li><strong>Production reality, not whiteboard reality.</strong>{" "}A design that wins the interview but melts under real load is not a design. We&apos;ll always close the loop on what production-grade looks like.</li>
         </ul>
       </section>
 
       <section>
         <h2>What you&apos;ll be able to do by the end</h2>
         <ul>
-          <li><strong>Walk into a senior system-design interview</strong> and run the room: clarify, estimate, propose, defend, deepen. With confidence, not memorization.</li>
-          <li><strong>Read a real design doc</strong> and immediately see the tradeoffs nobody wrote down — what happens during a partition, where the consistency boundaries are, what the queue depth is on a bad day.</li>
-          <li><strong>Make the call</strong> at work between &quot;cache it,&quot; &quot;shard it,&quot; &quot;queue it,&quot; or &quot;leave it alone&quot; — and have a one-paragraph defense for each.</li>
-          <li><strong>Talk to senior engineers</strong> in their own vocabulary — CAP, sagas, outbox, quorum reads, fanout-on-write — without faking it.</li>
+          <li><strong>Walk into a senior system-design interview</strong>{" "}and run the room: clarify, estimate, propose, defend, deepen. With confidence, not memorization.</li>
+          <li><strong>Read a real design doc</strong>{" "}and immediately see the tradeoffs nobody wrote down — what happens during a partition, where the consistency boundaries are, what the queue depth is on a bad day.</li>
+          <li><strong>Make the call</strong>{" "}at work between &quot;cache it,&quot; &quot;shard it,&quot; &quot;queue it,&quot; or &quot;leave it alone&quot; — and have a one-paragraph defense for each.</li>
+          <li><strong>Talk to senior engineers</strong>{" "}in their own vocabulary — CAP, sagas, outbox, quorum reads, fanout-on-write — without faking it.</li>
         </ul>
       </section>
 
       <section>
         <h2>How to actually study</h2>
         <ol>
-          <li><strong>Do the math out loud.</strong> Whenever a module hands you a back-of-envelope, do it on paper before you read the answer. The skill is producing the number under interview pressure, not recognizing it on a page.</li>
-          <li><strong>Defend every pattern.</strong> When a module introduces, say, fanout-on-write, ask yourself: <em>when is this wrong?</em> If you can&apos;t answer in one sentence, you don&apos;t actually understand the pattern yet. Re-read.</li>
-          <li><strong>Don&apos;t skip Phase 1.</strong> The four foundation modules feel abstract. Skip them and the case studies in Phase 6 will feel like memorization instead of derivation. CAP and consistency are load-bearing for everything later.</li>
-          <li><strong>Treat each case study like a real interview.</strong> Phase 6 modules are designed to be timed. Forty-five minutes, paper and pen, talk through the design before you read the walkthrough.</li>
+          <li><strong>Do the math out loud.</strong>{" "}Whenever a module hands you a back-of-envelope, do it on paper before you read the answer. The skill is producing the number under interview pressure, not recognizing it on a page.</li>
+          <li><strong>Defend every pattern.</strong>{" "}When a module introduces, say, fanout-on-write, ask yourself: <em>when is this wrong?</em>{" "}If you can&apos;t answer in one sentence, you don&apos;t actually understand the pattern yet. Re-read.</li>
+          <li><strong>Don&apos;t skip Phase 1.</strong>{" "}The four foundation modules feel abstract. Skip them and the case studies in Phase 6 will feel like memorization instead of derivation. CAP and consistency are load-bearing for everything later.</li>
+          <li><strong>Treat each case study like a real interview.</strong>{" "}Phase 6 modules are designed to be timed. Forty-five minutes, paper and pen, talk through the design before you read the walkthrough.</li>
         </ol>
         <Callout variant="insight" title="The single biggest mistake">
-          <p className="m-0">It&apos;s reading system-design content passively. People read &quot;Designing Data-Intensive Applications,&quot; nod a lot, and then bomb their first interview because they never had to <em>produce</em> a design under time pressure. This course is built to force production. Every quiz, every recap, every case study is a small reps of the real thing.</p>
+          <p className="m-0">It&apos;s reading system-design content passively. People read &quot;Designing Data-Intensive Applications,&quot; nod a lot, and then bomb their first interview because they never had to <em>produce</em>{" "}a design under time pressure. This course is built to force production. Every quiz, every recap, every case study is a small reps of the real thing.</p>
         </Callout>
       </section>
 
       <section>
         <h2>What you&apos;ll need</h2>
         <ul>
-          <li><strong>Java 17+</strong> and IntelliJ (or your IDE of choice). We&apos;ll touch Spring Boot 3.x in the labs.</li>
-          <li><strong>Comfort with HTTP, threads, and SQL basics.</strong> No deep prior distributed-systems knowledge required — we build it.</li>
-          <li><strong>Paper and a pen.</strong> Every back-of-envelope and every architecture sketch is faster on paper than in your editor. Yes, really.</li>
-          <li><strong>An hour a day, ish.</strong> Modules average 1.5–2.5 hours. Phase 1 is ~7 hours total. The full course is roughly <strong>80–100 hours</strong> of engaged work.</li>
+          <li><strong>Java 17+</strong>{" "}and IntelliJ (or your IDE of choice). We&apos;ll touch Spring Boot 3.x in the labs.</li>
+          <li><strong>Comfort with HTTP, threads, and SQL basics.</strong>{" "}No deep prior distributed-systems knowledge required — we build it.</li>
+          <li><strong>Paper and a pen.</strong>{" "}Every back-of-envelope and every architecture sketch is faster on paper than in your editor. Yes, really.</li>
+          <li><strong>An hour a day, ish.</strong>{" "}Modules average 1.5–2.5 hours. Phase 1 is ~7 hours total. The full course is roughly <strong>80–100 hours</strong>{" "}of engaged work.</li>
         </ul>
       </section>
 

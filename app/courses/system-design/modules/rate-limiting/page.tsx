@@ -77,10 +77,10 @@ export default function Page() {
         <h3>Token bucket</h3>
 
         <p>
-          A bucket holds up to <em>C</em> tokens. New tokens drip in at rate <em>r</em> per second up to the cap. Each request consumes one token; if the bucket is empty, the request is rejected (or queued). That&apos;s it. The whole algorithm fits in one paragraph.
+          A bucket holds up to <em>C</em>{" "}tokens. New tokens drip in at rate <em>r</em>{" "}per second up to the cap. Each request consumes one token; if the bucket is empty, the request is rejected (or queued). That&apos;s it. The whole algorithm fits in one paragraph.
         </p>
         <p>
-          The reason it&apos;s the most popular algorithm is that it gives you two knobs that map cleanly onto how you actually think about traffic: <em>r</em> is the sustained rate, <em>C</em> is the burst size. A client can sit idle, accumulate tokens up to <em>C</em>, then spend them in a burst — and after that they&apos;re paced at <em>r</em>. This matches real client behavior (mostly idle, occasionally bursty) far better than a hard rate cap.
+          The reason it&apos;s the most popular algorithm is that it gives you two knobs that map cleanly onto how you actually think about traffic: <em>r</em>{" "}is the sustained rate, <em>C</em>{" "}is the burst size. A client can sit idle, accumulate tokens up to <em>C</em>, then spend them in a burst — and after that they&apos;re paced at <em>r</em>. This matches real client behavior (mostly idle, occasionally bursty) far better than a hard rate cap.
         </p>
 
         <Mermaid chart={tokenBucketDiagram} />
@@ -88,7 +88,7 @@ export default function Page() {
         <h3>Leaky bucket</h3>
 
         <p>
-          A bucket has a fixed-size queue. Requests arrive and are added to the queue if there&apos;s room; they leak out at a constant rate <em>r</em>. If the queue is full, new requests are dropped. The output is perfectly smooth — exactly <em>r</em> requests per second, no bursts.
+          A bucket has a fixed-size queue. Requests arrive and are added to the queue if there&apos;s room; they leak out at a constant rate <em>r</em>. If the queue is full, new requests are dropped. The output is perfectly smooth — exactly <em>r</em>{" "}requests per second, no bursts.
         </p>
         <p>
           Leaky bucket is what you want when downstream is fragile. It enforces a strict ceiling on outbound rate at the cost of latency (requests wait in the queue). Token bucket lets bursts through; leaky bucket smooths them out. Pick based on whether the downstream is bursty-friendly or burst-allergic.
@@ -106,7 +106,7 @@ export default function Page() {
         <h3>Sliding window (log or counter)</h3>
 
         <p>
-          Two flavors. The <em>log</em> version stores the timestamp of every request in a window and counts how many fall in the last N seconds. Exact, but memory-heavy. The <em>counter</em> version maintains the current and previous window count and weights them by how much of the previous window is still &quot;in the past N seconds.&quot; Approximate but cheap and bursting-resistant.
+          Two flavors. The <em>log</em>{" "}version stores the timestamp of every request in a window and counts how many fall in the last N seconds. Exact, but memory-heavy. The <em>counter</em>{" "}version maintains the current and previous window count and weights them by how much of the previous window is still &quot;in the past N seconds.&quot; Approximate but cheap and bursting-resistant.
         </p>
         <p>
           The sliding-window-counter approach is what most production rate limiters actually use under the hood. It avoids the fixed-window boundary effect at near-zero memory cost.
@@ -387,10 +387,10 @@ public class RedisTokenBucketLimiter {
           The hardest part of rate limiting in production isn&apos;t the algorithm — it&apos;s deciding what counts as &quot;a client.&quot; A few options, each with a failure mode:
         </p>
         <ul>
-          <li><strong>By IP.</strong> Easy. Useful as a coarse outer ring. Wrong as the only key — carrier NAT means thousands of mobile users share one IP, and corporate proxies aggregate everyone in an office. Limiting by IP alone will get you angry support tickets from legitimate users.</li>
-          <li><strong>By API key / user ID.</strong> The right primary key for authenticated traffic. Each user gets their own bucket. Burst budgets can be tuned per tier (free, pro, enterprise).</li>
-          <li><strong>By tenant.</strong> For B2B APIs, the tenant (org) is usually the unit of contract. A noisy user inside a tenant should bother their teammates first, not strangers.</li>
-          <li><strong>Composite.</strong> The strongest pattern is <em>multiple</em> overlapping limits: per-IP outer ring (DDoS), per-user inner ring (fairness), per-endpoint cost-based limit (expensive endpoints get their own pool). All three checks, all three rejections possible.</li>
+          <li><strong>By IP.</strong>{" "}Easy. Useful as a coarse outer ring. Wrong as the only key — carrier NAT means thousands of mobile users share one IP, and corporate proxies aggregate everyone in an office. Limiting by IP alone will get you angry support tickets from legitimate users.</li>
+          <li><strong>By API key / user ID.</strong>{" "}The right primary key for authenticated traffic. Each user gets their own bucket. Burst budgets can be tuned per tier (free, pro, enterprise).</li>
+          <li><strong>By tenant.</strong>{" "}For B2B APIs, the tenant (org) is usually the unit of contract. A noisy user inside a tenant should bother their teammates first, not strangers.</li>
+          <li><strong>Composite.</strong>{" "}The strongest pattern is <em>multiple</em>{" "}overlapping limits: per-IP outer ring (DDoS), per-user inner ring (fairness), per-endpoint cost-based limit (expensive endpoints get their own pool). All three checks, all three rejections possible.</li>
         </ul>
 
         <Callout variant="insight" title="Cost-weighted limiting">
@@ -400,10 +400,10 @@ public class RedisTokenBucketLimiter {
         <h3>429 vs 503 — which one do you return?</h3>
 
         <p>
-          <strong>429 Too Many Requests</strong> means &quot;you are over your limit.&quot; The client did this. They should slow down and retry later. Status text says &quot;your fault.&quot;
+          <strong>429 Too Many Requests</strong>{" "}means &quot;you are over your limit.&quot; The client did this. They should slow down and retry later. Status text says &quot;your fault.&quot;
         </p>
         <p>
-          <strong>503 Service Unavailable</strong> means &quot;the server is overloaded.&quot; The server did this. The client may retry. Status text says &quot;our fault, try again.&quot;
+          <strong>503 Service Unavailable</strong>{" "}means &quot;the server is overloaded.&quot; The server did this. The client may retry. Status text says &quot;our fault, try again.&quot;
         </p>
         <p>
           The distinction matters because well-behaved clients react to them differently. A 429 with <code>Retry-After</code> tells the client to wait that long; well-written clients will. A 503 will trigger more aggressive retries from clients that don&apos;t know better. If your rate limiter is rejecting because the user exceeded their budget, return 429. If you&apos;re rejecting because the system is melting and you want all clients to back off, return 503.

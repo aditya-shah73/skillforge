@@ -87,8 +87,8 @@ export default function Page() {
 
       <section className="my-10">
         <p>
-          Caching patterns (cache-aside, write-through, etc.) tell you the <em>shape</em> of caching. This module is
-          about the <em>operational reality</em> of running a distributed cache. Redis is by far the most common one, so
+          Caching patterns (cache-aside, write-through, etc.) tell you the <em>shape</em>{" "}of caching. This module is
+          about the <em>operational reality</em>{" "}of running a distributed cache. Redis is by far the most common one, so
           most examples here are Redis. The principles transfer to Memcached, Hazelcast, Aerospike, and friends.
         </p>
         <p>
@@ -103,24 +103,24 @@ export default function Page() {
 
         <h3 className="text-xl font-semibold mt-4 mb-3">Three deployment shapes</h3>
 
-        <p><strong>1. Single instance.</strong> One Redis process. Fast, simple, single point of failure. Fine for dev or for caches where losing the cache means falling back to the DB and shrugging.</p>
+        <p><strong>1. Single instance.</strong>{" "}One Redis process. Fast, simple, single point of failure. Fine for dev or for caches where losing the cache means falling back to the DB and shrugging.</p>
 
-        <p><strong>2. Sentinel (high availability).</strong> One master, several replicas, three or more sentinel processes monitoring everyone. Sentinels gossip among themselves; if a quorum agrees the master is dead, they promote a replica. Clients connect through the sentinels to find the current master.</p>
+        <p><strong>2. Sentinel (high availability).</strong>{" "}One master, several replicas, three or more sentinel processes monitoring everyone. Sentinels gossip among themselves; if a quorum agrees the master is dead, they promote a replica. Clients connect through the sentinels to find the current master.</p>
 
         <Mermaid chart={sentinelDiagram} />
 
         <p>
-          <strong>When sentinel is the right call:</strong> data fits in one master&apos;s memory (call it &lt;200GB),
+          <strong>When sentinel is the right call:</strong>{" "}data fits in one master&apos;s memory (call it &lt;200GB),
           you want HA but not horizontal scale. The whole dataset lives on one master; replicas are for reads and
           failover.
         </p>
 
-        <p><strong>3. Cluster (sharded).</strong> Data is split into 16384 hash slots distributed across master nodes. Each master has its own replicas. Clients understand the slot layout and route directly to the right master.</p>
+        <p><strong>3. Cluster (sharded).</strong>{" "}Data is split into 16384 hash slots distributed across master nodes. Each master has its own replicas. Clients understand the slot layout and route directly to the right master.</p>
 
         <Mermaid chart={redisClusterDiagram} />
 
         <p>
-          <strong>When cluster is the right call:</strong> dataset doesn&apos;t fit in one master, or write throughput
+          <strong>When cluster is the right call:</strong>{" "}dataset doesn&apos;t fit in one master, or write throughput
           exceeds one master&apos;s capacity. Cluster gives you horizontal scale at the cost of: no multi-key operations
           across slots, transactions only within a slot, MGET fans out to all involved nodes.
         </p>
@@ -149,7 +149,7 @@ export default function Page() {
 
         <p>Spring offers two integration levels:</p>
 
-        <p><strong>@Cacheable / @CacheEvict (annotation-based).</strong> Highest level. You annotate a service method, Spring wraps it in cache-aside logic. Easy, opinionated.</p>
+        <p><strong>@Cacheable / @CacheEvict (annotation-based).</strong>{" "}Highest level. You annotate a service method, Spring wraps it in cache-aside logic. Easy, opinionated.</p>
 
         <CodeBlock lang="java" caption="@Cacheable — cache-aside in 4 lines">{`@Configuration
 @EnableCaching
@@ -176,7 +176,7 @@ public class UserService {
     }
 }`}</CodeBlock>
 
-        <p><strong>RedisTemplate (manual).</strong> Low level. You call <code>redis.opsForValue().get(...)</code> yourself. More code, more control — necessary for negative caching, jitter, stampede protection, multi-key operations, pub/sub.</p>
+        <p><strong>RedisTemplate (manual).</strong>{" "}Low level. You call <code>redis.opsForValue().get(...)</code> yourself. More code, more control — necessary for negative caching, jitter, stampede protection, multi-key operations, pub/sub.</p>
 
         <CodeBlock lang="java" caption="RedisTemplate — when you need control">{`@Service
 public class UserService {
@@ -238,7 +238,7 @@ public class UserService {
 
         <h3 className="text-xl font-semibold mt-4 mb-3">The hot key problem</h3>
         <p>
-          Consistent hashing distributes keys across nodes. It does not distribute <em>traffic</em> across nodes.
+          Consistent hashing distributes keys across nodes. It does not distribute <em>traffic</em>{" "}across nodes.
           If one key (Beyoncé&apos;s profile, the homepage feed, today&apos;s big news article) is read millions of
           times more than other keys, the node owning it gets hammered.
         </p>
@@ -249,18 +249,18 @@ public class UserService {
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Three real mitigations</h3>
 
-        <p><strong>1. Replicate the hot key to multiple nodes (read-side fan-out).</strong> Store <code>hotkey#1</code>, <code>hotkey#2</code>, …, <code>hotkey#10</code> all with the same value. Readers pick a random suffix per request. The load spreads across 10 keys, which the cluster spreads across (up to) 10 nodes. Updates are 10x more work.</p>
+        <p><strong>1. Replicate the hot key to multiple nodes (read-side fan-out).</strong>{" "}Store <code>hotkey#1</code>, <code>hotkey#2</code>, …, <code>hotkey#10</code> all with the same value. Readers pick a random suffix per request. The load spreads across 10 keys, which the cluster spreads across (up to) 10 nodes. Updates are 10x more work.</p>
 
-        <p><strong>2. Local in-process cache for hot keys.</strong> Put a Caffeine cache in front of Redis with a tiny TTL (1–10 seconds). Hot keys hit the local cache 99.9% of the time and never hit Redis. Each app instance has its own copy; staleness window is at most the TTL.</p>
+        <p><strong>2. Local in-process cache for hot keys.</strong>{" "}Put a Caffeine cache in front of Redis with a tiny TTL (1–10 seconds). Hot keys hit the local cache 99.9% of the time and never hit Redis. Each app instance has its own copy; staleness window is at most the TTL.</p>
 
-        <p><strong>3. Detect and tier.</strong> Redis 6.0 added client-side caching with invalidation messages — clients keep their own copy and Redis tells them when to evict. Effectively automatic local caching with cluster-driven invalidation.</p>
+        <p><strong>3. Detect and tier.</strong>{" "}Redis 6.0 added client-side caching with invalidation messages — clients keep their own copy and Redis tells them when to evict. Effectively automatic local caching with cluster-driven invalidation.</p>
 
         <Callout variant="warn" title="Consistent hashing does not fix this">
           <p className="m-0">
             A common interview answer to &quot;hot key&quot; is &quot;use consistent hashing.&quot; It&apos;s wrong.
             Consistent hashing decides where a key lives — once it&apos;s decided, all reads of that key go to one node.
             The fix is to make there be more than one place to read from (replication, local cache) or to spread
-            <em>the key</em> across nodes (suffixing). Algorithms that distribute keys don&apos;t help when the skew is on
+            <em>the key</em>{" "}across nodes (suffixing). Algorithms that distribute keys don&apos;t help when the skew is on
             a single key.
           </p>
         </Callout>
@@ -274,7 +274,7 @@ public class UserService {
 
         <p>The mitigations stack on each other:</p>
 
-        <p><strong>Per-key recompute lock.</strong> First miss acquires a distributed lock (<code>SET lock:KEY NX EX 5</code>). It refills. Other concurrent misses see the lock, wait briefly, retry. Lock expires automatically if the holder dies. This is the most common pattern.</p>
+        <p><strong>Per-key recompute lock.</strong>{" "}First miss acquires a distributed lock (<code>SET lock:KEY NX EX 5</code>). It refills. Other concurrent misses see the lock, wait briefly, retry. Lock expires automatically if the holder dies. This is the most common pattern.</p>
 
         <CodeBlock lang="java" caption="Stampede protection: distributed lock on refill">{`public User getHot(long id) {
     String key = "user:" + id;
@@ -304,9 +304,9 @@ public class UserService {
     return repo.findById(id).orElseThrow();
 }`}</CodeBlock>
 
-        <p><strong>Probabilistic early refresh.</strong> When reading a key, with some small probability that grows as expiry approaches, refresh the value <em>before</em> it&apos;s actually expired. Hot keys end up refreshed continuously by a small fraction of readers; cold keys mostly expire normally. Beautiful when it fits.</p>
+        <p><strong>Probabilistic early refresh.</strong>{" "}When reading a key, with some small probability that grows as expiry approaches, refresh the value <em>before</em>{" "}it&apos;s actually expired. Hot keys end up refreshed continuously by a small fraction of readers; cold keys mostly expire normally. Beautiful when it fits.</p>
 
-        <p><strong>Stale-while-revalidate.</strong> When a key has expired, serve the stale value to readers while one reader refreshes in the background. No miss is ever visible to users. Requires keeping the stale value around past TTL with a separate &quot;stale-allowed&quot; window.</p>
+        <p><strong>Stale-while-revalidate.</strong>{" "}When a key has expired, serve the stale value to readers while one reader refreshes in the background. No miss is ever visible to users. Requires keeping the stale value around past TTL with a separate &quot;stale-allowed&quot; window.</p>
 
         <Quiz
           kind="Quick check"
@@ -324,10 +324,10 @@ public class UserService {
           Big keys (anything &gt;100KB, definitely anything &gt;1MB) cause problems even if traffic is moderate:
         </p>
         <ul>
-          <li><strong>Network burst.</strong> A 10MB GET ties up the connection for tens of milliseconds. Other commands queue behind it.</li>
-          <li><strong>Single-threaded blocking.</strong> Redis is mostly single-threaded. Serializing a big value blocks every other operation on that node.</li>
-          <li><strong>Cluster migration pain.</strong> When resharding, big keys move slowly and cause visible latency hiccups.</li>
-          <li><strong>Memory fragmentation.</strong> Big allocations are harder for the allocator to recycle.</li>
+          <li><strong>Network burst.</strong>{" "}A 10MB GET ties up the connection for tens of milliseconds. Other commands queue behind it.</li>
+          <li><strong>Single-threaded blocking.</strong>{" "}Redis is mostly single-threaded. Serializing a big value blocks every other operation on that node.</li>
+          <li><strong>Cluster migration pain.</strong>{" "}When resharding, big keys move slowly and cause visible latency hiccups.</li>
+          <li><strong>Memory fragmentation.</strong>{" "}Big allocations are harder for the allocator to recycle.</li>
         </ul>
         <p>
           The fix is usually structural: split the value. A user&apos;s 1MB feed shouldn&apos;t be one key —
@@ -373,9 +373,9 @@ public class UserService {
           practice you pick from three:
         </p>
         <ul>
-          <li><strong>allkeys-lru:</strong> evict least-recently-used across all keys. The default for caches.</li>
-          <li><strong>allkeys-lfu:</strong> evict least-frequently-used. Better when your hot set is stable but small.</li>
-          <li><strong>noeviction:</strong> reject writes when full. Use only when Redis is your system of record (which it shouldn&apos;t be for cache use cases).</li>
+          <li><strong>allkeys-lru:</strong>{" "}evict least-recently-used across all keys. The default for caches.</li>
+          <li><strong>allkeys-lfu:</strong>{" "}evict least-frequently-used. Better when your hot set is stable but small.</li>
+          <li><strong>noeviction:</strong>{" "}reject writes when full. Use only when Redis is your system of record (which it shouldn&apos;t be for cache use cases).</li>
         </ul>
 
         <Callout variant="warn" title="Always set maxmemory">
@@ -392,9 +392,9 @@ public class UserService {
           matters. Cold cache after restart = DB stampede.
         </p>
         <ul>
-          <li><strong>RDB (snapshot):</strong> periodic point-in-time dumps. Small files, fast load. Lose minutes of writes on crash.</li>
-          <li><strong>AOF (append-only file):</strong> log every write. Bigger files, slower load. Lose seconds of writes on crash.</li>
-          <li><strong>Both:</strong> RDB for warm-up, AOF for durability. Common in production.</li>
+          <li><strong>RDB (snapshot):</strong>{" "}periodic point-in-time dumps. Small files, fast load. Lose minutes of writes on crash.</li>
+          <li><strong>AOF (append-only file):</strong>{" "}log every write. Bigger files, slower load. Lose seconds of writes on crash.</li>
+          <li><strong>Both:</strong>{" "}RDB for warm-up, AOF for durability. Common in production.</li>
         </ul>
         <p>
           For pure caches, RDB every 5 minutes is usually fine — you accept losing a few minutes of cache on crash
@@ -406,9 +406,9 @@ public class UserService {
           You should know exactly what your service does when Redis is unreachable. Two failure modes:
         </p>
 
-        <p><strong>Total outage.</strong> Redis is gone. The application falls through to the DB on every request. If the DB can handle it: great, slow but functional. If the DB can&apos;t: cascading failure. <em>Test this</em>. In load tests. With Redis stopped. Find out before production does.</p>
+        <p><strong>Total outage.</strong>{" "}Redis is gone. The application falls through to the DB on every request. If the DB can handle it: great, slow but functional. If the DB can&apos;t: cascading failure. <em>Test this</em>. In load tests. With Redis stopped. Find out before production does.</p>
 
-        <p><strong>Slow / partial outage.</strong> Redis is up but slow (1s p99 instead of 1ms). This is worse than total outage because every request waits 1s for the cache before falling through. Set tight client timeouts (50–100ms) so a sick Redis doesn&apos;t drag the whole system down.</p>
+        <p><strong>Slow / partial outage.</strong>{" "}Redis is up but slow (1s p99 instead of 1ms). This is worse than total outage because every request waits 1s for the cache before falling through. Set tight client timeouts (50–100ms) so a sick Redis doesn&apos;t drag the whole system down.</p>
 
         <CodeBlock lang="java" caption="Tight Redis client timeouts in Spring">{`@Bean
 public LettuceConnectionFactory redisConnectionFactory() {
@@ -452,20 +452,20 @@ public User get(long id) {
           Cold caches after restart are dangerous. Strategies:
         </p>
         <ul>
-          <li><strong>RDB snapshot warm.</strong> Restart loads the snapshot. ~minutes for a 100GB cache. Easiest.</li>
-          <li><strong>Replica promotion.</strong> Don&apos;t restart the master with cold cache; failover to a warm replica, then warm the old master as a new replica. No cold-cache window for clients.</li>
-          <li><strong>Application-level warm-up.</strong> On startup, the application pre-populates known hot keys before serving traffic. Common for small &quot;known hot&quot; sets like top-N queries.</li>
-          <li><strong>Slow rollout.</strong> Don&apos;t restart all cache nodes at once. Drain one, restart, let it warm naturally, move to the next.</li>
+          <li><strong>RDB snapshot warm.</strong>{" "}Restart loads the snapshot. ~minutes for a 100GB cache. Easiest.</li>
+          <li><strong>Replica promotion.</strong>{" "}Don&apos;t restart the master with cold cache; failover to a warm replica, then warm the old master as a new replica. No cold-cache window for clients.</li>
+          <li><strong>Application-level warm-up.</strong>{" "}On startup, the application pre-populates known hot keys before serving traffic. Common for small &quot;known hot&quot; sets like top-N queries.</li>
+          <li><strong>Slow rollout.</strong>{" "}Don&apos;t restart all cache nodes at once. Drain one, restart, let it warm naturally, move to the next.</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Monitoring you actually need</h3>
         <ul>
-          <li><strong>Hit rate.</strong> Hits / (hits + misses). &lt;50% means your cache is doing nothing useful.</li>
+          <li><strong>Hit rate.</strong>{" "}Hits / (hits + misses). &lt;50% means your cache is doing nothing useful.</li>
           <li><strong>Memory usage.</strong> % of maxmemory used. Approach 100% means evictions are happening.</li>
-          <li><strong>Eviction rate.</strong> Keys evicted per second. Should be near zero in steady state; spikes mean memory pressure.</li>
-          <li><strong>Slowlog.</strong> Commands taking &gt;10ms. Almost always big keys or expensive operations.</li>
-          <li><strong>Connected clients.</strong> If this trends up unboundedly, you have a connection leak.</li>
-          <li><strong>Replication lag.</strong> For replicas — same conversation as the database replication module.</li>
+          <li><strong>Eviction rate.</strong>{" "}Keys evicted per second. Should be near zero in steady state; spikes mean memory pressure.</li>
+          <li><strong>Slowlog.</strong>{" "}Commands taking &gt;10ms. Almost always big keys or expensive operations.</li>
+          <li><strong>Connected clients.</strong>{" "}If this trends up unboundedly, you have a connection leak.</li>
+          <li><strong>Replication lag.</strong>{" "}For replicas — same conversation as the database replication module.</li>
         </ul>
 
         <Callout variant="insight" title="The hit rate trap">

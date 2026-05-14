@@ -78,8 +78,8 @@ export default function Page() {
 
         <h3>The two archetypes</h3>
         <ul>
-          <li><strong>Chat:</strong> ordered messages, presence, typing indicators, read receipts, group chat. The server is the single source of truth for ordering — clients just render a timeline.</li>
-          <li><strong>Collaborative doc:</strong> simultaneous edits to shared state, conflict resolution (CRDT or OT), presence cursors, offline edits that have to merge cleanly when reconnecting.</li>
+          <li><strong>Chat:</strong>{" "}ordered messages, presence, typing indicators, read receipts, group chat. The server is the single source of truth for ordering — clients just render a timeline.</li>
+          <li><strong>Collaborative doc:</strong>{" "}simultaneous edits to shared state, conflict resolution (CRDT or OT), presence cursors, offline edits that have to merge cleanly when reconnecting.</li>
         </ul>
 
         <p>
@@ -106,24 +106,24 @@ export default function Page() {
 
         <h3>WebSocket — the default for chat</h3>
         <ul>
-          <li><strong>Bidirectional</strong> over a single TCP connection (after an HTTP upgrade handshake).</li>
+          <li><strong>Bidirectional</strong>{" "}over a single TCP connection (after an HTTP upgrade handshake).</li>
           <li><strong>Low per-message overhead</strong> — frames are 2-14 bytes of header on top of payload.</li>
           <li><strong>Persistent</strong> — one connection per device, held open as long as the tab/app is alive.</li>
-          <li><strong>Latency:</strong> handshake is ~200ms (TLS + HTTP upgrade). After that, message delivery is bounded by network RTT — usually 30-80ms in good conditions.</li>
+          <li><strong>Latency:</strong>{" "}handshake is ~200ms (TLS + HTTP upgrade). After that, message delivery is bounded by network RTT — usually 30-80ms in good conditions.</li>
         </ul>
 
         <h3>SSE (Server-Sent Events) — when you only need server → client</h3>
         <ul>
-          <li><strong>One direction:</strong> server pushes to client over a long-lived HTTP response. Client sends via separate HTTP requests.</li>
-          <li><strong>Runs over HTTP/2 or HTTP/3,</strong> so it multiplexes with your other traffic — no separate connection.</li>
+          <li><strong>One direction:</strong>{" "}server pushes to client over a long-lived HTTP response. Client sends via separate HTTP requests.</li>
+          <li><strong>Runs over HTTP/2 or HTTP/3,</strong>{" "}so it multiplexes with your other traffic — no separate connection.</li>
           <li><strong>Auto-reconnect built in</strong> — the EventSource API handles reconnects natively, with a Last-Event-ID header for resume.</li>
-          <li><strong>Use when:</strong> notifications feed, stock tickers, build logs, anything where the client mostly listens.</li>
+          <li><strong>Use when:</strong>{" "}notifications feed, stock tickers, build logs, anything where the client mostly listens.</li>
         </ul>
 
         <h3>Long polling — the legacy fallback</h3>
         <ul>
           <li>Client sends a request; server holds it open until data arrives or a timeout fires; client immediately sends another request.</li>
-          <li><strong>Use when:</strong> a corporate proxy strips websockets, or you{`'`}re supporting a 2012-era browser. In 2026, almost never new.</li>
+          <li><strong>Use when:</strong>{" "}a corporate proxy strips websockets, or you{`'`}re supporting a 2012-era browser. In 2026, almost never new.</li>
           <li>Latency floor is the round-trip plus poll interval. Cost on the server is high — you hold open a request handler per connected user.</li>
         </ul>
 
@@ -146,12 +146,12 @@ Need to fan out the same payload to many tabs?      → WS + BroadcastChannel (w
           Connections die. Constantly. The list of reasons is longer than candidates expect:
         </p>
         <ul>
-          <li><strong>NAT timeouts:</strong> home routers drop idle TCP connections after 5-10 minutes of silence.</li>
-          <li><strong>Mobile network changes:</strong> WiFi → LTE handoff, walking out of coffee shop range.</li>
-          <li><strong>Sleep / wake:</strong> laptop closes lid, phone screen-off — the OS may suspend the socket.</li>
-          <li><strong>Server restarts:</strong> rolling deploys, autoscale events, kernel panics.</li>
-          <li><strong>Load balancer connection draining:</strong> healthy gateway pod is being rotated out; your socket gets a clean close.</li>
-          <li><strong>Auth expiry:</strong> token TTL elapses; server closes with a 4401-class code.</li>
+          <li><strong>NAT timeouts:</strong>{" "}home routers drop idle TCP connections after 5-10 minutes of silence.</li>
+          <li><strong>Mobile network changes:</strong>{" "}WiFi → LTE handoff, walking out of coffee shop range.</li>
+          <li><strong>Sleep / wake:</strong>{" "}laptop closes lid, phone screen-off — the OS may suspend the socket.</li>
+          <li><strong>Server restarts:</strong>{" "}rolling deploys, autoscale events, kernel panics.</li>
+          <li><strong>Load balancer connection draining:</strong>{" "}healthy gateway pod is being rotated out; your socket gets a clean close.</li>
+          <li><strong>Auth expiry:</strong>{" "}token TTL elapses; server closes with a 4401-class code.</li>
         </ul>
 
         <p>
@@ -244,10 +244,10 @@ class ReconnectingSocket {
           Reconnect isn{`'`}t silent — the user needs feedback, but only if it lasts long enough to matter. The standard pattern:
         </p>
         <ul>
-          <li><strong>0-2s after close:</strong> show nothing. Most reconnects complete in this window; flashing a banner makes the UI feel jittery.</li>
-          <li><strong>2-10s:</strong> show a subtle {`"`}reconnecting…{`"`} indicator in the chat header. Inputs stay enabled — pending sends queue to the outbox.</li>
-          <li><strong>10s+:</strong> show a more prominent banner: {`"`}You{`'`}re offline. Messages will send when you{`'`}re back.{`"`} Disable typing indicators (no point sending typing events that won{`'`}t arrive).</li>
-          <li><strong>On reconnect:</strong> brief {`"`}back online{`"`} flash, then resync runs invisibly in the background. Don{`'`}t block the UI on resync — show old messages while the gap fills, then merge.</li>
+          <li><strong>0-2s after close:</strong>{" "}show nothing. Most reconnects complete in this window; flashing a banner makes the UI feel jittery.</li>
+          <li><strong>2-10s:</strong>{" "}show a subtle {`"`}reconnecting…{`"`} indicator in the chat header. Inputs stay enabled — pending sends queue to the outbox.</li>
+          <li><strong>10s+:</strong>{" "}show a more prominent banner: {`"`}You{`'`}re offline. Messages will send when you{`'`}re back.{`"`} Disable typing indicators (no point sending typing events that won{`'`}t arrive).</li>
+          <li><strong>On reconnect:</strong>{" "}brief {`"`}back online{`"`} flash, then resync runs invisibly in the background. Don{`'`}t block the UI on resync — show old messages while the gap fills, then merge.</li>
         </ul>
 
         <p>
@@ -286,7 +286,7 @@ class ReconnectingSocket {
 
         <h3>The ordering contract you actually get over WebSocket</h3>
         <p>
-          Over a single open WebSocket connection, message order is preserved — the protocol guarantees in-order delivery on the wire, since it runs over TCP. <strong>But the moment you reconnect, that guarantee gaps.</strong> Between {`"`}connection drops at t=10s{`"`} and {`"`}reconnect succeeds at t=14s,{`"`} four seconds of messages were sent to your old socket and never reached you. If the server doesn{`'`}t replay them, you{`'`}ve got a hole in your timeline.
+          Over a single open WebSocket connection, message order is preserved — the protocol guarantees in-order delivery on the wire, since it runs over TCP. <strong>But the moment you reconnect, that guarantee gaps.</strong>{" "}Between {`"`}connection drops at t=10s{`"`} and {`"`}reconnect succeeds at t=14s,{`"`} four seconds of messages were sent to your old socket and never reached you. If the server doesn{`'`}t replay them, you{`'`}ve got a hole in your timeline.
         </p>
 
         <h3>Sequence numbers + resync</h3>
@@ -447,14 +447,14 @@ function onAck(ack: { clientMsgId: string; msgId: string; seq: number }) {
 
         <h3>The presence model</h3>
         <ul>
-          <li><strong>Heartbeat per session.</strong> Each connected client (one per tab × per device) sends a heartbeat every 30s — usually piggybacking on the same ping that detects dead sockets.</li>
-          <li><strong>Server tracks last-seen.</strong> A Redis hash per user, with an entry per session and a TTL. {`"`}Online{`"`} means {`"`}has at least one session whose TTL has not expired.{`"`}</li>
-          <li><strong>Offline after N seconds.</strong> TTL is typically 90s — three missed heartbeats and you{`'`}re counted as offline. Shorter TTLs make presence flicker on flaky networks; longer TTLs make {`"`}offline{`"`} status stale.</li>
+          <li><strong>Heartbeat per session.</strong>{" "}Each connected client (one per tab × per device) sends a heartbeat every 30s — usually piggybacking on the same ping that detects dead sockets.</li>
+          <li><strong>Server tracks last-seen.</strong>{" "}A Redis hash per user, with an entry per session and a TTL. {`"`}Online{`"`} means {`"`}has at least one session whose TTL has not expired.{`"`}</li>
+          <li><strong>Offline after N seconds.</strong>{" "}TTL is typically 90s — three missed heartbeats and you{`'`}re counted as offline. Shorter TTLs make presence flicker on flaky networks; longer TTLs make {`"`}offline{`"`} status stale.</li>
         </ul>
 
         <h3>Multi-device aggregation</h3>
         <p>
-          A user with the app open on phone, laptop, and a tablet has three sessions. If <em>any</em> session is alive, the user is online. The aggregation happens server-side — clients just receive a single boolean per friend, not per-device states.
+          A user with the app open on phone, laptop, and a tablet has three sessions. If <em>any</em>{" "}session is alive, the user is online. The aggregation happens server-side — clients just receive a single boolean per friend, not per-device states.
         </p>
 
         <h3>Multi-tab inside one browser</h3>
@@ -471,9 +471,9 @@ function onAck(ack: { clientMsgId: string; msgId: string; seq: number }) {
           The fix is throttling at three levels:
         </p>
         <ul>
-          <li><strong>Client throttle:</strong> max one <code>typing</code> event per second, regardless of keystroke rate.</li>
-          <li><strong>Server fan-out throttle:</strong> server merges {`"`}typing{`"`} events per (user, conversation) — only forwards once per second per user.</li>
-          <li><strong>Client display:</strong> when typing arrives, show {`"`}Alice is typing…{`"`} for 5 seconds, reset on each new event. Drop the indicator after 5s of silence.</li>
+          <li><strong>Client throttle:</strong>{" "}max one <code>typing</code> event per second, regardless of keystroke rate.</li>
+          <li><strong>Server fan-out throttle:</strong>{" "}server merges {`"`}typing{`"`} events per (user, conversation) — only forwards once per second per user.</li>
+          <li><strong>Client display:</strong>{" "}when typing arrives, show {`"`}Alice is typing…{`"`} for 5 seconds, reset on each new event. Drop the indicator after 5s of silence.</li>
         </ul>
 
         <CodeBlock lang="ts" caption="Throttled typing emit">{`class TypingEmitter {
@@ -509,9 +509,9 @@ class TypingDisplay {
           With 50M DAU and the typical user having 50 friends, a naive {`"`}push presence change to every friend{`"`} costs 50 writes per online/offline transition. With users connecting and disconnecting all day (mobile, sleep/wake, network changes), you can easily generate 5-10 transitions per user per day. That{`'`}s 250M-500M presence pushes per day from presence alone — completely separate from messages.
         </p>
         <ul>
-          <li><strong>Push only material changes.</strong> User opens a second tab? They were already online; don{`'`}t emit a presence change. Only emit on online → offline and offline → online transitions.</li>
-          <li><strong>Coalesce flapping.</strong> Mobile users flap online/offline as the network blips. Wait 60s after going offline before pushing the change — most blips resolve in that window. Going online is instant; going offline can wait.</li>
-          <li><strong>Push to active relationships only.</strong> If Alice has 500 contacts but only 8 are in conversations she{`'`}s touched in the past week, only push her presence to those 8. {`"`}Active{`"`} is a product call but it cuts presence fanout dramatically.</li>
+          <li><strong>Push only material changes.</strong>{" "}User opens a second tab? They were already online; don{`'`}t emit a presence change. Only emit on online → offline and offline → online transitions.</li>
+          <li><strong>Coalesce flapping.</strong>{" "}Mobile users flap online/offline as the network blips. Wait 60s after going offline before pushing the change — most blips resolve in that window. Going online is instant; going offline can wait.</li>
+          <li><strong>Push to active relationships only.</strong>{" "}If Alice has 500 contacts but only 8 are in conversations she{`'`}s touched in the past week, only push her presence to those 8. {`"`}Active{`"`} is a product call but it cuts presence fanout dramatically.</li>
         </ul>
 
         <h3>De-duping typing across tabs</h3>
@@ -593,14 +593,14 @@ tryClaim();`}</CodeBlock>
 
         <h3>Option 3: localStorage events (legacy)</h3>
         <p>
-          Older browsers fire a <code>storage</code> event when localStorage changes — and that event fires in <em>other</em> tabs of the same origin, not the one that wrote it. You can use this as a poor-man{`'`}s pubsub: write to a key, every other tab gets the event. It works in browsers as old as IE8. Don{`'`}t use it new in 2026 unless you have an unusual browser-support matrix.
+          Older browsers fire a <code>storage</code> event when localStorage changes — and that event fires in <em>other</em>{" "}tabs of the same origin, not the one that wrote it. You can use this as a poor-man{`'`}s pubsub: write to a key, every other tab gets the event. It works in browsers as old as IE8. Don{`'`}t use it new in 2026 unless you have an unusual browser-support matrix.
         </p>
 
         <h3>Decision</h3>
         <ul>
-          <li><strong>BroadcastChannel + leader election</strong> for most modern apps. Simple, well-supported, no extra processes.</li>
-          <li><strong>SharedWorker</strong> when you need the WS to outlive any specific tab being open in the foreground (less relevant since browsers freeze backgrounded tabs aggressively now anyway).</li>
-          <li><strong>localStorage events</strong> only as a fallback for ancient browsers.</li>
+          <li><strong>BroadcastChannel + leader election</strong>{" "}for most modern apps. Simple, well-supported, no extra processes.</li>
+          <li><strong>SharedWorker</strong>{" "}when you need the WS to outlive any specific tab being open in the foreground (less relevant since browsers freeze backgrounded tabs aggressively now anyway).</li>
+          <li><strong>localStorage events</strong>{" "}only as a fallback for ancient browsers.</li>
         </ul>
 
         <Callout variant="insight" title="Leader election is the part that always has bugs">
@@ -659,14 +659,14 @@ tryClaim();`}</CodeBlock>
 
         <h3>You use a library — Yjs or Automerge</h3>
         <p>
-          You almost never implement a CRDT yourself. <strong>Yjs</strong> and <strong>Automerge</strong> are the production libraries. Yjs is the more common choice for editors (used by Notion, Linear, and many others); Automerge is more general-purpose. Both wrap the algorithmic complexity in a usable API: you mutate a {`"`}shared{`"`} object, and the library produces sync messages you ship over your transport (WebSocket, in our case).
+          You almost never implement a CRDT yourself. <strong>Yjs</strong>{" "}and <strong>Automerge</strong>{" "}are the production libraries. Yjs is the more common choice for editors (used by Notion, Linear, and many others); Automerge is more general-purpose. Both wrap the algorithmic complexity in a usable API: you mutate a {`"`}shared{`"`} object, and the library produces sync messages you ship over your transport (WebSocket, in our case).
         </p>
 
         <h3>When to reach for a CRDT</h3>
         <ul>
           <li><strong>Collaborative document, whiteboard, spreadsheet</strong> — multiple users editing the same shared state simultaneously.</li>
           <li><strong>Multi-device offline-edit</strong> — same user editing on phone and laptop both offline, merging on reconnect.</li>
-          <li><strong>Local-first apps</strong> where the source of truth is the device and sync is best-effort.</li>
+          <li><strong>Local-first apps</strong>{" "}where the source of truth is the device and sync is best-effort.</li>
         </ul>
 
         <h3>When NOT to reach for a CRDT</h3>
@@ -685,8 +685,8 @@ tryClaim();`}</CodeBlock>
           User loses connection mid-typing. What happens?
         </p>
         <ul>
-          <li><strong>Bad:</strong> error toast, lost message, user has to retype.</li>
-          <li><strong>Good:</strong> queue the message in IndexedDB, mark as <code>pending</code>, retry on reconnect.</li>
+          <li><strong>Bad:</strong>{" "}error toast, lost message, user has to retype.</li>
+          <li><strong>Good:</strong>{" "}queue the message in IndexedDB, mark as <code>pending</code>, retry on reconnect.</li>
         </ul>
 
         <p>
@@ -821,9 +821,9 @@ function useChatScroll(messages: Message[]) {
 
         <h3>Skeleton vs spinner</h3>
         <ul>
-          <li><strong>Skeleton</strong> when you know the shape of what{`'`}s coming — chat history loads message bubbles in known positions, so a skeleton with greyed-out bubbles feels like progress.</li>
-          <li><strong>Spinner</strong> when you don{`'`}t — sending a message of unknown duration, file upload progress unknown, {`"`}reconnecting…{`"`}.</li>
-          <li><strong>Nothing</strong> for sub-200ms ops — flashing a spinner that disappears in 100ms is worse than no feedback at all.</li>
+          <li><strong>Skeleton</strong>{" "}when you know the shape of what{`'`}s coming — chat history loads message bubbles in known positions, so a skeleton with greyed-out bubbles feels like progress.</li>
+          <li><strong>Spinner</strong>{" "}when you don{`'`}t — sending a message of unknown duration, file upload progress unknown, {`"`}reconnecting…{`"`}.</li>
+          <li><strong>Nothing</strong>{" "}for sub-200ms ops — flashing a spinner that disappears in 100ms is worse than no feedback at all.</li>
         </ul>
 
         <h2>Edge cases the interviewer probes</h2>
@@ -896,7 +896,7 @@ function useChatScroll(messages: Message[]) {
 
         <h3>Two devices, same user, same message ID</h3>
         <p>
-          User sends from phone, the network drops before the ACK, then they pick up their laptop and {`"`}send{`"`} the same draft. Two devices, two different <code>clientMsgId</code>s — these are <em>not</em> a duplicate, they{`'`}re two genuine sends. {`"`}Same draft text{`"`} doesn{`'`}t trigger dedup; only same UUID does. This is the right behavior: dedup is for retries of the same send, not for {`"`}I typed something similar later.{`"`}
+          User sends from phone, the network drops before the ACK, then they pick up their laptop and {`"`}send{`"`} the same draft. Two devices, two different <code>clientMsgId</code>s — these are <em>not</em>{" "}a duplicate, they{`'`}re two genuine sends. {`"`}Same draft text{`"`} doesn{`'`}t trigger dedup; only same UUID does. This is the right behavior: dedup is for retries of the same send, not for {`"`}I typed something similar later.{`"`}
         </p>
 
         <Callout variant="insight" title="What separates the great answer from the good one">
@@ -957,10 +957,10 @@ function useChatScroll(messages: Message[]) {
           Real-time UIs fail in ways that don{`'`}t throw exceptions. The socket {`"`}succeeded{`"`} but is silently delivering nothing. Messages are reaching the server but not being rendered because of a state-machine bug. The four metrics that catch these:
         </p>
         <ul>
-          <li><strong>Time-to-connect (p50/p99):</strong> from <code>new WebSocket()</code> to <code>open</code> event. If this drifts from 200ms to 800ms, your gateway is unhealthy or the LB is mis-routing.</li>
-          <li><strong>Send-to-ACK latency (p50/p99):</strong> from message dispatch to ACK received. Above 1s p99 sustained, fanout is lagging or you{`'`}re behind a slow proxy.</li>
-          <li><strong>Reconnect rate:</strong> reconnects per session per minute. Above ~1/min, something is making the connection unstable — corp proxies, an unhealthy gateway pod, or a deploy in progress.</li>
-          <li><strong>Outbox depth:</strong> messages waiting to be drained. If this grows above 0 for &gt;10s on most users, you{`'`}re shipping messages slower than users send them — usually a backend problem, not a client one.</li>
+          <li><strong>Time-to-connect (p50/p99):</strong>{" "}from <code>new WebSocket()</code> to <code>open</code> event. If this drifts from 200ms to 800ms, your gateway is unhealthy or the LB is mis-routing.</li>
+          <li><strong>Send-to-ACK latency (p50/p99):</strong>{" "}from message dispatch to ACK received. Above 1s p99 sustained, fanout is lagging or you{`'`}re behind a slow proxy.</li>
+          <li><strong>Reconnect rate:</strong>{" "}reconnects per session per minute. Above ~1/min, something is making the connection unstable — corp proxies, an unhealthy gateway pod, or a deploy in progress.</li>
+          <li><strong>Outbox depth:</strong>{" "}messages waiting to be drained. If this grows above 0 for &gt;10s on most users, you{`'`}re shipping messages slower than users send them — usually a backend problem, not a client one.</li>
         </ul>
         <p>
           The leading indicator that often catches issues before user reports: <strong>reconnect rate</strong>. A spike in reconnects across a region is almost always the first sign of a gateway problem, and it shows up minutes before the {`"`}messages aren{`'`}t arriving{`"`} support tickets.

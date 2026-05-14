@@ -90,7 +90,7 @@ export default function Page() {
       <Checkpoint moduleSlug="migration-patterns" id="why-hard" title="Part 1 · Why migrations are hard" xp={25}>
         <h2>The dual-write problem</h2>
         <p>
-          Almost every nontrivial migration runs into the same shape: for some window of time, the system has to keep <strong>two sources of truth</strong> in sync. Old database and new database. Database and cache. Database and search index. Old service and new service.
+          Almost every nontrivial migration runs into the same shape: for some window of time, the system has to keep <strong>two sources of truth</strong>{" "}in sync. Old database and new database. Database and cache. Database and search index. Old service and new service.
         </p>
         <p>
           Two sources of truth is not stable. The instant you have two, they will drift. Your job during a migration is to make the drift bounded and detectable, then collapse back to one source.
@@ -99,9 +99,9 @@ export default function Page() {
           Concretely, the dual-write problem shows up as:
         </p>
         <ul>
-          <li><strong>DB + cache:</strong> you write the row, then update Redis. The DB write succeeds, the Redis call fails. Now your cache is stale and there&apos;s no event that will repair it.</li>
-          <li><strong>DB + search:</strong> Postgres commits, you push to Elasticsearch, Elastic rejects the doc because of a mapping mismatch. Search and DB now disagree.</li>
-          <li><strong>Old DB + new DB:</strong> you write to both during cutover. One write fails. Now the systems disagree on a single row, and you have no idea which one a user&apos;s next read will hit.</li>
+          <li><strong>DB + cache:</strong>{" "}you write the row, then update Redis. The DB write succeeds, the Redis call fails. Now your cache is stale and there&apos;s no event that will repair it.</li>
+          <li><strong>DB + search:</strong>{" "}Postgres commits, you push to Elasticsearch, Elastic rejects the doc because of a mapping mismatch. Search and DB now disagree.</li>
+          <li><strong>Old DB + new DB:</strong>{" "}you write to both during cutover. One write fails. Now the systems disagree on a single row, and you have no idea which one a user&apos;s next read will hit.</li>
         </ul>
         <p>
           The naive answer — <em>&quot;I&apos;ll just write to both inside one method call&quot;</em> — is not a solution. It&apos;s a way to hide the problem until the worst possible moment. The right tools are <strong>outbox pattern</strong>, <strong>idempotent backfills</strong>, and <strong>change data capture (CDC)</strong>, which we&apos;ll get to in part 3.
@@ -125,8 +125,8 @@ export default function Page() {
         </p>
         <ul>
           <li><strong>The freeze window grows.</strong> &quot;Two hours&quot; becomes six. Becomes &quot;we&apos;re calling customers Sunday morning.&quot;</li>
-          <li><strong>You can&apos;t roll back.</strong> Once the new system has accepted writes, the old system is behind. Going back means losing data.</li>
-          <li><strong>You discover bugs in production at 3am.</strong> Schema differences, encoding mismatches, edge cases nobody backfilled — they all surface at the moment your team is most tired and traffic is starting to come back.</li>
+          <li><strong>You can&apos;t roll back.</strong>{" "}Once the new system has accepted writes, the old system is behind. Going back means losing data.</li>
+          <li><strong>You discover bugs in production at 3am.</strong>{" "}Schema differences, encoding mismatches, edge cases nobody backfilled — they all surface at the moment your team is most tired and traffic is starting to come back.</li>
         </ul>
         <p>
           The only real defense is <em>not freezing</em>. Migrate while the system is live. Every pattern in this module is essentially a way to answer the question <em>&quot;how do I do this without freezing?&quot;</em>
@@ -197,9 +197,9 @@ export default function Page() {
           The properties that make this work:
         </p>
         <ul>
-          <li><strong>Per-endpoint cutover.</strong> You move <code>/orders</code> in week 4, <code>/users</code> in week 9, <code>/billing</code> never (because it&apos;s the scariest). You&apos;re never doing a single big move.</li>
-          <li><strong>Per-endpoint rollback.</strong> If the new <code>/orders</code> implementation has a bug, the router flips traffic back to legacy in seconds. No data was destroyed.</li>
-          <li><strong>Bounded blast radius.</strong> A bug in the new service affects only the endpoints you&apos;ve moved. The legacy keeps serving the rest.</li>
+          <li><strong>Per-endpoint cutover.</strong>{" "}You move <code>/orders</code> in week 4, <code>/users</code> in week 9, <code>/billing</code> never (because it&apos;s the scariest). You&apos;re never doing a single big move.</li>
+          <li><strong>Per-endpoint rollback.</strong>{" "}If the new <code>/orders</code> implementation has a bug, the router flips traffic back to legacy in seconds. No data was destroyed.</li>
+          <li><strong>Bounded blast radius.</strong>{" "}A bug in the new service affects only the endpoints you&apos;ve moved. The legacy keeps serving the rest.</li>
         </ul>
         <p>
           The classic mistake is treating strangler fig as &quot;rewrite the new service, then move all traffic at once.&quot; That&apos;s a big-bang migration with extra steps. The whole point is the gradual move — usually starting with read-only or low-risk endpoints, building confidence, then tackling the writes.
@@ -214,9 +214,9 @@ export default function Page() {
           You want the first endpoint you migrate to be:
         </p>
         <ul>
-          <li><strong>Read-heavy.</strong> Reads are easier to roll back than writes — the worst case is a stale response, not a corrupted database.</li>
-          <li><strong>Low-stakes.</strong> Nobody&apos;s wallet is on the line if it has a bug for an hour.</li>
-          <li><strong>Self-contained.</strong> Doesn&apos;t require huge swaths of legacy logic to reimplement.</li>
+          <li><strong>Read-heavy.</strong>{" "}Reads are easier to roll back than writes — the worst case is a stale response, not a corrupted database.</li>
+          <li><strong>Low-stakes.</strong>{" "}Nobody&apos;s wallet is on the line if it has a bug for an hour.</li>
+          <li><strong>Self-contained.</strong>{" "}Doesn&apos;t require huge swaths of legacy logic to reimplement.</li>
         </ul>
         <p>
           Common first moves: a <code>/health</code> or <code>/version</code> endpoint (almost trivial), a read-only product-catalog list, a search endpoint that&apos;s already partially proxied. Save the writes — orders, payments, user creation — for after you&apos;ve built confidence with the routing infrastructure.
@@ -236,12 +236,12 @@ export default function Page() {
 
         <h3>The six steps, walked carefully</h3>
         <ol>
-          <li><strong>Add the new column, nullable, no reads.</strong> Pure ALTER TABLE — fast on Postgres if the column is nullable with no default. The application doesn&apos;t know about the column yet.</li>
-          <li><strong>Dual-write.</strong> Deploy code that writes both the old and the new column on every update. New rows get both populated. Old rows still have the old column populated and the new column NULL.</li>
-          <li><strong>Backfill.</strong> A separate batch job copies the old column&apos;s value into the new column for every existing row, in idempotent batches of (say) 10k rows. Throttled to keep replication lag under your SLO. After it&apos;s done, every row has both columns matching.</li>
-          <li><strong>Switch reads.</strong> Behind a feature flag, flip the application&apos;s read path from <code>old_status</code> to <code>status</code>. Roll out gradually — 1%, 10%, 100%. Watch for errors.</li>
-          <li><strong>Stop writing the old column.</strong> Once reads are 100% on the new column for a few days and nothing depends on the old, deploy code that only writes <code>status</code>. The old column is now frozen.</li>
-          <li><strong>Drop the old column.</strong> Weeks later, when you&apos;re sure nothing reads it (verify with logs and slow-query analysis), <code>ALTER TABLE DROP COLUMN</code>. Done.</li>
+          <li><strong>Add the new column, nullable, no reads.</strong>{" "}Pure ALTER TABLE — fast on Postgres if the column is nullable with no default. The application doesn&apos;t know about the column yet.</li>
+          <li><strong>Dual-write.</strong>{" "}Deploy code that writes both the old and the new column on every update. New rows get both populated. Old rows still have the old column populated and the new column NULL.</li>
+          <li><strong>Backfill.</strong>{" "}A separate batch job copies the old column&apos;s value into the new column for every existing row, in idempotent batches of (say) 10k rows. Throttled to keep replication lag under your SLO. After it&apos;s done, every row has both columns matching.</li>
+          <li><strong>Switch reads.</strong>{" "}Behind a feature flag, flip the application&apos;s read path from <code>old_status</code> to <code>status</code>. Roll out gradually — 1%, 10%, 100%. Watch for errors.</li>
+          <li><strong>Stop writing the old column.</strong>{" "}Once reads are 100% on the new column for a few days and nothing depends on the old, deploy code that only writes <code>status</code>. The old column is now frozen.</li>
+          <li><strong>Drop the old column.</strong>{" "}Weeks later, when you&apos;re sure nothing reads it (verify with logs and slow-query analysis), <code>ALTER TABLE DROP COLUMN</code>. Done.</li>
         </ol>
 
         <CodeBlock lang="java" caption="Liquibase: the expand step (add nullable column)">{`<changeSet id="20260415-add-status-column" author="david">
@@ -302,9 +302,9 @@ public class OrderService {
           Backfills sound simple — &quot;just copy the data&quot; — and then they take down production. The three properties that matter:
         </p>
         <ul>
-          <li><strong>Idempotent.</strong> Running the same batch twice produces the same result. Use <code>UPDATE ... WHERE status IS NULL</code>, not <code>UPDATE ... ; INSERT INTO migration_log</code>.</li>
-          <li><strong>Resumable.</strong> Track progress (last id processed, or a high-water-mark timestamp). If the job dies at row 47 million, the next run picks up at 47,000,001.</li>
-          <li><strong>Throttled.</strong> Pause between batches. Watch replication lag and back off if it grows. Backfilling at full speed will kill your replicas.</li>
+          <li><strong>Idempotent.</strong>{" "}Running the same batch twice produces the same result. Use <code>UPDATE ... WHERE status IS NULL</code>, not <code>UPDATE ... ; INSERT INTO migration_log</code>.</li>
+          <li><strong>Resumable.</strong>{" "}Track progress (last id processed, or a high-water-mark timestamp). If the job dies at row 47 million, the next run picks up at 47,000,001.</li>
+          <li><strong>Throttled.</strong>{" "}Pause between batches. Watch replication lag and back off if it grows. Backfilling at full speed will kill your replicas.</li>
         </ul>
 
         <CodeBlock lang="java" caption="A throttled, resumable backfill batch job">{`@Component
@@ -409,7 +409,7 @@ public class StatusBackfillJob {
           Phase 5 — the <Link href="/courses/system-design/modules/distributed-transactions">distributed transactions module</Link> — introduced the outbox pattern as a way to publish events alongside a database write atomically. It comes back here because <strong>almost every cross-system migration needs it</strong>.
         </p>
         <p>
-          The shape: instead of writing to system A and then publishing to system B (which can fail between the two), write to system A <em>and</em> append to an <code>outbox</code> table inside the same transaction. A separate publisher reads the outbox and pushes to system B with retries. If the publisher crashes, the outbox row stays. Eventually it gets delivered exactly once-ish.
+          The shape: instead of writing to system A and then publishing to system B (which can fail between the two), write to system A <em>and</em>{" "}append to an <code>outbox</code> table inside the same transaction. A separate publisher reads the outbox and pushes to system B with retries. If the publisher crashes, the outbox row stays. Eventually it gets delivered exactly once-ish.
         </p>
 
         <CodeBlock lang="java" caption="Outbox pattern for cross-system migration">{`@Service
@@ -468,7 +468,7 @@ public class OutboxPublisher {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why outbox beats 'write to both'">
-          <p className="m-0">The two writes — payments table and outbox table — are in the <em>same</em> Postgres transaction. They commit together or roll back together. The publisher is the only thing talking to the second system, and it&apos;s designed to retry safely. You replaced an undesigned distributed transaction with a designed one that lives entirely inside Postgres.</p>
+          <p className="m-0">The two writes — payments table and outbox table — are in the <em>same</em>{" "}Postgres transaction. They commit together or roll back together. The publisher is the only thing talking to the second system, and it&apos;s designed to retry safely. You replaced an undesigned distributed transaction with a designed one that lives entirely inside Postgres.</p>
         </Callout>
 
         <h2>Cutover strategies</h2>
@@ -478,7 +478,7 @@ public class OutboxPublisher {
 
         <h3>1. Read shadowing</h3>
         <p>
-          Before any user sees a result from the new system, send every read to <em>both</em> old and new in parallel. Return the old result to the user. Compare the two asynchronously and log mismatches. This catches every &quot;the new system gives slightly different answers&quot; bug before it ever affects production.
+          Before any user sees a result from the new system, send every read to <em>both</em>{" "}old and new in parallel. Return the old result to the user. Compare the two asynchronously and log mismatches. This catches every &quot;the new system gives slightly different answers&quot; bug before it ever affects production.
         </p>
         <p>
           It costs 2x reads for the duration of shadowing. That&apos;s usually a small price for finding 100% of the bugs in advance.
@@ -521,7 +521,7 @@ public class ShadowedOrderReader {
 
         <h3>2. Percentage traffic shifting</h3>
         <p>
-          When shadow reads have been clean for days, start sending a small percentage of <em>real</em> reads to the new system and returning its result. 1%, then 10%, then 50%, then 100%. Each step you watch dashboards and error rates. If anything looks wrong, drop back to 0 instantly via the feature flag.
+          When shadow reads have been clean for days, start sending a small percentage of <em>real</em>{" "}reads to the new system and returning its result. 1%, then 10%, then 50%, then 100%. Each step you watch dashboards and error rates. If anything looks wrong, drop back to 0 instantly via the feature flag.
         </p>
         <p>
           Bucket by user ID, not at random. Random bucketing means a single user gets old/new alternating responses, which can manifest as inconsistency bugs (&quot;why did my orders disappear and reappear?&quot;). Hashing on user ID gives every user a stable assignment.
@@ -558,13 +558,13 @@ if drift counter > 0 for >1 hour:
           Stitching the patterns together, here&apos;s the actual order of operations for a database migration:
         </p>
         <ol>
-          <li><strong>Stand up new system.</strong> Empty. Schema in place. Reachable from the app.</li>
-          <li><strong>Turn on dual-writes.</strong> All new writes go to both old and new (via outbox if cross-system). Reads still hit old.</li>
-          <li><strong>Run the backfill.</strong> Throttled, idempotent, resumable. New system is now &quot;caught up&quot; with old.</li>
-          <li><strong>Shadow reads.</strong> Send reads to both, return old, log diffs. Run until diffs are zero for several days.</li>
+          <li><strong>Stand up new system.</strong>{" "}Empty. Schema in place. Reachable from the app.</li>
+          <li><strong>Turn on dual-writes.</strong>{" "}All new writes go to both old and new (via outbox if cross-system). Reads still hit old.</li>
+          <li><strong>Run the backfill.</strong>{" "}Throttled, idempotent, resumable. New system is now &quot;caught up&quot; with old.</li>
+          <li><strong>Shadow reads.</strong>{" "}Send reads to both, return old, log diffs. Run until diffs are zero for several days.</li>
           <li><strong>Percentage cutover.</strong> 1% → 10% → 50% → 100% over days, with a feature flag and per-user bucketing.</li>
-          <li><strong>Stop writing the old system.</strong> Once reads are 100% new for a week and drift is zero.</li>
-          <li><strong>Decommission.</strong> Snapshot, archive, drop the old. Save it for one more month before deleting backups.</li>
+          <li><strong>Stop writing the old system.</strong>{" "}Once reads are 100% new for a week and drift is zero.</li>
+          <li><strong>Decommission.</strong>{" "}Snapshot, archive, drop the old. Save it for one more month before deleting backups.</li>
         </ol>
 
         <Callout variant="insight" title="The scariest step is step 6, not step 5">

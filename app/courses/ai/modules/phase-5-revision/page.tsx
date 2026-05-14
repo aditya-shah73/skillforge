@@ -73,7 +73,7 @@ export default function Phase5RevisionModule() {
         </p>
 
         <Callout variant="warn">
-          <strong>Read this first:</strong> agents are the most exciting thing in this course and the most dangerous in production. <em>Most problems do not need an agent.</em> A deterministic pipeline with one or two tool calls is cheaper, faster, more debuggable, and won&apos;t set your wallet on fire. Reach for an agent only when the steps are genuinely unknown until runtime. The rest of this card assumes you&apos;ve already decided you need one.
+          <strong>Read this first:</strong>{" "}agents are the most exciting thing in this course and the most dangerous in production. <em>Most problems do not need an agent.</em>{" "}A deterministic pipeline with one or two tool calls is cheaper, faster, more debuggable, and won&apos;t set your wallet on fire. Reach for an agent only when the steps are genuinely unknown until runtime. The rest of this card assumes you&apos;ve already decided you need one.
         </Callout>
       </section>
 
@@ -161,7 +161,7 @@ export default function Phase5RevisionModule() {
         </div>
 
         <Callout variant="insight">
-          <strong>The mental model:</strong> agent = LLM + toolbox + loop + stopping condition. If you can&apos;t name your stopping conditions, you don&apos;t have an agent — you have an unbounded process.
+          <strong>The mental model:</strong>{" "}agent = LLM + toolbox + loop + stopping condition. If you can&apos;t name your stopping conditions, you don&apos;t have an agent — you have an unbounded process.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -264,13 +264,13 @@ export default function Phase5RevisionModule() {
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
           <li>
-            <strong>Every box on this diagram needs structured logging.</strong> When something goes wrong in production, you need to see exactly which iteration, which tool, which args, and which result.
+            <strong>Every box on this diagram needs structured logging.</strong>{" "}When something goes wrong in production, you need to see exactly which iteration, which tool, which args, and which result.
           </li>
           <li>
-            <strong>The guard is your safety net.</strong> If your only exit is the final-answer edge, one bug in the model&apos;s reasoning hangs the process forever. The guard fires <em>before</em> the next model call so you never pay for a turn you&apos;re about to abort.
+            <strong>The guard is your safety net.</strong>{" "}If your only exit is the final-answer edge, one bug in the model&apos;s reasoning hangs the process forever. The guard fires <em>before</em>{" "}the next model call so you never pay for a turn you&apos;re about to abort.
           </li>
           <li>
-            <strong>The tool_result must always be appended.</strong> If the tool fails, append a structured error result — never silently retry or skip the turn. The model needs to see the failure to recover.
+            <strong>The tool_result must always be appended.</strong>{" "}If the tool fails, append a structured error result — never silently retry or skip the turn. The model needs to see the failure to recover.
           </li>
         </ul>
 
@@ -356,7 +356,7 @@ export default function Phase5RevisionModule() {
 }`}</CodeBlock>
 
         <Callout variant="insight">
-          <strong>The whole production agent is this loop plus observability.</strong> Frameworks add convenience, not magic. If your agent is misbehaving, you debug it by reading the message list turn by turn — there&apos;s nowhere else for the bug to hide.
+          <strong>The whole production agent is this loop plus observability.</strong>{" "}Frameworks add convenience, not magic. If your agent is misbehaving, you debug it by reading the message list turn by turn — there&apos;s nowhere else for the bug to hide.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -408,18 +408,18 @@ export default function Phase5RevisionModule() {
         <h3 className="text-base font-semibold mb-2">Isolation, communication, and the &quot;why not one bigger context&quot; question</h3>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
           <li>
-            <strong>Context isolation</strong> is the main reason multi-agent works. Each subagent gets only what it needs — its own context window, its own tools, its own scratchpad. The orchestrator never sees the subagent&apos;s 10K-token exploration; only its 300-token summary. That keeps cost linear in <em>useful</em> work, not total work.
+            <strong>Context isolation</strong>{" "}is the main reason multi-agent works. Each subagent gets only what it needs — its own context window, its own tools, its own scratchpad. The orchestrator never sees the subagent&apos;s 10K-token exploration; only its 300-token summary. That keeps cost linear in <em>useful</em>{" "}work, not total work.
           </li>
           <li>
-            <strong>Communication: shared scratchpad vs explicit messages.</strong> A shared scratchpad is simpler but every agent pays to re-read it; explicit message passing (orchestrator hands a specific brief to a specific subagent) scales better. Prefer explicit messages unless the agents truly need to see each other&apos;s reasoning.
+            <strong>Communication: shared scratchpad vs explicit messages.</strong>{" "}A shared scratchpad is simpler but every agent pays to re-read it; explicit message passing (orchestrator hands a specific brief to a specific subagent) scales better. Prefer explicit messages unless the agents truly need to see each other&apos;s reasoning.
           </li>
           <li>
-            <strong>Why not one bigger context window?</strong> Three reasons. (1) Cost — you pay per token per turn, so 10× the context = 10× per-turn cost. (2) Attention degrades on very long contexts; the model gets worse at finding the right information. (3) You can&apos;t parallelize a single agent — fan-out gives you wall-clock speedups a single agent can never match.
+            <strong>Why not one bigger context window?</strong>{" "}Three reasons. (1) Cost — you pay per token per turn, so 10× the context = 10× per-turn cost. (2) Attention degrades on very long contexts; the model gets worse at finding the right information. (3) You can&apos;t parallelize a single agent — fan-out gives you wall-clock speedups a single agent can never match.
           </li>
         </ul>
 
         <Callout variant="warn">
-          <strong>Multi-agent is not free.</strong> Each subagent is a full agent — its own loop, its own caps, its own observability. A 3-subagent orchestrator has 4 agents to monitor. Don&apos;t reach for it unless one agent has genuinely failed to deliver.
+          <strong>Multi-agent is not free.</strong>{" "}Each subagent is a full agent — its own loop, its own caps, its own observability. A 3-subagent orchestrator has 4 agents to monitor. Don&apos;t reach for it unless one agent has genuinely failed to deliver.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -481,7 +481,7 @@ export default function Phase5RevisionModule() {
         </div>
 
         <Callout variant="insight">
-          <strong>The single most expensive habit:</strong> a verbose scratchpad. Every &quot;Let me think about this step by step…&quot; in turn 1 gets re-sent on turns 2, 3, 4, 5… by turn 10 you&apos;ve re-billed it ten times. Keep reasoning concise; keep the scratchpad summarized; cap iterations; cache tools. In that order.
+          <strong>The single most expensive habit:</strong>{" "}a verbose scratchpad. Every &quot;Let me think about this step by step…&quot; in turn 1 gets re-sent on turns 2, 3, 4, 5… by turn 10 you&apos;ve re-billed it ten times. Keep reasoning concise; keep the scratchpad summarized; cap iterations; cache tools. In that order.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -669,7 +669,7 @@ String summary = llm.summarize(c, invoices); // ONE model call
           <li>The phrase &quot;cost explosion&quot; makes you check iteration histograms and prompt-cache hit rates, not shrug.</li>
         </ul>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Production &amp; Capstone.</strong> Evals come first because everything you&apos;ve built in Phases 1–5 is opinion until you can measure it. LLM-as-judge, golden sets, regression testing — the discipline that turns a demo into a system.
+          <strong>Up next: Phase 6 — Production &amp; Capstone.</strong>{" "}Evals come first because everything you&apos;ve built in Phases 1–5 is opinion until you can measure it. LLM-as-judge, golden sets, regression testing — the discipline that turns a demo into a system.
         </p>
         <Link
           href="/courses/ai/modules/evals"

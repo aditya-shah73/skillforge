@@ -130,9 +130,9 @@ export default function Page() {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Non-functional requirements</h3>
         <ul className="space-y-2">
-          <li><strong>Latency:</strong> p99 &lt; 300ms for PR view; &lt; 150ms for comment post.</li>
+          <li><strong>Latency:</strong>{" "}p99 &lt; 300ms for PR view; &lt; 150ms for comment post.</li>
           <li><strong>Availability:</strong> 99.9% (~8.7h of allowed downtime/year).</li>
-          <li><strong>Durability:</strong> zero loss for PRs and comments — they&apos;re audit-bearing.</li>
+          <li><strong>Durability:</strong>{" "}zero loss for PRs and comments — they&apos;re audit-bearing.</li>
           <li><strong>Scale:</strong> 5,000 devs, ~2,000 PRs/day, ~50 comments/PR average. Bursty during business hours.</li>
         </ul>
 
@@ -212,12 +212,12 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Service decomposition</h3>
         <ul className="space-y-2">
-          <li><strong>Review service.</strong> PRs, branches, reviewers, status, merges. Source of truth for PR lifecycle.</li>
-          <li><strong>Comment service.</strong> Inline + general comments, threads, reactions. Owned table to keep it scalable.</li>
-          <li><strong>Notification service.</strong> Email, Slack, in-app. Pure consumer of events.</li>
-          <li><strong>Search service.</strong> Elasticsearch wrapper. Read-only API for the UI.</li>
-          <li><strong>Audit service.</strong> Append-only log of state changes. Compliance/forensics target.</li>
-          <li><strong>API gateway / BFF.</strong> Single front door for the UI; aggregates calls; enforces authn.</li>
+          <li><strong>Review service.</strong>{" "}PRs, branches, reviewers, status, merges. Source of truth for PR lifecycle.</li>
+          <li><strong>Comment service.</strong>{" "}Inline + general comments, threads, reactions. Owned table to keep it scalable.</li>
+          <li><strong>Notification service.</strong>{" "}Email, Slack, in-app. Pure consumer of events.</li>
+          <li><strong>Search service.</strong>{" "}Elasticsearch wrapper. Read-only API for the UI.</li>
+          <li><strong>Audit service.</strong>{" "}Append-only log of state changes. Compliance/forensics target.</li>
+          <li><strong>API gateway / BFF.</strong>{" "}Single front door for the UI; aggregates calls; enforces authn.</li>
         </ul>
 
         <Callout variant="insight" title="Why these boundaries">
@@ -229,23 +229,23 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
         <h3 className="text-xl font-semibold mt-8 mb-3">Datastore choices, justified</h3>
         <ul className="space-y-3">
           <li>
-            <strong>Postgres for review + comment data.</strong> ACID, joins (PR ↔ reviewer ↔ comment), modest scale.
+            <strong>Postgres for review + comment data.</strong>{" "}ACID, joins (PR ↔ reviewer ↔ comment), modest scale.
             One DB per service for ownership; logical replication if we need cross-service reads.
           </li>
           <li>
-            <strong>S3 for diffs and large blobs.</strong> Cheap, durable. Diff blobs are immutable per commit — perfect
+            <strong>S3 for diffs and large blobs.</strong>{" "}Cheap, durable. Diff blobs are immutable per commit — perfect
             for object storage. Postgres holds the metadata pointer.
           </li>
           <li>
-            <strong>Redis for hot reads.</strong> PR view caching (TTL ~60s), session state, rate-limit counters. Not
+            <strong>Redis for hot reads.</strong>{" "}PR view caching (TTL ~60s), session state, rate-limit counters. Not
             source of truth.
           </li>
           <li>
-            <strong>Kafka as the spine.</strong> Comment-created, PR-state-changed, mention events. Decouples writers
+            <strong>Kafka as the spine.</strong>{" "}Comment-created, PR-state-changed, mention events. Decouples writers
             from notification + search + audit consumers.
           </li>
           <li>
-            <strong>Elasticsearch for search.</strong> Async-fed from Kafka. Eventually consistent — that&apos;s fine
+            <strong>Elasticsearch for search.</strong>{" "}Async-fed from Kafka. Eventually consistent — that&apos;s fine
             for search.
           </li>
         </ul>
@@ -288,9 +288,9 @@ pr_status_check
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Sharding and replication</h3>
         <ul className="space-y-2">
-          <li><strong>At year-1 scale:</strong> single Postgres primary + 2 read replicas per service. No sharding.</li>
-          <li><strong>If we need to scale:</strong> shard by <code>repo_id</code> — a repo&apos;s PRs/comments are naturally co-located, queries don&apos;t cross repos.</li>
-          <li><strong>Read replicas</strong> handle read traffic for &quot;list my PRs&quot; pages. Tolerate slight lag.</li>
+          <li><strong>At year-1 scale:</strong>{" "}single Postgres primary + 2 read replicas per service. No sharding.</li>
+          <li><strong>If we need to scale:</strong>{" "}shard by <code>repo_id</code> — a repo&apos;s PRs/comments are naturally co-located, queries don&apos;t cross repos.</li>
+          <li><strong>Read replicas</strong>{" "}handle read traffic for &quot;list my PRs&quot; pages. Tolerate slight lag.</li>
         </ul>
 
         <Callout variant="warn" title="Don't shard until you have to">
@@ -410,23 +410,23 @@ public ResponseEntity<Comment> create(
         <h3 className="text-xl font-semibold mt-8 mb-3">Reliability — what breaks, and how we contain it</h3>
         <ul className="space-y-3">
           <li>
-            <strong>Notification service down.</strong> Kafka buffers events. When it recovers, consumers catch up.
+            <strong>Notification service down.</strong>{" "}Kafka buffers events. When it recovers, consumers catch up.
             Users see notifications late, but PRs/comments still flow. Decoupled by design.
           </li>
           <li>
-            <strong>Elasticsearch down.</strong> Search is degraded; everything else works. Indexer falls behind on
+            <strong>Elasticsearch down.</strong>{" "}Search is degraded; everything else works. Indexer falls behind on
             Kafka, catches up later. Eventually consistent — user sees a 5-minute lag in search results, not an outage.
           </li>
           <li>
-            <strong>Postgres primary fails.</strong> Replica promotes (managed RDS handles this in ~60s). API
+            <strong>Postgres primary fails.</strong>{" "}Replica promotes (managed RDS handles this in ~60s). API
             gateway returns 503 with retry hints during the failover.
           </li>
           <li>
-            <strong>Redis cache cold/down.</strong> Reads fall through to Postgres. Latency degrades; system stays up.
+            <strong>Redis cache cold/down.</strong>{" "}Reads fall through to Postgres. Latency degrades; system stays up.
             Always design caches to be optional.
           </li>
           <li>
-            <strong>Kafka down.</strong> Outbox accumulates. When Kafka recovers, drains. Read path unaffected.
+            <strong>Kafka down.</strong>{" "}Outbox accumulates. When Kafka recovers, drains. Read path unaffected.
           </li>
         </ul>
 
@@ -438,10 +438,10 @@ public ResponseEntity<Comment> create(
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Observability</h3>
         <ul className="space-y-2">
-          <li><strong>Metrics:</strong> RED (rate, errors, duration) per endpoint; per-consumer Kafka lag; cache hit ratio.</li>
-          <li><strong>Logs:</strong> structured JSON; trace ID propagated end-to-end (W3C traceparent).</li>
-          <li><strong>Traces:</strong> OpenTelemetry across services — every API request is a single trace.</li>
-          <li><strong>Alarms:</strong> p99 latency, error rate, Kafka consumer lag, replica lag — paged on threshold.</li>
+          <li><strong>Metrics:</strong>{" "}RED (rate, errors, duration) per endpoint; per-consumer Kafka lag; cache hit ratio.</li>
+          <li><strong>Logs:</strong>{" "}structured JSON; trace ID propagated end-to-end (W3C traceparent).</li>
+          <li><strong>Traces:</strong>{" "}OpenTelemetry across services — every API request is a single trace.</li>
+          <li><strong>Alarms:</strong>{" "}p99 latency, error rate, Kafka consumer lag, replica lag — paged on threshold.</li>
         </ul>
 
         <Checkpoint moduleSlug="capstone" id="reliability" title="Traffic + reliability checkpoint" xp={25}>
@@ -500,9 +500,9 @@ public ResponseEntity<Comment> create(
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Identity and access</h3>
         <ul className="space-y-2">
-          <li><strong>Users:</strong> SSO via the corporate IdP (OAuth2 + OIDC, PKCE). No app-managed passwords.</li>
-          <li><strong>Service-to-service:</strong> mTLS via service mesh. Each pod has a SPIFFE identity from the mesh CA.</li>
-          <li><strong>Authorization:</strong> repo-level roles (admin, maintainer, contributor); enforced at the data layer (<code>WHERE repo_id IN :allowed</code>), not just the controller.</li>
+          <li><strong>Users:</strong>{" "}SSO via the corporate IdP (OAuth2 + OIDC, PKCE). No app-managed passwords.</li>
+          <li><strong>Service-to-service:</strong>{" "}mTLS via service mesh. Each pod has a SPIFFE identity from the mesh CA.</li>
+          <li><strong>Authorization:</strong>{" "}repo-level roles (admin, maintainer, contributor); enforced at the data layer (<code>WHERE repo_id IN :allowed</code>), not just the controller.</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Threat model — what we care about</h3>
@@ -528,22 +528,22 @@ public ResponseEntity<Comment> create(
         <h3 className="text-xl font-semibold mt-8 mb-3">Rollout plan</h3>
         <ol className="space-y-3">
           <li>
-            <strong>Phase 0 — internal alpha.</strong> Deploy to a single repo&apos;s team (~10 devs). Real PRs.
+            <strong>Phase 0 — internal alpha.</strong>{" "}Deploy to a single repo&apos;s team (~10 devs). Real PRs.
             Monitor latency, error rate, edge cases.
           </li>
           <li>
-            <strong>Phase 1 — opt-in pilot.</strong> Open to ~5 teams. Feature flag at the org level. Mirror PRs to the
+            <strong>Phase 1 — opt-in pilot.</strong>{" "}Open to ~5 teams. Feature flag at the org level. Mirror PRs to the
             existing system (dual-read) for 2 weeks. Compare for parity.
           </li>
           <li>
-            <strong>Phase 2 — strangler.</strong> New repos go to CodeForge by default. Existing repos migrate on
+            <strong>Phase 2 — strangler.</strong>{" "}New repos go to CodeForge by default. Existing repos migrate on
             request. Both systems run in parallel.
           </li>
           <li>
-            <strong>Phase 3 — full migration.</strong> Old system enters read-only mode. Active PRs drain. Backups taken.
+            <strong>Phase 3 — full migration.</strong>{" "}Old system enters read-only mode. Active PRs drain. Backups taken.
           </li>
           <li>
-            <strong>Phase 4 — decommission.</strong> Old system retired after a 90-day cooling-off period.
+            <strong>Phase 4 — decommission.</strong>{" "}Old system retired after a 90-day cooling-off period.
           </li>
         </ol>
 
@@ -562,10 +562,10 @@ public ResponseEntity<Comment> create(
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Failure modes we explicitly accept</h3>
         <ul className="space-y-2">
-          <li><strong>Search lag during high write bursts.</strong> Up to 30s. Acceptable.</li>
-          <li><strong>Notification delays during incident recovery.</strong> Up to a few minutes. Acceptable.</li>
-          <li><strong>60s of read-only during a Postgres failover.</strong> Acceptable; banner shows &quot;reconnecting.&quot;</li>
-          <li><strong>What we do NOT accept:</strong> data loss for committed PRs, comments, or audit events. Ever.</li>
+          <li><strong>Search lag during high write bursts.</strong>{" "}Up to 30s. Acceptable.</li>
+          <li><strong>Notification delays during incident recovery.</strong>{" "}Up to a few minutes. Acceptable.</li>
+          <li><strong>60s of read-only during a Postgres failover.</strong>{" "}Acceptable; banner shows &quot;reconnecting.&quot;</li>
+          <li><strong>What we do NOT accept:</strong>{" "}data loss for committed PRs, comments, or audit events. Ever.</li>
         </ul>
 
         <Checkpoint moduleSlug="capstone" id="security-rollout" title="Security & rollout checkpoint" xp={25}>

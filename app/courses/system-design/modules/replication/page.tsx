@@ -100,8 +100,8 @@ export default function Page() {
           The fundamental knob:
         </p>
         <ul>
-          <li><strong>Async:</strong> leader acks the write as soon as it&apos;s in its own WAL. Followers catch up later. Fast writes, but if the leader dies before the WAL replicates, you lose data.</li>
-          <li><strong>Sync:</strong> leader waits until at least one (or N) follower confirms before acking. Durable. Slow — the write latency is bounded by the slowest follower in the sync set.</li>
+          <li><strong>Async:</strong>{" "}leader acks the write as soon as it&apos;s in its own WAL. Followers catch up later. Fast writes, but if the leader dies before the WAL replicates, you lose data.</li>
+          <li><strong>Sync:</strong>{" "}leader waits until at least one (or N) follower confirms before acking. Durable. Slow — the write latency is bounded by the slowest follower in the sync set.</li>
         </ul>
         <p>
           Postgres lets you mix: <code>synchronous_commit = on</code> with a list of synchronous standbys. The most
@@ -133,9 +133,9 @@ hot_standby_feedback = on   # tells leader not to vacuum rows the follower is re
           A leader-follower setup needs a way to promote a follower when the leader dies. This is harder than it sounds:
         </p>
         <ul>
-          <li><strong>Detecting death.</strong> Is the leader actually dead, or is the network just flaky? Promote too eagerly and you have two leaders (split brain). Promote too slowly and you&apos;re down longer than you need to be.</li>
-          <li><strong>Picking the new leader.</strong> The follower with the most replicated WAL wins. Async followers may be behind, so the choice matters.</li>
-          <li><strong>Reconfiguring everyone.</strong> The other followers now stream from the new leader. Old leader, if it comes back, becomes a follower (or gets fenced).</li>
+          <li><strong>Detecting death.</strong>{" "}Is the leader actually dead, or is the network just flaky? Promote too eagerly and you have two leaders (split brain). Promote too slowly and you&apos;re down longer than you need to be.</li>
+          <li><strong>Picking the new leader.</strong>{" "}The follower with the most replicated WAL wins. Async followers may be behind, so the choice matters.</li>
+          <li><strong>Reconfiguring everyone.</strong>{" "}The other followers now stream from the new leader. Old leader, if it comes back, becomes a follower (or gets fenced).</li>
         </ul>
         <p>
           Tools like Patroni (Postgres) or Orchestrator (MySQL) automate this. AWS RDS Multi-AZ does it for you.
@@ -223,9 +223,9 @@ public class OrderQueryService {
           strategy, and none of them are great:
         </p>
         <ul>
-          <li><strong>Last-write-wins (LWW):</strong> compare timestamps, keep the latest. Simple, lossy. The earlier write is silently dropped.</li>
-          <li><strong>CRDTs:</strong> data types designed so concurrent writes merge mathematically (counters, sets). Beautiful, only works for the data types they exist for.</li>
-          <li><strong>Application resolution:</strong> store both versions, let the user / application pick. Common in collaborative editing.</li>
+          <li><strong>Last-write-wins (LWW):</strong>{" "}compare timestamps, keep the latest. Simple, lossy. The earlier write is silently dropped.</li>
+          <li><strong>CRDTs:</strong>{" "}data types designed so concurrent writes merge mathematically (counters, sets). Beautiful, only works for the data types they exist for.</li>
+          <li><strong>Application resolution:</strong>{" "}store both versions, let the user / application pick. Common in collaborative editing.</li>
         </ul>
 
         <Callout variant="info" title="Why most teams shouldn't use multi-leader">
@@ -257,10 +257,10 @@ public class OrderQueryService {
           Worked example with N=3:
         </p>
         <ul>
-          <li><strong>W=3, R=1.</strong> Every replica has every write. Reads are cheap. Writes fail if any replica is down.</li>
-          <li><strong>W=2, R=2.</strong> The classic balanced quorum. Tolerates one node failure for both reads and writes. R + W = 4 &gt; 3 — overlap guaranteed.</li>
-          <li><strong>W=1, R=3.</strong> Writes are fast. Reads have to talk to everyone and pick the winner. Tolerates write-node failures only if you allow lower W.</li>
-          <li><strong>W=1, R=1.</strong> R + W = 2, not greater than 3. <em>Stale reads possible.</em> Available but eventually consistent.</li>
+          <li><strong>W=3, R=1.</strong>{" "}Every replica has every write. Reads are cheap. Writes fail if any replica is down.</li>
+          <li><strong>W=2, R=2.</strong>{" "}The classic balanced quorum. Tolerates one node failure for both reads and writes. R + W = 4 &gt; 3 — overlap guaranteed.</li>
+          <li><strong>W=1, R=3.</strong>{" "}Writes are fast. Reads have to talk to everyone and pick the winner. Tolerates write-node failures only if you allow lower W.</li>
+          <li><strong>W=1, R=1.</strong>{" "}R + W = 2, not greater than 3. <em>Stale reads possible.</em>{" "}Available but eventually consistent.</li>
         </ul>
 
         <CodeBlock lang="plain" caption="Cassandra consistency levels (CQL)">{`-- Strong-ish: read repair across a quorum
@@ -289,7 +289,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
         <h3 className="text-xl font-semibold mt-8 mb-3">Sloppy quorums and hinted handoff</h3>
         <p>
           What if the &quot;real&quot; replicas for a key are unreachable but other nodes are healthy? A
-          <em>sloppy quorum</em> writes to the next available nodes instead, with a hint saying &quot;hey, when the
+          <em>sloppy quorum</em>{" "}writes to the next available nodes instead, with a hint saying &quot;hey, when the
           real owners come back, ship this to them.&quot; Hinted handoff is the mechanism that ships the data later.
         </p>
         <p>
@@ -330,15 +330,15 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
         <ul>
           <li><strong>Healthy:</strong> 5–50ms within a region, 50–200ms across regions.</li>
           <li><strong>Warning:</strong> 1–5 seconds. Something is wrong but the system is still functional.</li>
-          <li><strong>Crisis:</strong> tens of seconds to minutes. Long-running transaction on leader, network issue, follower CPU-bound during replay, vacuum lock contention.</li>
+          <li><strong>Crisis:</strong>{" "}tens of seconds to minutes. Long-running transaction on leader, network issue, follower CPU-bound during replay, vacuum lock contention.</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">What causes lag spikes</h3>
         <ul>
-          <li><strong>Big transactions on the leader.</strong> A 10M-row UPDATE blocks WAL streaming until commit, then replays as a single chunk on every follower.</li>
-          <li><strong>Slow follower replay.</strong> Postgres single-threaded WAL replay is a real bottleneck. If the follower can&apos;t keep up with peak write rate, lag grows.</li>
-          <li><strong>Network saturation.</strong> Cross-region replicas competing with backups or other traffic.</li>
-          <li><strong>Long-running queries on the follower.</strong> If <code>hot_standby_feedback = on</code>, the follower tells the leader &quot;don&apos;t vacuum rows I&apos;m reading,&quot; which can cause bloat. If it&apos;s off, the long query gets canceled.</li>
+          <li><strong>Big transactions on the leader.</strong>{" "}A 10M-row UPDATE blocks WAL streaming until commit, then replays as a single chunk on every follower.</li>
+          <li><strong>Slow follower replay.</strong>{" "}Postgres single-threaded WAL replay is a real bottleneck. If the follower can&apos;t keep up with peak write rate, lag grows.</li>
+          <li><strong>Network saturation.</strong>{" "}Cross-region replicas competing with backups or other traffic.</li>
+          <li><strong>Long-running queries on the follower.</strong>{" "}If <code>hot_standby_feedback = on</code>, the follower tells the leader &quot;don&apos;t vacuum rows I&apos;m reading,&quot; which can cause bloat. If it&apos;s off, the long query gets canceled.</li>
         </ul>
 
         <Callout variant="warn" title="The classic outage shape">
@@ -356,7 +356,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           The most-violated consistency property in real apps. Three patterns to fix it:
         </p>
 
-        <p><strong>1. Route to leader for a short window after a write.</strong> Stash a timestamp in the user&apos;s session: &quot;wrote at 14:32:01.&quot; For the next 5 seconds, route their reads to the leader. After that, replicas are presumed caught up.</p>
+        <p><strong>1. Route to leader for a short window after a write.</strong>{" "}Stash a timestamp in the user&apos;s session: &quot;wrote at 14:32:01.&quot; For the next 5 seconds, route their reads to the leader. After that, replicas are presumed caught up.</p>
 
         <CodeBlock lang="java" caption="Sticky-leader window after a write">{`@Service
 public class OrderService {
@@ -381,9 +381,9 @@ protected Object determineCurrentLookupKey() {
     return ReadOnlyContext.isReadOnly() ? "replica" : "primary";
 }`}</CodeBlock>
 
-        <p><strong>2. Read your own write from the leader, everything else from replicas.</strong> The post-write read is routed to the leader explicitly. Other reads (someone else&apos;s feed, a list view) hit replicas. Cleaner than session-scoped windows for some workloads.</p>
+        <p><strong>2. Read your own write from the leader, everything else from replicas.</strong>{" "}The post-write read is routed to the leader explicitly. Other reads (someone else&apos;s feed, a list view) hit replicas. Cleaner than session-scoped windows for some workloads.</p>
 
-        <p><strong>3. Wait for replication.</strong> Some clients can return the WAL position of a write. The follower lets you ask &quot;have you replayed up to LSN X?&quot; and you wait until yes. Postgres exposes this as <code>pg_wal_lsn_diff</code>. More work, more correct.</p>
+        <p><strong>3. Wait for replication.</strong>{" "}Some clients can return the WAL position of a write. The follower lets you ask &quot;have you replayed up to LSN X?&quot; and you wait until yes. Postgres exposes this as <code>pg_wal_lsn_diff</code>. More work, more correct.</p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Monotonic reads</h3>
         <p>

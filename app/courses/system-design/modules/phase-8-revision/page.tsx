@@ -61,7 +61,7 @@ flowchart LR
       {/* INTRO — set expectations, this is a map AND a course closer */}
       <section className="not-prose mb-10">
         <Callout variant="insight">
-          <strong>This is the closing card of the course.</strong> Phase 8 took the system-design lens you built on the backend (caches, queues, replication, consensus) and rotated it 180° onto the frontend, where the &quot;server&quot; is a 4-year-old Android on coffee-shop wifi and the user is one tab-close away. This module compresses every decision from the three frontend modules into tables and cards you can re-read on the train before a phone screen.
+          <strong>This is the closing card of the course.</strong>{" "}Phase 8 took the system-design lens you built on the backend (caches, queues, replication, consensus) and rotated it 180° onto the frontend, where the &quot;server&quot; is a 4-year-old Android on coffee-shop wifi and the user is one tab-close away. This module compresses every decision from the three frontend modules into tables and cards you can re-read on the train before a phone screen.
         </Callout>
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-4">
           The three modules you&apos;re consolidating: <Link href="/courses/system-design/modules/frontend-fundamentals" className="text-cyan-600 hover:underline">Frontend fundamentals</Link> (rendering, vitals, bundles, state), <Link href="/courses/system-design/modules/frontend-design-feed" className="text-cyan-600 hover:underline">Design a feed UI</Link>, and <Link href="/courses/system-design/modules/frontend-design-realtime" className="text-cyan-600 hover:underline">Design a real-time UI</Link>. If anything below feels unfamiliar, jump back to the source module — this card assumes you&apos;ve already done the work.
@@ -135,7 +135,7 @@ flowchart LR
         </div>
 
         <Callout variant="insight">
-          <strong>The senior frame:</strong> rendering is a function of three properties of the page — <em>personalization</em>, <em>freshness</em>, <em>SEO</em>. Identical-for-everyone + SEO → SSG. Personal + SEO → SSR. Personal + no SEO + complex interactivity → CSR. Add ISR when SSG is right but the build is too slow to redeploy on edit. Add streaming SSR when SSR is right but one data dep is the long pole.
+          <strong>The senior frame:</strong>{" "}rendering is a function of three properties of the page — <em>personalization</em>, <em>freshness</em>, <em>SEO</em>. Identical-for-everyone + SEO → SSG. Personal + SEO → SSR. Personal + no SEO + complex interactivity → CSR. Add ISR when SSG is right but the build is too slow to redeploy on edit. Add streaming SSR when SSR is right but one data dep is the long pole.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -195,7 +195,7 @@ flowchart LR
         </div>
 
         <Callout variant="warn">
-          <strong>The thing nobody tells you about INP:</strong> on SSR&apos;d pages, the worst INP usually happens during hydration. The page looks ready, the user taps, and the click sits in a queue while the bundle hydrates. RSC and islands aren&apos;t premature optimization — they&apos;re INP fixes for SSR pages.
+          <strong>The thing nobody tells you about INP:</strong>{" "}on SSR&apos;d pages, the worst INP usually happens during hydration. The page looks ready, the user taps, and the click sits in a queue while the bundle hydrates. RSC and islands aren&apos;t premature optimization — they&apos;re INP fixes for SSR pages.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -252,7 +252,7 @@ flowchart LR
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong> colocate state to its consumer. Start in <code>useState</code> next to the component that uses it. <em>Lift only when shared</em>, and only as high as the lowest common ancestor of the consumers. The default mistake is reaching for a global store on day one; the senior move is keeping state local until pain forces it up.
+          <strong>Decision rule:</strong>{" "}colocate state to its consumer. Start in <code>useState</code> next to the component that uses it. <em>Lift only when shared</em>, and only as high as the lowest common ancestor of the consumers. The default mistake is reaching for a global store on day one; the senior move is keeping state local until pain forces it up.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -278,13 +278,13 @@ flowchart LR
             <strong>Backoff schedule:</strong> 1s → 2s → 4s → 8s, capped at 30s. The cap stops users waiting forever after long outages. Without a cap, a user who closed their laptop for an hour comes back to a socket that&apos;s about to retry in 70 minutes.
           </li>
           <li>
-            <strong>±20% jitter on every attempt.</strong> Without it: gateway restarts → 100k clients all reconnect at exactly t+1s, t+2s, t+4s → you DDoS your own pod the moment it boots. With it: same 100k clients arrive over a 1.6s window. This is the same thundering-herd fix you learned for caches; it applies here too.
+            <strong>±20% jitter on every attempt.</strong>{" "}Without it: gateway restarts → 100k clients all reconnect at exactly t+1s, t+2s, t+4s → you DDoS your own pod the moment it boots. With it: same 100k clients arrive over a 1.6s window. This is the same thundering-herd fix you learned for caches; it applies here too.
           </li>
           <li>
-            <strong>Heartbeats:</strong> ping every 30s, expect pong within 10s, otherwise treat the socket as dead and reconnect. TCP&apos;s own dead-connection detection takes minutes. You don&apos;t have minutes.
+            <strong>Heartbeats:</strong>{" "}ping every 30s, expect pong within 10s, otherwise treat the socket as dead and reconnect. TCP&apos;s own dead-connection detection takes minutes. You don&apos;t have minutes.
           </li>
           <li>
-            <strong>Resync on reconnect:</strong> send <code>lastSeq</code> on the new connection. Server replays anything past that sequence. Without it, the user reconnects and silently loses every message that arrived during the outage.
+            <strong>Resync on reconnect:</strong>{" "}send <code>lastSeq</code> on the new connection. Server replays anything past that sequence. Without it, the user reconnects and silently loses every message that arrived during the outage.
           </li>
         </ul>
 
@@ -306,7 +306,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Virtualization (windowing)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Render only the rows in (or near) the viewport. A 10,000-item list ships ~20 DOM nodes, not 10,000. <code>react-window</code>, <code>@tanstack/react-virtual</code>. <em>Mandatory</em> past ~200 rows.
+              Render only the rows in (or near) the viewport. A 10,000-item list ships ~20 DOM nodes, not 10,000. <code>react-window</code>, <code>@tanstack/react-virtual</code>. <em>Mandatory</em>{" "}past ~200 rows.
             </p>
           </div>
 
@@ -377,14 +377,14 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Reconnect (the senior tell)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Exponential backoff (1s → 2s → 4s → 8s, cap 30s) with <strong>±20% jitter</strong> on every attempt. Without jitter, every gateway restart is a self-inflicted DDoS. Send <code>lastSeq</code> on reconnect so the server can replay missed messages.
+              Exponential backoff (1s → 2s → 4s → 8s, cap 30s) with <strong>±20% jitter</strong>{" "}on every attempt. Without jitter, every gateway restart is a self-inflicted DDoS. Send <code>lastSeq</code> on reconnect so the server can replay missed messages.
             </p>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Presence (heartbeat)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Send a 30s heartbeat; server marks user offline if missed 2x. <em>Don&apos;t</em> implement presence by polling <code>/who-is-online</code> every 5s — it&apos;s a 10-100x multiplier on your message volume. Throttle presence updates server-side: fan out at most every 5s per user.
+              Send a 30s heartbeat; server marks user offline if missed 2x. <em>Don&apos;t</em>{" "}implement presence by polling <code>/who-is-online</code> every 5s — it&apos;s a 10-100x multiplier on your message volume. Throttle presence updates server-side: fan out at most every 5s per user.
             </p>
           </div>
 
@@ -404,7 +404,7 @@ flowchart LR
         </div>
 
         <Callout variant="warn">
-          <strong>The one that bites people:</strong> reconnect without jitter. It works perfectly in dev with one tab open, and takes down production after every deploy. If you only remember one thing from the real-time module, make it &quot;exponential backoff with jitter.&quot;
+          <strong>The one that bites people:</strong>{" "}reconnect without jitter. It works perfectly in dev with one tab open, and takes down production after every deploy. If you only remember one thing from the real-time module, make it &quot;exponential backoff with jitter.&quot;
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -615,7 +615,7 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
           The thing that separates senior from staff isn&apos;t knowing more patterns — it&apos;s knowing which one to reach for under pressure, and being able to defend the call with numbers when someone pushes back. That&apos;s the practice now. Mock interviews, designing real systems at work, reading post-mortems with the question &quot;which of these patterns would&apos;ve caught it?&quot;
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          One last thing before you close the tab. The <strong>capstone</strong> is where it all comes together — an end-to-end design exercise (code review platform: ingest, search, real-time comments, notifications, audit log) that touches every phase. If you haven&apos;t done it yet, that&apos;s the next move. If you have: go run a real mock interview.
+          One last thing before you close the tab. The <strong>capstone</strong>{" "}is where it all comes together — an end-to-end design exercise (code review platform: ingest, search, real-time comments, notifications, audit log) that touches every phase. If you haven&apos;t done it yet, that&apos;s the next move. If you have: go run a real mock interview.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link

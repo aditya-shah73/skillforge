@@ -175,7 +175,7 @@ flowchart LR
         <p>
           The relation is reflexive, symmetric, and transitive — once you union <code>a</code> with <code>b</code> and{" "}
           <code>b</code> with <code>c</code>, the system has to know <code>a</code> and <code>c</code> are connected
-          without you saying so. This is exactly an <strong>equivalence-class</strong> structure, and the data
+          without you saying so. This is exactly an <strong>equivalence-class</strong>{" "}structure, and the data
           structure that maintains it under streaming updates is <strong>Union-Find</strong>, also called the{" "}
           <strong>Disjoint Set Union</strong> (DSU).
         </p>
@@ -191,7 +191,7 @@ flowchart LR
 
         <p>
           The other natural idea — &quot;just compute connected components once with one big DFS and answer queries
-          from a lookup table&quot; — works for a <em>static</em> graph. The trouble is that in our problem, the graph
+          from a lookup table&quot; — works for a <em>static</em>{" "}graph. The trouble is that in our problem, the graph
           is <em>dynamic</em>: every <code>union</code> potentially merges two components, and you don&apos;t want to
           recompute components from scratch after each merge.
         </p>
@@ -224,10 +224,10 @@ flowchart LR
         <h3>The four scenarios where DSU is the right hammer</h3>
 
         <ul>
-          <li><strong>Streaming connectivity.</strong> Edges arrive one at a time; answer connectivity queries on the fly.</li>
-          <li><strong>Connected components count.</strong> Maintain the number of components as edges are added.</li>
-          <li><strong>Cycle detection in an undirected graph.</strong> An edge that joins two nodes already in the same DSU group closes a cycle.</li>
-          <li><strong>Kruskal&apos;s MST.</strong> Sort edges by weight; greedily add each one that doesn&apos;t close a cycle. The cycle test is exactly a DSU connectivity check.</li>
+          <li><strong>Streaming connectivity.</strong>{" "}Edges arrive one at a time; answer connectivity queries on the fly.</li>
+          <li><strong>Connected components count.</strong>{" "}Maintain the number of components as edges are added.</li>
+          <li><strong>Cycle detection in an undirected graph.</strong>{" "}An edge that joins two nodes already in the same DSU group closes a cycle.</li>
+          <li><strong>Kruskal&apos;s MST.</strong>{" "}Sort edges by weight; greedily add each one that doesn&apos;t close a cycle. The cycle test is exactly a DSU connectivity check.</li>
         </ul>
 
         <Quiz
@@ -332,7 +332,7 @@ union(2, 1);   // 2's root is 2; 1's root is 0. 2 → 0. So 0 has two children: 
           <p>
             Two operations are bad: a careless <code>union</code> that always extends the same chain, and a{" "}
             <code>find</code> that doesn&apos;t shortcut the path it just walked. Each of the next two checkpoints
-            attacks one of these. <em>Either one alone</em> is enough to make DSU efficient. Together they push the cost
+            attacks one of these. <em>Either one alone</em>{" "}is enough to make DSU efficient. Together they push the cost
             all the way down to <code>O(α(n))</code> — and that&apos;s the bound that makes Kruskal&apos;s feasible.
           </p>
         </Callout>
@@ -369,7 +369,7 @@ union(2, 1);   // 2's root is 2; 1's root is 0. 2 → 0. So 0 has two children: 
         <p>
           The first optimization is almost embarrassingly simple. Each time you call <code>find(x)</code>, you walk a
           path from <code>x</code> up to its root. <strong>Make every node along that path point directly at the
-          root.</strong> The next <code>find</code> on any of them — or any of their descendants — finishes in O(1).
+          root.</strong>{" "}The next <code>find</code> on any of them — or any of their descendants — finishes in O(1).
         </p>
 
         <h3>The recursive one-liner</h3>
@@ -428,7 +428,7 @@ union(2, 1);   // 2's root is 2; 1's root is 0. 2 → 0. So 0 has two children: 
         <p>
           Path compression by itself, without any union strategy, gives <code>O(log n)</code> amortized per operation.
           Each operation either finishes fast or reshapes the tree into a flatter version. The harder result — that
-          path compression <em>plus</em> a smart union strategy gives <code>O(α(n))</code> — is what we&apos;ll set up
+          path compression <em>plus</em>{" "}a smart union strategy gives <code>O(α(n))</code> — is what we&apos;ll set up
           in the next checkpoint.
         </p>
 
@@ -479,8 +479,8 @@ union(2, 1);   // 2's root is 2; 1's root is 0. 2 → 0. So 0 has two children: 
 
         <p>
           <code>rank[i]</code> is an upper bound on the height of the subtree rooted at <code>i</code>. Initially every
-          node has rank 0. On <code>union(a, b)</code>, attach the root of the <em>shorter</em> tree under the root of
-          the <em>taller</em> one. If they&apos;re tied, attach either one and bump the survivor&apos;s rank by 1.
+          node has rank 0. On <code>union(a, b)</code>, attach the root of the <em>shorter</em>{" "}tree under the root of
+          the <em>taller</em>{" "}one. If they&apos;re tied, attach either one and bump the survivor&apos;s rank by 1.
         </p>
 
         <Mermaid chart={unionByRank} />
@@ -703,7 +703,7 @@ void union(int a, int b) {
         <p>
           Three lines plus the DSU. The same problem with BFS or DFS takes ~25 lines (build adjacency list, outer loop
           over unvisited nodes, inner traversal). DSU isn&apos;t shorter just for cosmetic reasons — it&apos;s shorter
-          because the data structure&apos;s invariant <em>is</em> the answer the problem asks for.
+          because the data structure&apos;s invariant <em>is</em>{" "}the answer the problem asks for.
         </p>
 
         <h3>LC 684 · Redundant Connection</h3>
@@ -726,7 +726,7 @@ void union(int a, int b) {
 }`}</CodeBlock>
 
         <p>
-          Walk the edges in order. The first one whose endpoints are <em>already</em> in the same DSU group is the
+          Walk the edges in order. The first one whose endpoints are <em>already</em>{" "}in the same DSU group is the
           one that closes a cycle — by problem guarantee, this is the redundant edge, and the &quot;first cycle-closer
           in input order&quot; matches the &quot;last in input order&quot; tiebreaker because the input has exactly
           one extra edge: there can only be one cycle-closer.
@@ -735,15 +735,15 @@ void union(int a, int b) {
         <h3>Why DSU beats DFS for these problems</h3>
 
         <ul>
-          <li><strong>Streaming-friendly.</strong> Edges arrive one at a time; you don&apos;t need to materialize the whole adjacency list before answering.</li>
-          <li><strong>No revisits.</strong> Each edge is processed exactly once, in O(α(n)). DFS-based cycle detection has to rebuild a visited set every time the graph changes.</li>
-          <li><strong>Single source of truth.</strong> Component count and connectivity are both maintained as a side effect of the union ops — no second pass needed.</li>
-          <li><strong>Simpler code.</strong> No adjacency list, no recursion, no visited array. Just a couple of arrays and three methods.</li>
+          <li><strong>Streaming-friendly.</strong>{" "}Edges arrive one at a time; you don&apos;t need to materialize the whole adjacency list before answering.</li>
+          <li><strong>No revisits.</strong>{" "}Each edge is processed exactly once, in O(α(n)). DFS-based cycle detection has to rebuild a visited set every time the graph changes.</li>
+          <li><strong>Single source of truth.</strong>{" "}Component count and connectivity are both maintained as a side effect of the union ops — no second pass needed.</li>
+          <li><strong>Simpler code.</strong>{" "}No adjacency list, no recursion, no visited array. Just a couple of arrays and three methods.</li>
         </ul>
 
         <Callout variant="warn" title="Where DFS still wins: directed cycles">
           <p>
-            DSU is for <em>undirected</em> connectivity. It cannot detect cycles in a <em>directed</em> graph — the
+            DSU is for <em>undirected</em>{" "}connectivity. It cannot detect cycles in a <em>directed</em>{" "}graph — the
             structure has no notion of edge direction. For directed cycle detection you want the WHITE/GRAY/BLACK DFS
             coloring from Module 15 (or topological sort with Kahn&apos;s algorithm). Reach for DSU when the relation
             you&apos;re tracking is symmetric.
@@ -780,7 +780,7 @@ void union(int a, int b) {
         <h2 id="kruskal">Kruskal&apos;s MST + Accounts Merge teaser</h2>
 
         <p>
-          DSU&apos;s most famous application is <strong>Kruskal&apos;s minimum spanning tree</strong> algorithm. It&apos;s
+          DSU&apos;s most famous application is <strong>Kruskal&apos;s minimum spanning tree</strong>{" "}algorithm. It&apos;s
           also the structure behind LeetCode 721 (Accounts Merge), the gnarly canonical &quot;merge groups by shared
           identifier&quot; problem.
         </p>
@@ -825,7 +825,7 @@ public int kruskal(int n, int[][] edges) {
         <Callout variant="insight" title="Why the greedy works (the cut property)">
           <p>
             At any point during Kruskal&apos;s, the chosen edges form a forest. Adding the next-lightest edge that
-            doesn&apos;t close a cycle is always safe: it&apos;s the cheapest edge across some <em>cut</em> separating
+            doesn&apos;t close a cycle is always safe: it&apos;s the cheapest edge across some <em>cut</em>{" "}separating
             two components, and the cut property of MSTs says the lightest edge crossing any cut is in some MST. DSU
             makes this greedy efficient — without it, the cycle test would be O(V + E) per edge and the whole algorithm
             would be O(E · (V + E)). With DSU, sorting dominates: O(E log E) total.

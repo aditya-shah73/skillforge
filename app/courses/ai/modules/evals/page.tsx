@@ -103,7 +103,7 @@ export default function EvalsModule() {
 
       <p>
         Traditional unit tests assume deterministic output. LLMs don&apos;t produce that. The
-        same prompt at temperature 0 will produce <em>nearly</em> the same output — but
+        same prompt at temperature 0 will produce <em>nearly</em>{" "}the same output — but
         whitespace differs, phrasing differs, and that&apos;s by design. <code>assertEquals</code>
         on free-form text is a flake factory.
       </p>
@@ -139,27 +139,27 @@ export default function EvalsModule() {
 
       <ol>
         <li>
-          <strong>Smoke / format checks.</strong> Did the response come back? Is it valid JSON?
+          <strong>Smoke / format checks.</strong>{" "}Did the response come back? Is it valid JSON?
           Does it contain the required fields? Cheap, deterministic, run on every request in
           production. Catches 30% of regressions for free.
         </li>
         <li>
-          <strong>Heuristic checks.</strong> String contains, regex match, numeric bounds, length
+          <strong>Heuristic checks.</strong>{" "}String contains, regex match, numeric bounds, length
           limits. &quot;Does the SQL output start with SELECT?&quot; &quot;Does the answer cite at
           least one source?&quot; Still cheap, still deterministic, catches another 30%.
         </li>
         <li>
-          <strong>Semantic checks.</strong> Embedding similarity to a reference answer. &quot;Is
+          <strong>Semantic checks.</strong>{" "}Embedding similarity to a reference answer. &quot;Is
           the meaning close enough?&quot; Costs an embedding call but no LLM call. Catches drift
           without needing a judge.
         </li>
         <li>
-          <strong>LLM-as-judge.</strong> The big hammer. Use a strong model to grade the output
+          <strong>LLM-as-judge.</strong>{" "}The big hammer. Use a strong model to grade the output
           against a rubric. Slow, costs tokens, occasionally biased — but the only thing that
           works for nuanced quality questions like &quot;is this response helpful?&quot;
         </li>
         <li>
-          <strong>Human review.</strong> The gold standard, the slowest, the most expensive.
+          <strong>Human review.</strong>{" "}The gold standard, the slowest, the most expensive.
           Reserve for calibrating the LLM judge and for a small periodic audit.
         </li>
       </ol>
@@ -220,16 +220,16 @@ export default function EvalsModule() {
 
       <ol>
         <li>
-          <strong>Representative cases.</strong> Inputs that look like average production traffic.
+          <strong>Representative cases.</strong>{" "}Inputs that look like average production traffic.
           The boring middle. Most of your set should be this.
         </li>
         <li>
-          <strong>Adversarial cases.</strong> Inputs designed to break the system: prompt
+          <strong>Adversarial cases.</strong>{" "}Inputs designed to break the system: prompt
           injection attempts, off-topic asks, ambiguous queries, edge-case formats. Mining
           these from real user complaints is gold.
         </li>
         <li>
-          <strong>Regression anchors.</strong> A case for every bug you&apos;ve ever fixed.
+          <strong>Regression anchors.</strong>{" "}A case for every bug you&apos;ve ever fixed.
           When a user reports &quot;the bot answered X for Y,&quot; you fix it, then add the
           case so it can never silently re-break.
         </li>
@@ -249,9 +249,9 @@ export default function EvalsModule() {
       <p>The numbers everyone wishes someone had told them earlier:</p>
 
       <ul>
-        <li><strong>10–20 cases:</strong> day-1 minimum. Beats vibes. Catches gross regressions.</li>
-        <li><strong>50–100 cases:</strong> sweet spot for most production features. Roughly even split between representative, adversarial, and regression anchors.</li>
-        <li><strong>500+ cases:</strong> needed when you&apos;re evaluating subtle quality (creative writing, summaries) or have many sub-categories to track separately.</li>
+        <li><strong>10–20 cases:</strong>{" "}day-1 minimum. Beats vibes. Catches gross regressions.</li>
+        <li><strong>50–100 cases:</strong>{" "}sweet spot for most production features. Roughly even split between representative, adversarial, and regression anchors.</li>
+        <li><strong>500+ cases:</strong>{" "}needed when you&apos;re evaluating subtle quality (creative writing, summaries) or have many sub-categories to track separately.</li>
       </ul>
 
       <p>
@@ -295,7 +295,7 @@ public record EvalCase(
 ) {}`}</CodeBlock>
 
       <p>
-        The <code>id</code> field deserves special attention. <strong>Never renumber it.</strong>
+        The <code>id</code> field deserves special attention. <strong>Never renumber it.</strong>{" "}
         Once a case has ID <code>EVAL-042</code>, that ID belongs to it forever. If you delete
         the case, the ID is retired — never reused. That&apos;s the only way you can track
         per-case scores over time without your dashboard going haywire when you reorder the file.
@@ -460,7 +460,7 @@ public record EvalCase(
 
       <p>
         For free-form outputs (summaries, explanations, long-form answers), you can&apos;t
-        write a regex. You need something that <em>understands</em> the response. The trick is
+        write a regex. You need something that <em>understands</em>{" "}the response. The trick is
         to use an LLM as the grader — typically a stronger or differently-trained model than
         the one you&apos;re evaluating.
       </p>
@@ -504,17 +504,17 @@ Return ONLY valid JSON in this exact shape:
 
       <ul>
         <li>
-          <strong>Numeric scale, not pass/fail.</strong> A 1–5 lets you track quality drift
+          <strong>Numeric scale, not pass/fail.</strong>{" "}A 1–5 lets you track quality drift
           even when no case fully fails. You&apos;ll see your average creep from 4.2 → 4.0 →
           3.8 over time, and that&apos;s the early-warning signal.
         </li>
         <li>
-          <strong>Structured output.</strong> JSON forces the judge to commit to a number
+          <strong>Structured output.</strong>{" "}JSON forces the judge to commit to a number
           rather than mumble &quot;mostly good.&quot; Use Module 11 tool-use or constrained
           output to make sure the JSON is always parseable.
         </li>
         <li>
-          <strong>Reasoning field.</strong> When a case fails, the reasoning is what lets you
+          <strong>Reasoning field.</strong>{" "}When a case fails, the reasoning is what lets you
           triage. Without it, you have a number with no diagnosis.
         </li>
       </ul>
@@ -598,7 +598,7 @@ public class JudgeService {
       <Callout variant="warn" title="Self-preference bias">
         <p className="m-0">
           A model judging its own outputs will rate them higher than outputs from other
-          models. If you&apos;re comparing prompts for the <em>same</em> production model,
+          models. If you&apos;re comparing prompts for the <em>same</em>{" "}production model,
           this washes out. If you&apos;re comparing models, use a third model as judge.
         </p>
       </Callout>
@@ -686,7 +686,7 @@ public class JudgeService {
 
       <p>
         A golden set you run manually once a quarter is theater. The whole value is catching
-        regressions <em>before</em> they ship. That means evals run in CI, gate the merge,
+        regressions <em>before</em>{" "}they ship. That means evals run in CI, gate the merge,
         and surface failures in the PR.
       </p>
 
@@ -700,17 +700,17 @@ public class JudgeService {
 
       <ul>
         <li>
-          <strong>Smoke evals (every commit):</strong> levels 1–2 of the ladder, deterministic,
+          <strong>Smoke evals (every commit):</strong>{" "}levels 1–2 of the ladder, deterministic,
           run in under 30 seconds. Format checks, smoke heuristics, regression anchors that
           can be checked with regex. Free or near-free.
         </li>
         <li>
-          <strong>Full evals (every PR that touches AI code):</strong> the full golden set
+          <strong>Full evals (every PR that touches AI code):</strong>{" "}the full golden set
           with judge scoring. Takes 2–10 minutes. Costs a few cents to a few dollars per run.
           Triggered by a path filter on the prompt files, model config, or RAG pipeline.
         </li>
         <li>
-          <strong>Slow evals (nightly):</strong> larger sets, slower judges, multi-turn
+          <strong>Slow evals (nightly):</strong>{" "}larger sets, slower judges, multi-turn
           conversation evals, jailbreak suites. Don&apos;t gate merges on these — surface
           regressions to a Slack channel.
         </li>
@@ -724,7 +724,7 @@ public class JudgeService {
 
       <ul>
         <li>
-          <strong>Per-case regressions on p0 cases.</strong> If <code>EVAL-003</code>
+          <strong>Per-case regressions on p0 cases.</strong>{" "}If <code>EVAL-003</code>
           (prompt injection refusal) goes from pass → fail, hard fail. No averaging.
           Some cases you can&apos;t afford to soften.
         </li>
@@ -798,11 +798,11 @@ jobs:
 
       <ul>
         <li>
-          <strong>Threshold buffers.</strong> If main scored 4.2 average, fail at 3.9 not 4.1.
+          <strong>Threshold buffers.</strong>{" "}If main scored 4.2 average, fail at 3.9 not 4.1.
           Gives 0.2 of slack for noise. Over time, narrow this as you measure actual variance.
         </li>
         <li>
-          <strong>Re-run on borderline failures.</strong> If a PR fails by 0.05, re-run
+          <strong>Re-run on borderline failures.</strong>{" "}If a PR fails by 0.05, re-run
           automatically. Three failures in a row = real regression. One failure of three = noise.
           (CI re-runs make this a pure config change, not a tooling change.)
         </li>
@@ -1079,7 +1079,7 @@ class EvalHarnessIT {
           to write the rubric carefully and to add a case for every prod issue.
         </p>
         <p className="text-sm text-slate-500 dark:text-slate-400 italic mt-3">
-          Mark this done when you&apos;ve got the harness running locally <em>and</em>
+          Mark this done when you&apos;ve got the harness running locally <em>and</em>{" "}
           you&apos;ve tested that a deliberately-broken PR fails the gate.
         </p>
       </Checkpoint>
@@ -1106,7 +1106,7 @@ class EvalHarnessIT {
       </p>
 
       <p>
-        <strong>Module 25</strong> tackles the other half of production safety: security.
+        <strong>Module 25</strong>{" "}tackles the other half of production safety: security.
         Prompt injection, PII leakage, output filtering — the things that turn a working AI
         feature into a CVE.
       </p>

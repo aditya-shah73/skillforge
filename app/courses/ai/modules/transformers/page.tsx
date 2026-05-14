@@ -56,7 +56,7 @@ export default function TransformersModule() {
           We&apos;re going to build its single most important piece, scaled dot-product attention, by hand in Java. By the end you&apos;ll:
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
-          <li>Explain <em>why</em> attention was invented — and what RNNs couldn&apos;t do.</li>
+          <li>Explain <em>why</em>{" "}attention was invented — and what RNNs couldn&apos;t do.</li>
           <li>Understand queries, keys, and values without hand-waving.</li>
           <li>Compute an attention output for a 5-token sequence <em>by hand</em>.</li>
           <li>Know why it&apos;s &quot;scaled&quot; and why softmax is there.</li>
@@ -64,7 +64,7 @@ export default function TransformersModule() {
           <li>Sketch a full transformer block — residuals, layer norm, FFN — and know what each piece does.</li>
         </ol>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
-          Fair warning: this is one idea, explained thoroughly. Budget ~3–4h. The math is easier than Module 4&apos;s backprop — the <em>intuition</em> is what takes time.
+          Fair warning: this is one idea, explained thoroughly. Budget ~3–4h. The math is easier than Module 4&apos;s backprop — the <em>intuition</em>{" "}is what takes time.
         </p>
       </section>
 
@@ -77,7 +77,7 @@ export default function TransformersModule() {
 
         <Callout variant="info" title="Where Module 4 leaves off, and why we need something new">
           <p className="m-0">
-            Module 4&apos;s MLP can take a fixed-size input vector (784 pixels) and produce a fixed-size output (10 digit scores). What it <em>can&apos;t</em> do is process a variable-length sequence — &quot;Why is String immutable?&quot; vs an entire RAG document — and let every token influence every other token. Attention is the operation that fills that gap. The MLP isn&apos;t going away (you&apos;ll see it inside every transformer block, doing the same widen-then-project trick you built); it just gets a sequence-aware partner. <strong>Attention mixes across positions; the MLP transforms at each position.</strong> That one line is the whole module in miniature.
+            Module 4&apos;s MLP can take a fixed-size input vector (784 pixels) and produce a fixed-size output (10 digit scores). What it <em>can&apos;t</em>{" "}do is process a variable-length sequence — &quot;Why is String immutable?&quot; vs an entire RAG document — and let every token influence every other token. Attention is the operation that fills that gap. The MLP isn&apos;t going away (you&apos;ll see it inside every transformer block, doing the same widen-then-project trick you built); it just gets a sequence-aware partner. <strong>Attention mixes across positions; the MLP transforms at each position.</strong>{" "}That one line is the whole module in miniature.
           </p>
         </Callout>
 
@@ -115,7 +115,7 @@ export default function TransformersModule() {
         </p>
 
         <p>
-          That&apos;s attention. When translating &quot;the cat sat on the mat&quot; to French and generating the word for &quot;cat&quot;, the model <em>attends</em> to the English &quot;cat&quot; with high weight and essentially ignores the others.
+          That&apos;s attention. When translating &quot;the cat sat on the mat&quot; to French and generating the word for &quot;cat&quot;, the model <em>attends</em>{" "}to the English &quot;cat&quot; with high weight and essentially ignores the others.
           No bottleneck. No forgetting. Every token has a direct line of sight to every other token.
         </p>
 
@@ -126,7 +126,7 @@ export default function TransformersModule() {
         </p>
 
         <p className="italic text-center text-slate-700 dark:text-slate-300">
-          &quot;The trophy didn&apos;t fit in the suitcase because <strong>it</strong> was too big.&quot;
+          &quot;The trophy didn&apos;t fit in the suitcase because <strong>it</strong>{" "}was too big.&quot;
         </p>
 
         <p>
@@ -209,7 +209,7 @@ export default function TransformersModule() {
         </ul>
 
         <p>
-          Then you pull out the contents of each folder, but <em>weighted</em> by how well its tab matched your query. Mostly 2023, a pinch of 2022, nothing from cats.
+          Then you pull out the contents of each folder, but <em>weighted</em>{" "}by how well its tab matched your query. Mostly 2023, a pinch of 2022, nothing from cats.
           The output is a mixture — dominated by the best match, but not purely one-hot.
         </p>
 
@@ -542,7 +542,7 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
 
         <Callout variant="warn" title="Attention's dirty secret: quadratic cost">
           <p className="mb-2">
-            The <code>Q · Kᵀ</code> matrix has shape <code>(n × n)</code>. For a sequence of 10,000 tokens, that&apos;s 100 million entries. Compute AND memory scale as <strong>O(n²)</strong> in sequence length.
+            The <code>Q · Kᵀ</code> matrix has shape <code>(n × n)</code>. For a sequence of 10,000 tokens, that&apos;s 100 million entries. Compute AND memory scale as <strong>O(n²)</strong>{" "}in sequence length.
           </p>
           <p className="m-0">
             This is why long-context LLMs are hard, why &quot;128k context&quot; was a big deal, and why papers like FlashAttention and sparse attention exist. The quadratic cost is baked into vanilla attention.
@@ -605,7 +605,7 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
         <h3>One attention head sees one view of the data</h3>
 
         <p>
-          Attention as we&apos;ve defined it has three learned matrices <code>W_Q, W_K, W_V</code>. They learn <em>one</em> way to compare tokens — for example,
+          Attention as we&apos;ve defined it has three learned matrices <code>W_Q, W_K, W_V</code>. They learn <em>one</em>{" "}way to compare tokens — for example,
           &quot;match tokens with similar syntactic roles.&quot; But a real sentence has many relevant relationships at once: syntax, coreference, tense, sentiment, topic.
           Asking a single set of Q/K/V projections to capture all of them is asking a lot.
         </p>
@@ -613,7 +613,7 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
         <h3>The fix: run several attentions in parallel, each with its own projections</h3>
 
         <p>
-          In <strong>multi-head attention</strong>, you split the model into <em>h</em> heads, each with its own <code>W_Q, W_K, W_V</code>.
+          In <strong>multi-head attention</strong>, you split the model into <em>h</em>{" "}heads, each with its own <code>W_Q, W_K, W_V</code>.
           Each head independently performs its own attention computation. Their outputs get concatenated and projected to form the final result.
         </p>
 
@@ -631,8 +631,8 @@ W_O is a learned output-projection matrix.`}
         </CodeBlock>
 
         <p>
-          Total parameter count is about the same as single-head attention with <code>d_k = d_model</code> — we just carved it into <em>h</em> smaller heads.
-          The win is that each head can learn a <em>different</em> notion of &quot;matching,&quot; and together they capture richer structure.
+          Total parameter count is about the same as single-head attention with <code>d_k = d_model</code> — we just carved it into <em>h</em>{" "}smaller heads.
+          The win is that each head can learn a <em>different</em>{" "}notion of &quot;matching,&quot; and together they capture richer structure.
         </p>
 
         <Callout variant="insight" title="What do heads actually learn?">
@@ -697,8 +697,8 @@ W_O is a learned output-projection matrix.`}
         </p>
 
         <p>
-          But of course order matters. <em>&quot;Dog bites man&quot;</em> and <em>&quot;Man bites dog&quot;</em> are different sentences with different meanings.
-          So somewhere we have to inject <strong>where</strong> each token sits in the sequence, before attention runs.
+          But of course order matters. <em>&quot;Dog bites man&quot;</em>{" "}and <em>&quot;Man bites dog&quot;</em>{" "}are different sentences with different meanings.
+          So somewhere we have to inject <strong>where</strong>{" "}each token sits in the sequence, before attention runs.
           That&apos;s the job of <strong>positional encoding</strong>.
         </p>
 
@@ -715,8 +715,8 @@ where p_i is a fixed (non-learned) vector that depends only on the integer i.`}
         </CodeBlock>
 
         <p>
-          That&apos;s it. The model now sees a vector that encodes both <em>what</em> the token is and <em>where</em> it sits.
-          Attention still does its permutation-invariant math — but the <em>inputs</em> are no longer interchangeable, because position got baked in.
+          That&apos;s it. The model now sees a vector that encodes both <em>what</em>{" "}the token is and <em>where</em>{" "}it sits.
+          Attention still does its permutation-invariant math — but the <em>inputs</em>{" "}are no longer interchangeable, because position got baked in.
         </p>
 
         <h3>Sinusoidal positions — what the original paper used</h3>
@@ -732,12 +732,12 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
 
         <p>
           Each dimension oscillates at a different frequency. Low-index dims wiggle slowly (encoding coarse position); high-index dims wiggle fast (encoding fine position).
-          Why <em>this</em> shape? Two nice properties: it generalizes to sequences longer than ever seen at training time, and the dot product <code>p_i · p_j</code> depends only on the offset <code>j − i</code> — so &quot;distance between positions&quot; is something attention can pick up cleanly.
+          Why <em>this</em>{" "}shape? Two nice properties: it generalizes to sequences longer than ever seen at training time, and the dot product <code>p_i · p_j</code> depends only on the offset <code>j − i</code> — so &quot;distance between positions&quot; is something attention can pick up cleanly.
         </p>
 
         <Callout variant="insight" title="Modern LLMs use RoPE, not sinusoidal addition">
           <p className="m-0">
-            Newer models (LLaMA, Claude, GPT-NeoX, most of 2023+) use <strong>Rotary Position Embedding (RoPE)</strong>. Instead of <em>adding</em> a position vector to the embedding, RoPE <em>rotates</em> the Q and K vectors by a position-dependent angle inside each attention head. The intuition stays the same — &quot;tell the model where each token is&quot; — but the mechanism plays nicer with long context. You don&apos;t need the math; you do need to know that &quot;positional encoding&quot; is the umbrella term and RoPE is the modern flavor.
+            Newer models (LLaMA, Claude, GPT-NeoX, most of 2023+) use <strong>Rotary Position Embedding (RoPE)</strong>. Instead of <em>adding</em>{" "}a position vector to the embedding, RoPE <em>rotates</em>{" "}the Q and K vectors by a position-dependent angle inside each attention head. The intuition stays the same — &quot;tell the model where each token is&quot; — but the mechanism plays nicer with long context. You don&apos;t need the math; you do need to know that &quot;positional encoding&quot; is the umbrella term and RoPE is the modern flavor.
           </p>
         </Callout>
 
@@ -813,7 +813,7 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
 
         <Callout variant="info" title="The 'plus' is not an afterthought">
           <p className="mb-2">
-            Each sub-layer&apos;s output is <em>added</em> back to its input: <code>output = x + SubLayer(x)</code>.
+            Each sub-layer&apos;s output is <em>added</em>{" "}back to its input: <code>output = x + SubLayer(x)</code>.
             This is called a <strong>residual connection</strong>, and it&apos;s the single reason you can stack 96 transformer layers without gradient pathologies.
           </p>
           <p className="m-0">
@@ -825,7 +825,7 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
         <h3>Layer Normalization</h3>
 
         <p>
-          After each add, the activations are normalized. <strong>Layer norm</strong> rescales each token&apos;s vector so it has mean 0 and standard deviation 1 (per token, across its features):
+          After each add, the activations are normalized. <strong>Layer norm</strong>{" "}rescales each token&apos;s vector so it has mean 0 and standard deviation 1 (per token, across its features):
         </p>
 
         <CodeBlock lang="plain">
@@ -844,7 +844,7 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
         <h3>The feed-forward network (FFN)</h3>
 
         <p>
-          After attention, each token&apos;s vector is passed <em>independently</em> through a small MLP (same one for every position):
+          After attention, each token&apos;s vector is passed <em>independently</em>{" "}through a small MLP (same one for every position):
         </p>
 
         <CodeBlock lang="plain">
@@ -862,17 +862,17 @@ activation σ = ReLU (original) or GELU (modern).`}
         <h3>What&apos;s a full transformer?</h3>
 
         <p>
-          A full transformer is just <em>N</em> of these blocks stacked, with token embeddings and positional encodings at the bottom and a final linear layer (&quot;unembedding&quot;) at the top producing logits over the vocabulary.
+          A full transformer is just <em>N</em>{" "}of these blocks stacked, with token embeddings and positional encodings at the bottom and a final linear layer (&quot;unembedding&quot;) at the top producing logits over the vocabulary.
           GPT-2-small has N = 12 blocks. GPT-3 has N = 96. The recipe is the same at every size.
         </p>
 
         <Callout variant="insight" title="The whole transformer recipe, in 5 bullets">
           <ul className="list-disc ml-5 m-0 space-y-1 text-sm">
-            <li><strong>Embed</strong> tokens into vectors, add positional encoding.</li>
-            <li><strong>Block ×N:</strong> LayerNorm → Multi-Head Attention → Residual → LayerNorm → FFN → Residual.</li>
-            <li><strong>Final LayerNorm</strong> after the last block.</li>
+            <li><strong>Embed</strong>{" "}tokens into vectors, add positional encoding.</li>
+            <li><strong>Block ×N:</strong>{" "}LayerNorm → Multi-Head Attention → Residual → LayerNorm → FFN → Residual.</li>
+            <li><strong>Final LayerNorm</strong>{" "}after the last block.</li>
             <li><strong>Unembed</strong> (a linear layer of shape d_model → vocab_size) produces logits.</li>
-            <li><strong>Softmax</strong> over logits gives next-token probabilities.</li>
+            <li><strong>Softmax</strong>{" "}over logits gives next-token probabilities.</li>
           </ul>
           <p className="m-0 mt-2 text-xs italic">
             That&apos;s it. That&apos;s a GPT. Everything else (rotary position encoding, MoE, grouped-query attention) is a variation on this skeleton.
@@ -934,16 +934,16 @@ activation σ = ReLU (original) or GELU (modern).`}
               Use the numerically-stable softmax (subtract the row max first).
             </li>
             <li>
-              <strong>Reproduce the worked example.</strong> Input the Q, K, V from Part 3&apos;s 5-token example and confirm row 0 of your output is approximately <code>[0.305, 0.694]</code>.
+              <strong>Reproduce the worked example.</strong>{" "}Input the Q, K, V from Part 3&apos;s 5-token example and confirm row 0 of your output is approximately <code>[0.305, 0.694]</code>.
             </li>
             <li>
               <strong>Add a causal-mask option.</strong> <code>attention(Q, K, V, boolean causal)</code>. When <code>causal == true</code>, mask the upper triangle of the score matrix to <code>−∞</code> before softmax.
             </li>
             <li>
-              <strong>Sanity-check the causal behavior:</strong> with a causal mask on a 4-token sequence, verify that row 0&apos;s attention weights are <code>[1, 0, 0, 0]</code> (it can only attend to itself).
+              <strong>Sanity-check the causal behavior:</strong>{" "}with a causal mask on a 4-token sequence, verify that row 0&apos;s attention weights are <code>[1, 0, 0, 0]</code> (it can only attend to itself).
             </li>
             <li>
-              <strong>Stretch goal:</strong> implement multi-head attention. Take <code>d_model</code> and <code>numHeads</code> as arguments, split into heads, run attention on each independently, concatenate, and project through <code>W_O</code>.
+              <strong>Stretch goal:</strong>{" "}implement multi-head attention. Take <code>d_model</code> and <code>numHeads</code> as arguments, split into heads, run attention on each independently, concatenate, and project through <code>W_O</code>.
             </li>
           </ol>
         </div>
@@ -962,28 +962,28 @@ activation σ = ReLU (original) or GELU (modern).`}
 
         <ul>
           <li>
-            <strong>Shape confusion.</strong> Is your Q row-major or column-major? Pick one (row-major, each row = one token) and stick with it. Write the shape in a comment next to every matrix.
+            <strong>Shape confusion.</strong>{" "}Is your Q row-major or column-major? Pick one (row-major, each row = one token) and stick with it. Write the shape in a comment next to every matrix.
           </li>
           <li>
             <strong>Forgetting the scale.</strong> <code>/ √d_k</code> is easy to skip when the sequence is short. With <code>d_k = 2</code> the difference is tiny; with <code>d_k = 64</code> it&apos;s enormous.
           </li>
           <li>
-            <strong>Softmax overflow.</strong> Always subtract the row max before exp. <code>exp(1000)</code> will NaN your whole output.
+            <strong>Softmax overflow.</strong>{" "}Always subtract the row max before exp. <code>exp(1000)</code> will NaN your whole output.
           </li>
           <li>
-            <strong>Masking bug.</strong> If you set masked entries to <code>0</code> instead of <code>−∞</code>, <code>exp(0) = 1</code>, and your mask leaks probability to future tokens. Use <code>Double.NEGATIVE_INFINITY</code>.
+            <strong>Masking bug.</strong>{" "}If you set masked entries to <code>0</code> instead of <code>−∞</code>, <code>exp(0) = 1</code>, and your mask leaks probability to future tokens. Use <code>Double.NEGATIVE_INFINITY</code>.
           </li>
           <li>
-            <strong>Test against the worked example.</strong> If your row 0 output doesn&apos;t match <code>[0.305, 0.694]</code> within ~0.01, something is wrong. Don&apos;t plow forward.
+            <strong>Test against the worked example.</strong>{" "}If your row 0 output doesn&apos;t match <code>[0.305, 0.694]</code> within ~0.01, something is wrong. Don&apos;t plow forward.
           </li>
         </ul>
 
         <Callout variant="insight" title="Milestones">
           <ol className="list-decimal ml-5 m-0 space-y-1 text-sm">
-            <li><strong>Matrix ops work.</strong> Unit-test matmul and transpose on tiny cases. If these are wrong, nothing downstream will be right.</li>
-            <li><strong>Unmasked attention matches the worked example.</strong> Row 0 ≈ [0.305, 0.694]. This is the single most important correctness check.</li>
-            <li><strong>Causal mask works.</strong> Row 0 attention weights are [1, 0, 0, 0]; row 3 weights sum to 1 over positions 0–3.</li>
-            <li><strong>Stretch:</strong> multi-head on a tiny toy input runs without crashing, shapes match the spec.</li>
+            <li><strong>Matrix ops work.</strong>{" "}Unit-test matmul and transpose on tiny cases. If these are wrong, nothing downstream will be right.</li>
+            <li><strong>Unmasked attention matches the worked example.</strong>{" "}Row 0 ≈ [0.305, 0.694]. This is the single most important correctness check.</li>
+            <li><strong>Causal mask works.</strong>{" "}Row 0 attention weights are [1, 0, 0, 0]; row 3 weights sum to 1 over positions 0–3.</li>
+            <li><strong>Stretch:</strong>{" "}multi-head on a tiny toy input runs without crashing, shapes match the spec.</li>
           </ol>
         </Callout>
 
@@ -1069,7 +1069,7 @@ activation σ = ReLU (original) or GELU (modern).`}
       <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Onward to geometry</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Module 6 pulls the camera back: what <em>are</em> those vectors floating through attention? <strong>Embeddings</strong> — numbers that turn into geometry.
+          Module 6 pulls the camera back: what <em>are</em>{" "}those vectors floating through attention? <strong>Embeddings</strong> — numbers that turn into geometry.
           You&apos;ll learn cosine similarity, build a nearest-neighbor search in Java, and get the foundation for RAG in Phase 3.
         </p>
         <Link

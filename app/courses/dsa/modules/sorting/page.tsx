@@ -100,9 +100,9 @@ flowchart TB
 
         <p>
           Sorting is the single most-studied problem in computer science, and for good reason: a sorted array unlocks
-          a cascade of fast techniques that don&apos;t work on raw data. <strong>Binary search</strong> needs sorted
-          input. <strong>Two-pointer</strong> patterns assume order. <strong>Deduplication</strong> in O(n) needs
-          adjacency. <strong>Merging</strong> two streams is trivial when both are sorted. Half of the algorithmic
+          a cascade of fast techniques that don&apos;t work on raw data. <strong>Binary search</strong>{" "}needs sorted
+          input. <strong>Two-pointer</strong>{" "}patterns assume order. <strong>Deduplication</strong>{" "}in O(n) needs
+          adjacency. <strong>Merging</strong>{" "}two streams is trivial when both are sorted. Half of the algorithmic
           tricks in the next phase start with the line &quot;first, sort the array.&quot;
         </p>
 
@@ -135,11 +135,11 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         </p>
 
         <ul>
-          <li><strong>Selection sort has no best case.</strong> It always scans the entire unsorted suffix to find the minimum, even if the array is already sorted. Worst, average, and best are all O(n²).</li>
-          <li><strong>Bubble and insertion sort are O(n) on already-sorted input.</strong> One pass with no swaps confirms order. This is rare in practice but it&apos;s why insertion sort is a building block of Timsort.</li>
-          <li><strong>Quicksort&apos;s O(n²) worst case</strong> only happens with terrible pivot choices — usually a sorted-or-reverse-sorted array combined with a fixed-position pivot. Random pivot or median-of-three reduces the chance to negligible.</li>
-          <li><strong>Heapsort is O(1) space</strong> in-place, but its constant factors are worse than quicksort because of poor cache behavior — the heap operations jump around the array.</li>
-          <li><strong>Timsort gets O(n) on sorted (or reverse-sorted) input</strong> because it detects existing &quot;runs&quot; and merges them. This is the property that makes it the right default for real-world data, which is rarely random.</li>
+          <li><strong>Selection sort has no best case.</strong>{" "}It always scans the entire unsorted suffix to find the minimum, even if the array is already sorted. Worst, average, and best are all O(n²).</li>
+          <li><strong>Bubble and insertion sort are O(n) on already-sorted input.</strong>{" "}One pass with no swaps confirms order. This is rare in practice but it&apos;s why insertion sort is a building block of Timsort.</li>
+          <li><strong>Quicksort&apos;s O(n²) worst case</strong>{" "}only happens with terrible pivot choices — usually a sorted-or-reverse-sorted array combined with a fixed-position pivot. Random pivot or median-of-three reduces the chance to negligible.</li>
+          <li><strong>Heapsort is O(1) space</strong>{" "}in-place, but its constant factors are worse than quicksort because of poor cache behavior — the heap operations jump around the array.</li>
+          <li><strong>Timsort gets O(n) on sorted (or reverse-sorted) input</strong>{" "}because it detects existing &quot;runs&quot; and merges them. This is the property that makes it the right default for real-world data, which is rarely random.</li>
         </ul>
 
         <h3>The O(n log n) floor for comparison sorts</h3>
@@ -172,11 +172,11 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         </p>
 
         <ul>
-          <li><strong>Binary search</strong> is O(log n) on a sorted array. On unsorted data, you&apos;re back to O(n) linear scan.</li>
-          <li><strong>Two-pointer</strong> patterns (3Sum, container-with-most-water, merge-two-sorted) need order to converge from both ends.</li>
-          <li><strong>Deduplication</strong> becomes a single-pass O(n) walk on sorted data instead of an O(n) hash-set construction.</li>
+          <li><strong>Binary search</strong>{" "}is O(log n) on a sorted array. On unsorted data, you&apos;re back to O(n) linear scan.</li>
+          <li><strong>Two-pointer</strong>{" "}patterns (3Sum, container-with-most-water, merge-two-sorted) need order to converge from both ends.</li>
+          <li><strong>Deduplication</strong>{" "}becomes a single-pass O(n) walk on sorted data instead of an O(n) hash-set construction.</li>
           <li><strong>Interval problems</strong> (merge intervals, meeting rooms, insert interval) almost always start with &quot;sort by start time.&quot;</li>
-          <li><strong>Greedy algorithms</strong> often need data sorted by some priority before the greedy choice is locally optimal.</li>
+          <li><strong>Greedy algorithms</strong>{" "}often need data sorted by some priority before the greedy choice is locally optimal.</li>
         </ul>
 
         <Quiz
@@ -297,7 +297,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
             to its left. One outer pass, no inner work. That&apos;s O(n).
           </p>
           <p>
-            On <em>nearly</em> sorted input (each element at most k positions out of place), insertion sort runs in
+            On <em>nearly</em>{" "}sorted input (each element at most k positions out of place), insertion sort runs in
             O(nk), which is linear when k is a small constant. Real-world data — log files, append-mostly databases,
             partially-sorted user input — often has this structure. This is why Timsort uses insertion sort as its
             base case for small subarrays (typically size ≤ 32 or 64): on tiny arrays the lower constant factors of
@@ -330,9 +330,9 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         </p>
 
         <ol>
-          <li><strong>Divide</strong> the array in half.</li>
-          <li><strong>Recursively sort</strong> each half.</li>
-          <li><strong>Merge</strong> the two sorted halves into one sorted whole.</li>
+          <li><strong>Divide</strong>{" "}the array in half.</li>
+          <li><strong>Recursively sort</strong>{" "}each half.</li>
+          <li><strong>Merge</strong>{" "}the two sorted halves into one sorted whole.</li>
         </ol>
 
         <p>
@@ -389,9 +389,9 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
         <h3>Why merge sort is stable, O(n log n) guaranteed, and not in-place</h3>
 
         <ul>
-          <li><strong>Stable:</strong> by the merge tie-breaker shown above. Equal elements never cross.</li>
-          <li><strong>O(n log n) guaranteed:</strong> the recursion always halves; no input pattern can degrade it. Worst, average, and best are all the same. This is the property that makes it the right choice when you cannot tolerate occasional slowness — external sorting, real-time systems, sorted-output guarantees in databases.</li>
-          <li><strong>O(n) extra space:</strong> the merge step needs scratch room equal to the size of the range being merged. There are in-place merge variants but they&apos;re complicated and slower in practice. Allocating a single scratch buffer up front (the <code>aux</code> array) and reusing it is the standard idiom.</li>
+          <li><strong>Stable:</strong>{" "}by the merge tie-breaker shown above. Equal elements never cross.</li>
+          <li><strong>O(n log n) guaranteed:</strong>{" "}the recursion always halves; no input pattern can degrade it. Worst, average, and best are all the same. This is the property that makes it the right choice when you cannot tolerate occasional slowness — external sorting, real-time systems, sorted-output guarantees in databases.</li>
+          <li><strong>O(n) extra space:</strong>{" "}the merge step needs scratch room equal to the size of the range being merged. There are in-place merge variants but they&apos;re complicated and slower in practice. Allocating a single scratch buffer up front (the <code>aux</code> array) and reusing it is the standard idiom.</li>
         </ul>
 
         <Callout variant="info" title="The overflow-safe midpoint">
@@ -401,7 +401,7 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
             non-negative indices.
           </p>
           <p>
-            This is the famous <em>binary search bug</em> that lurked in the JDK&apos;s{" "}
+            This is the famous <em>binary search bug</em>{" "}that lurked in the JDK&apos;s{" "}
             <code>Arrays.binarySearch</code> for years before Joshua Bloch wrote about it. Same fix applies in any
             divide-and-conquer index calculation.
           </p>
@@ -502,9 +502,9 @@ private static void swap(int[] a, int i, int j) {
         </p>
 
         <ul>
-          <li><strong>Random pivot.</strong> Pick a random index in <code>[lo..hi]</code> and swap it into the pivot position before partitioning. The probability of a degenerate split becomes negligible regardless of input.</li>
-          <li><strong>Median-of-three.</strong> Look at <code>a[lo]</code>, <code>a[mid]</code>, <code>a[hi]</code>, take the median, and use it as the pivot. Cheap and robust against the &quot;already-sorted&quot; pathology, since the median of three positions in a sorted array is the actual median value.</li>
-          <li><strong>Three-way partitioning (Dutch National Flag).</strong> Partition into &lt; / = / &gt; regions in one pass. O(n) on arrays with many duplicates, where Lomuto degenerates to O(n²).</li>
+          <li><strong>Random pivot.</strong>{" "}Pick a random index in <code>[lo..hi]</code> and swap it into the pivot position before partitioning. The probability of a degenerate split becomes negligible regardless of input.</li>
+          <li><strong>Median-of-three.</strong>{" "}Look at <code>a[lo]</code>, <code>a[mid]</code>, <code>a[hi]</code>, take the median, and use it as the pivot. Cheap and robust against the &quot;already-sorted&quot; pathology, since the median of three positions in a sorted array is the actual median value.</li>
+          <li><strong>Three-way partitioning (Dutch National Flag).</strong>{" "}Partition into &lt; / = / &gt; regions in one pass. O(n) on arrays with many duplicates, where Lomuto degenerates to O(n²).</li>
         </ul>
 
         <CodeBlock lang="java">{`// Random-pivot wrapper — one extra swap before partitioning
@@ -539,7 +539,7 @@ private static int partition(int[] a, int lo, int hi) {
 
         <Callout variant="insight" title="The recursion-depth fix nobody mentions">
           <p>
-            Even with random pivots, an <em>unlucky</em> sequence of splits can recurse log n levels deep on the
+            Even with random pivots, an <em>unlucky</em>{" "}sequence of splits can recurse log n levels deep on the
             unbalanced side and waste stack frames. The standard production trick: always recurse into the smaller
             half first, and convert the larger half into a tail-call-style loop. This bounds the recursion depth at
             O(log n) regardless of input.
@@ -754,7 +754,7 @@ private void swap(int[] a, int i, int j) {
 
         <Callout variant="insight" title="Why quickselect is O(n) on average">
           <p>
-            Each partition is O(n). After partitioning, you recurse into <em>one</em> side (not both). On average,
+            Each partition is O(n). After partitioning, you recurse into <em>one</em>{" "}side (not both). On average,
             the partition splits the range in half, so the recurrence is T(n) = T(n/2) + O(n), which solves to O(n)
             by the master theorem (or just by noticing the work halves each level: n + n/2 + n/4 + ... = 2n).
           </p>
@@ -803,7 +803,7 @@ private void swap(int[] a, int i, int j) {
 
         <p>
           Given a list of intervals, merge all overlapping ones. The trick is the first line: <strong>sort by start
-          time.</strong> Once sorted, you only need to compare each interval to the last merged one — overlaps are
+          time.</strong>{" "}Once sorted, you only need to compare each interval to the last merged one — overlaps are
           adjacent.
         </p>
 
@@ -837,10 +837,10 @@ private void swap(int[] a, int i, int j) {
             sweep through with a single pointer maintaining a running state. Variations:
           </p>
           <ul>
-            <li><strong>Meeting Rooms II:</strong> sort starts and ends separately, sweep both with two pointers, count overlapping meetings.</li>
-            <li><strong>Insert Interval:</strong> sort is unnecessary — already sorted — but the sweep is the same pattern.</li>
-            <li><strong>Non-overlapping Intervals:</strong> sort by end time (not start), greedy-pick the earliest-ending one each time.</li>
-            <li><strong>Skyline problem:</strong> sort events (start and end as separate events), sweep with a max-heap of active heights.</li>
+            <li><strong>Meeting Rooms II:</strong>{" "}sort starts and ends separately, sweep both with two pointers, count overlapping meetings.</li>
+            <li><strong>Insert Interval:</strong>{" "}sort is unnecessary — already sorted — but the sweep is the same pattern.</li>
+            <li><strong>Non-overlapping Intervals:</strong>{" "}sort by end time (not start), greedy-pick the earliest-ending one each time.</li>
+            <li><strong>Skyline problem:</strong>{" "}sort events (start and end as separate events), sweep with a max-heap of active heights.</li>
           </ul>
           <p>
             Recognizing &quot;this is sort + sweep&quot; on first read is half the battle. The other half is picking

@@ -69,7 +69,7 @@ export default function Page() {
       <section>
         <h2>Why this is a deceptive interview prompt</h2>
         <p>
-          On the surface, a rate limiter is one of the simplest things in the system design canon. &quot;Limit user X to 100 requests per minute. Use Redis. Done.&quot; The interesting part isn&apos;t the algorithm — you covered that in the rate-limiting module. The interesting part is what the system does when <em>your rate limiter</em> is the thing under stress: hot keys, Redis flapping, multi-region drift, the difference between sliding-window precision and what you actually need.
+          On the surface, a rate limiter is one of the simplest things in the system design canon. &quot;Limit user X to 100 requests per minute. Use Redis. Done.&quot; The interesting part isn&apos;t the algorithm — you covered that in the rate-limiting module. The interesting part is what the system does when <em>your rate limiter</em>{" "}is the thing under stress: hot keys, Redis flapping, multi-region drift, the difference between sliding-window precision and what you actually need.
         </p>
         <p>
           The right framing: a rate limiter is a piece of infrastructure that has to be <strong>more available than the service it protects</strong>. That single sentence shapes every decision — the storage backend, the failure mode, the topology, even the algorithm.
@@ -86,7 +86,7 @@ export default function Page() {
         <ul>
           <li><strong>Multi-key</strong> — limit per <code>userId</code>, per IP, per <code>apiKey</code>, per route. Often more than one limit applies to a single request.</li>
           <li><strong>Multi-tier</strong> — typically two limits stack: a short window (10/sec) to catch bursts and a long window (1000/hour) to catch slow-drip abuse. Both must allow.</li>
-          <li><strong>Standard 429 response</strong> with <code>Retry-After</code> header so well-behaved clients can back off correctly.</li>
+          <li><strong>Standard 429 response</strong>{" "}with <code>Retry-After</code> header so well-behaved clients can back off correctly.</li>
           <li><strong>Configurable per-tier limits</strong> — free tier vs pro tier vs internal services have different ceilings; reload limits without restarting.</li>
           <li><strong>Observable</strong> — every decision should be logged (sampled) and counted, so we can tell whether limits are tuned correctly.</li>
         </ul>
@@ -94,9 +94,9 @@ export default function Page() {
         <h3>Non-functional requirements</h3>
         <ul>
           <li><strong>Decision latency under 1ms p99</strong> — this sits on every API request, including the fast ones. A 5ms rate limiter ruins your endpoint latency budget.</li>
-          <li><strong>Higher availability than the protected service.</strong> If the rate limiter goes down, the API should still serve traffic (fail-open) rather than 503-ing every request.</li>
-          <li><strong>Strong precision is not required.</strong> Allowing 105 requests when the limit is 100 because of a 1s boundary effect is fine. Allowing 10,000 because a counter never reset is not.</li>
-          <li><strong>Multi-region.</strong> A user&apos;s requests can land in any region; the limit should apply globally, with some looseness acceptable for the latency win.</li>
+          <li><strong>Higher availability than the protected service.</strong>{" "}If the rate limiter goes down, the API should still serve traffic (fail-open) rather than 503-ing every request.</li>
+          <li><strong>Strong precision is not required.</strong>{" "}Allowing 105 requests when the limit is 100 because of a 1s boundary effect is fine. Allowing 10,000 because a counter never reset is not.</li>
+          <li><strong>Multi-region.</strong>{" "}A user&apos;s requests can land in any region; the limit should apply globally, with some looseness acceptable for the latency win.</li>
         </ul>
 
         <h3>Back of the envelope</h3>
@@ -105,8 +105,8 @@ export default function Page() {
         </p>
         <ul>
           <li><strong>Limiter check QPS:</strong> 1M (one check per request) — possibly 2M if both per-user and per-IP limits stack.</li>
-          <li><strong>Distinct keys:</strong> say 50M registered users. With expiring buckets, the working set in Redis is the set of keys touched in the last bucket window — usually 1-5M at any moment.</li>
-          <li><strong>Memory per key:</strong> a token bucket needs about 100 bytes (last refill timestamp + token count + small overhead). 5M × 100B = 500MB of working data.</li>
+          <li><strong>Distinct keys:</strong>{" "}say 50M registered users. With expiring buckets, the working set in Redis is the set of keys touched in the last bucket window — usually 1-5M at any moment.</li>
+          <li><strong>Memory per key:</strong>{" "}a token bucket needs about 100 bytes (last refill timestamp + token count + small overhead). 5M × 100B = 500MB of working data.</li>
           <li><strong>Redis topology:</strong> 500MB fits comfortably on a single Redis node, but at 1-2M QPS we shard for throughput, not capacity. A 6-node cluster handles ~300k QPS each comfortably.</li>
         </ul>
 
@@ -341,7 +341,7 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
         </p>
         <ul>
           <li><strong>Token bucket</strong> (the script above). O(1) memory. Allows configured bursts. Approximate at boundaries — could allow up to 2x the rate over a 2-window crossing in the worst case. Production default.</li>
-          <li><strong>Sliding window log</strong>. Keep a sorted set of request timestamps; admit if count in the last N seconds is under limit. <em>Exact</em> precision. O(N) memory per key — at 1000 req/min, you store 1000 timestamps per active user. For 5M active users, that&apos;s 5B entries. Hard pass at this scale.</li>
+          <li><strong>Sliding window log</strong>. Keep a sorted set of request timestamps; admit if count in the last N seconds is under limit. <em>Exact</em>{" "}precision. O(N) memory per key — at 1000 req/min, you store 1000 timestamps per active user. For 5M active users, that&apos;s 5B entries. Hard pass at this scale.</li>
           <li><strong>Sliding window counter</strong>. Two counters: current minute and previous minute. Estimate rate as <code>current + previous × (1 - current_minute_fraction)</code>. O(1), much smoother boundaries than token bucket, slightly more accurate. Good middle ground.</li>
         </ul>
         <p>
@@ -350,15 +350,15 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
 
         <h3>Hot keys — when one user sets your Redis on fire</h3>
         <p>
-          The pathological case: <strong>a single key gets so much traffic that one Redis shard becomes a bottleneck.</strong> An attacker hammering one apiKey, a buggy client retrying tightly, a celebrity user the world is hitting. Whatever the cause, that user&apos;s key hashes to one shard, and that shard is now serving 100k+ ops/sec that should be spread across 20.
+          The pathological case: <strong>a single key gets so much traffic that one Redis shard becomes a bottleneck.</strong>{" "}An attacker hammering one apiKey, a buggy client retrying tightly, a celebrity user the world is hitting. Whatever the cause, that user&apos;s key hashes to one shard, and that shard is now serving 100k+ ops/sec that should be spread across 20.
         </p>
         <p>
           Three production fixes, each with tradeoffs:
         </p>
         <ol>
-          <li><strong>Local-first, Redis-second.</strong> Each gateway instance keeps an in-process token bucket per key (Caffeine cache). Calls Redis only when local says &quot;allow&quot; or every N requests for sync. Brilliant for hot keys (the local check absorbs the load) but introduces cluster-wide drift — across 50 gateways, the effective limit can be N × per-gateway-limit if you don&apos;t coordinate.</li>
-          <li><strong>Per-shard fanout.</strong> Replace the hot key&apos;s state with a set of N sub-keys: <code>rl:user:42:0</code> through <code>rl:user:42:9</code>. Distribute requests across them by hashing the request ID. Limit becomes 1/N per sub-key. Cluster spreads the load, precision drops.</li>
-          <li><strong>Block early.</strong> If a key has been over-limit for ten consecutive checks, mark it as suppressed for the next minute and reject locally without hitting Redis at all. Useful for clearly malicious traffic; risky for legitimate spikes.</li>
+          <li><strong>Local-first, Redis-second.</strong>{" "}Each gateway instance keeps an in-process token bucket per key (Caffeine cache). Calls Redis only when local says &quot;allow&quot; or every N requests for sync. Brilliant for hot keys (the local check absorbs the load) but introduces cluster-wide drift — across 50 gateways, the effective limit can be N × per-gateway-limit if you don&apos;t coordinate.</li>
+          <li><strong>Per-shard fanout.</strong>{" "}Replace the hot key&apos;s state with a set of N sub-keys: <code>rl:user:42:0</code> through <code>rl:user:42:9</code>. Distribute requests across them by hashing the request ID. Limit becomes 1/N per sub-key. Cluster spreads the load, precision drops.</li>
+          <li><strong>Block early.</strong>{" "}If a key has been over-limit for ten consecutive checks, mark it as suppressed for the next minute and reject locally without hitting Redis at all. Useful for clearly malicious traffic; risky for legitimate spikes.</li>
         </ol>
 
         <h3>Multi-region: the hardest tradeoff</h3>
@@ -380,11 +380,11 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
           The interviewer&apos;s favorite question: &quot;what happens when X breaks?&quot; The good answers:
         </p>
         <ul>
-          <li><strong>Redis shard down:</strong> Gateway times out within 50ms, fails open for keys on that shard. Alerts fire. Once shard recovers, traffic resumes. Worst case: a window of unenforced limits.</li>
-          <li><strong>Whole Redis cluster down:</strong> Same as above but for everyone. The API stays up. No silent over-limit allowance — every fail-open is logged and alerted.</li>
-          <li><strong>Lua script bug deployed:</strong> All requests start failing or all start passing. Canary the script the same way you&apos;d canary application code.</li>
-          <li><strong>Clock skew between gateways:</strong> The script uses <code>now_ms</code> from the calling gateway. If gateway A&apos;s clock is 30s ahead of gateway B&apos;s, B&apos;s subsequent calls compute negative elapsed time, and the <code>math.max(0, ...)</code> in the script is what saves you. Always include that floor.</li>
-          <li><strong>Hot key DDoS:</strong> Detect via Redis slow log + per-key QPS metrics. Auto-suppress keys above N×limit. The hot-key detection itself should not require a Redis call on the hot path — it&apos;s metric-driven.</li>
+          <li><strong>Redis shard down:</strong>{" "}Gateway times out within 50ms, fails open for keys on that shard. Alerts fire. Once shard recovers, traffic resumes. Worst case: a window of unenforced limits.</li>
+          <li><strong>Whole Redis cluster down:</strong>{" "}Same as above but for everyone. The API stays up. No silent over-limit allowance — every fail-open is logged and alerted.</li>
+          <li><strong>Lua script bug deployed:</strong>{" "}All requests start failing or all start passing. Canary the script the same way you&apos;d canary application code.</li>
+          <li><strong>Clock skew between gateways:</strong>{" "}The script uses <code>now_ms</code> from the calling gateway. If gateway A&apos;s clock is 30s ahead of gateway B&apos;s, B&apos;s subsequent calls compute negative elapsed time, and the <code>math.max(0, ...)</code> in the script is what saves you. Always include that floor.</li>
+          <li><strong>Hot key DDoS:</strong>{" "}Detect via Redis slow log + per-key QPS metrics. Auto-suppress keys above N×limit. The hot-key detection itself should not require a Redis call on the hot path — it&apos;s metric-driven.</li>
         </ul>
 
         <Quiz

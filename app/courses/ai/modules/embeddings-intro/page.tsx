@@ -54,11 +54,11 @@ export default function EmbeddingsIntroModule() {
           but <code>cat</code> token 5 has nothing to do with <code>dog</code> token 6. Embeddings fix that. By the end you&apos;ll:
         </p>
         <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
-          <li>Explain why <strong>vector space</strong> is the right home for meaning.</li>
-          <li>Derive <strong>cosine similarity</strong> from the dot product, and compute it by hand.</li>
+          <li>Explain why <strong>vector space</strong>{" "}is the right home for meaning.</li>
+          <li>Derive <strong>cosine similarity</strong>{" "}from the dot product, and compute it by hand.</li>
           <li>Tell the difference between <strong>static</strong> (word2vec) and <strong>contextual</strong> (BERT/OpenAI) embeddings.</li>
-          <li>Build a <strong>nearest-neighbor search</strong> in Java and see semantic lookup actually work.</li>
-          <li>Know when cosine fails and why <strong>curse of dimensionality</strong> will haunt you in Phase 3.</li>
+          <li>Build a <strong>nearest-neighbor search</strong>{" "}in Java and see semantic lookup actually work.</li>
+          <li>Know when cosine fails and why <strong>curse of dimensionality</strong>{" "}will haunt you in Phase 3.</li>
         </ol>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
           This module is the gateway to Phase 3 (RAG). Shaky intuition here means the vector DB chapter will feel like magic. Don&apos;t skip the worked examples.
@@ -88,7 +88,7 @@ banana → 41022`}</CodeBlock>
 
         <h3>The fix: give every word a vector</h3>
         <p>
-          What if instead of one number per word, we gave every word a <em>list</em> of numbers — say, three of them?
+          What if instead of one number per word, we gave every word a <em>list</em>{" "}of numbers — say, three of them?
         </p>
         <CodeBlock lang="plain">{`cat    → [0.8, 0.1, 0.9]
 dog    → [0.7, 0.2, 0.9]
@@ -102,7 +102,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <p>
           Each list is a <strong>vector</strong>. Each number in the list is a <strong>dimension</strong>. The whole arrangement —
           every word living at some point in this multi-dimensional space — is the <strong>embedding space</strong>. Real-world embedding
-          spaces have <strong>384</strong>, <strong>768</strong>, <strong>1024</strong>, or even <strong>3072</strong> dimensions.
+          spaces have <strong>384</strong>, <strong>768</strong>, <strong>1024</strong>, or even <strong>3072</strong>{" "}dimensions.
           Three is just for our eyes.
         </p>
 
@@ -129,7 +129,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
 
         <h3>The famous party trick</h3>
         <p>
-          Once words live in vector space, you can do <em>arithmetic</em> on them. The classic example, from word2vec (2013):
+          Once words live in vector space, you can do <em>arithmetic</em>{" "}on them. The classic example, from word2vec (2013):
         </p>
         <div className="not-prose my-6 mx-auto max-w-lg p-5 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-950/30 text-center">
           <div className="font-mono text-lg">king − man + woman ≈ queen</div>
@@ -185,7 +185,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
 
         <h3>If words are points, what does &quot;close&quot; mean?</h3>
         <p>
-          You have two vectors. You want a single number that answers: <em>how similar are they?</em> There are three natural candidates.
+          You have two vectors. You want a single number that answers: <em>how similar are they?</em>{" "}There are three natural candidates.
         </p>
 
         <h3>Candidate 1: Euclidean distance (and why it&apos;s wrong here)</h3>
@@ -280,7 +280,7 @@ cat · banana = 0.8·0.1 + 0.1·0.9 + 0.9·0.1
                 <CodeBlock lang="plain">{`cos(cat, dog)    = 1.39 / (1.208 · 1.158) = 1.39 / 1.399 ≈ 0.994
 cos(cat, banana) = 0.26 / (1.208 · 0.911) = 0.26 / 1.100 ≈ 0.236`}</CodeBlock>
                 <p>
-                  <strong>0.994</strong> vs <strong>0.236</strong>. Cat and dog point <em>almost the same way</em>.
+                  <strong>0.994</strong>{" "}vs <strong>0.236</strong>. Cat and dog point <em>almost the same way</em>.
                   Cat and banana are nearly orthogonal. The geometry matches our intuition.
                 </p>
               </>
@@ -379,7 +379,7 @@ static double cosine(double[] a, double[] b) {
           </div>
           <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-2">Contextual (BERT, OpenAI, Cohere, Voyage)</div>
-            <p className="text-sm m-0 mb-2">Embeddings depend on the surrounding sentence. &quot;Sat by the <strong>bank</strong> of the river&quot; and &quot;deposited at the <strong>bank</strong>&quot; produce different vectors for <code>bank</code>.</p>
+            <p className="text-sm m-0 mb-2">Embeddings depend on the surrounding sentence. &quot;Sat by the <strong>bank</strong>{" "}of the river&quot; and &quot;deposited at the <strong>bank</strong>&quot; produce different vectors for <code>bank</code>.</p>
             <p className="text-xs text-slate-500 m-0">What every production system uses in 2026. The transformer (Module 5) is the machine under the hood.</p>
           </div>
         </div>
@@ -387,7 +387,7 @@ static double cosine(double[] a, double[] b) {
         <Callout variant="insight" title="Sentence embeddings, which you'll actually use">
           <p className="m-0">
             In RAG and search, you rarely embed single words. You embed <strong>chunks of text</strong> — a paragraph, a question, a product description. A contextual model reads the whole chunk and returns
-            <em> one</em> vector summarizing it. That&apos;s what gets stored in a vector DB. We&apos;ll do this for real in Phase 3.
+            <em> one</em>{" "}vector summarizing it. That&apos;s what gets stored in a vector DB. We&apos;ll do this for real in Phase 3.
           </p>
         </Callout>
 
@@ -396,11 +396,11 @@ static double cosine(double[] a, double[] b) {
           Empirically, trained embeddings learn surprisingly clean directions. In word2vec-style spaces you can find axes for:
         </p>
         <ul>
-          <li><strong>gender:</strong> king → queen, actor → actress, uncle → aunt</li>
-          <li><strong>verb tense:</strong> walk → walked, eat → ate</li>
-          <li><strong>plural:</strong> car → cars, mouse → mice</li>
-          <li><strong>country ↔ capital:</strong> France → Paris, Japan → Tokyo</li>
-          <li><strong>comparative/superlative:</strong> big → bigger → biggest</li>
+          <li><strong>gender:</strong>{" "}king → queen, actor → actress, uncle → aunt</li>
+          <li><strong>verb tense:</strong>{" "}walk → walked, eat → ate</li>
+          <li><strong>plural:</strong>{" "}car → cars, mouse → mice</li>
+          <li><strong>country ↔ capital:</strong>{" "}France → Paris, Japan → Tokyo</li>
+          <li><strong>comparative/superlative:</strong>{" "}big → bigger → biggest</li>
         </ul>
         <p>
           Nobody told the model these concepts exist. They emerge because a model that captures them predicts text better than one that doesn&apos;t.
@@ -422,7 +422,7 @@ static double cosine(double[] a, double[] b) {
         <p>
           In high dimensions, distances become weirdly flat. In 3-D, a nearest neighbor is clearly the nearest. In 1024-D,
           the nearest and farthest point often have similar distances. Brute-force search still works (what you&apos;ll build in the project),
-          but at millions of vectors you need <strong>approximate nearest neighbor</strong> indexes (HNSW, IVFFlat) — also Phase 3.
+          but at millions of vectors you need <strong>approximate nearest neighbor</strong>{" "}indexes (HNSW, IVFFlat) — also Phase 3.
         </p>
 
         <h3>Two embeddings you&apos;ll encounter in practice</h3>
@@ -476,7 +476,7 @@ Cohere embed-english-v3           → 1024 dims, strong for English`}</CodeBlock
 
         <h3>The problem</h3>
         <p>
-          You have 10,000 documents, each represented by a 768-dimensional vector. A user types a question. You embed the question into the same space. You want the <strong>k</strong> documents whose vectors are closest to the question vector.
+          You have 10,000 documents, each represented by a 768-dimensional vector. A user types a question. You embed the question into the same space. You want the <strong>k</strong>{" "}documents whose vectors are closest to the question vector.
         </p>
 
         <h3>Brute force (and why it&apos;s surprisingly good)</h3>
@@ -491,7 +491,7 @@ Cohere embed-english-v3           → 1024 dims, strong for English`}</CodeBlock
           Brute force is fine up to roughly a million vectors.
         </p>
         <p>
-          Only beyond that (tens of millions, hundreds of millions) do you need <strong>approximate</strong> nearest neighbors
+          Only beyond that (tens of millions, hundreds of millions) do you need <strong>approximate</strong>{" "}nearest neighbors
           (HNSW, IVFFlat, product quantization) — Phase 3&apos;s pgvector module covers those. You don&apos;t need them today.
         </p>
 
@@ -649,15 +649,15 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
         <h3>Milestones</h3>
         <ol>
           <li><strong>Cosine sanity:</strong> <code>cosine([1,0,0], [1,0,0]) == 1.0</code> and <code>cosine([1,0,0], [0,1,0]) == 0.0</code>.</li>
-          <li><strong>Normalized = dot:</strong> verify your two cosine functions agree on normalized input to within 1e-9.</li>
-          <li><strong>Pet query:</strong> Q1 returns a pet as the top hit.</li>
-          <li><strong>Emotion query:</strong> Q3 returns an emotion sentence as the top hit and pizza is <em>not</em> in the top-2.</li>
-          <li><strong>Ordering is stable:</strong> run the same query twice, get identical rankings.</li>
+          <li><strong>Normalized = dot:</strong>{" "}verify your two cosine functions agree on normalized input to within 1e-9.</li>
+          <li><strong>Pet query:</strong>{" "}Q1 returns a pet as the top hit.</li>
+          <li><strong>Emotion query:</strong>{" "}Q3 returns an emotion sentence as the top hit and pizza is <em>not</em>{" "}in the top-2.</li>
+          <li><strong>Ordering is stable:</strong>{" "}run the same query twice, get identical rankings.</li>
         </ol>
 
         <h3>Stretch goals</h3>
         <ul>
-          <li>Replace the hand-crafted vectors with <strong>TF-IDF</strong> features over a small vocab — same math, real embeddings (lexical, not semantic, but a real step up).</li>
+          <li>Replace the hand-crafted vectors with <strong>TF-IDF</strong>{" "}features over a small vocab — same math, real embeddings (lexical, not semantic, but a real step up).</li>
           <li>Add a tiny React 2-D visualizer: plot the first two dims on a scatter plot, highlight the query and top-k. (We&apos;ll help you wire this in later.)</li>
           <li>Benchmark brute-force search time on 100k random vectors — see when it starts to feel slow.</li>
         </ul>
@@ -665,8 +665,8 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
         <h3>Gotchas</h3>
         <ul>
           <li><strong>Zero vector:</strong> <code>normalize</code> must not divide by zero. Guard against <code>norm == 0</code>.</li>
-          <li><strong>Don&apos;t re-normalize in the hot loop:</strong> normalize every doc once at load, not per query.</li>
-          <li><strong>Cosine vs distance:</strong> if you ever sort ascending by &quot;distance&quot;, you&apos;ve introduced the most common bug. Sort descending by similarity.</li>
+          <li><strong>Don&apos;t re-normalize in the hot loop:</strong>{" "}normalize every doc once at load, not per query.</li>
+          <li><strong>Cosine vs distance:</strong>{" "}if you ever sort ascending by &quot;distance&quot;, you&apos;ve introduced the most common bug. Sort descending by similarity.</li>
           <li><strong>Float precision:</strong> <code>cosine([1,0,0], [1,0,0])</code> may come back as 0.9999999998. Don&apos;t compare with <code>==</code>; use a tolerance.</li>
         </ul>
 
@@ -756,7 +756,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
         <h3 className="mt-0 mb-2">Next up: Module 7 — Prompt engineering</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You&apos;ve built the model-side understanding. Next you turn it around and learn how to
-          <em> talk</em> to one: system prompts, few-shot, chain-of-thought, structured output — all locally, no API key required.
+          <em> talk</em>{" "}to one: system prompts, few-shot, chain-of-thought, structured output — all locally, no API key required.
         </p>
         <Link
           href="/courses/ai/modules/prompt-engineering"

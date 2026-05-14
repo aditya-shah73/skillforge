@@ -281,7 +281,7 @@ where f is one of:
         <h2 id="coin-change">Coin Change — unbounded choice</h2>
 
         <p>
-          <strong>LC 322 · Coin Change.</strong> Given an array <code>coins</code> (each coin
+          <strong>LC 322 · Coin Change.</strong>{" "}Given an array <code>coins</code> (each coin
           unlimited supply) and a target <code>amount</code>, return the fewest coins needed to make
           the target, or -1 if impossible.
         </p>
@@ -298,7 +298,7 @@ where f is one of:
 
         <Callout variant="warn" title="Why greedy fails for general coin sets">
           <p>
-            Greedy <em>does</em> work for some special sets — US currency {`{1, 5, 10, 25}`} is the
+            Greedy <em>does</em>{" "}work for some special sets — US currency {`{1, 5, 10, 25}`} is the
             classic example, where any change can be made greedily. These are called &quot;canonical
             coin systems,&quot; and proving a coin set is canonical is non-trivial.
           </p>
@@ -351,7 +351,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
           <p>
             If <code>dp[a - c]</code> is unreachable, we want any addition of 1 to still leave
             <code>dp[a]</code> &quot;unreachable.&quot; <code>Integer.MAX_VALUE + 1</code>{" "}
-            <em>overflows</em> to <code>Integer.MIN_VALUE</code> — silently wrong, and the bug only
+            <em>overflows</em>{" "}to <code>Integer.MIN_VALUE</code> — silently wrong, and the bug only
             shows up on certain inputs.
           </p>
           <p>
@@ -365,8 +365,8 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
         <h3>Complexity</h3>
 
         <ul>
-          <li><strong>Time:</strong> O(amount × coins.length). Outer loop fills the table; inner loop tries each coin per amount.</li>
-          <li><strong>Space:</strong> O(amount). One linear table.</li>
+          <li><strong>Time:</strong>{" "}O(amount × coins.length). Outer loop fills the table; inner loop tries each coin per amount.</li>
+          <li><strong>Space:</strong>{" "}O(amount). One linear table.</li>
         </ul>
 
         <p>
@@ -379,9 +379,9 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
         <h3>Variations to know exist</h3>
 
         <ul>
-          <li><strong>LC 518 · Coin Change 2.</strong> Counts the <em>number of ways</em> to make the amount, not the minimum coin count. Same shape (<code>dp[a] = sum over coins of dp[a - c]</code>), but the loop order matters: outer over coins, inner over amounts — to avoid double-counting permutations as separate combinations.</li>
-          <li><strong>Bounded Coin Change.</strong> Each coin has a finite supply. Add another dimension to the state: <code>dp[a][i]</code> = min coins using only first i types. (Phase 7&apos;s next module.)</li>
-          <li><strong>Combination Sum (LC 39).</strong> All distinct combinations summing to target, each combination listed. Backtracking, not DP — but the recurrence shape rhymes.</li>
+          <li><strong>LC 518 · Coin Change 2.</strong>{" "}Counts the <em>number of ways</em>{" "}to make the amount, not the minimum coin count. Same shape (<code>dp[a] = sum over coins of dp[a - c]</code>), but the loop order matters: outer over coins, inner over amounts — to avoid double-counting permutations as separate combinations.</li>
+          <li><strong>Bounded Coin Change.</strong>{" "}Each coin has a finite supply. Add another dimension to the state: <code>dp[a][i]</code> = min coins using only first i types. (Phase 7&apos;s next module.)</li>
+          <li><strong>Combination Sum (LC 39).</strong>{" "}All distinct combinations summing to target, each combination listed. Backtracking, not DP — but the recurrence shape rhymes.</li>
         </ul>
 
         <Quiz
@@ -414,7 +414,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
         <h2 id="word-break">Word Break — segmentation DP</h2>
 
         <p>
-          <strong>LC 139 · Word Break.</strong> Given a string <code>s</code> and a dictionary of
+          <strong>LC 139 · Word Break.</strong>{" "}Given a string <code>s</code> and a dictionary of
           words <code>wordDict</code>, return true if <code>s</code> can be segmented into a sequence
           of one or more dictionary words.
         </p>
@@ -430,7 +430,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
 
         <p>
           Define <code>dp[i]</code> = true iff the prefix <code>s[0..i)</code> can be segmented. The
-          insight: a prefix of length <code>i</code> is segmentable iff <em>some</em> earlier prefix
+          insight: a prefix of length <code>i</code> is segmentable iff <em>some</em>{" "}earlier prefix
           of length <code>j</code> is segmentable AND the slice <code>s[j..i)</code> is in the
           dictionary.
         </p>
@@ -442,7 +442,7 @@ answer = dp[n]`}</CodeBlock>
 
         <p>
           The recurrence is a boolean OR — we&apos;re doing reachability, not optimization. Once
-          we&apos;ve found <em>one</em> way to segment the prefix, we&apos;re done with that prefix;
+          we&apos;ve found <em>one</em>{" "}way to segment the prefix, we&apos;re done with that prefix;
           set <code>dp[i] = true</code> and short-circuit.
         </p>
 
@@ -503,11 +503,11 @@ answer = dp[8] = true`}</CodeBlock>
         <h3>Why this is DP and not sliding window</h3>
 
         <p>
-          Word Break <em>looks</em> like a string-scan problem and learners sometimes try a sliding
+          Word Break <em>looks</em>{" "}like a string-scan problem and learners sometimes try a sliding
           window. It doesn&apos;t fit. The reason: <strong>the &quot;decision&quot; at each position
           isn&apos;t a single local choice that monotonically grows or shrinks something</strong> —
-          it&apos;s &quot;does there exist <em>any</em> split of this prefix?&quot;, which requires
-          information from <em>all</em> earlier positions, not just an expanding-then-contracting
+          it&apos;s &quot;does there exist <em>any</em>{" "}split of this prefix?&quot;, which requires
+          information from <em>all</em>{" "}earlier positions, not just an expanding-then-contracting
           window. Sliding window has no way to express &quot;OR over many j&apos;s.&quot;
         </p>
 
@@ -555,7 +555,7 @@ answer = dp[8] = true`}</CodeBlock>
         <h2 id="lis">Longest Increasing Subsequence — the &quot;ending at i&quot; anchor</h2>
 
         <p>
-          <strong>LC 300 · Longest Increasing Subsequence.</strong> Given an integer array{" "}
+          <strong>LC 300 · Longest Increasing Subsequence.</strong>{" "}Given an integer array{" "}
           <code>nums</code>, return the length of the longest <em>strictly increasing subsequence</em>.
           Subsequence: pick any indices in order, not necessarily contiguous.
         </p>
@@ -572,7 +572,7 @@ answer = dp[8] = true`}</CodeBlock>
           You might try defining <code>dp[i]</code> = LIS of the prefix <code>nums[0..i]</code>. But
           this doesn&apos;t decompose. Knowing &quot;the LIS of the first 5 elements is 3&quot; tells
           you nothing about whether <code>nums[5]</code> can extend it — you don&apos;t know what the
-          last element of <em>that</em> LIS was. The recurrence has no clean way to chain.
+          last element of <em>that</em>{" "}LIS was. The recurrence has no clean way to chain.
         </p>
 
         <h3>The fix: anchor at i</h3>
@@ -593,7 +593,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
 
         <Callout variant="insight" title="Why 'ending at i' makes the recurrence work and 'in the first i elements' doesn't">
           <p>
-            The trick is that &quot;ending at i&quot; pins down the <em>last element</em> of the
+            The trick is that &quot;ending at i&quot; pins down the <em>last element</em>{" "}of the
             subsequence we&apos;re tracking. That gives the recurrence the hook it needs:{" "}
             <code>nums[j] &lt; nums[i]</code> is a clean comparison between two anchored positions.
           </p>
@@ -602,7 +602,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
             what comes last — so when we get to <code>nums[i+1]</code>, we can&apos;t tell whether to
             extend it. The lesson generalizes: when a problem asks &quot;longest something that
             satisfies a constraint involving consecutive picked elements,&quot; anchor the dp at the
-            <em> last</em> picked element. Maximum Subarray uses the same trick (Kadane&apos;s
+            <em> last</em>{" "}picked element. Maximum Subarray uses the same trick (Kadane&apos;s
             algorithm: <code>dp[i]</code> = max sum of subarray ending at i).
           </p>
         </Callout>
@@ -633,7 +633,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
 
         <Callout variant="warn" title="Don't forget the final max">
           <p>
-            Unlike Coin Change or Word Break, the answer for LIS is <em>not</em> at <code>dp[n-1]</code>{" "}
+            Unlike Coin Change or Word Break, the answer for LIS is <em>not</em>{" "}at <code>dp[n-1]</code>{" "}
             — that&apos;s only the LIS ending exactly at the last element, which may be small if the
             last element is small.
           </p>
@@ -665,9 +665,9 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         <h3>Variations on the &quot;ending at i&quot; theme</h3>
 
         <ul>
-          <li><strong>LC 53 · Maximum Subarray.</strong> dp[i] = max sum of subarray ending at i. Recurrence: <code>dp[i] = max(nums[i], dp[i-1] + nums[i])</code>. This is Kadane&apos;s algorithm and is one of the cleanest 1D DPs ever written.</li>
-          <li><strong>LC 152 · Maximum Product Subarray.</strong> Same anchor, but you have to track <em>two</em> dp values per index (max-product-ending-here AND min-product-ending-here) because a negative number can flip min into max.</li>
-          <li><strong>LC 198 · House Robber.</strong> Mixed flavor: dp[i] = max money robbing the first i houses, with the constraint that adjacent houses can&apos;t both be robbed. Recurrence: <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code>. This is &quot;first i&quot; framing but the recurrence still asks &quot;include i-th or skip&quot; — same decision template.</li>
+          <li><strong>LC 53 · Maximum Subarray.</strong>{" "}dp[i] = max sum of subarray ending at i. Recurrence: <code>dp[i] = max(nums[i], dp[i-1] + nums[i])</code>. This is Kadane&apos;s algorithm and is one of the cleanest 1D DPs ever written.</li>
+          <li><strong>LC 152 · Maximum Product Subarray.</strong>{" "}Same anchor, but you have to track <em>two</em>{" "}dp values per index (max-product-ending-here AND min-product-ending-here) because a negative number can flip min into max.</li>
+          <li><strong>LC 198 · House Robber.</strong>{" "}Mixed flavor: dp[i] = max money robbing the first i houses, with the constraint that adjacent houses can&apos;t both be robbed. Recurrence: <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code>. This is &quot;first i&quot; framing but the recurrence still asks &quot;include i-th or skip&quot; — same decision template.</li>
         </ul>
 
         <Quiz
@@ -689,7 +689,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         <h2 id="decode-ways">Decode Ways — Climbing Stairs with validation</h2>
 
         <p>
-          <strong>LC 91 · Decode Ways.</strong> A string of digits is encoded with the rule
+          <strong>LC 91 · Decode Ways.</strong>{" "}A string of digits is encoded with the rule
           A=1, B=2, …, Z=26. Given a digit string <code>s</code>, return the number of ways to decode
           it. Example: <code>&quot;226&quot;</code> can be decoded as &quot;BBF&quot; (2-2-6),
           &quot;BZ&quot; (2-26), or &quot;VF&quot; (22-6) — three ways.
@@ -733,7 +733,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
 
         <Callout variant="warn" title="The off-by-one trap">
           <p>
-            <code>dp[i]</code> = ways for prefix of <em>length</em> i. The character at the i-th
+            <code>dp[i]</code> = ways for prefix of <em>length</em>{" "}i. The character at the i-th
             position of the prefix is <code>s[i - 1]</code> (0-indexed). The two-digit chunk under
             consideration when computing dp[i] is <code>s[i-2..i)</code>, i.e., characters{" "}
             <code>s[i-2]</code> and <code>s[i-1]</code>.
@@ -941,8 +941,8 @@ return prev1;`}</CodeBlock>
           </p>
           <ul>
             <li><strong>You need to reconstruct the path</strong>, not just the answer. (E.g., &quot;return one valid LIS.&quot;) The dp array is your audit trail.</li>
-            <li><strong>The problem has multiple queries</strong> over the same array (rare in interviews, common in production).</li>
-            <li><strong>Clarity matters more than memory.</strong> n is usually so small that O(n) space is fine, and the table version is easier to debug.</li>
+            <li><strong>The problem has multiple queries</strong>{" "}over the same array (rare in interviews, common in production).</li>
+            <li><strong>Clarity matters more than memory.</strong>{" "}n is usually so small that O(n) space is fine, and the table version is easier to debug.</li>
           </ul>
           <p>
             For interviews, write the table version first. Mention &quot;this can be reduced to O(1)
@@ -955,10 +955,10 @@ return prev1;`}</CodeBlock>
         <p>When you spot a problem, ask in this order:</p>
 
         <ol>
-          <li><strong>Is the answer about a contiguous subarray/substring with a sliding-window-friendly invariant?</strong> Sliding window. Not DP.</li>
+          <li><strong>Is the answer about a contiguous subarray/substring with a sliding-window-friendly invariant?</strong>{" "}Sliding window. Not DP.</li>
           <li><strong>Is there a clean &quot;at index i, what choice do I make&quot; structure?</strong> 1D DP. Pick the shape:
             <ul>
-              <li>Lookback is <em>all earlier j</em> with a comparison? Shape 1 (&quot;ends at i&quot;).</li>
+              <li>Lookback is <em>all earlier j</em>{" "}with a comparison? Shape 1 (&quot;ends at i&quot;).</li>
               <li>Lookback is <em>some bounded set of earlier values</em> (a coin set, a dictionary)? Shape 2 (&quot;first i&quot;).</li>
               <li>Lookback is just <em>the last 1–2 values</em>? Shape 3 (&quot;i-th step&quot;).</li>
             </ul>

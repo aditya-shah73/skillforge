@@ -75,7 +75,7 @@ export default function Page() {
           A single-database transaction is one of the great gifts of relational databases. <code>BEGIN</code>, do five updates, <code>COMMIT</code>. All-or-nothing. Atomicity for free. The database does the hard work; your application gets the simple mental model.
         </p>
         <p>
-          Then you split the monolith into services, each with its own database, and that gift evaporates. <strong>A Spring <code>@Transactional</code> boundary stops at the JDBC connection.</strong> If your &quot;create order&quot; call writes to the orders DB, then makes an HTTP call to the inventory service, the inventory write is outside your transaction. If the HTTP call fails after the order commits, you have an order with no inventory reservation and no automatic rollback.
+          Then you split the monolith into services, each with its own database, and that gift evaporates. <strong>A Spring <code>@Transactional</code> boundary stops at the JDBC connection.</strong>{" "}If your &quot;create order&quot; call writes to the orders DB, then makes an HTTP call to the inventory service, the inventory write is outside your transaction. If the HTTP call fails after the order commits, you have an order with no inventory reservation and no automatic rollback.
         </p>
         <p>
           This is the cross-service consistency problem. Three patterns dominate the answer space, and the senior skill is knowing which one fits your shape.
@@ -85,11 +85,11 @@ export default function Page() {
       <Checkpoint moduleSlug="distributed-transactions" id="two-pc" title="Part 1 · 2PC and why it bites" xp={25}>
         <h2>Two-phase commit, the textbook answer</h2>
         <p>
-          Two-phase commit (2PC) is the classical solution. A <strong>coordinator</strong> talks to every participant — every database, every service — in two phases:
+          Two-phase commit (2PC) is the classical solution. A <strong>coordinator</strong>{" "}talks to every participant — every database, every service — in two phases:
         </p>
         <ol>
-          <li><strong>Phase 1 (prepare):</strong> coordinator asks each participant &quot;can you commit this?&quot; Each participant durably writes the change to its log, acquires locks, and replies VOTE_YES or VOTE_NO. After voting yes, the participant is in a &quot;prepared&quot; state — it cannot back out, but hasn&apos;t committed yet.</li>
-          <li><strong>Phase 2 (commit or abort):</strong> if every participant voted yes, the coordinator tells everyone to commit. If any voted no, everyone aborts. Participants release locks after the second message.</li>
+          <li><strong>Phase 1 (prepare):</strong>{" "}coordinator asks each participant &quot;can you commit this?&quot; Each participant durably writes the change to its log, acquires locks, and replies VOTE_YES or VOTE_NO. After voting yes, the participant is in a &quot;prepared&quot; state — it cannot back out, but hasn&apos;t committed yet.</li>
+          <li><strong>Phase 2 (commit or abort):</strong>{" "}if every participant voted yes, the coordinator tells everyone to commit. If any voted no, everyone aborts. Participants release locks after the second message.</li>
         </ol>
         <Mermaid chart={twoPcDiagram} />
         <p>
@@ -129,12 +129,12 @@ export default function Page() {
           The textbook isn&apos;t lying — there are places 2PC is the right tool:
         </p>
         <ul>
-          <li><strong>Within a single product&apos;s database cluster.</strong> XA across two MySQL shards owned by the same team, on the same network, with a stable coordinator. Latency and coupling are bounded.</li>
-          <li><strong>Distributed databases that hide it from you.</strong> CockroachDB and TiDB run their own 2PC under the hood across shards, but the coordinator and participants are all part of one product, all on Raft, all in one operational domain. You write SQL and it Just Works.</li>
-          <li><strong>Batch jobs where latency doesn&apos;t matter.</strong> Nightly settlement that needs hard atomicity across two systems and runs once a day for 30 minutes.</li>
+          <li><strong>Within a single product&apos;s database cluster.</strong>{" "}XA across two MySQL shards owned by the same team, on the same network, with a stable coordinator. Latency and coupling are bounded.</li>
+          <li><strong>Distributed databases that hide it from you.</strong>{" "}CockroachDB and TiDB run their own 2PC under the hood across shards, but the coordinator and participants are all part of one product, all on Raft, all in one operational domain. You write SQL and it Just Works.</li>
+          <li><strong>Batch jobs where latency doesn&apos;t matter.</strong>{" "}Nightly settlement that needs hard atomicity across two systems and runs once a day for 30 minutes.</li>
         </ul>
         <p>
-          What you almost never want: 2PC <em>between independently deployed microservices</em> across a network. The coupling, latency, and operational complexity are not worth the atomicity you get back.
+          What you almost never want: 2PC <em>between independently deployed microservices</em>{" "}across a network. The coupling, latency, and operational complexity are not worth the atomicity you get back.
         </p>
 
         <Quiz
@@ -179,7 +179,7 @@ export default function Page() {
           The saga pattern (Garcia-Molina &amp; Salem, 1987) starts from a different premise: <strong>don&apos;t try to make cross-service operations atomic. Make them eventually consistent, with explicit compensation for failure.</strong>
         </p>
         <p>
-          A saga is a sequence of local transactions, each in its own service. If step 3 fails, you don&apos;t roll back — there&apos;s nothing to roll back, because each step has already committed locally. Instead, you run <strong>compensating actions</strong> for steps 1 and 2 that semantically undo them. &quot;Cancel reservation&quot; instead of &quot;rollback the reservation insert.&quot;
+          A saga is a sequence of local transactions, each in its own service. If step 3 fails, you don&apos;t roll back — there&apos;s nothing to roll back, because each step has already committed locally. Instead, you run <strong>compensating actions</strong>{" "}for steps 1 and 2 that semantically undo them. &quot;Cancel reservation&quot; instead of &quot;rollback the reservation insert.&quot;
         </p>
 
         <h3>Two flavors: orchestration vs choreography</h3>
@@ -189,8 +189,8 @@ export default function Page() {
           One service — the saga orchestrator — explicitly drives the workflow. It calls service A, waits for the response, calls service B, and so on. If something fails, it calls the compensating actions in reverse order.
         </p>
         <ul>
-          <li><strong>Pros:</strong> the workflow is in one place. Easy to read, easy to debug, easy to monitor. Failure handling is explicit. This is the right starting point for almost all real sagas.</li>
-          <li><strong>Cons:</strong> the orchestrator becomes a coupling point. It needs to know about every step and every compensation. If poorly built, it slides toward becoming a distributed monolith.</li>
+          <li><strong>Pros:</strong>{" "}the workflow is in one place. Easy to read, easy to debug, easy to monitor. Failure handling is explicit. This is the right starting point for almost all real sagas.</li>
+          <li><strong>Cons:</strong>{" "}the orchestrator becomes a coupling point. It needs to know about every step and every compensation. If poorly built, it slides toward becoming a distributed monolith.</li>
         </ul>
 
         <h4>Choreography: events all the way down</h4>
@@ -198,8 +198,8 @@ export default function Page() {
           No central orchestrator. Each service publishes an event when it finishes its step; the next service subscribes and runs its step in response. Compensations are also event-driven: a failure event triggers each service to compensate its own work.
         </p>
         <ul>
-          <li><strong>Pros:</strong> services are loosely coupled. No central component to scale or fail over. Pure event-driven shape.</li>
-          <li><strong>Cons:</strong> the workflow is implicit — scattered across event handlers. Debugging a failed saga means reading every service&apos;s logs and stitching the timeline together. Cyclic event flows and accidental loops are easy to introduce. Adding a new step is hard because you have to figure out which existing services need to subscribe.</li>
+          <li><strong>Pros:</strong>{" "}services are loosely coupled. No central component to scale or fail over. Pure event-driven shape.</li>
+          <li><strong>Cons:</strong>{" "}the workflow is implicit — scattered across event handlers. Debugging a failed saga means reading every service&apos;s logs and stitching the timeline together. Cyclic event flows and accidental loops are easy to introduce. Adding a new step is hard because you have to figure out which existing services need to subscribe.</li>
         </ul>
 
         <Callout variant="insight" title="The default rule">
@@ -219,8 +219,8 @@ export default function Page() {
           That third bullet matters. Some operations have side effects in the real world that you can&apos;t cleanly undo. Two design moves help:
         </p>
         <ul>
-          <li><strong>Order steps so irreversible ones come last.</strong> Charge the card after the reservation is confirmed. Send the email after the order is committed.</li>
-          <li><strong>Accept that some compensations are visible.</strong> A refund is a real transaction the customer will see. That&apos;s the cost of giving up atomicity — eventually-consistent visible to the user, not invisible.</li>
+          <li><strong>Order steps so irreversible ones come last.</strong>{" "}Charge the card after the reservation is confirmed. Send the email after the order is committed.</li>
+          <li><strong>Accept that some compensations are visible.</strong>{" "}A refund is a real transaction the customer will see. That&apos;s the cost of giving up atomicity — eventually-consistent visible to the user, not invisible.</li>
         </ul>
 
         <h3>A concrete saga: order placement</h3>
@@ -228,10 +228,10 @@ export default function Page() {
           Walk through the canonical e-commerce saga:
         </p>
         <ol>
-          <li><strong>Step 1:</strong> Order Service creates an order in <code>PENDING</code> state. <em>Compensation:</em> mark order as <code>CANCELLED</code>.</li>
-          <li><strong>Step 2:</strong> Inventory Service reserves stock. <em>Compensation:</em> release reservation.</li>
-          <li><strong>Step 3:</strong> Payment Service charges the card. <em>Compensation:</em> issue refund.</li>
-          <li><strong>Step 4:</strong> Order Service marks order as <code>CONFIRMED</code>. (No compensation needed — this is the terminal step.)</li>
+          <li><strong>Step 1:</strong>{" "}Order Service creates an order in <code>PENDING</code> state. <em>Compensation:</em>{" "}mark order as <code>CANCELLED</code>.</li>
+          <li><strong>Step 2:</strong>{" "}Inventory Service reserves stock. <em>Compensation:</em>{" "}release reservation.</li>
+          <li><strong>Step 3:</strong>{" "}Payment Service charges the card. <em>Compensation:</em>{" "}issue refund.</li>
+          <li><strong>Step 4:</strong>{" "}Order Service marks order as <code>CONFIRMED</code>. (No compensation needed — this is the terminal step.)</li>
         </ol>
         <p>
           If step 3 fails, the orchestrator calls compensation 2 (release reservation), then compensation 1 (cancel order). The customer sees a failed order; nothing is double-charged, nothing is double-reserved. That&apos;s the win.
@@ -347,9 +347,9 @@ public Order createOrder(NewOrder req) {
           Looks fine. It is broken. Two writes, two systems (Postgres and Kafka), no shared transaction. Failure cases:
         </p>
         <ul>
-          <li><strong>DB commits, broker call fails:</strong> order exists, no event published. Downstream services never hear about it. Inventory never reserves stock. Customer is charged for an order that the rest of the system doesn&apos;t know exists.</li>
-          <li><strong>Broker call succeeds, DB rolls back:</strong> event was published, but the order doesn&apos;t exist. Downstream services act on a phantom order.</li>
-          <li><strong>Broker call timeout, retry succeeds:</strong> event published twice. Without idempotency downstream, work happens twice.</li>
+          <li><strong>DB commits, broker call fails:</strong>{" "}order exists, no event published. Downstream services never hear about it. Inventory never reserves stock. Customer is charged for an order that the rest of the system doesn&apos;t know exists.</li>
+          <li><strong>Broker call succeeds, DB rolls back:</strong>{" "}event was published, but the order doesn&apos;t exist. Downstream services act on a phantom order.</li>
+          <li><strong>Broker call timeout, retry succeeds:</strong>{" "}event published twice. Without idempotency downstream, work happens twice.</li>
         </ul>
         <p>
           This is the dual-write problem, and it&apos;s the silent killer of event-driven architectures. Every team writes this code. Every team eventually finds the inconsistencies in production.
@@ -357,7 +357,7 @@ public Order createOrder(NewOrder req) {
 
         <h3>The outbox pattern: one transaction, one source of truth</h3>
         <p>
-          The fix is structural: <strong>write the event to your own database, in the same transaction as the business write.</strong> A separate background process polls the events table and publishes them to the broker.
+          The fix is structural: <strong>write the event to your own database, in the same transaction as the business write.</strong>{" "}A separate background process polls the events table and publishes them to the broker.
         </p>
         <ol>
           <li>In one DB transaction: write the business row + write a row to <code>outbox</code> table containing the event payload.</li>
@@ -403,10 +403,10 @@ public class OutboxPoller {
 
         <h3>What the outbox actually buys you</h3>
         <ul>
-          <li><strong>Atomicity with the business write.</strong> One transaction. Either both happen or neither.</li>
-          <li><strong>At-least-once publishing.</strong> The poller retries failed publishes. Eventually the event lands.</li>
-          <li><strong>Replayability.</strong> The outbox is a log. If you screw up downstream, you can re-publish from a point in time.</li>
-          <li><strong>No XA, no JTA, no distributed transaction manager.</strong> Just plain old database transactions and a polling job.</li>
+          <li><strong>Atomicity with the business write.</strong>{" "}One transaction. Either both happen or neither.</li>
+          <li><strong>At-least-once publishing.</strong>{" "}The poller retries failed publishes. Eventually the event lands.</li>
+          <li><strong>Replayability.</strong>{" "}The outbox is a log. If you screw up downstream, you can re-publish from a point in time.</li>
+          <li><strong>No XA, no JTA, no distributed transaction manager.</strong>{" "}Just plain old database transactions and a polling job.</li>
         </ul>
 
         <Callout variant="spring" title="Outbox in Spring — the pieces">
@@ -418,10 +418,10 @@ public class OutboxPoller {
           The outbox isn&apos;t free:
         </p>
         <ul>
-          <li><strong>Latency:</strong> the poller introduces a delay between commit and publish — typically 100ms to a few seconds. For most workflows that&apos;s fine; for time-sensitive ones (real-time fanout) you may need CDC instead of polling.</li>
-          <li><strong>At-least-once, not exactly-once:</strong> retries can cause duplicate publishes. Consumers must be idempotent.</li>
-          <li><strong>Outbox table grows:</strong> archive published rows on a schedule. Don&apos;t let the table grow unbounded.</li>
-          <li><strong>Order isn&apos;t guaranteed across keys:</strong> the poller publishes in the order it reads, but Kafka partitioning may interleave events for different keys. Same key on the same partition is still ordered.</li>
+          <li><strong>Latency:</strong>{" "}the poller introduces a delay between commit and publish — typically 100ms to a few seconds. For most workflows that&apos;s fine; for time-sensitive ones (real-time fanout) you may need CDC instead of polling.</li>
+          <li><strong>At-least-once, not exactly-once:</strong>{" "}retries can cause duplicate publishes. Consumers must be idempotent.</li>
+          <li><strong>Outbox table grows:</strong>{" "}archive published rows on a schedule. Don&apos;t let the table grow unbounded.</li>
+          <li><strong>Order isn&apos;t guaranteed across keys:</strong>{" "}the poller publishes in the order it reads, but Kafka partitioning may interleave events for different keys. Same key on the same partition is still ordered.</li>
         </ul>
 
         <h3>Idempotent consumers: the other half of the deal</h3>

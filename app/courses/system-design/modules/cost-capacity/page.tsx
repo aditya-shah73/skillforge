@@ -69,11 +69,11 @@ export default function Page() {
           A typical web service&apos;s monthly cost decomposes into a few buckets. Most teams know roughly what their bill is, but not how it breaks down. The first job is to get a clean breakdown.
         </p>
         <ul>
-          <li><strong>Compute:</strong> EC2/GKE/ECS/Lambda — usually the biggest single line. Tag everything by service so you can attribute.</li>
-          <li><strong>Storage:</strong> RDS, DynamoDB, S3, EBS volumes. Includes IOPS charges, which are sneaky.</li>
-          <li><strong>Network egress:</strong> outbound bytes from cloud — by far the most-overlooked cost. Cross-region replication and data leaving the cloud both bite.</li>
-          <li><strong>Managed services:</strong> Kafka MSK, OpenSearch, ALBs, NAT gateways, Datadog, Snowflake. Each one is a margin the cloud or vendor takes.</li>
-          <li><strong>Idle / overhead:</strong> staging, dev, CI runners, leaked test resources. Easily 15–30% of total — finance calls this &quot;waste&quot; and they&apos;re right.</li>
+          <li><strong>Compute:</strong>{" "}EC2/GKE/ECS/Lambda — usually the biggest single line. Tag everything by service so you can attribute.</li>
+          <li><strong>Storage:</strong>{" "}RDS, DynamoDB, S3, EBS volumes. Includes IOPS charges, which are sneaky.</li>
+          <li><strong>Network egress:</strong>{" "}outbound bytes from cloud — by far the most-overlooked cost. Cross-region replication and data leaving the cloud both bite.</li>
+          <li><strong>Managed services:</strong>{" "}Kafka MSK, OpenSearch, ALBs, NAT gateways, Datadog, Snowflake. Each one is a margin the cloud or vendor takes.</li>
+          <li><strong>Idle / overhead:</strong>{" "}staging, dev, CI runners, leaked test resources. Easily 15–30% of total — finance calls this &quot;waste&quot; and they&apos;re right.</li>
         </ul>
 
         <Callout variant="info" title="The cost iceberg">
@@ -121,10 +121,10 @@ $/request      = monthly_cost / requests
           A few realistic complications:
         </p>
         <ul>
-          <li><strong>Not all requests cost the same.</strong> A cached GET costs &lt;$0.0001; a complex search query costs &gt;$0.01. Aggregate $/request can hide expensive endpoints. Break down by endpoint.</li>
-          <li><strong>Diurnal patterns matter.</strong> Peak QPS drives capacity sizing; average QPS drives request count. Use peak for capacity decisions, average for &quot;am I overprovisioned at night?&quot; questions.</li>
-          <li><strong>Reserved capacity changes math.</strong> Reserved instances and savings plans cut compute by 30–60% in exchange for commitment. The model should reflect committed cost, not on-demand list price, if you&apos;ve actually committed.</li>
-          <li><strong>Egress and per-request pricing surprise people.</strong> DynamoDB on-demand is per-request; Kafka MSK charges per-broker but throughput-bound; Snowflake charges per-second of warehouse uptime. Read the pricing page; assume nothing.</li>
+          <li><strong>Not all requests cost the same.</strong>{" "}A cached GET costs &lt;$0.0001; a complex search query costs &gt;$0.01. Aggregate $/request can hide expensive endpoints. Break down by endpoint.</li>
+          <li><strong>Diurnal patterns matter.</strong>{" "}Peak QPS drives capacity sizing; average QPS drives request count. Use peak for capacity decisions, average for &quot;am I overprovisioned at night?&quot; questions.</li>
+          <li><strong>Reserved capacity changes math.</strong>{" "}Reserved instances and savings plans cut compute by 30–60% in exchange for commitment. The model should reflect committed cost, not on-demand list price, if you&apos;ve actually committed.</li>
+          <li><strong>Egress and per-request pricing surprise people.</strong>{" "}DynamoDB on-demand is per-request; Kafka MSK charges per-broker but throughput-bound; Snowflake charges per-second of warehouse uptime. Read the pricing page; assume nothing.</li>
         </ul>
 
         <Quiz
@@ -168,10 +168,10 @@ $/request      = monthly_cost / requests
           Autoscaling is mostly a question of: what metric, what threshold, what response time. The naive setup — &quot;CPU above 70%, add an instance&quot; — is a starter; production-grade setups are more careful.
         </p>
         <ul>
-          <li><strong>Lead-indicator metric.</strong> CPU is fine for compute-bound services; for I/O-bound services, scale on request queue depth, in-flight requests, or p99 latency. Choose the metric that rises before user-visible degradation, not after.</li>
-          <li><strong>Asymmetric thresholds.</strong> Scale up fast (e.g., at 60% utilization), scale down slow (e.g., when below 30% for 15 minutes). Premature scale-down is how you end up cold-starting at peak.</li>
-          <li><strong>Cooldowns and step sizes.</strong> Adding one instance at a time when load is doubling is too slow. Step scaling: +1 at threshold, +3 at 1.5x, +10 at 2x. Test it.</li>
-          <li><strong>Predictive scaling for known patterns.</strong> If you know traffic doubles at 9am, pre-warm at 8:50. AWS has predictive autoscaling; it works for diurnal patterns and is harmless for irregular ones.</li>
+          <li><strong>Lead-indicator metric.</strong>{" "}CPU is fine for compute-bound services; for I/O-bound services, scale on request queue depth, in-flight requests, or p99 latency. Choose the metric that rises before user-visible degradation, not after.</li>
+          <li><strong>Asymmetric thresholds.</strong>{" "}Scale up fast (e.g., at 60% utilization), scale down slow (e.g., when below 30% for 15 minutes). Premature scale-down is how you end up cold-starting at peak.</li>
+          <li><strong>Cooldowns and step sizes.</strong>{" "}Adding one instance at a time when load is doubling is too slow. Step scaling: +1 at threshold, +3 at 1.5x, +10 at 2x. Test it.</li>
+          <li><strong>Predictive scaling for known patterns.</strong>{" "}If you know traffic doubles at 9am, pre-warm at 8:50. AWS has predictive autoscaling; it works for diurnal patterns and is harmless for irregular ones.</li>
         </ul>
 
         <Callout variant="insight" title="Cold start is a capacity problem">
@@ -183,10 +183,10 @@ $/request      = monthly_cost / requests
           Stateless services scale by adding instances behind a load balancer. Stateful services (databases, caches, event stores) scale by sharding, by replicating reads, or — most painfully — by upsizing the box and hoping. The lesson:
         </p>
         <ul>
-          <li><strong>Plan stateful capacity months ahead.</strong> Scaling a database mid-incident is a project, not an action.</li>
-          <li><strong>Use read replicas for read-heavy workloads.</strong> Cheap to add, fast to scale, and they take pressure off the primary.</li>
-          <li><strong>Consider sharding before you need it.</strong> Resharding a live system is among the most expensive engineering work in tech.</li>
-          <li><strong>For caches, plan for cold-start.</strong> A cluster restart with cold cache will hit the origin at full traffic — usually killing it. Stagger restarts or pre-warm.</li>
+          <li><strong>Plan stateful capacity months ahead.</strong>{" "}Scaling a database mid-incident is a project, not an action.</li>
+          <li><strong>Use read replicas for read-heavy workloads.</strong>{" "}Cheap to add, fast to scale, and they take pressure off the primary.</li>
+          <li><strong>Consider sharding before you need it.</strong>{" "}Resharding a live system is among the most expensive engineering work in tech.</li>
+          <li><strong>For caches, plan for cold-start.</strong>{" "}A cluster restart with cold cache will hit the origin at full traffic — usually killing it. Stagger restarts or pre-warm.</li>
         </ul>
 
         <Quiz
@@ -218,9 +218,9 @@ $/request      = monthly_cost / requests
           Once you have a $/request number, three categories of optimization tend to dominate. Most teams don&apos;t do them in a deliberate order; the ones who do save 30–50% without anyone noticing.
         </p>
         <ul>
-          <li><strong>Eliminate waste.</strong> Idle dev/staging, oversized instances, unused EBS volumes, orphaned load balancers. Free money. Should be the first quarter of work, not the fifth.</li>
-          <li><strong>Right-size and commit.</strong> Match instance types to actual usage; buy reserved or savings plans for the steady-state portion of compute. 30–50% savings on compute is normal here.</li>
-          <li><strong>Architectural moves.</strong> Cache more, batch more, compute fewer times, move to spot for resilient workloads, replace expensive managed services with cheaper alternatives where the margin doesn&apos;t justify itself.</li>
+          <li><strong>Eliminate waste.</strong>{" "}Idle dev/staging, oversized instances, unused EBS volumes, orphaned load balancers. Free money. Should be the first quarter of work, not the fifth.</li>
+          <li><strong>Right-size and commit.</strong>{" "}Match instance types to actual usage; buy reserved or savings plans for the steady-state portion of compute. 30–50% savings on compute is normal here.</li>
+          <li><strong>Architectural moves.</strong>{" "}Cache more, batch more, compute fewer times, move to spot for resilient workloads, replace expensive managed services with cheaper alternatives where the margin doesn&apos;t justify itself.</li>
         </ul>
 
         <Callout variant="info" title="The ordering matters">
@@ -258,11 +258,11 @@ $/request      = monthly_cost / requests
           Most cost work is reactive: someone notices the bill grew, panic, and a one-quarter cost-down sprint. A more grown-up version is an annual cost review with a small set of standing artifacts:
         </p>
         <ul>
-          <li><strong>$/QPS-month per service,</strong> trended quarter over quarter. Services that get more expensive over time should explain why.</li>
-          <li><strong>Top 10 line items</strong> in the bill. They almost always represent 70%+ of cost. Each should have a named owner.</li>
-          <li><strong>Reserved/savings plan coverage</strong> as a percentage of compute. Should be 70–90% for steady-state workloads; less means you&apos;re paying on-demand premium for predictable load.</li>
-          <li><strong>Idle/waste estimate.</strong> Track it; the goal is for it to drop, not stay flat.</li>
-          <li><strong>Cost per business unit (revenue, MAU, transaction).</strong> The unit that maps to the business is the one product cares about.</li>
+          <li><strong>$/QPS-month per service,</strong>{" "}trended quarter over quarter. Services that get more expensive over time should explain why.</li>
+          <li><strong>Top 10 line items</strong>{" "}in the bill. They almost always represent 70%+ of cost. Each should have a named owner.</li>
+          <li><strong>Reserved/savings plan coverage</strong>{" "}as a percentage of compute. Should be 70–90% for steady-state workloads; less means you&apos;re paying on-demand premium for predictable load.</li>
+          <li><strong>Idle/waste estimate.</strong>{" "}Track it; the goal is for it to drop, not stay flat.</li>
+          <li><strong>Cost per business unit (revenue, MAU, transaction).</strong>{" "}The unit that maps to the business is the one product cares about.</li>
         </ul>
 
         <Callout variant="spring" title="The cost-aware engineering mindset">

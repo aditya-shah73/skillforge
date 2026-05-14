@@ -61,7 +61,7 @@ flowchart TB
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-          This is the final reference card. You&apos;ve finished every algorithm and data-structure module in the course; the only thing left between you and a real interview is <em>composing</em> what you know under time pressure. That&apos;s what this card is for. It&apos;s not a tutorial — it&apos;s the page you keep open in another tab while you do mock interviews, the page you re-read 15 minutes before the real thing.
+          This is the final reference card. You&apos;ve finished every algorithm and data-structure module in the course; the only thing left between you and a real interview is <em>composing</em>{" "}what you know under time pressure. That&apos;s what this card is for. It&apos;s not a tutorial — it&apos;s the page you keep open in another tab while you do mock interviews, the page you re-read 15 minutes before the real thing.
         </p>
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
           The five modules you&apos;re consolidating: <Link href="/courses/dsa/modules/tries" className="text-emerald-600 hover:underline">Tries</Link>, <Link href="/courses/dsa/modules/union-find" className="text-emerald-600 hover:underline">Union-Find / DSU</Link>, <Link href="/courses/dsa/modules/advanced-graph" className="text-emerald-600 hover:underline">Advanced graph algorithms</Link>, <Link href="/courses/dsa/modules/interview-framework" className="text-emerald-600 hover:underline">Interview problem-solving framework</Link>, and the <Link href="/courses/dsa/modules/capstone" className="text-emerald-600 hover:underline">Capstone 20-problem set</Link>.
@@ -132,8 +132,8 @@ class Trie {
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pick a trie when…</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
               <li><strong>Prefix queries.</strong> &quot;Find every word starting with <code>str</code>&quot; — autocomplete, search-as-you-type.</li>
-              <li><strong>Sorted-by-prefix iteration.</strong> DFS the subtree to enumerate matches in lexical order for free.</li>
-              <li><strong>Dictionary-walk algorithms.</strong> Word Search II, Replace Words — walk the input and the trie in lockstep, pruning whole branches when no child matches.</li>
+              <li><strong>Sorted-by-prefix iteration.</strong>{" "}DFS the subtree to enumerate matches in lexical order for free.</li>
+              <li><strong>Dictionary-walk algorithms.</strong>{" "}Word Search II, Replace Words — walk the input and the trie in lockstep, pruning whole branches when no child matches.</li>
               <li><strong>Many strings with shared structure.</strong> 500k words averaging 8 chars store roughly N·L characters either way, but the trie collapses shared prefixes, and lookups become independent of N.</li>
             </ul>
           </div>
@@ -142,9 +142,9 @@ class Trie {
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Stick with a HashMap when…</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
               <li><strong>Only exact-match lookups.</strong> <code>HashSet.contains(word)</code> is O(L) too, with no per-node pointer overhead.</li>
-              <li><strong>Keys aren&apos;t strings.</strong> Tries are character-path-shaped; numbers, tuples, and objects don&apos;t fit.</li>
-              <li><strong>Memory budget is tight.</strong> A <code>TrieNode[26]</code> child array costs ~200 bytes per node even if mostly empty. For pure exact-match the hashmap wins by a wide margin on space.</li>
-              <li><strong>Simplicity matters more than O(L).</strong> Map lookup is one line. Trie is a class plus a node class plus a walker — only worth it when prefix queries are in the spec.</li>
+              <li><strong>Keys aren&apos;t strings.</strong>{" "}Tries are character-path-shaped; numbers, tuples, and objects don&apos;t fit.</li>
+              <li><strong>Memory budget is tight.</strong>{" "}A <code>TrieNode[26]</code> child array costs ~200 bytes per node even if mostly empty. For pure exact-match the hashmap wins by a wide margin on space.</li>
+              <li><strong>Simplicity matters more than O(L).</strong>{" "}Map lookup is one line. Trie is a class plus a node class plus a walker — only worth it when prefix queries are in the spec.</li>
             </ul>
           </div>
         </div>
@@ -215,11 +215,11 @@ class Trie {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">Classic uses</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
-              <li><strong>Kruskal&apos;s MST.</strong> Sort edges, union endpoints if not already connected.</li>
-              <li><strong>Connected components.</strong> Online — answer queries as edges stream in.</li>
+              <li><strong>Kruskal&apos;s MST.</strong>{" "}Sort edges, union endpoints if not already connected.</li>
+              <li><strong>Connected components.</strong>{" "}Online — answer queries as edges stream in.</li>
               <li><strong>Cycle detection</strong> (undirected). An edge whose endpoints already share a root would close a cycle.</li>
-              <li><strong>Accounts Merge / friend circles.</strong> Anything where the natural question is &quot;same group?&quot;.</li>
-              <li><strong>Redundant Connection.</strong> The first edge whose endpoints are already connected is the answer.</li>
+              <li><strong>Accounts Merge / friend circles.</strong>{" "}Anything where the natural question is &quot;same group?&quot;.</li>
+              <li><strong>Redundant Connection.</strong>{" "}The first edge whose endpoints are already connected is the answer.</li>
             </ul>
           </div>
 
@@ -358,7 +358,7 @@ for (int[] e : edges) {
         </div>
 
         <Callout variant="insight" title="UMPIRE is the talking script, not a workflow">
-          The framework&apos;s value isn&apos;t the order — you may circle back from <em>I</em> to <em>P</em> when implementation reveals a flaw. The value is that it gives you <strong>vocabulary the interviewer recognizes</strong>. Saying &quot;let me match this to a pattern&quot; or &quot;before I evaluate, let me trace through one example&quot; signals seniority more than the code itself.
+          The framework&apos;s value isn&apos;t the order — you may circle back from <em>I</em>{" "}to <em>P</em>{" "}when implementation reveals a flaw. The value is that it gives you <strong>vocabulary the interviewer recognizes</strong>. Saying &quot;let me match this to a pattern&quot; or &quot;before I evaluate, let me trace through one example&quot; signals seniority more than the code itself.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -560,25 +560,25 @@ for (int[] e : edges) {
 
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Not stating Big-O before implementing</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> Write the code first, then the interviewer asks for complexity and you discover it&apos;s O(n³) and panic.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Write the code first, then the interviewer asks for complexity and you discover it&apos;s O(n³) and panic.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;My plan is O(n log n) time, O(n) space — does that meet the bar before I write it?&quot; If they say &quot;can you do better?&quot;, you&apos;ve saved 10 minutes of wasted typing.</p>
           </div>
 
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Silent debugging</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> Two minutes of staring at the screen in total silence after a test case fails.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Two minutes of staring at the screen in total silence after a test case fails.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;That output looks off — let me trace through. At i=2 we should have low=1, but the code has low=2… ah, I&apos;m updating low before the check. Let me move that line.&quot; Talk while you debug; the interviewer is grading the process, not just the result.</p>
           </div>
 
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Skipping brute force for the &quot;clever&quot; solution</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> Spend 15 minutes trying to remember the O(n) trick, fail, run out of time with nothing on the screen.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spend 15 minutes trying to remember the O(n) trick, fail, run out of time with nothing on the screen.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;The brute force here is O(n²) with nested loops. Let me write that first, then we can optimize.&quot; A working O(n²) beats a broken O(n) every single time. Most interviewers will accept the brute force and ask &quot;can you do better?&quot; — and you now have a baseline to build on.</p>
           </div>
 
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Not asking for hints when stuck</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> Spiral in silence for five minutes, hoping inspiration strikes.</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spiral in silence for five minutes, hoping inspiration strikes.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;I&apos;m considering two approaches — a hashmap pass or a sort + two pointers. Is there a simpler angle I&apos;m missing?&quot; Asking for a nudge is normal collaboration. Silence is what eats your score.</p>
           </div>
         </div>

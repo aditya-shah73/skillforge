@@ -125,7 +125,7 @@ flowchart TB
         <p>
           When you see <code>0b00000000_00000000_00000000_00000101</code>, that&apos;s <code>5</code>. The underscores
           are just visual separators — Java allows them in any numeric literal since Java 7. The leading bit is the{" "}
-          <em>sign bit</em> in two&apos;s complement: <code>0</code> means non-negative, <code>1</code> means negative.
+          <em>sign bit</em>{" "}in two&apos;s complement: <code>0</code> means non-negative, <code>1</code> means negative.
         </p>
 
         <h3>Two&apos;s complement, in one paragraph</h3>
@@ -465,7 +465,7 @@ n & (n-1)  =  0 0 0 0 1 0 0 0     (8 — lowest 1 of n removed)`}</CodeBlock>
         <p>
           The naive solution uses a HashSet — add on first sight, remove on second; whatever&apos;s left is the loner.
           That&apos;s O(n) time, O(n) space. The XOR version is O(n) time, <strong>O(1) space</strong>. The space
-          savings come from the fact that XOR <em>itself</em> is the data structure: a single 32-bit accumulator that
+          savings come from the fact that XOR <em>itself</em>{" "}is the data structure: a single 32-bit accumulator that
           remembers the parity of every value seen so far.
         </p>
 
@@ -512,7 +512,7 @@ n & (n-1)  =  0 0 0 0 1 0 0 0     (8 — lowest 1 of n removed)`}</CodeBlock>
         <h3>LC 260 · Single Number III — find two singletons</h3>
 
         <p>
-          Now the puzzle gets more interesting. Every element appears twice except <em>two</em> different values that
+          Now the puzzle gets more interesting. Every element appears twice except <em>two</em>{" "}different values that
           each appear once. Find both. XOR-everything gives you <code>a ^ b</code> — but you can&apos;t recover{" "}
           <code>a</code> and <code>b</code> directly from the combined value.
         </p>
@@ -825,7 +825,7 @@ for (int mask = 0; mask < (1 << n); mask++) {
 
         <p>
           We&apos;re leaving the actual TSP solution for Phase 7 — the point here is just to plant the seed: when{" "}
-          <em>n</em> is small (≤ 20-ish) and the state needs to remember &quot;which subset have we seen,&quot;
+          <em>n</em>{" "}is small (≤ 20-ish) and the state needs to remember &quot;which subset have we seen,&quot;
           bitmask DP is the technique. Module 29 will work this out properly.
         </p>
 

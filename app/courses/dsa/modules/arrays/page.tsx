@@ -148,7 +148,7 @@ flowchart TB
 
         <h3>Java arrays in particular</h3>
         <p>
-          Java draws a sharp line between <strong>primitive arrays</strong> and <strong>object arrays</strong>:
+          Java draws a sharp line between <strong>primitive arrays</strong>{" "}and <strong>object arrays</strong>:
         </p>
         <CodeBlock lang="java">{`int[] primes = new int[5];           // 5 ints stored inline: 20 bytes of payload
 String[] names = new String[5];       // 5 references stored inline; the String objects
@@ -195,12 +195,12 @@ names[0] = "alice";                    // writes a reference; "alice" is a separ
         <h2>Part 2: Fixed arrays vs dynamic arrays (a.k.a. ArrayList)</h2>
 
         <p>
-          A fixed array is too rigid for most real code. You usually don&apos;t know the final size up front — you&apos;re reading from a stream, building results as you go, parsing an input of unknown length. So we wrap the fixed array in a structure that <em>looks</em> resizable: the dynamic array. In Java this is <code>ArrayList</code>. In C++ it&apos;s <code>std::vector</code>. In Python the built-in <code>list</code>. Same idea, different names.
+          A fixed array is too rigid for most real code. You usually don&apos;t know the final size up front — you&apos;re reading from a stream, building results as you go, parsing an input of unknown length. So we wrap the fixed array in a structure that <em>looks</em>{" "}resizable: the dynamic array. In Java this is <code>ArrayList</code>. In C++ it&apos;s <code>std::vector</code>. In Python the built-in <code>list</code>. Same idea, different names.
         </p>
 
         <h3>How a dynamic array actually works</h3>
         <p>
-          A dynamic array holds two things: an internal fixed array (the &ldquo;backing array&rdquo;) and a <code>size</code> counter telling you how many slots are currently used. The backing array is usually <em>bigger</em> than <code>size</code> — that extra room is what lets you append without reallocating.
+          A dynamic array holds two things: an internal fixed array (the &ldquo;backing array&rdquo;) and a <code>size</code> counter telling you how many slots are currently used. The backing array is usually <em>bigger</em>{" "}than <code>size</code> — that extra room is what lets you append without reallocating.
         </p>
 
         <CodeBlock lang="java">{`// Conceptually, ArrayList<E> is roughly:
@@ -239,8 +239,8 @@ class ArrayList<E> {
           These are not the same number, and reading <code>ArrayList</code> code without separating them will make you miserable:
         </p>
         <ul>
-          <li><strong>Size</strong> is the number of elements <em>you&apos;ve added</em>. <code>list.size()</code> returns this. It&apos;s also the next free index.</li>
-          <li><strong>Capacity</strong> is the length of the backing array — the number of slots <em>available</em> before a resize is needed. There is no public method to read it.</li>
+          <li><strong>Size</strong>{" "}is the number of elements <em>you&apos;ve added</em>. <code>list.size()</code> returns this. It&apos;s also the next free index.</li>
+          <li><strong>Capacity</strong>{" "}is the length of the backing array — the number of slots <em>available</em>{" "}before a resize is needed. There is no public method to read it.</li>
         </ul>
         <p>
           When you do <code>new ArrayList&lt;&gt;()</code>, you get a list with size 0 and (after the first add) capacity 10. When you do <code>new ArrayList&lt;&gt;(1000)</code>, you get size 0 and capacity 1000 — useful when you know roughly how big the list will get and want to avoid the resize-and-copy churn entirely.
@@ -314,7 +314,7 @@ class ArrayList<E> {
                     Allocate <code>new Object[8]</code>, copy 4 elements, write <code>e</code>.
                   </p>
                   <p>
-                    <code>capacity = 8, size = 5</code>. Now you have <strong>3 free slots</strong> before the next resize. As n grows, free slots between resizes grow too — that&apos;s the source of amortized O(1).
+                    <code>capacity = 8, size = 5</code>. Now you have <strong>3 free slots</strong>{" "}before the next resize. As n grows, free slots between resizes grow too — that&apos;s the source of amortized O(1).
                   </p>
                 </>
               ),
@@ -392,7 +392,7 @@ public void add(E e) {
 
         <h3>The five operations you actually use</h3>
         <p>
-          Here&apos;s the table. Try to <em>derive</em> each row before reading the column to its right.
+          Here&apos;s the table. Try to <em>derive</em>{" "}each row before reading the column to its right.
         </p>
 
         <div className="not-prose my-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -473,7 +473,7 @@ public void add(int index, E element) {
 
         <h3>The same logic for remove</h3>
         <p>
-          Removing at index i means closing the gap — every element from i+1 to size-1 shifts one slot left. Same O(n) cost, same shape. The only operation that&apos;s fast is removing the <em>last</em> element (just decrement size, no shift needed).
+          Removing at index i means closing the gap — every element from i+1 to size-1 shifts one slot left. Same O(n) cost, same shape. The only operation that&apos;s fast is removing the <em>last</em>{" "}element (just decrement size, no shift needed).
         </p>
 
         <Quiz
@@ -573,7 +573,7 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
           Two pointers is the move where you keep two indices into the same array (or two arrays) and advance them according to some rule. The classic shape is &ldquo;left and right ends, walk them inward.&rdquo;
         </p>
         <p>
-          Question: given a <em>sorted</em> int array, find two indices whose values sum to a target.
+          Question: given a <em>sorted</em>{" "}int array, find two indices whose values sum to a target.
         </p>
         <CodeBlock lang="java">{`int[] twoSumSorted(int[] arr, int target) {
     int l = 0, r = arr.length - 1;
@@ -591,7 +591,7 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
 
         <Callout variant="insight" title="The 'sorted' tell">
           <p className="m-0">
-            Whenever you see &ldquo;sorted array&rdquo; in a problem statement, two pointers and binary search should both immediately come to mind. They&apos;re what sorted-ness <em>buys</em> you.
+            Whenever you see &ldquo;sorted array&rdquo; in a problem statement, two pointers and binary search should both immediately come to mind. They&apos;re what sorted-ness <em>buys</em>{" "}you.
           </p>
         </Callout>
 
@@ -725,7 +725,7 @@ size++;`}</CodeBlock>
               Solve these two using the prefix-sum pattern from Part 4:
               <ul className="my-2">
                 <li><strong>Running Sum of 1d Array</strong> (LC 1480) — direct application. Build the prefix array.</li>
-                <li><strong>Best Time to Buy and Sell Stock</strong> (LC 121) — single pass tracking <em>min so far</em> and <em>best profit so far</em>. The same &ldquo;single accumulator scan&rdquo; shape as Module 2&apos;s array sum.</li>
+                <li><strong>Best Time to Buy and Sell Stock</strong> (LC 121) — single pass tracking <em>min so far</em>{" "}and <em>best profit so far</em>. The same &ldquo;single accumulator scan&rdquo; shape as Module 2&apos;s array sum.</li>
               </ul>
               For each, write down the time and space complexity in a comment at the top of your solution. Defend it.
             </div>
@@ -807,7 +807,7 @@ size++;`}</CodeBlock>
             Indexing as address arithmetic. Doubling as the price of amortized O(1). The mid-array shift as the source of O(n) inserts. The size/capacity split. Prefix sums and two pointers as the first two named patterns.
           </p>
           <p className="mb-4 opacity-95">
-            <strong>Up next: Module 5 — Strings &amp; string building.</strong> Strings are arrays in disguise (almost). The twist is immutability — and the trap of building a string with <code>+</code> in a loop.
+            <strong>Up next: Module 5 — Strings &amp; string building.</strong>{" "}Strings are arrays in disguise (almost). The twist is immutability — and the trap of building a string with <code>+</code> in a loop.
           </p>
           <Link
             href="/courses/dsa/modules/strings"

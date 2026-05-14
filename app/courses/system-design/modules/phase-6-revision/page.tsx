@@ -82,7 +82,7 @@ flowchart TB
       {/* INTRO */}
       <section className="not-prose mb-10">
         <Callout variant="insight">
-          <strong>How to use this card.</strong> This is not new material — it&apos;s a map of the eight Phase 6 modules compressed into reference cards. Read it once cold to test recall. Re-read it on the train to a phone screen. If an archetype card feels unfamiliar, the source module is one click away.
+          <strong>How to use this card.</strong>{" "}This is not new material — it&apos;s a map of the eight Phase 6 modules compressed into reference cards. Read it once cold to test recall. Re-read it on the train to a phone screen. If an archetype card feels unfamiliar, the source module is one click away.
         </Callout>
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-4">
           The eight modules you&apos;re consolidating: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">the 6-step framework</Link>, <Link href="/courses/system-design/modules/design-tinyurl" className="text-fuchsia-600 hover:underline">TinyURL</Link>, <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">news feed</Link>, <Link href="/courses/system-design/modules/design-twitter" className="text-fuchsia-600 hover:underline">Twitter</Link>, <Link href="/courses/system-design/modules/design-chat" className="text-fuchsia-600 hover:underline">chat</Link>, <Link href="/courses/system-design/modules/design-rate-limiter" className="text-fuchsia-600 hover:underline">rate limiter</Link>, <Link href="/courses/system-design/modules/design-rideshare" className="text-fuchsia-600 hover:underline">rideshare</Link>, and <Link href="/courses/system-design/modules/design-payments" className="text-fuchsia-600 hover:underline">payments</Link>.
@@ -107,9 +107,9 @@ flowchart TB
             <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">Step 1 · Clarify (5 min)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Three buckets:</p>
             <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
-              <li><strong>Functional:</strong> what does the user do? (post, follow, read feed)</li>
-              <li><strong>Non-functional:</strong> latency target, consistency, availability, durability</li>
-              <li><strong>Scale:</strong> DAU, peak QPS, geo distribution, read:write ratio</li>
+              <li><strong>Functional:</strong>{" "}what does the user do? (post, follow, read feed)</li>
+              <li><strong>Non-functional:</strong>{" "}latency target, consistency, availability, durability</li>
+              <li><strong>Scale:</strong>{" "}DAU, peak QPS, geo distribution, read:write ratio</li>
             </ul>
           </div>
 
@@ -117,9 +117,9 @@ flowchart TB
             <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">Step 2 · Estimate (5 min)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Three numbers, in this order:</p>
             <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
-              <li><strong>QPS:</strong> DAU × actions/user/day ÷ 86,400 × peak factor (≈3×)</li>
-              <li><strong>Storage:</strong> writes/day × bytes/write × retention × replication factor</li>
-              <li><strong>Bandwidth:</strong> QPS × bytes/response (cache-miss path)</li>
+              <li><strong>QPS:</strong>{" "}DAU × actions/user/day ÷ 86,400 × peak factor (≈3×)</li>
+              <li><strong>Storage:</strong>{" "}writes/day × bytes/write × retention × replication factor</li>
+              <li><strong>Bandwidth:</strong>{" "}QPS × bytes/response (cache-miss path)</li>
             </ul>
           </div>
 
@@ -153,7 +153,7 @@ flowchart TB
         </div>
 
         <Callout variant="warn">
-          <strong>The single most common failure mode</strong> is skipping step 1 and jumping straight to boxes-and-arrows. The interviewer will let you do it — and then ding you for missing requirements they never had to state aloud.
+          <strong>The single most common failure mode</strong>{" "}is skipping step 1 and jumping straight to boxes-and-arrows. The interviewer will let you do it — and then ding you for missing requirements they never had to state aloud.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -238,7 +238,7 @@ flowchart TB
           <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Archetype 1 · TinyURL</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> read-heavy ratio (~100:1), so cache aggressively. The whole service is essentially a giant KV lookup with a base62 encoder bolted on.
+              <strong>Key insight:</strong>{" "}read-heavy ratio (~100:1), so cache aggressively. The whole service is essentially a giant KV lookup with a base62 encoder bolted on.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`urls(short_code PK, long_url, owner_id, created_at, expires_at)
 counters(host_id PK, next_id)   -- range-allocated, avoids hot key
@@ -252,7 +252,7 @@ custom_aliases(alias PK, short_code FK)  -- optional reservations`}</CodeBlock>
           <div className="rounded-xl border border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Archetype 2 · News feed</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> the entire design hinges on push vs pull vs hybrid (see table above). Hybrid wins for real traffic because the distribution of follower counts is power-law.
+              <strong>Key insight:</strong>{" "}the entire design hinges on push vs pull vs hybrid (see table above). Hybrid wins for real traffic because the distribution of follower counts is power-law.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`posts(post_id PK, author_id, content, created_at)
 follows(follower_id, followee_id, PK(follower_id, followee_id))
@@ -266,7 +266,7 @@ feed_cache(user_id, post_id, score, PK(user_id, score DESC))  -- materialized fo
           <div className="rounded-xl border border-sky-200 dark:border-sky-900 bg-sky-50/40 dark:bg-sky-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Archetype 3 · Twitter</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> Twitter = newsfeed + search + trending. Each of those three is its own subsystem with its own data store; the trick is sequencing them in your design so you don&apos;t try to do it all with one DB.
+              <strong>Key insight:</strong>{" "}Twitter = newsfeed + search + trending. Each of those three is its own subsystem with its own data store; the trick is sequencing them in your design so you don&apos;t try to do it all with one DB.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`tweets(tweet_id PK, author_id, body, ts)         -- primary store (Cassandra/sharded SQL)
 es_tweets_index                                  -- Elasticsearch sidecar populated via CDC
@@ -280,7 +280,7 @@ trending(hashtag, window_start, count, PK(hashtag, window_start))`}</CodeBlock>
           <div className="rounded-xl border border-violet-200 dark:border-violet-900 bg-violet-50/40 dark:bg-violet-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300 mb-2">Archetype 4 · Chat</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> chat is the only archetype where the connection layer is stateful. WebSocket connections pin a user to a single server, and your load balancer has to know it.
+              <strong>Key insight:</strong>{" "}chat is the only archetype where the connection layer is stateful. WebSocket connections pin a user to a single server, and your load balancer has to know it.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`conversations(conv_id PK, type ENUM('1:1','group'), created_at)
 messages(conv_id, msg_id, sender_id, body, ts, PK(conv_id, msg_id))  -- partitioned by conv_id
@@ -294,7 +294,7 @@ presence_cache(user_id → connection_server, ttl 30s in Redis)`}</CodeBlock>
           <div className="rounded-xl border border-orange-200 dark:border-orange-900 bg-orange-50/40 dark:bg-orange-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-300 mb-2">Archetype 5 · Distributed rate limiter</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> the algorithm is easy (token bucket). The scary part is doing it atomically across N gateway nodes with sub-millisecond latency, and choosing whether to <em>fail open</em> or <em>fail closed</em> when Redis is down.
+              <strong>Key insight:</strong>{" "}the algorithm is easy (token bucket). The scary part is doing it atomically across N gateway nodes with sub-millisecond latency, and choosing whether to <em>fail open</em>{" "}or <em>fail closed</em>{" "}when Redis is down.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`Redis key: rl:{user_id}:{endpoint}
   → value = (tokens, last_refill_ts)
@@ -308,7 +308,7 @@ Lua script (EVAL): refill, decrement, return allow/deny  -- atomic, one RTT`}</C
           <div className="rounded-xl border border-teal-200 dark:border-teal-900 bg-teal-50/40 dark:bg-teal-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300 mb-2">Archetype 6 · Rideshare</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> five subsystems (geo-index, dispatch, ETA, surge, payment). The matching round-trip — driver candidate → offer → accept/reject → fall back to next candidate — is the hard part because it&apos;s low-latency and stateful.
+              <strong>Key insight:</strong>{" "}five subsystems (geo-index, dispatch, ETA, surge, payment). The matching round-trip — driver candidate → offer → accept/reject → fall back to next candidate — is the hard part because it&apos;s low-latency and stateful.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`drivers(driver_id PK, status, last_geohash, last_seen)  -- updated every 4s via WebSocket
 geo_index(geohash → set of driver_ids)                  -- Redis ZSET or S2 cells
@@ -322,13 +322,13 @@ trips(trip_id PK, rider_id, driver_id, state, route, fare)`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Archetype 7 · Payments</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-              <strong>Key insight:</strong> money is different. Idempotency keys are mandatory, the ledger is append-only, and reconciliation against the gateway is the source of truth. Boring is the goal — cleverness in payments is a code smell.
+              <strong>Key insight:</strong>{" "}money is different. Idempotency keys are mandatory, the ledger is append-only, and reconciliation against the gateway is the source of truth. Boring is the goal — cleverness in payments is a code smell.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`ledger(entry_id PK, txn_id, account, amount_cents, currency, type, ts)  -- append-only, double-entry
 idempotency(idem_key PK, body_hash, status, response_blob, ts)
 reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
             <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
-              Every financial event becomes two or more ledger entries that sum to zero (double-entry). The client owns the idempotency key; the server stores the response blob and replays it on retry. <strong>Never modify a posted ledger entry</strong> — corrections are <em>reversing entries</em> appended to the log so the audit trail is intact. Every night, fetch the gateway&apos;s settlement report and match each line to a ledger entry; mismatches go to a queue for human review. The interviewer wants to hear &quot;append&quot;, &quot;balanced&quot;, &quot;idempotent&quot;, and &quot;reversing entry&quot; — in that order. <Link href="/courses/system-design/modules/design-payments" className="text-rose-600 hover:underline">Source →</Link>
+              Every financial event becomes two or more ledger entries that sum to zero (double-entry). The client owns the idempotency key; the server stores the response blob and replays it on retry. <strong>Never modify a posted ledger entry</strong> — corrections are <em>reversing entries</em>{" "}appended to the log so the audit trail is intact. Every night, fetch the gateway&apos;s settlement report and match each line to a ledger entry; mismatches go to a queue for human review. The interviewer wants to hear &quot;append&quot;, &quot;balanced&quot;, &quot;idempotent&quot;, and &quot;reversing entry&quot; — in that order. <Link href="/courses/system-design/modules/design-payments" className="text-rose-600 hover:underline">Source →</Link>
             </p>
           </div>
         </div>
@@ -597,7 +597,7 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       {/* ============================================================ */}
       <section className="not-prose mb-12">
         <Callout variant="spring">
-          <strong>You&apos;re ready for Phase 7 when…</strong> you can pick any one of the seven archetypes, walk the 6-step framework end-to-end without stopping to think about the order, and name the headline tradeoff before drawing a single box. When the interviewer says &quot;OK, now let&apos;s zoom in on the bottleneck&quot;, you already know which two boxes they&apos;re going to point at — and you have a 5-minute deep dive ready for each.
+          <strong>You&apos;re ready for Phase 7 when…</strong>{" "}you can pick any one of the seven archetypes, walk the 6-step framework end-to-end without stopping to think about the order, and name the headline tradeoff before drawing a single box. When the interviewer says &quot;OK, now let&apos;s zoom in on the bottleneck&quot;, you already know which two boxes they&apos;re going to point at — and you have a 5-minute deep dive ready for each.
         </Callout>
       </section>
 
@@ -613,7 +613,7 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           The 6-step framework, the fanout decision, seven archetypes, the cross-cutting infra map, and four gotchas. That&apos;s the playbook every senior engineer carries into a system-design interview — and the patterns are the same ones you&apos;ll reach for when you&apos;re actually building production systems.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 7 — Production &amp; Capstone.</strong> Migrating off legacy monoliths, security at scale, the full course recap, and a capstone design exercise that ties everything together.
+          <strong>Up next: Phase 7 — Production &amp; Capstone.</strong>{" "}Migrating off legacy monoliths, security at scale, the full course recap, and a capstone design exercise that ties everything together.
         </p>
         <Link
           href="/courses/system-design/modules/migration-patterns"

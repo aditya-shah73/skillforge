@@ -72,7 +72,7 @@ export default function RagArchitectureModule() {
 
         <p>
           RAG (<strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration) is a pattern,
-          not a product. The pattern: <em>before</em> you call the LLM, search a knowledge base for relevant
+          not a product. The pattern: <em>before</em>{" "}you call the LLM, search a knowledge base for relevant
           snippets and stuff them into the prompt. The LLM answers using those snippets as ground truth.
         </p>
 
@@ -119,7 +119,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
          └────────────────────────────┘         └──────────────────────────────┘`}</CodeBlock>
 
         <p>
-          The <strong>indexing</strong> path runs once per doc (and on updates). The <strong>query time</strong>
+          The <strong>indexing</strong>{" "}path runs once per doc (and on updates). The <strong>query time</strong>{" "}
           path runs every request. Most of the work in a RAG project is making one or both of these paths
           better — usually by improving chunking, retrieval, or assembly.
         </p>
@@ -131,7 +131,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
             If your &quot;knowledge&quot; fits in 50KB and changes rarely, just paste it into the system prompt
             and use prompt caching (Module 13). RAG adds two pieces of infra (vector store + embedding
             pipeline) and a whole new failure mode (retrieval misses). Use it when the knowledge is
-            <strong> too big to fit in context</strong> or <strong>too dynamic to ship in code</strong>. Below
+            <strong> too big to fit in context</strong>{" "}or <strong>too dynamic to ship in code</strong>. Below
             those thresholds, plain prompt + cache wins.
           </p>
         </Callout>
@@ -246,8 +246,8 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               Split every N tokens (e.g., 512). Optionally with O tokens of overlap (e.g., 50).
             </p>
             <p className="text-xs text-slate-500 m-0">
-              <strong>Good for:</strong> baseline, uniform corpora (transcripts, plain prose).{" "}
-              <strong>Bad for:</strong> structured docs — splits mid-paragraph, mid-sentence,
+              <strong>Good for:</strong>{" "}baseline, uniform corpora (transcripts, plain prose).{" "}
+              <strong>Bad for:</strong>{" "}structured docs — splits mid-paragraph, mid-sentence,
               mid-code-block.
             </p>
           </div>
@@ -258,7 +258,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               small (<code>. </code>), then characters. Stop when chunks are under your target size.
             </p>
             <p className="text-xs text-slate-500 m-0">
-              <strong>Good for:</strong> general prose with paragraph structure. The default in LangChain and
+              <strong>Good for:</strong>{" "}general prose with paragraph structure. The default in LangChain and
               Spring AI&apos;s <code>TokenTextSplitter</code> is essentially this. <strong>Sweet spot:</strong>{" "}
               start here.
             </p>
@@ -270,8 +270,8 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               embeddings drift far apart (a topic boundary).
             </p>
             <p className="text-xs text-slate-500 m-0">
-              <strong>Good for:</strong> long-form essays where topic boundaries don&apos;t align with
-              paragraph boundaries. <strong>Cost:</strong> embeds the corpus twice (once during chunking,
+              <strong>Good for:</strong>{" "}long-form essays where topic boundaries don&apos;t align with
+              paragraph boundaries. <strong>Cost:</strong>{" "}embeds the corpus twice (once during chunking,
               once for storage).
             </p>
           </div>
@@ -282,8 +282,8 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               by code function boundary, by API endpoint.
             </p>
             <p className="text-xs text-slate-500 m-0">
-              <strong>Good for:</strong> docs with explicit hierarchy (READMEs, API specs, source code).
-              <strong> Best when</strong> headings/structure carry semantic weight you want to preserve in
+              <strong>Good for:</strong>{" "}docs with explicit hierarchy (READMEs, API specs, source code).
+              <strong> Best when</strong>{" "}headings/structure carry semantic weight you want to preserve in
               retrieval.
             </p>
           </div>
@@ -293,17 +293,17 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
 
         <ul className="list-disc pl-6 space-y-2">
           <li>
-            <strong>Chunk size.</strong> Bigger chunks = more context per hit, but vaguer embeddings (one
+            <strong>Chunk size.</strong>{" "}Bigger chunks = more context per hit, but vaguer embeddings (one
             vector representing more concepts). Smaller chunks = sharper embeddings, but the LLM may need 10
             of them to answer where 2 would have done. <em>Typical: 256–1024 tokens.</em>
           </li>
           <li>
-            <strong>Overlap.</strong> Chunks that share their boundaries (e.g., last 50 tokens of chunk N =
+            <strong>Overlap.</strong>{" "}Chunks that share their boundaries (e.g., last 50 tokens of chunk N =
             first 50 of chunk N+1) prevent answers from being &quot;orphaned&quot; right at a split point.
             <em> Typical: 10–20% of chunk size.</em>
           </li>
           <li>
-            <strong>Metadata.</strong> Every chunk should carry: source doc, section/heading path, page
+            <strong>Metadata.</strong>{" "}Every chunk should carry: source doc, section/heading path, page
             number, last-modified-at. Critical for citations and for filtering at retrieval time.
           </li>
         </ul>
@@ -317,11 +317,11 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               body: (
                 <>
                   <p className="text-sm">
-                    <strong>Pick:</strong> structural — split by H2 boundaries, fall back to recursive within
+                    <strong>Pick:</strong>{" "}structural — split by H2 boundaries, fall back to recursive within
                     each H2 if it&apos;s too big.
                   </p>
                   <p className="text-sm">
-                    <strong>Why:</strong> wiki pages have meaningful section structure. An H2 like
+                    <strong>Why:</strong>{" "}wiki pages have meaningful section structure. An H2 like
                     &quot;Authentication&quot; or &quot;Rate limits&quot; is exactly the granularity you want
                     to retrieve. Treat the heading path as metadata so &quot;tell me about rate limits&quot;
                     doesn&apos;t pull a paragraph from &quot;authentication&quot;.
@@ -334,11 +334,11 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               body: (
                 <>
                   <p className="text-sm">
-                    <strong>Pick:</strong> one chunk per ticket, no splitting (assuming tickets are short
+                    <strong>Pick:</strong>{" "}one chunk per ticket, no splitting (assuming tickets are short
                     enough to fit in your embedding model&apos;s context).
                   </p>
                   <p className="text-sm">
-                    <strong>Why:</strong> a ticket is a complete unit of meaning. A single ticket embedded as
+                    <strong>Why:</strong>{" "}a ticket is a complete unit of meaning. A single ticket embedded as
                     one vector retrieves cleanly. Splitting destroys context (&quot;the user said X, then the
                     agent replied Y, then the user said Z&quot;).
                   </p>
@@ -350,11 +350,11 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               body: (
                 <>
                   <p className="text-sm">
-                    <strong>Pick:</strong> structural by section, then recursive within section, with the
+                    <strong>Pick:</strong>{" "}structural by section, then recursive within section, with the
                     title + abstract concatenated to every chunk.
                   </p>
                   <p className="text-sm">
-                    <strong>Why:</strong> papers have heavy structure. Within a 5-page Methods section,
+                    <strong>Why:</strong>{" "}papers have heavy structure. Within a 5-page Methods section,
                     recursive splitting on paragraph boundaries works fine. Prepending the paper title +
                     abstract gives every chunk enough context that &quot;what does this paper say about
                     X&quot; can retrieve a relevant paragraph from any section.
@@ -369,7 +369,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
 
         <p>
           A 500-token chunk that says &quot;...and the timeout defaults to 30 seconds.&quot; is useless without
-          knowing what <em>it</em> is. Anthropic&apos;s &quot;Contextual Retrieval&quot; technique fixes this:
+          knowing what <em>it</em>{" "}is. Anthropic&apos;s &quot;Contextual Retrieval&quot; technique fixes this:
           before embedding each chunk, prepend a one-sentence summary of where it sits in the document.
         </p>
 
@@ -461,12 +461,12 @@ longer than that, the server closes it..."`}</CodeBlock>
 
         <ol className="list-decimal pl-6 space-y-3">
           <li>
-            <strong>Redundancy.</strong> Top 5 results might be 5 near-copies of the same paragraph,
+            <strong>Redundancy.</strong>{" "}Top 5 results might be 5 near-copies of the same paragraph,
             especially in corpora with duplicated boilerplate. The LLM gets one piece of information stated
             five ways and misses the actual answer hiding in chunk #7.
           </li>
           <li>
-            <strong>Lexical misses.</strong> The user asks &quot;What&apos;s the SLA on UPS_RB123 alerts?&quot;
+            <strong>Lexical misses.</strong>{" "}The user asks &quot;What&apos;s the SLA on UPS_RB123 alerts?&quot;
             and your docs have &quot;UPS_RB123&quot; as an exact identifier. Vector search may rank a vaguely
             similar paragraph above the one with the literal string match, because embeddings are about
             <em>meaning</em>, not exact tokens.
@@ -525,14 +525,14 @@ RRF(c) = Σ over rankings R: 1 / (k + rank_R(c))   # k = 60 is a common default
         <h3 className="text-xl font-bold mt-8 mb-3">Reranking: a second, smarter look</h3>
 
         <p>
-          Embedding-based retrieval is a <em>recall</em> tool. It pulls the top 20–50 candidates from a corpus
+          Embedding-based retrieval is a <em>recall</em>{" "}tool. It pulls the top 20–50 candidates from a corpus
           of millions in milliseconds. But the ranking inside that top-50 is rough — embeddings are trained for
           general semantic similarity, not for the specific &quot;does this chunk answer this query?&quot;
           question.
         </p>
 
         <p>
-          A <strong>reranker</strong> is a second model that scores (query, chunk) pairs more carefully. It
+          A <strong>reranker</strong>{" "}is a second model that scores (query, chunk) pairs more carefully. It
           looks at one pair at a time (a &quot;cross-encoder&quot;) and produces a relevance score. You feed it
           the top 20–50 from the embedding retriever and ask it to reorder them; you keep the new top 3–5.
         </p>
@@ -564,7 +564,7 @@ LLM:                top 3–5   → answer`}</CodeBlock>
         <h3 className="text-xl font-bold mt-8 mb-3">The metric that actually matters: retrieval recall@k</h3>
 
         <p>
-          Build a 50-query golden set. For each query, hand-label which chunks <em>should</em> come back.
+          Build a 50-query golden set. For each query, hand-label which chunks <em>should</em>{" "}come back.
           Then measure: of the chunks the retriever returned, how many of the right ones are in the top k?
         </p>
 
@@ -666,12 +666,12 @@ USER:
             be expected to behave well unless you tell it what behavior you want.
           </li>
           <li>
-            <strong>Numbers the chunks and asks for citations.</strong> Citations make the LLM&apos;s reasoning
-            auditable. They also force the model to actually <em>look at</em> the chunks instead of
+            <strong>Numbers the chunks and asks for citations.</strong>{" "}Citations make the LLM&apos;s reasoning
+            auditable. They also force the model to actually <em>look at</em>{" "}the chunks instead of
             confabulating from priors.
           </li>
           <li>
-            <strong>Includes source metadata in each chunk header.</strong> The model uses this when forming
+            <strong>Includes source metadata in each chunk header.</strong>{" "}The model uses this when forming
             answers (&quot;According to the OAuth flow section...&quot;) and you can render it as a real link
             in the UI.
           </li>
@@ -688,14 +688,14 @@ USER:
         <p>Practical implications:</p>
 
         <ul className="list-disc pl-6 space-y-2">
-          <li><strong>Don&apos;t pass 50 chunks.</strong> Pass 3–5. More is almost always worse.</li>
+          <li><strong>Don&apos;t pass 50 chunks.</strong>{" "}Pass 3–5. More is almost always worse.</li>
           <li>
-            <strong>Put the most relevant chunk last.</strong> Right before the user&apos;s question is the
+            <strong>Put the most relevant chunk last.</strong>{" "}Right before the user&apos;s question is the
             highest-attention slot. Some teams reverse the rerank order specifically to surface the top hit at
             the end of the context.
           </li>
           <li>
-            <strong>Watch out when you also have a long system prompt.</strong> System prompt + context +
+            <strong>Watch out when you also have a long system prompt.</strong>{" "}System prompt + context +
             question can easily push the actual question into a low-attention zone.
           </li>
         </ul>
@@ -718,7 +718,7 @@ Total per turn:       ~5250 tokens
 Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
 
         <p>
-          Notice the retrieved chunks are <em>not</em> cacheable — they vary by query. If you find yourself
+          Notice the retrieved chunks are <em>not</em>{" "}cacheable — they vary by query. If you find yourself
           jamming chunks into the cacheable system prompt &quot;just in case&quot;, you&apos;re defeating
           retrieval.
         </p>
@@ -726,7 +726,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
         <h3 className="text-xl font-bold mt-8 mb-3">Citations as a quality signal</h3>
 
         <p>
-          When you ask the model to cite, you can <em>verify</em> the citations. Did chunk [2] actually say
+          When you ask the model to cite, you can <em>verify</em>{" "}the citations. Did chunk [2] actually say
           what the answer claimed? An automated post-check (search the answer&apos;s claims in the cited
           chunks) catches a class of subtle hallucinations where the model invents a fact and slaps a citation
           on it.
@@ -792,7 +792,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
 
         <p>
           The point of this project isn&apos;t to build production RAG (Module 17 will). It&apos;s to make
-          you <em>feel</em> how chunking changes retrieval quality. You&apos;ll feed the same corpus through
+          you <em>feel</em>{" "}how chunking changes retrieval quality. You&apos;ll feed the same corpus through
           four chunkers, run the same 20 queries, compare recall@5 numbers, and see — viscerally — why
           chunking is the most important variable.
         </p>
@@ -1078,7 +1078,7 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
         <Checkpoint moduleSlug="rag-architecture" id="project" title="Project: doc chunking lab" xp={50} manual manualLabel="I felt the chunkers" celebration="You can now feel chunking quality in your bones. That intuition is rare and valuable.">
           <p>
             Mark this done once: you&apos;ve run all four chunkers, written down the recall@5 numbers, and can
-            articulate <em>why</em> the structural and contextual chunkers won — in your own words, against
+            articulate <em>why</em>{" "}the structural and contextual chunkers won — in your own words, against
             your own corpus.
           </p>
         </Checkpoint>

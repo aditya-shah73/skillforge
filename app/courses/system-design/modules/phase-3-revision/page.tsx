@@ -77,7 +77,7 @@ flowchart LR
         </p>
 
         <Callout variant="insight">
-          <strong>The Phase 3 mental model in one sentence:</strong> services talk to each other in exactly three shapes — <em>synchronous request/response</em> (REST/gRPC behind a gateway), <em>asynchronous fire-and-forget</em> (queues), or <em>asynchronous broadcast</em> (Kafka/event streams). Every architecture decision in this phase is just picking which of the three fits the use case, and then paying the matching tax (latency, ordering, idempotency, consistency).
+          <strong>The Phase 3 mental model in one sentence:</strong>{" "}services talk to each other in exactly three shapes — <em>synchronous request/response</em> (REST/gRPC behind a gateway), <em>asynchronous fire-and-forget</em> (queues), or <em>asynchronous broadcast</em> (Kafka/event streams). Every architecture decision in this phase is just picking which of the three fits the use case, and then paying the matching tax (latency, ordering, idempotency, consistency).
         </Callout>
       </section>
 
@@ -311,7 +311,7 @@ Content-Type: application/json
 
         <h3 className="text-base font-semibold mb-2">Does NOT belong at the edge</h3>
         <Callout variant="warn">
-          <strong>Anti-patterns:</strong> business validation, DB calls, response transformation that needs domain knowledge, request fan-out to multiple services (that&apos;s a BFF, not a gateway), or per-tenant feature flags that need DB lookups. If a filter has to call a database to do its job, it belongs in a service, not at the edge.
+          <strong>Anti-patterns:</strong>{" "}business validation, DB calls, response transformation that needs domain knowledge, request fan-out to multiple services (that&apos;s a BFF, not a gateway), or per-tenant feature flags that need DB lookups. If a filter has to call a database to do its job, it belongs in a service, not at the edge.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
@@ -325,7 +325,7 @@ Content-Type: application/json
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">3. Kafka partition → consumer-group assignment</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          The picture that explains <em>everything</em> about Kafka scaling. Four partitions, two groups. Group <code>orders</code> has 5 consumers — only 4 can do work; the 5th idles. Group <code>audit</code> has 2 consumers — each takes 2 partitions.
+          The picture that explains <em>everything</em>{" "}about Kafka scaling. Four partitions, two groups. Group <code>orders</code> has 5 consumers — only 4 can do work; the 5th idles. Group <code>audit</code> has 2 consumers — each takes 2 partitions.
         </p>
 
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
@@ -333,10 +333,10 @@ Content-Type: application/json
         </div>
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
-          <li><strong>Partition is the unit of parallelism.</strong> Want to scale a consumer group? Add partitions. Once.</li>
-          <li><strong>Consumer group is the unit of independent scaling.</strong> Two groups read the same partitions <em>at their own pace</em>, each tracking their own offsets.</li>
-          <li><strong>One partition → at most one consumer in a group.</strong> Adding consumers beyond <code>numPartitions</code> wastes hardware.</li>
-          <li><strong>Different groups, same topic = pub/sub.</strong> Same group, multiple consumers = work queue.</li>
+          <li><strong>Partition is the unit of parallelism.</strong>{" "}Want to scale a consumer group? Add partitions. Once.</li>
+          <li><strong>Consumer group is the unit of independent scaling.</strong>{" "}Two groups read the same partitions <em>at their own pace</em>, each tracking their own offsets.</li>
+          <li><strong>One partition → at most one consumer in a group.</strong>{" "}Adding consumers beyond <code>numPartitions</code> wastes hardware.</li>
+          <li><strong>Different groups, same topic = pub/sub.</strong>{" "}Same group, multiple consumers = work queue.</li>
         </ul>
       </section>
 
@@ -384,8 +384,8 @@ Content-Type: application/json
         </div>
 
         <Callout variant="warn" title="Ordering and DLQs are non-negotiable">
-          <strong>Ordering:</strong> Kafka guarantees order <em>per partition only</em>. Across partitions = no order. Choose your partition key carefully (e.g. <code>userId</code> keeps one user&apos;s events in order).<br/>
-          <strong>DLQs:</strong> every consumer needs a dead-letter queue + a max-retry policy. A poison message will otherwise block the entire partition forever.
+          <strong>Ordering:</strong>{" "}Kafka guarantees order <em>per partition only</em>. Across partitions = no order. Choose your partition key carefully (e.g. <code>userId</code> keeps one user&apos;s events in order).<br/>
+          <strong>DLQs:</strong>{" "}every consumer needs a dead-letter queue + a max-retry policy. A poison message will otherwise block the entire partition forever.
         </Callout>
 
         <h3 className="text-base font-semibold mb-2 mt-6">Broker pick — when each one wins</h3>
@@ -524,17 +524,17 @@ Content-Type: application/json
           Write side is normalized, validates invariants, optimized for correctness. Read side is denormalized, optimized for the specific queries the UI makes. An event stream from write → read keeps them in sync (with replication lag).
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-6">
-          <li><strong>Buys you:</strong> read scale independent of write scale, query shapes the UI actually wants, separate database technologies (Postgres write, Elasticsearch read).</li>
-          <li><strong>Costs you:</strong> eventual consistency (the user&apos;s write may not show up in their next read for ~ms–seconds), two models to keep in sync, more moving parts.</li>
-          <li><strong>Don&apos;t use for:</strong> CRUD apps where the read and write shapes are identical. You&apos;re paying the tax for no benefit.</li>
+          <li><strong>Buys you:</strong>{" "}read scale independent of write scale, query shapes the UI actually wants, separate database technologies (Postgres write, Elasticsearch read).</li>
+          <li><strong>Costs you:</strong>{" "}eventual consistency (the user&apos;s write may not show up in their next read for ~ms–seconds), two models to keep in sync, more moving parts.</li>
+          <li><strong>Don&apos;t use for:</strong>{" "}CRUD apps where the read and write shapes are identical. You&apos;re paying the tax for no benefit.</li>
         </ul>
 
         <h3 className="text-base font-semibold mb-2">Event sourcing — the audit + replay superpower</h3>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          Store the <em>events</em> as the source of truth, not the current state. Current state is a fold over the event log. You get a perfect audit trail, time-travel debugging, the ability to rebuild any projection — but every operation now lives in the event-modeling language.
+          Store the <em>events</em>{" "}as the source of truth, not the current state. Current state is a fold over the event log. You get a perfect audit trail, time-travel debugging, the ability to rebuild any projection — but every operation now lives in the event-modeling language.
         </p>
         <Callout variant="warn">
-          <strong>When event sourcing is overkill:</strong> if you don&apos;t need audit, don&apos;t need replay, and your domain doesn&apos;t naturally express itself as events (most CRUD apps don&apos;t), this is a 10× complexity multiplier for zero business value. Use it for payments, ledger, ordering, regulated domains — not for the average CMS.
+          <strong>When event sourcing is overkill:</strong>{" "}if you don&apos;t need audit, don&apos;t need replay, and your domain doesn&apos;t naturally express itself as events (most CRUD apps don&apos;t), this is a 10× complexity multiplier for zero business value. Use it for payments, ledger, ordering, regulated domains — not for the average CMS.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
@@ -592,7 +592,7 @@ LIMIT 20;`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Kafka consumer commits before processing</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              Auto-commit fires on a timer. If you crash between commit and processing, the message is lost forever. Commit <em>after</em> the work, manually.
+              Auto-commit fires on a timer. If you crash between commit and processing, the message is lost forever. Commit <em>after</em>{" "}the work, manually.
             </p>
             <CodeBlock lang="java">{`// BAD — auto-commit silently loses messages on crash
 props.put("enable.auto.commit", "true");
@@ -724,7 +724,7 @@ consumer.commitSync();`}</CodeBlock>
           API contracts, edge concerns, broker tradeoffs, Kafka mechanics, event-driven patterns — the whole communication toolbox. From here on, when a system-design problem says &quot;Service A talks to Service B,&quot; you already know what questions to ask and what shape the answer takes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Distribution &amp; Scale.</strong> Load balancing, rate limiting, distributed caching, distributed transactions, resilience. How systems hold together when one box is no longer enough.
+          <strong>Up next: Phase 4 — Distribution &amp; Scale.</strong>{" "}Load balancing, rate limiting, distributed caching, distributed transactions, resilience. How systems hold together when one box is no longer enough.
         </p>
         <Link
           href="/courses/system-design/modules/load-balancing"

@@ -73,12 +73,12 @@ sequenceDiagram
         </p>
 
         <p>
-          The answer is to expose <em>functions</em> the model can request. You describe each function in JSON: name, what it does, what arguments it takes. The model decides when to call one and what arguments to pass. You execute it server-side. You give the result back. The model continues.
+          The answer is to expose <em>functions</em>{" "}the model can request. You describe each function in JSON: name, what it does, what arguments it takes. The model decides when to call one and what arguments to pass. You execute it server-side. You give the result back. The model continues.
         </p>
 
         <Callout variant="info" title="Tool use is just structured output, repeated">
           <p>
-            Notice the parallel to Module 10&apos;s <code>.entity(...)</code>. There, the model produced JSON conforming to your <code>Sentiment</code> schema. Here, the model produces JSON conforming to a <em>tool call</em> schema: a name plus an input object. The mechanism is the same — constrained generation against a schema you supplied. The difference is that with structured output you stop after one parse; with tool use, you execute the parsed call and feed the result back so the model can keep going.
+            Notice the parallel to Module 10&apos;s <code>.entity(...)</code>. There, the model produced JSON conforming to your <code>Sentiment</code> schema. Here, the model produces JSON conforming to a <em>tool call</em>{" "}schema: a name plus an input object. The mechanism is the same — constrained generation against a schema you supplied. The difference is that with structured output you stop after one parse; with tool use, you execute the parsed call and feed the result back so the model can keep going.
           </p>
         </Callout>
 
@@ -180,7 +180,7 @@ sequenceDiagram
         <h2 className="text-2xl font-bold mt-12 mb-4">Part 3 — Tools in Spring AI</h2>
 
         <p>
-          The good news: you do not write JSON schemas by hand. Spring AI inspects your method signatures, generates the schema, and binds tool calls back to the method. There are two ways to register a tool — <strong>per-call</strong> via <code>@Tool</code> annotations on a regular Spring bean&apos;s methods, or <strong>programmatic</strong> via <code>MethodToolCallback</code> if you need runtime flexibility.
+          The good news: you do not write JSON schemas by hand. Spring AI inspects your method signatures, generates the schema, and binds tool calls back to the method. There are two ways to register a tool — <strong>per-call</strong>{" "}via <code>@Tool</code> annotations on a regular Spring bean&apos;s methods, or <strong>programmatic</strong>{" "}via <code>MethodToolCallback</code> if you need runtime flexibility.
         </p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">The simplest case: <code>@Tool</code> on a bean method</h3>
@@ -328,7 +328,7 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
 
         <Callout variant="warn" title="3. PII leakage in tool results">
           <p>
-            Tool results go straight into the conversation. If <code>findUser</code> returns SSN, the model might quote it verbatim in its reply, and now your logs and any cache contain SSN. Strip sensitive fields <em>inside the tool</em> before returning. The model can&apos;t leak what it never received.
+            Tool results go straight into the conversation. If <code>findUser</code> returns SSN, the model might quote it verbatim in its reply, and now your logs and any cache contain SSN. Strip sensitive fields <em>inside the tool</em>{" "}before returning. The model can&apos;t leak what it never received.
           </p>
         </Callout>
 
@@ -381,7 +381,7 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
         <Callout variant="info" title="Path A — Browser (start.spring.io)">
           <ol className="list-decimal pl-6 space-y-1 mt-2">
             <li>Open this pre-filled link: <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=graph-assistant&name=graph-assistant&description=GraphQL-aware%20assistant&packageName=com.example.graph&dependencies=spring-ai-anthropic" target="_blank" rel="noreferrer">start.spring.io with everything pre-filled</a>.</li>
-            <li>Click <strong>GENERATE</strong> at the bottom.</li>
+            <li>Click <strong>GENERATE</strong>{" "}at the bottom.</li>
             <li>Unzip the download somewhere sensible — e.g. <code>~/code/graph-assistant</code>.</li>
             <li>Open the folder in your editor.</li>
           </ol>

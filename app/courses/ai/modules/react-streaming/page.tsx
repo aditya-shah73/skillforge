@@ -86,7 +86,7 @@ export default function ReactStreamingModule() {
 
         <p>
           Streaming is the fix. Not because it&apos;s technically interesting (it is), but because the
-          user experience of <em>watching words appear</em> is fundamentally different from <em>waiting
+          user experience of <em>watching words appear</em>{" "}is fundamentally different from <em>waiting
           for a wall of text</em>. The same response feels twice as fast when streamed, even though the
           total time is identical.
         </p>
@@ -115,7 +115,7 @@ Streaming:
   → User waits 0.7s, then reads along with generation.`}</CodeBlock>
 
         <p>
-          The total work is the same. The <em>experience</em> is not. Users tolerate progress; they
+          The total work is the same. The <em>experience</em>{" "}is not. Users tolerate progress; they
           don&apos;t tolerate dead air.
         </p>
 
@@ -124,23 +124,23 @@ Streaming:
         <p>
           Streaming is not free. It locks you into incremental rendering, makes error handling harder
           (you might have already shown half a message before the stream dies), and complicates anything
-          downstream that needs the <em>full</em> response — JSON validation, tool calls, post-processing.
+          downstream that needs the <em>full</em>{" "}response — JSON validation, tool calls, post-processing.
         </p>
 
         <p>Skip streaming when:</p>
 
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>The response is short enough that the spinner is invisible.</strong> Classification, yes/no, single-word output — non-streaming is simpler and the user can&apos;t tell.</li>
-          <li><strong>You need the whole structured output before doing anything.</strong> If the LLM is producing JSON for your code to consume, partial JSON is useless — wait for it.</li>
-          <li><strong>The output goes to a non-human consumer.</strong> Cron job, webhook, batch process. Nobody&apos;s watching.</li>
+          <li><strong>The response is short enough that the spinner is invisible.</strong>{" "}Classification, yes/no, single-word output — non-streaming is simpler and the user can&apos;t tell.</li>
+          <li><strong>You need the whole structured output before doing anything.</strong>{" "}If the LLM is producing JSON for your code to consume, partial JSON is useless — wait for it.</li>
+          <li><strong>The output goes to a non-human consumer.</strong>{" "}Cron job, webhook, batch process. Nobody&apos;s watching.</li>
         </ul>
 
         <p>Stream when:</p>
 
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>A human is reading prose as it appears.</strong> Chat. Long-form generation. Q&amp;A. Code explanation.</li>
+          <li><strong>A human is reading prose as it appears.</strong>{" "}Chat. Long-form generation. Q&amp;A. Code explanation.</li>
           <li><strong>You want to surface tool calls live</strong> (&quot;Searching docs…&quot; → &quot;Reading 3 results…&quot; → &quot;Drafting answer…&quot;). We&apos;ll cover this in Part 4.</li>
-          <li><strong>Generation can take more than ~2 seconds.</strong> That&apos;s the spinner-tolerance threshold for most users.</li>
+          <li><strong>Generation can take more than ~2 seconds.</strong>{" "}That&apos;s the spinner-tolerance threshold for most users.</li>
         </ul>
 
         <Quiz
@@ -199,12 +199,12 @@ es.onerror = () => es.close();`}</CodeBlock>
 
         <ol className="list-decimal pl-6 space-y-1">
           <li>
-            <strong>It only does GET.</strong> Your chat request has a body — messages, tool config,
+            <strong>It only does GET.</strong>{" "}Your chat request has a body — messages, tool config,
             session ID, model parameters. None of that fits in a query string. (And query strings show
             up in server logs, which you don&apos;t want for user prompts.)
           </li>
           <li>
-            <strong>You can&apos;t set headers.</strong> No <code>Authorization</code>, no
+            <strong>You can&apos;t set headers.</strong>{" "}No <code>Authorization</code>, no
             <code>Content-Type</code>. Cookies work, custom auth doesn&apos;t. Most production AI APIs
             need a header.
           </li>
@@ -278,16 +278,16 @@ export async function* streamChat(
 
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            <strong>It&apos;s an async generator.</strong> Consumers loop with <code>for await</code>,
+            <strong>It&apos;s an async generator.</strong>{" "}Consumers loop with <code>for await</code>,
             which is the cleanest possible way to render incoming tokens.
           </li>
           <li>
-            <strong>It buffers across reads.</strong> A single <code>reader.read()</code> may give you
+            <strong>It buffers across reads.</strong>{" "}A single <code>reader.read()</code> may give you
             half a frame, two frames, or one and a half. We hold onto the partial in <code>buffer</code>
             until we see <code>\n\n</code>.
           </li>
           <li>
-            <strong>It tolerates a bad frame.</strong> If one JSON parse fails (network glitch, server
+            <strong>It tolerates a bad frame.</strong>{" "}If one JSON parse fails (network glitch, server
             bug), we skip it and keep going. Streams should be resilient.
           </li>
         </ul>
@@ -570,24 +570,24 @@ export function useStreamingChat() {
 
         <ol className="list-decimal pl-6 space-y-2">
           <li>
-            <strong>Single source of truth for both messages.</strong> The user message and the
+            <strong>Single source of truth for both messages.</strong>{" "}The user message and the
             in-flight assistant message both go into <code>messages</code> immediately. No separate
             &quot;current draft&quot; state to keep in sync.
           </li>
           <li>
-            <strong>The assistant message is born streaming.</strong> Its <code>streaming</code> flag
+            <strong>The assistant message is born streaming.</strong>{" "}Its <code>streaming</code> flag
             flips when the stream ends, which lets the UI show a cursor / pulse while it&apos;s alive.
           </li>
           <li>
-            <strong>AbortController lives in a ref, not state.</strong> Aborting is a side effect, not
+            <strong>AbortController lives in a ref, not state.</strong>{" "}Aborting is a side effect, not
             data the UI depends on. <code>useRef</code> is correct.
           </li>
           <li>
-            <strong>Cancelled streams aren&apos;t errors.</strong> If the user clicks stop, the partial
+            <strong>Cancelled streams aren&apos;t errors.</strong>{" "}If the user clicks stop, the partial
             text is fine — we keep it and go back to idle. Network failures are the actual error path.
           </li>
           <li>
-            <strong>The history sent to the server includes the new user message.</strong> Easy to get
+            <strong>The history sent to the server includes the new user message.</strong>{" "}Easy to get
             wrong: if you read <code>messages</code> directly, you&apos;ll miss the message you just
             added (state updates are async). We build the history explicitly.
           </li>
@@ -851,16 +851,16 @@ export function useAutoScroll<T>(dep: T) {
 
         <ol className="list-decimal pl-6 space-y-2">
           <li>
-            <strong>Mark the assistant message as failed but keep what arrived.</strong> Don&apos;t
+            <strong>Mark the assistant message as failed but keep what arrived.</strong>{" "}Don&apos;t
             erase content. Show an inline &quot;⚠ stream interrupted&quot; below it.
           </li>
           <li>
-            <strong>Offer a <em>continue</em> button.</strong> Re-sends the conversation with a system
+            <strong>Offer a <em>continue</em>{" "}button.</strong>{" "}Re-sends the conversation with a system
             instruction like &quot;Continue from where you left off, do not repeat what you&apos;ve
             already said.&quot; The model is good at this.
           </li>
           <li>
-            <strong>Don&apos;t auto-retry silently.</strong> A silent retry doubles your API spend and
+            <strong>Don&apos;t auto-retry silently.</strong>{" "}A silent retry doubles your API spend and
             often produces a different answer mid-conversation. Make the user click.
           </li>
         </ol>
@@ -1044,8 +1044,8 @@ export default function ChatDemo() {
         <ul className="list-disc pl-6 space-y-1">
           <li>Tokens appear in the UI within ~100ms of the mock starting to emit them.</li>
           <li>The tool-call appears as a styled badge with a &quot;running&quot; → &quot;done&quot; transition.</li>
-          <li>Clicking <strong>Stop</strong> mid-stream keeps the partial assistant content and re-enables the input.</li>
-          <li>Scrolling up while a stream is live <em>doesn&apos;t</em> yank you back down. Scrolling back to the bottom resumes auto-scroll.</li>
+          <li>Clicking <strong>Stop</strong>{" "}mid-stream keeps the partial assistant content and re-enables the input.</li>
+          <li>Scrolling up while a stream is live <em>doesn&apos;t</em>{" "}yank you back down. Scrolling back to the bottom resumes auto-scroll.</li>
           <li>Refreshing the page returns you to a clean state — no zombie streams in the network tab.</li>
           <li>The components have no styling tied to the demo page; they&apos;re drop-in usable elsewhere.</li>
         </ul>
@@ -1055,8 +1055,8 @@ export default function ChatDemo() {
         <ul className="list-disc pl-6 space-y-1">
           <li><strong>Markdown rendering</strong> — use <code>react-markdown</code> with safe defaults to render the text parts.</li>
           <li><strong>Code block syntax highlighting</strong> — your AI is going to emit a lot of code. Make it readable.</li>
-          <li><strong>Continue button</strong> on errored messages, as in Part 4.</li>
-          <li><strong>Persist conversations</strong> to <code>localStorage</code> so a refresh doesn&apos;t lose history. (We&apos;ll do this properly in Module 19 with a backend session store.)</li>
+          <li><strong>Continue button</strong>{" "}on errored messages, as in Part 4.</li>
+          <li><strong>Persist conversations</strong>{" "}to <code>localStorage</code> so a refresh doesn&apos;t lose history. (We&apos;ll do this properly in Module 19 with a backend session store.)</li>
         </ul>
 
         <Checkpoint moduleSlug="react-streaming" id="project" title="Project: chat UI component library" xp={50} manual manualLabel="My library streams cleanly" celebration="You have a chat UI you'll reuse for the rest of the course.">

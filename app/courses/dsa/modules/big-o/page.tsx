@@ -76,8 +76,8 @@ flowchart LR
           You&apos;ve written two ways to find a number in a list of one million integers.
         </p>
         <p>
-          <strong>Version A</strong> walks the list from start to end and stops when it finds the number.
-          <strong> Version B</strong> first builds a hash set of all the numbers, then checks if the target is in the set.
+          <strong>Version A</strong>{" "}walks the list from start to end and stops when it finds the number.
+          <strong> Version B</strong>{" "}first builds a hash set of all the numbers, then checks if the target is in the set.
         </p>
         <p>
           You time them on your laptop. Version A finishes in <strong>8 milliseconds</strong>. Version B finishes in <strong>12 milliseconds</strong>.
@@ -102,18 +102,18 @@ flowchart LR
           Wall-clock time is a terrible way to compare algorithms, for three reasons:
         </p>
         <ol>
-          <li><strong>It depends on the machine.</strong> A loop that takes 8ms on your M2 MacBook takes 80ms on a budget cloud VM. Same algorithm. Different stopwatch.</li>
-          <li><strong>It depends on n.</strong> Version A might beat Version B at <code>n = 100</code>, lose at <code>n = 100,000</code>, and lose catastrophically at <code>n = 100,000,000</code>. The crossover point is the whole game.</li>
-          <li><strong>It depends on luck.</strong> If your target was the first element in Version A, it finished instantly. Same code, different input, different time.</li>
+          <li><strong>It depends on the machine.</strong>{" "}A loop that takes 8ms on your M2 MacBook takes 80ms on a budget cloud VM. Same algorithm. Different stopwatch.</li>
+          <li><strong>It depends on n.</strong>{" "}Version A might beat Version B at <code>n = 100</code>, lose at <code>n = 100,000</code>, and lose catastrophically at <code>n = 100,000,000</code>. The crossover point is the whole game.</li>
+          <li><strong>It depends on luck.</strong>{" "}If your target was the first element in Version A, it finished instantly. Same code, different input, different time.</li>
         </ol>
         <p>
-          What we actually want is a way to talk about algorithms <em>independent</em> of any machine, any specific input, and any specific n. We want to ask: <em>how does the work the algorithm does grow as the input grows?</em>
+          What we actually want is a way to talk about algorithms <em>independent</em>{" "}of any machine, any specific input, and any specific n. We want to ask: <em>how does the work the algorithm does grow as the input grows?</em>
         </p>
         <p>That question is what Big-O answers.</p>
 
         <Callout variant="insight" title="Big-O is about scaling, not speed">
           <p className="m-0">
-            Big-O doesn&apos;t tell you how fast something is. It tells you how the running time <strong>grows</strong> as the input grows. A &quot;faster&quot; algorithm at small n can be the worse algorithm — if it scales worse.
+            Big-O doesn&apos;t tell you how fast something is. It tells you how the running time <strong>grows</strong>{" "}as the input grows. A &quot;faster&quot; algorithm at small n can be the worse algorithm — if it scales worse.
           </p>
         </Callout>
 
@@ -122,9 +122,9 @@ flowchart LR
           Imagine you&apos;re hired to fill a stadium with people, and you have three strategies:
         </p>
         <ul>
-          <li><strong>Strategy 1:</strong> One usher escorts people in, one at a time. To fill <code>n</code> seats, you do <code>n</code> escorts.</li>
+          <li><strong>Strategy 1:</strong>{" "}One usher escorts people in, one at a time. To fill <code>n</code> seats, you do <code>n</code> escorts.</li>
           <li><strong>Strategy 2:</strong> 50 ushers escort people in parallel. To fill <code>n</code> seats, you do roughly <code>n / 50</code> escorts.</li>
-          <li><strong>Strategy 3:</strong> You make every person who walks in greet every other person who&apos;s already inside. For <code>n</code> people, that&apos;s about <code>n × n</code> handshakes.</li>
+          <li><strong>Strategy 3:</strong>{" "}You make every person who walks in greet every other person who&apos;s already inside. For <code>n</code> people, that&apos;s about <code>n × n</code> handshakes.</li>
         </ul>
         <p>
           For 10 people, all three look fine. Strategy 1 does 10 things, Strategy 2 does 1, Strategy 3 does 100. Whatever — you fill the stadium quickly either way.
@@ -133,7 +133,7 @@ flowchart LR
           For 50,000 people? Strategy 1 does 50,000 things. Strategy 2 does 1,000. Strategy 3 does 2,500,000,000. <strong>That&apos;s the difference between &quot;done before lunch&quot; and &quot;done after the heat death of the universe.&quot;</strong>
         </p>
         <p>
-          Big-O is the language we use to talk about that difference — the <em>shape</em> of how work grows — without caring whether the ushers are fast or slow on any given day.
+          Big-O is the language we use to talk about that difference — the <em>shape</em>{" "}of how work grows — without caring whether the ushers are fast or slow on any given day.
         </p>
 
         <Quiz
@@ -165,7 +165,7 @@ flowchart LR
         <h2>Part 2: Why we drop constants and lower terms</h2>
 
         <p>
-          The first time you saw Big-O, somebody told you: <em>&quot;ignore constants, ignore lower-order terms.&quot;</em> Your reaction was probably: <strong>&quot;Why? That feels like cheating.&quot;</strong>
+          The first time you saw Big-O, somebody told you: <em>&quot;ignore constants, ignore lower-order terms.&quot;</em>{" "}Your reaction was probably: <strong>&quot;Why? That feels like cheating.&quot;</strong>
         </p>
         <p>
           It&apos;s not cheating. It&apos;s the entire reason Big-O is useful. Let&apos;s see why.
@@ -176,8 +176,8 @@ flowchart LR
           You have two algorithms that both solve the same problem:
         </p>
         <ul>
-          <li><strong>Algorithm X</strong> does exactly <code>5n + 3</code> operations on an input of size n.</li>
-          <li><strong>Algorithm Y</strong> does exactly <code>n² / 100</code> operations on an input of size n.</li>
+          <li><strong>Algorithm X</strong>{" "}does exactly <code>5n + 3</code> operations on an input of size n.</li>
+          <li><strong>Algorithm Y</strong>{" "}does exactly <code>n² / 100</code> operations on an input of size n.</li>
         </ul>
         <p>
           At small n, Algorithm Y looks tempting — that <code>/100</code> is doing some heavy lifting. Let&apos;s actually count.
@@ -193,7 +193,7 @@ flowchart LR
                 <>
                   <p>Algorithm X: <code>5(10) + 3 = 53</code> operations.</p>
                   <p>Algorithm Y: <code>10² / 100 = 1</code> operation.</p>
-                  <p><strong>Y wins by 53×.</strong> Looks great, right?</p>
+                  <p><strong>Y wins by 53×.</strong>{" "}Looks great, right?</p>
                 </>
               ),
             },
@@ -213,7 +213,7 @@ flowchart LR
                 <>
                   <p>Algorithm X: <code>5(500) + 3 = 2,503</code> operations.</p>
                   <p>Algorithm Y: <code>500² / 100 = 2,500</code> operations.</p>
-                  <p><strong>Roughly tied.</strong> This is the crossover. After this, Y starts losing.</p>
+                  <p><strong>Roughly tied.</strong>{" "}This is the crossover. After this, Y starts losing.</p>
                 </>
               ),
             },
@@ -233,7 +233,7 @@ flowchart LR
                 <>
                   <p>Algorithm X: <code>5(1,000,000) + 3 = 5,000,003</code> operations.</p>
                   <p>Algorithm Y: <code>1,000,000² / 100 = 10,000,000,000</code> operations.</p>
-                  <p><strong>X wins by ~2,000×.</strong> Y is now hopeless.</p>
+                  <p><strong>X wins by ~2,000×.</strong>{" "}Y is now hopeless.</p>
                 </>
               ),
             },
@@ -241,9 +241,9 @@ flowchart LR
               title: "The takeaway",
               body: (
                 <>
-                  <p>The constants (<code>5</code>, <code>3</code>, <code>/100</code>) decided who won at small n. They were <em>completely irrelevant</em> at large n.</p>
+                  <p>The constants (<code>5</code>, <code>3</code>, <code>/100</code>) decided who won at small n. They were <em>completely irrelevant</em>{" "}at large n.</p>
                   <p>What decided the long-term winner? The <strong>highest-order term</strong>: <code>n</code> for X vs <code>n²</code> for Y. That&apos;s the only thing that mattered once n got big.</p>
-                  <p>Big-O captures exactly that — the highest-order term, with constants stripped. So Algorithm X is <strong>O(n)</strong> and Algorithm Y is <strong>O(n²)</strong>.</p>
+                  <p>Big-O captures exactly that — the highest-order term, with constants stripped. So Algorithm X is <strong>O(n)</strong>{" "}and Algorithm Y is <strong>O(n²)</strong>.</p>
                 </>
               ),
             },
@@ -252,7 +252,7 @@ flowchart LR
 
         <h3>The formal definition (one paragraph)</h3>
         <p>
-          We say a function <code>f(n)</code> is <strong>O(g(n))</strong> if there exist constants <code>c &gt; 0</code> and <code>n₀ ≥ 0</code> such that for all <code>n ≥ n₀</code>:
+          We say a function <code>f(n)</code> is <strong>O(g(n))</strong>{" "}if there exist constants <code>c &gt; 0</code> and <code>n₀ ≥ 0</code> such that for all <code>n ≥ n₀</code>:
         </p>
         <pre><code>f(n) ≤ c · g(n)</code></pre>
         <p>
@@ -302,7 +302,7 @@ flowchart LR
 
         <Callout variant="warn" title="O(1) does not mean &apos;fast&apos;">
           <p className="m-0">
-            A function that does 10 billion operations but doesn&apos;t depend on n is still O(1). In practice O(1) usually <em>is</em> fast, but Big-O cannot tell you that. It can only tell you the work doesn&apos;t grow.
+            A function that does 10 billion operations but doesn&apos;t depend on n is still O(1). In practice O(1) usually <em>is</em>{" "}fast, but Big-O cannot tell you that. It can only tell you the work doesn&apos;t grow.
           </p>
         </Callout>
 
@@ -325,7 +325,7 @@ flowchart LR
         <h2>Part 3: The 7 curves you&apos;ll meet for the rest of your career</h2>
 
         <p>
-          Here&apos;s the good news. There aren&apos;t a hundred Big-O classes you need to know. There are <strong>seven</strong> that cover almost every algorithm you&apos;ll see in interviews and in production code.
+          Here&apos;s the good news. There aren&apos;t a hundred Big-O classes you need to know. There are <strong>seven</strong>{" "}that cover almost every algorithm you&apos;ll see in interviews and in production code.
         </p>
 
         <Mermaid chart={growthChart} />
@@ -395,7 +395,7 @@ flowchart LR
 
         <Callout variant="insight" title="The mental cliff: O(n log n) → O(n²)">
           <p className="m-0">
-            For interviews and most engineering work, the line you&apos;re always trying not to cross is the jump from O(n log n) to O(n²). <strong>Cross that line and your algorithm dies at scale.</strong> Most &quot;optimize this&quot; problems are really &quot;turn O(n²) into O(n log n) or O(n).&quot; Tattoo this on your brain.
+            For interviews and most engineering work, the line you&apos;re always trying not to cross is the jump from O(n log n) to O(n²). <strong>Cross that line and your algorithm dies at scale.</strong>{" "}Most &quot;optimize this&quot; problems are really &quot;turn O(n²) into O(n log n) or O(n).&quot; Tattoo this on your brain.
           </p>
         </Callout>
 
@@ -407,13 +407,13 @@ flowchart LR
           <code>log₂(n)</code> is &quot;how many times can I halve n before I get to 1?&quot;
         </p>
         <ul>
-          <li>n = 8 → halve to 4, 2, 1. <strong>3 halvings.</strong> log₂(8) = 3.</li>
+          <li>n = 8 → halve to 4, 2, 1. <strong>3 halvings.</strong>{" "}log₂(8) = 3.</li>
           <li>n = 1,000 → ~10 halvings. log₂(1,000) ≈ 10.</li>
           <li>n = 1,000,000 → ~20 halvings. log₂(1,000,000) ≈ 20.</li>
           <li>n = 1,000,000,000 → ~30 halvings.</li>
         </ul>
         <p>
-          The number gets a billion times bigger; the log only adds 20. <strong>Any time you can replace &quot;walk through everything&quot; (O(n)) with &quot;halve the problem until done&quot; (O(log n)), you&apos;ve made an algorithm a billion times more scalable.</strong> That&apos;s why binary search is famous.
+          The number gets a billion times bigger; the log only adds 20. <strong>Any time you can replace &quot;walk through everything&quot; (O(n)) with &quot;halve the problem until done&quot; (O(log n)), you&apos;ve made an algorithm a billion times more scalable.</strong>{" "}That&apos;s why binary search is famous.
         </p>
 
         <h3>What each curve looks like at n = 1 million</h3>
@@ -506,7 +506,7 @@ flowchart LR
 // Total: O(n × n) = O(n²)`}</CodeBlock>
         <Callout variant="warn" title="The 'inner loop is shorter' trap">
           <p className="m-0">
-            That inner loop runs n, then n−1, then n−2, ... → about n²/2 total. We <strong>still</strong> call this O(n²). Constants get dropped, remember? People who say &quot;but it&apos;s only half&quot; haven&apos;t internalized Part 2.
+            That inner loop runs n, then n−1, then n−2, ... → about n²/2 total. We <strong>still</strong>{" "}call this O(n²). Constants get dropped, remember? People who say &quot;but it&apos;s only half&quot; haven&apos;t internalized Part 2.
           </p>
         </Callout>
 
@@ -653,7 +653,7 @@ boolean badContains(List<String> haystack, String needle) {
                 Look at every loop. For each one ask: how many times does it iterate (n? log n? once?), and what&apos;s the cost of one iteration. Multiply nested loops, add sequential blocks, then keep only the dominant term and drop all constants.
               </p>
               <p>
-                Don&apos;t forget: every <em>method call</em> inside a loop has its own Big-O. A single-looking for-loop calling <code>List.contains</code> on each element is secretly O(n²).
+                Don&apos;t forget: every <em>method call</em>{" "}inside a loop has its own Big-O. A single-looking for-loop calling <code>List.contains</code> on each element is secretly O(n²).
               </p>
             </>
           }
@@ -838,9 +838,9 @@ n = 1000000
 
         <h3>Stretch goals (optional)</h3>
         <ul>
-          <li><strong>Add an O(2ⁿ) method</strong> using naive recursive Fibonacci. Run it for n=20, 25, 30, 35, 40. Watch each step roughly double the time. Stop at 40 — 50 will hang your laptop.</li>
-          <li><strong>Plot the data.</strong> Pipe the output to a CSV and graph it in Excel/Sheets. Seeing the curves on a real chart is the moment Big-O stops being abstract.</li>
-          <li><strong>Compare List.contains vs HashSet.contains.</strong> Build both with 1M elements. Search for 10,000 random keys in each. Time the difference. This is the single most important practical lesson in the entire module.</li>
+          <li><strong>Add an O(2ⁿ) method</strong>{" "}using naive recursive Fibonacci. Run it for n=20, 25, 30, 35, 40. Watch each step roughly double the time. Stop at 40 — 50 will hang your laptop.</li>
+          <li><strong>Plot the data.</strong>{" "}Pipe the output to a CSV and graph it in Excel/Sheets. Seeing the curves on a real chart is the moment Big-O stops being abstract.</li>
+          <li><strong>Compare List.contains vs HashSet.contains.</strong>{" "}Build both with 1M elements. Search for 10,000 random keys in each. Time the difference. This is the single most important practical lesson in the entire module.</li>
         </ul>
       </section>
       </Checkpoint>
@@ -918,7 +918,7 @@ n = 1000000
           You&apos;ll be able to name the seven curves, justify why constants and lower-order terms vanish, read a Java method and call out its Big-O on sight, and you&apos;ll have seen the curves with your own eyes on a real benchmark. That&apos;s the foundation.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Module 2 — Space complexity.</strong> The half of Big-O nobody talks about until they need it. Why recursion costs memory. What the JVM call stack actually looks like. The difference between auxiliary space (the part you control) and total space (the part you don&apos;t).
+          <strong>Up next: Module 2 — Space complexity.</strong>{" "}The half of Big-O nobody talks about until they need it. Why recursion costs memory. What the JVM call stack actually looks like. The difference between auxiliary space (the part you control) and total space (the part you don&apos;t).
         </p>
         <div className="mt-5">
           <Link

@@ -97,7 +97,7 @@ D   0 0 0 0"]
         <h2 id="what">What a graph is — beyond the textbook</h2>
 
         <p>
-          A <strong>graph</strong> is a set of <em>nodes</em> (or <em>vertices</em>) and <em>edges</em> connecting them.
+          A <strong>graph</strong>{" "}is a set of <em>nodes</em> (or <em>vertices</em>) and <em>edges</em>{" "}connecting them.
           That definition is so general it sounds useless. The reason graphs matter — and the reason every interview
           loop has 3-5 graph problems — is that <em>most non-trivial relationships in software are graphs</em>, and
           the same handful of algorithms solve them all.
@@ -108,20 +108,20 @@ D   0 0 0 0"]
         <p>Some examples that don&apos;t look like graphs but are:</p>
 
         <ul>
-          <li><strong>Build dependencies.</strong> Maven modules, Gradle subprojects — each module points to its dependencies. Topological sort tells you the build order.</li>
-          <li><strong>Function call graphs.</strong> Methods call other methods. Cycle detection finds infinite recursion; SCC analysis finds tightly coupled clusters.</li>
-          <li><strong>Spreadsheet formulas.</strong> Each cell points to the cells its formula reads. Re-evaluation order is a topo sort. Circular references are cycles.</li>
-          <li><strong>Permission inheritance.</strong> Roles inherit from roles, groups belong to groups. &quot;Does Alice have permission X?&quot; is reachability.</li>
-          <li><strong>Anything social.</strong> Friends-of-friends, retweets, reply threads. Six degrees of separation = BFS depth.</li>
-          <li><strong>State machines.</strong> Order states (PENDING → PAID → SHIPPED → DELIVERED) form a directed graph. Reachability tells you whether a transition is legal.</li>
-          <li><strong>The web.</strong> Pages link to pages. PageRank is a graph algorithm. So is &quot;recommended for you&quot; on most platforms.</li>
+          <li><strong>Build dependencies.</strong>{" "}Maven modules, Gradle subprojects — each module points to its dependencies. Topological sort tells you the build order.</li>
+          <li><strong>Function call graphs.</strong>{" "}Methods call other methods. Cycle detection finds infinite recursion; SCC analysis finds tightly coupled clusters.</li>
+          <li><strong>Spreadsheet formulas.</strong>{" "}Each cell points to the cells its formula reads. Re-evaluation order is a topo sort. Circular references are cycles.</li>
+          <li><strong>Permission inheritance.</strong>{" "}Roles inherit from roles, groups belong to groups. &quot;Does Alice have permission X?&quot; is reachability.</li>
+          <li><strong>Anything social.</strong>{" "}Friends-of-friends, retweets, reply threads. Six degrees of separation = BFS depth.</li>
+          <li><strong>State machines.</strong>{" "}Order states (PENDING → PAID → SHIPPED → DELIVERED) form a directed graph. Reachability tells you whether a transition is legal.</li>
+          <li><strong>The web.</strong>{" "}Pages link to pages. PageRank is a graph algorithm. So is &quot;recommended for you&quot; on most platforms.</li>
         </ul>
 
         <Callout variant="insight" title="Trees and linked lists are graphs too">
           A linked list is a graph where every node has exactly one outgoing edge. A tree is a graph that&apos;s
           connected and acyclic, with a designated root. Phase 3 was secretly preparing you for this — every tree
           algorithm is a graph algorithm with extra structure. Once you internalize the graph view, the BFS you wrote
-          for binary trees is the <em>same BFS</em> that does shortest-path, word ladders, and rotting oranges.
+          for binary trees is the <em>same BFS</em>{" "}that does shortest-path, word ladders, and rotting oranges.
         </Callout>
 
         <h3>Why graphs feel hard</h3>
@@ -132,8 +132,8 @@ D   0 0 0 0"]
         </p>
 
         <ol>
-          <li><strong>The shape isn&apos;t obvious from the input.</strong> An array is &quot;here are some numbers in order.&quot; A graph might be given as a list of edges, an adjacency matrix, a 2D grid, an implicit neighbor function, or just a problem statement. Step zero is always &quot;what&apos;s the graph?&quot;</li>
-          <li><strong>You can revisit nodes.</strong> Trees have no cycles, so DFS just works. Graphs need a <code>visited</code> set or you loop forever.</li>
+          <li><strong>The shape isn&apos;t obvious from the input.</strong>{" "}An array is &quot;here are some numbers in order.&quot; A graph might be given as a list of edges, an adjacency matrix, a 2D grid, an implicit neighbor function, or just a problem statement. Step zero is always &quot;what&apos;s the graph?&quot;</li>
+          <li><strong>You can revisit nodes.</strong>{" "}Trees have no cycles, so DFS just works. Graphs need a <code>visited</code> set or you loop forever.</li>
           <li><strong>The same algorithm solves wildly different-looking problems.</strong> &quot;Shortest path,&quot; &quot;word ladder,&quot; and &quot;rotting oranges&quot; are all BFS — but the surface details mask it. Recognizing the graph in disguise is half the skill.</li>
         </ol>
 
@@ -163,11 +163,11 @@ D   0 0 0 0"]
         <h3>The basic five</h3>
 
         <ul>
-          <li><strong>Vertex / node:</strong> a point. We&apos;ll use &quot;node&quot; informally and &quot;vertex&quot; in formal contexts. Same thing.</li>
-          <li><strong>Edge:</strong> a connection between two nodes. Sometimes written as a pair <code>(u, v)</code>.</li>
-          <li><strong>Neighbor / adjacent:</strong> two nodes connected by an edge. &quot;Neighbors of A&quot; = the nodes A is directly connected to.</li>
-          <li><strong>Degree:</strong> number of edges touching a node. In a directed graph, split into <strong>in-degree</strong> (edges coming in) and <strong>out-degree</strong> (edges going out).</li>
-          <li><strong>Path:</strong> a sequence of nodes where consecutive ones are neighbors. Length is usually counted in edges.</li>
+          <li><strong>Vertex / node:</strong>{" "}a point. We&apos;ll use &quot;node&quot; informally and &quot;vertex&quot; in formal contexts. Same thing.</li>
+          <li><strong>Edge:</strong>{" "}a connection between two nodes. Sometimes written as a pair <code>(u, v)</code>.</li>
+          <li><strong>Neighbor / adjacent:</strong>{" "}two nodes connected by an edge. &quot;Neighbors of A&quot; = the nodes A is directly connected to.</li>
+          <li><strong>Degree:</strong>{" "}number of edges touching a node. In a directed graph, split into <strong>in-degree</strong> (edges coming in) and <strong>out-degree</strong> (edges going out).</li>
+          <li><strong>Path:</strong>{" "}a sequence of nodes where consecutive ones are neighbors. Length is usually counted in edges.</li>
         </ul>
 
         <h3>The four axes that classify a graph</h3>
@@ -186,11 +186,11 @@ Connected  ←→ Disconnected   can you reach every node from every other?`}</C
         <h3>The structure words</h3>
 
         <ul>
-          <li><strong>Cycle:</strong> a path that starts and ends at the same node (with no repeats in between). Detecting cycles is one of the canonical graph problems.</li>
-          <li><strong>Connected component:</strong> a maximal set of nodes that can all reach each other. An undirected graph might split into several components — &quot;islands&quot;.</li>
-          <li><strong>Strongly connected component (SCC):</strong> in a directed graph, a maximal set where every node can reach every other. A weaker version, &quot;weakly connected,&quot; treats edges as undirected.</li>
-          <li><strong>Bipartite:</strong> nodes split into two groups with edges only going <em>between</em> groups, never within. Job-applicant ↔ job, student ↔ class.</li>
-          <li><strong>Dense vs sparse:</strong> rough labels for &quot;edges close to V²&quot; vs &quot;edges close to V&quot;. The choice between adjacency list and matrix turns on this.</li>
+          <li><strong>Cycle:</strong>{" "}a path that starts and ends at the same node (with no repeats in between). Detecting cycles is one of the canonical graph problems.</li>
+          <li><strong>Connected component:</strong>{" "}a maximal set of nodes that can all reach each other. An undirected graph might split into several components — &quot;islands&quot;.</li>
+          <li><strong>Strongly connected component (SCC):</strong>{" "}in a directed graph, a maximal set where every node can reach every other. A weaker version, &quot;weakly connected,&quot; treats edges as undirected.</li>
+          <li><strong>Bipartite:</strong>{" "}nodes split into two groups with edges only going <em>between</em>{" "}groups, never within. Job-applicant ↔ job, student ↔ class.</li>
+          <li><strong>Dense vs sparse:</strong>{" "}rough labels for &quot;edges close to V²&quot; vs &quot;edges close to V&quot;. The choice between adjacency list and matrix turns on this.</li>
         </ul>
 
         <Callout variant="info" title="V and E — the two variables in every graph Big-O">
@@ -203,7 +203,7 @@ Connected  ←→ Disconnected   can you reach every node from every other?`}</C
         <h3>Self-loops and multi-edges</h3>
 
         <p>
-          A <strong>self-loop</strong> is an edge from a node to itself (<code>A → A</code>). A <strong>multi-edge</strong>{" "}
+          A <strong>self-loop</strong>{" "}is an edge from a node to itself (<code>A → A</code>). A <strong>multi-edge</strong>{" "}
           (or parallel edge) is two distinct edges between the same pair of nodes. Most problems forbid both
           implicitly — a clean graph has neither — but it&apos;s worth asking. They show up in real systems (a graph
           of money transfers can have multiple A→B edges) and they break some algorithms (Eulerian path counts edges,
@@ -305,17 +305,17 @@ Iterate ALL edges      O(V + E)         O(V²)`}</CodeBlock>
         <Callout variant="insight" title="The default is adjacency list">
           Real-world graphs are sparse: social networks have ~100 friends per person out of billions of users; web
           pages link to a handful of others out of trillions. <code>O(V + E)</code> beats <code>O(V²)</code> by orders
-          of magnitude. The matrix only wins when E is close to V² (dense graphs) <em>or</em> when you do many
+          of magnitude. The matrix only wins when E is close to V² (dense graphs) <em>or</em>{" "}when you do many
           has-edge queries on random pairs.
         </Callout>
 
         <h3>When the matrix actually wins</h3>
 
         <ul>
-          <li><strong>Dense graphs:</strong> if E ≈ V², the matrix wastes no space and is cache-friendlier.</li>
-          <li><strong>Frequent has-edge queries:</strong> Floyd-Warshall (all-pairs shortest path) needs O(1) edge lookup. List would make it O(V³ · log V) or worse.</li>
-          <li><strong>Tiny V:</strong> if V ≤ 100, V² ≤ 10,000 — trivial. Matrix is simpler and the constant factors are usually faster.</li>
-          <li><strong>Implicit grids:</strong> a 2D grid problem (like &quot;number of islands&quot;) is essentially using the grid <em>as</em> the adjacency representation. Each cell&apos;s neighbors are computed on the fly with <code>(dr, dc)</code> deltas.</li>
+          <li><strong>Dense graphs:</strong>{" "}if E ≈ V², the matrix wastes no space and is cache-friendlier.</li>
+          <li><strong>Frequent has-edge queries:</strong>{" "}Floyd-Warshall (all-pairs shortest path) needs O(1) edge lookup. List would make it O(V³ · log V) or worse.</li>
+          <li><strong>Tiny V:</strong>{" "}if V ≤ 100, V² ≤ 10,000 — trivial. Matrix is simpler and the constant factors are usually faster.</li>
+          <li><strong>Implicit grids:</strong>{" "}a 2D grid problem (like &quot;number of islands&quot;) is essentially using the grid <em>as</em>{" "}the adjacency representation. Each cell&apos;s neighbors are computed on the fly with <code>(dr, dc)</code> deltas.</li>
         </ul>
 
         <ClassifyChallenge

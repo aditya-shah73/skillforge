@@ -147,7 +147,7 @@ flowchart TB
           Linked lists from Module 6 had nodes with a single <code>next</code> pointer. Replace <code>next</code>{" "}
           with two pointers — <code>left</code> and <code>right</code> — and you have a <strong>binary tree</strong>.
           Generalize to any number of children and you have a tree. That&apos;s it. The data structure isn&apos;t
-          new; the <em>shape</em> is.
+          new; the <em>shape</em>{" "}is.
         </p>
 
         <Mermaid chart={exampleTree} />
@@ -158,15 +158,15 @@ flowchart TB
         <h3>The vocabulary you&apos;ll need (no more)</h3>
 
         <ul>
-          <li><strong>Node:</strong> a value plus pointers to its children.</li>
-          <li><strong>Root:</strong> the single node with no parent. Trees have exactly one.</li>
-          <li><strong>Leaf:</strong> a node with no children.</li>
-          <li><strong>Parent / child:</strong> obvious. Each non-root node has exactly one parent.</li>
-          <li><strong>Sibling:</strong> nodes that share a parent.</li>
-          <li><strong>Subtree:</strong> a node together with all its descendants. Pick any node and the structure rooted at it is itself a tree.</li>
-          <li><strong>Depth of a node:</strong> distance from the root. Root is at depth 0.</li>
-          <li><strong>Height of a tree:</strong> the depth of the deepest leaf. A single-node tree has height 0.</li>
-          <li><strong>Level:</strong> the set of all nodes at a given depth.</li>
+          <li><strong>Node:</strong>{" "}a value plus pointers to its children.</li>
+          <li><strong>Root:</strong>{" "}the single node with no parent. Trees have exactly one.</li>
+          <li><strong>Leaf:</strong>{" "}a node with no children.</li>
+          <li><strong>Parent / child:</strong>{" "}obvious. Each non-root node has exactly one parent.</li>
+          <li><strong>Sibling:</strong>{" "}nodes that share a parent.</li>
+          <li><strong>Subtree:</strong>{" "}a node together with all its descendants. Pick any node and the structure rooted at it is itself a tree.</li>
+          <li><strong>Depth of a node:</strong>{" "}distance from the root. Root is at depth 0.</li>
+          <li><strong>Height of a tree:</strong>{" "}the depth of the deepest leaf. A single-node tree has height 0.</li>
+          <li><strong>Level:</strong>{" "}the set of all nodes at a given depth.</li>
         </ul>
 
         <Callout variant="info" title="Binary tree, complete tree, full tree, perfect tree">
@@ -200,7 +200,7 @@ flowchart TB
         </p>
         <ul>
           <li><strong>Empty</strong> (the <code>null</code> tree), or</li>
-          <li>A <strong>root node</strong> holding a value plus <em>two more binary trees</em> (the left and right subtrees).</li>
+          <li>A <strong>root node</strong>{" "}holding a value plus <em>two more binary trees</em> (the left and right subtrees).</li>
         </ul>
 
         <p>
@@ -275,11 +275,11 @@ TreeNode root = new TreeNode(1,
 
         <ul>
           <li>
-            <strong>Cache behavior is unpredictable.</strong> Walking a tree dereferences pointers all over the
+            <strong>Cache behavior is unpredictable.</strong>{" "}Walking a tree dereferences pointers all over the
             heap. Compare with a heap stored in an array (Module 13), where cache prefetching helps.
           </li>
           <li>
-            <strong>Recursion costs stack space.</strong> A tree of height h takes O(h) stack frames during a
+            <strong>Recursion costs stack space.</strong>{" "}A tree of height h takes O(h) stack frames during a
             recursive traversal. For a balanced tree of n nodes, that&apos;s O(log n). For a degenerate
             &quot;list-tree&quot; (every node has one child), it&apos;s O(n) — and a 10,000-node skewed tree
             blows the JVM stack.
@@ -345,9 +345,9 @@ private int checkBalanced(TreeNode n) {
         <h2 id="dfs">Depth-first traversal: three orders, one recursion</h2>
 
         <p>
-          A <strong>traversal</strong> visits every node in some order. Depth-first traversals dive deep before
+          A <strong>traversal</strong>{" "}visits every node in some order. Depth-first traversals dive deep before
           backtracking. There are three standard orderings — preorder, inorder, postorder — and they differ only
-          in <em>where you do the work</em> relative to the recursive calls.
+          in <em>where you do the work</em>{" "}relative to the recursive calls.
         </p>
 
         <CodeBlock lang="java">{`void preorder(TreeNode n) {
@@ -427,8 +427,8 @@ void postorder(TreeNode n) {
         <h3>The complexity, once and for all</h3>
 
         <ul>
-          <li><strong>Time:</strong> O(n) for any traversal — every node visited exactly once.</li>
-          <li><strong>Space:</strong> O(h) for recursion stack (or explicit stack), where h is tree height. O(log n) for balanced, O(n) worst case.</li>
+          <li><strong>Time:</strong>{" "}O(n) for any traversal — every node visited exactly once.</li>
+          <li><strong>Space:</strong>{" "}O(h) for recursion stack (or explicit stack), where h is tree height. O(log n) for balanced, O(n) worst case.</li>
         </ul>
 
         <ClassifyChallenge
@@ -516,8 +516,8 @@ void postorder(TreeNode n) {
         <h3>Complexity</h3>
 
         <ul>
-          <li><strong>Time:</strong> O(n) — each node enqueued and dequeued exactly once.</li>
-          <li><strong>Space:</strong> O(w) where w is the maximum width of the tree — the queue can hold a whole level. For a perfect binary tree of n nodes, the bottom level has ~n/2 nodes, so worst-case BFS space is O(n).</li>
+          <li><strong>Time:</strong>{" "}O(n) — each node enqueued and dequeued exactly once.</li>
+          <li><strong>Space:</strong>{" "}O(w) where w is the maximum width of the tree — the queue can hold a whole level. For a perfect binary tree of n nodes, the bottom level has ~n/2 nodes, so worst-case BFS space is O(n).</li>
         </ul>
 
         <p>
@@ -603,7 +603,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
           </li>
           <li>
             <strong>LC 100 · Same Tree</strong> (Easy). Two trees are equal iff both empty, or both non-empty with
-            equal values <em>and</em> equal left subtrees <em>and</em> equal right subtrees. Pure recursion-on-pairs.
+            equal values <em>and</em>{" "}equal left subtrees <em>and</em>{" "}equal right subtrees. Pure recursion-on-pairs.
           </li>
           <li>
             <strong>LC 226 · Invert Binary Tree</strong> (Easy). For each node, swap left and right pointers, then

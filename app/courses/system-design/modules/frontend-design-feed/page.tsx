@@ -44,7 +44,7 @@ export default function Page() {
           <span className="text-xs uppercase tracking-wider font-bold text-fuchsia-700 dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="text-base leading-relaxed m-0">
-          The interviewer says: <em>{`"Design the Twitter feed UI."`}</em> A mid-level candidate immediately starts naming components — FeedItem, Avatar, LikeButton — and burns ten minutes drawing a tree. A senior candidate stops and asks: <em>{`"Chronological or ranked? Mobile-first or desktop? Do likes need to feel instant? Offline read? Image-heavy or mostly text? Real-time push for new posts, or polling?"`}</em> Six questions in thirty seconds, and now we have a scope we can actually finish in 45 minutes.
+          The interviewer says: <em>{`"Design the Twitter feed UI."`}</em>{" "}A mid-level candidate immediately starts naming components — FeedItem, Avatar, LikeButton — and burns ten minutes drawing a tree. A senior candidate stops and asks: <em>{`"Chronological or ranked? Mobile-first or desktop? Do likes need to feel instant? Offline read? Image-heavy or mostly text? Real-time push for new posts, or polling?"`}</em>{" "}Six questions in thirty seconds, and now we have a scope we can actually finish in 45 minutes.
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
           This module walks the feed UI design end-to-end — the same pattern you would use in a senior frontend system design interview at Meta, Stripe, Airbnb, or any FAANG that takes the front of the stack seriously. You will leave with a defensible answer for components, state shape, data fetching, virtualization, optimistic updates, image loading, offline read, and accessibility. The architecture is different from a backend system design; the framework — clarify, design, deep-dive, wrap — is the same.
@@ -54,17 +54,17 @@ export default function Page() {
       <Checkpoint moduleSlug={mod.slug} id="scope" title="Part 1 · Scope + components" xp={15}>
         <h2>Scope clarification — the senior signal in the first two minutes</h2>
         <p>
-          Frontend system design has a dirty secret: the prompt is <em>always</em> ambiguous. {`"Design the Twitter feed"`} could mean a hundred different things, and the interviewer is watching to see whether you notice. A mid-level candidate sees {`"feed"`} and starts thinking about <code>{`<FeedItem />`}</code>. A senior candidate sees {`"feed"`} and starts thinking about which dimensions of the problem are actually open.
+          Frontend system design has a dirty secret: the prompt is <em>always</em>{" "}ambiguous. {`"Design the Twitter feed"`} could mean a hundred different things, and the interviewer is watching to see whether you notice. A mid-level candidate sees {`"feed"`} and starts thinking about <code>{`<FeedItem />`}</code>. A senior candidate sees {`"feed"`} and starts thinking about which dimensions of the problem are actually open.
         </p>
         <p>Here are the six questions I ask, every time, before I touch a single component:</p>
 
         <ol>
-          <li><strong>Chronological or ranked?</strong> A reverse-chronological feed is a sorted query. A ranked feed pulls from a server-side scoring service and the client treats the order as opaque. The data layer is identical; what changes is whether the client can re-sort locally on a refresh (chronological: yes, ranked: no).</li>
-          <li><strong>Web, mobile web, or native?</strong> Web has more memory, more screen real estate, and a real DOM. Mobile web has stricter memory pressure (Safari kills tabs at ~1GB), worse network, and a thumb-driven scroll model. {`"Web + mobile web in one responsive bundle"`} is the most common scope and what I will assume.</li>
-          <li><strong>Optimistic interactions?</strong> Tap-to-like — does the heart fill instantly, or wait for the server? {`"Instantly"`} is the right product answer 99% of the time, but it forces a real contract with the API: what if the like fails? what if the server returns a different count?</li>
-          <li><strong>Offline read?</strong> If the user opens the app on a subway, what do they see? A blank screen, the last-loaded items, or an error? Offline read is roughly 2–3x the engineering cost — service worker, cache strategy, sync UX — so we want to know if it is in scope.</li>
+          <li><strong>Chronological or ranked?</strong>{" "}A reverse-chronological feed is a sorted query. A ranked feed pulls from a server-side scoring service and the client treats the order as opaque. The data layer is identical; what changes is whether the client can re-sort locally on a refresh (chronological: yes, ranked: no).</li>
+          <li><strong>Web, mobile web, or native?</strong>{" "}Web has more memory, more screen real estate, and a real DOM. Mobile web has stricter memory pressure (Safari kills tabs at ~1GB), worse network, and a thumb-driven scroll model. {`"Web + mobile web in one responsive bundle"`} is the most common scope and what I will assume.</li>
+          <li><strong>Optimistic interactions?</strong>{" "}Tap-to-like — does the heart fill instantly, or wait for the server? {`"Instantly"`} is the right product answer 99% of the time, but it forces a real contract with the API: what if the like fails? what if the server returns a different count?</li>
+          <li><strong>Offline read?</strong>{" "}If the user opens the app on a subway, what do they see? A blank screen, the last-loaded items, or an error? Offline read is roughly 2–3x the engineering cost — service worker, cache strategy, sync UX — so we want to know if it is in scope.</li>
           <li><strong>Real-time new-post indicator?</strong> {`"42 new tweets"`} appearing at the top of the feed. Server-push (WebSocket / SSE) gives instant updates and a persistent connection per user. Polling (every 30–60s) is one round-trip per interval and dramatically simpler. The product impact of {`"6s slower"`} is usually acceptable.</li>
-          <li><strong>Image-heavy or text-only?</strong> If 80% of items have images, perceived performance lives or dies by image loading strategy (LQIP, lazy-load, aspect-ratio reservation). If items are mostly text, you can spend that complexity budget elsewhere.</li>
+          <li><strong>Image-heavy or text-only?</strong>{" "}If 80% of items have images, perceived performance lives or dies by image loading strategy (LQIP, lazy-load, aspect-ratio reservation). If items are mostly text, you can spend that complexity budget elsewhere.</li>
         </ol>
 
         <Callout variant="info" title="The scope I am locking in for this design">
@@ -79,7 +79,7 @@ export default function Page() {
         </Callout>
 
         <p>
-          Why this scope-locking matters: a feed UI <em>with</em> offline read and real-time push is roughly 3x the work of one without. The candidate who quietly designs all of it ends up rambling at minute 30 with nothing finished. The candidate who locks scope explicitly — {`"I am punting real-time push, here is why"`} — finishes a complete answer with depth in two areas. The interviewer wants the second one.
+          Why this scope-locking matters: a feed UI <em>with</em>{" "}offline read and real-time push is roughly 3x the work of one without. The candidate who quietly designs all of it ends up rambling at minute 30 with nothing finished. The candidate who locks scope explicitly — {`"I am punting real-time push, here is why"`} — finishes a complete answer with depth in two areas. The interviewer wants the second one.
         </p>
 
         <h2>Component breakdown</h2>
@@ -100,9 +100,9 @@ export default function Page() {
 
         <h3>What is reusable, what is leaf</h3>
         <ul>
-          <li><strong>Reusable across the app:</strong> AuthorBlock (used on profile pages too), MediaRenderer (used in tweet detail, search results), ActionBar variants. These should live in a shared <code>components/</code> directory, not inside the feed module.</li>
-          <li><strong>Feed-specific:</strong> FeedList, FeedItem, NewPostsIndicator. These know about feed-specific concerns (virtualization, polling, ordering).</li>
-          <li><strong>Page-level:</strong> FeedPage. Owns the data fetching hooks and passes data down. In a Next.js app, this is a route component.</li>
+          <li><strong>Reusable across the app:</strong>{" "}AuthorBlock (used on profile pages too), MediaRenderer (used in tweet detail, search results), ActionBar variants. These should live in a shared <code>components/</code> directory, not inside the feed module.</li>
+          <li><strong>Feed-specific:</strong>{" "}FeedList, FeedItem, NewPostsIndicator. These know about feed-specific concerns (virtualization, polling, ordering).</li>
+          <li><strong>Page-level:</strong>{" "}FeedPage. Owns the data fetching hooks and passes data down. In a Next.js app, this is a route component.</li>
         </ul>
 
         <h3>Where state lives</h3>
@@ -230,9 +230,9 @@ type Author = {
           Three things to call out about this shape:
         </p>
         <ol>
-          <li><strong>Authors are referenced by ID, not embedded.</strong> A retweet of a tweet from a popular account would otherwise duplicate the author payload across every retweet on the page. Reference + lookup keeps the wire payload small and lets the client cache authors once.</li>
-          <li><strong>viewerLiked is on the item, not separate.</strong> Embedding viewer state in the item means one fetch returns everything the UI needs to render. The alternative — separate {`/me/likes`} endpoint — doubles round trips and creates ordering bugs.</li>
-          <li><strong>pendingLike is client-only.</strong> The server never sees this field. It exists so the optimistic-update logic can roll back cleanly if the mutation fails. We will use it heavily in Part 6.</li>
+          <li><strong>Authors are referenced by ID, not embedded.</strong>{" "}A retweet of a tweet from a popular account would otherwise duplicate the author payload across every retweet on the page. Reference + lookup keeps the wire payload small and lets the client cache authors once.</li>
+          <li><strong>viewerLiked is on the item, not separate.</strong>{" "}Embedding viewer state in the item means one fetch returns everything the UI needs to render. The alternative — separate {`/me/likes`} endpoint — doubles round trips and creates ordering bugs.</li>
+          <li><strong>pendingLike is client-only.</strong>{" "}The server never sees this field. It exists so the optimistic-update logic can roll back cleanly if the mutation fails. We will use it heavily in Part 6.</li>
         </ol>
 
         <Callout variant="insight" title="The Media discriminated union is doing real work">
@@ -383,10 +383,10 @@ export function useInfiniteScroll(onEndReached: () => void) {
         </p>
         <ol>
           <li><strong>The user pulls to refresh</strong> (or clicks a refresh control). We want to drop the cached pages and refetch from cursor=null. React Query: <code>queryClient.invalidateQueries({`{ queryKey: ["feed"] }`})</code>.</li>
-          <li><strong>The user posts a new tweet of their own.</strong> Their own tweet should appear at the top immediately. Two strategies: (a) optimistically prepend the new tweet to the cached first page, or (b) invalidate and refetch. (a) is faster and feels instant; (b) is simpler and gets you the canonical server ordering. I would do (a) for the user-perceived experience, with a background refetch that reconciles after.</li>
+          <li><strong>The user posts a new tweet of their own.</strong>{" "}Their own tweet should appear at the top immediately. Two strategies: (a) optimistically prepend the new tweet to the cached first page, or (b) invalidate and refetch. (a) is faster and feels instant; (b) is simpler and gets you the canonical server ordering. I would do (a) for the user-perceived experience, with a background refetch that reconciles after.</li>
         </ol>
         <p>
-          What does <em>not</em> trigger invalidation: a like on someone else{`'`}s tweet, scroll position changes, time passing without user action. Aggressive invalidation kills perceived performance — a feed that refetches every minute will spend its life in a loading state.
+          What does <em>not</em>{" "}trigger invalidation: a like on someone else{`'`}s tweet, scroll position changes, time passing without user action. Aggressive invalidation kills perceived performance — a feed that refetches every minute will spend its life in a loading state.
         </p>
 
         <Callout variant="warn" title="The pull-to-refresh UX trap">
@@ -552,9 +552,9 @@ function VirtualizedList({ items, onEndReached }: {
         <p>There are three real strategies:</p>
 
         <ol>
-          <li><strong>Estimate + measure-and-adjust.</strong> What @tanstack/react-virtual does. Provide an <code>estimateSize</code>; render with the estimate; measure on first render; cache and reuse. The first scroll is slightly off, but caching makes subsequent renders accurate. Works well in practice; expect occasional small jumps when scrolling fast through never-rendered items.</li>
-          <li><strong>Pre-compute heights server-side.</strong> The server returns a height hint per item, computed from text length, media dimensions, and the known styling. Eliminates the {`"first render is wrong"`} jump but couples the server to client styling decisions — every CSS change requires re-deriving the formula. Not worth it for most teams.</li>
-          <li><strong>Impose fixed-height constraints.</strong> Cap text to N lines, force images to a fixed aspect-ratio container, etc. Every item is the same height and virtualization is trivial. The product cost is real — expanded tweets need a separate detail page rather than inline expansion. This is what news aggregators (Apple News, Google News) often do.</li>
+          <li><strong>Estimate + measure-and-adjust.</strong>{" "}What @tanstack/react-virtual does. Provide an <code>estimateSize</code>; render with the estimate; measure on first render; cache and reuse. The first scroll is slightly off, but caching makes subsequent renders accurate. Works well in practice; expect occasional small jumps when scrolling fast through never-rendered items.</li>
+          <li><strong>Pre-compute heights server-side.</strong>{" "}The server returns a height hint per item, computed from text length, media dimensions, and the known styling. Eliminates the {`"first render is wrong"`} jump but couples the server to client styling decisions — every CSS change requires re-deriving the formula. Not worth it for most teams.</li>
+          <li><strong>Impose fixed-height constraints.</strong>{" "}Cap text to N lines, force images to a fixed aspect-ratio container, etc. Every item is the same height and virtualization is trivial. The product cost is real — expanded tweets need a separate detail page rather than inline expansion. This is what news aggregators (Apple News, Google News) often do.</li>
         </ol>
 
         <p>
@@ -680,7 +680,7 @@ function ImageMedia({ media }: { media: { kind: "image" } & ImageMedia }) {
           The user taps the heart. The heart fills instantly, the count goes up. Behind the scenes, a request is in flight. The server might fail (network error, rate limit), the user might be a stale session, or the like might already exist (idempotency). The UI cannot wait for the round trip to resolve before responding — that would feel slow — but it cannot ignore the result either.
         </p>
         <p>
-          The pattern is: <strong>update locally, send the mutation, reconcile when the result arrives.</strong> React Query{`'`}s mutation lifecycle has the exact hooks for this:
+          The pattern is: <strong>update locally, send the mutation, reconcile when the result arrives.</strong>{" "}React Query{`'`}s mutation lifecycle has the exact hooks for this:
         </p>
 
         <CodeBlock lang="tsx" caption="hooks/useLikeMutation.ts">{`import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -759,9 +759,9 @@ export function useLikeMutation() {
         </p>
         <ul>
           <li><strong>The mutation ID is client-generated</strong> (typically a UUID per click). It goes in an <code>Idempotency-Key</code> header so the server can dedupe replays. If the network drops mid-request and we retry, the server sees the same key and returns the previous result rather than incrementing twice.</li>
-          <li><strong><code>cancelQueries</code> in onMutate prevents an in-flight refetch</strong> from stomping our optimistic update. Without it, you can race: optimistic update writes <code>viewerLiked: true</code>, refetch lands with the old <code>viewerLiked: false</code>, user sees the heart un-fill briefly.</li>
-          <li><strong>The pendingLike field tracks the rollback state.</strong> If the user fires three likes/unlikes rapidly, each click stashes the previous values; on failure of any one, we restore the snapshot from before that click.</li>
-          <li><strong>onSuccess uses the server response, not the optimistic value.</strong> If the server says the count is now 1,847 (not 1,803 like our optimistic increment guessed — because three other people also liked it in the same window), we adopt the server value. This is reconciliation.</li>
+          <li><strong><code>cancelQueries</code> in onMutate prevents an in-flight refetch</strong>{" "}from stomping our optimistic update. Without it, you can race: optimistic update writes <code>viewerLiked: true</code>, refetch lands with the old <code>viewerLiked: false</code>, user sees the heart un-fill briefly.</li>
+          <li><strong>The pendingLike field tracks the rollback state.</strong>{" "}If the user fires three likes/unlikes rapidly, each click stashes the previous values; on failure of any one, we restore the snapshot from before that click.</li>
+          <li><strong>onSuccess uses the server response, not the optimistic value.</strong>{" "}If the server says the count is now 1,847 (not 1,803 like our optimistic increment guessed — because three other people also liked it in the same window), we adopt the server value. This is reconciliation.</li>
         </ul>
 
         <h2>The deeper point — the API has to support this</h2>
@@ -769,9 +769,9 @@ export function useLikeMutation() {
           Optimistic updates are not a pure client-side technique. They are a contract with the server. The server has to:
         </p>
         <ul>
-          <li><strong>Return the canonical value</strong> after a mutation, not just success/failure. {`"OK"`} is not enough — we need to reconcile drift, which requires knowing what the value actually is now.</li>
-          <li><strong>Honor idempotency keys</strong> so retries are safe. Without this, a network blip plus an automatic retry double-likes.</li>
-          <li><strong>Validate authority server-side</strong> regardless of what the client claims. The client says {`"viewerLiked: true"`} — the server still checks who the user is and decides whether the like is valid.</li>
+          <li><strong>Return the canonical value</strong>{" "}after a mutation, not just success/failure. {`"OK"`} is not enough — we need to reconcile drift, which requires knowing what the value actually is now.</li>
+          <li><strong>Honor idempotency keys</strong>{" "}so retries are safe. Without this, a network blip plus an automatic retry double-likes.</li>
+          <li><strong>Validate authority server-side</strong>{" "}regardless of what the client claims. The client says {`"viewerLiked: true"`} — the server still checks who the user is and decides whether the like is valid.</li>
         </ul>
         <p>
           If the server returns only <code>200 OK</code>, the client is guessing. The optimistic increment is whatever you think it is — but if your guess drifts from reality (because of caching, fanout delay, multi-device usage), the user will see wrong counts until the next refetch papers over the drift. This ties back to the API design module: if you control both sides, design the mutation response to support optimistic update reconciliation.
@@ -792,9 +792,9 @@ export function useLikeMutation() {
 
         <h3>The pieces</h3>
         <ul>
-          <li><strong>IndexedDB</strong> stores the last-loaded feed pages. (Why IndexedDB and not localStorage? IndexedDB has higher quota — typically 50%+ of disk — and supports structured data + async access. localStorage maxes out around 5–10MB and is sync.)</li>
-          <li><strong>Service Worker</strong> intercepts <code>fetch</code> calls. For <code>/api/feed</code> reads, it follows a cache-first strategy backed by IndexedDB.</li>
-          <li><strong>React Query persistence plugin</strong> can hydrate the cache from IndexedDB on app boot, so the user sees the last-loaded items immediately on a cold start while offline.</li>
+          <li><strong>IndexedDB</strong>{" "}stores the last-loaded feed pages. (Why IndexedDB and not localStorage? IndexedDB has higher quota — typically 50%+ of disk — and supports structured data + async access. localStorage maxes out around 5–10MB and is sync.)</li>
+          <li><strong>Service Worker</strong>{" "}intercepts <code>fetch</code> calls. For <code>/api/feed</code> reads, it follows a cache-first strategy backed by IndexedDB.</li>
+          <li><strong>React Query persistence plugin</strong>{" "}can hydrate the cache from IndexedDB on app boot, so the user sees the last-loaded items immediately on a cold start while offline.</li>
         </ul>
 
         <CodeBlock lang="ts" caption="service-worker.ts — the read handler">{`// Stale-while-revalidate for /api/feed reads
@@ -827,8 +827,8 @@ self.addEventListener("fetch", (event: FetchEvent) => {
           Two strategies. Pick one and be explicit:
         </p>
         <ol>
-          <li><strong>Queue and replay.</strong> Mutations (like, retweet, reply) are written to a local queue. When the network returns, the service worker replays them in order. This requires server-side idempotency (we already have it) and a way to surface conflicts (the tweet was deleted while you were offline). Higher complexity, higher quality UX.</li>
-          <li><strong>Fail loudly.</strong> Mutations require network; if the network is offline, the action fails and the UI surfaces {`"You're offline — try again when you reconnect."`} Lower complexity, lower quality UX.</li>
+          <li><strong>Queue and replay.</strong>{" "}Mutations (like, retweet, reply) are written to a local queue. When the network returns, the service worker replays them in order. This requires server-side idempotency (we already have it) and a way to surface conflicts (the tweet was deleted while you were offline). Higher complexity, higher quality UX.</li>
+          <li><strong>Fail loudly.</strong>{" "}Mutations require network; if the network is offline, the action fails and the UI surfaces {`"You're offline — try again when you reconnect."`} Lower complexity, lower quality UX.</li>
         </ol>
         <p>
           For Twitter-class products, queue-and-replay is the right choice for likes and retweets (low-stakes, idempotent). For things with side effects you can{`'`}t un-do — like {`"send DM"`} — fail loudly is better, because a queued DM that fires 20 minutes later when the network returns is confusing.
@@ -836,7 +836,7 @@ self.addEventListener("fetch", (event: FetchEvent) => {
 
         <h3>The {`"sync when online"`} UX — do not silently swallow</h3>
         <p>
-          If a mutation fails because the user is offline and gets queued, <strong>tell them.</strong> A persistent banner that reads {`"Offline — 3 actions queued"`} sets the right mental model. When the network returns and the queue replays, swap to {`"Synced."`} for 2 seconds, then hide.
+          If a mutation fails because the user is offline and gets queued, <strong>tell them.</strong>{" "}A persistent banner that reads {`"Offline — 3 actions queued"`} sets the right mental model. When the network returns and the queue replays, swap to {`"Synced."`} for 2 seconds, then hide.
         </p>
         <p>
           The anti-pattern is silently queuing and surfacing nothing. The user fires off a like, sees the heart fill, walks into the subway, comes out 30 minutes later, and has no idea whether their actions made it. Trust is gone.
@@ -936,7 +936,7 @@ export function useFeedKeyboardNav(itemCount: number) {
 
         <h3>What if the user has zero follows?</h3>
         <p>
-          The API returns <code>{`{ items: [], hasMore: false }`}</code>. The UI must not render a blank screen — it should render an <strong>empty state</strong> with onboarding: {`"Follow some accounts to see tweets here. Suggested: ..."`} with three or four suggested accounts. Empty states are a real product surface, not a bug.
+          The API returns <code>{`{ items: [], hasMore: false }`}</code>. The UI must not render a blank screen — it should render an <strong>empty state</strong>{" "}with onboarding: {`"Follow some accounts to see tweets here. Suggested: ..."`} with three or four suggested accounts. Empty states are a real product surface, not a bug.
         </p>
 
         <h3>Scroll restoration on back-nav</h3>

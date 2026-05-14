@@ -80,20 +80,20 @@ export default function Page() {
       <Checkpoint moduleSlug="spring-cloud-gateway" id="why" title="Part 1 · Why a gateway exists" xp={25}>
         <h3>What belongs in the gateway</h3>
         <ul>
-          <li><strong>Authentication offload.</strong> Validate JWTs once, propagate a trusted identity header downstream. Internal services trust the header; they don&apos;t re-validate the token.</li>
-          <li><strong>Rate limiting.</strong> Per-user and per-API-key throttling. Cheaper to drop at the edge than to drop in service N after wasting hops.</li>
-          <li><strong>Routing.</strong> Path → service mapping. <code>/api/payments/**</code> → <code>payments-svc</code>. Route changes are config, not deploys.</li>
-          <li><strong>Cross-cutting headers.</strong> Correlation IDs, request IDs, tenant headers, security headers. Stamp once at the edge.</li>
-          <li><strong>Circuit breakers / retries.</strong> Coarse-grained, edge-level fallback. Fine-grained per-call resilience still belongs in service-to-service code.</li>
-          <li><strong>TLS termination.</strong> Often, though increasingly this is handled by the load balancer or service mesh in front of the gateway.</li>
+          <li><strong>Authentication offload.</strong>{" "}Validate JWTs once, propagate a trusted identity header downstream. Internal services trust the header; they don&apos;t re-validate the token.</li>
+          <li><strong>Rate limiting.</strong>{" "}Per-user and per-API-key throttling. Cheaper to drop at the edge than to drop in service N after wasting hops.</li>
+          <li><strong>Routing.</strong>{" "}Path → service mapping. <code>/api/payments/**</code> → <code>payments-svc</code>. Route changes are config, not deploys.</li>
+          <li><strong>Cross-cutting headers.</strong>{" "}Correlation IDs, request IDs, tenant headers, security headers. Stamp once at the edge.</li>
+          <li><strong>Circuit breakers / retries.</strong>{" "}Coarse-grained, edge-level fallback. Fine-grained per-call resilience still belongs in service-to-service code.</li>
+          <li><strong>TLS termination.</strong>{" "}Often, though increasingly this is handled by the load balancer or service mesh in front of the gateway.</li>
         </ul>
 
         <h3>What doesn’t belong</h3>
         <ul>
-          <li><strong>Business logic.</strong> If the gateway has to know that &quot;a refund over $1000 needs manager approval,&quot; you&apos;ve put domain logic at the edge. Don’t.</li>
-          <li><strong>Data aggregation.</strong> The gateway calling three services to merge a response is a tempting shortcut. It&apos;s also a coupling nightmare. That&apos;s a Backend-for-Frontend (BFF) job — a separate aggregator service.</li>
-          <li><strong>Long-lived state.</strong> Sessions, caches with business meaning, anything stateful. The gateway should be horizontally trivial to scale — stateless or near-stateless.</li>
-          <li><strong>Heavy transformation.</strong> Light header rewrites, sure. Full payload reshaping for every request? That&apos;s logic that should live somewhere it can be tested and owned.</li>
+          <li><strong>Business logic.</strong>{" "}If the gateway has to know that &quot;a refund over $1000 needs manager approval,&quot; you&apos;ve put domain logic at the edge. Don’t.</li>
+          <li><strong>Data aggregation.</strong>{" "}The gateway calling three services to merge a response is a tempting shortcut. It&apos;s also a coupling nightmare. That&apos;s a Backend-for-Frontend (BFF) job — a separate aggregator service.</li>
+          <li><strong>Long-lived state.</strong>{" "}Sessions, caches with business meaning, anything stateful. The gateway should be horizontally trivial to scale — stateless or near-stateless.</li>
+          <li><strong>Heavy transformation.</strong>{" "}Light header rewrites, sure. Full payload reshaping for every request? That&apos;s logic that should live somewhere it can be tested and owned.</li>
         </ul>
 
         <Callout variant="warn" title="The aggregator trap">
@@ -224,7 +224,7 @@ public class GatewayConfig {
 
         <h3>Filters: pre and post</h3>
         <p>
-          A filter has two halves: code that runs <em>before</em> the request is forwarded (pre-filter) and code that runs <em>after</em> the response comes back (post-filter). Most built-ins do one or the other; custom filters frequently do both.
+          A filter has two halves: code that runs <em>before</em>{" "}the request is forwarded (pre-filter) and code that runs <em>after</em>{" "}the response comes back (post-filter). Most built-ins do one or the other; custom filters frequently do both.
         </p>
 
         <Mermaid chart={filterLifecycle} />
@@ -252,7 +252,7 @@ public class GatewayConfig {
           Filters run in a specific order — Spring assigns each built-in a numeric order, and you can override with <code>OrderedGatewayFilter</code>. The mental model: pre-filters run low-order-first on the way in, post-filters run high-order-first on the way back out.
         </p>
         <p>
-          Common ordering bugs: rate-limiter running <em>after</em> the auth filter (so unauth&apos;d traffic still consumes tokens), or correlation-ID added <em>after</em> the access log filter (so logs have empty correlation IDs). When debugging weird filter behavior, dump the route&apos;s filter chain at startup — it’s the fastest way to see what&apos;s actually wired up.
+          Common ordering bugs: rate-limiter running <em>after</em>{" "}the auth filter (so unauth&apos;d traffic still consumes tokens), or correlation-ID added <em>after</em>{" "}the access log filter (so logs have empty correlation IDs). When debugging weird filter behavior, dump the route&apos;s filter chain at startup — it’s the fastest way to see what&apos;s actually wired up.
         </p>
 
         <h3>Building a custom filter (the right way)</h3>
@@ -324,7 +324,7 @@ public class CorrelationIdFilterFactory
 
         <h3>Global filters vs gateway filters</h3>
         <p>
-          A <code>GlobalFilter</code> (extend <code>GlobalFilter</code> directly) runs on <strong>every</strong> route. A <code>GatewayFilter</code> (via factory) runs only on routes that opt in. Default to gateway filters — they&apos;re composable and visible in route config. Reserve global filters for things that genuinely must apply to every request (request logging, security headers, top-level metrics).
+          A <code>GlobalFilter</code> (extend <code>GlobalFilter</code> directly) runs on <strong>every</strong>{" "}route. A <code>GatewayFilter</code> (via factory) runs only on routes that opt in. Default to gateway filters — they&apos;re composable and visible in route config. Reserve global filters for things that genuinely must apply to every request (request logging, security headers, top-level metrics).
         </p>
 
         <Quiz
@@ -561,10 +561,10 @@ public class FallbackController {
 
         <h3>Observability: the non-negotiables</h3>
         <ul>
-          <li><strong>Metrics:</strong> request count, status code distribution, p50/p95/p99 latency, per-route. Micrometer + your TSDB.</li>
-          <li><strong>Tracing:</strong> propagate <code>traceparent</code> (W3C Trace Context) end-to-end. Spring Cloud Sleuth (or Micrometer Tracing in newer versions) handles this if you enable it.</li>
-          <li><strong>Logs:</strong> structured JSON, with correlation ID, user ID, route ID, status, duration. Don’t log the entire request body — payloads contain PII.</li>
-          <li><strong>Rate-limit metrics:</strong> tokens consumed, rejections per key. If you can&apos;t graph the top 10 rate-limited users, you can&apos;t debug noisy neighbors.</li>
+          <li><strong>Metrics:</strong>{" "}request count, status code distribution, p50/p95/p99 latency, per-route. Micrometer + your TSDB.</li>
+          <li><strong>Tracing:</strong>{" "}propagate <code>traceparent</code> (W3C Trace Context) end-to-end. Spring Cloud Sleuth (or Micrometer Tracing in newer versions) handles this if you enable it.</li>
+          <li><strong>Logs:</strong>{" "}structured JSON, with correlation ID, user ID, route ID, status, duration. Don’t log the entire request body — payloads contain PII.</li>
+          <li><strong>Rate-limit metrics:</strong>{" "}tokens consumed, rejections per key. If you can&apos;t graph the top 10 rate-limited users, you can&apos;t debug noisy neighbors.</li>
         </ul>
 
         <Quiz

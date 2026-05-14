@@ -67,7 +67,7 @@ export default function Page() {
       <section className="my-10">
         <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
-          <li>A clear sense of <em>when</em> a single Postgres stops being enough — and when it&apos;s still fine.</li>
+          <li>A clear sense of <em>when</em>{" "}a single Postgres stops being enough — and when it&apos;s still fine.</li>
           <li>The three sharding strategies (hash, range, directory) and the workloads each one lives or dies on.</li>
           <li>Why naive <code>hash(key) % N</code> is a resharding nightmare, and how consistent hashing with virtual nodes fixes it.</li>
           <li>The math: with V virtual nodes per physical node, load std dev shrinks like 1/√(V·N).</li>
@@ -77,7 +77,7 @@ export default function Page() {
 
       <section className="my-10">
         <p>
-          Indexing speeds up lookups inside a database. Partitioning splits the data <em>across</em> databases. They solve different
+          Indexing speeds up lookups inside a database. Partitioning splits the data <em>across</em>{" "}databases. They solve different
           problems and you usually need both. The mistake people make in interviews is reaching for sharding too early — &quot;we&apos;ll
           shard by user_id&quot; — without acknowledging the operational cost. The other mistake is reaching too late, claiming
           a single Postgres will scale to 50TB and 200k QPS because they read a blog post about it once.
@@ -101,9 +101,9 @@ export default function Page() {
           So why partition? Three real reasons, in order of how often they actually apply:
         </p>
         <ul>
-          <li><strong>Storage outgrew the biggest box you can buy.</strong> Tens of TB and growing. Indexes don&apos;t fit in RAM anymore. Vacuum gets painful.</li>
-          <li><strong>Write throughput outgrew the biggest box.</strong> WAL is the bottleneck. You can&apos;t add more cores to a single writer.</li>
-          <li><strong>Blast radius.</strong> One node going down takes the whole product down. Partitioning lets you isolate failures.</li>
+          <li><strong>Storage outgrew the biggest box you can buy.</strong>{" "}Tens of TB and growing. Indexes don&apos;t fit in RAM anymore. Vacuum gets painful.</li>
+          <li><strong>Write throughput outgrew the biggest box.</strong>{" "}WAL is the bottleneck. You can&apos;t add more cores to a single writer.</li>
+          <li><strong>Blast radius.</strong>{" "}One node going down takes the whole product down. Partitioning lets you isolate failures.</li>
         </ul>
 
         <Callout variant="warn" title="The reason that's not on the list">
@@ -130,8 +130,8 @@ export default function Page() {
           Two flavors that get conflated:
         </p>
         <ul>
-          <li><strong>Partitioning (single-machine):</strong> Postgres declarative partitioning splits one logical table into multiple physical tables on the <em>same</em> server. Mostly a query-planning and vacuum-management win.</li>
-          <li><strong>Sharding (multi-machine):</strong> data lives on different servers. Now you have a routing problem, a cross-shard query problem, and a rebalancing problem.</li>
+          <li><strong>Partitioning (single-machine):</strong>{" "}Postgres declarative partitioning splits one logical table into multiple physical tables on the <em>same</em>{" "}server. Mostly a query-planning and vacuum-management win.</li>
+          <li><strong>Sharding (multi-machine):</strong>{" "}data lives on different servers. Now you have a routing problem, a cross-shard query problem, and a rebalancing problem.</li>
         </ul>
         <p>
           Most of this module is about sharding. Partitioning-on-one-box is a useful tool but it&apos;s not what you&apos;re
@@ -188,11 +188,11 @@ export default function Page() {
 // All reads/writes for that user go to that one shard.`}</CodeBlock>
 
         <p>
-          <strong>Lives on:</strong> point lookups by the partition key. Writes spread evenly across shards if your hash is
+          <strong>Lives on:</strong>{" "}point lookups by the partition key. Writes spread evenly across shards if your hash is
           good. Predictable load.
         </p>
         <p>
-          <strong>Dies on:</strong> range queries. &quot;Show me all users created last week&quot; becomes a fan-out across
+          <strong>Dies on:</strong>{" "}range queries. &quot;Show me all users created last week&quot; becomes a fan-out across
           every shard. Anything that wants ordered scans suffers.
         </p>
 
@@ -203,12 +203,12 @@ export default function Page() {
           work this way.
         </p>
         <p>
-          <strong>Lives on:</strong> range scans. &quot;Find all orders between Tuesday and Friday&quot; hits one or two
+          <strong>Lives on:</strong>{" "}range scans. &quot;Find all orders between Tuesday and Friday&quot; hits one or two
           shards instead of all of them.
         </p>
         <p>
-          <strong>Dies on:</strong> hot shards. If your key is monotonically increasing (timestamp, auto-increment ID),
-          <em>every new write</em> goes to the last shard. The other N-1 shards are bored. This is the classic
+          <strong>Dies on:</strong>{" "}hot shards. If your key is monotonically increasing (timestamp, auto-increment ID),
+          <em>every new write</em>{" "}goes to the last shard. The other N-1 shards are bored. This is the classic
           time-series sharding mistake.
         </p>
 
@@ -227,11 +227,11 @@ export default function Page() {
           Vitess uses this. Many B2B SaaS platforms use this when shards are tenants.
         </p>
         <p>
-          <strong>Lives on:</strong> heterogeneous workloads. One whale tenant gets its own dedicated shard. Smaller
+          <strong>Lives on:</strong>{" "}heterogeneous workloads. One whale tenant gets its own dedicated shard. Smaller
           tenants pile onto shared shards. You can move a tenant between shards without rehashing the world.
         </p>
         <p>
-          <strong>Dies on:</strong> the directory itself. Now it&apos;s a hot service that every query consults. You
+          <strong>Dies on:</strong>{" "}the directory itself. Now it&apos;s a hot service that every query consults. You
           cache it aggressively and pray the cache invalidation works.
         </p>
 
@@ -290,7 +290,7 @@ export default function Page() {
         <p>
           Here&apos;s the disaster scenario. You&apos;re running 4 shards with naive <code>hash(key) % 4</code> routing.
           Storage is filling up, you decide to add a 5th shard. Now <code>hash(key) % 5</code> is a different function.
-          Roughly <strong>4/5 of all keys land on a different shard than they did before.</strong> You&apos;re moving 80%
+          Roughly <strong>4/5 of all keys land on a different shard than they did before.</strong>{" "}You&apos;re moving 80%
           of your data while serving live traffic.
         </p>
         <p>
@@ -307,7 +307,7 @@ export default function Page() {
         <p>
           Add a node? It only steals the keys between itself and the previous node clockwise — typically about
           1/N of the keyspace. Remove a node? Its keys flow to the next node clockwise. <strong>The other N-1 nodes
-          don&apos;t move.</strong> That&apos;s the magic.
+          don&apos;t move.</strong>{" "}That&apos;s the magic.
         </p>
 
         <Mermaid chart={ringDiagram} />
@@ -323,7 +323,7 @@ export default function Page() {
         </p>
         <ul>
           <li>Load smooths out. With V vnodes per physical node and N nodes, the standard deviation of load shrinks like <strong>1/√(V·N)</strong>.</li>
-          <li>When a node fails, its load splits across <em>all</em> remaining nodes (because its 256 arcs each had different neighbors), not just one.</li>
+          <li>When a node fails, its load splits across <em>all</em>{" "}remaining nodes (because its 256 arcs each had different neighbors), not just one.</li>
         </ul>
 
         <Callout variant="insight" title="The 1/√(V·N) intuition">
@@ -377,7 +377,7 @@ export default function Page() {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Hot shards even with consistent hashing</h3>
         <p>
-          Consistent hashing distributes <em>keys</em> evenly. It does <strong>not</strong> distribute <em>traffic</em> evenly
+          Consistent hashing distributes <em>keys</em>{" "}evenly. It does <strong>not</strong>{" "}distribute <em>traffic</em>{" "}evenly
           if traffic is skewed. If user_id 42 is Beyoncé and gets 5% of all reads, the shard owning her data is on fire
           regardless of how clever your hashing is.
         </p>
@@ -385,9 +385,9 @@ export default function Page() {
           The mitigations are workload-specific:
         </p>
         <ul>
-          <li><strong>Read replicas for hot keys.</strong> Beyoncé&apos;s shard has 10 replicas, everyone else has 2.</li>
-          <li><strong>Application-level caching.</strong> Hot keys go in Redis. The shard never sees the read.</li>
-          <li><strong>Key salting for writes.</strong> Append a random suffix to spread writes (<code>beyonce#1</code>, <code>beyonce#2</code>, …) and merge on read. Ugly but it works.</li>
+          <li><strong>Read replicas for hot keys.</strong>{" "}Beyoncé&apos;s shard has 10 replicas, everyone else has 2.</li>
+          <li><strong>Application-level caching.</strong>{" "}Hot keys go in Redis. The shard never sees the read.</li>
+          <li><strong>Key salting for writes.</strong>{" "}Append a random suffix to spread writes (<code>beyonce#1</code>, <code>beyonce#2</code>, …) and merge on read. Ugly but it works.</li>
         </ul>
 
         <Callout variant="warn" title="The interview trap">

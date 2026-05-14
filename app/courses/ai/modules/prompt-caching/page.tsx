@@ -46,7 +46,7 @@ export default function PromptCachingModule() {
 
       <Callout variant="insight" title="The setup">
         <p>
-          Conversation memory (Module 10) compounds quickly: a 20-turn chat with a 2000-token system prompt re-bills you for that 2000 tokens <em>on every turn</em>. Across 10,000 daily users, that&apos;s tens of millions of duplicate input tokens billed daily. <strong>API prompt caching</strong> is Anthropic&apos;s answer: tell the API &quot;this prefix is reusable, store the encoded version of it for 5 minutes, and bill cache reads at 10% of normal price.&quot; This module shows you how to use it correctly — and how to instrument cost so you actually notice when something goes wrong.
+          Conversation memory (Module 10) compounds quickly: a 20-turn chat with a 2000-token system prompt re-bills you for that 2000 tokens <em>on every turn</em>. Across 10,000 daily users, that&apos;s tens of millions of duplicate input tokens billed daily. <strong>API prompt caching</strong>{" "}is Anthropic&apos;s answer: tell the API &quot;this prefix is reusable, store the encoded version of it for 5 minutes, and bill cache reads at 10% of normal price.&quot; This module shows you how to use it correctly — and how to instrument cost so you actually notice when something goes wrong.
         </p>
       </Callout>
 
@@ -60,12 +60,12 @@ export default function PromptCachingModule() {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">KV caching (inference internals)</h3>
         <p>
-          When the model generates a response, each new token attends over every previous token. If it had to recompute attention for every prior token on every step, generation would be quadratic and unusably slow. So inference engines cache the &quot;keys&quot; and &quot;values&quot; from each prior token&apos;s attention computation — the famous <strong>KV cache</strong>. This is an <em>internal optimization</em> at inference time. You don&apos;t configure it, you don&apos;t pay for it differently, you don&apos;t even see it as a developer. You met this back in Phase 1.
+          When the model generates a response, each new token attends over every previous token. If it had to recompute attention for every prior token on every step, generation would be quadratic and unusably slow. So inference engines cache the &quot;keys&quot; and &quot;values&quot; from each prior token&apos;s attention computation — the famous <strong>KV cache</strong>. This is an <em>internal optimization</em>{" "}at inference time. You don&apos;t configure it, you don&apos;t pay for it differently, you don&apos;t even see it as a developer. You met this back in Phase 1.
         </p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">API prompt caching (this module)</h3>
         <p>
-          Anthropic&apos;s API also offers an <em>opt-in, billable, observable</em> cache — a totally different beast. You mark a chunk of your prompt with <code>cache_control</code>. The first request stores that prefix server-side (encoded form) for 5 minutes (default) or 1 hour (extended). Subsequent requests with the <em>same exact prefix</em> within that window get a <strong>cache hit</strong> — input tokens for that prefix bill at ~10% of the normal rate.
+          Anthropic&apos;s API also offers an <em>opt-in, billable, observable</em>{" "}cache — a totally different beast. You mark a chunk of your prompt with <code>cache_control</code>. The first request stores that prefix server-side (encoded form) for 5 minutes (default) or 1 hour (extended). Subsequent requests with the <em>same exact prefix</em>{" "}within that window get a <strong>cache hit</strong> — input tokens for that prefix bill at ~10% of the normal rate.
         </p>
 
         <Callout variant="info" title="Two caches, one table">
@@ -84,7 +84,7 @@ You observe?    Invisible                   Usage block reports cache_creation
         </Callout>
 
         <p className="mt-4">
-          For the rest of this module, <strong>&quot;prompt caching&quot;</strong> means the API-level kind. The Phase 1 KV cache is just background.
+          For the rest of this module, <strong>&quot;prompt caching&quot;</strong>{" "}means the API-level kind. The Phase 1 KV cache is just background.
         </p>
 
         <Quiz
@@ -118,7 +118,7 @@ You observe?    Invisible                   Usage block reports cache_creation
 
         <h3 className="text-xl font-semibold mt-6 mb-3">The mental model: cached prefixes</h3>
         <p>
-          You can mark up to 4 cache breakpoints in a single request. Each breakpoint says &quot;everything <em>before</em> me is a cacheable prefix.&quot; Anthropic hashes that prefix; if a subsequent request has the same hash, it&apos;s a cache hit.
+          You can mark up to 4 cache breakpoints in a single request. Each breakpoint says &quot;everything <em>before</em>{" "}me is a cacheable prefix.&quot; Anthropic hashes that prefix; if a subsequent request has the same hash, it&apos;s a cache hit.
         </p>
 
         <CodeBlock lang="plain" caption="Anatomy of a cached request (raw API view)">{`{
@@ -137,7 +137,7 @@ You observe?    Invisible                   Usage block reports cache_creation
 }`}</CodeBlock>
 
         <p className="mt-4">
-          On the first call, Anthropic encodes the system prompt, stores it, and bills you the input tokens at the <strong>cache write rate</strong> (~25% premium over normal input). On subsequent calls with the <em>identical</em> system prompt within 5 minutes, you pay the <strong>cache read rate</strong> (~10% of normal input). The user message past the breakpoint always bills at full rate.
+          On the first call, Anthropic encodes the system prompt, stores it, and bills you the input tokens at the <strong>cache write rate</strong> (~25% premium over normal input). On subsequent calls with the <em>identical</em>{" "}system prompt within 5 minutes, you pay the <strong>cache read rate</strong> (~10% of normal input). The user message past the breakpoint always bills at full rate.
         </p>
 
         <Callout variant="insight" title="When caching pays off">
@@ -241,7 +241,7 @@ public class SupportService {
 
         <Callout variant="spring" title="Spring AI version note">
           <p>
-            The exact API surface for caching has shifted between Spring AI 1.0.x patch releases. In your real code, prefer the lookup: <em>&quot;Spring AI Anthropic cache_control example&quot;</em> for current syntax, then verify with the <code>spring.ai.anthropic.api</code> javadoc. The conceptual model — &quot;mark a system message or content block&quot; — is stable across versions.
+            The exact API surface for caching has shifted between Spring AI 1.0.x patch releases. In your real code, prefer the lookup: <em>&quot;Spring AI Anthropic cache_control example&quot;</em>{" "}for current syntax, then verify with the <code>spring.ai.anthropic.api</code> javadoc. The conceptual model — &quot;mark a system message or content block&quot; — is stable across versions.
           </p>
         </Callout>
 
@@ -427,7 +427,7 @@ public class CostTrackingAdvisor implements CallAdvisor {
         <Callout variant="info" title="Path B — IntelliJ Initializr">
           <ol className="list-decimal pl-6 space-y-1 mt-2">
             <li><strong>File → New → Project → Spring Initializr</strong>. Group <code>com.example</code>, Artifact <code>cost-dashboard</code>, Maven, Java 21, Jar.</li>
-            <li>Dependencies: <strong>Spring Web</strong> and <strong>Anthropic (Spring AI)</strong>.</li>
+            <li>Dependencies: <strong>Spring Web</strong>{" "}and <strong>Anthropic (Spring AI)</strong>.</li>
           </ol>
         </Callout>
 
@@ -703,7 +703,7 @@ public class DashboardController {
         <h3 className="text-xl font-semibold mt-8 mb-3">Step 10 — Run it</h3>
         <CodeBlock lang="plain">{`./mvnw spring-boot:run`}</CodeBlock>
 
-        <p className="mt-3">Open <a className="text-indigo-600 hover:underline" href="http://localhost:8080" target="_blank" rel="noreferrer">http://localhost:8080</a>. Click <strong>Ask</strong> once — you&apos;ll see Calls=1, Cache writes &gt; 0, Cache reads = 0. Click <strong>Ask × 10</strong> — watch cache hit ratio climb and avg $/call drop substantially.</p>
+        <p className="mt-3">Open <a className="text-indigo-600 hover:underline" href="http://localhost:8080" target="_blank" rel="noreferrer">http://localhost:8080</a>. Click <strong>Ask</strong>{" "}once — you&apos;ll see Calls=1, Cache writes &gt; 0, Cache reads = 0. Click <strong>Ask × 10</strong> — watch cache hit ratio climb and avg $/call drop substantially.</p>
 
         <p className="mt-3">Expected pattern after one warm-up call + 10 more:</p>
         <CodeBlock lang="plain">{`Calls                11

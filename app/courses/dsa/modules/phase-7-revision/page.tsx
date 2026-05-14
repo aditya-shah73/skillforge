@@ -87,21 +87,21 @@ flowchart TD
             <div className="flex gap-3">
               <div className="font-mono font-bold text-fuchsia-600 dark:text-fuchsia-400">(a)</div>
               <div className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Optimal substructure.</strong> The optimal answer for the whole problem can be assembled from optimal answers to <em>smaller instances of the same problem</em>. &quot;Shortest path from A to C passes through some B; that path A→B must itself be a shortest path.&quot;
+                <strong>Optimal substructure.</strong>{" "}The optimal answer for the whole problem can be assembled from optimal answers to <em>smaller instances of the same problem</em>. &quot;Shortest path from A to C passes through some B; that path A→B must itself be a shortest path.&quot;
               </div>
             </div>
 
             <div className="flex gap-3">
               <div className="font-mono font-bold text-fuchsia-600 dark:text-fuchsia-400">(b)</div>
               <div className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>Overlapping subproblems.</strong> Naive recursion calls the same subproblem more than once. <code>fib(5)</code> calls <code>fib(3)</code> twice, <code>fib(2)</code> three times. If subproblems never repeat, you have plain divide-and-conquer, not DP.
+                <strong>Overlapping subproblems.</strong>{" "}Naive recursion calls the same subproblem more than once. <code>fib(5)</code> calls <code>fib(3)</code> twice, <code>fib(2)</code> three times. If subproblems never repeat, you have plain divide-and-conquer, not DP.
               </div>
             </div>
 
             <div className="flex gap-3">
               <div className="font-mono font-bold text-fuchsia-600 dark:text-fuchsia-400">(c)</div>
               <div className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>The &quot;I keep recomputing the same thing&quot; tell.</strong> If your gut reaction to the brute-force recursion is &quot;wait, didn&apos;t I just solve this exact subproblem two frames up?&quot; — that&apos;s DP. Cache the result, transform exponential to polynomial.
+                <strong>The &quot;I keep recomputing the same thing&quot; tell.</strong>{" "}If your gut reaction to the brute-force recursion is &quot;wait, didn&apos;t I just solve this exact subproblem two frames up?&quot; — that&apos;s DP. Cache the result, transform exponential to polynomial.
               </div>
             </div>
           </div>
@@ -112,7 +112,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight">
-          <strong>The mental model:</strong> DP = brute-force recursion + a cache. Always write the brute-force recursion first. The state (the args that uniquely identify a subproblem) becomes your memo key, and that same state becomes your dp-table index when you flip it to bottom-up.
+          <strong>The mental model:</strong>{" "}DP = brute-force recursion + a cache. Always write the brute-force recursion first. The state (the args that uniquely identify a subproblem) becomes your memo key, and that same state becomes your dp-table index when you flip it to bottom-up.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -184,7 +184,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong> derive the recurrence top-down, then translate to bottom-up if the constant factor matters or you want to space-optimize. The recursion is how you <em>think</em>; the table is how you <em>ship</em>.
+          <strong>Decision rule:</strong>{" "}derive the recurrence top-down, then translate to bottom-up if the constant factor matters or you want to space-optimize. The recursion is how you <em>think</em>; the table is how you <em>ship</em>.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -206,53 +206,53 @@ flowchart TD
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Shape 1 · 1D, decision at index i</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i]</code> = best answer using/ending at index i</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> <code>dp[i] = f(dp[i-1], dp[i-2], ...)</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(n) / O(n) → O(1)</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> House Robber, Climbing Stairs</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n) / O(n) → O(1)</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}House Robber, Climbing Stairs</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Shape 2 · 2D, i × j string family</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> over two sequences A[..i], B[..j]</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> match → diagonal; else min/max of three neighbors</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(m·n) / O(m·n) → O(min(m,n))</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> Edit Distance, LCS</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}match → diagonal; else min/max of three neighbors</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(min(m,n))</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Edit Distance, LCS</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Shape 3 · Grid (m × n) path counting</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> = ways/cost to reach cell (i, j)</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> <code>dp[i][j] = dp[i-1][j] + dp[i][j-1]</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(m·n) / O(m·n) → O(n)</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> Unique Paths, Minimum Path Sum</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(n)</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Unique Paths, Minimum Path Sum</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">Shape 4 · Interval DP (i…j range)</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> = answer for subrange A[i..j]</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> split point k: <code>dp[i][j] = min/max over k of f(dp[i][k], dp[k+1][j])</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(n³) / O(n²)</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> Matrix Chain, Burst Balloons</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}split point k: <code>dp[i][j] = min/max over k of f(dp[i][k], dp[k+1][j])</code></div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n³) / O(n²)</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Matrix Chain, Burst Balloons</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">Shape 5 · Tree DP (rooted at node)</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[node]</code> often with a 2nd dim for include/exclude</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> post-order DFS, combine children&apos;s answers</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(n) / O(n)</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> House Robber III, Tree Diameter</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}post-order DFS, combine children&apos;s answers</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n) / O(n)</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}House Robber III, Tree Diameter</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Shape 6 · Bitmask DP (subset state)</div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[mask][i]</code> = best path visiting set <code>mask</code> ending at <code>i</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> for each j not in mask: try extending</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong> O(2ⁿ · n²) / O(2ⁿ · n)</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong> Travelling Salesman, Assign Cookies</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}for each j not in mask: try extending</div>
+            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(2ⁿ · n²) / O(2ⁿ · n)</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Travelling Salesman, Assign Cookies</div>
           </div>
         </div>
 
         <Callout variant="insight">
-          <strong>Pick the shape from the input.</strong> One sequence, decision per index → Shape 1. Two strings → Shape 2. A grid → Shape 3. &quot;Best way to split this range&quot; → Shape 4. A tree → Shape 5. n ≤ 20 and you&apos;re visiting subsets → Shape 6. The shape tells you the dimensions; the dimensions tell you the time complexity.
+          <strong>Pick the shape from the input.</strong>{" "}One sequence, decision per index → Shape 1. Two strings → Shape 2. A grid → Shape 3. &quot;Best way to split this range&quot; → Shape 4. A tree → Shape 5. n ≤ 20 and you&apos;re visiting subsets → Shape 6. The shape tells you the dimensions; the dimensions tell you the time complexity.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -272,7 +272,7 @@ flowchart TD
         <div className="grid md:grid-cols-3 gap-3 mb-5">
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-emerald-50/40 dark:bg-emerald-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Fibonacci</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong> i-th Fibonacci number</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong>{" "}i-th Fibonacci number</div>
             <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Transition:</strong> <code>dp[i] = dp[i-1] + dp[i-2]</code></div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Base:</strong> <code>dp[0]=0, dp[1]=1</code></div>
           </div>
@@ -284,7 +284,7 @@ flowchart TD
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-fuchsia-50/40 dark:bg-fuchsia-950/20">
             <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">House Robber</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong> max money robbing houses 0..i-1</div>
+            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong>{" "}max money robbing houses 0..i-1</div>
             <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Transition:</strong> <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code></div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Base:</strong> <code>dp[0]=0, dp[1]=nums[0]</code></div>
           </div>
@@ -308,7 +308,7 @@ public int rob(int[] nums) {
 }`}</CodeBlock>
 
         <Callout variant="spring" title="The collapse trick">
-          Any 1D DP whose transition uses a <em>constant</em> number of recent values (dp[i-1], dp[i-2], ...) collapses to O(1) space using that many rolling vars. <strong>LIS does NOT collapse</strong> — it reads every previous dp[j]. <strong>Coin Change does NOT collapse</strong> — it reads dp[a-c] for arbitrary coin sizes.
+          Any 1D DP whose transition uses a <em>constant</em>{" "}number of recent values (dp[i-1], dp[i-2], ...) collapses to O(1) space using that many rolling vars. <strong>LIS does NOT collapse</strong> — it reads every previous dp[j]. <strong>Coin Change does NOT collapse</strong> — it reads dp[a-c] for arbitrary coin sizes.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -322,7 +322,7 @@ public int rob(int[] nums) {
       <section className="not-prose mb-12">
         <h2 className="text-2xl font-bold tracking-tight mb-1">5. 2D DP — Edit Distance as the canonical example</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          <strong>LC 72 · Edit Distance (Levenshtein).</strong> Minimum number of insert / delete / replace ops to turn string A into string B. The recurrence has three cases; the table makes it obvious.
+          <strong>LC 72 · Edit Distance (Levenshtein).</strong>{" "}Minimum number of insert / delete / replace ops to turn string A into string B. The recurrence has three cases; the table makes it obvious.
         </p>
 
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40 mb-4">
@@ -481,7 +481,7 @@ public int tsp(int[][] dist) {
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
             <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Top-down memo with no base case</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-              The recursion calls itself forever, or returns garbage from the cache because you stored a half-baked answer. <strong>Always</strong> check the base case <em>before</em> the cache lookup.
+              The recursion calls itself forever, or returns garbage from the cache because you stored a half-baked answer. <strong>Always</strong>{" "}check the base case <em>before</em>{" "}the cache lookup.
             </p>
             <CodeBlock lang="java">{`// BAD — recurses past 0 into negative indices, StackOverflow
 int rob(int[] nums, int i, Integer[] memo) {
@@ -527,7 +527,7 @@ int f(int n, int[] memo) {
           </div>
 
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Forgetting to <em>store</em> the result after computing it</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Forgetting to <em>store</em>{" "}the result after computing it</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
               You added a cache lookup at the top but forgot to write the result back. The function still recomputes every subproblem — still O(2ⁿ). Easy to miss when refactoring.
             </p>
@@ -659,7 +659,7 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           The decision framework, the six state shapes, top-down vs bottom-up, the 1D collapse trick, the 2D rolling-array trick, bitmask state for subsets, and the five common bugs. That&apos;s the entire DP playbook — every &quot;hard&quot; LeetCode tag you see in this category bottoms out in one of these six shapes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 8 — Advanced &amp; Interview Prep.</strong> Tries (the prefix-tree structure for autocomplete and word search), then the heavier patterns you&apos;ll meet at the senior-interview tier — followed by the systematic interview framework that ties everything together.
+          <strong>Up next: Phase 8 — Advanced &amp; Interview Prep.</strong>{" "}Tries (the prefix-tree structure for autocomplete and word search), then the heavier patterns you&apos;ll meet at the senior-interview tier — followed by the systematic interview framework that ties everything together.
         </p>
         <Link
           href="/courses/dsa/modules/tries"

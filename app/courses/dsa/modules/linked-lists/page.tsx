@@ -97,13 +97,13 @@ flowchart LR
 
         <p>
           Arrays are wonderful — until you need to insert into the middle. Then every element to the right has to slide
-          over by one slot, and you pay <strong>O(n)</strong> on every poke. If your workload is mostly{" "}
+          over by one slot, and you pay <strong>O(n)</strong>{" "}on every poke. If your workload is mostly{" "}
           <em>insert here, delete there, splice this in front</em>, the array's contiguous memory becomes a tax.
         </p>
 
         <p>
-          A <strong>linked list</strong> trades random access for surgical insertion. There's no contiguous memory.
-          Each element lives in its own little <em>node</em> on the heap, and each node holds one extra piece of
+          A <strong>linked list</strong>{" "}trades random access for surgical insertion. There's no contiguous memory.
+          Each element lives in its own little <em>node</em>{" "}on the heap, and each node holds one extra piece of
           information: <code>next</code>, a reference to the node that comes after it. You navigate the list by
           chasing pointers, not by indexing.
         </p>
@@ -174,17 +174,17 @@ class MyLinkedList<E> {
         <h3>Singly vs doubly vs circular</h3>
         <ul>
           <li>
-            <strong>Singly linked:</strong> each node has only <code>next</code>. You can move forward, never backward.
+            <strong>Singly linked:</strong>{" "}each node has only <code>next</code>. You can move forward, never backward.
             Compact (one pointer per node).
           </li>
           <li>
-            <strong>Doubly linked:</strong> each node has <code>next</code> <em>and</em> <code>prev</code>. You can walk in
-            either direction. Costs an extra reference per node, but makes deletion <em>given a node</em> O(1) and lets
+            <strong>Doubly linked:</strong>{" "}each node has <code>next</code> <em>and</em> <code>prev</code>. You can walk in
+            either direction. Costs an extra reference per node, but makes deletion <em>given a node</em>{" "}O(1) and lets
             you maintain a tail pointer with O(1) addLast and O(1) removeLast.{" "}
             <code>java.util.LinkedList</code> is doubly linked.
           </li>
           <li>
-            <strong>Circular:</strong> the tail's <code>next</code> points back to the head instead of <code>null</code>.
+            <strong>Circular:</strong>{" "}the tail's <code>next</code> points back to the head instead of <code>null</code>.
             Useful for round-robin schedulers and ring-buffer-like structures.
           </li>
         </ul>
@@ -218,7 +218,7 @@ class MyLinkedList<E> {
 
         <p>
           Forget memorising. Derive each cost from the model: a singly-linked list only knows the head, and to reach
-          index <em>i</em> you must follow <em>i</em> next-pointers.
+          index <em>i</em>{" "}you must follow <em>i</em>{" "}next-pointers.
         </p>
 
         <table>
@@ -294,9 +294,9 @@ class MyLinkedList<E> {
         <h3>Trick 1: the dummy-head sentinel</h3>
         <p>
           Naive linked-list code is full of <em>"if I'm inserting at the front, special-case it"</em> branches, because
-          the head pointer lives on the list, not on a node. The <strong>dummy-head</strong> trick removes the
+          the head pointer lives on the list, not on a node. The <strong>dummy-head</strong>{" "}trick removes the
           asymmetry by introducing a fake first node that never holds real data — every real node is now the{" "}
-          <code>next</code> of <em>some</em> node, including the actual head.
+          <code>next</code> of <em>some</em>{" "}node, including the actual head.
         </p>
 
         <Mermaid chart={dummyHead} />

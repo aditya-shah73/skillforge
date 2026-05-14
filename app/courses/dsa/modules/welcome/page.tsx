@@ -43,31 +43,31 @@ export default function DsaWelcomeModule() {
       <section>
         <h2>What this course <em>is</em></h2>
         <ul>
-          <li><strong>Pattern-first.</strong> The reason interviewers love LeetCode isn&apos;t the problems themselves — it&apos;s that the same ~15 patterns cover most of them. We teach the patterns, then drill them.</li>
-          <li><strong>Intuition before code.</strong> Every concept starts with an analogy, then a worked example you trace by hand on paper, then code. Skipping the paper step is the #1 way people fail at this.</li>
-          <li><strong>Java, throughout.</strong> Every data structure built from scratch. Every problem solved in Java. We&apos;ll lean on the Java Collections Framework deliberately, not by accident.</li>
-          <li><strong>Interactive.</strong> Quizzes, drills, and checkpoints. You don&apos;t progress by clicking &quot;next&quot; — you progress by answering correctly.</li>
-          <li><strong>Opinionated.</strong> We&apos;ll tell you which patterns matter most, which problems to prioritize, and when to stop optimizing and ship.</li>
+          <li><strong>Pattern-first.</strong>{" "}The reason interviewers love LeetCode isn&apos;t the problems themselves — it&apos;s that the same ~15 patterns cover most of them. We teach the patterns, then drill them.</li>
+          <li><strong>Intuition before code.</strong>{" "}Every concept starts with an analogy, then a worked example you trace by hand on paper, then code. Skipping the paper step is the #1 way people fail at this.</li>
+          <li><strong>Java, throughout.</strong>{" "}Every data structure built from scratch. Every problem solved in Java. We&apos;ll lean on the Java Collections Framework deliberately, not by accident.</li>
+          <li><strong>Interactive.</strong>{" "}Quizzes, drills, and checkpoints. You don&apos;t progress by clicking &quot;next&quot; — you progress by answering correctly.</li>
+          <li><strong>Opinionated.</strong>{" "}We&apos;ll tell you which patterns matter most, which problems to prioritize, and when to stop optimizing and ship.</li>
         </ul>
       </section>
 
       <section>
         <h2>What this course is <em>not</em></h2>
         <ul>
-          <li><strong>Not a 500-problem grind.</strong> You&apos;ll trace ~80 problems by hand across the course — chosen because each one cleanly demonstrates a pattern. Volume comes later, after you have the framework.</li>
-          <li><strong>Not a CLRS replacement.</strong> We don&apos;t prove every theorem. If you want a formal CS textbook, this isn&apos;t it. The goal is interview-ready intuition, not graduate-level rigor.</li>
-          <li><strong>Not language-agnostic.</strong> Java only. Patterns transfer to other languages, but the course assumes Java syntax everywhere.</li>
-          <li><strong>Not a credential.</strong> The credential is your offer letter. The capstone problem set is what you point at when someone says &quot;show me you can solve these.&quot;</li>
+          <li><strong>Not a 500-problem grind.</strong>{" "}You&apos;ll trace ~80 problems by hand across the course — chosen because each one cleanly demonstrates a pattern. Volume comes later, after you have the framework.</li>
+          <li><strong>Not a CLRS replacement.</strong>{" "}We don&apos;t prove every theorem. If you want a formal CS textbook, this isn&apos;t it. The goal is interview-ready intuition, not graduate-level rigor.</li>
+          <li><strong>Not language-agnostic.</strong>{" "}Java only. Patterns transfer to other languages, but the course assumes Java syntax everywhere.</li>
+          <li><strong>Not a credential.</strong>{" "}The credential is your offer letter. The capstone problem set is what you point at when someone says &quot;show me you can solve these.&quot;</li>
         </ul>
       </section>
 
       <section>
         <h2>What you&apos;ll need</h2>
         <ul>
-          <li><strong>Java 17+</strong> and your IDE of choice (IntelliJ recommended)</li>
-          <li><strong>Node 20.9+</strong> to run this course app locally</li>
+          <li><strong>Java 17+</strong>{" "}and your IDE of choice (IntelliJ recommended)</li>
+          <li><strong>Node 20.9+</strong>{" "}to run this course app locally</li>
           <li>A <strong>LeetCode account</strong> (free tier — premium not required)</li>
-          <li><strong>Paper and a pen.</strong> Yes, really. You&apos;ll use it more than your IDE in Phases 1–3.</li>
+          <li><strong>Paper and a pen.</strong>{" "}Yes, really. You&apos;ll use it more than your IDE in Phases 1–3.</li>
           <li>Working knowledge of <strong>Java syntax</strong> — loops, classes, generics, the basics. No Spring, no frameworks.</li>
         </ul>
         <Callout variant="info" title="No prior algorithms experience required">
@@ -92,11 +92,11 @@ export default function DsaWelcomeModule() {
         </p>
         <ul>
           <li>Explain the concept in <strong>2 minutes</strong> (without jargon, like you&apos;re talking to a smart non-CS friend)</li>
-          <li><strong>Recognize it in code</strong> you didn&apos;t write — including subtle off-by-one variants</li>
-          <li><strong>Implement it from scratch</strong> in Java, without looking</li>
+          <li><strong>Recognize it in code</strong>{" "}you didn&apos;t write — including subtle off-by-one variants</li>
+          <li><strong>Implement it from scratch</strong>{" "}in Java, without looking</li>
         </ul>
         <p>
-          If you can&apos;t do all three, go back. The modules are designed so that skipping reinforcement will absolutely wreck the next module. Trees break if you skipped recursion. DP breaks if you skipped recursion <em>and</em> arrays. There are no shortcuts.
+          If you can&apos;t do all three, go back. The modules are designed so that skipping reinforcement will absolutely wreck the next module. Trees break if you skipped recursion. DP breaks if you skipped recursion <em>and</em>{" "}arrays. There are no shortcuts.
         </p>
       </section>
 
@@ -133,18 +133,18 @@ export default function DsaWelcomeModule() {
           <li><strong>Phase 8 (Advanced):</strong> ~10–13 hours</li>
         </ul>
         <p>
-          Total: <strong>~70–90 hours</strong> if you engage seriously, <strong>~110+ hours</strong> if you build every project and solve every LeetCode problem from scratch (which you should). At ~1.5 hours a day, that&apos;s about <strong>2–3 months</strong> to get genuinely interview-ready.
+          Total: <strong>~70–90 hours</strong>{" "}if you engage seriously, <strong>~110+ hours</strong>{" "}if you build every project and solve every LeetCode problem from scratch (which you should). At ~1.5 hours a day, that&apos;s about <strong>2–3 months</strong>{" "}to get genuinely interview-ready.
         </p>
       </section>
 
       <section>
         <h2>How to actually study (this part is not optional)</h2>
         <ol>
-          <li><strong>Use paper.</strong> When a module says &quot;trace this by hand,&quot; take out an actual sheet of paper and draw it. The kinesthetic step is what cements the pattern. People who skip this learn nothing.</li>
-          <li><strong>Solve before you peek.</strong> When a LeetCode problem appears, give yourself <em>at least</em> 20 minutes of honest effort before reading the solution — even if you fail. Failing is how you learn the shape of the problem.</li>
-          <li><strong>Re-derive, don&apos;t re-read.</strong> Coming back to a topic? Don&apos;t re-read the module. Try to re-derive the data structure or algorithm from scratch on paper. That&apos;s the only test that matters.</li>
-          <li><strong>Spaced repetition for problems.</strong> A problem you solved last week is not a problem you&apos;ve mastered. Keep a list, re-solve the hard ones a week later, then a month later.</li>
-          <li><strong>Talk it out.</strong> Real interviews require you to think out loud. Solve at least a few problems by literally narrating your thinking — to a friend, a rubber duck, or your phone&apos;s voice recorder.</li>
+          <li><strong>Use paper.</strong>{" "}When a module says &quot;trace this by hand,&quot; take out an actual sheet of paper and draw it. The kinesthetic step is what cements the pattern. People who skip this learn nothing.</li>
+          <li><strong>Solve before you peek.</strong>{" "}When a LeetCode problem appears, give yourself <em>at least</em> 20 minutes of honest effort before reading the solution — even if you fail. Failing is how you learn the shape of the problem.</li>
+          <li><strong>Re-derive, don&apos;t re-read.</strong>{" "}Coming back to a topic? Don&apos;t re-read the module. Try to re-derive the data structure or algorithm from scratch on paper. That&apos;s the only test that matters.</li>
+          <li><strong>Spaced repetition for problems.</strong>{" "}A problem you solved last week is not a problem you&apos;ve mastered. Keep a list, re-solve the hard ones a week later, then a month later.</li>
+          <li><strong>Talk it out.</strong>{" "}Real interviews require you to think out loud. Solve at least a few problems by literally narrating your thinking — to a friend, a rubber duck, or your phone&apos;s voice recorder.</li>
         </ol>
         <Callout variant="insight" title="The single biggest mistake returning learners make">
           <p className="m-0">It&apos;s not skipping problems — it&apos;s grinding problems <em>without the underlying pattern</em>. You solve 200 problems, retain almost nothing, and panic in the interview because the pattern feels new. This course is structured to prevent that exact failure mode. Patterns first, problems second.</p>
@@ -158,9 +158,9 @@ export default function DsaWelcomeModule() {
         </p>
         <ul>
           <li><strong>Quality over quantity.</strong> 80 problems traced fully and re-derived later beats 500 problems skim-solved.</li>
-          <li><strong>Easy &gt; Medium &gt; Hard, in that order.</strong> An &quot;Easy&quot; you can&apos;t solve from scratch is more important to revisit than a &quot;Hard&quot; you watched a video about.</li>
-          <li><strong>Your editorial discipline matters.</strong> If you peek at the solution, write a one-paragraph explanation in your own words afterward. If you can&apos;t, you didn&apos;t learn it.</li>
-          <li><strong>Time-box.</strong> 20–40 minutes per problem. If you&apos;re still stuck, peek <em>just enough</em> to unstick yourself, then go back and solve the rest unaided.</li>
+          <li><strong>Easy &gt; Medium &gt; Hard, in that order.</strong>{" "}An &quot;Easy&quot; you can&apos;t solve from scratch is more important to revisit than a &quot;Hard&quot; you watched a video about.</li>
+          <li><strong>Your editorial discipline matters.</strong>{" "}If you peek at the solution, write a one-paragraph explanation in your own words afterward. If you can&apos;t, you didn&apos;t learn it.</li>
+          <li><strong>Time-box.</strong> 20–40 minutes per problem. If you&apos;re still stuck, peek <em>just enough</em>{" "}to unstick yourself, then go back and solve the rest unaided.</li>
         </ul>
       </section>
 
@@ -177,10 +177,10 @@ export default function DsaWelcomeModule() {
       <section>
         <h2>How to get the most out of this</h2>
         <ol>
-          <li><strong>Don&apos;t skip Phase 1.</strong> Big-O feels boring after seven years away — you remember it &quot;well enough.&quot; You don&apos;t. Three modules. Do them.</li>
-          <li><strong>Build every data structure from scratch.</strong> Yes, even though Java has them. Building HashMap by hand is what makes you actually understand HashMap.</li>
-          <li><strong>Trace by hand.</strong> Every worked example. Every time. Five minutes of arithmetic on paper beats an hour of re-reading.</li>
-          <li><strong>Ship the capstone.</strong> Module 34 is a 20-problem mixed set with writeups. Put the repo on GitHub. Link it from your resume. That&apos;s the artifact recruiters and hiring managers can verify.</li>
+          <li><strong>Don&apos;t skip Phase 1.</strong>{" "}Big-O feels boring after seven years away — you remember it &quot;well enough.&quot; You don&apos;t. Three modules. Do them.</li>
+          <li><strong>Build every data structure from scratch.</strong>{" "}Yes, even though Java has them. Building HashMap by hand is what makes you actually understand HashMap.</li>
+          <li><strong>Trace by hand.</strong>{" "}Every worked example. Every time. Five minutes of arithmetic on paper beats an hour of re-reading.</li>
+          <li><strong>Ship the capstone.</strong>{" "}Module 34 is a 20-problem mixed set with writeups. Put the repo on GitHub. Link it from your resume. That&apos;s the artifact recruiters and hiring managers can verify.</li>
         </ol>
       </section>
 

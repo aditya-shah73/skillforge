@@ -158,7 +158,7 @@ diag2 (r-c=-1): (1,2), (2,3)"]
         <p>
           Backtracking is one of those words that gets thrown around like it&apos;s a separate algorithm. It&apos;s
           not. <strong>Backtracking is depth-first search over an implicit tree of choices, where you mutate shared
-          state on the way down and undo that mutation on the way back up.</strong> That&apos;s the entire technique.
+          state on the way down and undo that mutation on the way back up.</strong>{" "}That&apos;s the entire technique.
           The DFS skeleton from Module 15 is still doing the work — the wrinkle is the bookkeeping.
         </p>
 
@@ -174,7 +174,7 @@ diag2 (r-c=-1): (1,2), (2,3)"]
         <p>
           That tree above is the choice tree for &quot;enumerate all subsets of <code>{`{1, 2, 3}`}</code>.&quot; At
           each level, the decision is &quot;include this number or skip it.&quot; There are 2³ = 8 leaves, and each
-          one is a distinct subset. <em>The tree is never built in memory.</em> It exists only in the call stack —
+          one is a distinct subset. <em>The tree is never built in memory.</em>{" "}It exists only in the call stack —
           we&apos;re visiting nodes by recursing, not by allocating <code>TreeNode</code> objects. That&apos;s what
           &quot;implicit&quot; means.
         </p>
@@ -231,7 +231,7 @@ void backtrack(int i, int[] nums, List<Integer> chosen, List<List<Integer>> out)
 
         <ul>
           <li><strong>The tree is implicit and exponential.</strong> 2ⁿ subsets, n! permutations. There&apos;s no adjacency list to read; the children of a state are computed from the state itself.</li>
-          <li><strong>The same &quot;node&quot; (state value) can legitimately appear in many places.</strong> The empty subset shows up as a leaf of the &quot;skip everything&quot; branch. There&apos;s no sense in which we&apos;ve &quot;visited&quot; it before — it&apos;s a different path that produced the same value. So no visited[] in the BFS/DFS sense; the tree structure is the bookkeeping.</li>
+          <li><strong>The same &quot;node&quot; (state value) can legitimately appear in many places.</strong>{" "}The empty subset shows up as a leaf of the &quot;skip everything&quot; branch. There&apos;s no sense in which we&apos;ve &quot;visited&quot; it before — it&apos;s a different path that produced the same value. So no visited[] in the BFS/DFS sense; the tree structure is the bookkeeping.</li>
         </ul>
 
         <Callout variant="info" title="Reframe: backtracking IS stateful DFS on an implicit tree">
@@ -239,7 +239,7 @@ void backtrack(int i, int[] nums, List<Integer> chosen, List<List<Integer>> out)
             Every backtracking solution can be rewritten as recursive DFS where the &quot;graph&quot; is the choice
             tree. The choose/unchoose pair is just the way you express &quot;descend into a child, then return to the
             parent state.&quot; If you ever feel stuck on a backtracking problem, ask: <em>what&apos;s the state at a
-            node? What are the choices from this state? What&apos;s the leaf condition?</em> Three questions, every
+            node? What are the choices from this state? What&apos;s the leaf condition?</em>{" "}Three questions, every
             problem.
           </p>
         </Callout>
@@ -426,7 +426,7 @@ private void backtrack(int i, int[] nums, List<Integer> chosen, List<List<Intege
         <p>
           A subtle but useful variant: instead of waiting for the leaf, record the partial subset at every node. Each
           time we add an element, the resulting list is itself a valid subset. This naturally produces all 2ⁿ subsets
-          but with a different call-tree shape — an &quot;n-ary&quot; tree where each node tries every <em>later</em>
+          but with a different call-tree shape — an &quot;n-ary&quot; tree where each node tries every <em>later</em>{" "}
           index.
         </p>
 
@@ -448,7 +448,7 @@ private void backtrack(int start, int[] nums, List<Integer> chosen, List<List<In
         <Callout variant="insight" title="The start parameter is the &quot;don't go backwards&quot; trick">
           <p>
             Passing <code>i + 1</code> (not <code>start + 1</code>) into the recursive call means: from position{" "}
-            <code>i</code>, the next element we consider must come <em>after</em> i. This is how we avoid duplicates
+            <code>i</code>, the next element we consider must come <em>after</em>{" "}i. This is how we avoid duplicates
             like <code>[1, 2]</code> and <code>[2, 1]</code> — both would otherwise count as the same subset, but the
             start parameter ensures we always pick in increasing index order.
           </p>
@@ -465,7 +465,7 @@ private void backtrack(int start, int[] nums, List<Integer> chosen, List<List<In
         <p>
           The naive complexity statement is &quot;O(2ⁿ) subsets.&quot; True, but for total work we have to count the
           cost of producing each subset. Each subset can have up to n elements, and recording it copies them into a
-          fresh list — that&apos;s O(n) per leaf. So the real complexity is <strong>O(2ⁿ × n)</strong> time and the
+          fresh list — that&apos;s O(n) per leaf. So the real complexity is <strong>O(2ⁿ × n)</strong>{" "}time and the
           same for space (we&apos;re storing all 2ⁿ subsets).
         </p>
 

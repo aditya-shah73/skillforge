@@ -118,7 +118,7 @@ flowchart LR
         <h2 id="setup">The BST: an ordering invariant on top of a binary tree</h2>
 
         <p>
-          A <strong>binary search tree</strong> is a binary tree (Module 11) with one additional rule:
+          A <strong>binary search tree</strong>{" "}is a binary tree (Module 11) with one additional rule:
         </p>
 
         <Callout variant="insight" title="The BST invariant">
@@ -129,7 +129,7 @@ flowchart LR
 
         <p>
           That&apos;s it. The data structure is the same — nodes with left and right pointers — but now you can
-          <strong> binary-search</strong> for a key by walking down. Smaller? Go left. Bigger? Go right. Equal?
+          <strong> binary-search</strong>{" "}for a key by walking down. Smaller? Go left. Bigger? Go right. Equal?
           Found it.
         </p>
 
@@ -166,7 +166,7 @@ flowchart LR
                     but 2 < 5! Not a BST.`}</CodeBlock>
 
         <p>
-          Locally each node satisfies left &lt; node &lt; right. But the <em>subtree</em> rooted at 8 contains a 2,
+          Locally each node satisfies left &lt; node &lt; right. But the <em>subtree</em>{" "}rooted at 8 contains a 2,
           which is supposed to be &gt; 5. The invariant is global: every key in the right subtree must exceed
           every ancestor that the right subtree was descended from on a left-to-right move.
         </p>
@@ -300,9 +300,9 @@ flowchart LR
         <h3>Complexity, all three operations</h3>
 
         <ul>
-          <li><strong>Search:</strong> O(h). Balanced: O(log n). Skewed: O(n).</li>
-          <li><strong>Insert:</strong> O(h). Same balance dependency.</li>
-          <li><strong>Delete:</strong> O(h). Successor walk is O(h), recursive delete is O(h).</li>
+          <li><strong>Search:</strong>{" "}O(h). Balanced: O(log n). Skewed: O(n).</li>
+          <li><strong>Insert:</strong>{" "}O(h). Same balance dependency.</li>
+          <li><strong>Delete:</strong>{" "}O(h). Successor walk is O(h), recursive delete is O(h).</li>
         </ul>
 
         <Quiz
@@ -347,7 +347,7 @@ flowchart LR
         <h3>The fix: self-balancing trees</h3>
 
         <p>
-          A <strong>balanced BST</strong> is a BST that maintains an additional invariant — the tree&apos;s height
+          A <strong>balanced BST</strong>{" "}is a BST that maintains an additional invariant — the tree&apos;s height
           stays O(log n) regardless of insertion order. It does this by performing small local restructurings
           (called <strong>rotations</strong>) during insert and delete to redistribute nodes when the tree gets
           lopsided.
@@ -360,26 +360,26 @@ flowchart LR
         <h3>AVL trees (Adelson-Velsky & Landis, 1962)</h3>
 
         <ul>
-          <li><strong>Invariant:</strong> for every node, the heights of the left and right subtrees differ by at most 1.</li>
-          <li><strong>Rebalance:</strong> after each insert/delete, walk back up; if any ancestor is unbalanced, do a single or double rotation to fix it.</li>
-          <li><strong>Height:</strong> at most ≈ 1.44 × log₂(n+2). Tighter balance than red-black.</li>
-          <li><strong>Tradeoff:</strong> faster lookups (shallower tree), slower modifications (more rotations).</li>
-          <li><strong>Use case:</strong> read-heavy workloads.</li>
+          <li><strong>Invariant:</strong>{" "}for every node, the heights of the left and right subtrees differ by at most 1.</li>
+          <li><strong>Rebalance:</strong>{" "}after each insert/delete, walk back up; if any ancestor is unbalanced, do a single or double rotation to fix it.</li>
+          <li><strong>Height:</strong>{" "}at most ≈ 1.44 × log₂(n+2). Tighter balance than red-black.</li>
+          <li><strong>Tradeoff:</strong>{" "}faster lookups (shallower tree), slower modifications (more rotations).</li>
+          <li><strong>Use case:</strong>{" "}read-heavy workloads.</li>
         </ul>
 
         <h3>Red-black trees (Bayer 1972, then named by Guibas-Sedgewick 1978)</h3>
 
         <ul>
-          <li><strong>Invariant:</strong> each node is colored red or black, with rules ensuring the longest root-to-leaf path is at most twice the shortest.</li>
-          <li><strong>Rebalance:</strong> recolor and rotate based on the color of the new node&apos;s uncle. Constant amortized work per insert/delete.</li>
-          <li><strong>Height:</strong> at most 2 × log₂(n+1). Looser balance than AVL.</li>
-          <li><strong>Tradeoff:</strong> slightly deeper than AVL, but fewer rotations on modify.</li>
-          <li><strong>Use case:</strong> write-heavy or mixed workloads. <strong>This is what Java uses.</strong></li>
+          <li><strong>Invariant:</strong>{" "}each node is colored red or black, with rules ensuring the longest root-to-leaf path is at most twice the shortest.</li>
+          <li><strong>Rebalance:</strong>{" "}recolor and rotate based on the color of the new node&apos;s uncle. Constant amortized work per insert/delete.</li>
+          <li><strong>Height:</strong>{" "}at most 2 × log₂(n+1). Looser balance than AVL.</li>
+          <li><strong>Tradeoff:</strong>{" "}slightly deeper than AVL, but fewer rotations on modify.</li>
+          <li><strong>Use case:</strong>{" "}write-heavy or mixed workloads. <strong>This is what Java uses.</strong></li>
         </ul>
 
         <Callout variant="info" title="You don't need to memorize rotations">
-          For interviews, you should be able to explain <em>why</em> a plain BST is unsafe and that AVL and
-          red-black trees fix it with O(1) local restructuring during insert/delete. You generally do <em>not</em>
+          For interviews, you should be able to explain <em>why</em>{" "}a plain BST is unsafe and that AVL and
+          red-black trees fix it with O(1) local restructuring during insert/delete. You generally do <em>not</em>{" "}
           need to implement rotations on a whiteboard — interviewers know that&apos;s a 30-minute exercise that
           tests typing more than thinking. Reach for <code>TreeMap</code> in Java instead.
         </Callout>
@@ -424,7 +424,7 @@ Inorder after:  a, x, b, y, c  (unchanged — that's the magic)`}</CodeBlock>
         <p>
           <code>java.util.TreeMap</code> is a red-black tree. <code>TreeSet</code> is backed by a <code>TreeMap</code>
           (with the value half discarded) — same machinery as <code>HashSet</code> sitting on <code>HashMap</code>.
-          Both give you <strong>sorted iteration</strong> and <strong>O(log n) range queries</strong>, at the cost
+          Both give you <strong>sorted iteration</strong>{" "}and <strong>O(log n) range queries</strong>, at the cost
           of slower per-operation constant factors than the hash-based versions.
         </p>
 
@@ -451,7 +451,7 @@ events.headMap(3000);       // {1000=a, 2000=b} — keys < 3000
 events.tailMap(3000);       // {3500=c, 5000=d} — keys >= 3000`}</CodeBlock>
 
         <p>
-          Each of those is O(log n) — except <code>subMap</code>, which returns a <em>view</em> of the original
+          Each of those is O(log n) — except <code>subMap</code>, which returns a <em>view</em>{" "}of the original
           map (no copy) in O(log n), with iteration cost proportional to the size of the range.
         </p>
 
@@ -531,7 +531,7 @@ events.tailMap(3000);       // {3500=c, 5000=d} — keys >= 3000`}</CodeBlock>
         <h3>Part A — <code>SimpleBst&lt;K extends Comparable&lt;K&gt;&gt;</code></h3>
 
         <p>
-          Build an <em>unbalanced</em> BST. We&apos;re skipping rotations on purpose — implementing red-black is
+          Build an <em>unbalanced</em>{" "}BST. We&apos;re skipping rotations on purpose — implementing red-black is
           a 200-line exercise in bookkeeping that doesn&apos;t teach BST intuition. The plain version teaches
           search/insert/delete; <code>TreeMap</code> handles the balancing for you in production.
         </p>

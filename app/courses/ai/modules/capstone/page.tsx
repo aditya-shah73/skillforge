@@ -47,7 +47,7 @@ export default function CapstoneModule() {
           <li>RAG over a real codebase, an <strong>agent loop with tools</strong>, and structured outputs.</li>
           <li>Eval gates and security guards wired into CI — not bolted on later.</li>
           <li>A demo you can record in 90 seconds and put on your resume.</li>
-          <li>The honest experience of integrating <em>every</em> piece you&apos;ve built into one coherent product.</li>
+          <li>The honest experience of integrating <em>every</em>{" "}piece you&apos;ve built into one coherent product.</li>
         </ul>
       </div>
 
@@ -71,7 +71,7 @@ export default function CapstoneModule() {
       </p>
 
       <p>
-        It&apos;s deliberately a <em>real</em> product shape — not a toy. The same architecture is what you&apos;d
+        It&apos;s deliberately a <em>real</em>{" "}product shape — not a toy. The same architecture is what you&apos;d
         find inside Sourcegraph Cody, Cursor&apos;s @-mentions, GitHub Copilot Workspace, or any internal
         engineering-assistant tool at a large company. Once you&apos;ve built this, you can defend it in a system
         design interview, point at it on a resume, and use it on your own repos.
@@ -251,7 +251,7 @@ public class CodeChunker {
         <p className="m-0">
           For your first cut, a simple &quot;split on top-level function/class boundaries with a fallback to fixed-size
           windows&quot; is fine. Tree-sitter parsers exist for every major language and the integration is one weekend
-          of work. The 95th-percentile chunk-quality improvement comes from <em>any</em> structure-aware chunking, not
+          of work. The 95th-percentile chunk-quality improvement comes from <em>any</em>{" "}structure-aware chunking, not
           from the most sophisticated one.
         </p>
       </Callout>
@@ -684,7 +684,7 @@ conversation:
 
       <h3 id="injection-corpus">Injection corpus runs the same way</h3>
       <p>
-        Injection cases assert the assistant <em>refuses or ignores</em> the malicious content, that no canary
+        Injection cases assert the assistant <em>refuses or ignores</em>{" "}the malicious content, that no canary
         leaks, and that no disallowed URL is emitted. Same harness, different assertion library.
       </p>
 
@@ -870,7 +870,7 @@ conversation:
         </p>
         <p className="text-white/95 mb-3">
           Most people who say they &quot;know AI&quot; have done a fraction of this. You can defend every layer.
-          You know <em>why</em> RAG beats fine-tuning for facts, why evals belong in CI, why hybrid retrieval beats
+          You know <em>why</em>{" "}RAG beats fine-tuning for facts, why evals belong in CI, why hybrid retrieval beats
           pure vector search, why the agent loop needs a stop condition. You can answer the system-design
           questions because you built the systems.
         </p>

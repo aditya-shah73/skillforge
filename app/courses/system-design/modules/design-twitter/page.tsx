@@ -73,10 +73,10 @@ export default function Page() {
           <span className="text-xs uppercase tracking-wider font-bold text-fuchsia-700 dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="text-base leading-relaxed m-0">
-          The interviewer says: <em>&quot;Design Twitter.&quot;</em> Twitter is news feed plus search plus trending plus the follower graph plus a thousand other things. The interview move here is to <strong>scope ruthlessly</strong>: pick the 4 things that matter most, do them well, mention the rest at wrap. Underneath, Twitter is the same hybrid fanout you just built — but now it has to coexist with full-text search and real-time trending, and the data flowing through the system has multiple consumers.
+          The interviewer says: <em>&quot;Design Twitter.&quot;</em>{" "}Twitter is news feed plus search plus trending plus the follower graph plus a thousand other things. The interview move here is to <strong>scope ruthlessly</strong>: pick the 4 things that matter most, do them well, mention the rest at wrap. Underneath, Twitter is the same hybrid fanout you just built — but now it has to coexist with full-text search and real-time trending, and the data flowing through the system has multiple consumers.
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
-          Same framework: clarify, estimate, API + data, high-level, deep-dive on what&apos;s hardest. The hard part this time isn&apos;t a single algorithm — it&apos;s the <strong>data pipeline shape</strong> that lets one tweet feed timelines, search, and trending without each system pulling from the others.
+          Same framework: clarify, estimate, API + data, high-level, deep-dive on what&apos;s hardest. The hard part this time isn&apos;t a single algorithm — it&apos;s the <strong>data pipeline shape</strong>{" "}that lets one tweet feed timelines, search, and trending without each system pulling from the others.
         </p>
       </section>
 
@@ -86,10 +86,10 @@ export default function Page() {
           Twitter is a giant product. I&apos;m going to scope tight — four core features — and explicitly punt the rest. The interviewer will redirect if I&apos;ve picked wrong, and that&apos;s fine.
         </p>
         <ul>
-          <li><strong>Tweet.</strong> User posts a tweet (text, &lt;280 chars, optional media URL).</li>
-          <li><strong>Home timeline.</strong> Reverse-chronological feed of tweets from people you follow (we already know how to do this).</li>
-          <li><strong>Search.</strong> Find tweets matching a keyword, ranked by recency or relevance.</li>
-          <li><strong>Trending.</strong> Top hashtags / phrases over the last 1-6 hours, optionally per-region.</li>
+          <li><strong>Tweet.</strong>{" "}User posts a tweet (text, &lt;280 chars, optional media URL).</li>
+          <li><strong>Home timeline.</strong>{" "}Reverse-chronological feed of tweets from people you follow (we already know how to do this).</li>
+          <li><strong>Search.</strong>{" "}Find tweets matching a keyword, ranked by recency or relevance.</li>
+          <li><strong>Trending.</strong>{" "}Top hashtags / phrases over the last 1-6 hours, optionally per-region.</li>
         </ul>
         <p>
           Out of scope: DMs, threads, retweets/quotes (mention them at wrap as fanout extensions), ads, live spaces, lists, notifications. Each of these is its own design problem.
@@ -97,11 +97,11 @@ export default function Page() {
 
         <h3>Non-functional requirements</h3>
         <ul>
-          <li><strong>Read-heavy across the board.</strong> Roughly 100:1 reads to writes for timelines and search.</li>
+          <li><strong>Read-heavy across the board.</strong>{" "}Roughly 100:1 reads to writes for timelines and search.</li>
           <li><strong>Latency budget:</strong> &lt;200ms p99 on home timeline, &lt;300ms on search, &lt;100ms on trending.</li>
           <li><strong>Eventual consistency on timelines and trending is fine.</strong> 5-30 second staleness is acceptable.</li>
           <li><strong>Search needs near-real-time indexing</strong> — a posted tweet should be findable in &lt;30 seconds.</li>
-          <li><strong>High availability on read path.</strong> If timelines break, the product is dead.</li>
+          <li><strong>High availability on read path.</strong>{" "}If timelines break, the product is dead.</li>
         </ul>
 
         <Callout variant="info" title="Questions I'd ask the interviewer">
@@ -442,9 +442,9 @@ public class TrendingIndexer {
 
         <p>The fixes, in order of cost:</p>
         <ol>
-          <li><strong>Cache celebrity recent-tweet lists.</strong> The pull-side query (<code>SELECT recent FROM tweets WHERE author_id = celeb</code>) gets cached in Redis with a short TTL (say 30s). 10M concurrent timeline-builders all hit the cache, not the DB. Cost: 30 seconds of staleness on celebrity tweets, which is well within the SLO.</li>
-          <li><strong>CDN-cache celebrity profile reads.</strong> Public reads of a celebrity&apos;s recent tweets can go through a CDN with 1-minute TTL. Massive read amplification absorbed at the edge.</li>
-          <li><strong>Explicit hot-shard replicas.</strong> If a celebrity&apos;s tweets DB shard is consistently hot, replicate it 3-5x and shed reads across replicas. Routing is by author_id, replication is async.</li>
+          <li><strong>Cache celebrity recent-tweet lists.</strong>{" "}The pull-side query (<code>SELECT recent FROM tweets WHERE author_id = celeb</code>) gets cached in Redis with a short TTL (say 30s). 10M concurrent timeline-builders all hit the cache, not the DB. Cost: 30 seconds of staleness on celebrity tweets, which is well within the SLO.</li>
+          <li><strong>CDN-cache celebrity profile reads.</strong>{" "}Public reads of a celebrity&apos;s recent tweets can go through a CDN with 1-minute TTL. Massive read amplification absorbed at the edge.</li>
+          <li><strong>Explicit hot-shard replicas.</strong>{" "}If a celebrity&apos;s tweets DB shard is consistently hot, replicate it 3-5x and shed reads across replicas. Routing is by author_id, replication is async.</li>
         </ol>
 
         <p>
@@ -490,18 +490,18 @@ public class TrendingIndexer {
       <Checkpoint moduleSlug={mod.slug} id="wrap" title="Part 4 · Wrap and what I'd revisit" xp={6}>
         <h2>What I&apos;d revisit if I had more time</h2>
         <ul>
-          <li><strong>Retweets and quotes.</strong> A retweet is a fanout event for the retweeter&apos;s followers, with the original tweet_id as the payload (no copy). A quote is a new tweet that references another. Both extend the event-stream architecture cleanly: retweet → new fanout job; quote → new tweet event with a parent_id. Mention but don&apos;t design.</li>
-          <li><strong>Search ranking.</strong> Pure recency is the simple version. Real search blends recency + author authority + engagement + query relevance. That&apos;s an ML scoring layer between ES and the API; the architecture doesn&apos;t change, the ranking does.</li>
-          <li><strong>Multi-region active-active.</strong> Tweets DB replicates cross-region with conflict resolution by tweet_id (immutable). Trending is per-region naturally. Timelines are home-region; cross-region followers&apos; timelines lag by replication latency. Spell out the consistency tradeoff per surface.</li>
-          <li><strong>Abuse and content moderation.</strong> Async pipeline: every tweet event flows through a moderation classifier; flagged tweets are tombstoned (still readable by author, hidden from others) and sent to a human review queue. Lives as another event-stream consumer.</li>
+          <li><strong>Retweets and quotes.</strong>{" "}A retweet is a fanout event for the retweeter&apos;s followers, with the original tweet_id as the payload (no copy). A quote is a new tweet that references another. Both extend the event-stream architecture cleanly: retweet → new fanout job; quote → new tweet event with a parent_id. Mention but don&apos;t design.</li>
+          <li><strong>Search ranking.</strong>{" "}Pure recency is the simple version. Real search blends recency + author authority + engagement + query relevance. That&apos;s an ML scoring layer between ES and the API; the architecture doesn&apos;t change, the ranking does.</li>
+          <li><strong>Multi-region active-active.</strong>{" "}Tweets DB replicates cross-region with conflict resolution by tweet_id (immutable). Trending is per-region naturally. Timelines are home-region; cross-region followers&apos; timelines lag by replication latency. Spell out the consistency tradeoff per surface.</li>
+          <li><strong>Abuse and content moderation.</strong>{" "}Async pipeline: every tweet event flows through a moderation classifier; flagged tweets are tombstoned (still readable by author, hidden from others) and sent to a human review queue. Lives as another event-stream consumer.</li>
         </ul>
 
         <h3>Failure modes I&apos;m worried about</h3>
         <ul>
-          <li><strong>Event stream backlog.</strong> If the fanout consumer falls behind, timelines go stale; if the indexer falls behind, search misses recent tweets. Per-consumer lag monitoring with paging alerts at 30s.</li>
-          <li><strong>Hot author shards.</strong> One celeb&apos;s tweets-DB shard takes outsized read load. Mitigated by caching layer + CDN + (for mega-celebs) dedicated replicas.</li>
-          <li><strong>Trending counter explosion.</strong> Spam waves can flood a hashtag with millions of fake tweets. Requires upstream abuse filtering; counter alone doesn&apos;t protect against this.</li>
-          <li><strong>Search index corruption.</strong> An ES bug or bad mapping change can corrupt an index. Monthly indices bound the blast radius; replay from the event stream rebuilds the affected month.</li>
+          <li><strong>Event stream backlog.</strong>{" "}If the fanout consumer falls behind, timelines go stale; if the indexer falls behind, search misses recent tweets. Per-consumer lag monitoring with paging alerts at 30s.</li>
+          <li><strong>Hot author shards.</strong>{" "}One celeb&apos;s tweets-DB shard takes outsized read load. Mitigated by caching layer + CDN + (for mega-celebs) dedicated replicas.</li>
+          <li><strong>Trending counter explosion.</strong>{" "}Spam waves can flood a hashtag with millions of fake tweets. Requires upstream abuse filtering; counter alone doesn&apos;t protect against this.</li>
+          <li><strong>Search index corruption.</strong>{" "}An ES bug or bad mapping change can corrupt an index. Monthly indices bound the blast radius; replay from the event stream rebuilds the affected month.</li>
         </ul>
 
         <h3>What I&apos;d monitor</h3>
@@ -515,7 +515,7 @@ public class TrendingIndexer {
         </ul>
 
         <Callout variant="spring" title="The senior 'I would also' moves for Twitter">
-          <em>&quot;I&apos;d use Kafka for the tweet event stream; I would also consider Pulsar for the geo-replication built-in if we go multi-region heavy.&quot;</em> Or: <em>&quot;I&apos;d use Cassandra for tweets; I would also consider sharded Postgres if the team has stronger SQL ops experience — Cassandra wins on write throughput, Postgres wins on operational familiarity, and at our scale either works if tuned well.&quot;</em> The pattern: name the choice, name the alternative, name the axis on which you picked.
+          <em>&quot;I&apos;d use Kafka for the tweet event stream; I would also consider Pulsar for the geo-replication built-in if we go multi-region heavy.&quot;</em>{" "}Or: <em>&quot;I&apos;d use Cassandra for tweets; I would also consider sharded Postgres if the team has stronger SQL ops experience — Cassandra wins on write throughput, Postgres wins on operational familiarity, and at our scale either works if tuned well.&quot;</em>{" "}The pattern: name the choice, name the alternative, name the axis on which you picked.
         </Callout>
 
         <p>

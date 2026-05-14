@@ -122,7 +122,7 @@ flowchart LR
 
         <p>
           This module is the antidote to that. Not more problems — you&apos;ve done the problems. What you need is a
-          <strong> repeatable process</strong> you can run on autopilot when your prefrontal cortex is busy panicking.
+          <strong> repeatable process</strong>{" "}you can run on autopilot when your prefrontal cortex is busy panicking.
         </p>
 
         <h3>The cognitive load argument</h3>
@@ -135,11 +135,11 @@ flowchart LR
         </p>
 
         <p>
-          When working memory is overloaded, your <em>brightest</em> capabilities are the first to go. You can still
+          When working memory is overloaded, your <em>brightest</em>{" "}capabilities are the first to go. You can still
           write a for-loop in your sleep, but the elegant trick you &quot;definitely knew last week&quot; vanishes.
           This is not a sign that you don&apos;t know the material. It&apos;s a sign that you&apos;re a human in a
           high-stakes interaction — and the fix is not to study more, it&apos;s to <em>off-load process to a
-          framework</em> so working memory can focus on the actual problem.
+          framework</em>{" "}so working memory can focus on the actual problem.
         </p>
 
         <Callout variant="insight" title="The framework is the scaffolding">
@@ -148,7 +148,7 @@ flowchart LR
             &quot;Now I match a pattern.&quot; &quot;Now I plan in English.&quot; Each step is small enough that you
             can take it even when scared. By the time you&apos;ve finished the first three steps, you&apos;ve
             warmed up, the panic has subsided, and you&apos;re back in problem-solver mode. The framework is the
-            <em> bridge</em> between &quot;I just heard the problem&quot; and &quot;I can think clearly.&quot;
+            <em> bridge</em>{" "}between &quot;I just heard the problem&quot; and &quot;I can think clearly.&quot;
           </p>
         </Callout>
 
@@ -164,31 +164,31 @@ flowchart LR
 
         <ul>
           <li>
-            <strong>Communication.</strong> Can you make your thinking visible to a stranger? Can you defend a
+            <strong>Communication.</strong>{" "}Can you make your thinking visible to a stranger? Can you defend a
             choice when challenged? Can you explain your code such that the interviewer could rebuild it from your
             words alone?
           </li>
           <li>
-            <strong>Problem-solving.</strong> When you&apos;re stuck, what do you do? Do you flail and stay silent,
+            <strong>Problem-solving.</strong>{" "}When you&apos;re stuck, what do you do? Do you flail and stay silent,
             or do you systematically narrow the problem space?
           </li>
           <li>
-            <strong>Code quality.</strong> Is the code readable? Are variables named meaningfully? Did you
+            <strong>Code quality.</strong>{" "}Is the code readable? Are variables named meaningfully? Did you
             proactively call out edge cases, or did the interviewer have to point them out?
           </li>
           <li>
-            <strong>Collaboration.</strong> When the interviewer offers a hint, do you take it gracefully and
+            <strong>Collaboration.</strong>{" "}When the interviewer offers a hint, do you take it gracefully and
             integrate it, or do you defend your wrong path? Do you ask clarifying questions or assume?
           </li>
           <li>
-            <strong>Correctness.</strong> Does the code work? But often, &quot;the candidate hit the optimal
+            <strong>Correctness.</strong>{" "}Does the code work? But often, &quot;the candidate hit the optimal
             solution while talking through tradeoffs and edge cases&quot; beats &quot;the candidate silently
             produced a working brute-force.&quot;
           </li>
         </ul>
 
         <p>
-          A framework that forces you to <em>narrate</em>, <em>clarify</em>, and <em>self-test</em> is a framework
+          A framework that forces you to <em>narrate</em>, <em>clarify</em>, and <em>self-test</em>{" "}is a framework
           that maximizes your score across all five axes — even when your code has a small bug.
         </p>
 
@@ -202,12 +202,12 @@ flowchart LR
         </p>
 
         <ul>
-          <li><strong>U · Understand.</strong> Clarify the problem before solving it.</li>
-          <li><strong>M · Match.</strong> Pattern-recognize. Which family does this belong to?</li>
-          <li><strong>P · Plan.</strong> Whiteboard the algorithm in plain English. State invariants and complexity targets.</li>
-          <li><strong>I · Implement.</strong> Code it, narrating every choice as you go.</li>
-          <li><strong>R · Review.</strong> Walk through with a small input by hand. Catch off-by-ones.</li>
-          <li><strong>E · Evaluate.</strong> Final time and space complexity. What would change at scale?</li>
+          <li><strong>U · Understand.</strong>{" "}Clarify the problem before solving it.</li>
+          <li><strong>M · Match.</strong>{" "}Pattern-recognize. Which family does this belong to?</li>
+          <li><strong>P · Plan.</strong>{" "}Whiteboard the algorithm in plain English. State invariants and complexity targets.</li>
+          <li><strong>I · Implement.</strong>{" "}Code it, narrating every choice as you go.</li>
+          <li><strong>R · Review.</strong>{" "}Walk through with a small input by hand. Catch off-by-ones.</li>
+          <li><strong>E · Evaluate.</strong>{" "}Final time and space complexity. What would change at scale?</li>
         </ul>
 
         <p>
@@ -259,15 +259,15 @@ flowchart LR
 
         <ul>
           <li>
-            <strong>You probably don&apos;t fully understand it.</strong> Problem statements are deliberately
+            <strong>You probably don&apos;t fully understand it.</strong>{" "}Problem statements are deliberately
             ambiguous in interviews. There&apos;s almost always a constraint that wasn&apos;t spelled out.
           </li>
           <li>
-            <strong>The interviewer is grading curiosity.</strong> A candidate who asks zero clarifying questions
+            <strong>The interviewer is grading curiosity.</strong>{" "}A candidate who asks zero clarifying questions
             looks either incurious or overconfident. Both are bad signals.
           </li>
           <li>
-            <strong>It buys you thinking time.</strong> While the interviewer answers, your subconscious is already
+            <strong>It buys you thinking time.</strong>{" "}While the interviewer answers, your subconscious is already
             pattern-matching. By the time the answers come back, you often already know the approach.
           </li>
         </ul>
@@ -275,17 +275,17 @@ flowchart LR
         <h4>What to clarify, in order</h4>
 
         <ol>
-          <li><strong>Inputs.</strong> Types, ranges, constraints. Negative? Empty? Unicode? Sorted?</li>
-          <li><strong>Outputs.</strong> Format, what to return, what to do on no-answer.</li>
-          <li><strong>Constraints.</strong> Memory limits, real-time, in-place required?</li>
-          <li><strong>Edge cases.</strong> Empty input, single element, all-same, max-size.</li>
+          <li><strong>Inputs.</strong>{" "}Types, ranges, constraints. Negative? Empty? Unicode? Sorted?</li>
+          <li><strong>Outputs.</strong>{" "}Format, what to return, what to do on no-answer.</li>
+          <li><strong>Constraints.</strong>{" "}Memory limits, real-time, in-place required?</li>
+          <li><strong>Edge cases.</strong>{" "}Empty input, single element, all-same, max-size.</li>
         </ol>
 
         <h4>Worked example: clarifying &quot;longest substring without repeating characters&quot;</h4>
 
         <p>
           The interviewer says: <em>&quot;Given a string, return the length of the longest substring without
-          repeating characters.&quot;</em> Sounds simple. Now run the clarification pass. A good candidate asks
+          repeating characters.&quot;</em>{" "}Sounds simple. Now run the clarification pass. A good candidate asks
           three or four of these:
         </p>
 
@@ -325,14 +325,14 @@ A:  "Up to 50,000."`}</CodeBlock>
           <p>
             Re-asking what the interviewer just said wastes time and signals lack of attention. Asking &quot;is
             the array sorted?&quot; when the prompt said &quot;given a sorted array&quot; is a small but real ding.
-            Listen carefully on the first read; then ask <em>beyond</em> the prompt.
+            Listen carefully on the first read; then ask <em>beyond</em>{" "}the prompt.
           </p>
         </Callout>
 
         <h3>M · Match — pattern recognition pass</h3>
 
         <p>
-          With the problem clarified, your second job is to ask: <em>what does this look like?</em> You&apos;ve
+          With the problem clarified, your second job is to ask: <em>what does this look like?</em>{" "}You&apos;ve
           spent 32 modules learning the patterns; this is where they pay off. The match step is fast — usually 30
           seconds to a minute — but it sets the entire direction.
         </p>
@@ -444,7 +444,7 @@ A:  "Up to 50,000."`}</CodeBlock>
 
         <p>
           Once you&apos;ve clarified and matched, you have a candidate approach. <strong>Do not start typing
-          yet.</strong> First, plan the algorithm out loud, in plain English, while the interviewer listens. This
+          yet.</strong>{" "}First, plan the algorithm out loud, in plain English, while the interviewer listens. This
           is the single highest-leverage stage of UMPIRE: a 90-second plan saves 10 minutes of mid-implementation
           confusion.
         </p>
@@ -453,20 +453,20 @@ A:  "Up to 50,000."`}</CodeBlock>
 
         <ul>
           <li>
-            <strong>You catch design errors at the cheapest possible moment.</strong> Realizing your data structure
+            <strong>You catch design errors at the cheapest possible moment.</strong>{" "}Realizing your data structure
             is wrong while you&apos;re still talking is free. Realizing it 20 lines into typing is expensive.
           </li>
           <li>
-            <strong>The interviewer can correct you cheaply.</strong> If your plan is heading off a cliff, they can
+            <strong>The interviewer can correct you cheaply.</strong>{" "}If your plan is heading off a cliff, they can
             redirect with a single sentence. If you&apos;re mid-code, redirecting requires deleting visible work,
             which is psychologically hard for both of you.
           </li>
           <li>
-            <strong>You demonstrate you know the structure of solutions.</strong> Anyone can copy a template. Few
-            candidates can articulate <em>why</em> a particular structure is right for a particular problem.
+            <strong>You demonstrate you know the structure of solutions.</strong>{" "}Anyone can copy a template. Few
+            candidates can articulate <em>why</em>{" "}a particular structure is right for a particular problem.
           </li>
           <li>
-            <strong>You get verbal commitment.</strong> Saying &quot;I&apos;ll use a HashMap of value→index, then a
+            <strong>You get verbal commitment.</strong>{" "}Saying &quot;I&apos;ll use a HashMap of value→index, then a
             single pass...&quot; and getting a nod from the interviewer is the closest you&apos;ll get to
             mid-flight reassurance.
           </li>
@@ -475,11 +475,11 @@ A:  "Up to 50,000."`}</CodeBlock>
         <h3>What goes into a plan</h3>
 
         <ol>
-          <li><strong>Data structures.</strong> Which ones, and why each one.</li>
-          <li><strong>Algorithm in 3–5 sentences.</strong> What you&apos;ll iterate over, what you maintain, when you stop.</li>
-          <li><strong>Invariant.</strong> What stays true after each step? This is the soul of correctness.</li>
-          <li><strong>Complexity target.</strong> Time and space, in Big-O. State it before coding so you can&apos;t back into it.</li>
-          <li><strong>Tradeoffs vs. alternatives.</strong> If you considered another approach, name it and say why you rejected it.</li>
+          <li><strong>Data structures.</strong>{" "}Which ones, and why each one.</li>
+          <li><strong>Algorithm in 3–5 sentences.</strong>{" "}What you&apos;ll iterate over, what you maintain, when you stop.</li>
+          <li><strong>Invariant.</strong>{" "}What stays true after each step? This is the soul of correctness.</li>
+          <li><strong>Complexity target.</strong>{" "}Time and space, in Big-O. State it before coding so you can&apos;t back into it.</li>
+          <li><strong>Tradeoffs vs. alternatives.</strong>{" "}If you considered another approach, name it and say why you rejected it.</li>
         </ol>
 
         <h3>A concrete planning monologue</h3>
@@ -603,7 +603,7 @@ return [val for (val, _) in heap]`}</CodeBlock>
         <p>
           You have a plan. Now you type. The single most common mistake at this stage is going silent. The
           interviewer has been watching you reason through the problem; they need to keep watching as you turn that
-          reasoning into Java. <strong>Talk through every line.</strong> Not every keystroke — that&apos;s
+          reasoning into Java. <strong>Talk through every line.</strong>{" "}Not every keystroke — that&apos;s
           exhausting — but every meaningful decision.
         </p>
 
@@ -640,7 +640,7 @@ right there."`}</CodeBlock>
         <h3>Pre-emptively call out tricky spots</h3>
 
         <p>
-          Senior candidates flag known foot-guns <em>before</em> they cause bugs. This signals language fluency and
+          Senior candidates flag known foot-guns <em>before</em>{" "}they cause bugs. This signals language fluency and
           experience. A few examples:
         </p>
 
@@ -806,18 +806,18 @@ rotation, right? Just want to be sure."`}</CodeBlock>
         </p>
 
         <ul>
-          <li><strong>Off-by-one errors.</strong> Loop bounds, array indexing, &quot;is the right edge inclusive?&quot;</li>
-          <li><strong>Edge-case crashes.</strong> Empty input, single element, all-same elements, max-size input.</li>
-          <li><strong>Subtle logic bugs.</strong> The early-return is in the wrong place; the visited check happens after the recursion instead of before.</li>
+          <li><strong>Off-by-one errors.</strong>{" "}Loop bounds, array indexing, &quot;is the right edge inclusive?&quot;</li>
+          <li><strong>Edge-case crashes.</strong>{" "}Empty input, single element, all-same elements, max-size input.</li>
+          <li><strong>Subtle logic bugs.</strong>{" "}The early-return is in the wrong place; the visited check happens after the recursion instead of before.</li>
         </ul>
 
         <h4>The four standard test inputs</h4>
 
         <ol>
-          <li><strong>Empty.</strong> What if <code>nums.length == 0</code>? Does your code crash, return a sentinel, or compute correctly?</li>
-          <li><strong>Single element.</strong> Does the loop body even run? What does the answer reduce to?</li>
-          <li><strong>All same.</strong> Helpful for problems where uniqueness or comparisons matter — heaps, dedup, hash sets.</li>
-          <li><strong>The medium example from the problem statement.</strong> Trace it index by index, narrating what each variable holds. This is the one where most off-by-ones surface.</li>
+          <li><strong>Empty.</strong>{" "}What if <code>nums.length == 0</code>? Does your code crash, return a sentinel, or compute correctly?</li>
+          <li><strong>Single element.</strong>{" "}Does the loop body even run? What does the answer reduce to?</li>
+          <li><strong>All same.</strong>{" "}Helpful for problems where uniqueness or comparisons matter — heaps, dedup, hash sets.</li>
+          <li><strong>The medium example from the problem statement.</strong>{" "}Trace it index by index, narrating what each variable holds. This is the one where most off-by-ones surface.</li>
         </ol>
 
         <Callout variant="warn" title="The most common review failure: mental shortcutting">
@@ -1039,7 +1039,7 @@ Me: "Final complexity:
 
         <p>
           Three full mock interviews, transcribed. Each shows a different difficulty level, a different pattern, and
-          a different way of getting in (and out of) trouble. The point is to internalize the <em>rhythm</em> of a
+          a different way of getting in (and out of) trouble. The point is to internalize the <em>rhythm</em>{" "}of a
           UMPIRE-driven interview, not to memorize specific solutions.
         </p>
 
@@ -1455,14 +1455,14 @@ Me: "Final complexity:
             <strong>The recursion-to-memoization pivot was named explicitly.</strong> &quot;That&apos;s exponential
             because the same suffix is reached via many different prefix paths.&quot; That sentence is the entire
             insight that turns recursion into DP, and saying it out loud is the difference between &quot;candidate
-            knew DP&quot; and &quot;candidate <em>derived</em> DP.&quot;
+            knew DP&quot; and &quot;candidate <em>derived</em>{" "}DP.&quot;
           </li>
           <li>
-            <strong>Boolean (boxed) for the memo, with a <code>null</code> sentinel.</strong> A small detail, but
+            <strong>Boolean (boxed) for the memo, with a <code>null</code> sentinel.</strong>{" "}A small detail, but
             it shows language fluency. The interviewer specifically called it out.
           </li>
           <li>
-            <strong>The empty-string review caught a real ambiguity.</strong> The candidate noticed
+            <strong>The empty-string review caught a real ambiguity.</strong>{" "}The candidate noticed
             mid-walkthrough that they hadn&apos;t verified the empty-string case, re-read the prompt, and added a
             guard. That&apos;s self-correction in action.
           </li>

@@ -88,14 +88,14 @@ flowchart LR
         <h2 id="setup">A set is a map with the values erased</h2>
 
         <p>
-          A <strong>set</strong> is a collection of distinct elements with O(1) membership testing. That&apos;s it.
+          A <strong>set</strong>{" "}is a collection of distinct elements with O(1) membership testing. That&apos;s it.
           You can <code>add</code>, you can ask <code>contains</code>, you can <code>remove</code>. There&apos;s no
           ordering guarantee (in <code>HashSet</code>) and no duplicates allowed.
         </p>
 
         <p>
           Look at the API of <code>HashSet</code> and you&apos;ll notice it&apos;s exactly <code>HashMap</code> with the
-          value half snipped off. In fact, the JDK source <em>literally</em> backs <code>HashSet</code> with a{" "}
+          value half snipped off. In fact, the JDK source <em>literally</em>{" "}backs <code>HashSet</code> with a{" "}
           <code>HashMap&lt;E, Object&gt;</code>, where every key maps to the same dummy <code>PRESENT</code>{" "}
           sentinel. Everything you learned in Module 9 — hashing, chaining, load factor, treeification, the{" "}
           <code>equals</code>/<code>hashCode</code> contract — applies here, full stop.
@@ -125,7 +125,7 @@ seen.size();              // 1`}</CodeBlock>
 
         <Callout variant="info" title="Set ≠ Map<K, Boolean> in your code">
           <p>
-            You <em>can</em> simulate a set with <code>Map&lt;K, Boolean&gt;</code>, but don&apos;t.
+            You <em>can</em>{" "}simulate a set with <code>Map&lt;K, Boolean&gt;</code>, but don&apos;t.
           </p>
           <p>
             <code>Set</code> conveys intent (&quot;I only care about presence&quot;) and gives you set-algebra
@@ -178,17 +178,17 @@ difference.removeAll(b);          // {1, 2}`}</CodeBlock>
         <h3>HashSet — the default</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>HashMap</code>.</li>
-          <li><strong>Order:</strong> none. Iteration order is bucket order, basically random, and changes after a resize.</li>
-          <li><strong>add / contains / remove:</strong> O(1) average, O(log n) worst.</li>
-          <li><strong>Use when:</strong> you only care about presence. The 95% case.</li>
+          <li><strong>Order:</strong>{" "}none. Iteration order is bucket order, basically random, and changes after a resize.</li>
+          <li><strong>add / contains / remove:</strong>{" "}O(1) average, O(log n) worst.</li>
+          <li><strong>Use when:</strong>{" "}you only care about presence. The 95% case.</li>
         </ul>
 
         <h3>LinkedHashSet — insertion order, same speed</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>HashMap</code> + a doubly-linked list threading insertion order through the entries.</li>
-          <li><strong>Order:</strong> insertion order. Iterating gives you the elements in the order you added them.</li>
-          <li><strong>add / contains / remove:</strong> still O(1) average — the linked list adds two pointer updates per add, not a search.</li>
-          <li><strong>Use when:</strong> you want to dedupe a stream while preserving the order things appeared.</li>
+          <li><strong>Order:</strong>{" "}insertion order. Iterating gives you the elements in the order you added them.</li>
+          <li><strong>add / contains / remove:</strong>{" "}still O(1) average — the linked list adds two pointer updates per add, not a search.</li>
+          <li><strong>Use when:</strong>{" "}you want to dedupe a stream while preserving the order things appeared.</li>
         </ul>
 
         <CodeBlock lang="java">{`// Dedupe a list while preserving first-seen order.
@@ -199,10 +199,10 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
         <h3>TreeSet — sorted order, log time</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>TreeMap</code>, which is a red-black tree (Module 12).</li>
-          <li><strong>Order:</strong> sorted, by natural order or by a <code>Comparator</code> you supply.</li>
-          <li><strong>add / contains / remove:</strong> O(log n). Always. No hashing involved.</li>
+          <li><strong>Order:</strong>{" "}sorted, by natural order or by a <code>Comparator</code> you supply.</li>
+          <li><strong>add / contains / remove:</strong>{" "}O(log n). Always. No hashing involved.</li>
           <li><strong>Bonus:</strong> <code>first</code>, <code>last</code>, <code>floor</code>, <code>ceiling</code>, <code>headSet</code>, <code>tailSet</code> — range queries, all O(log n).</li>
-          <li><strong>Use when:</strong> you need sorted iteration, or &quot;largest element ≤ x&quot; queries, or range scans.</li>
+          <li><strong>Use when:</strong>{" "}you need sorted iteration, or &quot;largest element ≤ x&quot; queries, or range scans.</li>
         </ul>
 
         <Callout variant="warn" title="TreeSet wants Comparable elements">
@@ -307,7 +307,7 @@ boolean isAnagram(String s, String t) {
 
         <p>
           That&apos;s LeetCode 242 in 8 lines. The trick — increment for s, decrement for t in the same loop, then
-          check all zeros — turns a two-counter compare into a one-counter check. The array <em>is</em> a
+          check all zeros — turns a two-counter compare into a one-counter check. The array <em>is</em>{" "}a
           frequency map; it just happens to live on the stack.
         </p>
 
@@ -339,7 +339,7 @@ boolean isAnagram(String s, String t) {
         <h2 id="window">Sliding window + frequency map</h2>
 
         <p>
-          The combination of a <strong>frequency map</strong> and a <strong>sliding window</strong> (two indices,
+          The combination of a <strong>frequency map</strong>{" "}and a <strong>sliding window</strong> (two indices,
           left and right, that both only move forward) is the engine that powers an entire family of substring
           problems: longest unique substring, smallest window containing all of T, longest substring with at most
           K distinct characters, and so on.
@@ -388,8 +388,8 @@ boolean isAnagram(String s, String t) {
         <h3>The pattern, abstracted</h3>
 
         <ol>
-          <li><strong>Define the invariant</strong> the window must satisfy (e.g. &quot;no repeats&quot;, &quot;sum &le; k&quot;, &quot;contains all of T&quot;).</li>
-          <li><strong>Right pointer expands</strong> the window: add the new element, update the map.</li>
+          <li><strong>Define the invariant</strong>{" "}the window must satisfy (e.g. &quot;no repeats&quot;, &quot;sum &le; k&quot;, &quot;contains all of T&quot;).</li>
+          <li><strong>Right pointer expands</strong>{" "}the window: add the new element, update the map.</li>
           <li><strong>While the invariant is broken</strong>, advance the left pointer: remove its element from the map.</li>
           <li><strong>After each expand-and-restore</strong>, record the answer (longest, shortest, count, whatever you&apos;re tracking).</li>
         </ol>
@@ -400,7 +400,7 @@ boolean isAnagram(String s, String t) {
             instead of a <code>HashMap</code>? Yes — <code>add</code> returns false on duplicate.
           </p>
           <p>
-            But once the window has to shrink, you need to know <em>how many copies</em> of the left character
+            But once the window has to shrink, you need to know <em>how many copies</em>{" "}of the left character
             remain so you only erase it from the set when the count hits zero. That&apos;s a frequency map. The Set
             works for &quot;ever seen&quot;; the Map works for &quot;currently present, with count&quot;.
           </p>

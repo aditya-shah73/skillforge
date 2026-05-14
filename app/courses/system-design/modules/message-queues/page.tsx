@@ -101,7 +101,7 @@ export default function Page() {
         <Mermaid chart={atLeastOnceFlow} />
 
         <p>
-          The alternative — ack <em>before</em> processing — gives you at-most-once. Crash after the ack but before processing, and the message is gone forever. That&apos;s rarely what you want.
+          The alternative — ack <em>before</em>{" "}processing — gives you at-most-once. Crash after the ack but before processing, and the message is gone forever. That&apos;s rarely what you want.
         </p>
 
         <h3>Idempotent consumers: the actual answer</h3>
@@ -109,8 +109,8 @@ export default function Page() {
           Since at-least-once is the default and exactly-once is a fairy tale, your consumers must handle duplicates. Two patterns dominate:
         </p>
         <ul>
-          <li><strong>Idempotency keys.</strong> The producer stamps each message with a unique ID. The consumer records processed IDs in a deduplication table; before doing the side effect, it checks the table. (See the api-design module for the same pattern at the HTTP layer.)</li>
-          <li><strong>Naturally-idempotent operations.</strong> Some operations are safe to repeat. <code>UPDATE accounts SET status = &apos;CLOSED&apos; WHERE id = ?</code> is idempotent — running it twice has the same effect as running it once. <code>UPDATE accounts SET balance = balance - 100 WHERE id = ?</code> is NOT idempotent. Reshape operations to be naturally idempotent when you can.</li>
+          <li><strong>Idempotency keys.</strong>{" "}The producer stamps each message with a unique ID. The consumer records processed IDs in a deduplication table; before doing the side effect, it checks the table. (See the api-design module for the same pattern at the HTTP layer.)</li>
+          <li><strong>Naturally-idempotent operations.</strong>{" "}Some operations are safe to repeat. <code>UPDATE accounts SET status = &apos;CLOSED&apos; WHERE id = ?</code> is idempotent — running it twice has the same effect as running it once. <code>UPDATE accounts SET balance = balance - 100 WHERE id = ?</code> is NOT idempotent. Reshape operations to be naturally idempotent when you can.</li>
         </ul>
 
         <CodeBlock lang="java">{`@Service
@@ -147,10 +147,10 @@ public class OrderEventConsumer {
           Even before the consumer side, you can lose messages between producer and broker. The defenses:
         </p>
         <ul>
-          <li><strong>Synchronous publish with broker ack.</strong> Don&apos;t fire-and-forget — wait for the broker to confirm durable receipt. Throughput drops; reliability goes way up.</li>
-          <li><strong>Persistent / durable messages.</strong> Mark messages so the broker writes them to disk before acking. The default in some brokers is in-memory only.</li>
-          <li><strong>Producer retries with backoff.</strong> If the broker is briefly unreachable, retry. Idempotency keys prevent duplicates if the broker received the first attempt but the ack got lost.</li>
-          <li><strong>Transactional outbox.</strong> Write the message to your own database in the same transaction as the business state, then a separate process publishes from the outbox. Bullet-proof but adds operational complexity.</li>
+          <li><strong>Synchronous publish with broker ack.</strong>{" "}Don&apos;t fire-and-forget — wait for the broker to confirm durable receipt. Throughput drops; reliability goes way up.</li>
+          <li><strong>Persistent / durable messages.</strong>{" "}Mark messages so the broker writes them to disk before acking. The default in some brokers is in-memory only.</li>
+          <li><strong>Producer retries with backoff.</strong>{" "}If the broker is briefly unreachable, retry. Idempotency keys prevent duplicates if the broker received the first attempt but the ack got lost.</li>
+          <li><strong>Transactional outbox.</strong>{" "}Write the message to your own database in the same transaction as the business state, then a separate process publishes from the outbox. Bullet-proof but adds operational complexity.</li>
         </ul>
 
         <Quiz
@@ -191,9 +191,9 @@ public class OrderEventConsumer {
           &quot;FIFO queue&quot; sounds like total ordering — first in, first out. Read the docs and you&apos;ll find the truth is more nuanced. Three useful tiers:
         </p>
         <ul>
-          <li><strong>No ordering.</strong> Messages can arrive in any order. Default for SQS standard, Kafka without keying, RabbitMQ with multiple consumers on one queue. Cheapest and most parallelizable.</li>
-          <li><strong>Per-key ordering.</strong> All messages with the same key are ordered relative to each other; different keys can interleave. This is the sweet spot — Kafka achieves it via partitioning, SQS FIFO via <code>MessageGroupId</code>.</li>
-          <li><strong>Total ordering.</strong> All messages globally ordered. Hard to scale — you&apos;re back to a single consumer or a single partition. Reserve for narrow cases (single-writer ledger).</li>
+          <li><strong>No ordering.</strong>{" "}Messages can arrive in any order. Default for SQS standard, Kafka without keying, RabbitMQ with multiple consumers on one queue. Cheapest and most parallelizable.</li>
+          <li><strong>Per-key ordering.</strong>{" "}All messages with the same key are ordered relative to each other; different keys can interleave. This is the sweet spot — Kafka achieves it via partitioning, SQS FIFO via <code>MessageGroupId</code>.</li>
+          <li><strong>Total ordering.</strong>{" "}All messages globally ordered. Hard to scale — you&apos;re back to a single consumer or a single partition. Reserve for narrow cases (single-writer ledger).</li>
         </ul>
 
         <Callout variant="insight" title="Per-key ordering is almost always what you actually need">
@@ -207,14 +207,14 @@ public class OrderEventConsumer {
           You can&apos;t have N consumers competing on a single queue and preserve order. The moment two consumers pull messages 1 and 2 in parallel, message 2&apos;s processing can finish first. The fixes are all variations on the same idea: <strong>route messages that need to be ordered to the same consumer</strong>.
         </p>
         <ul>
-          <li><strong>Kafka:</strong> partition by key. Same key → same partition → one consumer at a time → ordered.</li>
+          <li><strong>Kafka:</strong>{" "}partition by key. Same key → same partition → one consumer at a time → ordered.</li>
           <li><strong>SQS FIFO:</strong> <code>MessageGroupId</code>. Same group → one consumer at a time → ordered. Different groups can be processed in parallel.</li>
-          <li><strong>RabbitMQ:</strong> single consumer per queue, OR <em>consistent hash exchange</em> to route by key.</li>
+          <li><strong>RabbitMQ:</strong>{" "}single consumer per queue, OR <em>consistent hash exchange</em>{" "}to route by key.</li>
         </ul>
 
         <h3>The visibility timeout / redelivery timeout</h3>
         <p>
-          When a consumer pulls a message, the broker hides it from other consumers for a window — the <strong>visibility timeout</strong> in SQS, the <strong>ack deadline</strong> in Pub/Sub, the equivalent of consumer-group offset lag in Kafka. If the consumer doesn&apos;t ack within that window, the broker assumes it crashed and redelivers.
+          When a consumer pulls a message, the broker hides it from other consumers for a window — the <strong>visibility timeout</strong>{" "}in SQS, the <strong>ack deadline</strong>{" "}in Pub/Sub, the equivalent of consumer-group offset lag in Kafka. If the consumer doesn&apos;t ack within that window, the broker assumes it crashed and redelivers.
         </p>
         <p>
           Set it too short: a slow message gets redelivered while still being processed. You now have two consumers doing the same work. Set it too long: a real consumer crash means the message sits idle for that whole window before retry. The right answer is &quot;a bit longer than your worst-case processing time, with explicit heartbeat extensions for genuinely long jobs.&quot;
@@ -233,9 +233,9 @@ RedrivePolicy:
           What goes in the DLQ tells you a lot about your system:
         </p>
         <ul>
-          <li><strong>Bad data.</strong> Producer sent something the consumer can&apos;t parse (schema drift). Fix the producer or the consumer; replay from DLQ once fixed.</li>
-          <li><strong>Transient downstream failure.</strong> A dependency was down longer than your retry budget. Replay when the dependency is back.</li>
-          <li><strong>Code bug.</strong> The consumer crashes on certain inputs. Fix, deploy, replay.</li>
+          <li><strong>Bad data.</strong>{" "}Producer sent something the consumer can&apos;t parse (schema drift). Fix the producer or the consumer; replay from DLQ once fixed.</li>
+          <li><strong>Transient downstream failure.</strong>{" "}A dependency was down longer than your retry budget. Replay when the dependency is back.</li>
+          <li><strong>Code bug.</strong>{" "}The consumer crashes on certain inputs. Fix, deploy, replay.</li>
         </ul>
 
         <Callout variant="warn" title="DLQs without alerts are write-only stores">
@@ -250,8 +250,8 @@ RedrivePolicy:
         </p>
         <ul>
           <li><strong>Exponential backoff:</strong> 1s, 2s, 4s, 8s, 16s — doubling each time.</li>
-          <li><strong>Jitter:</strong> add randomness so retries from different consumers spread out instead of synchronizing.</li>
-          <li><strong>Cap on retries:</strong> after N attempts, ship to DLQ. Forever-retrying is a self-DDoS.</li>
+          <li><strong>Jitter:</strong>{" "}add randomness so retries from different consumers spread out instead of synchronizing.</li>
+          <li><strong>Cap on retries:</strong>{" "}after N attempts, ship to DLQ. Forever-retrying is a self-DDoS.</li>
         </ul>
 
         <CodeBlock lang="java">{`@Configuration
@@ -396,10 +396,10 @@ public class OrderConsumer {
           RabbitMQ&apos;s superpower is the <strong>exchange</strong>: a routing layer between producer and queue. Producers publish to exchanges; exchanges route to queues based on rules (direct match, topic pattern, fanout, header conditions). One event can fan out to ten different consumers, each filtering on its own pattern, with no producer changes.
         </p>
         <ul>
-          <li><strong>Direct exchange:</strong> route by exact key match. <code>order.created</code> → queue A.</li>
-          <li><strong>Topic exchange:</strong> route by wildcard pattern. <code>order.*</code> matches <code>order.created</code>, <code>order.paid</code>, etc.</li>
-          <li><strong>Fanout exchange:</strong> ignore the key, broadcast to every bound queue.</li>
-          <li><strong>Headers exchange:</strong> route by AMQP header values instead of routing key.</li>
+          <li><strong>Direct exchange:</strong>{" "}route by exact key match. <code>order.created</code> → queue A.</li>
+          <li><strong>Topic exchange:</strong>{" "}route by wildcard pattern. <code>order.*</code> matches <code>order.created</code>, <code>order.paid</code>, etc.</li>
+          <li><strong>Fanout exchange:</strong>{" "}ignore the key, broadcast to every bound queue.</li>
+          <li><strong>Headers exchange:</strong>{" "}route by AMQP header values instead of routing key.</li>
         </ul>
 
         <p>
@@ -417,8 +417,8 @@ public class OrderConsumer {
           Kafka isn&apos;t really a queue — it&apos;s an append-only log that consumers read by tracking their own offset. Messages aren&apos;t deleted on consumption; they age out by retention policy (7 days, 30 days, forever). This unlocks two superpowers RabbitMQ and SQS can&apos;t match:
         </p>
         <ul>
-          <li><strong>Replay.</strong> Re-derive a downstream view by replaying every event from offset 0. Backfill new services. Test with production data.</li>
-          <li><strong>Multiple consumer groups, independent offsets.</strong> Service A and Service B both read every event in topic <code>orders</code>, but each tracks its own progress. No producer changes when a new consumer group joins.</li>
+          <li><strong>Replay.</strong>{" "}Re-derive a downstream view by replaying every event from offset 0. Backfill new services. Test with production data.</li>
+          <li><strong>Multiple consumer groups, independent offsets.</strong>{" "}Service A and Service B both read every event in topic <code>orders</code>, but each tracks its own progress. No producer changes when a new consumer group joins.</li>
         </ul>
 
         <p>

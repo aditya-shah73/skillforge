@@ -124,9 +124,9 @@ flowchart LR
         <h2 id="setup">What a heap is — and why it&apos;s an array</h2>
 
         <p>
-          A <strong>heap</strong> is a complete binary tree with one rule: every parent is{" "}
-          <em>≤</em> its children (min-heap) or <em>≥</em> its children (max-heap). That&apos;s the entire definition.
-          Note what&apos;s <em>not</em> required: siblings have no order with respect to each other, and the tree is
+          A <strong>heap</strong>{" "}is a complete binary tree with one rule: every parent is{" "}
+          <em>≤</em>{" "}its children (min-heap) or <em>≥</em>{" "}its children (max-heap). That&apos;s the entire definition.
+          Note what&apos;s <em>not</em>{" "}required: siblings have no order with respect to each other, and the tree is
           not sorted. The min-heap below is a perfectly valid heap — but it&apos;s not a BST, and reading its leaves
           left-to-right does not give you sorted order.
         </p>
@@ -134,7 +134,7 @@ flowchart LR
         <Mermaid chart={heapShape} />
 
         <p>
-          The shape rule is just as important as the order rule. <strong>Complete</strong> means every level is filled
+          The shape rule is just as important as the order rule. <strong>Complete</strong>{" "}means every level is filled
           except possibly the last, and the last level fills left-to-right. This shape constraint is what makes the
           array trick work.
         </p>
@@ -180,7 +180,7 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         </ul>
 
         <p>
-          What it&apos;s <em>not</em> good at: finding an arbitrary element (O(n) — you have to scan), getting elements
+          What it&apos;s <em>not</em>{" "}good at: finding an arbitrary element (O(n) — you have to scan), getting elements
           in sorted order without removing them, or finding the second-smallest fast (it&apos;s one of the root&apos;s
           children, but you don&apos;t know which without comparing). If you need any of those, you want a TreeMap
           or TreeSet from the previous module.
@@ -218,7 +218,7 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         <p>
           All three core heap operations boil down to two primitives: <strong>sift-up</strong> (used by{" "}
           <code>offer</code>) and <strong>sift-down</strong> (used by <code>poll</code>). Each walks one path from a
-          leaf to the root or vice versa — and a complete binary tree of <em>n</em> nodes has height{" "}
+          leaf to the root or vice versa — and a complete binary tree of <em>n</em>{" "}nodes has height{" "}
           <code>⌊log₂ n⌋</code>, which is where the O(log n) cost comes from.
         </p>
 
@@ -254,7 +254,7 @@ public void offer(int x) {
 
         <p>
           To remove the min: take it from index 0, move the last element into the root (still complete), then walk it
-          down, swapping with its <em>smaller</em> child whenever the heap property is violated.
+          down, swapping with its <em>smaller</em>{" "}child whenever the heap property is violated.
         </p>
 
         <Mermaid chart={siftDown} />
@@ -281,7 +281,7 @@ public int poll() {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="The classic sift-down bug">
-          You must compare against the <em>smaller</em> of the two children, not just the left one. If you swap with
+          You must compare against the <em>smaller</em>{" "}of the two children, not just the left one. If you swap with
           the left child blindly, you can violate the heap property on the right. The two <code>if</code>s plus the{" "}
           <code>smallest</code> tracker handle this correctly: each iteration picks the genuine minimum among
           parent, left, and right.
@@ -314,7 +314,7 @@ public int poll() {
 
         <p>
           Once you have heapify, sorting is almost free: heapify the array (O(n)), then repeatedly poll the min into
-          position. The standard trick to do this in-place is to use a <em>max-heap</em> and swap the root with the
+          position. The standard trick to do this in-place is to use a <em>max-heap</em>{" "}and swap the root with the
           last unsorted slot — that ends up giving you the array in ascending order with no extra allocation. Total:
           O(n log n) time, O(1) extra space, not stable.
         </p>
@@ -388,7 +388,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
           <li><code>offer(x)</code>, <code>poll()</code>, <code>remove()</code> at root: <strong>O(log n)</strong></li>
           <li><code>peek()</code>: <strong>O(1)</strong></li>
           <li><code>contains(x)</code>, <code>remove(x)</code> for arbitrary x: <strong>O(n)</strong> — has to scan</li>
-          <li>Construction from a collection of size n: <strong>O(n)</strong> via internal heapify</li>
+          <li>Construction from a collection of size n: <strong>O(n)</strong>{" "}via internal heapify</li>
           <li>Iteration order: <strong>not sorted</strong> — it&apos;s array order, which is heap order, which is meaningless to humans</li>
         </ul>
 
@@ -401,10 +401,10 @@ PriorityQueue<String> p = new PriorityQueue<>(
         <h3>What PriorityQueue is <em>not</em></h3>
 
         <ul>
-          <li><strong>Not thread-safe.</strong> For concurrent use, see <code>PriorityBlockingQueue</code>.</li>
-          <li><strong>Not a stable heap.</strong> Equal-priority elements come out in unspecified order. If you need FIFO-among-ties, store an insertion counter alongside the value and break ties on it.</li>
-          <li><strong>Not efficient for &quot;decrease-key.&quot;</strong> If you need to update an element&apos;s priority (e.g., Dijkstra with the textbook implementation), the standard trick is to insert the updated copy and skip stale entries when polling. Indexed/Fibonacci heaps support real decrease-key but the JDK doesn&apos;t ship one.</li>
-          <li><strong>Not iterable in sorted order.</strong> The only way to drain a PQ in order is to repeatedly poll.</li>
+          <li><strong>Not thread-safe.</strong>{" "}For concurrent use, see <code>PriorityBlockingQueue</code>.</li>
+          <li><strong>Not a stable heap.</strong>{" "}Equal-priority elements come out in unspecified order. If you need FIFO-among-ties, store an insertion counter alongside the value and break ties on it.</li>
+          <li><strong>Not efficient for &quot;decrease-key.&quot;</strong>{" "}If you need to update an element&apos;s priority (e.g., Dijkstra with the textbook implementation), the standard trick is to insert the updated copy and skip stale entries when polling. Indexed/Fibonacci heaps support real decrease-key but the JDK doesn&apos;t ship one.</li>
+          <li><strong>Not iterable in sorted order.</strong>{" "}The only way to drain a PQ in order is to repeatedly poll.</li>
         </ul>
 
         <ClassifyChallenge
@@ -463,7 +463,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why min-heap for top-K largest (and not max-heap)">
-          To maintain the top K largest seen so far, you need fast access to the <em>smallest</em> of the survivors —
+          To maintain the top K largest seen so far, you need fast access to the <em>smallest</em>{" "}of the survivors —
           that&apos;s the one to evict when something larger arrives. So min-heap. By symmetry: for top-K smallest,
           use a max-heap. This swap-the-comparator-orientation step trips people up; if you find yourself confused
           mid-interview, the rule is &quot;heap holds the K survivors; root is the one most likely to be evicted.&quot;
@@ -504,8 +504,8 @@ PriorityQueue<String> p = new PriorityQueue<>(
 
         <h4>LC 347 · Top K Frequent Elements</h4>
         <p>
-          Two-step pattern that braids together everything from this phase. <strong>Step 1:</strong> count
-          frequencies with a HashMap (Module 9). <strong>Step 2:</strong> top-K over the map entries by count.
+          Two-step pattern that braids together everything from this phase. <strong>Step 1:</strong>{" "}count
+          frequencies with a HashMap (Module 9). <strong>Step 2:</strong>{" "}top-K over the map entries by count.
         </p>
 
         <CodeBlock lang="java">{`public int[] topKFrequent(int[] nums, int k) {

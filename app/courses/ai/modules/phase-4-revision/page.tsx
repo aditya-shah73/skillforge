@@ -74,7 +74,7 @@ flowchart LR
         </p>
 
         <Callout variant="insight">
-          <strong>What this card covers:</strong> the four transport/UI/state/multimodal decisions you make every time you put an LLM on a screen — SSE vs fetch-stream, token-batched rendering, optimistic reconcile, image payload shape — plus the four mistakes that bite you in production. Quizzes at the end are non-gating recall checks.
+          <strong>What this card covers:</strong>{" "}the four transport/UI/state/multimodal decisions you make every time you put an LLM on a screen — SSE vs fetch-stream, token-batched rendering, optimistic reconcile, image payload shape — plus the four mistakes that bite you in production. Quizzes at the end are non-gating recall checks.
         </Callout>
       </section>
 
@@ -204,7 +204,7 @@ flowchart LR
 }`}</CodeBlock>
 
         <Callout variant="warn">
-          <strong>Always pass an <code>AbortSignal</code>.</strong> A React component that unmounts mid-stream without aborting leaves a zombie fetch holding a socket open and calling <code>setState</code> on a dead component. React will warn; your server-side connection count will climb.
+          <strong>Always pass an <code>AbortSignal</code>.</strong>{" "}A React component that unmounts mid-stream without aborting leaves a zombie fetch holding a socket open and calling <code>setState</code> on a dead component. React will warn; your server-side connection count will climb.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -259,7 +259,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Partial markdown</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Use a markdown parser that <em>tolerates</em> unclosed fences and half-tokens (<code>react-markdown</code> with <code>remark-gfm</code> is fine). Never use one that throws on incomplete input — you&apos;ll crash on every other token.
+              Use a markdown parser that <em>tolerates</em>{" "}unclosed fences and half-tokens (<code>react-markdown</code> with <code>remark-gfm</code> is fine). Never use one that throws on incomplete input — you&apos;ll crash on every other token.
             </p>
           </div>
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
@@ -290,16 +290,16 @@ flowchart LR
 
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
           <li>
-            <strong>Optimistic add happens before the network call.</strong> Two messages are appended locally: the user&apos;s text and a placeholder assistant message with empty content and <code>status: &quot;streaming&quot;</code>. The composer clears immediately. The UI feels instant.
+            <strong>Optimistic add happens before the network call.</strong>{" "}Two messages are appended locally: the user&apos;s text and a placeholder assistant message with empty content and <code>status: &quot;streaming&quot;</code>. The composer clears immediately. The UI feels instant.
           </li>
           <li>
-            <strong>The <code>Flux&lt;String&gt;</code> on the server</strong> is the Spring side. Each <code>String</code> emission becomes an SSE <code>data:</code> frame on the wire. Spring handles the framing; you just push strings.
+            <strong>The <code>Flux&lt;String&gt;</code> on the server</strong>{" "}is the Spring side. Each <code>String</code> emission becomes an SSE <code>data:</code> frame on the wire. Spring handles the framing; you just push strings.
           </li>
           <li>
-            <strong>The reader on the client</strong> decodes bytes → text → frames → tokens, batches into a ref, flushes on rAF, calls <code>setState</code> with append-only logic.
+            <strong>The reader on the client</strong>{" "}decodes bytes → text → frames → tokens, batches into a ref, flushes on rAF, calls <code>setState</code> with append-only logic.
           </li>
           <li>
-            <strong>The <code>AbortController</code></strong> sits on top of everything. The user&apos;s &quot;Stop&quot; button calls <code>abort()</code>; <code>useEffect</code> cleanup calls <code>abort()</code>. Both unwind the entire pipeline without leaking the socket.
+            <strong>The <code>AbortController</code></strong>{" "}sits on top of everything. The user&apos;s &quot;Stop&quot; button calls <code>abort()</code>; <code>useEffect</code> cleanup calls <code>abort()</code>. Both unwind the entire pipeline without leaking the socket.
           </li>
         </ul>
 
@@ -342,7 +342,7 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Optimistic + reconcile</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Append the user message and an empty assistant message <em>before</em> the request leaves. On the first token, the assistant message&apos;s status flips from <code>streaming</code> to populated content. On error, swap to <code>status: &quot;error&quot;</code> and expose a Retry. <strong>Never delete the optimistic message on error</strong> — leave it so the user can see what they sent.
+              Append the user message and an empty assistant message <em>before</em>{" "}the request leaves. On the first token, the assistant message&apos;s status flips from <code>streaming</code> to populated content. On error, swap to <code>status: &quot;error&quot;</code> and expose a Retry. <strong>Never delete the optimistic message on error</strong> — leave it so the user can see what they sent.
             </p>
           </div>
 
@@ -416,7 +416,7 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong> <em>colocate by default, lift only when needed.</em> The composer text should live in the composer component — never in a global store. The messages array, however, is consumed by the message list AND the send hook AND the &quot;new chat&quot; button, so lift it to a chat-scope store (Zustand, Context). Don&apos;t reach for Redux for one conversation&apos;s state.
+          <strong>Decision rule:</strong> <em>colocate by default, lift only when needed.</em>{" "}The composer text should live in the composer component — never in a global store. The messages array, however, is consumed by the message list AND the send hook AND the &quot;new chat&quot; button, so lift it to a chat-scope store (Zustand, Context). Don&apos;t reach for Redux for one conversation&apos;s state.
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
@@ -462,8 +462,8 @@ const urlMessage = {
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Inline base64 vs upload-first</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
-              <li><strong>Inline base64</strong> for &lt; ~1MB images — one request, no orphan files, simpler error paths.</li>
-              <li><strong>Upload-first (URL)</strong> for larger files, multi-turn reuse, or any image you want to show again later.</li>
+              <li><strong>Inline base64</strong>{" "}for &lt; ~1MB images — one request, no orphan files, simpler error paths.</li>
+              <li><strong>Upload-first (URL)</strong>{" "}for larger files, multi-turn reuse, or any image you want to show again later.</li>
               <li>Inline payloads bloat by ~33% (base64 overhead). Watch your request size limits.</li>
             </ul>
           </div>
@@ -472,7 +472,7 @@ const urlMessage = {
             <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Client-side validation</div>
             <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
               <li>MIME check by sniffing magic bytes — never trust the file extension or <code>File.type</code>.</li>
-              <li>Hard cap dimensions (e.g. 8000×8000) and bytes (e.g. 20MB) <em>before</em> sending.</li>
+              <li>Hard cap dimensions (e.g. 8000×8000) and bytes (e.g. 20MB) <em>before</em>{" "}sending.</li>
               <li>Down-scale on the client (canvas → <code>toBlob</code>) when the model only needs ~1024px.</li>
               <li>Show a preview thumbnail + filename + size; let the user remove before send.</li>
             </ul>
@@ -480,7 +480,7 @@ const urlMessage = {
         </div>
 
         <Callout variant="warn">
-          <strong>The cost-per-image gotcha:</strong> vision models charge by image as a (usually large) token count — often equivalent to ~1500 tokens for a single 1024px image. A multi-turn chat that re-sends the image on every turn pays for it every turn. Either send the image once and reference it by id on subsequent turns, or strip it from the history after the first response if the conversation no longer needs to look at it.
+          <strong>The cost-per-image gotcha:</strong>{" "}vision models charge by image as a (usually large) token count — often equivalent to ~1500 tokens for a single 1024px image. A multi-turn chat that re-sends the image on every turn pays for it every turn. Either send the image once and reference it by id on subsequent turns, or strip it from the history after the first response if the conversation no longer needs to look at it.
         </Callout>
 
         <CodeBlock lang="tsx" caption="Client-side downscale before send">{`async function downscale(file: File, maxDim = 1568): Promise<Blob> {
@@ -667,7 +667,7 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
           <li>You always wire an <code>AbortController</code> with cleanup, no exceptions.</li>
         </ul>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Agents &amp; Advanced Patterns.</strong> The ReAct loop, multi-turn tool use, when an agent is the right call and when it&apos;s wildly overkill, multi-agent orchestration patterns.
+          <strong>Up next: Phase 5 — Agents &amp; Advanced Patterns.</strong>{" "}The ReAct loop, multi-turn tool use, when an agent is the right call and when it&apos;s wildly overkill, multi-agent orchestration patterns.
         </p>
         <Link
           href="/courses/ai/modules/agents-intro"

@@ -106,19 +106,19 @@ export default function Page() {
         <h3>Why each number is roughly that order of magnitude</h3>
 
         <p>
-          You don&apos;t need to memorize raw digits. You need to understand <em>why</em> each tier sits where it does, so you can re-derive numbers when you forget them.
+          You don&apos;t need to memorize raw digits. You need to understand <em>why</em>{" "}each tier sits where it does, so you can re-derive numbers when you forget them.
         </p>
 
         <ul>
-          <li><strong>Caches are nanoseconds because they&apos;re on the CPU die.</strong> The signal doesn&apos;t leave the chip. L1 is closer than L2; L2 is closer than RAM.</li>
-          <li><strong>RAM is ~100ns because the signal has to travel inches across the motherboard.</strong> Plus addressing logic. The 100x gap from L1 is &quot;leaving the CPU.&quot;</li>
-          <li><strong>SSDs are ~100µs because flash is electrons-in-a-cell, but with controllers, queues, and a system call.</strong> Three orders of magnitude slower than RAM. This is the gap that makes caching worth it.</li>
-          <li><strong>Network in datacenter is ~500µs because the signal goes through a NIC, switches, another NIC.</strong> Even at the speed of light, switching dominates within a building.</li>
-          <li><strong>Cross-region latency is bounded by physics.</strong> Light in fiber goes ~200,000 km/s — about 5ms per 1000km. New York to Los Angeles is ~4000km, so the round trip floor is ~40ms. Real cables aren&apos;t straight, switches add overhead, so ~70ms is realistic. <strong>You cannot beat this with engineering. You can only avoid it.</strong></li>
+          <li><strong>Caches are nanoseconds because they&apos;re on the CPU die.</strong>{" "}The signal doesn&apos;t leave the chip. L1 is closer than L2; L2 is closer than RAM.</li>
+          <li><strong>RAM is ~100ns because the signal has to travel inches across the motherboard.</strong>{" "}Plus addressing logic. The 100x gap from L1 is &quot;leaving the CPU.&quot;</li>
+          <li><strong>SSDs are ~100µs because flash is electrons-in-a-cell, but with controllers, queues, and a system call.</strong>{" "}Three orders of magnitude slower than RAM. This is the gap that makes caching worth it.</li>
+          <li><strong>Network in datacenter is ~500µs because the signal goes through a NIC, switches, another NIC.</strong>{" "}Even at the speed of light, switching dominates within a building.</li>
+          <li><strong>Cross-region latency is bounded by physics.</strong>{" "}Light in fiber goes ~200,000 km/s — about 5ms per 1000km. New York to Los Angeles is ~4000km, so the round trip floor is ~40ms. Real cables aren&apos;t straight, switches add overhead, so ~70ms is realistic. <strong>You cannot beat this with engineering. You can only avoid it.</strong></li>
         </ul>
 
         <Callout variant="insight" title="The three jumps that matter">
-          <p className="m-0">In 99% of design discussions, what you&apos;re really reasoning about is one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong> Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers.</p>
+          <p className="m-0">In 99% of design discussions, what you&apos;re really reasoning about is one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong>{" "}Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers.</p>
         </Callout>
 
         <h3>The interview move</h3>
@@ -219,7 +219,7 @@ export default function Page() {
           <li><strong>1 billion DAU, 1 action/day each</strong> → ~12,000 QPS.</li>
         </ul>
         <p>
-          Or as a one-liner: <strong>DAU in millions × actions/day ≈ average QPS in dozens.</strong> A 100M-DAU app where each user takes 10 actions/day is ~12,000 average QPS. That&apos;s the whole conversion.
+          Or as a one-liner: <strong>DAU in millions × actions/day ≈ average QPS in dozens.</strong>{" "}A 100M-DAU app where each user takes 10 actions/day is ~12,000 average QPS. That&apos;s the whole conversion.
         </p>
 
         <h3>Average is not what you provision for. Peak is.</h3>
@@ -294,7 +294,7 @@ export default function Page() {
               body: (
                 <>
                   <p>The math told you the architecture before you drew a single box. The write path is &quot;normal database problem,&quot; the read path is &quot;giant cache fronting a sharded store.&quot; That entire design choice fell out of two divisions and a peak multiplier.</p>
-                  <p><strong>This is what every senior interviewer wants to see in the first 5 minutes.</strong> The math <em>derives</em> the architecture, instead of the architecture being asserted.</p>
+                  <p><strong>This is what every senior interviewer wants to see in the first 5 minutes.</strong>{" "}The math <em>derives</em>{" "}the architecture, instead of the architecture being asserted.</p>
                 </>
               ),
             },
@@ -308,7 +308,7 @@ export default function Page() {
         </p>
         <CodeBlock lang="plain">{`storage/year = (DAU × items/day × bytes/item × replication factor) × 365`}</CodeBlock>
         <p>
-          Twitter again: 300M DAU × 2 tweets/day × ~280 bytes/tweet × 3x replication × 365 days ≈ <strong>~180 TB/year</strong> of raw tweet text. That&apos;s small. Even at 10x for indexes, metadata, and media references, it&apos;s in the low petabytes — utterly tractable on modern infrastructure. The famously hard part of Twitter isn&apos;t storage; it&apos;s the read fanout.
+          Twitter again: 300M DAU × 2 tweets/day × ~280 bytes/tweet × 3x replication × 365 days ≈ <strong>~180 TB/year</strong>{" "}of raw tweet text. That&apos;s small. Even at 10x for indexes, metadata, and media references, it&apos;s in the low petabytes — utterly tractable on modern infrastructure. The famously hard part of Twitter isn&apos;t storage; it&apos;s the read fanout.
         </p>
         <p>
           The arithmetic skill is identical: pick a per-day number, multiply by users, multiply by bytes, multiply by replication, multiply by days. <strong>If you can do QPS, you can do storage growth — same math, different units.</strong>
@@ -363,19 +363,19 @@ export default function Page() {
         <h3>The four axes you&apos;ll always size</h3>
 
         <ol>
-          <li><strong>Storage.</strong> Rows × bytes/row × replication factor, integrated over time.</li>
-          <li><strong>Bandwidth.</strong> QPS × payload size, both directions.</li>
-          <li><strong>Connections.</strong> Concurrent connected clients, plus the ports/sockets/threads they&apos;ll consume per server.</li>
-          <li><strong>Memory.</strong> Working set you want to keep hot in RAM. Usually for caches.</li>
+          <li><strong>Storage.</strong>{" "}Rows × bytes/row × replication factor, integrated over time.</li>
+          <li><strong>Bandwidth.</strong>{" "}QPS × payload size, both directions.</li>
+          <li><strong>Connections.</strong>{" "}Concurrent connected clients, plus the ports/sockets/threads they&apos;ll consume per server.</li>
+          <li><strong>Memory.</strong>{" "}Working set you want to keep hot in RAM. Usually for caches.</li>
         </ol>
 
         <h3>The 80/20 heuristics</h3>
 
         <ul>
-          <li><strong>If the working set fits in RAM, your read path is going to be fast.</strong> The whole game of caching is keeping the hot subset in RAM. If the dataset is 10TB but the hot 1% is 100GB, that&apos;s a single beefy machine&apos;s worth of cache.</li>
+          <li><strong>If the working set fits in RAM, your read path is going to be fast.</strong>{" "}The whole game of caching is keeping the hot subset in RAM. If the dataset is 10TB but the hot 1% is 100GB, that&apos;s a single beefy machine&apos;s worth of cache.</li>
           <li><strong>One commodity server can handle ~10–50k QPS for simple work, ~1–5k QPS for heavy work.</strong> &quot;Simple&quot; = stateless service returning a small JSON. &quot;Heavy&quot; = a service doing several DB calls and some computation per request. Numbers vary, but this is the rough ceiling per-instance before you scale out.</li>
-          <li><strong>One Postgres instance handles ~5–30k writes/sec.</strong> Reads can go much higher with replicas. If your write QPS is in this range, you may not need to shard yet.</li>
-          <li><strong>1 Gbps NIC saturates at ~125 MB/s.</strong> If your average response is 100KB and you serve 2k QPS, that&apos;s 200 MB/s — you&apos;ve already saturated the NIC. Bandwidth is invisible until it isn&apos;t.</li>
+          <li><strong>One Postgres instance handles ~5–30k writes/sec.</strong>{" "}Reads can go much higher with replicas. If your write QPS is in this range, you may not need to shard yet.</li>
+          <li><strong>1 Gbps NIC saturates at ~125 MB/s.</strong>{" "}If your average response is 100KB and you serve 2k QPS, that&apos;s 200 MB/s — you&apos;ve already saturated the NIC. Bandwidth is invisible until it isn&apos;t.</li>
           <li><strong>Each TCP connection costs a few KB of kernel memory plus a file descriptor.</strong> 100k concurrent WebSocket connections per box is achievable but requires tuning. 1M is heroic.</li>
         </ul>
 
@@ -488,7 +488,7 @@ public class DataSourceConfig {
               body: (
                 <>
                   <p>In about five minutes of arithmetic, the architecture wrote itself: a small write path (single sharded DB), a heavy read path (cache cluster), and a clear bandwidth constraint that forces multiple front-end nodes.</p>
-                  <p>You haven&apos;t drawn a box yet. <strong>The math told you what the boxes have to be.</strong> That&apos;s the move.</p>
+                  <p>You haven&apos;t drawn a box yet. <strong>The math told you what the boxes have to be.</strong>{" "}That&apos;s the move.</p>
                 </>
               ),
             },
@@ -537,7 +537,7 @@ public class DataSourceConfig {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: the scaling ladder</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          You can now produce numbers. Module 2 is about what to <em>do</em> with them — vertical, horizontal, stateless, cache, shard, async, in that order, and the conditions that move you up each rung.
+          You can now produce numbers. Module 2 is about what to <em>do</em>{" "}with them — vertical, horizontal, stateless, cache, shard, async, in that order, and the conditions that move you up each rung.
         </p>
         <Link
           href="/courses/system-design/modules/scaling-ladder"

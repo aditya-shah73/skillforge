@@ -48,7 +48,7 @@ export default function FineTuningModule() {
           <li>The math intuition behind gradient updates on a 70B-parameter model — without doing the math.</li>
           <li>A concrete <strong>decision framework</strong>: prompt vs RAG vs fine-tune, with the questions to ask before you spend a dollar.</li>
           <li>The five honest reasons teams reach for fine-tuning prematurely — and how to spot them in your own thinking.</li>
-          <li>A delivered <strong>decision document</strong> for a real-world scenario: prompt, RAG, or fine-tune?</li>
+          <li>A delivered <strong>decision document</strong>{" "}for a real-world scenario: prompt, RAG, or fine-tune?</li>
         </ul>
       </div>
 
@@ -62,10 +62,10 @@ export default function FineTuningModule() {
       <p>
         Fine-tuning is the most over-reached-for tool in AI engineering. Every team eventually says some version of:
         &quot;the prompt isn&apos;t good enough, let&apos;s fine-tune.&quot; Most of those teams spend weeks, burn a five-figure
-        budget, and end up with a model that&apos;s <em>worse</em> than a well-engineered prompt with retrieval.
+        budget, and end up with a model that&apos;s <em>worse</em>{" "}than a well-engineered prompt with retrieval.
       </p>
       <p>
-        This module isn&apos;t anti-fine-tuning. It&apos;s pro-honesty. There <em>are</em> situations where fine-tuning
+        This module isn&apos;t anti-fine-tuning. It&apos;s pro-honesty. There <em>are</em>{" "}situations where fine-tuning
         is the right answer. They&apos;re rarer than people think, and the way to find out is a checklist — not a vibe.
       </p>
 
@@ -79,7 +79,7 @@ export default function FineTuningModule() {
       <p>
         We covered the mechanics in <Link href="/courses/ai/modules/ml-training">Module 3</Link> and{" "}
         <Link href="/courses/ai/modules/neural-networks">Module 4</Link>: forward pass, loss, backward pass, gradient update, repeat.
-        Fine-tuning a frontier LLM is the <em>same algorithm</em> you wrote by hand in Java — just at a scale that bends
+        Fine-tuning a frontier LLM is the <em>same algorithm</em>{" "}you wrote by hand in Java — just at a scale that bends
         your intuition about cost.
       </p>
 
@@ -135,7 +135,7 @@ export default function FineTuningModule() {
 
       <p>
         When somebody at your company says &quot;let&apos;s fine-tune,&quot; they almost always mean the last row —
-        customer-side SFT, often with LoRA adapters to make it cheap. They are <em>not</em> talking about pre-training,
+        customer-side SFT, often with LoRA adapters to make it cheap. They are <em>not</em>{" "}talking about pre-training,
         and they are almost never talking about RLHF (which requires a reward model and infrastructure most teams don&apos;t have).
       </p>
 
@@ -143,7 +143,7 @@ export default function FineTuningModule() {
       <p>
         Full fine-tuning a 70B-parameter model means computing gradients for 70 billion weights and storing optimizer state
         for each. The memory alone is hundreds of gigabytes. <strong>LoRA</strong> (Low-Rank Adaptation) sidesteps this
-        by freezing the base model and learning a small <em>delta</em> in low-rank decomposed matrices — typically less
+        by freezing the base model and learning a small <em>delta</em>{" "}in low-rank decomposed matrices — typically less
         than 1% of the original parameter count.
       </p>
 
@@ -167,7 +167,7 @@ Real numbers for a 70B model with rank r=16:
 
       <Callout variant="warn" title="LoRA can&apos;t teach what the base model doesn&apos;t already know">
         LoRA is great at adjusting <em>style</em>, <em>format</em>, and <em>which existing capability to deploy</em>.
-        It&apos;s bad at teaching <em>new facts</em> or <em>genuinely new reasoning</em>. If your problem is &quot;the
+        It&apos;s bad at teaching <em>new facts</em>{" "}or <em>genuinely new reasoning</em>. If your problem is &quot;the
         model doesn&apos;t know our product,&quot; LoRA will not fix it. RAG will.
       </Callout>
 
@@ -205,7 +205,7 @@ Real numbers for a 70B model with rank r=16:
       <h2 id="when-to-fine-tune">2. When fine-tuning is actually right</h2>
       <p>
         There are real, defensible cases for fine-tuning. They share a few features: the behavior you need is
-        <em> structural</em> rather than <em>factual</em>, prompt iteration has hit a clear ceiling, and you have
+        <em> structural</em>{" "}rather than <em>factual</em>, prompt iteration has hit a clear ceiling, and you have
         the data to support real evaluation. Here are the cases where fine-tuning earns its place.
       </p>
 
@@ -213,7 +213,7 @@ Real numbers for a 70B model with rank r=16:
       <p>
         You have a strict brand voice, a domain-specific tone, or an output format that needs to be exact across
         thousands of inputs. You&apos;ve tried system prompts and few-shot examples and the model still drifts on
-        edge cases. <strong>This is the textbook fine-tune case.</strong> LoRA is genuinely good at this.
+        edge cases. <strong>This is the textbook fine-tune case.</strong>{" "}LoRA is genuinely good at this.
       </p>
       <p className="text-sm text-slate-500 dark:text-slate-400">
         Example: a legal tech company that needs every clause summary in a precise three-sentence structure with
@@ -224,7 +224,7 @@ Real numbers for a 70B model with rank r=16:
       <h3 id="case-latency">Case 2: You&apos;re paying for a 5,000-token system prompt every request</h3>
       <p>
         If you&apos;ve crammed instructions, formatting rules, examples, and tool descriptions into a system prompt
-        that costs you on every request, fine-tuning can <em>compress</em> all of that into the weights. The trained
+        that costs you on every request, fine-tuning can <em>compress</em>{" "}all of that into the weights. The trained
         model produces the same output with a 200-token prompt instead of 5,000. At high volume this saves real money
         and reduces latency.
       </p>
@@ -257,7 +257,7 @@ Real numbers for a 70B model with rank r=16:
 
       <h2 id="when-not-to">3. When fine-tuning is the wrong answer</h2>
       <p>
-        Now the failure modes. These are the requests that <em>sound</em> like fine-tuning candidates and almost
+        Now the failure modes. These are the requests that <em>sound</em>{" "}like fine-tuning candidates and almost
         always aren&apos;t.
       </p>
 
@@ -277,7 +277,7 @@ Real numbers for a 70B model with rank r=16:
 
       <h3 id="not-tools">&quot;We need it to use tools better&quot;</h3>
       <p>
-        Tool selection is a <em>reasoning</em> task, not a style task. Frontier models are already excellent at it
+        Tool selection is a <em>reasoning</em>{" "}task, not a style task. Frontier models are already excellent at it
         when given clear tool descriptions. If your model is mis-using tools, the problem is usually ambiguous tool
         descriptions, missing examples, or a bug in your <Link href="/courses/ai/modules/agent-spring">agent loop (Module 22)</Link>.
       </p>
@@ -387,8 +387,8 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
             body: (
               <>
                 <p>
-                  You audit 50 wrong answers. <strong>40 of them</strong> are the assistant making up product
-                  features that don&apos;t exist or quoting outdated pricing. <strong>10 of them</strong> are the
+                  You audit 50 wrong answers. <strong>40 of them</strong>{" "}are the assistant making up product
+                  features that don&apos;t exist or quoting outdated pricing. <strong>10 of them</strong>{" "}are the
                   assistant phrasing the right answer in a way customers find rude.
                 </p>
                 <p>
@@ -466,7 +466,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
                   Fine-tuned wins on tone (4.6/5 vs 4.2/5) and saves $4K/month in prompt cost. Net positive.
                 </p>
                 <p>
-                  Total elapsed: ~10 weeks. ~7 of those were spent fixing things that <em>weren&apos;t</em> a fine-tuning
+                  Total elapsed: ~10 weeks. ~7 of those were spent fixing things that <em>weren&apos;t</em>{" "}a fine-tuning
                   problem. That&apos;s the framework doing its job.
                 </p>
               </>
@@ -498,7 +498,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
 
       <h2 id="economics">5. The economics nobody talks about</h2>
       <p>
-        Even when fine-tuning is technically right, the <em>economics</em> can still kill it. Three specific costs
+        Even when fine-tuning is technically right, the <em>economics</em>{" "}can still kill it. Three specific costs
         get under-counted:
       </p>
 
@@ -595,7 +595,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
       <h2 id="project">7. Project: the decision document</h2>
       <p>
         No code this module. The deliverable is a written decision document — the artifact you&apos;d hand to your
-        manager to defend a fine-tune-or-not call. Production AI engineering is as much about <em>not</em> building
+        manager to defend a fine-tune-or-not call. Production AI engineering is as much about <em>not</em>{" "}building
         things as it is about building them. This is the muscle.
       </p>
 
@@ -670,16 +670,16 @@ mid-project. Decide these BEFORE you start.]
       <p>A good decision doc:</p>
       <ul>
         <li><strong>Names the failure classes.</strong> &quot;18% wrong&quot; isn&apos;t a problem statement; &quot;12% are billing-related but routed to tier-1 because of jargon&quot; is.</li>
-        <li><strong>Does the cheap diagnosis before recommending the expensive fix.</strong> Failure-class analysis costs a day. A fine-tune costs months.</li>
+        <li><strong>Does the cheap diagnosis before recommending the expensive fix.</strong>{" "}Failure-class analysis costs a day. A fine-tune costs months.</li>
         <li><strong>Has explicit kill criteria.</strong> &quot;If we don&apos;t hit 92% accuracy by week 8, we stop&quot; — written before you start.</li>
-        <li><strong>Quotes a real cost.</strong> Including labeler time. Including the re-training tax.</li>
-        <li><strong>Considers the &quot;just accept it&quot; option.</strong> Sometimes 18% wrong is fine and the budget is better spent elsewhere. A good doc names this.</li>
-        <li><strong>Picks a path and commits.</strong> A doc that says &quot;maybe fine-tune, maybe not&quot; isn&apos;t a decision.</li>
+        <li><strong>Quotes a real cost.</strong>{" "}Including labeler time. Including the re-training tax.</li>
+        <li><strong>Considers the &quot;just accept it&quot; option.</strong>{" "}Sometimes 18% wrong is fine and the budget is better spent elsewhere. A good doc names this.</li>
+        <li><strong>Picks a path and commits.</strong>{" "}A doc that says &quot;maybe fine-tune, maybe not&quot; isn&apos;t a decision.</li>
       </ul>
 
       <Callout variant="warn" title="The most common mistake">
         Most decision docs jump straight to &quot;here&apos;s my fine-tuning plan.&quot; The whole exercise is about the
-        <em> investigation that comes first.</em> If your doc starts with &quot;I recommend fine-tuning because...,&quot;
+        <em> investigation that comes first.</em>{" "}If your doc starts with &quot;I recommend fine-tuning because...,&quot;
         rewrite it. The first half should be &quot;here&apos;s what I learned about the failures.&quot;
       </Callout>
 
@@ -759,7 +759,7 @@ mid-project. Decide these BEFORE you start.]
           module left.
         </p>
         <p className="text-white/95 mb-0">
-          <strong>Module 27 — Capstone:</strong> a single end-to-end AI engineering assistant that uses everything you&apos;ve
+          <strong>Module 27 — Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
           built. Streaming chat, tool use, RAG over a real codebase, agent loops, evals, security guards. The portfolio
           piece. The thing you point at when somebody asks &quot;can you actually ship AI?&quot;
         </p>
