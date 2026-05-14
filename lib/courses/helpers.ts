@@ -48,6 +48,22 @@ export function coursePercent(courseId: CourseId, completedModules: string[]) {
 }
 
 /**
+ * Same shape as `coursePercent`, but scoped to a single phase. Used on the
+ * course landing pages to show "Phase 2 · 4/6" next to the phase header.
+ * If the phase has no available modules yet, returns `{done:0,total:0,percent:0}`.
+ */
+export function phasePercent(courseId: CourseId, phaseNumber: number, completedModules: string[]) {
+  const data = COURSE_DATA[courseId];
+  const inPhase = data.MODULES.filter(
+    (m) => m.status === "available" && m.phaseNumber === phaseNumber,
+  );
+  const done = inPhase.filter((m) => completedModules.includes(m.slug)).length;
+  const total = inPhase.length;
+  const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+  return { done, total, percent };
+}
+
+/**
  * Find the "next thing to do" for a learner across all courses.
  * Strategy:
  *  - Find the course with the most recent activity (any completed module

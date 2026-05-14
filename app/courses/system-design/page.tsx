@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MODULES, PHASES } from "@/lib/courses/system-design";
 import CourseProgress from "@/components/CourseProgress";
+import PhaseProgress from "@/components/PhaseProgress";
 
 export default function SystemDesignHome() {
   const modulesByPhase = PHASES.map((phase) => ({
@@ -54,6 +55,7 @@ export default function SystemDesignHome() {
               </div>
               <h2 className="text-xl font-bold">{phase.name}</h2>
               <div className="text-xs text-slate-500">{phase.modules.length} {phase.modules.length === 1 ? "module" : "modules"}</div>
+              <PhaseProgress courseId="system-design" phaseNumber={phase.number} />
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {phase.modules.map((m) => {

@@ -12,19 +12,30 @@ export default function ModuleProgress({
   moduleSlug: string;
   checkpoints: CheckpointDef[];
 }) {
-  const { completedCheckpoints } = useProgress();
+  const { completedCheckpoints, completedModules, completeModule } = useProgress();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <div className="h-10" />;
-
-  const done = completedCheckpoints[moduleSlug] || [];
+  const done = mounted ? completedCheckpoints[moduleSlug] || [] : [];
   const total = checkpoints.length;
   const completed = checkpoints.filter((c) => done.includes(c.id)).length;
   const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  // Auto-mark the module complete when every checkpoint has been cleared.
+  // This is the only place that flips `completedModules` today, which feeds
+  // the home-page resume CTA, per-course progress bar, and palette ordering.
+  useEffect(() => {
+    if (!mounted) return;
+    if (total === 0) return;
+    if (completed < total) return;
+    if (completedModules.includes(moduleSlug)) return;
+    completeModule(moduleSlug);
+  }, [mounted, completed, total, moduleSlug, completedModules, completeModule]);
+
+  if (!mounted) return <div className="h-10" />;
 
   return (
     <div className="mt-6 mb-2">

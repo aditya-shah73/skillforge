@@ -288,6 +288,10 @@ export default function CommandPalette() {
             navigate
             <kbd className="rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 font-mono">↵</kbd>
             open
+            <span className="hidden sm:inline-flex items-center gap-1">
+              <kbd className="rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 font-mono">?</kbd>
+              shortcuts
+            </span>
           </span>
           <span className="flex items-center gap-2">
             {results.length} {results.length === 1 ? "result" : "results"}

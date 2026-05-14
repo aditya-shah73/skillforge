@@ -7,6 +7,7 @@ import { TokeyProvider } from "@/components/Tokey";
 import HeaderStats from "@/components/HeaderStats";
 import ReadingProgress from "@/components/ReadingProgress";
 import CommandPalette from "@/components/CommandPalette";
+import KeyboardHelp from "@/components/KeyboardHelp";
 import SearchButton from "@/components/SearchButton";
 
 const geistSans = Geist({
@@ -39,6 +40,7 @@ export default function RootLayout({
           <TokeyProvider>
             <ReadingProgress />
             <CommandPalette />
+            <KeyboardHelp />
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
               <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
                 <Link href="/" className="font-bold text-3xl sm:text-4xl tracking-tight leading-none">

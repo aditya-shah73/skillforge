@@ -4,7 +4,7 @@ import { useProgress } from "@/lib/progress";
 import { useEffect, useState } from "react";
 
 export default function HeaderStats() {
-  const { xp, streak, combo, soundEnabled, toggleSound } = useProgress();
+  const { xp, streak, combo, soundEnabled, toggleSound, hardcoreMode, toggleHardcore } = useProgress();
   const [mounted, setMounted] = useState(false);
   const [displayXp, setDisplayXp] = useState(0);
 
@@ -48,9 +48,23 @@ export default function HeaderStats() {
         ⚡ {displayXp} XP
       </div>
       <button
+        onClick={toggleHardcore}
+        title={hardcoreMode ? "Hardcore mode ON — wrong answers lock in. Click to disable." : "Hardcore mode OFF — you can retry quiz questions. Click to enable."}
+        aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
+        aria-pressed={hardcoreMode}
+        className={`w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
+          hardcoreMode
+            ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
+            : "hover:bg-slate-200 dark:hover:bg-slate-800"
+        }`}
+      >
+        {hardcoreMode ? "💀" : "🎯"}
+      </button>
+      <button
         onClick={toggleSound}
         title={soundEnabled ? "Mute" : "Unmute"}
         aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
+        aria-pressed={soundEnabled}
         className="w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
       >
         {soundEnabled ? "🔊" : "🔇"}
