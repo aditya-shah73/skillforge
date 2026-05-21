@@ -84,7 +84,7 @@ export const MODULES: Module[] = [
   { slug: "security", number: 29, phase: "Production & Capstone", phaseNumber: 6, title: "Security & guardrails", subtitle: "Prompt injection, PII, output filtering", duration: "~1.5h", project: "Injection test suite", status: "available" },
   { slug: "fine-tuning", number: 30, phase: "Production & Capstone", phaseNumber: 6, title: "Fine-tuning & RLHF (when to bother)", subtitle: "How model training actually works — and why RAG usually wins", duration: "~1.5h", project: "Decision framework: fine-tune vs prompt vs RAG", status: "available" },
   { slug: "phase-6-revision", number: 31, phase: "Production & Capstone", phaseNumber: 6, title: "Phase 6 revision notes", subtitle: "Evals, security, fine-tune vs RAG vs prompt — the production-AI cheat sheet before the capstone", duration: "~15–20 min", project: "No project — pure revision", status: "available" },
-  { slug: "capstone", number: 32, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~3h", project: "Portfolio centerpiece", status: "available" },
+  { slug: "capstone", number: 32, phase: "Production & Capstone", phaseNumber: 6, title: "Capstone project", subtitle: "End-to-end AI engineering assistant", duration: "~1 week", project: "Portfolio centerpiece", status: "available" },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {

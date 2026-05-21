@@ -239,7 +239,7 @@ flowchart TD
             Sending 10,000 tokens of context on every request? Your bill scales with that. Not with request count.
           </NumberedPoint>
           <NumberedPoint n={2} title="Models have context windows in tokens">
-            Claude Sonnet 4.6 has a 200K-token context. That&apos;s roughly 150,000 English words. Sounds huge until you try to stuff in 100 PDFs.
+            Claude Sonnet 4.5 has a 200K-token context (1M on the extended-context tier). That&apos;s roughly 150,000 English words at 200K. Sounds huge until you try to stuff in 100 PDFs.
           </NumberedPoint>
           <NumberedPoint n={3} title="You MUST count tokens before sending">
             Go over the limit → API rejects the whole request. You need server-side counting to truncate gracefully.

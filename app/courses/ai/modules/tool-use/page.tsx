@@ -309,7 +309,7 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
 }`}</CodeBlock>
 
         <p className="mt-4">
-          Notice <code>Status</code> became an <code>enum</code> in the schema — that&apos;s a hard constraint. The model literally cannot produce a value outside that set. Use enums where you want strict values; use plain strings where you want flexibility.
+          Notice <code>Status</code> became an <code>enum</code> in the schema — that&apos;s a strong constraint. The API will reject tool calls whose inputs don&apos;t conform, and the model is heavily biased to stay inside the enum (it&apos;s built into the prompt the platform synthesizes from your schema). It&apos;s not a hard decoding constraint the way some libraries enforce, so still <em>validate the value defensively</em>{" "}in your tool handler — but in practice the model nearly always gives you a valid value. Use enums where you want strict values; use plain strings where you want flexibility.
         </p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">Three things that bite people in production</h3>
@@ -601,7 +601,7 @@ Bye.`}</CodeBlock>
           <ul className="list-disc pl-6 space-y-2 mt-2">
             <li><strong>&quot;No qualifying bean of type ChatClient.Builder&quot;</strong> — your <code>pom.xml</code> is missing <code>spring-ai-starter-model-anthropic</code>. Re-check the dependency.</li>
             <li><strong>Model never calls a tool, just makes things up</strong> — your tool descriptions are too vague. Beef them up; add example values.</li>
-            <li><strong>Loop runs a handful of tool calls and aborts</strong> — Spring AI&apos;s tool-execution loop has a built-in iteration cap to prevent runaway loops. Either your tool returns nonsense (check what it returns by logging), or the question genuinely needs more steps. Raise the cap by configuring a custom <code>ToolCallingManager</code> bean with a higher <code>maxIterations</code> value and wiring it into your <code>ChatClient.Builder</code>.</li>
+            <li><strong>Loop runs a handful of tool calls and aborts</strong> — Spring AI&apos;s tool-execution loop has a built-in iteration cap to prevent runaway loops. Either your tool returns nonsense (check what it returns by logging), or the question genuinely needs more steps. Raise the cap via <code>ToolCallingChatOptions</code> when you build the request (e.g.{" "}<code>ToolCallingChatOptions.builder().toolExecutionEligibilityPredicate(...)</code>), or via the per-property knob your Spring AI version exposes — names have shifted across milestones, so check the docs for your version.</li>
             <li><strong>Tool runs but model says &quot;I don&apos;t have access&quot;</strong> — usually means the tool returned <code>null</code> or threw silently. Check stdout; consider returning an explicit error string.</li>
           </ul>
         </Callout>

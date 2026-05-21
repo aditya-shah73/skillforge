@@ -195,6 +195,9 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
           d(a, b) = √( Σᵢ (aᵢ − bᵢ)² )
         </div>
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          That&apos;s just the Pythagorean theorem in n dimensions: subtract the vectors element by element, square the differences, add them up, take the square root. Same recipe you used in high school for the distance between two points on a grid — just with more numbers per point.
+        </p>
         <p>
           The trouble: Euclidean distance cares about <strong>magnitude</strong>. If someone embeds a 5-word tweet and a 5000-word essay,
           the essay&apos;s embedding is often <em>longer</em> (larger magnitude) than the tweet&apos;s — even if they&apos;re about the same topic.
@@ -211,6 +214,9 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
           a · b = Σᵢ aᵢ · bᵢ = |a| · |b| · cos(θ)
         </div>
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          Two ways to read the same number. <strong>Computationally:</strong>{" "}pair up the entries of <code>a</code> and <code>b</code>, multiply each pair, add them all up — one number out. <strong>Geometrically:</strong>{" "}that number equals the lengths of the two arrows multiplied together, times the cosine of the angle between them. The first form tells you how to compute it; the second tells you what it means.
+        </p>
         <p>
           The second form is the important one: the dot product is <em>length times length times the cosine of the angle between them</em>.
           The cosine part is what we actually want. The two length factors are what we want to divide out.
@@ -425,14 +431,14 @@ static double cosine(double[] a, double[] b) {
           but at millions of vectors you need <strong>approximate nearest neighbor</strong>{" "}indexes (HNSW, IVFFlat) — also Phase 3.
         </p>
 
-        <h3>Two embeddings you&apos;ll encounter in practice</h3>
+        <h3>Embeddings you&apos;ll encounter in practice</h3>
         <CodeBlock lang="plain">{`OpenAI text-embedding-3-small     → 1536 dims, cheap, surprisingly strong
 OpenAI text-embedding-3-large     → 3072 dims, expensive, slightly better
-Voyage voyage-3                    → 1024 dims, tuned for code & retrieval
+Voyage voyage-3 / voyage-3-large  → 1024 / 2048 dims, tuned for code & retrieval
 sentence-transformers all-MiniLM  → 384 dims, runs locally, free, weaker
-Cohere embed-english-v3           → 1024 dims, strong for English`}</CodeBlock>
+Cohere embed-english-v3 / v4      → 1024+ dims, strong for English`}</CodeBlock>
         <p>
-          You&apos;ll pick between these in Phase 3. For today: they all return a list of floats that obeys the same math you just learned.
+          (Model lineups shift every few months — check each provider&apos;s docs for the current names and prices before you commit.) You&apos;ll pick between these in Phase 3. For today: they all return a list of floats that obeys the same math you just learned.
         </p>
 
         <Quiz

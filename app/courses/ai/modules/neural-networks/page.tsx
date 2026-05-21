@@ -186,6 +186,10 @@ export default function NeuralNetworksModule() {
           Forget the brain analogy — it&apos;s misleading. A neuron is a tiny function:
         </p>
 
+        <p>
+          <strong>In plain English:</strong>{" "}take each input, multiply it by its own weight, add them all up, add a constant called bias, and then run that final number through a squishing function (the activation). That&apos;s a neuron. The Greek <code>σ</code> (sigma) is just a placeholder for whichever squishing function you pick.
+        </p>
+
         <CodeBlock lang="plain">
 {`neuron(x) = σ( w₁·x₁ + w₂·x₂ + ... + wₙ·xₙ + b )
 
@@ -740,6 +744,14 @@ z₁ = [ 0.5, 0.7, 1.5 ]`}
           For a network with any number of layers, backprop boils down to four rules. I&apos;ll state them, then we&apos;ll derive them in the worked example below.
           Let <code>δ[ℓ]</code> (delta) be <code>∂L/∂z[ℓ]</code> — the error signal at layer ℓ&apos;s pre-activation.
         </p>
+
+        <Callout variant="info" title="Read this first if the equations feel dense">
+          <p className="m-0">
+            In plain English, the four rules say: <strong>(BP1)</strong>{" "}figure out how wrong the output layer is. <strong>(BP2)</strong>{" "}for each earlier layer, take the &quot;wrongness&quot; from the layer ahead and pull it backwards through the weights — that&apos;s how the blame flows back through the network. <strong>(BP3)</strong>{" "}and <strong>(BP4)</strong>{" "}then convert that per-layer error into the actual update you apply to each bias and each weight.
+            <br /><br />
+            The funny symbols are: <code>⊙</code> means &quot;multiply two same-shape vectors element by element&quot;, and <code>ᵀ</code> means &quot;flip rows and columns of a matrix&quot; (transpose). You will never write these by hand at work — autograd does it. But seeing them once makes the framework code stop feeling like a black box.
+          </p>
+        </Callout>
 
         <CodeBlock lang="plain">
 {`(BP1)  δ[L]    = ∇_a L  ⊙  σ'(z[L])             // error at the output layer

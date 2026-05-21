@@ -545,6 +545,11 @@ export default function MLBasicsModule() {
         />
 
         <h3>Notation you&apos;ll see everywhere</h3>
+
+        <p>
+          Heads up: the cheat sheet below uses some math symbols (Greek letters, set notation, subscripts). <strong>You don&apos;t need to memorize any of this</strong> — you just need to recognize it so papers and code stop looking foreign. Every line is decoded in plain English right under it.
+        </p>
+
         <CodeBlock lang="plain">{`X     — capital X, the features (usually a matrix: rows = examples, cols = features)
 y     — lowercase y, the labels (a vector)
 ŷ     — "y-hat", the model's prediction (what f(X) outputs)
@@ -555,8 +560,29 @@ w, b  — weights and bias (the parameters we're learning)
 Training data shape:   X ∈ ℝ^(n × d),  y ∈ ℝ^n
 One prediction:        ŷᵢ = f(Xᵢ; w, b)
 Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
+
+        <div className="not-prose my-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-5 text-sm">
+          <div className="font-bold text-slate-800 dark:text-slate-200 mb-3">Decoded, line by line:</div>
+          <ul className="list-disc ml-5 space-y-2 text-slate-700 dark:text-slate-300 m-0">
+            <li>
+              <strong><code>X ∈ ℝ^(n × d)</code></strong> reads as: <em>&quot;X is a grid of real numbers with n rows and d columns.&quot;</em>{" "}
+              The funny <code>∈</code> is just &quot;is a member of&quot; (think: <em>belongs to</em>). <code>ℝ</code> is &quot;the real numbers.&quot; The exponent <code>(n × d)</code> is the shape — rows by columns. So: a spreadsheet with one row per example and one column per feature.
+            </li>
+            <li>
+              <strong><code>y ∈ ℝ^n</code></strong> — same idea, but a single column (n real numbers, one true label per example).
+            </li>
+            <li>
+              <strong><code>ŷᵢ = f(Xᵢ; w, b)</code></strong> reads as: <em>&quot;the prediction for example i equals the model applied to that example&apos;s features, parameterized by the weights w and bias b.&quot;</em>{" "}
+              The little <code>ᵢ</code> subscript is &quot;the i-th one&quot; — same idea as <code>array[i]</code> in code.
+            </li>
+            <li>
+              <strong><code>make ŷᵢ ≈ yᵢ for all i</code></strong> is just the training goal: <em>for every training example, get the prediction close to the truth.</em>
+            </li>
+          </ul>
+        </div>
+
         <p className="text-xs italic">
-          You don&apos;t need to memorize Greek — just recognize it. Every ML paper uses these letters.
+          Every ML paper uses these letters. After you&apos;ve seen them a few times in worked examples (we&apos;ll do exactly that in Part 4), the symbols stop feeling foreign and start feeling like shorthand.
         </p>
 
         <h3>Feature engineering: the real work</h3>
@@ -661,7 +687,7 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
 
         <Callout variant="insight" title="Why bother with something this simple?">
           <p className="m-0">
-            Linear regression is the hydrogen atom of ML. Once you understand it deeply, every more complex model is just a variation: logistic regression adds a sigmoid, neural nets stack many of these with non-linearities in between, transformers are fancy arrangements of them with attention. The update rule in this tiny model is the <em>same</em>{" "}update rule used in GPT-4 training.
+            Linear regression is the hydrogen atom of ML. Once you understand it deeply, every more complex model is just a variation: logistic regression adds a sigmoid, neural nets stack many of these with non-linearities in between, transformers are fancy arrangements of them with attention. The update rule in this tiny model is the <em>same</em>{" "}update rule used to train frontier LLMs like GPT-5 and Claude.
           </p>
         </Callout>
 
@@ -720,7 +746,7 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
           Save those four numbers to a file and your model is &quot;deployed.&quot; Load them back up and you can predict forever. <em>Training</em>{" "}is the process that chooses the specific values; <em>the model</em>{" "}is the chosen values.
         </p>
 
-        <Callout variant="insight" title="This scales all the way up to GPT-4">
+        <Callout variant="insight" title="This scales all the way up to frontier LLMs">
           <p className="m-0 mb-2">
             Every ML model you&apos;ve heard of works this way — just with more numbers. A rough ladder:
           </p>
@@ -729,7 +755,7 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
             <li><strong>Spam classifier on 1000 word features:</strong> ~1,001 numbers. ~8 KB.</li>
             <li><strong>Small image model (ResNet-18):</strong> ~11 million parameters. ~44 MB.</li>
             <li><strong>Llama 3 8B:</strong> 8 billion parameters. ~16 GB at float16 (2 bytes each).</li>
-            <li><strong>GPT-4 (estimated):</strong> ~1.7 trillion parameters. Roughly 800 GB+, split across many GPUs.</li>
+            <li><strong>Frontier LLMs (GPT-5, Claude Opus 4, Gemini Ultra):</strong> roughly trillion-parameter scale. Hundreds of GB+, split across many GPUs. (Exact numbers aren&apos;t public.)</li>
           </ul>
           <p className="m-0 mt-2">
             Same idea at every scale: train, save the numbers, load, multiply. The numbers get bigger. The concept doesn&apos;t change.
@@ -970,6 +996,14 @@ public final class LinearRegression {
 
         <h3>Loss #1: Mean Squared Error (MSE) — the regression workhorse</h3>
 
+        <p>
+          <strong>In plain English:</strong>{" "}for each example, subtract the truth from your prediction, square the gap, then average those squared gaps across all examples. Smaller number = better model.
+        </p>
+
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          The formula below is the same idea in math shorthand. You don&apos;t need to memorize it — you just need to recognize it when you see it in a model&apos;s code or a paper. The big sigma (Σ) just means &quot;add these up,&quot; and the subscript <code>i</code> means &quot;for each training example.&quot;
+        </p>
+
         <CodeBlock lang="plain">{`MSE = (1/n) · Σᵢ (ŷᵢ − yᵢ)²
 
      n        __________________
@@ -1004,6 +1038,10 @@ public final class LinearRegression {
 
         <h3>Loss #2: MAE (Mean Absolute Error) — when outliers shouldn&apos;t rule</h3>
 
+        <p>
+          <strong>In plain English:</strong>{" "}same as MSE, but instead of squaring the gap, take its absolute value (drop the sign). An error of 10 contributes 10 — not 100. The vertical bars <code>|…|</code> are just &quot;absolute value of.&quot;
+        </p>
+
         <CodeBlock lang="plain">{`MAE = (1/n) · Σᵢ |ŷᵢ − yᵢ|`}</CodeBlock>
 
         <p>
@@ -1031,6 +1069,14 @@ public final class LinearRegression {
 
         <h3>Loss #3: Huber loss — MSE and MAE&apos;s pragmatic child</h3>
 
+        <p>
+          <strong>In plain English:</strong>{" "}if the error is small (less than some threshold <code>δ</code>), behave like MSE — square it. If the error is big, switch to MAE — just take the absolute value, scaled. Best of both: smooth for small errors, robust against outliers.
+        </p>
+
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          The curly brace is &quot;case analysis&quot; — read it as &quot;if the top condition holds use the top expression, otherwise use the bottom one.&quot; Same idea as an <code>if/else</code> in code.
+        </p>
+
         <CodeBlock lang="plain">{`              ⎧  ½ · (ŷ − y)²                     if |ŷ − y| ≤ δ
 Huber(ŷ, y) = ⎨
               ⎩  δ · (|ŷ − y| − ½δ)               otherwise`}</CodeBlock>
@@ -1043,6 +1089,14 @@ Huber(ŷ, y) = ⎨
 
         <p>
           Classification is a different world. Your output isn&apos;t a number you can subtract — it&apos;s a probability distribution across classes. We need a loss that says <em>&quot;how confident was the model in the right answer?&quot;</em>
+        </p>
+
+        <p>
+          <strong>In plain English:</strong>{" "}look at the probability the model gave to the correct class. Take its <code>log</code>, flip the sign. That&apos;s your loss. If the model was very confident in the right answer, this number is near zero. If the model was confident in a wrong answer, this number is huge. That&apos;s it.
+        </p>
+
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          The formula below looks scary because it spells out two cases (two classes vs. many classes). You can ignore the symbols on first read — the next paragraph below the formula explains what the model &quot;feels&quot; for each level of confidence.
         </p>
 
         <CodeBlock lang="plain">{`For binary classification (2 classes):
@@ -1067,7 +1121,7 @@ Where:
 
         <Callout variant="info" title="Cross-entropy is what LLMs minimize">
           <p className="m-0">
-            Every token GPT-4 has ever emitted during training was scored with cross-entropy: &quot;given the previous tokens, the correct next token was &apos;cat&apos; — what probability did you assign to &apos;cat&apos;?&quot; The entire trillion-parameter monster is optimizing <em>exactly this loss</em>, across trillions of tokens. Every other LLM trick (attention, transformers, RLHF) is machinery in service of minimizing that one number.
+            Every token a frontier LLM emits during training is scored with cross-entropy: &quot;given the previous tokens, the correct next token was &apos;cat&apos; — what probability did you assign to &apos;cat&apos;?&quot; The entire trillion-parameter monster is optimizing <em>exactly this loss</em>, across trillions of tokens. Every other LLM trick (attention, transformers, RLHF) is machinery in service of minimizing that one number.
           </p>
         </Callout>
 

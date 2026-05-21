@@ -65,8 +65,8 @@ export default function EvalsModule() {
       <Callout variant="info" title="Prerequisites">
         <p className="m-0">
           Modules 9–13 (the API + Spring AI surface) and Module 11 (tool use). The capstone in
-          Module 17 (RAG end-to-end) is what we&apos;ll be evaluating, so revisiting the
-          architecture there will make the examples concrete. Module 22 (agents in Spring) is
+          Module 18 (RAG end-to-end) is what we&apos;ll be evaluating, so revisiting the
+          architecture there will make the examples concrete. Module 25 (agents in Spring) is
           useful background — agent outputs are notoriously hard to eval, so we touch on that.
         </p>
       </Callout>
@@ -895,16 +895,16 @@ public class EvalHarness {
     List<EvalCase> cases = loader.load(Path.of("evals/golden-set.yaml"));
 
     // Run cases in parallel — they're independent and IO-bound, perfect for
-    // virtual threads (see Module 23 if this looks unfamiliar).
-    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-      var futures = cases.stream()
+    // virtual threads (see Module 26 if this looks unfamiliar).
+    try (var scope = StructuredTaskScope.open(
+            StructuredTaskScope.Joiner.<EvalResult>allSuccessfulOrThrow())) {
+      var subtasks = cases.stream()
           .map(c -> scope.fork(() -> evaluateOne(c)))
           .toList();
 
       scope.join();
-      scope.throwIfFailed();
 
-      List<EvalResult> results = futures.stream().map(f -> f.get()).toList();
+      List<EvalResult> results = subtasks.stream().map(s -> s.get()).toList();
       EvalReport report = aggregate(results);
       writer.write(report);
       return report;
@@ -954,7 +954,7 @@ public class EvalHarness {
 
       <p>
         Two design choices worth calling out. First, the <code>StructuredTaskScope</code> —
-        this is straight from Module 22/23. Eval cases are embarrassingly parallel and
+        this is straight from Module 25/26. Eval cases are embarrassingly parallel and
         IO-bound, so virtual threads are perfect. A 50-case suite that takes 8 minutes serial
         finishes in 30 seconds parallel.
       </p>
@@ -1061,7 +1061,7 @@ class EvalHarnessIT {
 
       <Callout variant="info" title="The exercise">
         Build a working version of this harness against any small chat endpoint you wrote
-        in earlier modules (Module 17&apos;s RAG endpoint is ideal). Steps:
+        in earlier modules (Module 18&apos;s RAG endpoint is ideal). Steps:
         <ol className="mt-2 list-decimal pl-5 space-y-1 mb-0">
           <li>Pick or build the system under test (10 min)</li>
           <li>Author 15 golden cases — 5 representative, 5 adversarial, 5 regression — in YAML (~30 min, the slow part)</li>
@@ -1106,7 +1106,7 @@ class EvalHarnessIT {
       </p>
 
       <p>
-        <strong>Module 25</strong>{" "}tackles the other half of production safety: security.
+        <strong>Module 29</strong>{" "}tackles the other half of production safety: security.
         Prompt injection, PII leakage, output filtering — the things that turn a working AI
         feature into a CVE.
       </p>
@@ -1170,7 +1170,7 @@ class EvalHarnessIT {
           <h3 className="font-bold text-lg m-0">Next up</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-          <strong>Module 25 — Security &amp; guardrails</strong>: prompt injection, PII
+          <strong>Module 29 — Security &amp; guardrails</strong>: prompt injection, PII
           handling, output filtering, jailbreak resistance. The other half of production
           safety. Once you have evals to catch quality regressions, security keeps the bad
           actors from turning your AI feature into a liability.

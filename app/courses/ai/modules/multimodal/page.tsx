@@ -66,7 +66,7 @@ export default function MultimodalModule() {
       <Callout variant="info" title="Prerequisites">
         <p className="m-0">
           Module 9 (Claude API fundamentals) for the request shape, Module 10 (Spring AI) for the
-          Java client, Module 19 (chat interface) for the upload UI you&apos;ll bolt this onto.
+          Java client, Module 21 (chat interface) for the upload UI you&apos;ll bolt this onto.
           Optional but useful: Module 6 (embeddings) — image embeddings come from the same idea.
         </p>
       </Callout>
@@ -781,7 +781,7 @@ export function ReceiptUploader() {
           <p className="m-0">
             For one-shot extraction (receipt → JSON), don&apos;t bother streaming. The whole call
             finishes in 2-4 seconds, and a JSON object isn&apos;t meaningful to render token-by-token.
-            Save streaming for the chat UX (Module 18/19), where partial output is actually useful.
+            Save streaming for the chat UX (Module 20/21), where partial output is actually useful.
           </p>
         </Callout>
 
@@ -993,7 +993,7 @@ ORDER BY 1 DESC;`}</CodeBlock>
             Build a <code>fixtures/</code> directory of 10-20 real receipts (yours, your roommate&apos;s,
             whatever). Some printed, some thermal-paper, some screenshots, one HEIC, one PDF. Run
             your pipeline against the whole set on every change and eyeball the results. This is
-            your eval suite — Module 24 will formalize it, but a manual version pays off
+            your eval suite — Module 28 will formalize it, but a manual version pays off
             immediately.
           </p>
         </Callout>
@@ -1092,7 +1092,7 @@ ORDER BY 1 DESC;`}</CodeBlock>
             className="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-600 p-4 transition"
           >
             <div className="text-xs uppercase tracking-wider text-slate-400 mb-1">Previous</div>
-            <div className="font-bold">Module 19 · Full chat interface</div>
+            <div className="font-bold">Module 21 · Full chat interface</div>
           </Link>
           <Link
             href="/courses/ai/modules/agents-intro"

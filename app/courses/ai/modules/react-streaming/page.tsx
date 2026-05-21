@@ -1056,7 +1056,7 @@ export default function ChatDemo() {
           <li><strong>Markdown rendering</strong> — use <code>react-markdown</code> with safe defaults to render the text parts.</li>
           <li><strong>Code block syntax highlighting</strong> — your AI is going to emit a lot of code. Make it readable.</li>
           <li><strong>Continue button</strong>{" "}on errored messages, as in Part 4.</li>
-          <li><strong>Persist conversations</strong>{" "}to <code>localStorage</code> so a refresh doesn&apos;t lose history. (We&apos;ll do this properly in Module 19 with a backend session store.)</li>
+          <li><strong>Persist conversations</strong>{" "}to <code>localStorage</code> so a refresh doesn&apos;t lose history. (We&apos;ll do this properly in Module 21 with a backend session store.)</li>
         </ul>
 
         <Checkpoint moduleSlug="react-streaming" id="project" title="Project: chat UI component library" xp={50} manual manualLabel="My library streams cleanly" celebration="You have a chat UI you'll reuse for the rest of the course.">
@@ -1102,7 +1102,7 @@ export default function ChatDemo() {
           kind="Final check"
           question="You shipped the chat UI. A user reports: 'I asked a question, the model started answering, then stopped halfway through. I refreshed and now my whole conversation is gone.' Two bugs — name them."
           options={[
-            { label: "(a) The dropped stream wasn't surfaced as recoverable; (b) conversation state lives only in component state", correct: true, explanation: "Right on both. Drop-recovery should leave partial content in place with a continue button, not silently strand the user. And conversation state belongs somewhere durable (localStorage at minimum, server-side ideally) so a refresh doesn't nuke history. Module 19 handles the server-side persistence." },
+            { label: "(a) The dropped stream wasn't surfaced as recoverable; (b) conversation state lives only in component state", correct: true, explanation: "Right on both. Drop-recovery should leave partial content in place with a continue button, not silently strand the user. And conversation state belongs somewhere durable (localStorage at minimum, server-side ideally) so a refresh doesn't nuke history. Module 21 handles the server-side persistence." },
             { label: "The user's network is flaky — not your bug", explanation: "Network is flaky everywhere. It's exactly your job to handle it gracefully." },
             { label: "EventSource auto-reconnect failed", explanation: "We're not using EventSource — and even if we were, auto-reconnect doesn't help in the middle of one stream." },
             { label: "The model produced a malformed response", explanation: "Possible but not the systemic issue. The systemic issues are recovery UX and persistence." },
@@ -1134,7 +1134,7 @@ export default function ChatDemo() {
           xp={15}
         />
 
-        <Checkpoint moduleSlug="react-streaming" id="final" title="Final quiz" xp={50} celebration="You can build any streaming chat UI from here. Module 19 turns the mock into a real backend.">
+        <Checkpoint moduleSlug="react-streaming" id="final" title="Final quiz" xp={50} celebration="You can build any streaming chat UI from here. Module 21 turns the mock into a real backend.">
           <p>
             With this module complete, you have the React-side primitives — a streaming generator, a
             state-machine hook, and a small set of components — that every AI feature in the rest of
@@ -1147,10 +1147,10 @@ export default function ChatDemo() {
       {/* FOOTER NAV */}
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/rag-spring" className="text-slate-600 dark:text-slate-400 hover:text-sky-600">
-          ← Module 17: RAG in Spring Boot
+          ← Module 18: RAG in Spring Boot
         </Link>
         <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline font-semibold">
-          Module 19: Full chat interface →
+          Module 21: Full chat interface →
         </Link>
       </footer>
         <ModuleNav courseId="ai" currentSlug="react-streaming" />

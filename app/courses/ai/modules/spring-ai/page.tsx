@@ -193,7 +193,7 @@ public class CreativeWriter {
             <div className="text-xs space-y-1.5">
               <div>Postgres / MySQL / etc.</div>
               <div>Use for: production. Survives restarts, multi-instance safe.</div>
-              <div>Spring AI ships the schema; auto-runs Flyway migrations.</div>
+              <div>Spring AI ships the schema; bootstrap with <code>spring.ai.chat.memory.repository.jdbc.initialize-schema=embedded</code> (or use Flyway/Liquibase yourself if you already have them).</div>
             </div>
           </div>
           <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30 p-4">
@@ -612,7 +612,7 @@ public class LoggingAdvisor implements CallAdvisor {
         <Callout variant="info" title="Direct pre-filled link">
           <p className="m-0">
             <a
-              href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=journal-assistant&name=journal-assistant&description=Journal%20assistant%20with%20memory&packageName=com.example.journal&dependencies=spring-ai-anthropic"
+              href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.5.0&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=journal-assistant&name=journal-assistant&description=Journal%20assistant%20with%20memory&packageName=com.example.journal&dependencies=spring-ai-anthropic"
               className="text-indigo-600 hover:underline break-all"
               target="_blank"
               rel="noreferrer"
@@ -928,7 +928,7 @@ Session ended.`}</CodeBlock>
           </div>
           <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
             <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">CallAdvisor / AdvisedRequest can&apos;t be resolved</div>
-            <div className="text-sm">Check your Spring AI version. The advisor API was renamed across 1.0.0-M and 1.0.0; make sure your BOM pins <code>1.0.0</code> or later, and re-run <code>./mvnw clean install</code>.</div>
+            <div className="text-sm">Check your Spring AI version. The advisor API was renamed across milestones; make sure your BOM pins the latest <code>1.x</code> release, and re-run <code>./mvnw clean install</code>.</div>
           </div>
         </div>
       </section>

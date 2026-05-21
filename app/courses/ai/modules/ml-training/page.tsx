@@ -79,7 +79,7 @@ export default function MLTrainingModule() {
 
         <Callout variant="info" title="Picking up exactly where Module 2 left off">
           <p className="m-0">
-            Module 2 ended with a model that can <em>predict</em> (linear regression), a loss that can <em>score</em>{" "}the predictions (MSE), and a metric that can <em>tell us how good those predictions are</em>{" "}on held-out data. What we never answered: <strong>where do the weights actually come from?</strong>{" "}In Module 2 we hand-eyeballed slope and intercept off the LineFitDemo. That obviously doesn&apos;t scale. This module is the missing middle — the algorithm that takes <em>any</em>{" "}initial guess at the weights and walks them downhill on the loss surface until they&apos;re good. It&apos;s the same loop whether you&apos;re fitting 2 weights for house prices or 175 billion for GPT-3.
+            Module 2 ended with a model that can <em>predict</em> (linear regression), a loss that can <em>score</em>{" "}the predictions (MSE), and a metric that can <em>tell us how good those predictions are</em>{" "}on held-out data. What we never answered: <strong>where do the weights actually come from?</strong>{" "}In Module 2 we hand-eyeballed slope and intercept off the LineFitDemo. That obviously doesn&apos;t scale. This module is the missing middle — the algorithm that takes <em>any</em>{" "}initial guess at the weights and walks them downhill on the loss surface until they&apos;re good. It&apos;s the same loop whether you&apos;re fitting 2 weights for house prices or hundreds of billions for a frontier LLM.
           </p>
         </Callout>
 
@@ -98,7 +98,7 @@ export default function MLTrainingModule() {
 
         <Callout variant="insight" title="The whole module in one paragraph">
           <p className="m-0">
-            Every &quot;training&quot; algorithm — from a 1960s linear regression to GPT-4 — is some flavor of: <em>compute the gradient of the loss with respect
+            Every &quot;training&quot; algorithm — from a 1960s linear regression to GPT-5 — is some flavor of: <em>compute the gradient of the loss with respect
             to the weights, nudge the weights in the opposite direction, repeat</em>. The rest of the module is refinements, diagnostics, and gotchas on this one idea.
           </p>
         </Callout>
@@ -107,6 +107,10 @@ export default function MLTrainingModule() {
 
         <p>
           For each weight <code>w</code>, the update rule is:
+        </p>
+
+        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+          Don&apos;t panic at the symbols. <code>∂L / ∂w</code> just means &quot;how does the loss change if I nudge this one weight a tiny bit?&quot; — a slope. The funny <code>∂</code> is the same idea as a derivative <code>d/dx</code>, except we have many weights so we use partials.
         </p>
 
         <CodeBlock lang="plain">
@@ -187,13 +191,16 @@ L = (−1.0)²  =  1.0`}
               body: (
                 <>
                   <p className="m-0 mb-2">
-                    We need <code>∂L/∂w</code>. Using the chain rule on <code>L = (w·x − y)²</code>:
+                    We need <code>∂L/∂w</code> — &quot;how much does the loss change when I nudge w?&quot; The shape of <code>L = (w·x − y)²</code> is a parabola (you squared something). For a parabola <code>(stuff)²</code>, calculus says the slope is <code>2 · stuff · (slope of stuff)</code>. The &quot;stuff&quot; is <code>w·x − y</code>, whose slope with respect to <code>w</code> is just <code>x</code>. Multiply them together:
                   </p>
                   <CodeBlock lang="plain">
 {`∂L/∂w = 2 · (w·x − y) · x
        = 2 · (−1.0) · 4
        = −8.0`}
                   </CodeBlock>
+                  <p className="m-0 mb-2 text-xs italic text-slate-600 dark:text-slate-400">
+                    That was the chain rule in action — the trick of breaking a derivative into &quot;outer × inner&quot;. You don&apos;t need to derive this by hand in real code; PyTorch and TensorFlow do it for you automatically (it&apos;s called <strong>autograd</strong>). But seeing it once helps the rest stop feeling like magic.
+                  </p>
                   <p className="m-0 text-xs italic">
                     The gradient is negative — meaning &quot;if you increase w, the loss goes down.&quot; Good sign, since we picked <code>w = 0.5</code> and the truth is closer to <code>0.75</code>.
                   </p>
@@ -1132,13 +1139,13 @@ is the expensive part.`}
         <h2>Part 5: Project — your Java linear regression actually trains now</h2>
 
         <p>
-          In Module 2 you built a <code>LinearModel</code> that could <em>predict</em>, and a <code>mse()</code> function that could <em>score</em>.
+          In Module 2 you built a <code>LinearRegression</code> that could <em>predict</em>, and a <code>mse()</code> function that could <em>score</em>.
           What was missing was the part that takes bad weights and makes them good — the training loop. Now you have the theory. Time to write it.
         </p>
 
         <Callout variant="info" title="What we're building">
           <p className="m-0">
-            A Java <code>LinearRegressionTrainer</code> that takes a (X, y) dataset and a learning rate, and returns a fitted <code>LinearModel</code>.
+            A Java <code>LinearRegressionTrainer</code> that takes a (X, y) dataset and a learning rate, and returns a fitted <code>LinearRegression</code>.
             It uses batch gradient descent, prints a loss curve, evaluates on a held-out set, and reports RMSE and R². About 90 lines of code total.
           </p>
         </Callout>
@@ -1152,7 +1159,7 @@ is the expensive part.`}
 
         <CodeBlock lang="plain">
 {`cd ~/ml-playground       # or wherever you put Module 2's project
-# You should already have LinearModel.java from last module.
+# You should already have LinearRegression.java from last module.
 # We'll add three new files.
 touch LinearRegressionTrainer.java
 touch Metrics.java
@@ -1169,7 +1176,7 @@ touch TrainingRunner.java`}
 {`import java.util.Random;
 
 /**
- * Fits a LinearModel to (X, y) using batch gradient descent.
+ * Fits a LinearRegression to (X, y) using batch gradient descent.
  *
  * "Batch" = we compute the gradient using ALL training examples on
  * every step. Perfectly fine for toy-scale problems; on real data
@@ -1189,9 +1196,9 @@ public class LinearRegressionTrainer {
 
     /**
      * X is [nSamples][nFeatures]. y is [nSamples].
-     * Returns a trained LinearModel.
+     * Returns a trained LinearRegression.
      */
-    public LinearModel fit(double[][] X, double[] y) {
+    public LinearRegression fit(double[][] X, double[] y) {
         int n = X.length;
         int d = X[0].length;
 
@@ -1235,7 +1242,7 @@ public class LinearRegressionTrainer {
             }
         }
 
-        return new LinearModel(w, b);
+        return new LinearRegression(w, b);
     }
 }`}
         </CodeBlock>
@@ -1326,7 +1333,7 @@ public class TrainingRunner {
         // ─── 3. Train ─────────────────────────────────────────────────
         LinearRegressionTrainer trainer =
             new LinearRegressionTrainer(0.01, 500, true);
-        LinearModel model = trainer.fit(Xtrain, yTrain);
+        LinearRegression model = trainer.fit(Xtrain, yTrain);
 
         // ─── 4. Evaluate on held-out test set ────────────────────────
         double[] yHat = new double[yTest.length];
@@ -1350,7 +1357,7 @@ public class TrainingRunner {
 }`}
         </CodeBlock>
 
-        <Callout variant="warn" title="Your LinearModel needs getters">
+        <Callout variant="warn" title="Your LinearRegression needs getters">
           <p className="mb-2">
             The runner calls <code>model.weights()</code> and <code>model.bias()</code> — if your Module 2 model doesn&apos;t expose those, add two tiny getters:
           </p>

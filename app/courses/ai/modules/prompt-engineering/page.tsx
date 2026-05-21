@@ -102,9 +102,9 @@ export default function PromptEngineeringModule() {
         </p>
 
         <h3>The anatomy of a modern API call</h3>
-        <p>Every modern chat model (Claude, GPT-4, Gemini) takes the same shape:</p>
+        <p>Every modern chat model (Claude, GPT-5, Gemini) takes the same shape:</p>
         <CodeBlock lang="plain">{`{
-  model: "claude-sonnet-4",
+  model: "claude-sonnet-4-5",
   system: "<instructions that never change across turns>",
   messages: [
     { role: "user",      content: "..." },

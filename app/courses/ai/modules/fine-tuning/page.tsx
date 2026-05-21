@@ -17,7 +17,7 @@ const CHECKPOINTS = [
   { id: "decision-framework", title: "The decision framework" },
   { id: "economics-rlhf", title: "Economics & RLHF" },
   { id: "decision-doc", title: "Decision document" },
-  { id: "final", title: "Module 26 final" },
+  { id: "final", title: "Module 30 final" },
 ];
 
 export default function FineTuningModule() {
@@ -28,7 +28,7 @@ export default function FineTuningModule() {
       </Link>
 
       <div className="mt-6 mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-pink-500 to-rose-500 text-white">
-        Phase 6 · Module 26
+        Phase 6 · Module 30
       </div>
       <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">~1.5h · Production &amp; Capstone</div>
       <h1 className="text-4xl font-extrabold tracking-tight mb-3">Fine-tuning &amp; RLHF (when to bother)</h1>
@@ -55,7 +55,7 @@ export default function FineTuningModule() {
       <Callout variant="info" title="Prerequisites">
         You should be comfortable with everything from <Link href="/courses/ai/modules/ml-basics">Module 2 (supervised learning)</Link>,{" "}
         <Link href="/courses/ai/modules/ml-training">Module 3 (training loops)</Link>, and <Link href="/courses/ai/modules/neural-networks">Module 4 (neural networks)</Link>.
-        You should also have shipped a RAG pipeline (<Link href="/courses/ai/modules/rag-spring">Module 17</Link>) and tuned prompts (<Link href="/courses/ai/modules/prompt-engineering">Module 7</Link>) so you have something to compare against.
+        You should also have shipped a RAG pipeline (<Link href="/courses/ai/modules/rag-spring">Module 18</Link>) and tuned prompts (<Link href="/courses/ai/modules/prompt-engineering">Module 7</Link>) so you have something to compare against.
       </Callout>
 
       <h2 id="why-this-module">Why this module exists</h2>
@@ -279,7 +279,7 @@ Real numbers for a 70B model with rank r=16:
       <p>
         Tool selection is a <em>reasoning</em>{" "}task, not a style task. Frontier models are already excellent at it
         when given clear tool descriptions. If your model is mis-using tools, the problem is usually ambiguous tool
-        descriptions, missing examples, or a bug in your <Link href="/courses/ai/modules/agent-spring">agent loop (Module 22)</Link>.
+        descriptions, missing examples, or a bug in your <Link href="/courses/ai/modules/agent-spring">agent loop (Module 25)</Link>.
       </p>
 
       <h3 id="not-knowledge-cutoff">&quot;It doesn&apos;t know about events after its knowledge cutoff&quot;</h3>
@@ -335,7 +335,7 @@ Real numbers for a 70B model with rank r=16:
      ├─ New knowledge        → STOP. Use RAG. Fine-tuning will hallucinate.
      └─ New behavior         → continue
 
-Q2. Have I systematically iterated on the prompt with eval-driven feedback (Module 24)?
+Q2. Have I systematically iterated on the prompt with eval-driven feedback (Module 28)?
      ├─ No                   → STOP. Build evals first. You're flying blind.
      └─ Yes                  → continue
 
@@ -356,7 +356,7 @@ Q6. Do I have ≥500 high-quality (input, ideal output) pairs that an expert agr
      └─ Yes                  → continue
 
 Q7. Do I have an eval set distinct from training data, with measurable success criteria?
-     ├─ No                   → STOP. Build evals (Module 24). You can't tell if FT worked.
+     ├─ No                   → STOP. Build evals (Module 28). You can't tell if FT worked.
      └─ Yes                  → continue
 
 → FINE-TUNE. Use LoRA. Compare against the base + prompt baseline. Re-evaluate quarterly.`}</CodeBlock>
@@ -513,7 +513,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
       <p>
         You can&apos;t tell if a fine-tune worked without an eval set held out from training data — and that eval set
         has to be expert-labeled too. And every time you change the model, the prompt, or the data pipeline, you
-        re-run the eval. (See <Link href="/courses/ai/modules/evals">Module 24</Link>.) Eval cost is not a one-time investment.
+        re-run the eval. (See <Link href="/courses/ai/modules/evals">Module 28</Link>.) Eval cost is not a one-time investment.
       </p>
 
       <h3 id="cost-drift">Model drift &amp; vendor lock-in</h3>
@@ -585,7 +585,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
           question="Why does prompt + RAG have a 'hidden discount' over fine-tuning?"
           options={[
             { label: "Prompts have unlimited token budgets.", explanation: "They don't — pricing scales with tokens." },
-            { label: "RAG has no embedding cost.", explanation: "It does — see Module 14." },
+            { label: "RAG has no embedding cost.", explanation: "It does — see Module 15." },
             { label: "When the base model improves, prompts and retrieval transfer for free; fine-tunes have to be re-trained.", correct: true, explanation: "Yes — this is a real and large effect over multi-year projects." },
             { label: "RAG outputs are cached at the platform level by default.", explanation: "Caching is opt-in (Module 13), not free or default." },
           ]}
@@ -703,7 +703,7 @@ mid-project. Decide these BEFORE you start.]
       </Checkpoint>
 
       <h2 id="final-quiz">Final quiz</h2>
-      <Checkpoint moduleSlug={SLUG} id="final" title="Module 26 final" xp={50}>
+      <Checkpoint moduleSlug={SLUG} id="final" title="Module 30 final" xp={50}>
         <Quiz
           question="Which statement most accurately describes what customer LoRA fine-tuning is good for?"
           options={[
@@ -759,7 +759,7 @@ mid-project. Decide these BEFORE you start.]
           module left.
         </p>
         <p className="text-white/95 mb-0">
-          <strong>Module 27 — Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
+          <strong>Module 32 — Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
           built. Streaming chat, tool use, RAG over a real codebase, agent loops, evals, security guards. The portfolio
           piece. The thing you point at when somebody asks &quot;can you actually ship AI?&quot;
         </p>

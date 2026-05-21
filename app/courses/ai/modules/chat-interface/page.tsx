@@ -54,7 +54,7 @@ export default function ChatInterfaceModule() {
           calls, and the operational concerns you hit in production.
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
-          <li>Module 18&apos;s components, now wired to a real Spring Boot SSE endpoint</li>
+          <li>Module 20&apos;s components, now wired to a real Spring Boot SSE endpoint</li>
           <li>Session and message persistence — refreshes don&apos;t lose conversations</li>
           <li>Streaming tool calls (Module 11) all the way through to a structured UI</li>
           <li>The team standup bot: ask &quot;what did the team ship yesterday?&quot;, get a digest with citations</li>
@@ -65,7 +65,7 @@ export default function ChatInterfaceModule() {
       <Callout variant="info" title="Prerequisites">
         <p className="m-0">
           Module 11 (tool use) for the backend tool loop, Module 12 (streaming with SSE) for the
-          Spring Boot endpoint, Module 18 (React streaming patterns) for the frontend hook and
+          Spring Boot endpoint, Module 20 (React streaming patterns) for the frontend hook and
           components. This module connects them.
         </p>
       </Callout>
@@ -77,7 +77,7 @@ export default function ChatInterfaceModule() {
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Frontend ↔ backend wiring</h2>
 
         <p>
-          We have a Next.js frontend (Module 18) and a Spring Boot backend (Modules 11 + 12). Now
+          We have a Next.js frontend (Module 20) and a Spring Boot backend (Modules 11 + 12). Now
           they have to talk to each other. The wiring is mostly boring, except for three places where
           beginners reliably trip:
         </p>
@@ -287,7 +287,7 @@ public class ChatController {
           ]}
         />
 
-        <Checkpoint moduleSlug="chat-interface" id="frontend-backend" title="Frontend ↔ backend wiring" xp={20} celebration="Module 18's components now talk to a real backend.">
+        <Checkpoint moduleSlug="chat-interface" id="frontend-backend" title="Frontend ↔ backend wiring" xp={20} celebration="Module 20's components now talk to a real backend.">
           <p>
             You should be able to: stand up a Spring controller that streams chat tokens, point your
             Next.js frontend at it via a rewrite, and have a multi-turn conversation that remembers
@@ -578,7 +578,7 @@ export function useChatSession(userId: string) {
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Streaming tool results to the UI</h2>
 
         <p>
-          Module 18 modeled tool calls as message parts on the frontend. We never wired up the backend
+          Module 20 modeled tool calls as message parts on the frontend. We never wired up the backend
           to actually emit them. Time to fix that. The result is a UI where the user sees:
         </p>
 
@@ -736,7 +736,7 @@ public class ToolService {
         <h3 className="text-xl font-bold mt-8 mb-3">The frontend already handles this</h3>
 
         <p>
-          Module 18&apos;s <code>reduceChunk</code> already accepts <code>tool_call</code> and
+          Module 20&apos;s <code>reduceChunk</code> already accepts <code>tool_call</code> and
           <code>tool_result</code> events and threads them into the message&apos;s parts. Once the
           backend emits them, the UI lights up automatically. This is the payoff for designing the
           frontend protocol with tool events from day one.
@@ -835,18 +835,18 @@ public class ToolService {
 
         <PartRecap
           title="Part 3 recap"
-          gist="Drop to chatResponse() to surface tool calls. Emit a tool_call frame per call; the frontend already handles it via the parts model from Module 18. Skip explicit tool_result on v1 unless the UX needs it."
+          gist="Drop to chatResponse() to surface tool calls. Emit a tool_call frame per call; the frontend already handles it via the parts model from Module 20. Skip explicit tool_result on v1 unless the UX needs it."
           points={[
             { takeaway: "content() vs chatResponse() is the lever.", detail: "content() gives you text only — clean for chat. chatResponse() gives you full structured responses including tool calls. Use the right one for what you're rendering." },
             { takeaway: "Surface tool calls; defer tool results.", detail: "tool_call events are cheap to emit and the highest-leverage UX. tool_result threading is fiddly and only worth it when the result deserves its own UI (sources panel, structured output)." },
-            { takeaway: "The frontend protocol from Module 18 already supports this.", detail: "Designing the protocol with tool events on day one means adding backend support is a one-sided change — no frontend rewrites." },
+            { takeaway: "The frontend protocol from Module 20 already supports this.", detail: "Designing the protocol with tool events on day one means adding backend support is a one-sided change — no frontend rewrites." },
           ]}
         />
 
         <Checkpoint moduleSlug="chat-interface" id="tool-results" title="Streaming tool results to the UI" xp={25} celebration="Your chat shows the model thinking, not just talking.">
           <p>
             You should be able to: emit tool_call SSE events from a Spring AI streaming endpoint and
-            see them render as live status indicators in the React UI from Module 18.
+            see them render as live status indicators in the React UI from Module 20.
           </p>
         </Checkpoint>
       </section>
@@ -1020,7 +1020,7 @@ return chatClient.prompt()
         <p>
           Build a chat product your team would actually use: ask it &quot;what shipped yesterday?&quot;
           or &quot;who&apos;s blocked?&quot; and it answers using a tool that queries a fake ticket
-          database. Frontend is Module 18&apos;s components; backend is Modules 11/12 wired together
+          database. Frontend is Module 20&apos;s components; backend is Modules 11/12 wired together
           with sessions from this module.
         </p>
 
@@ -1108,7 +1108,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           </li>
           <li>
             <strong>Frontend wiring.</strong>{" "}Next.js project with the rewrite to localhost:8080. Drop
-            in Module 18&apos;s components. Build the demo page with session loading.
+            in Module 20&apos;s components. Build the demo page with session loading.
           </li>
           <li>
             <strong>Polish.</strong>{" "}Rate limit, TTFT timeout, loading and error states. Try a
@@ -1218,10 +1218,10 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           xp={15}
         />
 
-        <Checkpoint moduleSlug="chat-interface" id="final" title="Final quiz" xp={50} celebration="You shipped a real chat product. Module 20 adds the last frontend piece: images.">
+        <Checkpoint moduleSlug="chat-interface" id="final" title="Final quiz" xp={50} celebration="You shipped a real chat product. Module 22 adds the last frontend piece: images.">
           <p>
             With this module complete, you have an end-to-end AI feature: React frontend, Spring Boot
-            backend, sessions, tools, streaming, and the operational layer to keep it running. Module 20
+            backend, sessions, tools, streaming, and the operational layer to keep it running. Module 22
             takes the same stack and adds multimodal — images and files going into the model.
           </p>
         </Checkpoint>
@@ -1230,7 +1230,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
       {/* FOOTER NAV */}
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/react-streaming" className="text-slate-600 dark:text-slate-400 hover:text-sky-600">
-          ← Module 18: React streaming patterns
+          ← Module 20: React streaming patterns
         </Link>
         <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline font-semibold">
           Module 20: Multimodal inputs →

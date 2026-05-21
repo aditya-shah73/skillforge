@@ -94,7 +94,7 @@ sequenceDiagram
     { "role": "assistant", "content": "..." },        // your job to append prior replies
     { "role": "user",      "content": "..." }
   ],
-  "temperature": 0.7,                                 // optional — randomness
+  "temperature": 0.7,                                 // optional — randomness (default 1.0; 0.7 is a common safe middle)
   "top_p":       1.0,                                 // optional — nucleus sampling
   "stream":      false                                // optional — SSE on/off
 }`}</CodeBlock>

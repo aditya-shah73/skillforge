@@ -494,19 +494,21 @@ public class ParallelReviewer {
         <h3 className="text-xl font-bold mt-8 mb-3">Structured concurrency: the better version</h3>
 
         <p>
-          Java 21 added <code>StructuredTaskScope</code> as a preview, which gives you proper
-          fan-out semantics: cancel siblings on failure, gather all on success, with a clean
+          Java 21–24 incubated <code>StructuredTaskScope</code> as a preview; JDK 25 finalized
+          it with a static factory and a <code>Joiner</code> strategy. Same idea — proper
+          fan-out semantics, cancel siblings on failure, gather all on success, with a clean
           try-with-resources lifecycle. If you&apos;re on a recent JDK, prefer this.
         </p>
 
         <CodeBlock lang="java">{`public ReviewReport review(String diff) throws Exception {
-    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+    // JDK 25 finalized API — Joiner picks the merge strategy
+    try (var scope = StructuredTaskScope.open(
+            StructuredTaskScope.Joiner.<String>allSuccessfulOrThrow())) {
         var sec  = scope.fork(() -> security.prompt().user(diff).call().content());
         var perf = scope.fork(() -> performance.prompt().user(diff).call().content());
         var sty  = scope.fork(() -> style.prompt().user(diff).call().content());
 
-        scope.join();             // wait for all
-        scope.throwIfFailed();    // propagate any error
+        scope.join();             // waits for all; throws on any failure
 
         return new ReviewReport(sec.get(), perf.get(), sty.get());
     }
@@ -550,7 +552,9 @@ public class ParallelReviewer {
 
         <CodeBlock lang="java">{`// Best-effort version — sectioning is forgiving
 public ReviewReport reviewBestEffort(String diff) {
-    try (var scope = new StructuredTaskScope<String>()) {
+    // awaitAll waits for every subtask without failing the scope
+    try (var scope = StructuredTaskScope.open(
+            StructuredTaskScope.Joiner.<String>awaitAll())) {
         var sec  = scope.fork(() -> safeCall(security, diff, "security"));
         var perf = scope.fork(() -> safeCall(performance, diff, "performance"));
         var sty  = scope.fork(() -> safeCall(style, diff, "style"));
@@ -614,7 +618,7 @@ private String safeCall(ChatClient client, String diff, String role) {
                 explanation: "That handles failures gracefully but doesn't cancel siblings — the still-running ones still bill you.",
               },
               {
-                label: "Wrap the fan-out in StructuredTaskScope.ShutdownOnFailure — when one fails, the scope auto-cancels the others.",
+                label: "Wrap the fan-out in StructuredTaskScope with the allSuccessfulOrThrow Joiner — when one fails, the scope auto-cancels the others.",
                 correct: true,
                 explanation: "Right. Structured concurrency exists for exactly this. Sibling cancellation kills the in-flight calls when one fails (in 'fail fast' mode), so you stop paying for work you'll throw away.",
               },
@@ -979,7 +983,8 @@ public class PrReviewService {
     }
 
     public ReviewReport review(String diff) throws InterruptedException {
-        try (var scope = new StructuredTaskScope<ReviewSection>()) {
+        try (var scope = StructuredTaskScope.open(
+                StructuredTaskScope.Joiner.<ReviewSection>awaitAll())) {
             var sec  = scope.fork(() -> reviewerCall(security,    "security",    diff));
             var perf = scope.fork(() -> reviewerCall(performance, "performance", diff));
             var sty  = scope.fork(() -> reviewerCall(style,       "style",       diff));
@@ -1091,9 +1096,9 @@ public class PrReviewService {
         <p>That&apos;s Phase 5. You&apos;ve gone from:</p>
 
         <ul className="list-disc pl-6 space-y-1 mb-4">
-          <li><strong>Module 21:</strong>{" "}what an agent is, by hand — a loop with tools and stop conditions</li>
-          <li><strong>Module 22:</strong>{" "}agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
-          <li><strong>Module 23:</strong>{" "}when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
+          <li><strong>Module 24:</strong>{" "}what an agent is, by hand — a loop with tools and stop conditions</li>
+          <li><strong>Module 25:</strong>{" "}agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
+          <li><strong>Module 26:</strong>{" "}when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
         </ul>
 
         <p>
@@ -1197,16 +1202,16 @@ public class PrReviewService {
           />
           <Quiz
             kind="Quick check"
-            question="You have parallelization with sectioning (security/performance/style reviewers). One reviewer fails. You're using StructuredTaskScope.ShutdownOnFailure. What happens?"
+            question="You have parallelization with sectioning (security/performance/style reviewers). One reviewer fails. You're using StructuredTaskScope with the allSuccessfulOrThrow Joiner. What happens?"
             options={[
               {
                 label: "All three reviews complete; you get partial results.",
-                explanation: "ShutdownOnFailure cancels siblings on the first failure. For best-effort partial results you'd want a different scope variant.",
+                explanation: "allSuccessfulOrThrow cancels siblings on the first failure. For best-effort partial results you'd want awaitAll plus per-task try/catch.",
               },
               {
                 label: "The siblings are cancelled and the whole call fails.",
                 correct: true,
-                explanation: "Yes — that's the behavior of ShutdownOnFailure. Sibling cancellation is the cost-saving feature, but it also means partial-success isn't the default; you have to opt into it with a custom scope or per-task try/catch.",
+                explanation: "Yes — that's the behavior of allSuccessfulOrThrow. Sibling cancellation is the cost-saving feature, but it also means partial-success isn't the default; you have to opt into it with a different Joiner (e.g. awaitAll) or per-task try/catch.",
               },
               {
                 label: "The remaining reviewers get a bonus 30 seconds to finish.",
@@ -1223,15 +1228,15 @@ public class PrReviewService {
         <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
           <p className="font-semibold mb-2">Coming up next — Phase 6: Production &amp; Capstone</p>
           <p className="text-sm">
-            <strong>Module 24 (Evals)</strong>: how do you actually know your LLM feature is
+            <strong>Module 28 (Evals)</strong>: how do you actually know your LLM feature is
             getting better, not worse? Golden sets, LLM-as-judge, regression testing.
             <br />
-            <strong>Module 25 (Security)</strong>: prompt injection, PII, output filtering — the
+            <strong>Module 29 (Security)</strong>: prompt injection, PII, output filtering — the
             things you wish you&apos;d done before launch.
             <br />
-            <strong>Module 26 (Fine-tuning)</strong>: when to bother. (Spoiler: rarely.)
+            <strong>Module 30 (Fine-tuning)</strong>: when to bother. (Spoiler: rarely.)
             <br />
-            <strong>Module 27 (Capstone)</strong>: the AI engineering assistant. Everything you&apos;ve
+            <strong>Module 32 (Capstone)</strong>: the AI engineering assistant. Everything you&apos;ve
             built so far, threaded into one portfolio piece.
           </p>
         </div>

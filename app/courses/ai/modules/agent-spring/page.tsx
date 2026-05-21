@@ -48,7 +48,7 @@ export default function AgentSpringModule() {
           <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          The Module 21 research agent rebuilt the Spring AI way — same loop, same stopping
+          The Module 24 research agent rebuilt the Spring AI way — same loop, same stopping
           conditions, but with the framework doing the boring parts. Plus the trick that
           matters most in production: knowing exactly when to <em>turn off</em>{" "}the framework
           and run the loop yourself.
@@ -64,7 +64,7 @@ export default function AgentSpringModule() {
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 21 — you must understand the manual loop before letting a framework run it for
+        Module 24 — you must understand the manual loop before letting a framework run it for
         you. Module 10 (Spring AI basics) and Module 11 (tool use) for the API surface.
         Module 13 (prompt caching) is useful when we get to cost control.
       </Callout>
@@ -233,7 +233,7 @@ public class ResearchController {
           <li>Streaming intermediate steps to a UI (&quot;agent is searching... agent is reading X&quot;).</li>
           <li>Logging every turn for audit / debugging.</li>
           <li>Human-in-the-loop approval before destructive tool calls.</li>
-          <li>Coordinating multiple agents (Module 23).</li>
+          <li>Coordinating multiple agents (Module 26).</li>
         </ul>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Opting out: own the loop</h3>
@@ -263,7 +263,7 @@ ChatResponse response = chat.prompt()
         <p>
           With the auto-execution off, you get the raw <code>ChatResponse</code> back after
           each model turn. You inspect it for tool calls, run them yourself, append results,
-          and call again. This is the manual loop from Module 21 — but with Spring&apos;s
+          and call again. This is the manual loop from Module 24 — but with Spring&apos;s
           chat-client, message types, and observability still in play.
         </p>
 
@@ -373,7 +373,7 @@ ChatResponse response = chat.prompt()
               body: (
                 <>
                   <p>
-                    Three fixed steps. Reread Module 21 Part 4 if you forgot — this is a
+                    Three fixed steps. Reread Module 24 Part 4 if you forgot — this is a
                     workflow, not an agent.
                   </p>
                   <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
@@ -441,7 +441,7 @@ ChatResponse response = chat.prompt()
         gist="Spring AI runs the loop for you by default. Turn it off when you need control over each turn."
         points={[
           { takeaway: "internalToolExecutionEnabled = true is fine for simple Q&A agents.", detail: "The framework handles tool dispatch, message bookkeeping, and termination. .call().content() returns the final answer." },
-          { takeaway: "Flip it off when you need streaming intermediate steps, audit logging, or approval gates.", detail: "You then drive the loop yourself with chatModel.call(prompt) — same pattern as Module 21, but with Spring's message types." },
+          { takeaway: "Flip it off when you need streaming intermediate steps, audit logging, or approval gates.", detail: "You then drive the loop yourself with chatModel.call(prompt) — same pattern as Module 24, but with Spring's message types." },
           { takeaway: "Workflow problems still need workflows.", detail: "Don't reach for a manual loop just because you can. If the steps are fixed, write a service that calls them in order." },
         ]}
       />
@@ -453,20 +453,21 @@ ChatResponse response = chat.prompt()
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Memory and state across turns</h2>
 
         <p>
-          Module 21 covered memory <em>conceptually</em>. Now let&apos;s wire each kind in
+          Module 24 covered memory <em>conceptually</em>. Now let&apos;s wire each kind in
           Spring AI specifically.
         </p>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Short-term: ChatMemory</h3>
 
         <p>
-          Spring AI ships an <code>InMemoryChatMemory</code> bean (and a JDBC-backed one) that
-          attaches to a <code>ChatClient</code> as an advisor. It keeps the message history
-          per conversation ID and replays it on each call.
+          Spring AI ships a <code>MessageWindowChatMemory</code> bean (and a JDBC-backed
+          repository) that attaches to a <code>ChatClient</code> as an advisor. It keeps the
+          message history per conversation ID and replays it on each call. (Older 1.0
+          milestones called this <code>InMemoryChatMemory</code> — same idea, renamed at GA.)
         </p>
 
         <CodeBlock lang="java">{`import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 
 @Configuration
@@ -474,14 +475,16 @@ public class AgentConfig {
 
     @Bean
     ChatMemory chatMemory() {
-        return new InMemoryChatMemory();
+        return MessageWindowChatMemory.builder()
+            .maxMessages(20)
+            .build();
     }
 
     @Bean
     ChatClient researchChat(ChatClient.Builder builder, ChatMemory memory, ResearchTools tools) {
         return builder
             .defaultSystem("You are a research assistant. Cite sources.")
-            .defaultAdvisors(new MessageChatMemoryAdvisor(memory))
+            .defaultAdvisors(MessageChatMemoryAdvisor.builder(memory).build())
             .defaultTools(tools)
             .build();
     }
@@ -557,7 +560,7 @@ public class UserMemoryService {
         <h3 className="text-xl font-bold mt-8 mb-3">Scratchpad as a tool</h3>
 
         <p>
-          The scratchpad pattern from Module 21 is best implemented as two more
+          The scratchpad pattern from Module 24 is best implemented as two more
           <code>@Tool</code> methods. The agent is in charge of when to use them.
         </p>
 
@@ -659,7 +662,7 @@ public class Scratchpad {
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Stopping conditions in production</h2>
 
         <p>
-          Module 21 covered the stopping conditions conceptually. Now the production cuts:
+          Module 24 covered the stopping conditions conceptually. Now the production cuts:
           where Spring lets you wire each one in, and which combinations matter.
         </p>
 
@@ -743,7 +746,7 @@ public DeferredResult<String> runAgent(@RequestBody String question) {
         <h3 className="text-xl font-bold mt-8 mb-3">Repeated-tool-call detection</h3>
 
         <p>
-          Same pattern as Module 21. In Spring you have full access to the
+          Same pattern as Module 24. In Spring you have full access to the
           <code>AssistantMessage.ToolCall</code> objects — keep a running set of
           <code>(name, hashOfArgs)</code> tuples and trip when you see one twice in a row
           without progress.
@@ -1108,7 +1111,7 @@ Never:
         </ul>
 
         <p>
-          <strong>Module 23</strong>{" "}goes wider: when one agent isn&apos;t enough.
+          <strong>Module 26</strong>{" "}goes wider: when one agent isn&apos;t enough.
           Orchestrator/subagent patterns, parallel fanout, and the part nobody mentions —
           how to keep multi-agent systems from devolving into distributed-systems debugging.
         </p>
@@ -1234,7 +1237,7 @@ Never:
         <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
           <p className="font-semibold mb-2">Coming up next:</p>
           <p className="text-sm">
-            <strong>Module 23 — Multi-agent patterns</strong>: when one agent isn&apos;t
+            <strong>Module 26 — Multi-agent patterns</strong>: when one agent isn&apos;t
             enough. Orchestrator/subagent, parallel fanout, evaluator-optimizer loops, and
             the trap of multi-agent for the sake of multi-agent. We&apos;ll build a PR review
             panel that runs three specialized reviewers in parallel.

@@ -325,6 +325,10 @@ V = X · W_V    shape = (5 × 3)`}
         </div>
 
         <p>
+          <strong>In plain English:</strong>{" "}for every token, compare its question (<code>Q</code>) against every other token&apos;s label (<code>K</code>) to get a similarity score. Shrink those scores so they don&apos;t blow up (the <code>/√d_k</code>). Turn the scores into percentages that add to 100% (<code>softmax</code>). Then take a weighted blend of the other tokens&apos; content (<code>V</code>) using those percentages. The result is each token&apos;s new representation — informed by whichever neighbors it cared about.
+        </p>
+
+        <p>
           Four operations, all matrix ops:
         </p>
 
@@ -677,7 +681,7 @@ W_O is a learned output-projection matrix.`}
             { takeaway: "d_k per head = d_model / h. Same total budget, split h ways.", detail: <>Each head is a 'thinner' attention; together they match the expressive width of a single big head but with diverse perspectives.</> },
             { takeaway: "Heads learn different 'kinds' of match.", detail: <>Some heads track syntax, others track coreference, topic, tense. Not every head is interpretable, but many are.</> },
             { takeaway: "Outputs are concatenated, then projected by W_O.", detail: <>The concat brings all head outputs back to d_model dimension; W_O lets the network mix and re-weight them before moving on.</> },
-            { takeaway: "Adding more heads ≠ always better.", detail: <>Beyond a point, heads become redundant. BERT-base uses 12, GPT-2 small uses 12, GPT-3 uses 96 — tuned per model size.</> },
+            { takeaway: "Adding more heads ≠ always better.", detail: <>Beyond a point, heads become redundant. As reference points (2020-era models): BERT-base uses 12, GPT-2 small uses 12, GPT-3 uses 96 — tuned per model size. Modern frontier models go further still.</> },
           ]}
         />
       </section>
@@ -863,7 +867,7 @@ activation σ = ReLU (original) or GELU (modern).`}
 
         <p>
           A full transformer is just <em>N</em>{" "}of these blocks stacked, with token embeddings and positional encodings at the bottom and a final linear layer (&quot;unembedding&quot;) at the top producing logits over the vocabulary.
-          GPT-2-small has N = 12 blocks. GPT-3 has N = 96. The recipe is the same at every size.
+          GPT-2-small has N = 12 blocks. GPT-3 has N = 96. Modern frontier models go further still. The recipe is the same at every size.
         </p>
 
         <Callout variant="insight" title="The whole transformer recipe, in 5 bullets">

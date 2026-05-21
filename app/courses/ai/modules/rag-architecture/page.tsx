@@ -542,9 +542,10 @@ Reranker:           top 50    → top 3–5 (slow, precise ranking)
 LLM:                top 3–5   → answer`}</CodeBlock>
 
         <p>
-          Cohere&apos;s rerank-3 and Voyage&apos;s rerank-2 are the workhorses; both are paid APIs that take a
-          query + list of candidates and return the candidates resorted with relevance scores. Cost is
-          milliseconds per call, single digits of cents per thousand documents.
+          Cohere&apos;s <code>rerank-3.5</code> and Voyage&apos;s <code>rerank-2.5</code> are the current
+          workhorses (versions roll forward — check each vendor&apos;s docs for the latest tag). Both are paid
+          APIs that take a query + list of candidates and return the candidates resorted with relevance scores.
+          Cost is milliseconds per call, single digits of cents per thousand documents.
         </p>
 
         <Callout variant="warn" title="When rerankers earn their cost">

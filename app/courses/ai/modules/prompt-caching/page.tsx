@@ -292,7 +292,7 @@ chatClient.prompt()
             gist="Spring AI exposes Anthropic's cache_control via AnthropicChatOptions and message metadata. Verify with the usage block."
             points={[
               { takeaway: "Cache the stable parts at builder time, not per-call.", detail: ".defaultSystem + .defaultOptions on the ChatClient.Builder bake the cache config into every call from that service." },
-              { takeaway: "Tool definitions are huge and stable — cache them too.", detail: "AnthropicChatOptions.builder().cacheTools(true) opts the tool block into the cached prefix. Worth it for any assistant with more than two tools." },
+              { takeaway: "Tool definitions are huge and stable — cache them too.", detail: "Once cacheTtl is set on AnthropicChatOptions, Spring AI's Anthropic adapter writes cache_control onto the tool block in addition to the system prompt, so a single cached prefix covers both. (The exact flag name has shifted across 1.0.x — check the version note above.)" },
               { takeaway: "ChatResponse.getMetadata().getUsage() exposes cache reads/writes; instrument them.", detail: "Without metrics you have no idea if your cache is working. Always log the four token counts on every call (or at least sample them)." },
             ]}
           />

@@ -312,12 +312,12 @@ flowchart LR
             <div className="text-sm">Greedy. Same prompt → same output (mostly). Use for: extraction, classification, code gen, anything you&apos;ll diff against expected output.</div>
           </div>
           <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-2">temperature: 0.7 (default)</div>
-            <div className="text-sm">Anthropic&apos;s default. Some variation, still coherent. Use for: chat, RAG answers, anything where small phrasing changes are fine.</div>
+            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-2">temperature: 0.7</div>
+            <div className="text-sm">A common &quot;safe middle&quot; for general use. Some variation, still coherent. Use for: chat, RAG answers, anything where small phrasing changes are fine.</div>
           </div>
           <div className="p-4 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/30">
-            <div className="text-xs uppercase tracking-wider text-rose-700 dark:text-rose-300 font-bold mb-2">temperature: 1.0</div>
-            <div className="text-sm">Maximum spread. Use for: brainstorming, creative writing where you want surprising outputs. Rarely needed.</div>
+            <div className="text-xs uppercase tracking-wider text-rose-700 dark:text-rose-300 font-bold mb-2">temperature: 1.0 (Anthropic default)</div>
+            <div className="text-sm">Anthropic&apos;s default if you don&apos;t pass one. Maximum spread. Use for: brainstorming, creative writing where you want surprising outputs.</div>
           </div>
         </div>
 
@@ -452,7 +452,7 @@ flowchart LR
         <ol>
           <li>Open <a href="https://start.spring.io" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">start.spring.io</a> in your browser.</li>
           <li>In the left panel, set <strong>Project</strong>{" "}to <code>Maven</code> and <strong>Language</strong>{" "}to <code>Java</code>.</li>
-          <li><strong>Spring Boot</strong>: pick the latest <code>3.4.x</code> stable release (avoid <code>SNAPSHOT</code> and <code>M*</code> milestones — those are pre-release).</li>
+          <li><strong>Spring Boot</strong>: pick the latest <code>3.x</code> stable release (avoid <code>SNAPSHOT</code> and <code>M*</code> milestones — those are pre-release).</li>
           <li>In <strong>Project Metadata</strong>, set:
             <ul>
               <li><strong>Group:</strong> <code>com.example</code></li>
@@ -600,7 +600,7 @@ echo $env:ANTHROPIC_API_KEY`}</CodeBlock>
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-ai.version>1.0.0</spring-ai.version>  <!-- use the latest 1.x at the time you build -->
     </properties>
 
     <dependencies>
@@ -1020,9 +1020,12 @@ Needs work.
           You can call Claude. Now we go deeper into the Spring AI side: multi-turn conversations, structured output (<code>.entity(MyDto.class)</code> directly into a typed object), advisors (Spring AI&apos;s middleware-style hooks for memory, logging, and rate-limiting), and the personal journal assistant project. Same Claude API underneath — much more leverage on top.
         </p>
         <div className="flex flex-wrap gap-3">
-          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-200/60 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200 font-medium text-sm">
-            Module 10 — Spring AI integration · coming soon
-          </span>
+          <Link
+            href="/courses/ai/modules/spring-ai"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-200/60 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-300/60 dark:hover:bg-amber-900/60 transition"
+          >
+            Module 10 — Spring AI integration →
+          </Link>
           <Link
             href="/courses/ai"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-100 dark:hover:bg-amber-900/40 transition"

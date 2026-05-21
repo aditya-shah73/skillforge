@@ -77,7 +77,7 @@ export default function RecapModule() {
         </p>
         <CodeBlock lang="plain">{`POST https://api.anthropic.com/v1/messages
 {
-  "model":       "claude-sonnet-4",
+  "model":       "claude-sonnet-4-5",
   "max_tokens":  256,
   "system":      "You are a concise Java tutor. Answer in 2 sentences.",
   "messages": [
@@ -220,7 +220,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           Attention(Q, K, V) = softmax(Q · Kᵀ / √d_k) · V
         </div>
         <p>
-          Module 5&apos;s full worked example was 5 tokens by hand. Claude does the same math for 45 (your prompt) &times; 128 (heads per block, roughly) &times; 80 (blocks). Same formula, billions of multiplies.
+          Module 5&apos;s full worked example was 5 tokens by hand. Claude does the same math for 45 (your prompt) &times; dozens of heads per block &times; many dozens of blocks. Same formula, billions of multiplies.
         </p>
 
         <h3>Causal masking — so the model can&apos;t cheat</h3>
@@ -465,7 +465,7 @@ T → ∞:   all logits get squashed toward equality
         <div className="not-prose my-6 p-5 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20">
           <p className="text-sm m-0 leading-relaxed">
             <em>
-              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm kept training stable way back when. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
+              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm — added so gradients survived training — were still doing their job here at inference. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
             </em>
           </p>
         </div>
@@ -535,7 +535,7 @@ T → ∞:   all logits get squashed toward equality
               { label: "~200 KB", explanation: "Off by ~1000×. 50K × 4096 × 4 bytes is ~800 MB, not KB." },
               { label: "~80 MB", explanation: "Off by 10×. 50K × 4096 × 4 = 819,200,000 bytes ≈ 800 MB." },
               { label: "~800 MB", correct: true, explanation: "Right. 50,000 × 4096 × 4 bytes ≈ 800 MB. The embedding table alone is the size of a small model. This is why 'just store an extra row per new token' is expensive." },
-              { label: "~8 GB", explanation: "Off by 10× the other way. You're probably squaring the dim instead of multiplying." },
+              { label: "~8 GB", explanation: "Off by ~10× too big. A common mistake here is to double-count (e.g., assuming float64 + position table) or to add an order of magnitude to the vocab. Recompute: 50K × 4096 × 4 = ~819 MB." },
             ]}
           />
 

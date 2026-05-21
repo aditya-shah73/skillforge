@@ -172,7 +172,7 @@ while True:
           Spring AI exposes this loop through <code>ChatClient</code> with tools attached — when
           you register tool callbacks, Spring&apos;s default behavior already loops on tool calls
           for you up to a configurable limit. You can override <code>internalToolExecutionEnabled</code>
-          to turn off the auto-loop and run tool calls yourself. We&apos;ll do that in Module 22 so
+          to turn off the auto-loop and run tool calls yourself. We&apos;ll do that in Module 25 so
           you can see and control every iteration.
         </Callout>
 
@@ -795,7 +795,7 @@ Scratchpad (cheap):
 
         <p>
           We&apos;re building the <em>core loop</em>{" "}by hand here, not using Spring AI&apos;s
-          built-in agent abstractions. That comes in Module 22. The point of this project is to
+          built-in agent abstractions. That comes in Module 25. The point of this project is to
           have the loop fully in front of you, with no magic.
         </p>
 
@@ -1029,14 +1029,14 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         </ul>
 
         <p>
-          <strong>Module 22</strong>{" "}takes everything you built by hand here and rebuilds it
+          <strong>Module 25</strong>{" "}takes everything you built by hand here and rebuilds it
           using Spring AI&apos;s native abstractions — including how to keep control of the
           iteration count, observability, and stopping logic when the framework is doing some
           of it for you.
         </p>
 
         <p>
-          <strong>Module 23</strong>{" "}goes one level up: when one agent isn&apos;t enough,
+          <strong>Module 26</strong>{" "}goes one level up: when one agent isn&apos;t enough,
           and how to coordinate multiple agents without it becoming a distributed-systems
           nightmare.
         </p>
@@ -1163,7 +1163,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
           <p className="font-semibold mb-2">Coming up next:</p>
           <p className="text-sm">
-            <strong>Module 22 — Agents in Spring Boot</strong>: rebuild the research agent
+            <strong>Module 25 — Agents in Spring Boot</strong>: rebuild the research agent
             using Spring AI&apos;s native tool execution and chat memory, and learn when to
             opt out of the framework&apos;s built-in loop to keep control. We&apos;ll add
             stopping conditions, observability, and a code-migration agent that actually

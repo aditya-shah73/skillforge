@@ -328,7 +328,7 @@ es.onerror = (err) => {
 };`}</CodeBlock>
 
         <p className="mt-4">
-          <code>onmessage</code> handles unnamed events (the <code>data: ...</code> lines from the default Spring serialization). Spring also auto-emits a final completion signal you can catch.
+          <code>onmessage</code> handles unnamed events (the <code>data: ...</code> lines from the default Spring serialization). The named <code>&quot;done&quot;</code> listener only fires if your server explicitly emits an SSE frame with <code>event: done</code> — Spring won&apos;t do this automatically when you return <code>Flux&lt;String&gt;</code>. If you want a terminal signal, return <code>Flux&lt;ServerSentEvent&lt;String&gt;&gt;</code> on the server and emit one with <code>.event(&quot;done&quot;)</code> after the stream completes; otherwise just rely on <code>onerror</code> + closing on stream end.
         </p>
 
         <h3 className="text-xl font-semibold mt-8 mb-3">React patterns (preview — Phase 4 covers this in depth)</h3>
@@ -438,6 +438,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -460,13 +461,18 @@ public class StoryController {
   }
 
   @GetMapping(value = "/story/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public Flux<String> stream(@RequestParam String topic) {
+  public Flux<ServerSentEvent<String>> stream(@RequestParam String topic) {
     log.info("Streaming story for topic={}", topic);
-    return chat.prompt()
+    Flux<ServerSentEvent<String>> chunks = chat.prompt()
         .user("Topic: " + topic)
         .stream()
         .content()
-        .doOnNext(chunk -> log.debug("chunk: '{}'", chunk));
+        .doOnNext(chunk -> log.debug("chunk: '{}'", chunk))
+        .map(chunk -> ServerSentEvent.<String>builder(chunk).build());
+    // Append a terminal frame so the browser knows we're finished.
+    Flux<ServerSentEvent<String>> done = Flux.just(
+        ServerSentEvent.<String>builder("end").event("done").build());
+    return chunks.concatWith(done);
   }
 }`}</CodeBlock>
 
