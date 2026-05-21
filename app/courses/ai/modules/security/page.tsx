@@ -1018,15 +1018,15 @@ public class InjectionTestSuite {
   public InjectionReport run() throws Exception {
     List<InjectionCase> corpus = loader.load();
 
-    try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-      var futures = corpus.stream()
+    try (var scope = StructuredTaskScope.open(
+            StructuredTaskScope.Joiner.<InjectionResult>allSuccessfulOrThrow())) {
+      var subtasks = corpus.stream()
           .map(c -> scope.fork(() -> testOne(c)))
           .toList();
 
       scope.join();
-      scope.throwIfFailed();
 
-      List<InjectionResult> results = futures.stream().map(f -> f.get()).toList();
+      List<InjectionResult> results = subtasks.stream().map(s -> s.get()).toList();
       return new InjectionReport(results);
     }
   }

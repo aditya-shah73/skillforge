@@ -598,10 +598,10 @@ public class Scratchpad {
         <Checkpoint moduleSlug="agent-spring" id="memory-state" title="State across turns" xp={20}>
           <Quiz
             kind="Quick check"
-            question="You're using Spring AI's MessageChatMemoryAdvisor with InMemoryChatMemory. Two requests come in for sessionId='alice'. What does Spring do on the second request?"
+            question="You're using Spring AI's MessageChatMemoryAdvisor with MessageWindowChatMemory. Two requests come in for sessionId='alice'. What does Spring do on the second request?"
             options={[
               {
-                label: "Spawns a fresh conversation — InMemoryChatMemory doesn't persist between calls.",
+                label: "Spawns a fresh conversation — the in-memory store doesn't persist between calls.",
                 explanation: "It does persist within the JVM lifetime; that's exactly the point.",
               },
               {
@@ -649,7 +649,7 @@ public class Scratchpad {
         title="Part 3 recap"
         gist="Three memory layers, three Spring AI mechanisms — and one gotcha: chat memory grows unbounded by default."
         points={[
-          { takeaway: "InMemoryChatMemory + MessageChatMemoryAdvisor handle short-term per-session memory.", detail: "Pass a conversationId on each request and Spring replays the right history. Cap window size or compact periodically — the default is unbounded." },
+          { takeaway: "MessageWindowChatMemory + MessageChatMemoryAdvisor handle short-term per-session memory.", detail: "Pass a conversationId on each request and Spring replays the right history. The window cap (`maxMessages`) keeps it bounded — pick a value that fits your model's context budget." },
           { takeaway: "Long-term memory = a per-user vector store, populated at end-of-session, queried at start-of-session.", detail: "Same VectorStore API as your doc RAG, just a different namespace. The hard call is what to save (an LLM-distilled summary works well)." },
           { takeaway: "Scratchpad is two @Tool methods on a service.", detail: "Let the agent decide when to use them — your description is the prompt. Big tool results go in, summaries come out, full text on demand." },
         ]}

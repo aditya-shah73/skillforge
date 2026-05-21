@@ -25,7 +25,7 @@ export default function ApiFundamentalsModule() {
 flowchart LR
     A[Your Spring Boot app] -->|POST /v1/messages<br/>JSON body| B[Anthropic edge]
     B --> C{Auth check<br/>x-api-key}
-    C -->|valid| D[Route by model:<br/>claude-sonnet-4 etc.]
+    C -->|valid| D[Route by model:<br/>claude-sonnet-4-5 etc.]
     C -->|invalid| X[401 Unauthorized]
     D --> E[Run inference]
     E --> F[Stream OR<br/>buffer tokens]
