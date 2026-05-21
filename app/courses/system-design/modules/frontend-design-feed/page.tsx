@@ -1048,7 +1048,7 @@ export function useFeedKeyboardNav(itemCount: number) {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="text-sm uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-300 mb-2">Up next</p>
         <p className="m-0 text-base">
-          Module 42: Design a real-time chat UI. Same framework, different archetype — message ordering under flaky networks, presence and typing indicators, scroll-to-bottom semantics, and why message lists are virtualized differently than feeds.
+          Module 48: Design a real-time chat UI. Same framework, different archetype — message ordering under flaky networks, presence and typing indicators, scroll-to-bottom semantics, and why message lists are virtualized differently than feeds.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="frontend-design-feed" />

@@ -407,13 +407,13 @@ total_nodes    = per_zone_nodes * zones
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: rate limiting</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Now that requests are flowing through a load balancer, the next question is which ones you let through. Module 18 covers rate limiting algorithms — token bucket, leaky bucket, sliding window — and how to do distributed rate limiting with Redis.
+          Now that requests are flowing through a load balancer, the next question is which ones you let through. Module 21 covers rate limiting algorithms — token bucket, leaky bucket, sliding window — and how to do distributed rate limiting with Redis.
         </p>
         <Link
           href="/courses/system-design/modules/rate-limiting"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-sky-600 hover:to-blue-600 transition no-underline"
         >
-          Module 18: Rate limiting →
+          Module 21: Rate limiting →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="load-balancing" />

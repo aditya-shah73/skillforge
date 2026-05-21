@@ -766,14 +766,14 @@ public class RankedFeedController {
         </Callout>
 
         <p>
-          That&apos;s the news feed. The hybrid fanout pattern shows up in feeds, notifications, activity streams, and any system where one event needs to reach many subscribers. Module 31 (Twitter) extends this with timelines + search + trending and lets you practice the same framework on a more crowded surface.
+          That&apos;s the news feed. The hybrid fanout pattern shows up in feeds, notifications, activity streams, and any system where one event needs to reach many subscribers. Module 36 (Twitter) extends this with timelines + search + trending and lets you practice the same framework on a more crowded surface.
         </p>
       </Checkpoint>
 
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="text-sm uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-300 mb-2">Up next</p>
         <p className="m-0 text-base">
-          Module 31: Design Twitter. Newsfeed + timelines + search + trending — a busier surface area, but the framework you just used on news feed handles all of it.
+          Module 36: Design Twitter. Newsfeed + timelines + search + trending — a busier surface area, but the framework you just used on news feed handles all of it.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="design-newsfeed" />

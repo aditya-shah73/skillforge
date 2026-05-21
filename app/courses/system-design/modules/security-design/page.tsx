@@ -1034,7 +1034,7 @@ public class OrdersController {
       <section className="my-12">
         <h3 className="text-lg font-semibold mb-3">Next up</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Module 38: Recap — we synthesize all 35 modules into a single mental compass before the capstone.
+          Module 44: Recap — we synthesize the whole course into a single mental compass before the capstone.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="security-design" />

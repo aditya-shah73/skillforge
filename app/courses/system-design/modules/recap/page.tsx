@@ -72,7 +72,7 @@ export default function Page() {
 
       <section className="my-8">
         <p className="lead">
-          You&apos;ve walked through 35 modules. Replication, sharding, queues, caches, consistency models, idempotency,
+          You&apos;ve walked through 43 modules. Replication, sharding, queues, caches, consistency models, idempotency,
           migrations, security. Now we tie it together. The goal of this recap isn&apos;t to re-explain — it&apos;s to
           give you a compass. When someone hands you a vague design problem, what do you reach for first, and why?
         </p>
@@ -102,26 +102,26 @@ export default function Page() {
         <ol className="space-y-3">
           <li>
             <strong>Foundations.</strong>{" "}Latency budgets, throughput targets, SLOs, consistency requirements.
-            Modules 1–6 lived here. If you skip foundations, every later choice is guesswork.
+            Modules 1–5 lived here. If you skip foundations, every later choice is guesswork.
           </li>
           <li>
             <strong>Data plane.</strong>{" "}Where the bytes actually live. Replication for availability, sharding for
-            scale, indexes for access patterns. Modules 7–14.
+            scale, indexes for access patterns. Modules 6–13.
           </li>
           <li>
             <strong>Traffic plane.</strong>{" "}How requests reach the data. Load balancers, caches, queues, streams.
-            Modules 15–22.
+            Modules 14–21.
           </li>
           <li>
             <strong>Reliability.</strong>{" "}What keeps the system honest under stress. Idempotency, retries,
-            backpressure, circuit breakers, observability. Modules 23–30.
+            backpressure, circuit breakers, observability. Modules 22–26.
           </li>
           <li>
             <strong>Evolution.</strong>{" "}How the system changes without breaking. Migrations, dual-writes,
-            blue/green, feature flags. Module 36.
+            blue/green, feature flags. Module 42.
           </li>
           <li>
-            <strong>Security.</strong>{" "}The cross-cutting concern that touches every layer. Module 37.
+            <strong>Security.</strong>{" "}The cross-cutting concern that touches every layer. Module 43.
           </li>
         </ol>
 
@@ -1046,7 +1046,7 @@ export default function Page() {
       <section className="my-12 rounded-xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 p-8">
         <h2 className="text-2xl font-bold mb-3">You have the toolkit</h2>
         <p>
-          35 modules of patterns and tradeoffs. The compass gives you the order: foundations, data, traffic,
+          43 modules of patterns and tradeoffs. The compass gives you the order: foundations, data, traffic,
           reliability, evolution, security. The toolbox gives you the components. The traps give you humility.
         </p>
         <p className="mt-3">
@@ -1058,7 +1058,7 @@ export default function Page() {
       <section className="my-12">
         <h3 className="text-lg font-semibold mb-3">Next up</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Module 39: Capstone — design a code review platform end to end. Bring the compass.
+          Module 45: Capstone — design a code review platform end to end. Bring the compass.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="recap" />

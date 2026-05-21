@@ -485,13 +485,13 @@ public class RequestFingerprint {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: observability</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          You&apos;ve protected the system at the request boundary. Now you need to see what&apos;s happening inside it. Module 21 covers the four golden signals, RED and USE method, distributed tracing with OpenTelemetry, structured logging, and what to actually alert on.
+          You&apos;ve protected the system at the request boundary. Now you need to see what&apos;s happening inside it. Module 24 covers the four golden signals, RED and USE method, distributed tracing with OpenTelemetry, structured logging, and what to actually alert on.
         </p>
         <Link
           href="/courses/system-design/modules/observability"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-sky-600 hover:to-blue-600 transition no-underline"
         >
-          Module 21: Observability →
+          Module 24: Observability →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="idempotency" />

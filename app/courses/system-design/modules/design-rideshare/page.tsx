@@ -353,7 +353,7 @@ public class MatchingService {
       <section className="my-12 pt-8 border-t border-slate-200 dark:border-slate-800">
         <h2>Next up</h2>
         <p>
-          Module 35 — <Link href="/courses/system-design/modules/design-payments" className="text-cyan-600 hover:underline">Design a payments system</Link>.
+          Module 40 — <Link href="/courses/system-design/modules/design-payments" className="text-cyan-600 hover:underline">Design a payments system</Link>.
           The trip ends with COMPLETED; payments turn that into PAID. We&apos;ll build a double-entry ledger, idempotency keys, and a webhook
           handler that survives Stripe retrying you eight times.
         </p>

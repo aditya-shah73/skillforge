@@ -516,13 +516,13 @@ public class DecorrelatedJitter {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: Resilience4j deep dive</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Rate limiting decides which requests get in. Circuit breakers decide what happens when downstream calls fail. Module 19 covers Resilience4j&apos;s circuit breaker, retry, bulkhead, and time limiter — and the order in which they should be composed.
+          Rate limiting decides which requests get in. Circuit breakers decide what happens when downstream calls fail. Module 22 covers Resilience4j&apos;s circuit breaker, retry, bulkhead, and time limiter — and the order in which they should be composed.
         </p>
         <Link
           href="/courses/system-design/modules/resilience4j-deep"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-sky-600 hover:to-blue-600 transition no-underline"
         >
-          Module 19: Resilience4j deep dive →
+          Module 22: Resilience4j deep dive →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="rate-limiting" />

@@ -478,13 +478,13 @@ public class CorrelationIdFilter implements Filter {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: on-call and incident response</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          You can see the system. Now you have to operate it under stress. Module 22 covers what actually happens during an incident — incident command, communication, blameless postmortems, and the rituals that make on-call sustainable.
+          You can see the system. Now you have to operate it under stress. Module 25 covers what actually happens during an incident — incident command, communication, blameless postmortems, and the rituals that make on-call sustainable.
         </p>
         <Link
           href="/courses/system-design/modules/on-call-incident"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-sky-600 hover:to-blue-600 transition no-underline"
         >
-          Module 22: On-call &amp; incident response →
+          Module 25: On-call &amp; incident response →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="observability" />

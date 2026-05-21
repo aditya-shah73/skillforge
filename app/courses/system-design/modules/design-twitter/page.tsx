@@ -245,7 +245,7 @@ public class TweetController {
 record CreateTweetRequest(@NotBlank @Size(max = 280) String text, @URL String mediaUrl) {}`}</CodeBlock>
 
         <p>
-          Three things to point at: (1) tweet creation publishes a single event; downstream consumers (timeline, search, trending) subscribe independently. This decouples write latency from any single consumer&apos;s health. (2) home timeline uses the hybrid fanout from Module 30. (3) search and trending have separate query paths against their own stores.
+          Three things to point at: (1) tweet creation publishes a single event; downstream consumers (timeline, search, trending) subscribe independently. This decouples write latency from any single consumer&apos;s health. (2) home timeline uses the hybrid fanout from Module 35. (3) search and trending have separate query paths against their own stores.
         </p>
 
         <h2>Data model</h2>
@@ -365,7 +365,7 @@ Trending (Redis sorted sets, time-windowed):
           At Phase 5 you call out the hard parts and let the interviewer pick what to dig into. For Twitter:
         </p>
         <ol>
-          <li><strong>Hybrid fanout for timelines</strong> — same as Module 30. I&apos;d skim it here unless they want a refresher.</li>
+          <li><strong>Hybrid fanout for timelines</strong> — same as Module 35. I&apos;d skim it here unless they want a refresher.</li>
           <li><strong>Trending pipeline</strong> — how to compute &quot;top hashtags in the last hour&quot; at 7k tweets/sec without recomputing from scratch.</li>
           <li><strong>Celebrity hot-key on read path</strong> — when a single celebrity tweet gets viral, every timeline-builder is reading that tweet. The tweets DB shard becomes the hot key.</li>
         </ol>
@@ -437,7 +437,7 @@ public class TrendingIndexer {
 
         <h2>Deep-dive: celebrity hot-key on the read path</h2>
         <p>
-          Module 30 solved the celebrity write-path with hybrid fanout. But there&apos;s a symmetric read-path problem: when 10M followers all build their feeds in the same minute, each one&apos;s timeline service pulls the celebrity&apos;s recent tweets from the tweets DB. That&apos;s 10M concurrent reads concentrated on whatever shard holds the celebrity&apos;s recent tweets — a single hot shard.
+          Module 35 solved the celebrity write-path with hybrid fanout. But there&apos;s a symmetric read-path problem: when 10M followers all build their feeds in the same minute, each one&apos;s timeline service pulls the celebrity&apos;s recent tweets from the tweets DB. That&apos;s 10M concurrent reads concentrated on whatever shard holds the celebrity&apos;s recent tweets — a single hot shard.
         </p>
 
         <p>The fixes, in order of cost:</p>
@@ -519,14 +519,14 @@ public class TrendingIndexer {
         </Callout>
 
         <p>
-          That&apos;s Twitter — not the whole product, but the architectural skeleton. Notice that we used the framework from Module 28 unchanged: clarify, estimate, API + data, high-level, deep-dive, wrap. The system is bigger than TinyURL or news feed but the framework absorbs it. That&apos;s the point of the framework — it doesn&apos;t care how big the problem is, only that you walk it deliberately.
+          That&apos;s Twitter — not the whole product, but the architectural skeleton. Notice that we used the framework from Module 33 unchanged: clarify, estimate, API + data, high-level, deep-dive, wrap. The system is bigger than TinyURL or news feed but the framework absorbs it. That&apos;s the point of the framework — it doesn&apos;t care how big the problem is, only that you walk it deliberately.
         </p>
       </Checkpoint>
 
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="text-sm uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-300 mb-2">Up next</p>
         <p className="m-0 text-base">
-          Module 32: Design a chat system. WebSockets, presence, message ordering, group chat, push notifications. The architecture shifts from request/response to stateful connections — and that changes everything about how you scale.
+          Module 37: Design a chat system. WebSockets, presence, message ordering, group chat, push notifications. The architecture shifts from request/response to stateful connections — and that changes everything about how you scale.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="design-twitter" />

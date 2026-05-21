@@ -60,7 +60,7 @@ export default function Page() {
           The interviewer says: <em>&quot;Design a URL shortener. Like TinyURL or bit.ly.&quot;</em>{" "}You smile, because this is the canonical warm-up. It looks easy and it&apos;s a trap. The naive version is two endpoints and a hash table — which the interviewer will absolutely follow up with: <em>&quot;OK, now serve 100 million links a day with sub-100ms p99.&quot;</em>{" "}The whole point of TinyURL as an interview is that the surface area is small enough for you to actually finish in 45 minutes — but only if you do the math, pick a sane key strategy, and notice that this is a 100:1 read-heavy workload.
         </p>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
-          We&apos;ll walk this with the framework from Module 28: clarify, estimate, API + data, high-level, deep-dives. By the end you should be able to give this design end-to-end in 35 minutes and have time to discuss two extensions.
+          We&apos;ll walk this with the framework from Module 33: clarify, estimate, API + data, high-level, deep-dives. By the end you should be able to give this design end-to-end in 35 minutes and have time to discuss two extensions.
         </p>
       </section>
 
@@ -461,7 +461,7 @@ public class KeyGenerationService {
       <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="text-sm uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-300 mb-2">Up next</p>
         <p className="m-0 text-base">
-          Module 30: Design a news feed. Same framework, harder problem — fanout-on-write vs fanout-on-read, the celebrity hot-key, and why the &quot;right&quot; answer is usually a hybrid.
+          Module 35: Design a news feed. Same framework, harder problem — fanout-on-write vs fanout-on-read, the celebrity hot-key, and why the &quot;right&quot; answer is usually a hybrid.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="design-tinyurl" />

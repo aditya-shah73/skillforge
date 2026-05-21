@@ -312,7 +312,7 @@ export default function Page() {
         <h3>Reliability metrics worth tracking</h3>
 
         <ul>
-          <li><strong>MTTD — Mean Time To Detect.</strong>{" "}From incident start to alert firing. Improving this means better signals (covered in Module 21).</li>
+          <li><strong>MTTD — Mean Time To Detect.</strong>{" "}From incident start to alert firing. Improving this means better signals (covered in Module 24).</li>
           <li><strong>MTTR — Mean Time To Recover.</strong>{" "}From alert to service restored. Most of this is the time spent diagnosing and mitigating; runbooks, practiced failover, and good incident process all reduce it.</li>
           <li><strong>MTBF — Mean Time Between Failures.</strong>{" "}How long between SEV1s. Driven by deeper architecture and process changes.</li>
           <li><strong>Incidents per quarter / pages per week.</strong>{" "}Volume metrics. A team trending up on pages-per-week is heading toward burnout regardless of MTTR.</li>
@@ -330,7 +330,7 @@ export default function Page() {
           <li>Multiple people have asked to leave the rotation</li>
         </ul>
         <p>
-          The fixes are upstream of any individual: tighten alerts (Module 21), invest in reliability (less to break), grow the rotation (more people = less individual load), and treat alert fatigue as a team-level emergency, not a personal stamina problem. A 6-person rotation paged twice a week is sustainable; a 3-person rotation paged twice a night is not.
+          The fixes are upstream of any individual: tighten alerts (Module 24), invest in reliability (less to break), grow the rotation (more people = less individual load), and treat alert fatigue as a team-level emergency, not a personal stamina problem. A 6-person rotation paged twice a week is sustainable; a 3-person rotation paged twice a night is not.
         </p>
 
         <Callout variant="warn" title="Compensate for follow-the-sun, hand off cleanly">
