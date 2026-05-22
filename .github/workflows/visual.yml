@@ -58,8 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      # `next start` reads NODE_ENV; force production so we test what ships.
-      NODE_ENV: production
+      # Skip Husky's `prepare` script in CI — there's no .git/hooks to wire
+      # up here, and running it under `npm ci` was crashing with "Exit handler
+      # never called" because devDeps (including husky itself) aren't always
+      # installed by the time `prepare` fires. Husky's documented CI escape.
+      HUSKY: "0"
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +72,10 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      # NOTE: We intentionally do NOT set NODE_ENV=production at the job level.
+      # `npm ci` with NODE_ENV=production skips devDependencies, but `next
+      # build`, `playwright test`, and our ESLint config all live in devDeps.
+      # `next build` sets NODE_ENV=production itself for the bundle it emits.
       - name: Install dependencies
         run: npm ci
 
@@ -84,7 +91,11 @@ jobs:
       # Playwright spawns `npm run start` itself via the `webServer` block in
       # playwright.config.ts and waits for localhost:3000 before running tests.
       # If you want to debug a flaky boot, set DEBUG=pw:webserver in env.
+      # NODE_ENV is set here (not job-wide) so `next start` serves prod assets
+      # without affecting the earlier `npm ci` step (which needs devDeps).
       - name: Run visual tests
+        env:
+          NODE_ENV: production
         run: npm run test:visual
 
       # On failure, upload the diff PNGs + traces so the PR author can see
