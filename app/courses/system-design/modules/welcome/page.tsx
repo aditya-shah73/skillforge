@@ -22,7 +22,7 @@ export default function Page() {
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">Welcome</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
-          Read this first. It&apos;s five minutes and it sets up the way the next forty modules are going to talk to you.
+          Read this first. It&apos;s five minutes and it sets up the way the next forty-nine modules are going to talk to you.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="welcome" />
       </header>
@@ -60,18 +60,19 @@ export default function Page() {
           Most system-design content drops you straight into &quot;design Twitter&quot; on day one. That&apos;s like teaching DSA by opening with hard graph problems — you spend the whole hour pattern-matching to fragments you half-remember, you never build real intuition, and you forget it all by next month.
         </p>
         <p>
-          This course is structured the opposite way. Phase 1 is fundamentals — the math and concepts every later module will lean on. Phase 2 is storage. Phase 3 is communication. Phase 4 is reliability. Phase 5 is the hard distributed-systems primitives. Then Phase 6 — the case studies, the &quot;design Twitter&quot; stuff — pulls all of that together. By the time you get there, every word in the case studies is something you&apos;ve already built up.
+          This course is structured the opposite way. Phase 1 is fundamentals — the math and concepts every later module will lean on. Phase 2 is storage. Phase 3 is communication. Phase 4 is reliability. Phase 5 is the hard distributed-systems primitives. Phase 6 — the case studies, the &quot;design Twitter&quot; stuff — pulls all of that together. Phase 7 is the production discipline (migrations, security) and the capstone. Phase 8 closes with frontend system design — the same patterns applied to the browser. By the time you get there, every word in the case studies is something you&apos;ve already built up.
         </p>
-        <p>The seven phases:</p>
+        <p>The nine phases:</p>
         <ul>
           <li><strong>Phase 0 · Orientation</strong> — this module.</li>
-          <li><strong>Phase 1 · Foundations (4 modules)</strong> — back-of-envelope math, the scaling ladder, CAP/PACELC, consistency models. The vocabulary.</li>
-          <li><strong>Phase 2 · Storage Layer (7 modules)</strong> — SQL vs NoSQL, indexing, sharding, replication, caching, search.</li>
-          <li><strong>Phase 3 · Communication (5 modules)</strong> — APIs, gateways, queues, Kafka, event-driven patterns.</li>
-          <li><strong>Phase 4 · Reliability &amp; Operations (6 modules)</strong> — load balancing, rate limiting, Resilience4j, idempotency, observability, on-call.</li>
-          <li><strong>Phase 5 · Distributed Systems Deep (5 modules)</strong> — consensus, distributed transactions, clocks, geo, capacity.</li>
-          <li><strong>Phase 6 · Case Studies (8 modules)</strong> — TinyURL, news feed, Twitter, chat, rate limiter, rideshare, payments. The famous interview problems, but with the foundations to actually defend each move.</li>
+          <li><strong>Phase 1 · Foundations (5 modules)</strong> — back-of-envelope math, the scaling ladder, CAP/PACELC, consistency models, plus a phase-revision card. The vocabulary.</li>
+          <li><strong>Phase 2 · Storage Layer (8 modules)</strong> — SQL vs NoSQL, indexing, sharding, replication, caching, distributed cache, search, plus a phase-revision card.</li>
+          <li><strong>Phase 3 · Communication (6 modules)</strong> — APIs, gateways, queues, Kafka, event-driven/CQRS, plus a phase-revision card.</li>
+          <li><strong>Phase 4 · Reliability &amp; Operations (7 modules)</strong> — load balancing, rate limiting, Resilience4j, idempotency, observability, on-call, plus a phase-revision card.</li>
+          <li><strong>Phase 5 · Distributed Systems Deep (6 modules)</strong> — consensus, distributed transactions, clocks, geo, capacity, plus a phase-revision card.</li>
+          <li><strong>Phase 6 · Case Studies (9 modules)</strong> — interview framework, TinyURL, news feed, Twitter, chat, rate limiter, rideshare, payments, plus a phase-revision card. The famous interview problems, but with the foundations to actually defend each move.</li>
           <li><strong>Phase 7 · Production &amp; Capstone (4 modules)</strong> — migration, security, recap, capstone.</li>
+          <li><strong>Phase 8 · Frontend System Design (4 modules)</strong> — rendering strategies and Core Web Vitals, feed UI, real-time UI, plus a phase-revision card.</li>
         </ul>
       </section>
 

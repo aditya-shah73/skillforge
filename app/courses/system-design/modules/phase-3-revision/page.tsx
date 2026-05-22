@@ -724,13 +724,13 @@ consumer.commitSync();`}</CodeBlock>
           API contracts, edge concerns, broker tradeoffs, Kafka mechanics, event-driven patterns — the whole communication toolbox. From here on, when a system-design problem says &quot;Service A talks to Service B,&quot; you already know what questions to ask and what shape the answer takes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Distribution &amp; Scale.</strong>{" "}Load balancing, rate limiting, distributed caching, distributed transactions, resilience. How systems hold together when one box is no longer enough.
+          <strong>Up next: Phase 4 — Reliability &amp; Operations.</strong>{" "}Load balancing, rate limiting, Resilience4j (circuit breakers, retries, bulkheads), idempotency, observability, on-call. How systems hold together when one box is no longer enough — and how you stay sane when they don&apos;t.
         </p>
         <Link
           href="/courses/system-design/modules/load-balancing"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
         >
-          Next phase: Distribution &amp; Scale →
+          Next phase: Reliability &amp; Operations →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="phase-3-revision" />

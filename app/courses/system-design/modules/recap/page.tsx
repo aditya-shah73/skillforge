@@ -235,7 +235,7 @@ export default function Page() {
 
         <h3 className="text-xl font-semibold mt-8 mb-3">The consistency dial</h3>
         <p>
-          You learned the lattice in module 5: linearizable, sequential, causal, read-your-writes, eventual. Most
+          You learned the lattice in module 4: linearizable, sequential, causal, read-your-writes, eventual. Most
           systems mix levels by design — strong for money, eventual for likes, causal for chat. Knowing where the dial
           sits per feature is the heart of system design.
         </p>

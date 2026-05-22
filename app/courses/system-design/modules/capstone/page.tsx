@@ -733,15 +733,14 @@ public ResponseEntity<Comment> create(
           security. Numbers first, tools second, tradeoffs justified out loud.
         </p>
         <p className="mt-3 font-semibold">
-          Course complete. Go build something.
+          Backend system design — complete. One more phase to go.
         </p>
       </section>
 
       <section className="my-12">
-        <h3 className="text-lg font-semibold mb-3">Next up</h3>
+        <h3 className="text-lg font-semibold mb-3">Next up — Phase 8: Frontend System Design</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          You&apos;re at the end of the course. Pick a real system at work — describe it on a whiteboard using this
-          framework. The first time you do it on something live, this all clicks.
+          The same patterns — rendering strategies, state shape, real-time, virtualization — applied to the browser. Three case studies (feed UI, real-time UI) and a closing phase-revision card. Then pick a real system at work and describe it end-to-end. The first time you do it on something live, this all clicks.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="capstone" />

@@ -662,7 +662,7 @@ public List<Order> recentOrders(long userId) {
           Six families, six index types, three partitioning strategies, three replication topologies, four caching patterns, and an inverted-index search tier. That&apos;s the entire storage decision toolkit — and you can now reason about latency, throughput, and consistency for any of them on the spot.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Communication.</strong>{" "}APIs, gateways, message queues, event streams, Kafka, distributed transactions. The wire between services.
+          <strong>Up next: Phase 3 — Communication.</strong>{" "}APIs, gateways, message queues, Kafka, event-driven &amp; CQRS. The wire between services.
         </p>
         <Link
           href="/courses/system-design/modules/api-design"

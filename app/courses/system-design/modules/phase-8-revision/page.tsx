@@ -607,7 +607,7 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
         <div className="text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300 mb-2">
           You&apos;re done with the course
         </div>
-        <h3 className="mt-0 mb-3 text-2xl font-bold">Eight phases, in your head.</h3>
+        <h3 className="mt-0 mb-3 text-2xl font-bold">Nine phases, in your head.</h3>
         <p className="mb-3 text-slate-700 dark:text-slate-300">
           You walked in with &quot;I&apos;ve heard of CAP&quot; and you&apos;re walking out with a full mental toolkit: scaling ladders, partitioning, replication, consistency models, consensus, queues, caches, observability, resilience patterns, on-call instincts, and now the frontend half — rendering, vitals, feed and real-time archetypes. That&apos;s the entire interview surface for a senior system design loop, top to bottom.
         </p>
