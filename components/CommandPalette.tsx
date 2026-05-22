@@ -283,7 +283,7 @@ export default function CommandPalette() {
                 }`}
               >
                 <span
-                  className={`shrink-0 inline-flex items-center justify-center rounded-md bg-gradient-to-br ${item.badgeColor} text-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider min-w-[64px] text-center`}
+                  className={`shrink-0 inline-flex items-center justify-center rounded-md bg-gradient-to-br ${item.badgeColor} text-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider min-w-[52px] sm:min-w-[64px] text-center`}
                 >
                   {item.badge}
                 </span>

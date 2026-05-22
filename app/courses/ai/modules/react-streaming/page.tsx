@@ -35,7 +35,7 @@ export default function ReactStreamingModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">React streaming patterns</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">React streaming patterns</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Module 12 streamed tokens out of Spring Boot. This module catches them in React without
           melting your component tree.

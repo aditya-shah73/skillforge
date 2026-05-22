@@ -39,7 +39,7 @@ export default function Page() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="cap-pacelc" />
         <ModuleProgress moduleSlug="cap-pacelc" checkpoints={CHECKPOINTS} />
@@ -191,7 +191,7 @@ export default function Page() {
         <p>
           PACELC gives you a 2×2 of system shapes, named by what they pick under each condition:
         </p>
-        <div className="not-prose my-6 grid grid-cols-2 gap-3 text-sm">
+        <div className="not-prose my-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
           <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/30 p-4">
             <div className="font-bold text-rose-700 dark:text-rose-300 mb-1">PA / EL</div>
             <div className="text-xs text-slate-700 dark:text-slate-300 mb-2">Always favors availability and latency. Loosest consistency.</div>

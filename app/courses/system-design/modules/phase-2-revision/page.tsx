@@ -50,7 +50,7 @@ flowchart TB
         <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-bold uppercase tracking-wider">
           Phase 2 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
           Phase 2 revision notes
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">

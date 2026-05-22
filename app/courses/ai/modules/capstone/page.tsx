@@ -30,7 +30,7 @@ export default function CapstoneModule() {
         Phase 6 · Module 32 · Capstone
       </div>
       <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">~1 week (8 daily sessions) · Production &amp; Capstone</div>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-3">Capstone: an end-to-end AI engineering assistant</h1>
+      <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Capstone: an end-to-end AI engineering assistant</h1>
       <p className="text-lg text-slate-600 dark:text-slate-300 italic mb-6">
         The portfolio piece. Everything you&apos;ve learned, in one shippable system.
       </p>

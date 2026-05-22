@@ -36,7 +36,7 @@ export default function NeuralNetworksModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Neural networks</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Neural networks</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Layers, activations, backprop — from a single neuron up to a handwritten-digit classifier, all by hand in Java.
         </p>

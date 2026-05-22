@@ -48,7 +48,7 @@ flowchart LR
         <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold uppercase tracking-wider">
           Phase {mod.phaseNumber} · Module {mod.number} · Revision
         </span>
-        <h1 className="text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
           {mod.title}
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">

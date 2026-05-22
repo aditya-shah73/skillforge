@@ -35,7 +35,7 @@ export default function RagArchitectureModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">RAG architecture</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">RAG architecture</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Stop bolting embeddings onto an LLM. Build retrieval that earns its place in the prompt.
         </p>

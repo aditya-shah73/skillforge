@@ -161,6 +161,29 @@ body {
   .token-chip-7 { background-color: #831843; color: #fbcfe8; }
 }
 
+/* =========================================================================
+ * Responsive tables
+ * 88 module pages render raw `<table>` elements (Big-O comparisons, feature
+ * matrices, queue/protocol grids). On phones a 4-column table easily blows
+ * past the 360px viewport. We use the modern `:has()` selector to wrap any
+ * element that contains a direct-child <table> in an overflow-x scrolling
+ * box on small screens. `display: block` on the table itself would break
+ * table layout, so this approach keeps the `<table>` rendering intact but
+ * makes its container the scroll surface.
+ *
+ * `:has()` is supported in all evergreen browsers (Chrome 105+, Safari 15.4+,
+ * Firefox 121+). Browsers without :has() fall back to native overflow:visible
+ * — the page still works, you just get the existing overflow bug on those
+ * legacy browsers, which is the same behavior as today (no regression).
+ * ======================================================================= */
+@media (max-width: 640px) {
+  *:has(> table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
 /* Prose tweaks */
 .prose-custom h2 {
   font-size: 1.5rem;
@@ -197,6 +220,12 @@ em {
   border-radius: 0.25rem;
   font-size: 0.9em;
   font-family: var(--font-mono), monospace;
+  /* Long Java identifiers (e.g. `ConcurrentHashMap.newKeySet`) stretch past
+     a phone viewport when wrapped in <code>. `overflow-wrap: anywhere` lets
+     the browser break inside the token as a last resort — only kicks in when
+     the line would otherwise overflow, so prose with normal-length code stays
+     unbroken. Safer than `word-break: break-all`, which breaks aggressively. */
+  overflow-wrap: anywhere;
 }
 
 @media (prefers-color-scheme: dark) {

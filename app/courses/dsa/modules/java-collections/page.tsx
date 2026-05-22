@@ -83,7 +83,7 @@ flowchart TB
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-sky-500 text-white text-xs font-bold uppercase tracking-wider">
           Phase 5 · Module 21 · Synthesis
         </div>
-        <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~1.5–2h · the &quot;which container do I reach for&quot; decision framework</p>
       </div>

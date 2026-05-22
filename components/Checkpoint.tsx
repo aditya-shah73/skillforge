@@ -159,12 +159,18 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
   return (
     <>
       <Confetti active={showConfetti} />
-      <div className="relative my-12 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-emerald-50/30 dark:bg-emerald-950/20 p-6">
-        <div className="absolute -top-3 left-4 px-3 py-0.5 text-xs font-bold rounded-full bg-emerald-500 text-white flex items-center gap-1">
-          {completed ? "✓" : "◆"} Checkpoint · {title}
+      {/* Tighter padding + min-w-0 below sm so deeply nested Quiz cards
+          (and any long checkpoint titles in the floating badge) can't push
+          the container past the viewport edge. The progress badge is hidden
+          below sm — it duplicates info that's available inline, and the two
+          floating badges colliding at 360px is uglier than dropping one. */}
+      <div className="relative my-12 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-emerald-50/30 dark:bg-emerald-950/20 p-4 sm:p-6 min-w-0">
+        <div className="absolute -top-3 left-4 px-3 py-0.5 text-xs font-bold rounded-full bg-emerald-500 text-white flex items-center gap-1 max-w-[calc(100%-2rem)] truncate">
+          <span className="shrink-0">{completed ? "✓" : "◆"}</span>
+          <span className="truncate">Checkpoint · {title}</span>
         </div>
         {showProgress && (
-          <div className="absolute -top-3 right-4 px-3 py-0.5 text-[10px] font-semibold rounded-full bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300">
+          <div className="hidden sm:block absolute -top-3 right-4 px-3 py-0.5 text-[10px] font-semibold rounded-full bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300">
             {done} / {total} answered
           </div>
         )}

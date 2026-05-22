@@ -167,7 +167,7 @@ flowchart TB
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
           Phase 7 · Module 32 · Dynamic Programming
         </div>
-        <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~2.5–3h · the technique that turns &quot;exponential and broken&quot; into &quot;linear and obvious&quot;</p>
       </div>

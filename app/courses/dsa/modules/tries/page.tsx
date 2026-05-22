@@ -107,7 +107,7 @@ flowchart TB
         <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-semibold tracking-wide uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~1.5–2h · Phase 8 · Advanced &amp; Interview Prep</p>
       </div>

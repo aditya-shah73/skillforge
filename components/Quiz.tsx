@@ -130,7 +130,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   }
 
   return (
-    <div className="my-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 p-6" role="group" aria-label={`${kind}: ${question}`}>
+    <div className="my-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 p-4 sm:p-6" role="group" aria-label={`${kind}: ${question}`}>
       {/* Visually-hidden status for screen readers. polite (not assertive) so
           it doesn't interrupt the user mid-keystroke when they tab through
           options; the result is meant to be confirming, not urgent. */}
@@ -184,7 +184,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
               className={className}
               disabled={locked}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 min-w-0">
                 <span className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold ${
                   showAsCorrect ? "border-emerald-500 bg-emerald-500 text-white" :
                   isWrongSelected ? "border-rose-500 bg-rose-500 text-white" :
@@ -192,7 +192,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
                 }`}>
                   {showAsCorrect ? "✓" : isWrongSelected ? "✗" : String.fromCharCode(65 + i)}
                 </span>
-                <span className="flex-1 text-sm leading-relaxed">{opt.label}</span>
+                <span className="flex-1 min-w-0 text-sm leading-relaxed break-words">{opt.label}</span>
               </div>
               {isRevealedCorrect && opt.explanation && (
                 <div className="mt-3 ml-9 text-sm text-emerald-800 dark:text-emerald-200 border-l-2 border-emerald-400 pl-3">

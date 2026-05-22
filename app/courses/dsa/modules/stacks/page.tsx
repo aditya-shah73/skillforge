@@ -100,7 +100,7 @@ flowchart TB
         <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold tracking-wide uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
       </div>
 

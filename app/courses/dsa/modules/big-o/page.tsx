@@ -57,7 +57,7 @@ flowchart LR
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
           Big-O from zero
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">

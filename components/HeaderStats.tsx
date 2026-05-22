@@ -30,15 +30,17 @@ export default function HeaderStats() {
   }, [xp, mounted]);
 
   if (!mounted) {
-    return <div className="shrink-0 w-40 h-9" />;
+    return <div className="shrink-0 w-28 sm:w-40 h-9" />;
   }
 
   return (
     // `shrink-0` so the search bar can't squish the stats group.
     // `flex-nowrap` so chips never wrap to a second line as XP/combo grow.
-    // Compact paddings and a single icon-only "combo" pill on small screens
-    // keep the row stable even at 4-digit XP.
-    <div className="shrink-0 flex flex-nowrap items-center gap-2 text-sm">
+    // On mobile the row is XP-pill + icon buttons only — streak chip is
+    // hidden (still tracked + announced via tooltips elsewhere) and combo
+    // chip shows only when active. Toggles bumped to 36×36 (closer to the
+    // 44px tap-target minimum without ballooning the header height).
+    <div className="shrink-0 flex flex-nowrap items-center gap-1 sm:gap-2 text-sm">
       {combo >= 2 && (
         <Tooltip
           label={
@@ -66,7 +68,9 @@ export default function HeaderStats() {
             </>
           }
         >
-          <div className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold flex items-center gap-1 tabular-nums">
+          {/* Streak chip hidden below sm — it's nice-to-have and the row is
+              cramped on phones. The XP pill still surfaces the headline number. */}
+          <div className="hidden sm:flex px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold items-center gap-1 tabular-nums">
             🔥 {streak}
           </div>
         </Tooltip>
@@ -104,7 +108,7 @@ export default function HeaderStats() {
           onClick={toggleHardcore}
           aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
           aria-pressed={hardcoreMode}
-          className={`shrink-0 w-8 h-8 rounded-full text-base flex items-center justify-center transition ${
+          className={`shrink-0 w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
             hardcoreMode
               ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
               : "hover:bg-slate-200 dark:hover:bg-slate-800"
@@ -132,7 +136,7 @@ export default function HeaderStats() {
           onClick={toggleSound}
           aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
           aria-pressed={soundEnabled}
-          className="shrink-0 w-8 h-8 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+          className="shrink-0 w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
         >
           {soundEnabled ? "🔊" : "🔇"}
         </button>

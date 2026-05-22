@@ -20,7 +20,7 @@ export default function Page() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Welcome</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Welcome</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           Read this first. It&apos;s five minutes and it sets up the way the next forty-nine modules are going to talk to you.
         </p>

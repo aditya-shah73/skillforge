@@ -114,20 +114,21 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
   return (
     <TokeyContext.Provider value={{ say }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex items-end gap-2 pointer-events-none print:hidden">
-        {/* Always-rendered live region — keeps screen readers subscribed even
-            when the bubble visually unmounts, and announces minimized-state
-            messages too. `polite` so encouragement doesn't interrupt; the
-            bubble is decorative for sighted users, the live region is the
-            real semantic surface. */}
-        <div
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-          className="sr-only"
-        >
-          {visible && message ? `Tokey says: ${message.text}` : ""}
-        </div>
+      {/* Live region stays mounted at every viewport size so screen readers
+          keep the subscription even when the mascot's visual chrome is hidden
+          on mobile. `polite` so encouragement doesn't interrupt the user. */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {visible && message ? `Tokey says: ${message.text}` : ""}
+      </div>
+      {/* Hidden below `sm` (640px). The 56×56 button + speech bubble would
+          otherwise cover quiz CTAs and checkpoint actions on phones — sighted
+          mobile users lose the mascot, screen reader users still hear it. */}
+      <div className="hidden sm:flex fixed bottom-4 right-4 z-50 items-end gap-2 pointer-events-none print:hidden">
         {visible && message && !minimized && (
           <div
             className="pointer-events-auto max-w-xs rounded-2xl rounded-br-sm bg-white dark:bg-slate-800 border-2 border-indigo-300 dark:border-indigo-700 shadow-xl px-4 py-3 text-sm animate-slide-up"

@@ -49,7 +49,7 @@ export default function Home() {
       <section className="space-y-10">
         {modulesByPhase.map((phase) => (
           <div key={phase.number}>
-            <div className="flex items-baseline gap-3 mb-4">
+            <div className="flex items-baseline gap-x-3 gap-y-1 flex-wrap mb-4">
               <div className={`text-xs font-bold uppercase tracking-wider bg-gradient-to-r ${phase.color} bg-clip-text text-transparent`}>
                 Phase {phase.number}
               </div>

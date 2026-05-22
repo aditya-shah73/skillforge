@@ -35,7 +35,7 @@ export default function MultiAgentModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Multi-agent patterns</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Multi-agent patterns</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           One agent is hard. Two agents is harder. Make sure the second agent earns its keep.
         </p>

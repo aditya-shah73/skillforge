@@ -35,7 +35,7 @@ export default function EvalsModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Evals</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Evals</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The hardest part of shipping LLM features isn&apos;t writing the prompt. It&apos;s knowing whether the prompt got worse.
         </p>

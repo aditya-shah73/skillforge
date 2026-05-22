@@ -42,8 +42,12 @@ export default function RootLayout({
             <CommandPalette />
             <KeyboardHelp />
             <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
-              <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-4">
-                <Link href="/" className="font-bold text-3xl sm:text-4xl tracking-tight leading-none shrink-0">
+              {/* Header layout: tighter gutters + gap on mobile (px-4 / gap-3)
+                  so the brand + search + stats row fits a 360px viewport
+                  without horizontal scroll. Brand shrinks to text-2xl on
+                  mobile (was text-3xl) to free another ~16px for stats. */}
+              <nav className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4">
+                <Link href="/" className="font-bold text-2xl sm:text-4xl tracking-tight leading-none shrink-0">
                   <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Skillforge</span>
                 </Link>
                 {/* Search bar fills remaining space; stats stay compact on the right.
@@ -55,7 +59,10 @@ export default function RootLayout({
                 <HeaderStats />
               </nav>
             </header>
-            <main className="flex-1 max-w-4xl w-full mx-auto px-6 py-10">
+            {/* Tighter horizontal padding on mobile (px-4) buys ~16px of
+                content width on phones — critical for code blocks and tables
+                that don't have their own overflow handling. */}
+            <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-10">
               {children}
             </main>
           </TokeyProvider>

@@ -37,7 +37,7 @@ export default function TransformersModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Attention &amp; transformers</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Attention &amp; transformers</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           The one idea that ate the ML world — built from scratch, one matrix at a time.
         </p>

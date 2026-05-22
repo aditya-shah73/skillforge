@@ -31,7 +31,7 @@ export default function FineTuningModule() {
         Phase 6 · Module 30
       </div>
       <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">~1.5h · Production &amp; Capstone</div>
-      <h1 className="text-4xl font-extrabold tracking-tight mb-3">Fine-tuning &amp; RLHF (when to bother)</h1>
+      <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Fine-tuning &amp; RLHF (when to bother)</h1>
       <p className="text-lg text-slate-600 dark:text-slate-300 italic mb-6">
         How model training actually works — and why RAG usually wins.
       </p>

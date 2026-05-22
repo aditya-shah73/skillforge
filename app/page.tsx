@@ -191,23 +191,27 @@ export default function Home() {
                 <Pill>🐦 Tokey, your guide</Pill>
               </div>
             </div>
-            <div className="flex sm:justify-end">
-              <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 py-4 shadow-sm">
-                <div className="flex items-center gap-4">
+            {/* Preview card: tighter gutters + smaller numbers below sm so the
+                three stat blocks + two dividers fit a 360px viewport without
+                overflow. `min-w-0` on the outer wrapper lets the card shrink
+                below its intrinsic content width. */}
+            <div className="flex sm:justify-end min-w-0">
+              <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 sm:px-5 py-4 shadow-sm max-w-full">
+                <div className="flex items-center gap-2 sm:gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                    <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tabular-nums">
                       1,240
                     </div>
                     <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">XP</div>
                   </div>
                   <div className="h-8 w-px bg-slate-200 dark:bg-slate-700" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-500">🔥 7</div>
+                    <div className="text-xl sm:text-2xl font-bold text-orange-500 tabular-nums">🔥 7</div>
                     <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Streak</div>
                   </div>
                   <div className="h-8 w-px bg-slate-200 dark:bg-slate-700" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-500">12<span className="text-slate-400 dark:text-slate-500">/{availableModuleCount}</span></div>
+                    <div className="text-xl sm:text-2xl font-bold text-emerald-500 tabular-nums">12<span className="text-slate-400 dark:text-slate-500">/{availableModuleCount}</span></div>
                     <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Modules</div>
                   </div>
                 </div>

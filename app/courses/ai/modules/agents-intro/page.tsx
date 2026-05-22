@@ -35,7 +35,7 @@ export default function AgentsIntroModule() {
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Agent fundamentals</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Agent fundamentals</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 italic">
           A loop, a tool list, and a stopping condition. That&apos;s the whole trick.
         </p>
