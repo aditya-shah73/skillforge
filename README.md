@@ -113,7 +113,7 @@ npm run verify
 
 Budget: ~2–3 minutes on a warm M-class laptop (~5s lint + ~30–45s build + ~60–90s visual). The visual step dominates because Playwright runs sequentially (`workers: 1`) for deterministic snapshots.
 
-A Husky `pre-push` hook runs `npm run verify` automatically on `git push`. To bypass it in an emergency:
+A Husky `pre-push` hook runs `npm run verify` automatically on `git push`. The hook sources `nvm` and runs `nvm use` from `.nvmrc` so Node 22 is active even if your shell defaulted to a different version — if you don't use nvm, install Node 22 globally instead. To bypass the hook in an emergency:
 
 ```bash
 git push --no-verify

@@ -15,4 +15,29 @@
 #
 # To update visual baselines after intentional UI changes, run
 # `npm run test:visual:update` and commit the new PNGs *before* pushing.
+
+# --- Node version selection -------------------------------------------
+# Husky hooks inherit the shell environment from `git push`, which may
+# not have run your shell rc files — so `node` could resolve to whatever
+# system Node you have (we hit Node 18 in practice, which Next 16 rejects).
+# Try to activate the version pinned in .nvmrc via nvm before running the
+# gate. If nvm isn't installed, fall back to checking that the current
+# Node satisfies engines.node and bail out with a clear message if not.
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  # shellcheck disable=SC1091
+  . "$HOME/.nvm/nvm.sh"
+  # `nvm use` reads .nvmrc from cwd; git runs hooks from the repo root,
+  # so this finds our pin. Silence the "Now using node vXX" line — the
+  # version check below will report on success/failure either way.
+  nvm use >/dev/null 2>&1 || true
+fi
+
+node_major=$(node -p "process.versions.node.split('.')[0]" 2>/dev/null || echo 0)
+if [ "$node_major" -lt 22 ]; then
+  echo "✗ pre-push: Node $(node --version) is too old; this repo requires >=22 (see .nvmrc)."
+  echo "  Run \`nvm use\` (or install Node 22) and try again."
+  echo "  Emergency bypass: \`git push --no-verify\`."
+  exit 1
+fi
+
 npm run verify
