@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useId, useState, ReactNode } from "react";
 
 export type RecapItem = {
   /** The single-line takeaway, visible up front. */
@@ -29,6 +29,7 @@ export type PartRecapProps = {
  */
 export default function PartRecap({ title, gist, points }: PartRecapProps) {
   const [open, setOpen] = useState<Record<number, boolean>>({});
+  const baseId = useId();
 
   function toggle(i: number) {
     setOpen((o) => ({ ...o, [i]: !o[i] }));
@@ -58,8 +59,10 @@ export default function PartRecap({ title, gist, points }: PartRecapProps) {
             </h4>
           </div>
           <button
+            type="button"
             onClick={allOpen ? closeAll : openAll}
-            className="text-xs font-semibold text-teal-800 dark:text-teal-200 hover:underline"
+            className="text-xs font-semibold text-teal-800 dark:text-teal-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 rounded"
+            aria-label={allOpen ? "Collapse all takeaways" : "Expand all takeaways"}
           >
             {allOpen ? "Hide all" : anyOpen ? "Show rest" : "Reveal all"}
           </button>
@@ -76,10 +79,17 @@ export default function PartRecap({ title, gist, points }: PartRecapProps) {
               className="rounded-lg border border-teal-200 dark:border-teal-900 bg-white dark:bg-slate-900 overflow-hidden"
             >
               <button
+                type="button"
                 onClick={() => toggle(i)}
-                className="w-full flex items-start gap-3 p-3 text-left hover:bg-teal-50/50 dark:hover:bg-teal-950/40 transition"
+                aria-expanded={isOpen}
+                aria-controls={`${baseId}-detail-${i}`}
+                id={`${baseId}-summary-${i}`}
+                className="w-full flex items-start gap-3 p-3 text-left hover:bg-teal-50/50 dark:hover:bg-teal-950/40 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-inset"
               >
-                <span className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-teal-600 dark:bg-teal-500 text-white text-xs font-bold flex items-center justify-center">
+                <span
+                  className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-teal-600 dark:bg-teal-500 text-white text-xs font-bold flex items-center justify-center"
+                  aria-hidden="true"
+                >
                   {i + 1}
                 </span>
                 <span className="flex-1 text-sm font-medium text-slate-900 dark:text-slate-100">
@@ -95,7 +105,12 @@ export default function PartRecap({ title, gist, points }: PartRecapProps) {
                 </span>
               </button>
               {isOpen && (
-                <div className="px-3 pb-3 pl-11 text-sm text-slate-700 dark:text-slate-300 border-t border-teal-100 dark:border-teal-900/60 pt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                <div
+                  id={`${baseId}-detail-${i}`}
+                  role="region"
+                  aria-labelledby={`${baseId}-summary-${i}`}
+                  className="px-3 pb-3 pl-11 text-sm text-slate-700 dark:text-slate-300 border-t border-teal-100 dark:border-teal-900/60 pt-2 animate-in fade-in slide-in-from-top-1 duration-200"
+                >
                   {p.detail}
                 </div>
               )}

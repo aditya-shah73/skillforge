@@ -51,6 +51,25 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   // In hardcore mode, any wrong answer locks the quiz
   const locked = answered || (hardcoreMode && selected !== null && !options[selected]?.correct);
 
+  // Status message announced to screen-reader users when the answer is
+  // resolved. Built deterministically from the current state so the
+  // aria-live region announces the same thing the sighted user sees in the
+  // colored option + reward chip + Tokey speech bubble (which is purely
+  // decorative for AT users).
+  const selectedOption = selected !== null ? options[selected] : null;
+  let statusMessage = "";
+  if (answered) {
+    const xpText = reward
+      ? ` Earned ${reward.gained} experience points${reward.multiplier > 1 ? `, ${reward.multiplier}x combo multiplier` : ""}${reward.speed ? ", with speed bonus" : ""}.`
+      : "";
+    statusMessage = `Correct.${xpText}${selectedOption?.explanation ? ` ${selectedOption.explanation}` : ""}`;
+  } else if (locked && selectedOption) {
+    // Hardcore mode — wrong, locked.
+    statusMessage = `Incorrect. Hardcore mode locks the question.${selectedOption.explanation ? ` ${selectedOption.explanation}` : ""}`;
+  } else if (selectedOption && !selectedOption.correct) {
+    statusMessage = `Incorrect — try another answer.${selectedOption.explanation ? ` ${selectedOption.explanation}` : ""}`;
+  }
+
   useEffect(() => {
     startedAt.current = Date.now();
   }, []);
@@ -62,15 +81,18 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
     return () => checkpoint.unregister(quizId);
   }, [checkpoint, quizId]);
 
-  // Report "resolved" upward once the quiz is done.
-  // In normal mode this means answered correctly.
-  // In hardcore mode, a locked wrong answer also counts as resolved (one shot, done).
-  // Either way the user has engaged — the checkpoint is no longer gated on scrolling past.
+  // Report "answered correctly" upward to the enclosing Checkpoint.
+  // We gate strictly on correctness, NOT on `locked`. In hardcore mode a wrong
+  // answer also flips `locked` (one shot, no retry), but it must not count
+  // toward checkpoint clearance — otherwise hardcore mode silently becomes an
+  // XP gift: click any option, the quiz locks, the checkpoint clears, +20 XP.
+  // If a user truly wants to skip past a quiz, the Checkpoint exposes a
+  // separate manual completion path.
   useEffect(() => {
-    if (locked && checkpoint) {
+    if (answered && checkpoint) {
       checkpoint.markCorrect(quizId);
     }
-  }, [locked, checkpoint, quizId]);
+  }, [answered, checkpoint, quizId]);
 
   function handleClick(i: number) {
     if (locked) return;
@@ -108,7 +130,18 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   }
 
   return (
-    <div className="my-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 p-6">
+    <div className="my-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 p-6" role="group" aria-label={`${kind}: ${question}`}>
+      {/* Visually-hidden status for screen readers. polite (not assertive) so
+          it doesn't interrupt the user mid-keystroke when they tab through
+          options; the result is meant to be confirming, not urgent. */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {statusMessage}
+      </div>
       <div className="flex items-center gap-2 mb-3 justify-between">
         <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>

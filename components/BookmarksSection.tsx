@@ -32,9 +32,12 @@ export default function BookmarksSection() {
       const courseMeta = COURSES.find((c) => c.id === courseId);
       if (!courseMeta) return null;
       const data = getCourseData(courseId as CourseId);
-      const module = data.MODULES.find((m) => m.slug === slug);
-      if (!module) return null;
-      return { key, courseMeta, module };
+      // Avoid naming the local `module` — Next.js's `no-assign-module-variable`
+      // rule flags it because Webpack injects a CJS `module` binding into every
+      // file and reassigning it can break HMR.
+      const mod = data.MODULES.find((m) => m.slug === slug);
+      if (!mod) return null;
+      return { key, courseMeta, mod };
     })
     .filter((x): x is NonNullable<typeof x> => x !== null);
 
@@ -51,13 +54,13 @@ export default function BookmarksSection() {
         </span>
       </div>
       <div className="grid sm:grid-cols-2 gap-3">
-        {resolved.map(({ key, courseMeta, module }) => (
+        {resolved.map(({ key, courseMeta, mod }) => (
           <div
             key={key}
             className="group relative flex items-stretch rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition hover:-translate-y-0.5 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-md"
           >
             <Link
-              href={`/courses/${courseMeta.slug}/modules/${module.slug}`}
+              href={`/courses/${courseMeta.slug}/modules/${mod.slug}`}
               className="flex-1 min-w-0 p-4"
             >
               <div className="flex items-center gap-2 mb-1">
@@ -65,14 +68,14 @@ export default function BookmarksSection() {
                   {courseMeta.icon}
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 truncate">
-                  {courseMeta.shortName} · Module {module.number}
+                  {courseMeta.shortName} · Module {mod.number}
                 </span>
               </div>
               <h3 className="text-sm font-bold tracking-tight truncate">
-                {module.title}
+                {mod.title}
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-1">
-                {module.subtitle}
+                {mod.subtitle}
               </p>
             </Link>
             <button

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { lockBodyScroll } from "@/lib/scroll-lock";
 
 type Shortcut = {
   keys: string[];
@@ -58,14 +59,12 @@ export default function KeyboardHelp() {
     };
   }, [open]);
 
-  // Lock background scroll while open
+  // Lock background scroll while open — counter-based via the shared helper
+  // so simultaneous overlays (e.g. open command palette, then hit `?`) don't
+  // leak each other's "original overflow" snapshots and leave scroll locked.
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    return lockBodyScroll();
   }, [open]);
 
   const mod = isMac ? "⌘" : "Ctrl";

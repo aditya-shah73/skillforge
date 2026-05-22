@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback, useId } from "react";
 import { useRouter } from "next/navigation";
 import { COURSES } from "@/lib/courses";
 import { getCourseData } from "@/lib/courses/helpers";
 import { useProgress } from "@/lib/progress";
+import { lockBodyScroll } from "@/lib/scroll-lock";
 
 type Item = {
   /** Stable id for keying / focus tracking */
@@ -43,6 +44,8 @@ export default function CommandPalette() {
   const listRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { bookmarks } = useProgress();
+  const listboxId = useId();
+  const optionId = (i: number) => `${listboxId}-opt-${i}`;
 
   // Build the index once. COURSES/registries are static, so we don't need to
   // recompute on every render — the result is memoized by an empty dep list.
@@ -155,15 +158,17 @@ export default function CommandPalette() {
     };
   }, [open]);
 
-  // Focus input + lock background scroll while open
+  // Focus input + lock background scroll while open. Scroll-lock is
+  // counter-based (see lib/scroll-lock) so overlapping overlays like the
+  // keyboard-help dialog don't leak each other's "original overflow"
+  // snapshots and end up trapping the page in a locked state.
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => inputRef.current?.focus(), 10);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const releaseScroll = lockBodyScroll();
     return () => {
       clearTimeout(t);
-      document.body.style.overflow = prev;
+      releaseScroll();
     };
   }, [open]);
 
@@ -232,7 +237,15 @@ export default function CommandPalette() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onInputKey}
             placeholder="Search courses, modules, or jump to a section…"
-            className="flex-1 bg-transparent py-3.5 text-sm outline-none placeholder:text-slate-400"
+            className="flex-1 bg-transparent py-3.5 text-sm outline-none focus-visible:outline-none placeholder:text-slate-400"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls={listboxId}
+            aria-autocomplete="list"
+            aria-activedescendant={
+              results.length > 0 ? optionId(activeIndex) : undefined
+            }
+            aria-label="Search courses, modules, or jump to a section"
           />
           <kbd className="hidden sm:inline-block rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
             esc
@@ -241,17 +254,26 @@ export default function CommandPalette() {
 
         <div
           ref={listRef}
+          id={listboxId}
+          role="listbox"
+          aria-label="Search results"
           className="max-h-[60vh] overflow-y-auto py-1"
         >
           {results.length === 0 ? (
-            <div className="px-4 py-10 text-center text-sm text-slate-500">
+            <div className="px-4 py-10 text-center text-sm text-slate-500" role="status">
               No results for <span className="font-mono">&quot;{query}&quot;</span>
             </div>
           ) : (
             results.map((item, i) => (
               <button
                 key={item.id}
+                id={optionId(i)}
+                role="option"
+                aria-selected={i === activeIndex}
                 data-cp-idx={i}
+                // The input keeps focus; options are referenced via
+                // aria-activedescendant, so we don't make them tab stops.
+                tabIndex={-1}
                 onMouseEnter={() => setActiveIndex(i)}
                 onClick={() => choose(item)}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition ${

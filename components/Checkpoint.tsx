@@ -51,6 +51,9 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
   // Checkpoint should fall back to a manual "Mark as done" button.
   const [registrationSettled, setRegistrationSettled] = useState(false);
   const firedRef = useRef(false);
+  // Track the confetti auto-hide timer so unmount (e.g. nav-away mid-fire)
+  // cancels it and doesn't try to setShowConfetti on a dead component.
+  const confettiTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const completed = isCheckpointComplete(moduleSlug, id);
 
   // Wait one render cycle for child Quiz components to register themselves.
@@ -116,9 +119,23 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
         text: celebration || `Checkpoint cleared: ${title}! +${xp} XP`,
         duration: 4000,
       });
-      setTimeout(() => setShowConfetti(false), 2200);
+      if (confettiTimerRef.current) clearTimeout(confettiTimerRef.current);
+      confettiTimerRef.current = setTimeout(() => {
+        setShowConfetti(false);
+        confettiTimerRef.current = null;
+      }, 2200);
     }
   }, [completed, moduleSlug, id, xp, title, celebration, completeCheckpoint, addXp, play, say]);
+
+  // Clear any in-flight confetti timer on unmount.
+  useEffect(() => {
+    return () => {
+      if (confettiTimerRef.current) {
+        clearTimeout(confettiTimerRef.current);
+        confettiTimerRef.current = null;
+      }
+    };
+  }, []);
 
   // Auto-fire when every registered quiz is resolved.
   // Manual (or effectively manual) checkpoints skip this and use the button.

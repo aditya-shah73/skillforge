@@ -27,7 +27,7 @@ export default function DsaHome() {
 
       <section className="mb-14 grid sm:grid-cols-2 gap-x-10 gap-y-8 border-y border-slate-200 dark:border-slate-800 py-8">
         <div className="border-l-2 border-emerald-500 dark:border-emerald-400 pl-5">
-          <h3 className="text-lg font-bold tracking-tight mb-3">Prerequisites</h3>
+          <h2 className="text-lg font-bold tracking-tight mb-3">Prerequisites</h2>
           <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300 m-0 p-0 list-none">
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java</strong> (loops, classes, generics — that&apos;s it)</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You studied DSA <em>once</em>, years ago, and most of it has faded</span></li>
@@ -36,7 +36,7 @@ export default function DsaHome() {
           </ul>
         </div>
         <div className="border-l-2 border-teal-500 dark:border-teal-400 pl-5">
-          <h3 className="text-lg font-bold tracking-tight mb-3">What you&apos;ll get</h3>
+          <h2 className="text-lg font-bold tracking-tight mb-3">What you&apos;ll get</h2>
           <ul className="text-sm space-y-2 text-slate-700 dark:text-slate-300 m-0 p-0 list-none">
             <li className="flex gap-2"><span className="text-emerald-500 dark:text-emerald-400 font-bold select-none">✓</span><span>Big-O intuition you can <em>feel</em>, not just recite</span></li>
             <li className="flex gap-2"><span className="text-emerald-500 dark:text-emerald-400 font-bold select-none">✓</span><span>Every core data structure built from scratch in Java</span></li>

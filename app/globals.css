@@ -41,6 +41,27 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
 
+/* =========================================================================
+ * Global focus indicator
+ * Browser defaults vary (Safari's blue ring is invisible on amber buttons,
+ * Chrome's default disappears on dark gradients). Provide a consistent
+ * `:focus-visible` ring across every focusable element so keyboard users
+ * never lose track of focus. Components that want a different ring (e.g.
+ * tabs with an inset ring) override via their own `focus-visible:ring-*`
+ * utilities — those win because they're more specific. We use
+ * `:focus-visible` (not `:focus`) so mouse clicks don't trigger the ring.
+ * ======================================================================= */
+:focus-visible {
+  outline: 2px solid #6366f1; /* indigo-500 */
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (prefers-color-scheme: dark) {
+  :focus-visible {
+    outline-color: #a5b4fc; /* indigo-300 — brighter on dark bg */
+  }
+}
+
 /* Quiz animations */
 @keyframes pulse-correct {
   0%, 100% { transform: scale(1); }
@@ -91,6 +112,33 @@ body {
 .animate-bounce-soft { animation: bounce-soft 1.2s ease-in-out infinite; }
 .animate-token-pop { animation: token-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 .animate-confetti { animation: confetti-fall 1.6s ease-in forwards; }
+
+/* =========================================================================
+ * Reduced motion
+ * Honor `prefers-reduced-motion: reduce` for every animation we ship. Quiz
+ * pulse/shake, slide-up, soft bounce, token pop, confetti, and the tooltip
+ * intro all trigger on user actions — for learners with vestibular disorders
+ * they're disorienting, not delightful. We collapse animation duration so the
+ * end state still renders (no missing UI), but no motion plays. We also
+ * remove the infinite Tokey bounce so it sits still.
+ * ======================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .animate-correct,
+  .animate-wrong,
+  .animate-slide-up,
+  .animate-bounce-soft,
+  .animate-token-pop,
+  .animate-confetti {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  /* Suppress all decorative transitions too. */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.001ms !important;
+  }
+}
 
 /* Token chip colors — cycle through palette */
 .token-chip-0 { background-color: #fecaca; color: #991b1b; }

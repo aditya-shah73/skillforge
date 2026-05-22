@@ -1,11 +1,16 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
+import { COURSES, ai, dsa, systemDesign } from "./courses";
 
 type Progress = {
   xp: number;
   streak: number;
   lastStudyDate: string | null;
+  // Completed module keys in the form "<courseId>/<moduleSlug>". Namespacing by
+  // course matters because identical slugs exist across courses (e.g.
+  // "welcome", "capstone", "phase-1-revision"). A flat slug array would treat
+  // AI/welcome and DSA/welcome as the same record and silently leak progress.
   completedModules: string[];
   completedCheckpoints: Record<string, string[]>; // moduleSlug -> checkpointIds
   combo: number;
@@ -25,15 +30,63 @@ type ProgressContextType = Progress & {
   incrementCombo: () => void;
   resetCombo: () => void;
   completeCheckpoint: (moduleSlug: string, checkpointId: string) => boolean;
-  completeModule: (moduleSlug: string) => void;
+  completeModule: (courseId: string, moduleSlug: string) => void;
   toggleSound: () => void;
   toggleHardcore: () => void;
   unlockEasterEgg: (id: string) => boolean;
   setTheme: (theme: string) => void;
   isCheckpointComplete: (moduleSlug: string, checkpointId: string) => boolean;
+  isModuleComplete: (courseId: string, moduleSlug: string) => boolean;
   toggleBookmark: (key: string) => void;
   isBookmarked: (key: string) => boolean;
 };
+
+/** Build the canonical completed-module key for a course/module pair. */
+export function moduleKey(courseId: string, moduleSlug: string) {
+  return `${courseId}/${moduleSlug}`;
+}
+
+/**
+ * Migrate legacy bare-slug entries in `completedModules` to namespaced
+ * "<courseId>/<slug>" keys. Older builds stored only the slug, which collided
+ * across courses for slugs like "welcome", "recap", "capstone", and every
+ * "phase-N-revision". For each bare slug we look up which courses own it in
+ * the registries and emit one key per matching course. If a slug exists in
+ * multiple courses we keep all matches — over-crediting is recoverable from
+ * the UI; silent under-crediting wouldn't be.
+ */
+function migrateCompletedModules(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const COURSE_LOOKUP: Record<string, { slug: string }[]> = {
+    ai: ai.MODULES,
+    dsa: dsa.MODULES,
+    "system-design": systemDesign.MODULES,
+  };
+  const out = new Set<string>();
+  for (const entry of raw) {
+    if (typeof entry !== "string" || entry.length === 0) continue;
+    if (entry.includes("/")) {
+      // Already namespaced — keep verbatim.
+      out.add(entry);
+      continue;
+    }
+    // Bare slug from legacy storage. Match against every course's registry.
+    let matched = false;
+    for (const c of COURSES) {
+      const mods = COURSE_LOOKUP[c.id];
+      if (mods?.some((m) => m.slug === entry)) {
+        out.add(moduleKey(c.id, entry));
+        matched = true;
+      }
+    }
+    if (!matched) {
+      // Slug isn't in any current registry — could be a removed module. Drop
+      // rather than guess; localStorage retains nothing of value to recover.
+      continue;
+    }
+  }
+  return Array.from(out);
+}
 
 const defaultProgress: Progress = {
   xp: 0,
@@ -82,14 +135,24 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           try {
             localStorage.setItem(STORAGE_KEY, legacy);
             localStorage.removeItem(LEGACY_STORAGE_KEY);
-          } catch {}
+          } catch {
+            // Best-effort migration: if the write back fails (quota, private
+            // mode), we'll just re-read the legacy key on next load. No
+            // user-visible impact.
+          }
         }
       }
       if (raw) {
         const parsed = JSON.parse(raw);
-        setProgress({ ...defaultProgress, ...parsed });
+        // Run the bare-slug → namespaced-key migration unconditionally; it's
+        // a no-op when every entry is already namespaced, and idempotent.
+        const completedModules = migrateCompletedModules(parsed.completedModules);
+        setProgress({ ...defaultProgress, ...parsed, completedModules });
       }
-    } catch {}
+    } catch {
+      // localStorage may be unavailable in private mode or blocked by the
+      // user — fall back to defaults rather than blocking hydration.
+    }
     setHydrated(true);
   }, []);
 
@@ -97,7 +160,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     if (!hydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    } catch {}
+    } catch {
+      // Quota-exceeded or storage unavailable — progress this session still
+      // works in-memory; we just don't persist it. Don't surface to the user.
+    }
   }, [progress, hydrated]);
 
   // Update streak on first interaction of the day
@@ -112,16 +178,27 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  // Latest progress snapshot for cases where we need to compute a return value
+  // synchronously without going through `setProgress`'s functional updater. Using
+  // the updater for side effects is unsafe under React 19's StrictMode, which
+  // intentionally double-invokes the updater in dev — any writes to closed-over
+  // variables fire twice, drifting reported XP/multiplier values away from what
+  // actually landed in state.
+  const progressRef = useRef(progress);
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
+
   const addXp = useCallback((amount: number, opts?: { speed?: boolean }) => {
-    let gained = amount;
-    let comboMultiplier = 1;
-    setProgress((p) => {
-      const multiplier = p.combo >= 5 ? 2 : p.combo >= 3 ? 1.5 : 1;
-      const speedBonus = opts?.speed ? 5 : 0;
-      gained = Math.round(amount * multiplier) + speedBonus;
-      comboMultiplier = multiplier;
-      return { ...p, xp: p.xp + gained };
-    });
+    // Compute gained/multiplier *outside* the setter so the values returned
+    // here are deterministic and consistent with the state write below. The
+    // closure-writes pattern that used to live here got the right result in
+    // production but doubled under StrictMode.
+    const combo = progressRef.current.combo;
+    const comboMultiplier = combo >= 5 ? 2 : combo >= 3 ? 1.5 : 1;
+    const speedBonus = opts?.speed ? 5 : 0;
+    const gained = Math.round(amount * comboMultiplier) + speedBonus;
+    setProgress((p) => ({ ...p, xp: p.xp + gained }));
     touchStreak();
     return { gained, comboMultiplier };
   }, [touchStreak]);
@@ -155,12 +232,20 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return wasNew;
   }, []);
 
-  const completeModule = useCallback((moduleSlug: string) => {
+  const completeModule = useCallback((courseId: string, moduleSlug: string) => {
+    const key = moduleKey(courseId, moduleSlug);
     setProgress((p) => {
-      if (p.completedModules.includes(moduleSlug)) return p;
-      return { ...p, completedModules: [...p.completedModules, moduleSlug] };
+      if (p.completedModules.includes(key)) return p;
+      return { ...p, completedModules: [...p.completedModules, key] };
     });
   }, []);
+
+  const isModuleComplete = useCallback(
+    (courseId: string, moduleSlug: string) => {
+      return progress.completedModules.includes(moduleKey(courseId, moduleSlug));
+    },
+    [progress.completedModules],
+  );
 
   const toggleSound = useCallback(() => {
     setProgress((p) => ({ ...p, soundEnabled: !p.soundEnabled }));
@@ -218,6 +303,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         unlockEasterEgg,
         setTheme,
         isCheckpointComplete,
+        isModuleComplete,
         toggleBookmark,
         isBookmarked,
       }}
@@ -243,6 +329,7 @@ export function useProgress() {
       unlockEasterEgg: () => false,
       setTheme: () => {},
       isCheckpointComplete: () => false,
+      isModuleComplete: () => false,
       toggleBookmark: () => {},
       isBookmarked: () => false,
     };
@@ -250,15 +337,14 @@ export function useProgress() {
   return ctx;
 }
 
-// Simple sound player — bundled as data URIs, so no network
-const SOUNDS = {
-  correct: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA",
-  wrong: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA",
-};
-
+/**
+ * Tiny sound effects for quiz feedback. Uses Web Audio API to generate tones
+ * on the fly — no audio files needed, no network, works offline. Previous
+ * versions kept a data-URI <audio> cache; that's been removed in favor of
+ * synthesizing the four short patterns below directly.
+ */
 export function useSound() {
   const { soundEnabled } = useProgress();
-  const audioCache = useRef<Record<string, HTMLAudioElement>>({});
 
   const play = useCallback((name: "correct" | "wrong" | "levelup" | "combo") => {
     if (!soundEnabled) return;
@@ -288,11 +374,12 @@ export function useSound() {
       });
       osc.start();
       osc.stop(t);
-    } catch {}
+    } catch {
+      // AudioContext can throw on autoplay-blocked browsers / older Safari /
+      // when the page hasn't yet had a user gesture. Failing silently is the
+      // right UX: sounds are non-essential feedback.
+    }
   }, [soundEnabled]);
 
   return { play };
 }
-
-// Suppress unused warnings for SOUNDS/audioCache — reserved for future
-void SOUNDS;

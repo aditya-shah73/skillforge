@@ -46,18 +46,28 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    // Welcome message after 1.5s
+    // Welcome message after 1.5s, then auto-hide 6s after that. Track both
+    // timers in refs so unmount (e.g. during HMR) clears the inner timer too
+    // — without this, the inner setTimeout could call setVisible(false) on a
+    // dead component and leak a closure over stale state.
+    let innerTimer: ReturnType<typeof setTimeout> | null = null;
     const t = setTimeout(() => {
       setMessage({ mood: "happy", text: "Hey! I'm Tokey. I'll hang out here while you learn. Tap me anytime to hide." });
       setVisible(true);
-      setTimeout(() => setVisible(false), 6000);
+      innerTimer = setTimeout(() => setVisible(false), 6000);
     }, 1500);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(t);
+      if (innerTimer) clearTimeout(innerTimer);
+    };
   }, []);
 
-  // Procrastination detection — if you scroll without engaging for a while
+  // Procrastination detection — if you scroll without engaging for a while.
+  // The auto-hide timer inside the interval is tracked so unmount clears it
+  // (otherwise it could fire after the provider is gone).
   useEffect(() => {
     if (!mounted) return;
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
     const onScroll = () => {
       lastInteraction.current = Date.now();
     };
@@ -76,7 +86,8 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
           text: "Still there? Don't just scroll — try the quiz. I promise it won't bite.",
         });
         setVisible(true);
-        setTimeout(() => setVisible(false), 5000);
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => setVisible(false), 5000);
       }
     }, 5000);
 
@@ -84,6 +95,7 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("click", onClick);
       clearInterval(interval);
+      if (hideTimer) clearTimeout(hideTimer);
     };
   }, [mounted]);
 
@@ -102,9 +114,27 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
   return (
     <TokeyContext.Provider value={{ say }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex items-end gap-2 pointer-events-none">
+      <div className="fixed bottom-4 right-4 z-50 flex items-end gap-2 pointer-events-none print:hidden">
+        {/* Always-rendered live region — keeps screen readers subscribed even
+            when the bubble visually unmounts, and announces minimized-state
+            messages too. `polite` so encouragement doesn't interrupt; the
+            bubble is decorative for sighted users, the live region is the
+            real semantic surface. */}
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="sr-only"
+        >
+          {visible && message ? `Tokey says: ${message.text}` : ""}
+        </div>
         {visible && message && !minimized && (
-          <div className="pointer-events-auto max-w-xs rounded-2xl rounded-br-sm bg-white dark:bg-slate-800 border-2 border-indigo-300 dark:border-indigo-700 shadow-xl px-4 py-3 text-sm animate-slide-up">
+          <div
+            className="pointer-events-auto max-w-xs rounded-2xl rounded-br-sm bg-white dark:bg-slate-800 border-2 border-indigo-300 dark:border-indigo-700 shadow-xl px-4 py-3 text-sm animate-slide-up"
+            // aria-hidden because the live region above already announces this
+            // — otherwise screen readers would read it twice.
+            aria-hidden="true"
+          >
             {message.text}
           </div>
         )}
@@ -112,8 +142,12 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
           onClick={() => setMinimized((m) => !m)}
           className={`pointer-events-auto w-14 h-14 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 shadow-lg flex items-center justify-center text-3xl hover:scale-110 transition-transform ${message ? MOOD_ANIMATION[message.mood] : ""}`}
           title={minimized ? "Show Tokey" : "Hide Tokey"}
+          aria-label={minimized ? "Show Tokey mascot" : "Hide Tokey mascot"}
+          aria-pressed={minimized}
         >
-          {minimized ? "🤖" : message ? MOOD_EMOJI[message.mood] : "🤖"}
+          <span aria-hidden="true">
+            {minimized ? "🤖" : message ? MOOD_EMOJI[message.mood] : "🤖"}
+          </span>
         </button>
       </div>
     </TokeyContext.Provider>

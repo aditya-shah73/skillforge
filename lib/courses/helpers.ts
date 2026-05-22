@@ -32,15 +32,15 @@ export function getAllAvailableModules(): { courseId: CourseId; courseSlug: stri
   );
 }
 
-/** Per-course completion stats based on the user's `completedModules` array. */
+/**
+ * Per-course completion stats. `completedModules` is the namespaced storage
+ * shape: each entry is `<courseId>/<slug>`. We filter by prefix so the same
+ * slug in two courses (e.g. AI/welcome vs DSA/welcome) doesn't cross-count.
+ */
 export function coursePercent(courseId: CourseId, completedModules: string[]) {
   const data = COURSE_DATA[courseId];
   const available = data.MODULES.filter((m) => m.status === "available");
-  // We treat completion as "user marked this module slug complete". The slug
-  // namespace is per-course, so collisions across courses are possible but
-  // the registries don't currently overlap; if they do, refine to a
-  // `${courseId}/${slug}` key.
-  const completed = available.filter((m) => completedModules.includes(m.slug));
+  const completed = available.filter((m) => completedModules.includes(`${courseId}/${m.slug}`));
   const total = available.length;
   const done = completed.length;
   const percent = total === 0 ? 0 : Math.round((done / total) * 100);
@@ -57,7 +57,7 @@ export function phasePercent(courseId: CourseId, phaseNumber: number, completedM
   const inPhase = data.MODULES.filter(
     (m) => m.status === "available" && m.phaseNumber === phaseNumber,
   );
-  const done = inPhase.filter((m) => completedModules.includes(m.slug)).length;
+  const done = inPhase.filter((m) => completedModules.includes(`${courseId}/${m.slug}`)).length;
   const total = inPhase.length;
   const percent = total === 0 ? 0 : Math.round((done / total) * 100);
   return { done, total, percent };
@@ -85,9 +85,12 @@ export function findResumeTarget(completedModules: string[]): {
 } | null {
   const bundles: CourseBundle[] = COURSES.map((meta) => ({ meta, modules: COURSE_DATA[meta.id].MODULES }));
 
-  // Score each course by # completed modules.
+  // Score each course by # completed modules. Keys are namespaced as
+  // "<courseId>/<slug>", so we match against the course's own prefix.
   const scored = bundles.map((b) => {
-    const completedInCourse = b.modules.filter((m) => completedModules.includes(m.slug)).length;
+    const completedInCourse = b.modules.filter((m) =>
+      completedModules.includes(`${b.meta.id}/${m.slug}`),
+    ).length;
     return { bundle: b, completed: completedInCourse };
   });
   scored.sort((a, b) => b.completed - a.completed);
@@ -102,7 +105,9 @@ export function findResumeTarget(completedModules: string[]): {
   if (!targetCourse) return null;
 
   const nextModule = targetCourse.modules.find(
-    (m) => m.status === "available" && !completedModules.includes(m.slug),
+    (m) =>
+      m.status === "available" &&
+      !completedModules.includes(`${targetCourse.meta.id}/${m.slug}`),
   );
 
   if (!nextModule) return null;

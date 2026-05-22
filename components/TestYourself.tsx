@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useId, useRef, KeyboardEvent } from "react";
 
 type Tab = "explain" | "recognize" | "implement";
 
@@ -27,6 +27,8 @@ export default function TestYourself({ concept, explain, recognize, implement }:
     recognize: false,
     implement: false,
   });
+  const baseId = useId();
+  const tablistRef = useRef<HTMLDivElement | null>(null);
 
   const tabs: { key: Tab; label: string; icon: string; hint: string }[] = [
     { key: "explain", label: "Explain it", icon: "🗣️", hint: "In 2 minutes, in your own words." },
@@ -36,6 +38,25 @@ export default function TestYourself({ concept, explain, recognize, implement }:
 
   const current = tabs.find((t) => t.key === tab)!;
   const body = { explain, recognize, implement }[tab];
+
+  // Arrow-key navigation per APG: left/right cycle, home/end jump to ends.
+  function handleTabKey(e: KeyboardEvent<HTMLButtonElement>) {
+    const idx = tabs.findIndex((t) => t.key === tab);
+    let nextIdx: number | null = null;
+    if (e.key === "ArrowRight") nextIdx = (idx + 1) % tabs.length;
+    else if (e.key === "ArrowLeft") nextIdx = (idx - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") nextIdx = 0;
+    else if (e.key === "End") nextIdx = tabs.length - 1;
+    if (nextIdx === null) return;
+    e.preventDefault();
+    const nextKey = tabs[nextIdx].key;
+    setTab(nextKey);
+    // Move focus to the newly-active tab.
+    const next = tablistRef.current?.querySelector<HTMLButtonElement>(
+      `[data-tab-key="${nextKey}"]`
+    );
+    next?.focus();
+  }
 
   return (
     <div className="not-prose my-8 rounded-xl border-2 border-amber-300 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 overflow-hidden shadow-sm">
@@ -51,24 +72,47 @@ export default function TestYourself({ concept, explain, recognize, implement }:
         </p>
       </div>
 
-      <div className="flex border-b border-amber-200 dark:border-amber-900 bg-white/60 dark:bg-slate-900/40">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={`flex-1 px-3 py-2 text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-1.5 ${
-              tab === t.key
-                ? "bg-amber-200/60 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 border-b-2 border-amber-600 dark:border-amber-400"
-                : "text-slate-600 dark:text-slate-400 hover:bg-amber-100/50 dark:hover:bg-amber-900/20"
-            }`}
-          >
-            <span>{t.icon}</span>
-            <span>{t.label}</span>
-          </button>
-        ))}
+      <div
+        role="tablist"
+        aria-label={`Confidence check for ${concept}`}
+        ref={tablistRef}
+        className="flex border-b border-amber-200 dark:border-amber-900 bg-white/60 dark:bg-slate-900/40"
+      >
+        {tabs.map((t) => {
+          const isActive = tab === t.key;
+          return (
+            <button
+              key={t.key}
+              role="tab"
+              id={`${baseId}-tab-${t.key}`}
+              aria-selected={isActive}
+              aria-controls={`${baseId}-panel-${t.key}`}
+              // Only the active tab is in the tab order; arrow keys move focus
+              // between tabs once you've landed on one. APG roving tabindex.
+              tabIndex={isActive ? 0 : -1}
+              data-tab-key={t.key}
+              onClick={() => setTab(t.key)}
+              onKeyDown={handleTabKey}
+              className={`flex-1 px-3 py-2 text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${
+                isActive
+                  ? "bg-amber-200/60 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 border-b-2 border-amber-600 dark:border-amber-400"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-amber-100/50 dark:hover:bg-amber-900/20"
+              }`}
+            >
+              <span aria-hidden="true">{t.icon}</span>
+              <span>{t.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      <div className="p-5 space-y-4">
+      <div
+        role="tabpanel"
+        id={`${baseId}-panel-${tab}`}
+        aria-labelledby={`${baseId}-tab-${tab}`}
+        tabIndex={0}
+        className="p-5 space-y-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-inset"
+      >
         <div className="text-sm text-slate-700 dark:text-slate-300 italic">
           <span className="font-semibold text-amber-900 dark:text-amber-200">Prompt:</span> {current.hint}
         </div>
