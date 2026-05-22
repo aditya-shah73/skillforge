@@ -59,7 +59,7 @@ stateDiagram-v2
           This is not new material. It&apos;s a <strong>map of Phase 5</strong> — the deep distributed-systems primitives compressed into tables and cards. If something looks unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before a senior systems interview, not as a tutorial.
         </p>
         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
-          The five modules you&apos;re consolidating: <Link href="/courses/system-design/modules/consensus" className="text-indigo-600 hover:underline">Consensus</Link>, <Link href="/courses/system-design/modules/distributed-transactions" className="text-indigo-600 hover:underline">Distributed transactions &amp; sagas</Link>, <Link href="/courses/system-design/modules/clock-time" className="text-indigo-600 hover:underline">Clocks &amp; time</Link>, <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geospatial systems</Link>, and <Link href="/courses/system-design/modules/cost-capacity" className="text-indigo-600 hover:underline">Cost &amp; capacity planning</Link>.
+          The five modules you&apos;re consolidating: <Link href="/courses/system-design/modules/consensus" className="text-indigo-600 hover:underline">Consensus</Link>, <Link href="/courses/system-design/modules/distributed-transactions" className="text-indigo-600 hover:underline">Distributed transactions &amp; sagas</Link>, <Link href="/courses/system-design/modules/clock-time" className="text-indigo-600 hover:underline">Clocks &amp; time</Link>, <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geo-distributed systems</Link>, and <Link href="/courses/system-design/modules/cost-capacity" className="text-indigo-600 hover:underline">Cost &amp; capacity planning</Link>.
         </p>
       </section>
 
@@ -452,7 +452,7 @@ COMMIT;
         </div>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
-          Source: <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geospatial systems</Link>.
+          Sources: <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geo-distributed systems</Link> (latency framing) and <Link href="/courses/system-design/modules/design-rideshare" className="text-indigo-600 hover:underline">Design a rideshare service</Link> (geo-indexing primitives in depth).
         </p>
       </section>
 
