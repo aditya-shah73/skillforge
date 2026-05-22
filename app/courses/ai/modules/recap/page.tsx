@@ -438,7 +438,7 @@ T → ∞:   all logits get squashed toward equality
 
         <Callout variant="insight" title="This is why prompts can't teach the model new facts">
           <p className="m-0">
-            Training = weights get updated. Prompting = input tokens get different, weights stay frozen. When you show a few-shot example, the model pattern-matches in-context — it doesn&apos;t learn anything persistent. Close the API call, start a new one, and the model has no memory. This is a real limit, not a quirk. RAG (Phase 3) and fine-tuning (Module 26) are the two different ways to work around it.
+            Training = weights get updated. Prompting = input tokens get different, weights stay frozen. When you show a few-shot example, the model pattern-matches in-context — it doesn&apos;t learn anything persistent. Close the API call, start a new one, and the model has no memory. This is a real limit, not a quirk. RAG (Phase 3) and fine-tuning (Module 30) are the two different ways to work around it.
           </p>
         </Callout>
 

@@ -50,7 +50,7 @@ export default function RagSpringModule() {
           <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          You designed RAG in Module 16. Now you build it. End of this module: you have a Spring Boot service
+          You designed RAG in Module 17. Now you build it. End of this module: you have a Spring Boot service
           that ingests Markdown docs, indexes them in pgvector, and answers user questions with citations.
         </p>
         <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
@@ -133,7 +133,7 @@ public class DocsService {
           <p className="text-sm m-0">
             <code>VectorStore</code> is great for the 80% case. For hybrid (BM25 + vector) retrieval, custom
             SQL with joins, or anything that needs an exotic <code>EXPLAIN ANALYZE</code>-driven query plan,
-            you&apos;ll drop to <code>JdbcTemplate</code> like we did in Module 15. The two coexist fine — use
+            you&apos;ll drop to <code>JdbcTemplate</code> like we did in Module 16. The two coexist fine — use
             VectorStore by default, JDBC for the long tail.
           </p>
         </Callout>
@@ -218,8 +218,8 @@ public class DocsService {
 
         <p>
           Time to write code. We&apos;re going to build the indexing path: read a folder of Markdown files,
-          chunk them by H2 (Module 16&apos;s structural strategy), enrich each chunk with a contextual prefix
-          (Module 16&apos;s biggest win), and store them in pgvector.
+          chunk them by H2 (Module 17&apos;s structural strategy), enrich each chunk with a contextual prefix
+          (Module 17&apos;s biggest win), and store them in pgvector.
         </p>
 
         <h3 className="text-xl font-bold mt-8 mb-3">Project setup</h3>
@@ -272,7 +272,7 @@ spring:
         initialize-schema: true   # let Spring AI manage the vector_store table for now`}</CodeBlock>
 
         <p>
-          For this project we&apos;ll let Spring AI manage the schema. (For Module 15 we owned it via Flyway;
+          For this project we&apos;ll let Spring AI manage the schema. (For Module 16 we owned it via Flyway;
           here we&apos;re prioritizing speed-to-running. You can switch to <code>initialize-schema: false</code>
           and a Flyway migration the moment you need to evolve.)
         </p>
@@ -379,7 +379,7 @@ public class MarkdownH2Splitter implements DocumentTransformer {
         <h3 className="text-xl font-bold mt-8 mb-3">A contextual-prefix transformer</h3>
 
         <p>
-          The Module 16 lesson: prepend a one-sentence document-context summary to each chunk before embedding.
+          The Module 17 lesson: prepend a one-sentence document-context summary to each chunk before embedding.
           We do it as a <code>DocumentTransformer</code> that sits after the splitter and before the writer.
         </p>
 
@@ -492,7 +492,7 @@ public class IngestionConfig {
             For real use, either (a) wipe the store before each ingest in dev, (b) compute a stable
             <code> chunk_hash </code> per chunk and skip if it&apos;s already present, or (c) version your
             <code> doc_id </code> and use <code>store.delete(filterExpr)</code> to clear old versions before
-            adding new ones. Module 17 stretch goal: pick one and implement it.
+            adding new ones. Stretch goal for this module: pick one and implement it.
           </p>
         </Callout>
 
@@ -570,7 +570,7 @@ public class RetrievalService {
         <h3 className="text-xl font-bold mt-8 mb-3">Assembling the prompt with numbered citations</h3>
 
         <p>
-          Module 16&apos;s Part 4 prompt template, made concrete. Each retrieved <code>Document</code> becomes
+          Module 17&apos;s Part 4 prompt template, made concrete. Each retrieved <code>Document</code> becomes
           a numbered context block; the prompt instructs the model to cite by number.
         </p>
 
@@ -852,7 +852,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
             For a real chat-with-docs UX you want both <code>QuestionAnswerAdvisor</code> (for retrieval) and
             <code> MessageChatMemoryAdvisor</code> (for conversation history). Register both on the same
             ChatClient builder; Spring AI orders them so memory is added to the prompt and the user&apos;s
-            current turn drives retrieval. Module 22 (agents) goes deeper on advisor composition.
+            current turn drives retrieval. Module 25 (agents in Spring Boot) goes deeper on advisor composition.
           </p>
         </Callout>
 
@@ -1032,11 +1032,11 @@ q.addEventListener('keydown', async (e) => {
           </li>
           <li>
             <strong>If retrieval is at fault</strong>: try increasing topK, lowering similarityThreshold,
-            checking your chunking. If your corpus has identifiers, consider hybrid retrieval (Module 16).
+            checking your chunking. If your corpus has identifiers, consider hybrid retrieval (Module 17).
           </li>
           <li>
             <strong>If the prompt is at fault</strong>: tighten the system prompt, reorder chunks (Module
-            16&apos;s lost-in-the-middle), or pass fewer chunks.
+            17&apos;s lost-in-the-middle), or pass fewer chunks.
           </li>
         </ol>
 
@@ -1046,7 +1046,7 @@ q.addEventListener('keydown', async (e) => {
           <li>Add streaming (Module 12) so answers appear token-by-token while the sources panel renders immediately on retrieval.</li>
           <li>Add prompt caching (Module 13) on the system prompt — cuts per-turn cost noticeably.</li>
           <li>Add idempotent re-ingestion: compute a chunk hash, skip already-stored chunks, delete stale ones from a previous version of the doc.</li>
-          <li>Add hybrid retrieval: Postgres ts_vector for BM25, fused with vector via RRF (Module 16 Part 3).</li>
+          <li>Add hybrid retrieval: Postgres ts_vector for BM25, fused with vector via RRF (Module 17 Part 3).</li>
           <li>Add an &quot;ask follow-up&quot; flow that combines QuestionAnswerAdvisor + MessageChatMemoryAdvisor.</li>
         </ul>
 
@@ -1138,10 +1138,10 @@ q.addEventListener('keydown', async (e) => {
       {/* FOOTER NAV */}
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/rag-architecture" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
-          ← Module 16: RAG architecture
+          ← Module 17: RAG architecture
         </Link>
         <Link href="/courses/ai/modules/react-streaming" className="text-emerald-600 hover:underline font-semibold">
-          Module 18: React streaming patterns →
+          Module 20: React streaming patterns →
         </Link>
       </footer>
         <ModuleNav courseId="ai" currentSlug="rag-spring" />

@@ -131,7 +131,7 @@ export default function WelcomeModule() {
         <ol>
           <li><strong>Actually do the projects.</strong>{" "}Reading Java code that someone else wrote is not the same as writing it. The from-scratch ML code in Phase 1 feels tedious but <em>builds the mental model</em>{" "}that makes everything else click.</li>
           <li><strong>Don&apos;t skip the worked examples.</strong>{" "}When a module says &quot;compute this by hand&quot; — pull out paper and do it. Five minutes of arithmetic beats an hour of re-reading theory.</li>
-          <li><strong>Ship the capstone.</strong>{" "}Module 27 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
+          <li><strong>Ship the capstone.</strong>{" "}Module 32 is a portfolio centerpiece. Put it on GitHub. Link it from your resume. That&apos;s the point of the whole course.</li>
         </ol>
       </section>
 

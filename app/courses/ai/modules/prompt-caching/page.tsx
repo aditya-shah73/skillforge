@@ -808,7 +808,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
 
       <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/streaming" className="text-indigo-600 hover:underline">← Module 12: Streaming</Link>
-        <Link href="/courses/ai/modules/embeddings-deep" className="text-indigo-600 hover:underline">Module 14: Embeddings deep dive →</Link>
+        <Link href="/courses/ai/modules/embeddings-deep" className="text-indigo-600 hover:underline">Module 15: Embeddings deep dive →</Link>
       </div>
         <ModuleNav courseId="ai" currentSlug="prompt-caching" />
     </article>

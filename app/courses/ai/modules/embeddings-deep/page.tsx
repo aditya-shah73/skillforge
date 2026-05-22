@@ -61,8 +61,8 @@ export default function EmbeddingsDeepModule() {
           <li>Ship a Spring Boot <strong>semantic bookmark search</strong>{" "}that works on a corpus of 30+ items.</li>
         </ol>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
-          This is the on-ramp for the rest of Phase 3. Module 15 introduces pgvector to fix the brute-force problem you
-          create here. Module 16 layers retrieval on top. Module 17 puts the whole RAG pipeline behind a chat UI.
+          This is the on-ramp for the rest of Phase 3. Module 16 introduces pgvector to fix the brute-force problem you
+          create here. Module 17 layers retrieval on top. Module 18 puts the whole RAG pipeline behind a chat UI.
         </p>
       </section>
 
@@ -496,7 +496,7 @@ public class EmbeddingService {
 
         List<float[]> vectors = embeddingService.embedBatch(texts);
 
-        // Persist (id, vector) pairs. In Module 15 we'll do this in pgvector.
+        // Persist (id, vector) pairs. In Module 16 we'll do this in pgvector.
         for (int j = 0; j < slice.size(); j++) {
             store.save(slice.get(j).id(), vectors.get(j));
         }
@@ -646,7 +646,7 @@ public class CachedEmbeddingService {
         </ol>
 
         <p>
-          Both are why Module 15 introduces approximate nearest-neighbor (ANN) indexes via pgvector. But the only
+          Both are why Module 16 introduces approximate nearest-neighbor (ANN) indexes via pgvector. But the only
           way to feel the problem is to look at real numbers.
         </p>
 
@@ -823,7 +823,7 @@ public class CachedEmbeddingService {
           gist="High-dimensional space is geometrically weird. Brute force is fine until it isn't. Embedding search works because real embeddings live on a low-D manifold inside the high-D space."
           points={[
             { takeaway: "Distances concentrate as d grows.", detail: "The ratio of nearest-to-farthest collapses toward 1 in pure random clouds. Trained embeddings dodge this by clustering semantically." },
-            { takeaway: "Brute force scales linearly in N·d.", detail: "Fine to ~50k vectors. At 1M+ at 1024 dims, you want an ANN index — which is Module 15." },
+            { takeaway: "Brute force scales linearly in N·d.", detail: "Fine to ~50k vectors. At 1M+ at 1024 dims, you want an ANN index — which is Module 16." },
             { takeaway: "Don't index prematurely.", detail: "If your corpus is small, exact brute-force search is faster, simpler, and more accurate than any approximate index." },
           ]}
         />
@@ -848,7 +848,7 @@ public class CachedEmbeddingService {
           (titles + descriptions), embeds them at startup, exposes a <code>/search?q=...</code> endpoint, and
           returns the top-k semantically-similar bookmarks with their cosine scores. We&apos;re using brute force
           deliberately — the corpus is tiny, and the point of this project is to feel embeddings working before
-          Module 15 introduces an index.
+          Module 16 introduces an index.
         </p>
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Step 1 — Spin up the project</h3>
@@ -1158,8 +1158,8 @@ public class SearchController {
           <p>
             Type three queries that aren&apos;t literal substrings of any bookmark title or description, and check
             that the right bookmark still wins. That&apos;s semantic search working. If you can do that, you&apos;ve
-            built the data plane that every retrieval system needs — Module 15 swaps the in-memory store for
-            pgvector with an HNSW index, and Module 17 wraps the whole thing in a chat UI.
+            built the data plane that every retrieval system needs — Module 16 swaps the in-memory store for
+            pgvector with an HNSW index, and Module 18 wraps the whole thing in a chat UI.
           </p>
         </Checkpoint>
       </section>
@@ -1223,7 +1223,7 @@ public class SearchController {
           question="You're tempted to add an HNSW index to your 8,000-bookmark search. What's the mature engineering response?"
           options={[
             { label: "Add it anyway — better safe than sorry", explanation: "Adding indexes you don't need is a real cost: build time, recall risk, operational complexity." },
-            { label: "8k vectors brute-force in <10ms — adding HNSW now buys you nothing and costs you complexity. Wait until brute-force latency is actually a problem, then add it with measurement", correct: true, explanation: "Right. Premature ANN indexing is a specific kind of over-engineering. The honest progression is: brute-force → measure → if and only if too slow, add an index → measure recall delta. Module 15 walks you through what 'too slow' looks like and what the index trade-offs actually are." },
+            { label: "8k vectors brute-force in <10ms — adding HNSW now buys you nothing and costs you complexity. Wait until brute-force latency is actually a problem, then add it with measurement", correct: true, explanation: "Right. Premature ANN indexing is a specific kind of over-engineering. The honest progression is: brute-force → measure → if and only if too slow, add an index → measure recall delta. Module 16 walks you through what 'too slow' looks like and what the index trade-offs actually are." },
             { label: "Add HNSW only if you also add IVFFlat", explanation: "These are alternatives, not complements." },
             { label: "Use a graph database instead", explanation: "Not relevant to this problem." },
           ]}
@@ -1234,7 +1234,7 @@ public class SearchController {
           <p>
             That&apos;s Phase 3, Module 1 done. You can pick an embedding model defensibly, call it from Spring AI,
             handle batching and caching and L2 normalization correctly, and reason about when brute force is fine
-            and when it isn&apos;t. Module 15 takes the &quot;when it isn&apos;t&quot; case and replaces the
+            and when it isn&apos;t. Module 16 takes the &quot;when it isn&apos;t&quot; case and replaces the
             in-memory store with pgvector — a real database with real ANN indexes.
           </p>
         </Checkpoint>
@@ -1242,7 +1242,7 @@ public class SearchController {
 
       <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/prompt-caching" className="text-indigo-600 hover:underline">← Module 13: Prompt caching</Link>
-        <Link href="/courses/ai/modules/pgvector" className="text-indigo-600 hover:underline">Module 15: Vector DBs &amp; pgvector →</Link>
+        <Link href="/courses/ai/modules/pgvector" className="text-indigo-600 hover:underline">Module 16: Vector DBs &amp; pgvector →</Link>
       </div>
         <ModuleNav courseId="ai" currentSlug="embeddings-deep" />
     </article>

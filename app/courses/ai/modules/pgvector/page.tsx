@@ -49,7 +49,7 @@ export default function PgvectorModule() {
           <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
         </div>
         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
-          In Module 14 you indexed bookmarks in a <code>HashMap</code>. That works until it doesn&apos;t. Today
+          In Module 15 you indexed bookmarks in a <code>HashMap</code>. That works until it doesn&apos;t. Today
           you learn the standard production answer in the Spring/Java world: <strong>Postgres + pgvector</strong>.
           One database for both your business data and your vectors, with real ANN indexes underneath.
         </p>
@@ -69,7 +69,7 @@ export default function PgvectorModule() {
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Why a vector database</h2>
 
         <p>
-          You can &quot;do vector search&quot; with a <code>List&lt;float[]&gt;</code> in memory and a for-loop. Module 14
+          You can &quot;do vector search&quot; with a <code>List&lt;float[]&gt;</code> in memory and a for-loop. Module 15
           proved it: thirty bookmarks, brute-force cosine, instant results. So when does that stop working?
         </p>
 
@@ -596,7 +596,7 @@ LIMIT 10;`}</CodeBlock>
           <p className="text-sm m-0 mb-2">
             • Java 21, Spring Boot 3.5+, Maven<br />
             • Docker (for Postgres + pgvector)<br />
-            • An <code>OPENAI_API_KEY</code> environment variable (or swap the embedding starter for any provider you set up in Module 14)
+            • An <code>OPENAI_API_KEY</code> environment variable (or swap the embedding starter for any provider you set up in Module 15)
           </p>
         </Callout>
 
@@ -801,7 +801,7 @@ public class IssueService {
             Whether 0.20 cosine distance means &quot;duplicate&quot; depends entirely on your embedding model
             and the kind of text you&apos;re embedding. Build a labeled set of 50 known-duplicate pairs and
             50 known-different pairs from your real data, plot the distance histograms, and pick the threshold
-            where the distributions barely overlap. Module 14&apos;s domain-eval methodology applies here.
+            where the distributions barely overlap. Module 15&apos;s domain-eval methodology applies here.
           </p>
         </Callout>
 
@@ -985,7 +985,7 @@ LIMIT 5;
           xp={15}
         />
 
-        <Checkpoint moduleSlug="pgvector" id="final" title="Final quiz" xp={40} celebration="Module 15 done. Vectors are stored, indexed, and queryable. Module 16 is where chunks become RAG.">
+        <Checkpoint moduleSlug="pgvector" id="final" title="Final quiz" xp={40} celebration="Module 16 done. Vectors are stored, indexed, and queryable. Module 17 is where chunks become RAG.">
           <p>
             With this module under your belt you can stand up a Spring Boot app that uses Postgres as its
             vector database, pick the right index and operator for your data, and reason about hybrid
@@ -998,10 +998,10 @@ LIMIT 5;
       {/* FOOTER NAV */}
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/embeddings-deep" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
-          ← Module 14: Embeddings deep dive
+          ← Module 15: Embeddings deep dive
         </Link>
         <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline font-semibold">
-          Module 16: RAG architecture →
+          Module 17: RAG architecture →
         </Link>
       </footer>
         <ModuleNav courseId="ai" currentSlug="pgvector" />

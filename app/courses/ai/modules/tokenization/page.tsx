@@ -350,7 +350,7 @@ public class SafeChatService {
      *
      * Naïve version: chop 10% off the end each iteration. Real production
      * code would instead rank chunks by relevance (using embeddings — see
-     * Module 14) and drop the least useful ones first. That's the 'R' in RAG.
+     * Module 17) and drop the least useful ones first. That's the 'R' in RAG.
      */
     private String truncateToFit(String text, int tokenBudget) {
         while (tokenCounter.estimate(text) > tokenBudget && text.length() > 0) {

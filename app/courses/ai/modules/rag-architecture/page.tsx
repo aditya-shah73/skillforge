@@ -792,7 +792,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
         <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: doc chunking lab</h2>
 
         <p>
-          The point of this project isn&apos;t to build production RAG (Module 17 will). It&apos;s to make
+          The point of this project isn&apos;t to build production RAG (Module 18 will). It&apos;s to make
           you <em>feel</em>{" "}how chunking changes retrieval quality. You&apos;ll feed the same corpus through
           four chunkers, run the same 20 queries, compare recall@5 numbers, and see — viscerally — why
           chunking is the most important variable.
@@ -800,8 +800,8 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
 
         <Callout variant="info" title="What you'll need">
           <p className="text-sm m-0 mb-2">
-            • Java 21, Spring Boot 3.5+ (you can reuse the Module 15 project)<br />
-            • The pgvector setup from Module 15<br />
+            • Java 21, Spring Boot 3.5+ (you can reuse the Module 16 project)<br />
+            • The pgvector setup from Module 16<br />
             • OpenAI API key (or any embedding provider)<br />
             • A 10–30 page Markdown corpus with real headings — your own README, a public open-source project&apos;s docs, or the Spring Framework reference guide ({" "}
             <a className="text-emerald-600 hover:underline" href="https://docs.spring.io/spring-framework/reference/">a chapter of this</a>{" "}
@@ -1151,10 +1151,10 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           xp={15}
         />
 
-        <Checkpoint moduleSlug="rag-architecture" id="final" title="Final quiz" xp={40} celebration="You can architect a RAG system without copying a tutorial. Module 17 is where you wire it all into Spring.">
+        <Checkpoint moduleSlug="rag-architecture" id="final" title="Final quiz" xp={40} celebration="You can architect a RAG system without copying a tutorial. Module 18 is where you wire it all into Spring.">
           <p>
             With this module under your belt you can name every stage of a RAG pipeline, defend each one,
-            spot the most common failure modes, and design a measurement loop. Module 17 turns the design into
+            spot the most common failure modes, and design a measurement loop. Module 18 turns the design into
             running Spring Boot code — Spring AI&apos;s <code>VectorStore</code> + pgvector, end to end.
           </p>
         </Checkpoint>
@@ -1163,10 +1163,10 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
       {/* FOOTER NAV */}
       <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
         <Link href="/courses/ai/modules/pgvector" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
-          ← Module 15: Vector DBs &amp; pgvector
+          ← Module 16: Vector DBs &amp; pgvector
         </Link>
         <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline font-semibold">
-          Module 17: RAG in Spring Boot →
+          Module 18: RAG in Spring Boot →
         </Link>
       </footer>
         <ModuleNav courseId="ai" currentSlug="rag-architecture" />

@@ -421,7 +421,7 @@ static double cosine(double[] a, double[] b) {
 
         <h4>2. Negations and small words</h4>
         <p>
-          &quot;I love skiing&quot; and &quot;I don&apos;t love skiing&quot; have very high cosine similarity in most models. One tiny word flips the meaning; embeddings often don&apos;t. This is why pure cosine retrieval is weak at contradiction, and why people layer in re-ranking (Module 15-16).
+          &quot;I love skiing&quot; and &quot;I don&apos;t love skiing&quot; have very high cosine similarity in most models. One tiny word flips the meaning; embeddings often don&apos;t. This is why pure cosine retrieval is weak at contradiction, and why people layer in re-ranking (Module 17).
         </p>
 
         <h4>3. Curse of dimensionality (a Phase-3 preview)</h4>

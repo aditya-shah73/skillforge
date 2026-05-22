@@ -1233,7 +1233,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           ← Module 20: React streaming patterns
         </Link>
         <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline font-semibold">
-          Module 20: Multimodal inputs →
+          Module 22: Multimodal inputs →
         </Link>
       </footer>
         <ModuleNav courseId="ai" currentSlug="chat-interface" />
