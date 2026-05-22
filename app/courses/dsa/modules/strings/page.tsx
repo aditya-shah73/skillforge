@@ -99,7 +99,7 @@ flowchart TB
         <h2>Part 1: A String is an array of characters with a contract</h2>
 
         <p>
-          You spent Module 4 understanding arrays. The good news: a Java <code>String</code> is, internally, an array of characters. The bad news: it&apos;s wrapped behind a class that promises one thing — <strong>you cannot modify it</strong>.
+          You spent Module 5 understanding arrays. The good news: a Java <code>String</code> is, internally, an array of characters. The bad news: it&apos;s wrapped behind a class that promises one thing — <strong>you cannot modify it</strong>.
         </p>
 
         <Callout variant="insight" title="The Java String model, in one sentence">
@@ -271,7 +271,7 @@ for (int i = 0; i < n; i++) {
 return sb.toString();           // one final allocation, O(n)`}</CodeBlock>
 
         <p>
-          <code>StringBuilder</code> is, internally, exactly the dynamic array you built in Module 4 — a backing <code>char[]</code> with a <code>count</code> field, doubling on overflow. <code>append</code> is amortized O(1). Total work over n appends is O(n). At n = 1,000,000 you&apos;re doing about 2 million character-touches instead of half a trillion.
+          <code>StringBuilder</code> is, internally, exactly the dynamic array you built in Module 5 — a backing <code>char[]</code> with a <code>count</code> field, doubling on overflow. <code>append</code> is amortized O(1). Total work over n appends is O(n). At n = 1,000,000 you&apos;re doing about 2 million character-touches instead of half a trillion.
         </p>
 
         <Quiz
@@ -321,7 +321,7 @@ for (int i = 0; i < n; i++) {
           points={[
             { takeaway: "+ on strings always allocates a new String and copies both operands.", detail: "Inside a loop where one operand grows, total work is 1 + 2 + ... + n = O(n²)." },
             { takeaway: "javac folds a single + chain into one StringBuilder call. It cannot fold across loop iterations.", detail: "String s = a + b + c gets compiled to one builder. for(...) s += x; doesn't, because each iteration is its own expression." },
-            { takeaway: "StringBuilder is the dynamic-array-of-chars from Module 4 — same doubling trick, same amortized O(1) append.", detail: "Build with the mutable type, freeze with toString() at the end. The pattern works for any loop building one string." },
+            { takeaway: "StringBuilder is the dynamic-array-of-chars from Module 5 — same doubling trick, same amortized O(1) append.", detail: "Build with the mutable type, freeze with toString() at the end. The pattern works for any loop building one string." },
             { takeaway: "Anything that returns String inside a loop deserves suspicion.", detail: "+, concat, replace, substring — they all allocate. If you call them n times, the loop is O(n²) at minimum." },
           ]}
         />
@@ -339,7 +339,7 @@ for (int i = 0; i < n; i++) {
 
         <h3>StringBuilder, in detail</h3>
         <p>
-          <code>StringBuilder</code> is the same dynamic array you implemented in Module 4, specialized to characters. It has:
+          <code>StringBuilder</code> is the same dynamic array you implemented in Module 5, specialized to characters. It has:
         </p>
         <ul>
           <li>A backing <code>char[] value</code> (or <code>byte[]</code> on JDK 9+ for ASCII).</li>
@@ -405,7 +405,7 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
 }`}</CodeBlock>
 
         <p>
-          The two-pointer pattern from Module 4 shows up immediately. For palindrome checks, anagram checks, and any &ldquo;process the string from both ends&rdquo; problem, <code>char[]</code> + two pointers is the natural shape.
+          The two-pointer pattern previewed in Module 5 (Arrays) shows up immediately. For palindrome checks, anagram checks, and any &ldquo;process the string from both ends&rdquo; problem, <code>char[]</code> + two pointers is the natural shape.
         </p>
 
         <Callout variant="insight" title="Three tools, one rule">
@@ -683,7 +683,7 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
       </Checkpoint>
 
       {/* PART 6: FINAL QUIZ */}
-      <Checkpoint moduleSlug="strings" id="final" title="Final quiz" xp={30} celebration="Module 5 done. Linked lists are next.">
+      <Checkpoint moduleSlug="strings" id="final" title="Final quiz" xp={30} celebration="Module 6 done. Linked lists are next.">
       <section>
         <h2>Final check</h2>
 
@@ -740,13 +740,13 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
             You see the immutable byte array. You feel the O(n²) trap of <code>+</code>. You know the three tools — <code>String</code>, <code>StringBuilder</code>, <code>char[]</code> — and which one to reach for. And you have three named patterns (frequency arrays, two pointers from ends, append-and-build) that handle a remarkable share of string interview questions.
           </p>
           <p className="mb-4 opacity-95">
-            <strong>Up next: Module 6 — Linked lists.</strong>{" "}Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
+            <strong>Up next: Module 7 — Linked lists.</strong>{" "}Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
           </p>
           <Link
             href="/courses/dsa/modules/linked-lists"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-amber-700 font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Continue to Module 6 — Linked lists →
+            Continue to Module 7 — Linked lists →
           </Link>
         </div>
       </section>

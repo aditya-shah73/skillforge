@@ -545,7 +545,7 @@ class RecentCounter {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="queues" id="final" title="I've completed Module 8 — and Phase 2!" xp={30} celebration="That's all five linear data structures. Phase 3 — hashing, trees, and the algorithms that go with them — is where things get interesting.">
+      <Checkpoint moduleSlug="queues" id="final" title="I've completed Module 9 — and Phase 2!" xp={30} celebration="That's all five linear data structures. Phase 3 — hashing, trees, and the algorithms that go with them — is where things get interesting.">
       <section>
         <h2 id="final">Final quiz</h2>
 

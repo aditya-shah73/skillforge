@@ -105,7 +105,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 6 · Module 18 · Algorithmic Techniques
+          Phase 6 · Module 23 · Algorithmic Techniques
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -834,10 +834,10 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
           items={[
             { id: "1", label: "Given a sorted array, find two indices that sum to a target value.", answer: "opposite", explanation: "Two Sum II — the canonical opposite-end pattern. Sortedness gives the directional move signal." },
             { id: "2", label: "Move all zeros in an array to the end while preserving the order of non-zeros, in place.", answer: "same-direction", explanation: "Move Zeroes — slow points at the next non-zero slot, fast scans. Classic same-direction filter." },
-            { id: "3", label: "Given an unsorted array of integers, return whether any two elements sum to k.", answer: "not-two-pointer", explanation: "Unsorted means no monotonic structure — two pointers can't help. Use a HashSet (Module 9): for each x, check if k-x has been seen. O(n) time, O(n) space." },
+            { id: "3", label: "Given an unsorted array of integers, return whether any two elements sum to k.", answer: "not-two-pointer", explanation: "Unsorted means no monotonic structure — two pointers can't help. Use a HashSet (Module 11): for each x, check if k-x has been seen. O(n) time, O(n) space." },
             { id: "4", label: "Find the maximum area of water trapped between two vertical lines in a height array.", answer: "opposite", explanation: "Container With Most Water. Greedy: always move the shorter side; the area is bounded by min(h[l], h[r])." },
             { id: "5", label: "Remove every occurrence of a given value from an array, in place. Return the new length.", answer: "same-direction", explanation: "LC 27 Remove Element — slow/fast filter. Keep predicate is 'value != target'. Slow ends as the new length." },
-            { id: "6", label: "Find the shortest path in an unweighted graph between two nodes.", answer: "not-two-pointer", explanation: "Graph traversal, not array walking. BFS (Module 15). 'Two pointers' applies to linear structures with monotonic move rules — not graphs." },
+            { id: "6", label: "Find the shortest path in an unweighted graph between two nodes.", answer: "not-two-pointer", explanation: "Graph traversal, not array walking. BFS (Module 18). 'Two pointers' applies to linear structures with monotonic move rules — not graphs." },
             { id: "7", label: "Determine if a string is a palindrome, ignoring non-alphanumeric characters and case.", answer: "opposite", explanation: "Valid Palindrome. l and r walk inward; skip non-alphanumeric on each side, then compare normalized characters." },
             { id: "8", label: "Find the kth smallest element in an unsorted array.", answer: "not-two-pointer", explanation: "Quickselect or heap-of-size-k. No two-element structure to track; you're partitioning around a pivot or maintaining a top-k. Different algorithmic family." },
           ]}
@@ -878,7 +878,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
-          <p className="text-xs uppercase tracking-wider text-indigo-700 dark:text-indigo-300 font-semibold">Up next · Module 19</p>
+          <p className="text-xs uppercase tracking-wider text-indigo-700 dark:text-indigo-300 font-semibold">Up next · Module 24</p>
           <Link
             href="/courses/dsa/modules/sliding-window"
             className="block mt-2 text-xl font-bold text-slate-900 dark:text-slate-100 hover:text-indigo-700 dark:hover:text-indigo-300 no-underline"

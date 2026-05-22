@@ -118,7 +118,7 @@ flowchart LR
         <h2 id="setup">The BST: an ordering invariant on top of a binary tree</h2>
 
         <p>
-          A <strong>binary search tree</strong>{" "}is a binary tree (Module 11) with one additional rule:
+          A <strong>binary search tree</strong>{" "}is a binary tree (Module 13) with one additional rule:
         </p>
 
         <Callout variant="insight" title="The BST invariant">
@@ -180,7 +180,7 @@ flowchart LR
         <h3>Inorder traversal of a BST = sorted output</h3>
 
         <p>
-          From Module 11: inorder visits left, then root, then right. On a BST this means: smaller keys, then
+          From Module 13: inorder visits left, then root, then right. On a BST this means: smaller keys, then
           this key, then bigger keys — at every level. The output is sorted. That&apos;s why &quot;inorder is
           magic for BSTs&quot;: it&apos;s how you turn the tree back into a sorted sequence in O(n).
         </p>
@@ -647,13 +647,13 @@ events.tailMap(3000);       // {3500=c, 5000=d} — keys >= 3000`}</CodeBlock>
         <Callout variant="insight" title="The BST mental check">
           On every BST problem, ask: &quot;Can I exploit that inorder gives me sorted? Can I exploit that{" "}
           <code>x.left.val &lt; x.val &lt; x.right.val</code> globally?&quot; Both answers being &quot;no&quot;
-          usually means the problem is really a tree problem (Module 11), not a BST problem.
+          usually means the problem is really a tree problem (Module 13), not a BST problem.
         </Callout>
       </section>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final quiz ───────────────── */}
-      <Checkpoint moduleSlug="bst" id="final" title="I've completed Module 12" xp={20} celebration="BSTs and balanced trees demystified. Heaps next — a different tree shape for a different problem.">
+      <Checkpoint moduleSlug="bst" id="final" title="I've completed Module 14" xp={20} celebration="BSTs and balanced trees demystified. Heaps next — a different tree shape for a different problem.">
       <section>
         <h2 id="final">Final check</h2>
 
@@ -688,7 +688,7 @@ events.tailMap(3000);       // {3500=c, 5000=d} — keys >= 3000`}</CodeBlock>
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
-          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 12 complete</h3>
+          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 14 complete</h3>
           <p className="text-emerald-50 mb-4">
             Search trees down. The last Phase 3 module is heaps — another tree, but stored in an array and tuned
             for one specific question: &quot;what&apos;s the smallest (or largest)?&quot;

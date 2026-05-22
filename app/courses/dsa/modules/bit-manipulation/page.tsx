@@ -91,7 +91,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 6 · Module 25 · Closeout
+          Phase 6 · Module 30 · Closeout
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -806,7 +806,7 @@ n & (n-1)  =  0 0 0 0 1 0 0 0     (8 — lowest 1 of n removed)`}</CodeBlock>
           million operations — under a second.
         </p>
 
-        <CodeBlock lang="java">{`// Sketch only — full implementation comes in Module 29 (Phase 7 · Advanced DP).
+        <CodeBlock lang="java">{`// Sketch only — full implementation comes in Module 35 (Phase 7 · Advanced DP).
 // dp[mask][i] = min cost to visit exactly the cities in 'mask', ending at city i.
 
 int[][] dp = new int[1 << n][n];
@@ -826,7 +826,7 @@ for (int mask = 0; mask < (1 << n); mask++) {
         <p>
           We&apos;re leaving the actual TSP solution for Phase 7 — the point here is just to plant the seed: when{" "}
           <em>n</em>{" "}is small (≤ 20-ish) and the state needs to remember &quot;which subset have we seen,&quot;
-          bitmask DP is the technique. Module 29 will work this out properly.
+          bitmask DP is the technique. Module 35 will work this out properly.
         </p>
 
         <Quiz
@@ -982,7 +982,7 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
       </Checkpoint>
 
       {/* ───────────────── Part 7 · Phase 6 wrap-up ───────────────── */}
-      <Checkpoint moduleSlug="bit-manipulation" id="phase-recap" title="I've completed Module 25 — and Phase 6!" xp={50} celebration="Eight algorithmic techniques. You now have a vocabulary for solving most of the LeetCode catalog. Phase 7 — Dynamic Programming — is where the real bossfights live.">
+      <Checkpoint moduleSlug="bit-manipulation" id="phase-recap" title="I've completed Module 30 — and Phase 6!" xp={50} celebration="Eight algorithmic techniques. You now have a vocabulary for solving most of the LeetCode catalog. Phase 7 — Dynamic Programming — is where the real bossfights live.">
       <section>
         <h2 id="phase-recap">Phase 6 · Algorithmic Techniques wrap-up</h2>
 
@@ -1118,7 +1118,7 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
             { id: "4", label: "Find the smallest number in [1, n] whose square exceeds x.", answer: "bsearch", explanation: "Monotonic predicate (i² > x flips false→true exactly once). Binary search on the answer space [1, n]. O(log n)." },
             { id: "5", label: "Pair up tasks so the difference between max and min within each pair is minimized.", answer: "two-ptr", explanation: "Sort, then pair smallest-with-largest using head and tail pointers. Classic two-pointer convergence over a sorted array." },
             { id: "6", label: "Schedule N meetings into the fewest possible rooms.", answer: "greedy", explanation: "Sort by start time, greedily assign each meeting to the earliest-freeing room (min-heap of room-end-times). Greedy + heap is the canonical interval-scheduling pattern." },
-            { id: "7", label: "Among all 2^n subsets of n ≤ 20 cities, find the one minimizing total tour cost.", answer: "bitmask", explanation: "n ≤ 20 plus 'subset' is the bitmask DP signature. dp[mask][last_city]. We sketched it in this module; the full solution is in Module 29." },
+            { id: "7", label: "Among all 2^n subsets of n ≤ 20 cities, find the one minimizing total tour cost.", answer: "bitmask", explanation: "n ≤ 20 plus 'subset' is the bitmask DP signature. dp[mask][last_city]. We sketched it in this module; the full solution is in Module 35." },
             { id: "8", label: "Place 8 queens on an 8x8 board with no two attacking each other.", answer: "backtrack", explanation: "Place row by row, prune when a queen attacks any earlier row. Backtrack on dead-end. Choose / explore / unchoose, with diagonals tracked in three sets (or three bitmasks)." },
             { id: "9", label: "In an array where every element appears 3 times except one (which appears once), find the loner — O(1) extra space.", answer: "bitmask", explanation: "Generalization of Single Number. Track ones-count and twos-count of each bit-column; the value with count 1 mod 3 survives. XOR isn't enough alone — you need a small bit-state machine." },
             { id: "10", label: "Smallest contiguous subarray whose sum is at least target (positive ints).", answer: "sliding", explanation: "Variable-window: expand right while sum < target; record length and shrink left while sum >= target. O(n)." },

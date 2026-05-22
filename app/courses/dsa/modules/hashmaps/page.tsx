@@ -401,7 +401,7 @@ static final int MIN_TREEIFY_CAPACITY = 64;           // resize first if smaller
           <code>HashMap</code> iteration order is &quot;the order entries happen to live in the buckets&quot; —
           essentially arbitrary, and it can change after a resize. <strong>Never rely on iteration order.</strong>{" "}
           If you need insertion order, use <code>LinkedHashMap</code>. If you need sorted-key order, use{" "}
-          <code>TreeMap</code> (which is a red-black tree, not a hash table — Module 12).
+          <code>TreeMap</code> (which is a red-black tree, not a hash table — Module 14).
         </p>
 
         <Quiz
@@ -709,7 +709,7 @@ public int hashCode() {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final quiz ───────────────── */}
-      <Checkpoint moduleSlug="hashmaps" id="final" title="I've completed Module 9" xp={20} celebration="Hashing demystified. Sets and frequency counting are next, and they're mostly applied HashMap.">
+      <Checkpoint moduleSlug="hashmaps" id="final" title="I've completed Module 11" xp={20} celebration="Hashing demystified. Sets and frequency counting are next, and they're mostly applied HashMap.">
       <section>
         <h2 id="final">Final check</h2>
 
@@ -743,7 +743,7 @@ public int hashCode() {
           ]}
         />
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
-          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 9 complete</h3>
+          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 11 complete</h3>
           <p className="text-emerald-50 mb-4">
             Hashing is the single most useful idea in this course. The next module — sets — is the same machinery
             reframed as &quot;does X exist?&quot; with a frequency-counting twist that solves a surprising number

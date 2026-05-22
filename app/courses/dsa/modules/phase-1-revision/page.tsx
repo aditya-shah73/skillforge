@@ -573,7 +573,7 @@ flowchart LR
         </div>
 
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
-          Full deep dive: <Link href="/courses/dsa/modules/java-collections" className="text-emerald-600 hover:underline">Module 18 — Java Collections Framework deep dive</Link> (Phase 5).
+          Full deep dive: <Link href="/courses/dsa/modules/java-collections" className="text-emerald-600 hover:underline">Module 21 — Java Collections Framework deep dive</Link> (Phase 5).
         </p>
       </section>
 

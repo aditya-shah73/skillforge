@@ -94,7 +94,7 @@ flowchart LR
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 8 · Module 33 · Interview Prep
+          Phase 8 · Module 40 · Interview Prep
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -1550,7 +1550,7 @@ Me: "Final complexity:
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Module 33 done · One left</h3>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Module 40 done · One left</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             You have the patterns (Phases 2–7), the advanced structures (Phase 8&apos;s tries, union-find, advanced
             graphs), and now the framework that unifies them under interview pressure. The capstone is a curated
@@ -1561,7 +1561,7 @@ Me: "Final complexity:
             href="/courses/dsa/modules/capstone"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Module 34 · Capstone: 20-problem mixed set →
+            Module 41 · Capstone: 20-problem mixed set →
           </Link>
         </div>
       </section>

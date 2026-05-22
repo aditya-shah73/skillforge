@@ -97,7 +97,7 @@ flowchart LR
           Look at the API of <code>HashSet</code> and you&apos;ll notice it&apos;s exactly <code>HashMap</code> with the
           value half snipped off. In fact, the JDK source <em>literally</em>{" "}backs <code>HashSet</code> with a{" "}
           <code>HashMap&lt;E, Object&gt;</code>, where every key maps to the same dummy <code>PRESENT</code>{" "}
-          sentinel. Everything you learned in Module 9 — hashing, chaining, load factor, treeification, the{" "}
+          sentinel. Everything you learned in Module 11 — hashing, chaining, load factor, treeification, the{" "}
           <code>equals</code>/<code>hashCode</code> contract — applies here, full stop.
         </p>
 
@@ -198,7 +198,7 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
 
         <h3>TreeSet — sorted order, log time</h3>
         <ul>
-          <li><strong>Backed by:</strong> <code>TreeMap</code>, which is a red-black tree (Module 12).</li>
+          <li><strong>Backed by:</strong> <code>TreeMap</code>, which is a red-black tree (Module 14).</li>
           <li><strong>Order:</strong>{" "}sorted, by natural order or by a <code>Comparator</code> you supply.</li>
           <li><strong>add / contains / remove:</strong>{" "}O(log n). Always. No hashing involved.</li>
           <li><strong>Bonus:</strong> <code>first</code>, <code>last</code>, <code>floor</code>, <code>ceiling</code>, <code>headSet</code>, <code>tailSet</code> — range queries, all O(log n).</li>
@@ -317,7 +317,7 @@ boolean isAnagram(String s, String t) {
             { title: "Has a duplicate? (LC 217)", body: "Walk the array; bail when freq[x] becomes 2. Or use a HashSet and bail when add returns false. O(n)." },
             { title: "Anagram / permutation match? (LC 242)", body: "Build freq for s, decrement for t, check all-zero. Or compare two freq maps with .equals." },
             { title: "Most common element? (LC 1, 49 group anagrams, 169 majority element)", body: "Build the full freq map, then scan its entries for the max. Two passes total." },
-            { title: "Top K most common? (LC 347)", body: "Build freq, then push entries into a min-heap of size K. O(n log K). Heaps are Module 13 — the punchline lands soon." },
+            { title: "Top K most common? (LC 347)", body: "Build freq, then push entries into a min-heap of size K. O(n log K). Heaps are Module 15 — the punchline lands soon." },
           ]}
         />
 
@@ -346,7 +346,7 @@ boolean isAnagram(String s, String t) {
         </p>
 
         <p>
-          The full sliding-window pattern lives in Module 19. This module teaches the frequency-map half of the
+          The full sliding-window pattern lives in Module 24. This module teaches the frequency-map half of the
           combo, then shows you the assembled engine on one canonical problem.
         </p>
 
@@ -465,7 +465,7 @@ boolean isAnagram(String s, String t) {
         <p>
           Test it: offer the chars of <code>&quot;abacaba&quot;</code> with a window of 4 and watch{" "}
           <code>distinct()</code> climb and stabilize. The whole class is one frequency map (the int array) plus a
-          ring buffer (Module 8) for the eviction order. Notice how each <code>offer</code> is O(1) — no scanning.
+          ring buffer (Module 9) for the eviction order. Notice how each <code>offer</code> is O(1) — no scanning.
         </p>
 
         <h3>Part B — LeetCode warm-ups</h3>
@@ -499,7 +499,7 @@ boolean isAnagram(String s, String t) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final quiz ───────────────── */}
-      <Checkpoint moduleSlug="sets" id="final" title="I've completed Module 10" xp={15} celebration="Sets and frequency counting unlocked. Trees are next — recursion's natural home.">
+      <Checkpoint moduleSlug="sets" id="final" title="I've completed Module 12" xp={15} celebration="Sets and frequency counting unlocked. Trees are next — recursion's natural home.">
       <section>
         <h2 id="final">Final check</h2>
 
@@ -534,7 +534,7 @@ boolean isAnagram(String s, String t) {
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
-          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 10 complete</h3>
+          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 12 complete</h3>
           <p className="text-emerald-50 mb-4">
             Sets and frequency counting put a lot of medium-difficulty problems within reach. Next up: trees —
             the recursive shape that powers traversal, search trees, heaps, and basically all of Phase 4&apos;s

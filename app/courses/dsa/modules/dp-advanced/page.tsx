@@ -120,7 +120,7 @@ flowchart TD
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 7 · Module 29 · Closeout
+          Phase 7 · Module 35 · Closeout
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -722,7 +722,7 @@ Total: 7 nonzero submasks, plus the empty one, = 2^3 = 8 = number of subsets of 
 
         <p>
           Time <code>O(n · target)</code>, space <code>O(target)</code>. This is the &quot;knapsack-style&quot; DP
-          you saw in Module 28. Already good enough to pass the LeetCode constraints — but there&apos;s a cute
+          you saw in Module 34. Already good enough to pass the LeetCode constraints — but there&apos;s a cute
           bitset variant that&apos;s faster by a factor of 64.
         </p>
 
@@ -862,7 +862,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Choosing the right shape ───────────────── */}
-      <Checkpoint moduleSlug="dp-advanced" id="shape" title="I've completed Module 29 — and Phase 7!" xp={50} celebration="Five DP families: 1D, 2D, interval, tree, bitmask. You can now read a problem and pick the right state shape on first read. Phase 8 — interview prep — is next.">
+      <Checkpoint moduleSlug="dp-advanced" id="shape" title="I've completed Module 35 — and Phase 7!" xp={50} celebration="Five DP families: 1D, 2D, interval, tree, bitmask. You can now read a problem and pick the right state shape on first read. Phase 8 — interview prep — is next.">
       <section>
         <h2 id="shape">Choosing the right DP shape</h2>
 
@@ -1010,7 +1010,7 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
         </div>
 
         <div className="not-prose mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40">
-          <p className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-semibold">Up next · Phase 8 · Module 30</p>
+          <p className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-semibold">Up next · Phase 8 · Module 37</p>
           <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mt-1 mb-2">Tries</h3>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
             The prefix-tree structure for string problems. When a hashmap of strings is good but a trie is great:

@@ -233,7 +233,7 @@ flowchart TB
           </p>
           <p>
             Use <code>ArrayDeque&lt;E&gt;</code> as a stack — call <code>push</code>, <code>pop</code>, and{" "}
-            <code>peek</code> on it. It's an array-backed deque, faster, and correct. Module 8 explains why.
+            <code>peek</code> on it. It's an array-backed deque, faster, and correct. Module 9 explains why.
           </p>
         </Callout>
 
@@ -547,7 +547,7 @@ public class MinStack {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="stacks" id="final" title="I've completed Module 7" xp={25} celebration="Stacks are now reflex. Queues — the FIFO mirror image — are next.">
+      <Checkpoint moduleSlug="stacks" id="final" title="I've completed Module 8" xp={25} celebration="Stacks are now reflex. Queues — the FIFO mirror image — are next.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -597,7 +597,7 @@ public class MinStack {
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border border-amber-200 dark:border-amber-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 8 — Queues &amp; deques</h3>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 9 — Queues &amp; deques</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             FIFO (the inverse of LIFO). Ring buffers and ArrayDeque under the hood. The data structure that powers
             BFS, task queues, and sliding-window algorithms.
@@ -606,7 +606,7 @@ public class MinStack {
             href="/courses/dsa/modules/queues"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Continue to Module 8 — Queues &amp; deques →
+            Continue to Module 9 — Queues &amp; deques →
           </Link>
         </div>
       </section>

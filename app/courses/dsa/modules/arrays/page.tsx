@@ -467,7 +467,7 @@ public void add(int index, E element) {
 
         <Callout variant="warn" title="add(0, x) is a footgun in tight loops">
           <p className="m-0">
-            Calling <code>add(0, x)</code> n times is O(n²) — every insert shifts the entire list. If you find yourself doing this, you almost certainly want a <code>Deque</code> (Module 8) or to build the list in reverse and call <code>Collections.reverse</code> at the end.
+            Calling <code>add(0, x)</code> n times is O(n²) — every insert shifts the entire list. If you find yourself doing this, you almost certainly want a <code>Deque</code> (Module 9) or to build the list in reverse and call <code>Collections.reverse</code> at the end.
           </p>
         </Callout>
 
@@ -514,7 +514,7 @@ public void add(int index, E element) {
             { takeaway: "get/set/size are O(1). Append is amortized O(1).", detail: "These are the operations dynamic arrays are good at. Lean on them." },
             { takeaway: "add(i, x) and remove(i) for arbitrary i are O(n).", detail: "Shifts are unavoidable when you need to keep slots contiguous. If you're doing many mid-array inserts, the wrong data structure is in play." },
             { takeaway: "Removing the last element is O(1); removing the first is O(n).", detail: "Asymmetric behavior — append/pop-back is the cheap pattern, push/pop-front is not." },
-            { takeaway: "contains is O(n) — there's no shortcut on an unsorted array.", detail: "If you're doing many lookups, hash sets (Module 9-10) or sorted arrays with binary search (Module 20) are what you want." },
+            { takeaway: "contains is O(n) — there's no shortcut on an unsorted array.", detail: "If you're doing many lookups, hash sets (Modules 11-12) or sorted arrays with binary search (Module 25) are what you want." },
           ]}
         />
       </section>
@@ -526,7 +526,7 @@ public void add(int index, E element) {
         <h2>Part 4: The first two patterns — prefix sum and two pointers (preview)</h2>
 
         <p>
-          Arrays are the substrate every linear algorithm walks on. Two patterns show up often enough that you should recognize them on sight. We&apos;ll do them properly later (two pointers in Module 18, sliding window in Module 19), but introducing them here is how the &ldquo;pattern-first&rdquo; approach starts.
+          Arrays are the substrate every linear algorithm walks on. Two patterns show up often enough that you should recognize them on sight. We&apos;ll do them properly later (two pointers in Module 23, sliding window in Module 24), but introducing them here is how the &ldquo;pattern-first&rdquo; approach starts.
         </p>
 
         <h3>Pattern 1: Prefix sum (the running total)</h3>
@@ -562,7 +562,7 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
           question="prefix[r+1] - prefix[l] gives the sum of arr[l..r]. Why?"
           options={[
             { label: "Because subtraction undoes addition.", explanation: "True but not specific. The point is which sums cancel." },
-            { label: "prefix[r+1] is sum of arr[0..r], prefix[l] is sum of arr[0..l-1]; subtracting cancels arr[0..l-1] and leaves arr[l..r].", correct: true, explanation: "Right. You're 'cancelling out' the prefix you don't want. This telescoping idea generalizes to 2D prefix sums (Module 28) and many other range-query structures." },
+            { label: "prefix[r+1] is sum of arr[0..r], prefix[l] is sum of arr[0..l-1]; subtracting cancels arr[0..l-1] and leaves arr[l..r].", correct: true, explanation: "Right. You're 'cancelling out' the prefix you don't want. This telescoping idea generalizes to 2D prefix sums (Module 34) and many other range-query structures." },
             { label: "Because the prefix array is sorted.", explanation: "It isn't (unless all values are non-negative). And sortedness isn't what makes the trick work — telescoping does." },
             { label: "Because arr[l..r] equals (r - l + 1) elements.", explanation: "That's the count of elements, not their sum." },
           ]}
@@ -596,7 +596,7 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
         </Callout>
 
         <p>
-          We&apos;ll do this properly in Module 18 with all the variants — opposite-end vs same-direction, the partitioning twist, &ldquo;3Sum&rdquo;. The point right now is just to plant the flag: when you have a sorted array, two pointers is on the table.
+          We&apos;ll do this properly in Module 23 with all the variants — opposite-end vs same-direction, the partitioning twist, &ldquo;3Sum&rdquo;. The point right now is just to plant the flag: when you have a sorted array, two pointers is on the table.
         </p>
 
         <Quiz
@@ -750,7 +750,7 @@ size++;`}</CodeBlock>
       </Checkpoint>
 
       {/* PART 6: FINAL QUIZ */}
-      <Checkpoint moduleSlug="arrays" id="final" title="Final quiz" xp={30} celebration="Module 4 done. Onto strings.">
+      <Checkpoint moduleSlug="arrays" id="final" title="Final quiz" xp={30} celebration="Module 5 done. Onto strings.">
       <section>
         <h2>Final check</h2>
 
@@ -782,7 +782,7 @@ size++;`}</CodeBlock>
           options={[
             { label: "Reading lines from a file when you don't know how many there are.", explanation: "Solid use case. Append-as-you-go is exactly what dynamic arrays are for." },
             { label: "Storing the results of a for-loop transformation, indexed access by position.", explanation: "Append-then-index. Squarely in ArrayList's strength zone." },
-            { label: "A queue where you frequently remove from the front and add at the back.", correct: true, explanation: "Right — this is the wrong tool. remove(0) is O(n) on ArrayList. ArrayDeque (Module 8) gives you O(1) on both ends." },
+            { label: "A queue where you frequently remove from the front and add at the back.", correct: true, explanation: "Right — this is the wrong tool. remove(0) is O(n) on ArrayList. ArrayDeque (Module 9) gives you O(1) on both ends." },
             { label: "Caching computed results for later O(1) lookup by index.", explanation: "Indexed lookup is what ArrayList is best at. Solid use case." },
           ]}
         />
@@ -807,13 +807,13 @@ size++;`}</CodeBlock>
             Indexing as address arithmetic. Doubling as the price of amortized O(1). The mid-array shift as the source of O(n) inserts. The size/capacity split. Prefix sums and two pointers as the first two named patterns.
           </p>
           <p className="mb-4 opacity-95">
-            <strong>Up next: Module 5 — Strings &amp; string building.</strong>{" "}Strings are arrays in disguise (almost). The twist is immutability — and the trap of building a string with <code>+</code> in a loop.
+            <strong>Up next: Module 6 — Strings &amp; string building.</strong>{" "}Strings are arrays in disguise (almost). The twist is immutability — and the trap of building a string with <code>+</code> in a loop.
           </p>
           <Link
             href="/courses/dsa/modules/strings"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-amber-700 font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Continue to Module 5 — Strings &amp; string building →
+            Continue to Module 6 — Strings &amp; string building →
           </Link>
         </div>
       </section>

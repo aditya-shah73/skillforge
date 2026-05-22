@@ -165,7 +165,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 7 · Module 26 · Dynamic Programming
+          Phase 7 · Module 32 · Dynamic Programming
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -213,7 +213,7 @@ flowchart TB
         <h3>Draw the recursion tree</h3>
 
         <p>
-          Every recursive function has a recursion tree (Module 22). For <code>fib(5)</code>, it looks like this:
+          Every recursive function has a recursion tree (Module 27). For <code>fib(5)</code>, it looks like this:
         </p>
 
         <Mermaid chart={fibOverlap} />
@@ -839,10 +839,10 @@ private int climb(int n, Integer[] memo) {
           items={[
             { id: "1", label: "Number of ways to tile a 2×n grid using 2×1 dominoes.", answer: "yes", explanation: "Same recurrence: dp[n] = dp[n-1] + dp[n-2]. The first column is either covered by one vertical domino (leaving a 2×(n-1) grid) or by two horizontal dominoes stacked (leaving 2×(n-2)). Fibonacci in disguise." },
             { id: "2", label: "Number of distinct ways to reach step n if you can take 1, 2, or 3 steps at a time.", answer: "yes", explanation: "Same shape, just three terms: dp[n] = dp[n-1] + dp[n-2] + dp[n-3]. Constant lookback, base cases set explicitly." },
-            { id: "3", label: "Number of ways to make change for amount k with coins {1, 5, 10, 25}.", answer: "no", explanation: "This is also a 1D DP, but the recurrence is over coin denominations, not step indices, and it requires double iteration (over coins × amounts) to avoid double-counting permutations. Different shape — covered in Module 27 (1D DP patterns)." },
+            { id: "3", label: "Number of ways to make change for amount k with coins {1, 5, 10, 25}.", answer: "no", explanation: "This is also a 1D DP, but the recurrence is over coin denominations, not step indices, and it requires double iteration (over coins × amounts) to avoid double-counting permutations. Different shape — covered in Module 33 (1D DP patterns)." },
             { id: "4", label: "Maximum sum of a contiguous subarray (Kadane's algorithm).", answer: "yes", explanation: "dp[i] = max(nums[i], dp[i-1] + nums[i]) — depends on a constant lookback (one step), constant work per cell. Linear scan with a single previous value, very much in the Climbing-Stairs family." },
             { id: "5", label: "House Robber: maximum non-adjacent sum.", answer: "yes", explanation: "dp[i] = max(dp[i-1], dp[i-2] + nums[i]) — constant lookback, constant work per cell. The recurrence isn't a sum (it's a max), but the shape — index-by-index, two-step lookback — is identical." },
-            { id: "6", label: "Edit distance between two strings.", answer: "no", explanation: "Two-dimensional DP — state is (i, j) for prefixes of both strings, recurrence depends on dp[i-1][j-1], dp[i-1][j], dp[i][j-1]. Different shape entirely; needs a 2D table. Module 28 (2D DP)." },
+            { id: "6", label: "Edit distance between two strings.", answer: "no", explanation: "Two-dimensional DP — state is (i, j) for prefixes of both strings, recurrence depends on dp[i-1][j-1], dp[i-1][j], dp[i][j-1]. Different shape entirely; needs a 2D table. Module 34 (2D DP)." },
             { id: "7", label: "Decode a numeric string into letters (LC 91 Decode Ways).", answer: "yes", explanation: "dp[i] = ways to decode prefix of length i = (decode last 1 char if valid) + (decode last 2 chars if valid). Same constant-lookback shape, with conditional contributions based on character validity." },
             { id: "8", label: "Longest increasing subsequence.", answer: "no", explanation: "dp[i] = longest LIS ending at index i, computed via dp[i] = 1 + max(dp[j] for j < i with nums[j] < nums[i]). The lookback isn't a constant number of steps — it scans ALL earlier indices. O(n²) shape, not the Climbing-Stairs O(n) shape." },
           ]}
@@ -1054,7 +1054,7 @@ private int climb(int n, Integer[] memo) {
             { takeaway: "Constant-lookback 1D DPs admit O(1) space via two scalars.", detail: "If dp[i] depends only on dp[i-1] and dp[i-2], you can throw away the array and keep two variables. Climbing Stairs, House Robber, Fibonacci, 2×n tiling all use this trick." },
             { takeaway: "The two tells: overlapping subproblems + optimal substructure.", detail: "Without overlap, caching is pointless (divide-and-conquer regime). Without optimal substructure, the cache stores the wrong answers (longest simple path is the famous counter-example). DP is exactly the regime where both hold." },
             { takeaway: "The DP recipe: state, recurrence, base cases, order of computation.", detail: "State: what does dp[i] mean? Recurrence: how does dp[i] depend on smaller dp's? Base: where does the recursion ground out? Order: top-down (memo) or bottom-up (tab)? Most of the difficulty in any DP problem is finding the recurrence — the rest is mechanical." },
-            { takeaway: "Climbing Stairs and House Robber are templates, not just problems.", detail: "Climbing Stairs is the count-the-paths shape (sums of previous dp's). House Robber is the optimization shape (max/min over previous dp's plus a local contribution). Together they cover most of the 1D DP world. Module 27 generalizes both." },
+            { takeaway: "Climbing Stairs and House Robber are templates, not just problems.", detail: "Climbing Stairs is the count-the-paths shape (sums of previous dp's). House Robber is the optimization shape (max/min over previous dp's plus a local contribution). Together they cover most of the 1D DP world. Module 33 generalizes both." },
           ]}
         />
       </section>
@@ -1062,7 +1062,7 @@ private int climb(int n, Integer[] memo) {
 
       {/* ───────────────── Forward link ───────────────── */}
       <div className="not-prose mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-800 bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/40 dark:to-pink-950/40">
-        <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Module 27</p>
+        <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Module 33</p>
         <Link
           href="/courses/dsa/modules/dp-1d"
           className="block mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100 no-underline hover:text-fuchsia-700 dark:hover:text-fuchsia-300 transition"

@@ -312,7 +312,7 @@ for (int[] e : edges) {
         </Callout>
 
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
-          Source: <Link href="/courses/dsa/modules/advanced-graph" className="text-emerald-600 hover:underline">Module 39 — Advanced graph algorithms</Link> (Dijkstra is reviewed from <Link href="/courses/dsa/modules/shortest-path" className="text-emerald-600 hover:underline">Module 23 — Shortest path</Link>, Phase 4).
+          Source: <Link href="/courses/dsa/modules/advanced-graph" className="text-emerald-600 hover:underline">Module 39 — Advanced graph algorithms</Link> (Dijkstra is reviewed from <Link href="/courses/dsa/modules/shortest-path" className="text-emerald-600 hover:underline">Module 19 — Shortest path</Link>, Phase 4).
         </p>
       </section>
 

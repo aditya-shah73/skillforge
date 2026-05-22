@@ -88,7 +88,7 @@ flowchart LR
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 4 · Module 16 · Closeout
+          Phase 4 · Module 19 · Closeout
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -131,7 +131,7 @@ Bottom path: A ───────── 100 ────────── B 
         <p>
           BFS processes nodes in FIFO order, which corresponds to breadth in unweighted graphs. The fix is to process
           them in order of <em>accumulated distance from the source</em>. The data structure that gives you &quot;always
-          extract the smallest&quot; is a min-heap — which you saw in Module 13. Plug a min-heap into the BFS template,
+          extract the smallest&quot; is a min-heap — which you saw in Module 15. Plug a min-heap into the BFS template,
           ordering by distance, and you have <strong>Dijkstra&apos;s algorithm</strong>.
         </p>
 
@@ -605,7 +605,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="shortest-path" id="final" title="I've completed Module 16 — and Phase 4!" xp={40} celebration="Graphs are no longer mysterious. Phase 5 — Java Collections in depth — sets up the rest of your interview toolkit.">
+      <Checkpoint moduleSlug="shortest-path" id="final" title="I've completed Module 19 — and Phase 4!" xp={40} celebration="Graphs are no longer mysterious. Phase 5 — Java Collections in depth — sets up the rest of your interview toolkit.">
       <section>
         <h2 id="final">Final quiz</h2>
 

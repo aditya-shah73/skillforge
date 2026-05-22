@@ -131,7 +131,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 8 · Module 32 · Advanced graphs
+          Phase 8 · Module 39 · Advanced graphs
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -765,7 +765,7 @@ public int kruskalMST(int n, int[][] edges) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Prim & cheat sheet ───────────────── */}
-      <Checkpoint moduleSlug="advanced-graph" id="prim" title="I can pick the right shortest-path/MST algorithm in seconds" xp={40} celebration="You now have the full graph-algorithm toolkit. Module 33 — Interview problem-solving framework — wraps everything you've learned into a repeatable approach.">
+      <Checkpoint moduleSlug="advanced-graph" id="prim" title="I can pick the right shortest-path/MST algorithm in seconds" xp={40} celebration="You now have the full graph-algorithm toolkit. Module 40 — Interview problem-solving framework — wraps everything you've learned into a repeatable approach.">
       <section>
         <h2 id="prim">Prim&apos;s algorithm + the algorithm cheat sheet</h2>
 
@@ -939,9 +939,9 @@ Streaming / online setting (edges arrive one at a time):
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Next up · Module 33 · Interview problem-solving framework</h3>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Next up · Module 40 · Interview problem-solving framework</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
-            You now have every algorithm a typical interview demands. Module 33 turns that toolkit into a repeatable
+            You now have every algorithm a typical interview demands. Module 40 turns that toolkit into a repeatable
             problem-solving process — UMPIRE, pattern recognition from problem statements, and how to communicate
             your thinking under pressure. Three full mock interviews with talk-aloud transcripts close the loop on
             Phase 8.
@@ -950,7 +950,7 @@ Streaming / online setting (edges arrive one at a time):
             href="/courses/dsa/modules/interview-framework"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Continue to Module 33 →
+            Continue to Module 40 →
           </Link>
         </div>
       </section>

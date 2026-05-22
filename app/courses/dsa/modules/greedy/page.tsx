@@ -161,7 +161,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 6 · Module 24 · Algorithmic Techniques
+          Phase 6 · Module 29 · Algorithmic Techniques
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -939,7 +939,7 @@ public static void stressTest() {
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
-          <p className="text-xs uppercase tracking-wider text-indigo-700 dark:text-indigo-300 font-semibold">Up next · Module 25</p>
+          <p className="text-xs uppercase tracking-wider text-indigo-700 dark:text-indigo-300 font-semibold">Up next · Module 30</p>
           <Link
             href="/courses/dsa/modules/bit-manipulation"
             className="mt-2 inline-flex items-center gap-2 text-2xl font-bold text-slate-900 dark:text-slate-100 no-underline hover:text-indigo-700 dark:hover:text-indigo-300 transition"

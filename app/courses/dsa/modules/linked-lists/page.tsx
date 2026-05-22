@@ -193,7 +193,7 @@ class MyLinkedList<E> {
           <p className="m-0">
             <code>java.util.LinkedList&lt;E&gt;</code> is the doubly-linked one we're modelling. It also implements{" "}
             <code>Deque</code>, so you can use it as a queue or stack. (Spoiler: <code>ArrayDeque</code> is faster for
-            almost every real workload — Module 8.)
+            almost every real workload — Module 9.)
           </p>
         </Callout>
 
@@ -559,7 +559,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="linked-lists" id="final" title="I've completed Module 6" xp={25} celebration="Linked lists are now muscle memory. Stacks and queues are next — and they're built on top of what you just learned.">
+      <Checkpoint moduleSlug="linked-lists" id="final" title="I've completed Module 7" xp={25} celebration="Linked lists are now muscle memory. Stacks and queues are next — and they're built on top of what you just learned.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -609,7 +609,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border border-amber-200 dark:border-amber-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 7 — Stacks</h3>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 8 — Stacks</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             LIFO. The call stack is a stack. Bracket matching is a stack. Reverse Polish notation is a stack. And monotonic
             stacks unlock a class of problems (next-greater-element, daily temperatures) that look impossible until you
@@ -619,7 +619,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
             href="/courses/dsa/modules/stacks"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
           >
-            Continue to Module 7 — Stacks →
+            Continue to Module 8 — Stacks →
           </Link>
         </div>
       </section>

@@ -144,7 +144,7 @@ flowchart TB
         <h2 id="setup">Trees: linked lists that branch</h2>
 
         <p>
-          Linked lists from Module 6 had nodes with a single <code>next</code> pointer. Replace <code>next</code>{" "}
+          Linked lists from Module 7 had nodes with a single <code>next</code> pointer. Replace <code>next</code>{" "}
           with two pointers — <code>left</code> and <code>right</code> — and you have a <strong>binary tree</strong>.
           Generalize to any number of children and you have a tree. That&apos;s it. The data structure isn&apos;t
           new; the <em>shape</em>{" "}is.
@@ -173,7 +173,7 @@ flowchart TB
           These four words get muddled. <strong>Binary</strong>: at most 2 children per node.{" "}
           <strong>Full</strong>: every internal node has exactly 0 or 2 children — never just one.{" "}
           <strong>Complete</strong>: every level is full <em>except possibly the last</em>, which is filled
-          left-to-right (this is the heap shape, Module 13). <strong>Perfect</strong>: full and all leaves at the
+          left-to-right (this is the heap shape, Module 15). <strong>Perfect</strong>: full and all leaves at the
           same depth — that&apos;s the diagram above. Most interview problems just say &quot;binary tree&quot; and
           mean &quot;arbitrary, possibly unbalanced.&quot;
         </Callout>
@@ -185,7 +185,7 @@ flowchart TB
           <li><strong>The DOM</strong> — every web page is a tree of HTML elements.</li>
           <li><strong>Expression parsers</strong> — <code>(2 + 3) * 4</code> is naturally an AST: a tree of operators with operands as leaves.</li>
           <li><strong>Decision processes</strong> — game trees, classification trees, dependency resolution.</li>
-          <li><strong>Search structures</strong> — BSTs (Module 12), heaps (Module 13), tries (Module 30) are all trees underneath.</li>
+          <li><strong>Search structures</strong> — BSTs (Module 14), heaps (Module 15), tries (Module 37) are all trees underneath.</li>
         </ul>
 
         <p>
@@ -276,7 +276,7 @@ TreeNode root = new TreeNode(1,
         <ul>
           <li>
             <strong>Cache behavior is unpredictable.</strong>{" "}Walking a tree dereferences pointers all over the
-            heap. Compare with a heap stored in an array (Module 13), where cache prefetching helps.
+            heap. Compare with a heap stored in an array (Module 15), where cache prefetching helps.
           </li>
           <li>
             <strong>Recursion costs stack space.</strong>{" "}A tree of height h takes O(h) stack frames during a
@@ -288,7 +288,7 @@ TreeNode root = new TreeNode(1,
 
         <Callout variant="warn" title="The skewed-tree stack overflow">
           On LeetCode, the canonical recursion solution to most tree problems passes — until a stress test hands
-          you a tree that&apos;s really a long chain. Inserts into a BST without balancing (Module 12) produce
+          you a tree that&apos;s really a long chain. Inserts into a BST without balancing (Module 14) produce
           this if input is sorted. The fix: either guarantee balance, or use an iterative traversal with an
           explicit <code>Deque</code>. We&apos;ll show both.
         </Callout>
@@ -323,7 +323,7 @@ private int checkBalanced(TreeNode n) {
 
         <p>
           Notice the pattern: each function&apos;s body is one base case (empty tree) and one recursive case (combine
-          the answers from the subtrees). This is the recursion contract from Module 22, applied to trees. Trees
+          the answers from the subtrees). This is the recursion contract from Module 27, applied to trees. Trees
           are the cleanest place to learn it because the structure does most of the thinking for you.
         </p>
 
@@ -385,7 +385,7 @@ void postorder(TreeNode n) {
           </li>
           <li>
             <strong>Inorder</strong> — left, node, right. <strong>This is the magic one for BSTs:</strong>{" "}
-            inorder traversal of a BST yields nodes in sorted order. We&apos;ll lean on this hard in Module 12.
+            inorder traversal of a BST yields nodes in sorted order. We&apos;ll lean on this hard in Module 14.
           </li>
           <li>
             <strong>Postorder</strong> — process the node after its subtrees. Use when you need to combine child
@@ -471,7 +471,7 @@ void postorder(TreeNode n) {
         </p>
 
         <p>
-          The data structure for BFS is a <strong>queue</strong> (Module 8). Enqueue the root; while the queue is
+          The data structure for BFS is a <strong>queue</strong> (Module 9). Enqueue the root; while the queue is
           non-empty, dequeue, visit, enqueue children. The queue holds &quot;the frontier&quot; — nodes seen but
           not yet processed.
         </p>
@@ -625,7 +625,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final quiz ───────────────── */}
-      <Checkpoint moduleSlug="trees" id="final" title="I've completed Module 11" xp={20} celebration="Trees and traversals locked in. Module 12 sharpens the tree into a search structure.">
+      <Checkpoint moduleSlug="trees" id="final" title="I've completed Module 13" xp={20} celebration="Trees and traversals locked in. Module 14 sharpens the tree into a search structure.">
       <section>
         <h2 id="final">Final check</h2>
 
@@ -633,7 +633,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
           question="A binary tree of n nodes is degenerate (every node has only one child — a 'list-tree'). What's the time and space cost of a recursive in-order traversal?"
           options={[
             { label: "O(n) time, O(log n) space.", explanation: "O(log n) recursion depth assumes balance. A degenerate tree's height is n, not log n." },
-            { label: "O(n) time, O(n) space — the recursion stack reaches depth n and may blow up.", correct: true, explanation: "Right. Time is still O(n) — every node is visited once. But recursion depth equals tree height, which is n in a list-tree. That O(n) call-stack space is what blows up the JVM on a 10,000-node skewed tree. The fix is balancing (Module 12) or iterative traversal." },
+            { label: "O(n) time, O(n) space — the recursion stack reaches depth n and may blow up.", correct: true, explanation: "Right. Time is still O(n) — every node is visited once. But recursion depth equals tree height, which is n in a list-tree. That O(n) call-stack space is what blows up the JVM on a 10,000-node skewed tree. The fix is balancing (Module 14) or iterative traversal." },
             { label: "O(n²) time, O(n) space.", explanation: "Each node is visited exactly once; no work is repeated." },
             { label: "O(n log n) time, O(n) space.", explanation: "Same: each node is one constant-work visit." },
           ]}
@@ -660,7 +660,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
-          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 11 complete</h3>
+          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 13 complete</h3>
           <p className="text-emerald-50 mb-4">
             Trees and traversals are the foundation for the rest of Phase 3 — and most of Phase 4. Next module:
             BSTs, where we layer an ordering invariant on top of this structure and unlock O(log n) search.

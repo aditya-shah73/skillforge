@@ -841,7 +841,7 @@ private TrieNode buildTrie(String[] words) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Replace Words + recap ───────────────── */}
-      <Checkpoint moduleSlug="tries" id="replace" title="I've completed Module 30 — Tries" xp={25} celebration="Tries unlock the prefix-query family. Next: Union-Find for connectivity and partitioning.">
+      <Checkpoint moduleSlug="tries" id="replace" title="I've completed Module 37 — Tries" xp={25} celebration="Tries unlock the prefix-query family. Next: Union-Find for connectivity and partitioning.">
       <section>
         <h2 id="replace">Replace Words and the prefix-replacement pattern</h2>
 
@@ -1037,11 +1037,11 @@ class TrieNode {
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-rose-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Module 30 complete · Tries</h3>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Module 37 complete · Tries</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Prefix queries demystified. You can now implement a trie from scratch, recognize trie problems on sight,
             apply the DFS-plus-trie combo on a grid, and reason about when a hashmap is the right call instead.
-            Module 31 — Union-Find — picks up another specialized structure: O(α(n)) connectivity queries with two
+            Module 38 — Union-Find — picks up another specialized structure: O(α(n)) connectivity queries with two
             tiny optimizations (path compression, union by rank) doing all the heavy lifting.
           </p>
           <Link

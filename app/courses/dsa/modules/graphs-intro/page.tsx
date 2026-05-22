@@ -84,7 +84,7 @@ D   0 0 0 0"]
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 4 · Module 14 · Foundations
+          Phase 4 · Module 17 · Foundations
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -679,7 +679,7 @@ return false;`}</CodeBlock>
         />
 
         <div className="not-prose mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/30 dark:to-blue-950/30 border border-sky-200 dark:border-sky-800/40">
-          <p className="text-sm uppercase tracking-wider font-bold text-sky-700 dark:text-sky-300 mb-2">Up next · Module 15</p>
+          <p className="text-sm uppercase tracking-wider font-bold text-sky-700 dark:text-sky-300 mb-2">Up next · Module 18</p>
           <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">BFS &amp; DFS</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             The two traversals that solve most of the graph question family. When BFS gives you shortest path for free,

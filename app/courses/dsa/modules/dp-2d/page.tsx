@@ -91,7 +91,7 @@ flowchart LR
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 7 · Module 28 · 2D DP
+          Phase 7 · Module 34 · 2D DP
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -1024,10 +1024,10 @@ answer: dp[N][W]`}</CodeBlock>
 
         <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/30 dark:to-pink-950/30 border border-fuchsia-200 dark:border-fuchsia-800/40">
           <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">
-            Next up · Module 29 — Advanced DP: intervals, trees, bitmask
+            Next up · Module 35 — Advanced DP: intervals, trees, bitmask
           </h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
-            You&apos;ve handled the four 2D DP shapes that account for most LeetCode DP questions. Module 29 covers
+            You&apos;ve handled the four 2D DP shapes that account for most LeetCode DP questions. Module 35 covers
             the harder cousins: interval DP (state is a subarray <code>[i..j]</code> with a third &quot;split
             point&quot; loop), tree DP (state is &quot;subtree rooted at <code>v</code>&quot; with two flavors per
             node), and bitmask DP (state encodes a subset directly into an integer). After that, you&apos;ll have

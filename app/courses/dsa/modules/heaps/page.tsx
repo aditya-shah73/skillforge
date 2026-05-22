@@ -111,7 +111,7 @@ flowchart LR
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 3 · Module 13 · Closeout
+          Phase 3 · Module 15 · Closeout
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -505,7 +505,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
         <h4>LC 347 · Top K Frequent Elements</h4>
         <p>
           Two-step pattern that braids together everything from this phase. <strong>Step 1:</strong>{" "}count
-          frequencies with a HashMap (Module 9). <strong>Step 2:</strong>{" "}top-K over the map entries by count.
+          frequencies with a HashMap (Module 11). <strong>Step 2:</strong>{" "}top-K over the map entries by count.
         </p>
 
         <CodeBlock lang="java">{`public int[] topKFrequent(int[] nums, int k) {
@@ -699,7 +699,7 @@ public class HeapStress {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 13 — and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4 — sorting, recursion, and divide-and-conquer — is next.">
+      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 15 — and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4 — sorting, recursion, and divide-and-conquer — is next.">
       <section>
         <h2 id="final">Final quiz</h2>
 

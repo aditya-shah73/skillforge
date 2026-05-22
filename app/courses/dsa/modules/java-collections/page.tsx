@@ -81,7 +81,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-sky-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 5 · Module 17 · Synthesis
+          Phase 5 · Module 21 · Synthesis
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -619,7 +619,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="java-collections" id="final" title="I've completed Module 17 — and Phase 5!" xp={40} celebration="The Java Collections framework is no longer a forest of class names. You can pick the right tool, instantly. Phase 6 — algorithmic techniques — is the next stop.">
+      <Checkpoint moduleSlug="java-collections" id="final" title="I've completed Module 21 — and Phase 5!" xp={40} celebration="The Java Collections framework is no longer a forest of class names. You can pick the right tool, instantly. Phase 6 — algorithmic techniques — is the next stop.">
       <section>
         <h2 id="final">Final quiz</h2>
 

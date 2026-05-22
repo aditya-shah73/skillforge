@@ -140,7 +140,7 @@ flowchart TB
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 7 · Module 27 · Dynamic Programming
+          Phase 7 · Module 33 · Dynamic Programming
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -1025,7 +1025,7 @@ return prev1;`}</CodeBlock>
         />
 
         <div className="not-prose mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-800 bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/40 dark:to-pink-950/40">
-          <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Module 28</p>
+          <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Module 34</p>
           <Link
             href="/courses/dsa/modules/dp-2d"
             className="mt-2 inline-block text-xl font-bold text-slate-900 dark:text-slate-100 hover:text-fuchsia-700 dark:hover:text-fuchsia-300 transition no-underline"

@@ -805,7 +805,7 @@ System.out.printf("%nPre-sized: 10k adds, total cost = %d%n", pre.totalCost);
           href="/courses/dsa/modules/arrays"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
         >
-          Continue to Module 4 — Arrays &amp; dynamic arrays →
+          Continue to Module 5 — Arrays &amp; dynamic arrays →
         </Link>
       </section>
         <ModuleNav courseId="dsa" currentSlug="amortized-analysis" />

@@ -150,7 +150,7 @@ flowchart LR
           ← Back to DSA in Java
         </Link>
         <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
-          Phase 8 · Module 31 · Advanced
+          Phase 8 · Module 38 · Advanced
         </div>
         <h1 className="mt-4 text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
@@ -745,7 +745,7 @@ void union(int a, int b) {
           <p>
             DSU is for <em>undirected</em>{" "}connectivity. It cannot detect cycles in a <em>directed</em>{" "}graph — the
             structure has no notion of edge direction. For directed cycle detection you want the WHITE/GRAY/BLACK DFS
-            coloring from Module 15 (or topological sort with Kahn&apos;s algorithm). Reach for DSU when the relation
+            coloring from Module 18 (or topological sort with Kahn&apos;s algorithm). Reach for DSU when the relation
             you&apos;re tracking is symmetric.
           </p>
         </Callout>
@@ -937,7 +937,7 @@ public int kruskal(int n, int[][] edges) {
           ]}
           items={[
             { id: "1", label: "Detect a cycle in an undirected graph as edges arrive one at a time.", answer: "dsu", explanation: "Streaming undirected cycle detection is DSU's signature use case. Each edge: if endpoints already share a root, the edge closes a cycle." },
-            { id: "2", label: "Detect a cycle in a directed graph.", answer: "other", explanation: "DSU has no edge direction. Use DFS with WHITE/GRAY/BLACK coloring (Module 15) or Kahn's topological sort with a remaining-count check." },
+            { id: "2", label: "Detect a cycle in a directed graph.", answer: "other", explanation: "DSU has no edge direction. Use DFS with WHITE/GRAY/BLACK coloring (Module 18) or Kahn's topological sort with a remaining-count check." },
             { id: "3", label: "Maintain the count of connected components as edges stream in.", answer: "dsu", explanation: "Initialize count = n; decrement on each successful union. O(α(n)) per update, O(1) per query." },
             { id: "4", label: "Find the shortest path between two nodes in a weighted graph.", answer: "other", explanation: "Dijkstra (with a heap) or Bellman-Ford. DSU answers connectivity, not distance." },
             { id: "5", label: "Build a minimum spanning tree.", answer: "dsu", explanation: "Kruskal's algorithm. Sort edges, union endpoints if not already connected. The cycle test is a DSU connectivity check." },
@@ -996,7 +996,7 @@ public int kruskal(int n, int[][] edges) {
         />
 
         <div className="not-prose mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-800/40">
-          <p className="text-sm uppercase tracking-wider font-bold text-pink-700 dark:text-pink-300 mb-2">Up next · Module 32</p>
+          <p className="text-sm uppercase tracking-wider font-bold text-pink-700 dark:text-pink-300 mb-2">Up next · Module 39</p>
           <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Advanced graph: MST, Bellman-Ford, Floyd-Warshall</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             You&apos;ve seen Kruskal&apos;s MST — next, Prim&apos;s alternative (heap-based), and the two heavyweight

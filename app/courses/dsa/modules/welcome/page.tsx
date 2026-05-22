@@ -78,7 +78,7 @@ export default function DsaWelcomeModule() {
       <section>
         <h2>How the course works</h2>
         <p>
-          The syllabus is <strong>34 modules across 9 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
+          The syllabus is <strong>43 modules across 9 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
         </p>
         <ol>
           <li><strong>Analogy</strong> — the intuition, before any math or code</li>
@@ -180,7 +180,7 @@ export default function DsaWelcomeModule() {
           <li><strong>Don&apos;t skip Phase 1.</strong>{" "}Big-O feels boring after seven years away — you remember it &quot;well enough.&quot; You don&apos;t. Three modules. Do them.</li>
           <li><strong>Build every data structure from scratch.</strong>{" "}Yes, even though Java has them. Building HashMap by hand is what makes you actually understand HashMap.</li>
           <li><strong>Trace by hand.</strong>{" "}Every worked example. Every time. Five minutes of arithmetic on paper beats an hour of re-reading.</li>
-          <li><strong>Ship the capstone.</strong>{" "}Module 34 is a 20-problem mixed set with writeups. Put the repo on GitHub. Link it from your resume. That&apos;s the artifact recruiters and hiring managers can verify.</li>
+          <li><strong>Ship the capstone.</strong>{" "}Module 41 is a 20-problem mixed set with writeups. Put the repo on GitHub. Link it from your resume. That&apos;s the artifact recruiters and hiring managers can verify.</li>
         </ol>
       </section>
 
