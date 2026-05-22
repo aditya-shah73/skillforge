@@ -23,21 +23,21 @@ export default function PromptCachingModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Prompt caching &amp; cost
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The other half of running LLMs at production scale — and the line item finance asks about.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="prompt-caching" />
@@ -52,18 +52,18 @@ export default function PromptCachingModule() {
 
       {/* ===================== Part 1 ===================== */}
       <section id="two-caches">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 1 — Two different &quot;caches&quot;</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 1 — Two different &quot;caches&quot;</h2>
 
         <p>
           The word &quot;caching&quot; gets thrown around for two unrelated things in LLM-land. They sound similar and they&apos;re completely different mechanisms. Burning this distinction in early prevents a year of confused conversations.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">KV caching (inference internals)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">KV caching (inference internals)</h3>
         <p>
           When the model generates a response, each new token attends over every previous token. If it had to recompute attention for every prior token on every step, generation would be quadratic and unusably slow. So inference engines cache the &quot;keys&quot; and &quot;values&quot; from each prior token&apos;s attention computation — the famous <strong>KV cache</strong>. This is an <em>internal optimization</em>{" "}at inference time. You don&apos;t configure it, you don&apos;t pay for it differently, you don&apos;t even see it as a developer. You met this back in Phase 1.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">API prompt caching (this module)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">API prompt caching (this module)</h3>
         <p>
           Anthropic&apos;s API also offers an <em>opt-in, billable, observable</em>{" "}cache — a totally different beast. You mark a chunk of your prompt with <code>cache_control</code>. The first request stores that prefix server-side (encoded form) for 5 minutes (default) or 1 hour (extended). Subsequent requests with the <em>same exact prefix</em>{" "}within that window get a <strong>cache hit</strong> — input tokens for that prefix bill at ~10% of the normal rate.
         </p>
@@ -114,9 +114,9 @@ You observe?    Invisible                   Usage block reports cache_creation
 
       {/* ===================== Part 2 ===================== */}
       <section id="how-it-works">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 2 — How API prompt caching works</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 2 — How API prompt caching works</h2>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">The mental model: cached prefixes</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">The mental model: cached prefixes</h3>
         <p>
           You can mark up to 4 cache breakpoints in a single request. Each breakpoint says &quot;everything <em>before</em>{" "}me is a cacheable prefix.&quot; Anthropic hashes that prefix; if a subsequent request has the same hash, it&apos;s a cache hit.
         </p>
@@ -150,23 +150,23 @@ get reused thousands of times an hour — caching is essentially free money,
 provided you set it up right.`}</CodeBlock>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Three rules that matter</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Three rules that matter</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Exact-prefix match</strong> — every byte before the cache breakpoint must be identical, including whitespace. Change one comma in your system prompt and you bust the cache for every cached request.</li>
           <li><strong>Order matters</strong> — system → tools → messages. Mark caches in stable parts (system prompt, tool definitions, long shared context). Don&apos;t cache parts that change per-request.</li>
           <li><strong>Cache TTL = 5 minutes by default</strong> — every cache hit refreshes the TTL. As long as traffic keeps flowing, the cache stays warm. Idle longer than 5 min, you&apos;ll pay write again. Anthropic also offers a 1-hour cache (different pricing).</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What to cache</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What to cache</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Long static system prompts</strong> — the obvious win. Anything &gt;500 tokens, used by &gt;1 user.</li>
           <li><strong>Tool definitions</strong> — they can be huge. Cache them, they almost never change.</li>
           <li><strong>RAG &quot;context blocks&quot;</strong> — for tenanted RAG with stable corpora, the retrieved context can be cached when the same docs come back across users.</li>
           <li><strong>Few-shot examples</strong> — large few-shot blocks are great cache candidates.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What NOT to cache</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What NOT to cache</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li>Per-user data that varies every request (you&apos;ll cache-write each time, paying a premium with no payoff).</li>
           <li>Anything below the minimum cacheable size (1024 tokens for most models — short prompts simply can&apos;t be cached).</li>
           <li>Highly volatile content (timestamps, request IDs in the prefix).</li>
@@ -199,7 +199,7 @@ provided you set it up right.`}</CodeBlock>
 
       {/* ===================== Part 3 ===================== */}
       <section id="spring-cache">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 3 — <code>cache_control</code> in Spring AI</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 3 — <code>cache_control</code> in Spring AI</h2>
 
         <p>
           Spring AI exposes Anthropic&apos;s caching via provider-specific options. The cleanest way is to set it on the system prompt at builder time — once per service, applied to every call.
@@ -245,7 +245,7 @@ public class SupportService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Caching tool definitions</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Caching tool definitions</h3>
         <p>
           For Module 11&apos;s assistant pattern, the tool definitions can dwarf the system prompt. They&apos;re sent on every call. They almost never change. Perfect cache candidate. The same <code>cacheTtl</code> options apply when tools are attached — Spring AI&apos;s Anthropic adapter writes <code>cache_control</code> onto the long, stable blocks (system prompt and tool definitions) so a single cached prefix covers both:
         </p>
@@ -261,11 +261,11 @@ chatClient.prompt()
     .call()
     .content();`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Verifying it works</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Verifying it works</h3>
         <p>
           Cache effectiveness is observable in <code>ChatResponse.getMetadata().getUsage()</code>. Anthropic returns four numbers per response:
         </p>
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><code>input_tokens</code> — tokens billed at the normal input rate.</li>
           <li><code>cache_creation_input_tokens</code> — tokens you wrote to the cache (premium-billed).</li>
           <li><code>cache_read_input_tokens</code> — tokens served from cache (~10% of normal).</li>
@@ -301,13 +301,13 @@ chatClient.prompt()
 
       {/* ===================== Part 4 ===================== */}
       <section id="tracking-cost">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 4 — Tracking cost in code</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 4 — Tracking cost in code</h2>
 
         <p>
           The single biggest cost-control lever is <strong>knowing what you spent</strong>. Anthropic gives you precise token counts on every response; turning those into dollars and surfacing them in your app is straightforward — and once you have it, regressions get caught instantly.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">A cost-tracking advisor</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">A cost-tracking advisor</h3>
         <p>
           The pattern lifted from Module 10: write a <code>CallAdvisor</code> that wraps every call, reads usage out of the response, multiplies by per-model rates, and reports.
         </p>
@@ -365,8 +365,8 @@ public class CostTrackingAdvisor implements CallAdvisor {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What to alarm on</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What to alarm on</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Cost-per-request P95</strong> — a creeping P95 means prompts are growing or memory windows are blowing up.</li>
           <li><strong>Cache hit ratio</strong> — <code>cache_read / (cache_read + cache_write + input_tokens)</code>. If it drops, somebody changed a system prompt.</li>
           <li><strong>Daily spend</strong> — board-friendly, the only metric finance cares about.</li>
@@ -400,14 +400,14 @@ public class CostTrackingAdvisor implements CallAdvisor {
 
       {/* ===================== Part 5: Project ===================== */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 5 — Project: cost dashboard</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5 — Project: cost dashboard</h2>
 
         <p>
           You&apos;re going to build a tiny Spring service that runs the same prompt repeatedly with caching enabled, accumulates per-call usage and cost, and serves a one-page dashboard with the live numbers. Goal: <strong>see the cache hit ratio climb after the first call</strong>, and watch dollars-per-call drop in real time.
         </p>
 
         <Callout variant="spring" title="What you'll build">
-          <ul className="list-disc pl-6 space-y-1 mt-2">
+          <ul className="mt-2 list-disc space-y-1 pl-6">
             <li>A <code>CostTracker</code> bean that accumulates totals across calls.</li>
             <li>A <code>CostAdvisor</code> that records usage on every call.</li>
             <li>A <code>SupportService</code> with a long, cached system prompt.</li>
@@ -416,30 +416,30 @@ public class CostTrackingAdvisor implements CallAdvisor {
           </ul>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 1 — Scaffold</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 1 — Scaffold</h3>
         <Callout variant="info" title="Path A — Browser (start.spring.io)">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li>Use this <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=cost-dashboard&name=cost-dashboard&description=LLM%20cost%20dashboard&packageName=com.example.cost&dependencies=spring-ai-anthropic,web" target="_blank" rel="noreferrer">pre-filled link</a> (Spring Web + Anthropic).</li>
             <li>GENERATE → unzip to <code>~/code/cost-dashboard</code>.</li>
           </ol>
         </Callout>
 
         <Callout variant="info" title="Path B — IntelliJ Initializr">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li><strong>File → New → Project → Spring Initializr</strong>. Group <code>com.example</code>, Artifact <code>cost-dashboard</code>, Maven, Java 21, Jar.</li>
             <li>Dependencies: <strong>Spring Web</strong>{" "}and <strong>Anthropic (Spring AI)</strong>.</li>
           </ol>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 2 — Verify</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2 — Verify</h3>
         <CodeBlock lang="plain">{`cd ~/code/cost-dashboard
 ./mvnw -version
 ls src/main/java/com/example/cost/`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 3 — API key</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3 — API key</h3>
         <CodeBlock lang="plain">{`export ANTHROPIC_API_KEY="sk-ant-..."`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 4 — application.properties</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4 — application.properties</h3>
         <CodeBlock lang="plain" caption="src/main/resources/application.properties">{`spring.application.name=cost-dashboard
 server.port=8080
 
@@ -453,7 +453,7 @@ llm.rates.output=15.00
 llm.rates.cache_write=3.75
 llm.rates.cache_read=0.30`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 5 — The cost tracker</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5 — The cost tracker</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/cost/CostTracker.java">{`package com.example.cost;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -505,7 +505,7 @@ public class CostTracker {
       double totalUsd, double cacheHitRatio) {}
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 6 — The advisor</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6 — The advisor</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/cost/CostAdvisor.java">{`package com.example.cost;
 
 import org.springframework.ai.chat.client.ChatClientRequest;
@@ -557,7 +557,7 @@ public class CostAdvisor implements CallAdvisor {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 7 — The cached service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7 — The cached service</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/cost/SupportService.java">{`package com.example.cost;
 
 import org.springframework.ai.anthropic.AnthropicChatOptions;
@@ -612,7 +612,7 @@ public class SupportService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 8 — The dashboard controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 8 — The dashboard controller</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/cost/DashboardController.java">{`package com.example.cost;
 
 import org.springframework.web.bind.annotation.*;
@@ -642,7 +642,7 @@ public class DashboardController {
   public record AnswerResponse(String reply) {}
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 9 — Static dashboard page</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 9 — Static dashboard page</h3>
         <CodeBlock lang="plain" caption="src/main/resources/static/index.html">{`<!doctype html>
 <html lang="en">
 <head>
@@ -700,7 +700,7 @@ public class DashboardController {
 </body>
 </html>`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 10 — Run it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 10 — Run it</h3>
         <CodeBlock lang="plain">{`./mvnw spring-boot:run`}</CodeBlock>
 
         <p className="mt-3">Open <a className="text-indigo-600 hover:underline" href="http://localhost:8080" target="_blank" rel="noreferrer">http://localhost:8080</a>. Click <strong>Ask</strong>{" "}once — you&apos;ll see Calls=1, Cache writes &gt; 0, Cache reads = 0. Click <strong>Ask × 10</strong> — watch cache hit ratio climb and avg $/call drop substantially.</p>
@@ -720,7 +720,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="Common errors & fixes">
-          <ul className="list-disc pl-6 space-y-2 mt-2">
+          <ul className="mt-2 list-disc space-y-2 pl-6">
             <li><strong>Cache write tokens stays 0</strong> — your system prompt is below the 1024-token cache minimum. Add more padding or use a real long prompt.</li>
             <li><strong>Cache read tokens stays 0 across many calls</strong> — something in the prefix changes each call. The system prompt should be a static constant; check that nothing dynamic (timestamp, user info) is leaking into <code>defaultSystem()</code>.</li>
             <li><strong>NullPointerException reading nativeUsage</strong> — older Spring AI returns null instead of an empty map. The advisor handles this with the <code>instanceof Map</code> guard; ensure you&apos;re on a recent 1.0.x.</li>
@@ -737,7 +737,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
 
       {/* ===================== Part 6: Final Quiz ===================== */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final quiz"
@@ -806,7 +806,7 @@ Cache hit ratio      ~90%`}</CodeBlock>
         </Checkpoint>
       </section>
 
-      <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
+      <div className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
         <Link href="/courses/ai/modules/streaming" className="text-indigo-600 hover:underline">← Module 12: Streaming</Link>
         <Link href="/courses/ai/modules/embeddings-deep" className="text-indigo-600 hover:underline">Module 15: Embeddings deep dive →</Link>
       </div>

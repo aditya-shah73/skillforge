@@ -25,19 +25,19 @@ export default function NeuralNetworksModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Neural networks</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Neural networks</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Layers, activations, backprop — from a single neuron up to a handwritten-digit classifier, all by hand in Java.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="neural-networks" />
@@ -45,23 +45,23 @@ export default function NeuralNetworksModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🎯</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Modules 2 and 3 gave you a single linear model that trains itself. This module generalizes that idea to many linear models stacked
           with a squiggle between them — which turns out to be <em>literally every modern AI model</em>. By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Explain why a 1000-layer linear network is the <em>same</em>{" "}as a 1-layer linear network — and what fixes that.</li>
           <li>Know ReLU, sigmoid, and softmax cold — when to use each and why.</li>
           <li>Do a forward pass through a 2-layer network <em>by hand</em>{" "}with real numbers.</li>
           <li>Derive backpropagation for that network — the chain rule, just organized.</li>
           <li>Ship a Java MLP that classifies handwritten digits with &gt;90% accuracy. No library. Just arrays.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           This is the longest module in Phase 1. It&apos;s the investment that makes Modules 5 (attention) and everything after feel obvious instead of magical.
         </p>
       </section>
@@ -255,31 +255,31 @@ where:
 
         <h3>The three you need to know cold</h3>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">ReLU</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">ReLU</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               f(z) = max(0, z)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Pass positives through, squash negatives to 0. Default for hidden layers. Fast, gradient-friendly, what everyone uses.
             </p>
           </div>
-          <div className="rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-1">Sigmoid</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">Sigmoid</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               f(z) = 1 / (1 + e⁻ᶻ)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               S-curve from 0 to 1. Used for <em>output</em>{" "}of binary classifiers (&quot;probability of spam&quot;). Rare in hidden layers today.
             </p>
           </div>
-          <div className="rounded-xl border border-violet-300 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/40 p-4 text-sm">
-            <div className="font-bold text-violet-900 dark:text-violet-200 mb-1">Softmax</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
+            <div className="mb-1 font-bold text-violet-900 dark:text-violet-200">Softmax</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               f(zᵢ) = eᶻⁱ / Σⱼ eᶻʲ
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Turns a vector of scores into a probability distribution (sums to 1). The output layer for multi-class classification.
             </p>
           </div>
@@ -426,17 +426,17 @@ p(bird) = 1.105 / 11.212 ≈ 0.099`}
 
         <h3>Which to use, when</h3>
 
-        <div className="grid gap-2 my-4 not-prose text-sm">
-          <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+        <div className="not-prose my-4 grid gap-2 text-sm">
+          <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-800">
             <strong>Hidden layers:</strong>{" "}ReLU (or Leaky ReLU if you see dead neurons). Don&apos;t overthink it — this is the default for 95% of networks.
           </div>
-          <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+          <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-800">
             <strong>Output — binary classification:</strong>{" "}Sigmoid (1 output neuron).
           </div>
-          <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+          <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-800">
             <strong>Output — multi-class classification:</strong>{" "}Softmax (one neuron per class).
           </div>
-          <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+          <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-800">
             <strong>Output — regression:</strong>{" "}No activation (linear). You want the raw output.
           </div>
         </div>
@@ -1186,9 +1186,9 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
 
         <h3>The spec</h3>
 
-        <div className="not-prose rounded-xl border border-indigo-200 dark:border-indigo-900 bg-indigo-50/60 dark:bg-indigo-950/30 p-5 my-4 text-sm">
-          <div className="font-bold mb-3">Build an MLP that hits ≥ 90% accuracy on the MNIST test set.</div>
-          <ol className="list-decimal ml-5 space-y-2">
+        <div className="not-prose my-4 rounded-xl border border-indigo-200 bg-indigo-50/60 p-5 text-sm dark:border-indigo-900 dark:bg-indigo-950/30">
+          <div className="mb-3 font-bold">Build an MLP that hits ≥ 90% accuracy on the MNIST test set.</div>
+          <ol className="ml-5 list-decimal space-y-2">
             <li>
               <strong>Load the data.</strong>{" "}Use the standard MNIST files (<code>train-images-idx3-ubyte</code>, <code>train-labels-idx1-ubyte</code>, and the test counterparts).
               Parse by hand — it&apos;s ~30 lines. Normalize pixel values to <code>[0, 1]</code> by dividing by 255.
@@ -1245,7 +1245,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
           <p className="mb-2">
             The project is a checklist, not a sprint. Target these milestones in order:
           </p>
-          <ol className="list-decimal ml-5 m-0 space-y-1 text-sm">
+          <ol className="m-0 ml-5 list-decimal space-y-1 text-sm">
             <li><strong>Forward pass runs</strong> — random weights, get <em>some</em>{" "}output per image. No training yet.</li>
             <li><strong>Gradient check passes</strong> — your backprop matches numerical gradients on one example.</li>
             <li><strong>Overfits a single batch</strong> — train on the same 32 examples over and over; loss should hit near-zero. If not, your code is broken.</li>
@@ -1341,7 +1341,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
       </Checkpoint>
 
       {/* NEXT MODULE */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">You built a real neural network. What&apos;s next?</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Module 5 adds <strong>attention</strong> — the one idea on top of MLPs that unlocked the whole transformer era.
@@ -1349,7 +1349,7 @@ for (int epoch = 0; epoch < numEpochs; epoch++) {
         </p>
         <Link
           href="/courses/ai/modules/transformers"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
         >
           Continue to Module 5 →
         </Link>

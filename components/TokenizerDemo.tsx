@@ -66,25 +66,25 @@ export default function TokenizerDemo() {
   const costDollars = (tokenCount / 1_000_000) * costPer1M;
 
   return (
-    <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
-      <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <h4 className="font-semibold text-sm flex items-center gap-2">
+    <div className="my-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="border-b border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-800 dark:bg-slate-950/50">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="flex items-center gap-2 text-sm font-semibold">
             <span className="text-lg">🔬</span> Live Tokenizer
           </h4>
           <span className="text-xs text-slate-500">using GPT tokenizer (BPE) — similar behavior to Claude&apos;s</span>
         </div>
       </div>
 
-      <div className="p-5 space-y-4">
+      <div className="space-y-4 p-5">
         <div>
-          <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 block">Try a preset:</label>
+          <label className="mb-2 block text-xs font-semibold tracking-wider text-slate-500 uppercase">Try a preset:</label>
           <div className="flex flex-wrap gap-2">
             {PRESETS.map((p) => (
               <button
                 key={p.label}
                 onClick={() => setText(p.text)}
-                className="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-700 hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:scale-105 transition"
+                className="rounded-full border border-slate-300 px-3 py-1 text-xs transition hover:scale-105 hover:border-indigo-400 hover:bg-indigo-50 dark:border-slate-700 dark:hover:bg-indigo-950"
               >
                 {p.label}
               </button>
@@ -93,35 +93,35 @@ export default function TokenizerDemo() {
         </div>
 
         <div>
-          <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 block">Or type your own:</label>
+          <label className="mb-2 block text-xs font-semibold tracking-wider text-slate-500 uppercase">Or type your own:</label>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950"
             rows={3}
             placeholder="Type anything... (psst — try secret words 😉)"
           />
         </div>
 
         <div>
-          <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 block">Tokens:</label>
-          <div className="flex flex-wrap gap-1 p-3 rounded-lg bg-slate-50 dark:bg-slate-950 min-h-[60px]">
+          <label className="mb-2 block text-xs font-semibold tracking-wider text-slate-500 uppercase">Tokens:</label>
+          <div className="flex min-h-[60px] flex-wrap gap-1 rounded-lg bg-slate-50 p-3 dark:bg-slate-950">
             {tokens.map((tok, i) => (
               <span
                 key={`${tok.id}-${i}`}
-                className={`token-chip-${i % 8} px-2 py-1 rounded text-sm font-mono leading-none animate-token-pop`}
+                className={`token-chip-${i % 8} animate-token-pop rounded px-2 py-1 font-mono text-sm leading-none`}
                 style={{ animationDelay: `${Math.min(i * 15, 400)}ms` }}
                 title={`Token ID: ${tok.id}`}
               >
                 {tok.text.replace(/ /g, "·").replace(/\n/g, "↵") || "∅"}
               </span>
             ))}
-            {tokens.length === 0 && <span className="text-slate-400 text-sm italic">Type something to see tokens</span>}
+            {tokens.length === 0 && <span className="text-sm text-slate-400 italic">Type something to see tokens</span>}
           </div>
-          <p className="mt-2 text-xs text-slate-500">💡 <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">·</code> = space &middot; each color is one token</p>
+          <p className="mt-2 text-xs text-slate-500">💡 <code className="rounded bg-slate-100 px-1 dark:bg-slate-800">·</code> = space &middot; each color is one token</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        <div className="grid grid-cols-2 gap-3 pt-2 sm:grid-cols-4">
           <Stat label="Characters" value={charCount} />
           <Stat label="Words" value={wordCount} />
           <Stat label="Tokens" value={tokenCount} highlight />
@@ -135,9 +135,9 @@ export default function TokenizerDemo() {
 
 function Stat({ label, value, highlight, subtle }: { label: string; value: number | string; highlight?: boolean; subtle?: boolean }) {
   return (
-    <div className={`rounded-lg px-3 py-2 transition-transform hover:-translate-y-0.5 ${highlight ? "bg-indigo-100 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-900" : "bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"}`}>
+    <div className={`rounded-lg px-3 py-2 transition-transform hover:-translate-y-0.5 ${highlight ? "border border-indigo-200 bg-indigo-100 dark:border-indigo-900 dark:bg-indigo-950/60" : "border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900"}`}>
       <div className={`text-xs ${subtle ? "text-slate-400" : "text-slate-500"}`}>{label}</div>
-      <div className={`font-mono font-semibold ${highlight ? "text-indigo-700 dark:text-indigo-300 text-lg" : "text-base"}`}>{value}</div>
+      <div className={`font-mono font-semibold ${highlight ? "text-lg text-indigo-700 dark:text-indigo-300" : "text-base"}`}>{value}</div>
     </div>
   );
 }

@@ -88,15 +88,15 @@ export default function Tooltip({
           {/* Inner wrapper carries the enter animation so it doesn't fight
               the outer element's -translate-x-1/2 centering transform. */}
           <span
-            className="relative block rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur px-3 py-2 text-xs leading-snug text-slate-700 dark:text-slate-200 shadow-lg shadow-slate-900/10 dark:shadow-black/40"
+            className="relative block rounded-xl border border-slate-200 bg-white/95 px-3 py-2 text-xs leading-snug text-slate-700 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-200 dark:shadow-black/40"
             style={{ animation: "skillforge-tooltip-in 140ms ease-out both" }}
           >
             {label}
             <span
               aria-hidden
-              className={`absolute ${caretSide} ${caretAlign} h-2 w-2 rotate-45 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 ${
+              className={`absolute ${caretSide} ${caretAlign} h-2 w-2 rotate-45 border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 ${
                 side === "bottom"
-                  ? "border-l border-t"
+                  ? "border-t border-l"
                   : "border-r border-b"
               }`}
             />

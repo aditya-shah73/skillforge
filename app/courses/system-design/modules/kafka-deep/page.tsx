@@ -46,32 +46,32 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="kafka-deep" />
         <ModuleProgress moduleSlug="kafka-deep" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📚</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Kafka isn&apos;t a queue, it&apos;s a partitioned, replicated, append-only log. By the end you&apos;ll know how producers, partitions, and consumer groups actually compose — and how to wire up Spring Kafka with real exactly-once semantics for read-process-write pipelines.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Topics, partitions, replication, ISR — the storage model</li>
           <li>Producer acks, idempotent producer, ordering pitfalls</li>
           <li>Consumer groups, offsets, the auto-commit footgun</li>
@@ -600,9 +600,9 @@ public class OutboxPublisher {
         />
       </Checkpoint>
 
-      <section className="not-prose my-12 rounded-2xl border-2 border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <h3 className="font-bold text-lg mt-0 mb-2">Up next</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-0">
+      <section className="not-prose my-12 rounded-2xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <h3 className="mt-0 mb-2 text-lg font-bold">Up next</h3>
+        <p className="mb-0 text-sm text-slate-700 dark:text-slate-300">
           You can produce, consume, and reason about Kafka. Now the question of how to use it: <Link href="/courses/system-design/modules/event-driven-cqrs" className="text-cyan-600 hover:underline">event-driven architecture, event sourcing, and CQRS</Link> — when each helps, and when they&apos;re overkill.
         </p>
       </section>

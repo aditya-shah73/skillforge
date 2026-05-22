@@ -35,23 +35,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/system-design"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase {mod.phaseNumber} · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           {mod.title}
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           {mod.subtitle}
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-8-revision" />
@@ -63,7 +63,7 @@ flowchart LR
         <Callout variant="insight">
           <strong>This is the closing card of the course.</strong>{" "}Phase 8 took the system-design lens you built on the backend (caches, queues, replication, consensus) and rotated it 180° onto the frontend, where the &quot;server&quot; is a 4-year-old Android on coffee-shop wifi and the user is one tab-close away. This module compresses every decision from the three frontend modules into tables and cards you can re-read on the train before a phone screen.
         </Callout>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-4">
+        <p className="mt-4 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/system-design/modules/frontend-fundamentals" className="text-cyan-600 hover:underline">Frontend fundamentals</Link> (rendering, vitals, bundles, state), <Link href="/courses/system-design/modules/frontend-design-feed" className="text-cyan-600 hover:underline">Design a feed UI</Link>, and <Link href="/courses/system-design/modules/frontend-design-realtime" className="text-cyan-600 hover:underline">Design a real-time UI</Link>. If anything below feels unfamiliar, jump back to the source module — this card assumes you&apos;ve already done the work.
         </p>
       </section>
@@ -72,14 +72,14 @@ flowchart LR
       {/* SECTION 1 — Rendering strategies */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Rendering strategies — when each wins</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Rendering strategies — when each wins</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five strategies, four properties that decide between them. Get this right early or migrate for a year.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Strategy</th>
                 <th className="px-4 py-3 font-semibold">First paint</th>
@@ -138,7 +138,7 @@ flowchart LR
           <strong>The senior frame:</strong>{" "}rendering is a function of three properties of the page — <em>personalization</em>, <em>freshness</em>, <em>SEO</em>. Identical-for-everyone + SEO → SSG. Personal + SEO → SSR. Personal + no SEO + complex interactivity → CSR. Add ISR when SSG is right but the build is too slow to redeploy on edit. Add streaming SSR when SSR is right but one data dep is the long pole.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-fundamentals" className="text-cyan-600 hover:underline">Module 46 — Frontend fundamentals</Link>.
         </p>
       </section>
@@ -147,45 +147,45 @@ flowchart LR
       {/* SECTION 2 — Core Web Vitals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Core Web Vitals — the three numbers you defend</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Core Web Vitals — the three numbers you defend</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           p75 of real users. &quot;This adds 80ms to LCP&quot; is a code review conversation. &quot;This feels slow&quot; is not.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-4">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">LCP · Largest Contentful Paint</div>
-            <p className="font-mono text-sm font-semibold mb-2">good &lt; 2.5s · poor &gt; 4s</p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-4 grid gap-4 md:grid-cols-3">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">LCP · Largest Contentful Paint</div>
+            <p className="mb-2 font-mono text-sm font-semibold">good &lt; 2.5s · poor &gt; 4s</p>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               When the biggest visible element finishes painting — usually the hero image or headline text.
             </p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li><strong>Image</strong>: format (WebP/AVIF), responsive srcset, <code>fetchpriority=&quot;high&quot;</code>, preload</li>
               <li><strong>Fonts</strong>: <code>font-display: optional</code>, preload the LCP font</li>
               <li><strong>JS on critical path</strong>: defer/async, don&apos;t block paint</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">INP · Interaction to Next Paint</div>
-            <p className="font-mono text-sm font-semibold mb-2">good &lt; 200ms · poor &gt; 500ms</p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-amber-200 bg-amber-50/40 p-5 dark:border-amber-900 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">INP · Interaction to Next Paint</div>
+            <p className="mb-2 font-mono text-sm font-semibold">good &lt; 200ms · poor &gt; 500ms</p>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Replaced FID in March 2024. Latency from any input (tap/click/key) to the next paint reflecting it. Reports the worst, not the first.
             </p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li><strong>Reduce JS</strong> — the single biggest INP win</li>
               <li>50ms+ tasks = long tasks; split with <code>scheduler.yield()</code> or a Worker</li>
               <li><code>useTransition</code> for non-urgent updates (filtering big lists while typing)</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">CLS · Cumulative Layout Shift</div>
-            <p className="font-mono text-sm font-semibold mb-2">good &lt; 0.1 · poor &gt; 0.25</p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">CLS · Cumulative Layout Shift</div>
+            <p className="mb-2 font-mono text-sm font-semibold">good &lt; 0.1 · poor &gt; 0.25</p>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Unitless score combining shift distance with viewport fraction affected. Visible content jumping around.
             </p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li><strong>Images</strong>: always set width/height (or aspect-ratio)</li>
               <li><strong>Fonts</strong>: match fallback metrics (<code>next/font</code> handles this)</li>
               <li>Reserve space for ads, banners, cookie bars — anything that inserts late</li>
@@ -198,7 +198,7 @@ flowchart LR
           <strong>The thing nobody tells you about INP:</strong>{" "}on SSR&apos;d pages, the worst INP usually happens during hydration. The page looks ready, the user taps, and the click sits in a queue while the bundle hydrates. RSC and islands aren&apos;t premature optimization — they&apos;re INP fixes for SSR pages.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-fundamentals" className="text-cyan-600 hover:underline">Module 46 — Frontend fundamentals</Link>.
         </p>
       </section>
@@ -207,14 +207,14 @@ flowchart LR
       {/* SECTION 3 — State architecture */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. State architecture — four buckets, not one</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. State architecture — four buckets, not one</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Half the Redux you&apos;ve seen exists because someone treated all four as the same problem. They&apos;re not.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Bucket</th>
                 <th className="px-4 py-3 font-semibold">What it is</th>
@@ -255,7 +255,7 @@ flowchart LR
           <strong>Decision rule:</strong>{" "}colocate state to its consumer. Start in <code>useState</code> next to the component that uses it. <em>Lift only when shared</em>, and only as high as the lowest common ancestor of the consumers. The default mistake is reaching for a global store on day one; the senior move is keeping state local until pain forces it up.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-fundamentals" className="text-cyan-600 hover:underline">Module 46 — Frontend fundamentals</Link>.
         </p>
       </section>
@@ -264,16 +264,16 @@ flowchart LR
       {/* SECTION 4 — Mermaid: reconnect state machine */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. The WebSocket reconnect picture</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. The WebSocket reconnect picture</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A real chat session reconnects 5-50 times. The user never notices because of three things: exponential backoff with jitter, heartbeats, and resync-from-sequence.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={reconnectChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Backoff schedule:</strong> 1s → 2s → 4s → 8s, capped at 30s. The cap stops users waiting forever after long outages. Without a cap, a user who closed their laptop for an hour comes back to a socket that&apos;s about to retry in 70 minutes.
           </li>
@@ -288,7 +288,7 @@ flowchart LR
           </li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-design-realtime" className="text-cyan-600 hover:underline">Module 48 — Real-time UI</Link>.
         </p>
       </section>
@@ -297,56 +297,56 @@ flowchart LR
       {/* SECTION 5 — Feed UI archetype */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Feed UI archetype — the moves that matter</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Feed UI archetype — the moves that matter</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Twitter, Instagram, LinkedIn, any infinite scroll. Every interview lands on these six concerns.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Virtualization (windowing)</div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Virtualization (windowing)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Render only the rows in (or near) the viewport. A 10,000-item list ships ~20 DOM nodes, not 10,000. <code>react-window</code>, <code>@tanstack/react-virtual</code>. <em>Mandatory</em>{" "}past ~200 rows.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Infinite scroll</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Infinite scroll</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               <code>IntersectionObserver</code> on a sentinel row near the end. When it enters the viewport, fetch the next page. Cursor-based pagination on the API, not offset — page tokens survive inserts at the head.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Optimistic updates + rollback</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Optimistic updates + rollback</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               On a like: update local state immediately, fire the mutation, roll back to the prior state on error. React Query&apos;s <code>onMutate</code> + <code>onError</code>. Without rollback, a flaky network leaves the UI lying about server state.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Image loading</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Image loading</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               LQIP (low-quality placeholder, blurhash, or a 10×10 base64), lazy-load with <code>loading=&quot;lazy&quot;</code> for below-fold, <code>srcset</code> + <code>sizes</code> for responsive, AVIF/WebP. The hero image gets <code>fetchpriority=&quot;high&quot;</code>; everything else doesn&apos;t.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Skeleton states</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Skeleton states</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Show shaped placeholders (same dimensions as real content) during loading. Prevents CLS on data arrival. Avoid spinners on first-load — they signal &quot;wait&quot; instead of progress.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Offline-first read</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Offline-first read</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Cache feed pages in IndexedDB (or React Query&apos;s persister). On cold start with no network, render cached pages immediately, revalidate in the background. The user sees something instantly — that&apos;s the whole point.
             </p>
           </div>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-design-feed" className="text-cyan-600 hover:underline">Module 47 — Feed UI</Link>.
         </p>
       </section>
@@ -355,18 +355,18 @@ flowchart LR
       {/* SECTION 6 — Real-time UI archetype */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Real-time UI archetype — connection lifecycle is the heart</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Real-time UI archetype — connection lifecycle is the heart</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Chat, collab docs, presence cursors, live dashboards. The interviewer cares less about &quot;open a websocket&quot; and more about what happens when it drops.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Transport choice</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-1">
+        <div className="mb-4 grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-600 uppercase">Transport choice</div>
+            <p className="mb-1 text-sm text-slate-700 dark:text-slate-300">
               <strong>WebSocket</strong> — bidirectional, &lt;1ms per frame after the ~200ms handshake. Default for chat, collab.
             </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-1">
+            <p className="mb-1 text-sm text-slate-700 dark:text-slate-300">
               <strong>SSE</strong> — server → client only, auto-reconnect built in (<code>Last-Event-ID</code>). Default for live feeds, notifications, dashboards.
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -374,29 +374,29 @@ flowchart LR
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Reconnect (the senior tell)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-600 uppercase">Reconnect (the senior tell)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Exponential backoff (1s → 2s → 4s → 8s, cap 30s) with <strong>±20% jitter</strong>{" "}on every attempt. Without jitter, every gateway restart is a self-inflicted DDoS. Send <code>lastSeq</code> on reconnect so the server can replay missed messages.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Presence (heartbeat)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-600 uppercase">Presence (heartbeat)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Send a 30s heartbeat; server marks user offline if missed 2x. <em>Don&apos;t</em>{" "}implement presence by polling <code>/who-is-online</code> every 5s — it&apos;s a 10-100x multiplier on your message volume. Throttle presence updates server-side: fan out at most every 5s per user.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Multi-tab sync</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-600 uppercase">Multi-tab sync</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               <code>BroadcastChannel</code> for the simple case — fan out received messages to other tabs. For correctness under load, elect a <strong>leader tab</strong> (only one tab holds the WS, others read via BroadcastChannel). A shared <code>SharedWorker</code> or service worker is the cleaner version when the browser supports it.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 md:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">CRDT intuition (collab docs)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 md:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-600 uppercase">CRDT intuition (collab docs)</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Conflict-free Replicated Data Types let two clients edit offline and merge without a server arbitrating. The math requires every operation to be <strong>commutative</strong> (order doesn&apos;t matter), <strong>associative</strong> (grouping doesn&apos;t matter), and <strong>idempotent</strong> (applying twice = applying once). Yjs and Automerge are the production options. The senior answer is &quot;I&apos;d reach for Yjs, not implement one&quot; — knowing when and why, not coding it from scratch.
             </p>
@@ -407,7 +407,7 @@ flowchart LR
           <strong>The one that bites people:</strong>{" "}reconnect without jitter. It works perfectly in dev with one tab open, and takes down production after every deploy. If you only remember one thing from the real-time module, make it &quot;exponential backoff with jitter.&quot;
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/frontend-design-realtime" className="text-cyan-600 hover:underline">Module 48 — Real-time UI</Link>.
         </p>
       </section>
@@ -416,15 +416,15 @@ flowchart LR
       {/* SECTION 7 — Common gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Five gotchas that cost real engineers real hours</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that cost real engineers real hours</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each has a clear BAD/GOOD shape. If you remember nothing else, remember these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · CSR for SEO-critical page</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · CSR for SEO-critical page</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Public landing page that needs Google traffic, rendered client-side. Crawler sees an empty shell; users see 4 seconds of blank screen on cellular.
             </p>
             <CodeBlock lang="tsx">{`// BAD — CSR for a public marketing/SEO page
@@ -442,9 +442,9 @@ export default async function Landing() {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Infinite list without virtualization</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Infinite list without virtualization</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               10,000 items in the DOM. Scroll jank. Memory bloat. Re-render cost on any parent state change is catastrophic.
             </p>
             <CodeBlock lang="tsx">{`// BAD — every item is a DOM node, even the 9,000 off-screen ones
@@ -465,9 +465,9 @@ const virtualizer = useVirtualizer({
 ))}`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Optimistic update without rollback</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Optimistic update without rollback</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               User likes a post. Local state flips. Network fails. UI keeps lying about server state forever.
             </p>
             <CodeBlock lang="tsx">{`// BAD — no rollback path
@@ -493,9 +493,9 @@ const mutation = useMutation({
 });`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · WebSocket without reconnect + jittered backoff</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · WebSocket without reconnect + jittered backoff</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Works in dev. Production: gateway restarts → 100k clients all reconnect at t+0ms → second-wave outage caused by the recovery from the first.
             </p>
             <CodeBlock lang="ts">{`// BAD — immediate reconnect, no cap, no jitter
@@ -514,9 +514,9 @@ ws.onclose = () => {
 ws.onopen = () => { attempt = 0; };                     // reset on success`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Presence via polling</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Presence via polling</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Poll <code>/who-is-online</code> every 5s for every user. Network traffic scales as users² for groups. Burns mobile data, drains battery, and the answer is always 30 seconds stale anyway.
             </p>
             <CodeBlock lang="ts">{`// BAD — polling the world every 5s
@@ -539,8 +539,8 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
       {/* SECTION 8 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -603,8 +603,8 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
       {/* ============================================================ */}
       {/* SECTION 9 — Course closer spring callout */}
       {/* ============================================================ */}
-      <section className="not-prose mt-12 p-6 rounded-2xl border border-teal-200 dark:border-teal-900 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:from-teal-950/30 dark:via-cyan-950/30 dark:to-blue-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300 mb-2">
+      <section className="not-prose mt-12 rounded-2xl border border-teal-200 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 p-6 dark:border-teal-900 dark:from-teal-950/30 dark:via-cyan-950/30 dark:to-blue-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-teal-700 uppercase dark:text-teal-300">
           You&apos;re done with the course
         </div>
         <h3 className="mt-0 mb-3 text-2xl font-bold">Nine phases, in your head.</h3>
@@ -620,13 +620,13 @@ setInterval(() => ws.send(JSON.stringify({ type: "heartbeat" })), 30_000);
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/system-design"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             ← Back to course overview
           </Link>
           <Link
             href="/courses/system-design/modules/capstone"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 no-underline transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             Try the capstone →
           </Link>

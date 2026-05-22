@@ -109,15 +109,15 @@ export default function LineFitDemo() {
   const lineEnd = { x: xMax, y: m * xMax + b };
 
   return (
-    <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
-      <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex items-center justify-between flex-wrap gap-2">
-        <h4 className="font-semibold text-sm flex items-center gap-2">
+    <div className="my-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-800 dark:bg-slate-950/50">
+        <h4 className="flex items-center gap-2 text-sm font-semibold">
           <span className="text-lg">📈</span> Fit the line yourself
         </h4>
         <span className="text-xs text-slate-500">House size → price</span>
       </div>
 
-      <div className="p-5 space-y-4">
+      <div className="space-y-4 p-5">
         <div className="flex justify-center">
           <svg width={W} height={H} className="max-w-full">
             {/* Grid — explicit stroke w/ opacity works on any bg */}
@@ -191,9 +191,9 @@ export default function LineFitDemo() {
           </svg>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex justify-between">
+            <label className="flex justify-between text-xs font-semibold tracking-wider text-slate-500 uppercase">
               <span>Slope (m)</span>
               <span className="font-mono">{m.toFixed(1)}</span>
             </label>
@@ -204,12 +204,12 @@ export default function LineFitDemo() {
               step={0.5}
               value={m}
               onChange={(e) => setM(Number(e.target.value))}
-              className="w-full mt-1 accent-indigo-500"
+              className="mt-1 w-full accent-indigo-500"
               disabled={autoFit}
             />
           </div>
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex justify-between">
+            <label className="flex justify-between text-xs font-semibold tracking-wider text-slate-500 uppercase">
               <span>Intercept (b)</span>
               <span className="font-mono">{b.toFixed(1)}</span>
             </label>
@@ -220,25 +220,25 @@ export default function LineFitDemo() {
               step={1}
               value={b}
               onChange={(e) => setB(Number(e.target.value))}
-              className="w-full mt-1 accent-indigo-500"
+              className="mt-1 w-full accent-indigo-500"
               disabled={autoFit}
             />
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-3 pt-2">
+        <div className="grid gap-3 pt-2 sm:grid-cols-3">
           <Stat label="Prediction" value={`price = ${m.toFixed(0)} × size + ${b.toFixed(0)}`} wide />
           <Stat label="Loss (MSE)" value={mse.toFixed(0)} highlight={isGood} />
           <button
             onClick={() => setAutoFit(true)}
             disabled={autoFit}
-            className="rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white px-4 py-2 text-sm font-semibold hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 px-4 py-2 text-sm font-semibold text-white transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {autoFit ? "🏃 Descending..." : "✨ Let gradient descent solve it"}
           </button>
         </div>
 
-        <div className="rounded-lg p-3 bg-slate-50 dark:bg-slate-950 text-xs text-slate-600 dark:text-slate-400">
+        <div className="rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-950 dark:text-slate-400">
           💡 <strong>Red dashed lines</strong> are the errors — each point&apos;s distance from your line. The loss
           squares &amp; averages those. Get under <span className="font-mono">{(BEST.mse * 1.05).toFixed(0)}</span> by hand for an easter egg.
         </div>
@@ -249,9 +249,9 @@ export default function LineFitDemo() {
 
 function Stat({ label, value, highlight, wide }: { label: string; value: string | number; highlight?: boolean; wide?: boolean }) {
   return (
-    <div className={`rounded-lg px-3 py-2 ${wide ? "sm:col-span-1" : ""} ${highlight ? "bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800" : "bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"}`}>
+    <div className={`rounded-lg px-3 py-2 ${wide ? "sm:col-span-1" : ""} ${highlight ? "border border-emerald-300 bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/60" : "border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900"}`}>
       <div className="text-xs text-slate-500">{label}</div>
-      <div className={`font-mono font-semibold text-sm ${highlight ? "text-emerald-700 dark:text-emerald-300" : ""}`}>{value}</div>
+      <div className={`font-mono text-sm font-semibold ${highlight ? "text-emerald-700 dark:text-emerald-300" : ""}`}>{value}</div>
     </div>
   );
 }

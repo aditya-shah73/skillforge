@@ -36,23 +36,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 2 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 2 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Arrays, strings, linked lists, stacks, queues — every linear-structure pattern compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-2-revision" />
@@ -61,10 +61,10 @@ flowchart LR
 
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 2</strong> — every Big-O row, every named pattern, every gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating:{" "}
           <Link href="/courses/dsa/modules/arrays" className="text-amber-600 hover:underline">Arrays &amp; dynamic arrays</Link>,{" "}
           <Link href="/courses/dsa/modules/strings" className="text-amber-600 hover:underline">Strings</Link>,{" "}
@@ -78,14 +78,14 @@ flowchart LR
       {/* SECTION 1 — Per-structure Big-O table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Per-structure Big-O table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Per-structure Big-O table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The numbers you defend in an interview. Note the asterisks — they&apos;re where amortized analysis hides.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Structure</th>
                 <th className="px-4 py-3 font-semibold">Access by index</th>
@@ -95,7 +95,7 @@ flowchart LR
                 <th className="px-4 py-3 font-semibold">Note</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">ArrayList</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)</td>
@@ -140,7 +140,7 @@ flowchart LR
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           Asterisks mark amortized bounds. A single call can spike (e.g. ArrayList resize, ArrayDeque resize, StringBuilder grow), but over a sequence of n adds the total work is O(n).
         </p>
       </section>
@@ -149,85 +149,85 @@ flowchart LR
       {/* SECTION 2 — When to pick which */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. When to pick which</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. When to pick which</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The decision card. Choose by the operation you do most often, not by the structure&apos;s name.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">ArrayList</div>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Use when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-2">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">ArrayList</div>
+            <div className="mb-1 text-xs font-semibold text-slate-500">Use when</div>
+            <ul className="mb-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You need random access by index</li>
               <li>You mostly append at the end</li>
               <li>You iterate front-to-back a lot (cache-friendly)</li>
             </ul>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Avoid when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You insert / remove in the middle frequently</li>
               <li>You need O(1) push at the front</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">String / StringBuilder</div>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Use when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">String / StringBuilder</div>
+            <div className="mb-1 text-xs font-semibold text-slate-500">Use when</div>
+            <ul className="mb-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>String: keys, returns, immutable handles</li>
               <li>StringBuilder: any mutation in a loop</li>
               <li>char[]: in-place algorithms (palindrome, reverse)</li>
             </ul>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Avoid when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Concatenating String with <code>+=</code> in a loop</li>
               <li>Sharing a StringBuilder across threads (use StringBuffer)</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">LinkedList</div>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Use when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">LinkedList</div>
+            <div className="mb-1 text-xs font-semibold text-slate-500">Use when</div>
+            <ul className="mb-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You already hold a node reference and need O(1) splice</li>
               <li>You&apos;re implementing LRU cache (doubly-linked list + HashMap)</li>
               <li>You&apos;re building a queue/deque from scratch as a teaching exercise</li>
             </ul>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Avoid when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You need a queue — use ArrayDeque</li>
               <li>You need random access</li>
               <li>Memory or cache locality matters</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">ArrayDeque as Stack</div>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Use when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">ArrayDeque as Stack</div>
+            <div className="mb-1 text-xs font-semibold text-slate-500">Use when</div>
+            <ul className="mb-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Bracket / parenthesis matching</li>
               <li>Postfix / infix expression evaluation</li>
               <li>Monotonic-stack problems (next greater element, daily temps)</li>
               <li>Iterative tree traversal (replace recursion)</li>
             </ul>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Avoid when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You need to scan the middle — that&apos;s not what a stack is for</li>
               <li>Never reach for <code>java.util.Stack</code> — legacy, synchronized</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">ArrayDeque as Queue / Deque</div>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Use when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">ArrayDeque as Queue / Deque</div>
+            <div className="mb-1 text-xs font-semibold text-slate-500">Use when</div>
+            <ul className="mb-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>BFS frontier</li>
               <li>Sliding-window maximum / minimum</li>
               <li>Producer/consumer with one thread</li>
               <li>You need a queue AND a stack at once</li>
             </ul>
-            <div className="text-xs font-semibold text-slate-500 mb-1">Avoid when</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>You need thread safety — use <code>ConcurrentLinkedDeque</code> or <code>LinkedBlockingDeque</code></li>
               <li>You need priority ordering — use <code>PriorityQueue</code></li>
             </ul>
@@ -239,16 +239,16 @@ flowchart LR
       {/* SECTION 3 — The 5 named patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The 5 named patterns from this phase</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The 5 named patterns from this phase</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five recognition cues. When you see the tell, you know the pattern — no further analysis needed.
         </p>
 
         <div className="space-y-4">
           {/* Pattern 1 — prefix sums */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 1 · Prefix sums</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 1 · Prefix sums</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong>{" "}repeated range-sum queries on an immutable array — &quot;sum from i to j&quot;, &quot;average over window&quot;, &quot;subarray sum equals k&quot;. Precompute once in O(n), answer each query in O(1).
             </p>
             <CodeBlock lang="java" caption="Range sum in O(1) after O(n) precompute">{`int n = a.length;
@@ -261,9 +261,9 @@ int rangeSum(int l, int r) { return prefix[r + 1] - prefix[l]; }`}</CodeBlock>
           </div>
 
           {/* Pattern 2 — two-pointer on sorted */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 2 · Two pointers on sorted data</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 2 · Two pointers on sorted data</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong>{" "}array is sorted (or you can sort it) and you&apos;re looking for a <em>pair / triplet</em>{" "}that satisfies a sum or difference condition. Two pointers collapse what would be O(n²) into O(n).
             </p>
             <CodeBlock lang="java" caption="Two-sum on a sorted array">{`// Returns indices [l, r] such that a[l] + a[r] == target, or null.
@@ -280,9 +280,9 @@ int[] twoSumSorted(int[] a, int target) {
           </div>
 
           {/* Pattern 3 — dummy-head linked-list trick */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 3 · Dummy-head sentinel</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 3 · Dummy-head sentinel</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong>{" "}you&apos;re writing linked-list code where the answer might require <em>removing or replacing the head</em>. Add a fake first node — every real node is now <code>.next</code> of <em>some</em>{" "}node, so insert-at-front and insert-at-middle use the same code.
             </p>
             <CodeBlock lang="java" caption="LC 203 — remove all nodes with value v">{`ListNode removeElements(ListNode head, int v) {
@@ -298,9 +298,9 @@ int[] twoSumSorted(int[] a, int target) {
           </div>
 
           {/* Pattern 4 — fast/slow pointers */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 4 · Fast / slow pointers</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 4 · Fast / slow pointers</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong>{" "}linked-list problem about <em>middle</em>, <em>cycle</em>, or <em>kᵗʰ-from-end</em>. Walk two pointers, slow steps 1, fast steps 2. When fast falls off, slow is at the middle. If they collide, there&apos;s a cycle.
             </p>
             <CodeBlock lang="java" caption="LC 141 — cycle detection via Floyd's tortoise &amp; hare">{`boolean hasCycle(ListNode head) {
@@ -315,9 +315,9 @@ int[] twoSumSorted(int[] a, int target) {
           </div>
 
           {/* Pattern 5 — monotonic stack */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Pattern 5 · Monotonic stack</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 5 · Monotonic stack</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong> &quot;for each element, find the next/previous greater/smaller&quot; — daily temperatures, next greater element, largest rectangle, trapping rain water. Maintain a stack of <em>indices</em>{" "}in sorted order; each index pushes and pops at most once → O(n) total.
             </p>
             <CodeBlock lang="java" caption="LC 739 — Daily Temperatures">{`int[] dailyTemperatures(int[] T) {
@@ -341,16 +341,16 @@ int[] twoSumSorted(int[] a, int target) {
       {/* SECTION 4 — String immutability deep dive */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. String immutability — why <code>s += x</code> is O(n²)</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. String immutability — why <code>s += x</code> is O(n²)</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The single most common accidental quadratic. Worth memorizing the picture.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={immutabilityChart} />
         </div>
 
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-4">
+        <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">
           Each iteration <code>s += x</code> allocates a brand-new String of the running length and copies every prior character into it. Iteration k copies k−1 characters, so the total work across n iterations is 0 + 1 + 2 + … + (n−1) = n(n−1)/2 — that&apos;s <strong>O(n²)</strong>. <code>StringBuilder</code> uses a doubling internal <code>char[]</code> so append is amortized O(1), and the whole loop is O(n).
         </p>
 
@@ -371,7 +371,7 @@ return sb.toString();        // one final allocation`}</CodeBlock>
           The Java compiler rewrites <code>a + b + c</code> into a single <code>StringBuilder</code> chain — but only within one expression. The moment you put <code>+=</code> inside a loop, each iteration is its own expression, so each gets its own throwaway StringBuilder. The quadratic is real.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/strings" className="text-amber-600 hover:underline">Module 6 — Strings</Link>.
         </p>
       </section>
@@ -380,18 +380,18 @@ return sb.toString();        // one final allocation`}</CodeBlock>
       {/* SECTION 5 — Linked-list manipulation rules */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Linked-list manipulation rules</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Linked-list manipulation rules</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Three tricks that remove most of the pain from linked-list code. Memorize the snippets — they appear in dozens of derived problems.
         </p>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">Rule 1 · Add a dummy head whenever the head might change</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mt-4 mb-2 text-base font-semibold">Rule 1 · Add a dummy head whenever the head might change</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Without it, you write a special-case branch for &quot;is this the first node?&quot; in every insert and delete. With it, the head looks like any other node — and you return <code>dummy.next</code> at the end. See Pattern 3 above for the canonical example.
         </p>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">Rule 2 · In-place reversal is a three-pointer dance</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mt-4 mb-2 text-base font-semibold">Rule 2 · In-place reversal is a three-pointer dance</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Hold <code>prev</code>, <code>curr</code>, and <code>next</code>. At each step: remember where you were going, flip <code>curr.next</code> to point at <code>prev</code>, advance both. When <code>curr</code> is null, <code>prev</code> is the new head.
         </p>
         <CodeBlock lang="java" caption="LC 206 — reverse a singly-linked list, iterative">{`ListNode reverse(ListNode head) {
@@ -405,8 +405,8 @@ return sb.toString();        // one final allocation`}</CodeBlock>
     return prev;                        // prev is now the new head
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Rule 3 · Fast/slow pointers solve middle, cycle, and kᵗʰ-from-end</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mt-6 mb-2 text-base font-semibold">Rule 3 · Fast/slow pointers solve middle, cycle, and kᵗʰ-from-end</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           See Pattern 4 above. The cycle invariant in one line: on an acyclic list, fast always escapes first; on a cyclic list, the gap between fast and slow shrinks by one each iteration inside the cycle, so they must collide. There&apos;s no third option.
         </p>
 
@@ -414,7 +414,7 @@ return sb.toString();        // one final allocation`}</CodeBlock>
           Recursive linked-list code (reverse, merge) is shorter and reads better — but every recursive call adds a stack frame. On a 10⁶-node list, the recursive version StackOverflows. The iterative versions above are the production answer.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/linked-lists" className="text-amber-600 hover:underline">Module 7 — Linked lists</Link>.
         </p>
       </section>
@@ -423,30 +423,30 @@ return sb.toString();        // one final allocation`}</CodeBlock>
       {/* SECTION 6 — Stack vs queue, ArrayDeque wins */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Stack vs queue — and why ArrayDeque beats both alternatives</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Stack vs queue — and why ArrayDeque beats both alternatives</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The call-stack analogy, the API map, and the one container you should actually reach for.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden mb-5">
-          <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">
-            <div className="p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Stack — LIFO</div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+          <div className="grid divide-y divide-slate-200 md:grid-cols-2 md:divide-x md:divide-y-0 dark:divide-slate-800">
+            <div className="bg-emerald-50/40 p-5 dark:bg-emerald-950/20">
+              <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Stack — LIFO</div>
+              <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 Push at the top, pop from the top, peek at the top. Three operations, all O(1). The JVM&apos;s call stack is literally a stack — each method invocation pushes a frame, each return pops one. That&apos;s why recursive code naturally maps to iterative-with-explicit-stack.
               </p>
-              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+              <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>API on ArrayDeque: <code>push</code>, <code>pop</code>, <code>peek</code></li>
                 <li>Used for: matching, expression eval, monotonic patterns, DFS</li>
               </ul>
             </div>
 
-            <div className="p-5 bg-sky-50/40 dark:bg-sky-950/20">
-              <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Queue — FIFO</div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+            <div className="bg-sky-50/40 p-5 dark:bg-sky-950/20">
+              <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Queue — FIFO</div>
+              <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 Add at the back, remove from the front, peek at the front. Three operations, all O(1) (amortized for add when the ring buffer resizes). Used wherever order-of-arrival matters: BFS, scheduling, request handling.
               </p>
-              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+              <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>API on ArrayDeque: <code>offer</code>, <code>poll</code>, <code>peek</code></li>
                 <li>Used for: BFS, level-order traversal, sliding window, work queues</li>
               </ul>
@@ -454,10 +454,10 @@ return sb.toString();        // one final allocation`}</CodeBlock>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Why ArrayDeque, not java.util.Stack or LinkedList</h3>
+        <h3 className="mb-2 text-base font-semibold">Why ArrayDeque, not java.util.Stack or LinkedList</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Container</th>
                 <th className="px-4 py-3 font-semibold">Verdict</th>
@@ -467,17 +467,17 @@ return sb.toString();        // one final allocation`}</CodeBlock>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">java.util.Stack</td>
-                <td className="px-4 py-3 text-rose-600 font-semibold">Avoid</td>
+                <td className="px-4 py-3 font-semibold text-rose-600">Avoid</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Legacy JDK 1.0 class, extends <code>Vector</code>, every method synchronized. Slow even single-threaded.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">LinkedList as Deque</td>
-                <td className="px-4 py-3 text-amber-600 font-semibold">Avoid</td>
+                <td className="px-4 py-3 font-semibold text-amber-600">Avoid</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Two pointers per node, allocation per offer, cache-hostile. Same Big-O on paper, several times slower in practice.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">ArrayDeque</td>
-                <td className="px-4 py-3 text-emerald-600 font-semibold">Use this</td>
+                <td className="px-4 py-3 font-semibold text-emerald-600">Use this</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Power-of-two ring buffer, head/tail indices, no shifting, no per-element allocation. Faster than both alternatives on every operation.</td>
               </tr>
             </tbody>
@@ -488,7 +488,7 @@ return sb.toString();        // one final allocation`}</CodeBlock>
           <code>Deque&lt;E&gt; stack = new ArrayDeque&lt;&gt;();</code> for a stack. <code>Deque&lt;E&gt; queue = new ArrayDeque&lt;&gt;();</code> for a queue. Same class, different verbs. If you remember nothing else from Modules 8 and 9, remember these two lines.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Sources: <Link href="/courses/dsa/modules/stacks" className="text-amber-600 hover:underline">Module 8 — Stacks</Link>,{" "}
           <Link href="/courses/dsa/modules/queues" className="text-amber-600 hover:underline">Module 9 — Queues &amp; deques</Link>.
         </p>
@@ -498,16 +498,16 @@ return sb.toString();        // one final allocation`}</CodeBlock>
       {/* SECTION 7 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Five gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost real engineers real hours. If you only remember five things from this card, make it these.
         </p>
 
         <div className="space-y-4">
           {/* Gotcha 1 */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · <code>+=</code> in a String loop</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · <code>+=</code> in a String loop</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               See Section 4. The compiler doesn&apos;t save you across iterations. This is the most common accidental O(n²) in real Java code.
             </p>
             <CodeBlock lang="java" caption="BAD — O(n²)">{`String s = "";
@@ -518,9 +518,9 @@ String s = sb.toString();`}</CodeBlock>
           </div>
 
           {/* Gotcha 2 */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · <code>new Stack&lt;&gt;()</code> instead of ArrayDeque</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · <code>new Stack&lt;&gt;()</code> instead of ArrayDeque</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <code>java.util.Stack</code> extends <code>Vector</code> and synchronizes every method. Even single-threaded, it&apos;s measurably slower than <code>ArrayDeque</code> — and an interviewer who knows Java will silently dock you for using it.
             </p>
             <CodeBlock lang="java" caption="BAD — legacy and synchronized">{`Stack<Integer> st = new Stack<>();
@@ -532,9 +532,9 @@ st.pop();`}</CodeBlock>
           </div>
 
           {/* Gotcha 3 */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · LinkedList for random access</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · LinkedList for random access</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <code>LinkedList.get(i)</code> is O(i). Calling it inside a <code>for</code> loop of size n is O(n²). The for-each loop hides it because it uses an iterator (O(1) per step) — but indexed access does not.
             </p>
             <CodeBlock lang="java" caption="BAD — O(n²) hidden in a clean-looking loop">{`LinkedList<Integer> list = ...;
@@ -547,9 +547,9 @@ for (int i = 0; i < list.size(); i++) {
           </div>
 
           {/* Gotcha 4 */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · <code>ArrayList.remove(int)</code> vs <code>remove(Integer)</code></div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · <code>ArrayList.remove(int)</code> vs <code>remove(Integer)</code></div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Java picks the overload by <em>static type</em>. <code>list.remove(2)</code> removes the element <em>at index 2</em>. <code>list.remove(Integer.valueOf(2))</code> removes the first element <em>equal to 2</em>. Mixing them up silently corrupts data.
             </p>
             <CodeBlock lang="java" caption="BAD — surprising overload resolution">{`List<Integer> list = new ArrayList<>(List.of(10, 20, 30, 40));
@@ -561,9 +561,9 @@ list.remove(idx);                   // primitive int → index overload, unambig
           </div>
 
           {/* Gotcha 5 */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · <code>ArrayList.add(0, x)</code> is O(n)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · <code>ArrayList.add(0, x)</code> is O(n)</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Inserting at the front of an ArrayList shifts every existing element one slot to the right. In a loop, that&apos;s O(n²). If you need O(1) push-at-front, use an ArrayDeque.
             </p>
             <CodeBlock lang="java" caption="BAD — O(n²) push-at-front loop">{`List<Integer> list = new ArrayList<>();
@@ -580,8 +580,8 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
       {/* SECTION 8 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -644,8 +644,8 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
       {/* ============================================================ */}
       {/* SECTION 9 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 via-white to-green-50 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
           Phase 2 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now defend every linear-structure choice on sight</h3>
@@ -657,7 +657,7 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
         </p>
         <Link
           href="/courses/dsa/modules/hashmaps"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Hashing &amp; Trees →
         </Link>

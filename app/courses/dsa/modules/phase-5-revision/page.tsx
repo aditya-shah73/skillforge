@@ -70,23 +70,23 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-sky-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-cyan-500 to-sky-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 5 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 5 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The entire Java Collections Framework — hierarchy, Big-O, ordering, contracts, thread-safety — compressed to one reference card.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-5-revision" />
@@ -95,10 +95,10 @@ flowchart TB
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           Phase 5 is one module long: the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Java Collections Framework deep dive</Link>. That makes this revision card different from Phase 1&apos;s — instead of consolidating three modules, we&apos;re going <em>deeper</em>{" "}on one. The goal is to lock in the <strong>pick-the-right-collection</strong>{" "}mental model: hierarchy, Big-O, ordering rules, the <code>equals/hashCode</code> contract, <code>Comparable</code> vs <code>Comparator</code>, and the thread-safety options.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           If anything here looks unfamiliar, the deep dive is one click away. Otherwise: this is the page you re-read before an interview, before a code review, before you reach for <code>new ArrayList&lt;&gt;()</code> on autopilot.
         </p>
       </section>
@@ -107,12 +107,12 @@ flowchart TB
       {/* SECTION 1 — The full Collections hierarchy */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. The full Collections hierarchy</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The full Collections hierarchy</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Sketch this from memory. <code>Iterable</code> at the top; <code>Map</code> deliberately off to the side because it is <em>not</em>{" "}a <code>Collection</code>.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={hierarchyChart} />
         </div>
 
@@ -120,14 +120,14 @@ flowchart TB
           <code>Map&lt;K,V&gt;</code> sits in its own subtree of <code>java.util</code>. You cannot pass a <code>HashMap</code> where a <code>Collection</code> is expected. You <em>can</em>{" "}get collection-views from it: <code>map.keySet()</code>, <code>map.values()</code>, <code>map.entrySet()</code>. That is the bridge.
         </Callout>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mt-4">
+        <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><code>List</code> — ordered, indexed, allows duplicates. <code>ArrayList</code> (array-backed) and <code>LinkedList</code> (doubly-linked).</li>
           <li><code>Set</code> — no duplicates. <code>HashSet</code> (no order), <code>LinkedHashSet</code> (insertion order), <code>TreeSet</code> (sorted).</li>
           <li><code>Queue</code> / <code>Deque</code> — FIFO / double-ended. <code>ArrayDeque</code> is the modern default; <code>PriorityQueue</code> is a binary heap.</li>
           <li><code>Map</code> — key→value. <code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>, <code>ConcurrentHashMap</code>.</li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Module 21 — Java Collections Framework deep dive</Link>.
         </p>
       </section>
@@ -136,14 +136,14 @@ flowchart TB
       {/* SECTION 2 — The complete Big-O table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. The complete Big-O table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The complete Big-O table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every implementation you&apos;ll see in production code. Eleven rows. The <em>Key gotcha</em>{" "}column is what separates a junior answer from a senior one.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Collection</th>
                 <th className="px-4 py-3 font-semibold">Access</th>
@@ -153,7 +153,7 @@ flowchart TB
                 <th className="px-4 py-3 font-semibold">Key gotcha</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">ArrayList</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)</td>
@@ -246,7 +246,7 @@ flowchart TB
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           Read the rows you actually use first. <strong>ArrayList, HashMap, ArrayDeque, HashSet</strong>{" "}cover 80% of production code; everything else is opt-in for a reason.
         </p>
       </section>
@@ -255,39 +255,39 @@ flowchart TB
       {/* SECTION 3 — The pick-the-right-collection decision tree */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The pick-the-right-collection decision tree</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The pick-the-right-collection decision tree</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Four questions. Answer them in order and you&apos;ll land on exactly one implementation.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Q1 · Key-value pairs?</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">If yes → <strong>Map family</strong> (jump to Q3 for ordering). If no → <strong>Collection family</strong> (go Q2).</p>
-            <code className="text-xs block text-slate-600 dark:text-slate-400">need lookup by key → Map<br/>need just &quot;a bag of things&quot; → List/Set/Queue</code>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Q1 · Key-value pairs?</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">If yes → <strong>Map family</strong> (jump to Q3 for ordering). If no → <strong>Collection family</strong> (go Q2).</p>
+            <code className="block text-xs text-slate-600 dark:text-slate-400">need lookup by key → Map<br/>need just &quot;a bag of things&quot; → List/Set/Queue</code>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Q2 · Duplicates allowed?</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Yes, and order/index matters → <strong>List</strong> (<code>ArrayList</code>). Yes, and you only push/pop ends → <strong>Deque</strong> (<code>ArrayDeque</code>). No duplicates → <strong>Set</strong> (jump to Q3).</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Q2 · Duplicates allowed?</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Yes, and order/index matters → <strong>List</strong> (<code>ArrayList</code>). Yes, and you only push/pop ends → <strong>Deque</strong> (<code>ArrayDeque</code>). No duplicates → <strong>Set</strong> (jump to Q3).</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Q3 · What iteration order?</div>
-            <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Q3 · What iteration order?</div>
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-700 dark:text-slate-300">
               <li><strong>None</strong> (fastest) → <code>HashMap</code> / <code>HashSet</code></li>
               <li><strong>Insertion order</strong> → <code>LinkedHashMap</code> / <code>LinkedHashSet</code></li>
               <li><strong>Sorted</strong>{" "}by key → <code>TreeMap</code> / <code>TreeSet</code></li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Q4 · Need range queries / nearest neighbor?</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Yes (<code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code>, &quot;next thing after X&quot;) → <strong>TreeMap / TreeSet</strong>. No → stick with hash-based for the O(1) average.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Q4 · Need range queries / nearest neighbor?</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Yes (<code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code>, &quot;next thing after X&quot;) → <strong>TreeMap / TreeSet</strong>. No → stick with hash-based for the O(1) average.</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 md:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Q5 · Priority access? Min/max repeatedly?</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 md:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Q5 · Priority access? Min/max repeatedly?</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">→ <strong>PriorityQueue</strong>. Top-K problems, Dijkstra, scheduler-style &quot;give me the next thing to do.&quot; O(log n) insert/poll, O(1) peek.</p>
           </div>
         </div>
@@ -301,14 +301,14 @@ flowchart TB
       {/* SECTION 4 — Comparable vs Comparator */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Comparable vs Comparator</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Comparable vs Comparator</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Both define ordering, but they live in different places and answer different questions.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold"></th>
                 <th className="px-4 py-3 font-semibold">Comparable&lt;T&gt;</th>
@@ -387,30 +387,30 @@ PriorityQueue<Employee> pq =
       {/* SECTION 5 — equals / hashCode contract */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. The equals / hashCode contract</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. The equals / hashCode contract</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every hash-based collection (<code>HashMap</code>, <code>HashSet</code>, <code>LinkedHashMap</code>, …) trusts these rules. Break one, and your map silently loses keys.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Rule 1 · Reflexive</div>
+        <div className="mb-4 grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 1 · Reflexive</div>
             <p className="text-sm text-slate-700 dark:text-slate-300"><code>x.equals(x)</code> must be <code>true</code>. (Don&apos;t worry — the default <code>Object</code> impl already does this.)</p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Rule 2 · Symmetric</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 2 · Symmetric</div>
             <p className="text-sm text-slate-700 dark:text-slate-300"><code>a.equals(b)</code> iff <code>b.equals(a)</code>. Broken when subclasses widen the equals check.</p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Rule 3 · Transitive</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 3 · Transitive</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">If <code>a.equals(b)</code> and <code>b.equals(c)</code>, then <code>a.equals(c)</code>.</p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-cyan-600 mb-2">Rule 4 · Consistent</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 4 · Consistent</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Repeated calls return the same result <em>as long as the fields used haven&apos;t changed.</em>{" "}Mutating a key after putting it in a map is the disaster scenario.</p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 md:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Rule 5 · equals → hashCode</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 md:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Rule 5 · equals → hashCode</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">If <code>a.equals(b)</code> is true, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong>{" "}be true. The converse is <em>not</em>{" "}required (collisions are fine). Break this and HashMap looks in the wrong bucket and silently &quot;loses&quot; your key.</p>
           </div>
         </div>
@@ -462,14 +462,14 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       {/* SECTION 6 — Iteration order rules */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Iteration order rules</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Iteration order rules</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           What you actually get when you write <code>for (var e : collection)</code>. Surprising your reviewer here is a code-review smell.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Implementation</th>
                 <th className="px-4 py-3 font-semibold">Iteration order</th>
@@ -520,14 +520,14 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       {/* SECTION 7 — Thread safety quick reference */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Thread safety quick reference</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Thread safety quick reference</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Standard collections (<code>ArrayList</code>, <code>HashMap</code>, etc.) are <strong>not</strong>{" "}thread-safe. Here are the four options when you need them to be.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Option</th>
                 <th className="px-4 py-3 font-semibold">Safe?</th>
@@ -538,25 +538,25 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">HashMap</td>
-                <td className="px-4 py-3 text-rose-600 font-semibold">No</td>
+                <td className="px-4 py-3 font-semibold text-rose-600">No</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">None. Concurrent writes can <em>corrupt the structure</em> — infinite loops on resize have been observed in the wild.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Single-threaded only.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">ConcurrentHashMap</td>
-                <td className="px-4 py-3 text-emerald-600 font-semibold">Yes</td>
+                <td className="px-4 py-3 font-semibold text-emerald-600">Yes</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lock striping / CAS on individual buckets. Reads are mostly lock-free.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Default choice</strong>{" "}for shared mutable maps. High concurrency, low contention.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">Collections.synchronizedMap(m)</td>
-                <td className="px-4 py-3 text-amber-600 font-semibold">Yes, coarsely</td>
+                <td className="px-4 py-3 font-semibold text-amber-600">Yes, coarsely</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">One mutex on the whole map. Every operation grabs the same lock — serialized.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Legacy code or when contention is genuinely low. Iteration still needs external <code>synchronized</code> blocks.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">Hashtable</td>
-                <td className="px-4 py-3 text-amber-600 font-semibold">Yes (legacy)</td>
+                <td className="px-4 py-3 font-semibold text-amber-600">Yes (legacy)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Every method <code>synchronized</code>. Same global-lock model as <code>synchronizedMap</code>.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400"><strong>Don&apos;t use.</strong>{" "}Pre-collections-framework. <code>ConcurrentHashMap</code> is strictly better.</td>
               </tr>
@@ -564,7 +564,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           </table>
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 mt-4">
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>List equivalents:</strong> <code>CopyOnWriteArrayList</code> for read-heavy workloads (every write copies the array). <code>Collections.synchronizedList(...)</code> for everything else.</li>
           <li><strong>Set equivalents:</strong> <code>ConcurrentHashMap.newKeySet()</code> for a concurrent <code>Set</code>. <code>CopyOnWriteArraySet</code> for read-heavy.</li>
           <li><strong>Queue equivalents:</strong> <code>ConcurrentLinkedQueue</code> (lock-free FIFO), <code>LinkedBlockingQueue</code> (bounded, blocks producers/consumers), <code>PriorityBlockingQueue</code> for ordered.</li>
@@ -580,8 +580,8 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       {/* SECTION 8 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five recall checks. No XP, no gating. If you miss one, jump back to the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">deep dive</Link>.
         </p>
 
@@ -644,8 +644,8 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       {/* ============================================================ */}
       {/* SECTION 9 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-indigo-950/30 dark:via-slate-900 dark:to-purple-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/30 dark:via-slate-900 dark:to-purple-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">
           Phase 5 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now pick the right collection on sight</h3>
@@ -657,7 +657,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
         </p>
         <Link
           href="/courses/dsa/modules/two-pointers"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Algorithmic Techniques →
         </Link>

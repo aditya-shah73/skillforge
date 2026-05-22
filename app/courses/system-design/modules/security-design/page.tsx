@@ -72,19 +72,19 @@ export default function Page() {
     <article className="prose-custom">
       <BookmarkButton courseId="system-design" moduleSlug="security-design" />
       <ModuleProgress moduleSlug="security-design" checkpoints={CHECKPOINTS} />
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
       </header>
 
       <section className="my-8">
@@ -95,8 +95,8 @@ export default function Page() {
           everything?
         </p>
 
-        <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50/60 dark:bg-slate-900/40">
-          <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">What you&apos;ll walk out with</p>
+        <div className="my-8 rounded-xl border border-slate-200 bg-slate-50/60 p-6 dark:border-slate-800 dark:bg-slate-900/40">
+          <p className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">What you&apos;ll walk out with</p>
           <ul className="space-y-2 text-sm">
             <li>A working mental model for AuthN vs AuthZ — and why JWTs aren&apos;t a silver bullet.</li>
             <li>Where secrets actually go (hint: not in your repo, not in your config map either).</li>
@@ -109,7 +109,7 @@ export default function Page() {
 
       {/* ============================== PART 1 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 1 — AuthN and AuthZ are not the same thing</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 1 — AuthN and AuthZ are not the same thing</h2>
         <p>
           Authentication answers <em>who are you</em>. Authorization answers <em>what are you allowed to do</em>. Mix
           them up and you build systems where logging in implicitly grants access to everything — which is exactly the
@@ -122,7 +122,7 @@ export default function Page() {
           second one and you ship BOLA.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Sessions vs tokens vs JWTs</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Sessions vs tokens vs JWTs</h3>
         <p>Three flavors of authentication state you&apos;ll encounter:</p>
         <ul className="space-y-2">
           <li>
@@ -145,7 +145,7 @@ export default function Page() {
           Either accept that, keep TTLs short with refresh tokens, or maintain a denylist (which puts the state back).
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">OAuth2 + OIDC, end to end</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">OAuth2 + OIDC, end to end</h3>
         <p>
           OAuth2 is the authorization framework. OIDC layers identity on top. The flow most modern apps use is
           Authorization Code with PKCE:
@@ -226,14 +226,14 @@ public class SecurityConfig {
 
       {/* ============================== PART 2 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 2 — Secrets, certs, and mTLS</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 2 — Secrets, certs, and mTLS</h2>
         <p>
           Authentication for users is one problem. Authentication between services is another. And the substrate for
           both is secrets — passwords, API keys, signing keys, cert private keys. Where they live, how they rotate, and
           who can read them is half the battle.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Where secrets do NOT belong</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Where secrets do NOT belong</h3>
         <ul className="space-y-2">
           <li><strong>Source control.</strong>{" "}Once it&apos;s in git history, it&apos;s public. Rotate it.</li>
           <li><strong>Plain config maps / environment files committed to repos.</strong>{" "}Same problem.</li>
@@ -246,7 +246,7 @@ public class SecurityConfig {
           get committed eventually. Plan rotation and revocation as if it&apos;s a Tuesday, not an emergency.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Where secrets DO belong</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Where secrets DO belong</h3>
         <p>A dedicated secrets manager: HashiCorp Vault, AWS Secrets Manager, GCP Secret Manager, Kubernetes External Secrets, etc. The shape:</p>
 
         <CodeBlock lang="plain" caption="Spring Boot pulling secrets from Vault at startup">{`# application.yml
@@ -271,7 +271,7 @@ spring:
           with the k8s API, then issues a short-lived secret lease. No long-lived credential anywhere on disk.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Service-to-service: mTLS</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Service-to-service: mTLS</h3>
         <p>
           For human-to-service auth you have OAuth. For service-to-service auth inside your network, mTLS is the gold
           standard. Both sides present certs. Both sides verify. The TLS handshake itself becomes the authentication.
@@ -279,7 +279,7 @@ spring:
 
         <Mermaid chart={mtlsFlow} />
 
-        <ul className="space-y-2 mt-4">
+        <ul className="mt-4 space-y-2">
           <li><strong>What it gives you:</strong>{" "}encryption + mutual authentication, baked into the connection.</li>
           <li><strong>Cost:</strong>{" "}certificate lifecycle. Issuance, rotation, revocation, CA management.</li>
           <li><strong>Realistic deployment:</strong>{" "}Istio / Linkerd handle this transparently via sidecars. Cert-manager + an internal CA if you&apos;re rolling your own.</li>
@@ -328,13 +328,13 @@ spring:
 
       {/* ============================== PART 3 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 3 — The OWASP categories that actually bite</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 3 — The OWASP categories that actually bite</h2>
         <p>
           The OWASP API Security Top 10 reads like a litany of design failures. Most of them aren&apos;t exotic
           attacks — they&apos;re missed checks. Here are the ones that show up in real system design reviews:
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">BOLA — Broken Object-Level Authorization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">BOLA — Broken Object-Level Authorization</h3>
         <p>
           Number one on the list, and the most common. Endpoint <code>GET /api/orders/{`{id}`}</code> authenticates the
           caller but doesn&apos;t check that the order belongs to them. Caller swaps the ID and reads someone
@@ -362,7 +362,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           into a query filter or aspect. <code>WHERE user_id = :caller</code> in the repository is hard to forget.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">SSRF — Server-Side Request Forgery</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">SSRF — Server-Side Request Forgery</h3>
         <p>
           Your service accepts a URL and fetches it (image upload from URL, webhook config, link preview). Attacker
           sends <code>http://169.254.169.254/latest/meta-data/</code> — the AWS instance metadata endpoint — and your
@@ -376,21 +376,21 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           <li>Egress proxy with allowlist for outbound calls if you can swing it.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Injection — still alive in 2026</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Injection — still alive in 2026</h3>
         <p>
           SQL injection via concatenation. Command injection via shelling out. LDAP injection. Template injection. The
           fix is always the same: parameterize, don&apos;t concatenate. ORMs help. Prepared statements help. String
           formatting with user input ends careers.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Security misconfiguration</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Security misconfiguration</h3>
         <p>
           The breach you don&apos;t see coming. Open S3 buckets. Default admin passwords. CORS set to <code>*</code>.
           Debug endpoints exposed to the internet. Stack traces in production responses. The fix is automation —
           benchmarks (CIS), policy-as-code (OPA, Kyverno), and continuous scanning.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Insufficient logging &amp; monitoring</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Insufficient logging &amp; monitoring</h3>
         <p>
           The category that turns a 1-day breach into a 6-month one. If you can&apos;t see who logged in, what data
           they accessed, and what changed — you can&apos;t respond. Log auth events, admin actions, and access to
@@ -454,14 +454,14 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
 
       {/* ============================== PART 4 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 4 — PII, encryption, and designing for deletion</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 4 — PII, encryption, and designing for deletion</h2>
         <p>
           Personal data shows up everywhere — emails, names, addresses, payment details, IP addresses. Modern
           regulations (GDPR, CCPA, etc.) treat it as a liability you have to manage explicitly, not just data you
           happen to have.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Encryption at rest, in transit, in use</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Encryption at rest, in transit, in use</h3>
         <ul className="space-y-2">
           <li>
             <strong>In transit.</strong>{" "}TLS everywhere — between client and edge, between services, between service
@@ -507,7 +507,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           a clean audit log of every decryption.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The right to be forgotten</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The right to be forgotten</h3>
         <p>
           GDPR Article 17 says users can demand deletion. Sounds simple. Then you remember:
         </p>
@@ -525,7 +525,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           them inaccessible — which most regulators accept.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Data minimization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Data minimization</h3>
         <p>
           The cheapest way to handle PII is not to have it. Don&apos;t collect what you don&apos;t need. Tokenize early
           (Stripe-style) so payment data never lives in your DB. Anonymize for analytics. Hash identifiers when joining
@@ -569,7 +569,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
 
       {/* ============================== PART 5 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 5 — Modern auth depth: OAuth flows, tokens, CSRF, and tier placement</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 5 — Modern auth depth: OAuth flows, tokens, CSRF, and tier placement</h2>
         <p>
           Part 1 gave you the AuthN/AuthZ split and a feel for OAuth. This part is the depth: which OAuth flow to pick
           and why, what the actual difference is between an ID token and an access token, how refresh token rotation
@@ -578,7 +578,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           through your edge, BFF, and downstream services.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">OAuth2 flows — pick one, and only one</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">OAuth2 flows — pick one, and only one</h3>
         <p>
           OAuth2 has a handful of grant types. In 2026, the answer is almost always Authorization Code with PKCE. The
           others are either dead, deprecated, or narrow special cases.
@@ -621,7 +621,7 @@ public Order get(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">ID token vs access token — they answer different questions</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">ID token vs access token — they answer different questions</h3>
         <p>
           OIDC layers identity on top of OAuth2. The auth server hands back two tokens after a successful login flow,
           and they are not interchangeable.
@@ -673,43 +673,43 @@ JwtDecoder jwtDecoder(@Value("\${app.issuer}") String issuer,
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Session vs JWT — the 2026 take</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Session vs JWT — the 2026 take</h3>
         <p>
           The mid-2010s consensus was &quot;JWT for everything, sessions are legacy.&quot; That consensus was wrong, and
           the industry is quietly walking it back. Here&apos;s the honest tradeoff.
         </p>
 
-        <div className="my-6 grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
-            <p className="font-semibold mb-2">JWT — pros</p>
-            <ul className="text-sm space-y-1">
+        <div className="my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+            <p className="mb-2 font-semibold">JWT — pros</p>
+            <ul className="space-y-1 text-sm">
               <li>Stateless. No DB read per request.</li>
               <li>Trivial to scale horizontally — any node can validate.</li>
               <li>Works across origins and across services without a shared session store.</li>
               <li>Carries claims (scopes, tenant) the resource server can act on.</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
-            <p className="font-semibold mb-2">JWT — cons</p>
-            <ul className="text-sm space-y-1">
+          <div className="rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+            <p className="mb-2 font-semibold">JWT — cons</p>
+            <ul className="space-y-1 text-sm">
               <li>Can&apos;t revoke until expiry — fired user keeps access for the TTL.</li>
               <li>Bytes ride on every request. Big claims = big requests.</li>
               <li>Key rotation is a real operational chore (JWKS, kid headers, overlap windows).</li>
               <li>Footguns: alg=none, weak HS256 secrets, missing aud check.</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
-            <p className="font-semibold mb-2">Session — pros</p>
-            <ul className="text-sm space-y-1">
+          <div className="rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+            <p className="mb-2 font-semibold">Session — pros</p>
+            <ul className="space-y-1 text-sm">
               <li>Instant revocation — delete the row, done.</li>
               <li>Tiny opaque cookie. No claim leakage.</li>
               <li>Server controls everything: roles, lockouts, step-up auth.</li>
               <li>Hard to misuse — there&apos;s no &quot;forgot to validate&quot; case.</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5">
-            <p className="font-semibold mb-2">Session — cons</p>
-            <ul className="text-sm space-y-1">
+          <div className="rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+            <p className="mb-2 font-semibold">Session — cons</p>
+            <ul className="space-y-1 text-sm">
               <li>Session store is a hot dependency — Redis goes down, logins go down.</li>
               <li>Sticky sessions or a shared store needed across instances.</li>
               <li>Doesn&apos;t cross origins easily.</li>
@@ -735,7 +735,7 @@ JwtDecoder jwtDecoder(@Value("\${app.issuer}") String issuer,
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Refresh token rotation — and why it&apos;s a tripwire</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Refresh token rotation — and why it&apos;s a tripwire</h3>
         <p>
           The standard pattern: short-lived access token (5–15 minutes), long-lived refresh token (days to weeks). When
           the access token expires, the client posts the refresh token to the auth server and gets a new access token
@@ -801,7 +801,7 @@ public class RefreshTokenService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">CSRF in 2026 — what changed and what didn&apos;t</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">CSRF in 2026 — what changed and what didn&apos;t</h3>
         <p>
           Modern browsers default cookies to <code>SameSite=Lax</code>. That single change neutered most classic CSRF:
           a malicious site can no longer cause your browser to silently POST to <code>bank.com/transfer</code> with
@@ -829,7 +829,7 @@ public class RefreshTokenService {
           </li>
         </ul>
 
-        <p className="font-semibold mt-6">The three CSRF defenses, and what each actually defends:</p>
+        <p className="mt-6 font-semibold">The three CSRF defenses, and what each actually defends:</p>
 
         <ClassifyChallenge
           title="CSRF defense fit"
@@ -863,7 +863,7 @@ public class RefreshTokenService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Where auth state lives — full-stack tier walkthrough</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Where auth state lives — full-stack tier walkthrough</h3>
         <p>
           The interview question that separates &quot;has read a JWT tutorial&quot; from &quot;has shipped this in
           production&quot; is: as a request walks from the browser through your edge gateway, into a BFF, then out to
@@ -872,7 +872,7 @@ public class RefreshTokenService {
 
         <Mermaid chart={authTiers} />
 
-        <ul className="space-y-2 mt-4">
+        <ul className="mt-4 space-y-2">
           <li>
             <strong>Client (browser/SPA).</strong>{" "}Holds an access token in memory and a refresh token in an HttpOnly
             cookie. Or — for first-party apps — holds nothing but a session cookie, and the BFF does all token handling
@@ -1016,8 +1016,8 @@ public class OrdersController {
       </section>
 
       {/* ============================== Closing ============================== */}
-      <section className="my-12 rounded-xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 p-8">
-        <h2 className="text-2xl font-bold mb-3">Walking out</h2>
+      <section className="my-12 rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h2 className="mb-3 text-2xl font-bold">Walking out</h2>
         <p>
           Security in system design is mostly about not skipping the boring checks. Validate audience claims. Push
           ownership filters into queries. Resolve URLs before fetching. Encrypt with per-user keys. Log auth events.
@@ -1032,7 +1032,7 @@ public class OrdersController {
       </section>
 
       <section className="my-12">
-        <h3 className="text-lg font-semibold mb-3">Next up</h3>
+        <h3 className="mb-3 text-lg font-semibold">Next up</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Module 44: Recap — we synthesize the whole course into a single mental compass before the capstone.
         </p>

@@ -33,12 +33,12 @@ export default function CourseProgress({
 
   return (
     <div className="mb-8">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
           Your progress
         </span>
-        <span className="text-xs font-mono text-slate-500 tabular-nums">
-          {done} / {total} complete · <span className={showActive ? "text-slate-900 dark:text-slate-100 font-semibold" : ""}>{percent}%</span>
+        <span className="font-mono text-xs text-slate-500 tabular-nums">
+          {done} / {total} complete · <span className={showActive ? "font-semibold text-slate-900 dark:text-slate-100" : ""}>{percent}%</span>
         </span>
       </div>
       <div className="relative h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">

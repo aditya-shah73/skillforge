@@ -146,13 +146,13 @@ flowchart LR
       <ModuleProgress moduleSlug="union-find" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 8 · Module 38 · Advanced
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~1.5–2h · the data structure that makes Kruskal&apos;s feasible</p>
       </div>
@@ -995,9 +995,9 @@ public int kruskal(int n, int[][] edges) {
           ]}
         />
 
-        <div className="not-prose mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-800/40">
-          <p className="text-sm uppercase tracking-wider font-bold text-pink-700 dark:text-pink-300 mb-2">Up next · Module 39</p>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Advanced graph: MST, Bellman-Ford, Floyd-Warshall</h3>
+        <div className="not-prose mt-8 mb-8 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-800/40 dark:from-pink-950/30 dark:to-rose-950/30">
+          <p className="mb-2 text-sm font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">Up next · Module 39</p>
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Advanced graph: MST, Bellman-Ford, Floyd-Warshall</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             You&apos;ve seen Kruskal&apos;s MST — next, Prim&apos;s alternative (heap-based), and the two heavyweight
             shortest-path algorithms: Bellman-Ford for graphs with negative edges, and Floyd-Warshall for all-pairs
@@ -1006,7 +1006,7 @@ public int kruskal(int n, int[][] edges) {
           </p>
           <Link
             href="/courses/dsa/modules/advanced-graph"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Advanced graph →
           </Link>

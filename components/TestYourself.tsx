@@ -59,15 +59,15 @@ export default function TestYourself({ concept, explain, recognize, implement }:
   }
 
   return (
-    <div className="not-prose my-8 rounded-xl border-2 border-amber-300 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 overflow-hidden shadow-sm">
-      <div className="px-5 py-3 border-b border-amber-200 dark:border-amber-900 bg-amber-100/50 dark:bg-amber-950/60">
-        <div className="flex items-center gap-2 flex-wrap">
+    <div className="not-prose my-8 overflow-hidden rounded-xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 shadow-sm dark:border-amber-800 dark:from-amber-950/40 dark:to-orange-950/40">
+      <div className="border-b border-amber-200 bg-amber-100/50 px-5 py-3 dark:border-amber-900 dark:bg-amber-950/60">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-lg">🎯</span>
-          <h4 className="font-bold text-sm uppercase tracking-wider text-amber-900 dark:text-amber-200">
+          <h4 className="text-sm font-bold tracking-wider text-amber-900 uppercase dark:text-amber-200">
             Confidence check: {concept}
           </h4>
         </div>
-        <p className="text-xs text-amber-800/80 dark:text-amber-300/80 mt-1">
+        <p className="mt-1 text-xs text-amber-800/80 dark:text-amber-300/80">
           Three tabs, three levels. Try answering each in your head before you reveal.
         </p>
       </div>
@@ -76,7 +76,7 @@ export default function TestYourself({ concept, explain, recognize, implement }:
         role="tablist"
         aria-label={`Confidence check for ${concept}`}
         ref={tablistRef}
-        className="flex border-b border-amber-200 dark:border-amber-900 bg-white/60 dark:bg-slate-900/40"
+        className="flex border-b border-amber-200 bg-white/60 dark:border-amber-900 dark:bg-slate-900/40"
       >
         {tabs.map((t) => {
           const isActive = tab === t.key;
@@ -93,10 +93,10 @@ export default function TestYourself({ concept, explain, recognize, implement }:
               data-tab-key={t.key}
               onClick={() => setTab(t.key)}
               onKeyDown={handleTabKey}
-              className={`flex-1 px-3 py-2 text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${
+              className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold transition focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:outline-none sm:text-sm dark:focus-visible:ring-offset-slate-900 ${
                 isActive
-                  ? "bg-amber-200/60 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 border-b-2 border-amber-600 dark:border-amber-400"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-amber-100/50 dark:hover:bg-amber-900/20"
+                  ? "border-b-2 border-amber-600 bg-amber-200/60 text-amber-900 dark:border-amber-400 dark:bg-amber-900/40 dark:text-amber-100"
+                  : "text-slate-600 hover:bg-amber-100/50 dark:text-slate-400 dark:hover:bg-amber-900/20"
               }`}
             >
               <span aria-hidden="true">{t.icon}</span>
@@ -111,21 +111,21 @@ export default function TestYourself({ concept, explain, recognize, implement }:
         id={`${baseId}-panel-${tab}`}
         aria-labelledby={`${baseId}-tab-${tab}`}
         tabIndex={0}
-        className="p-5 space-y-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-inset"
+        className="space-y-4 p-5 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none focus-visible:ring-inset"
       >
-        <div className="text-sm text-slate-700 dark:text-slate-300 italic">
+        <div className="text-sm text-slate-700 italic dark:text-slate-300">
           <span className="font-semibold text-amber-900 dark:text-amber-200">Prompt:</span> {current.hint}
         </div>
 
         {!revealed[tab] ? (
           <button
             onClick={() => setRevealed((r) => ({ ...r, [tab]: true }))}
-            className="w-full py-4 rounded-lg border-2 border-dashed border-amber-400 dark:border-amber-700 bg-white/50 dark:bg-slate-900/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition text-sm font-semibold text-amber-900 dark:text-amber-200"
+            className="w-full rounded-lg border-2 border-dashed border-amber-400 bg-white/50 py-4 text-sm font-semibold text-amber-900 transition hover:bg-amber-50 dark:border-amber-700 dark:bg-slate-900/40 dark:text-amber-200 dark:hover:bg-amber-950/40"
           >
             🤔 Thought about it? → Show answer
           </button>
         ) : (
-          <div className="rounded-lg bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-900 p-4 text-sm text-slate-800 dark:text-slate-200 space-y-3">
+          <div className="space-y-3 rounded-lg border border-amber-200 bg-white p-4 text-sm text-slate-800 dark:border-amber-900 dark:bg-slate-900 dark:text-slate-200">
             {body}
           </div>
         )}

@@ -74,13 +74,13 @@ export default function GradientBowl() {
   const diverging = Math.abs(w) > 15;
 
   return (
-    <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
-      <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50">
-        <h4 className="font-semibold text-sm flex items-center gap-2">
+    <div className="my-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="border-b border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-800 dark:bg-slate-950/50">
+        <h4 className="flex items-center gap-2 text-sm font-semibold">
           <span className="text-lg">🎢</span> The bowl you&apos;re rolling down
         </h4>
       </div>
-      <div className="p-5 space-y-4">
+      <div className="space-y-4 p-5">
         <div className="flex justify-center">
           <svg width={W} height={H} className="max-w-full">
             {/* Horizontal gridlines (loss values) */}
@@ -147,9 +147,9 @@ export default function GradientBowl() {
           </svg>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex justify-between">
+            <label className="flex justify-between text-xs font-semibold tracking-wider text-slate-500 uppercase">
               <span>Weight w (start)</span>
               <span className="font-mono">{w.toFixed(2)}</span>
             </label>
@@ -161,11 +161,11 @@ export default function GradientBowl() {
               value={w}
               onChange={(e) => resetAt(Number(e.target.value))}
               disabled={stepping}
-              className="w-full mt-1 accent-amber-500"
+              className="mt-1 w-full accent-amber-500"
             />
           </div>
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex justify-between">
+            <label className="flex justify-between text-xs font-semibold tracking-wider text-slate-500 uppercase">
               <span>Learning rate</span>
               <span className={`font-mono ${overshoot ? "text-rose-600 dark:text-rose-400" : ""}`}>{lr.toFixed(2)}</span>
             </label>
@@ -177,42 +177,42 @@ export default function GradientBowl() {
               value={lr}
               onChange={(e) => setLr(Number(e.target.value))}
               disabled={stepping}
-              className="w-full mt-1 accent-amber-500"
+              className="mt-1 w-full accent-amber-500"
             />
           </div>
         </div>
 
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={manualStep}
             disabled={stepping}
-            className="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold transition disabled:opacity-50"
+            className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold transition hover:bg-slate-200 disabled:opacity-50 dark:bg-slate-800 dark:hover:bg-slate-700"
           >
             Step once
           </button>
           <button
             onClick={() => setStepping(true)}
             disabled={stepping}
-            className="px-4 py-2 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-sm font-semibold hover:scale-105 transition disabled:opacity-50"
+            className="rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 px-4 py-2 text-sm font-semibold text-white transition hover:scale-105 disabled:opacity-50"
           >
             {stepping ? "Descending..." : "Run 60 steps"}
           </button>
           <button
             onClick={() => resetAt(-2)}
             disabled={stepping}
-            className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm transition hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50"
+            className="rounded-lg border border-slate-300 px-4 py-2 text-sm transition hover:bg-slate-50 disabled:opacity-50 dark:border-slate-700 dark:hover:bg-slate-800"
           >
             Reset
           </button>
         </div>
 
         {overshoot && (
-          <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-200">
+          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200">
             ⚠️ Learning rate &gt; 1 on this curve — you&apos;ll overshoot and may diverge. Watch the ball fly off.
           </div>
         )}
         {diverging && (
-          <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-200">
+          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200">
             💥 Diverged. This is what happens in real training when the LR is too big.
           </div>
         )}

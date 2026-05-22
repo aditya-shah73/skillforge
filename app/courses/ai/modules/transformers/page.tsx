@@ -26,19 +26,19 @@ export default function TransformersModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Attention &amp; transformers</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Attention &amp; transformers</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The one idea that ate the ML world — built from scratch, one matrix at a time.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="transformers" />
@@ -46,16 +46,16 @@ export default function TransformersModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🎯</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The famous 2017 paper &quot;Attention Is All You Need&quot; introduced the transformer — the architecture behind every LLM you use.
           We&apos;re going to build its single most important piece, scaled dot-product attention, by hand in Java. By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Explain <em>why</em>{" "}attention was invented — and what RNNs couldn&apos;t do.</li>
           <li>Understand queries, keys, and values without hand-waving.</li>
           <li>Compute an attention output for a 5-token sequence <em>by hand</em>.</li>
@@ -63,7 +63,7 @@ export default function TransformersModule() {
           <li>Ship a Java implementation of self-attention. 40 lines, no library.</li>
           <li>Sketch a full transformer block — residuals, layer norm, FFN — and know what each piece does.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           Fair warning: this is one idea, explained thoroughly. Budget ~3–4h. The math is easier than Module 4&apos;s backprop — the <em>intuition</em>{" "}is what takes time.
         </p>
       </section>
@@ -125,7 +125,7 @@ export default function TransformersModule() {
           Take the sentence:
         </p>
 
-        <p className="italic text-center text-slate-700 dark:text-slate-300">
+        <p className="text-center text-slate-700 italic dark:text-slate-300">
           &quot;The trophy didn&apos;t fit in the suitcase because <strong>it</strong>{" "}was too big.&quot;
         </p>
 
@@ -139,7 +139,7 @@ export default function TransformersModule() {
           <p className="mb-2">
             Three properties made attention dominate:
           </p>
-          <ul className="list-disc ml-5 m-0 space-y-1 text-sm">
+          <ul className="m-0 ml-5 list-disc space-y-1 text-sm">
             <li><strong>No recurrence</strong> — process the whole sequence in parallel on a GPU, instead of one token at a time.</li>
             <li><strong>No long-distance decay</strong> — every pair of tokens is one matmul apart, no matter how far.</li>
             <li><strong>Learned routing</strong> — the network figures out which tokens should influence which, per example, from data.</li>
@@ -318,8 +318,8 @@ V = X · W_V    shape = (5 × 3)`}
           Here it is — the formula from &quot;Attention Is All You Need&quot;, and the center of every LLM:
         </p>
 
-        <div className="my-6 not-prose text-center">
-          <div className="inline-block rounded-xl bg-slate-900 dark:bg-slate-950 text-slate-100 font-mono text-base px-6 py-5 shadow">
+        <div className="not-prose my-6 text-center">
+          <div className="inline-block rounded-xl bg-slate-900 px-6 py-5 font-mono text-base text-slate-100 shadow dark:bg-slate-950">
             Attention(Q, K, V) = softmax( Q · Kᵀ / √d_k ) · V
           </div>
         </div>
@@ -871,7 +871,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         </p>
 
         <Callout variant="insight" title="The whole transformer recipe, in 5 bullets">
-          <ul className="list-disc ml-5 m-0 space-y-1 text-sm">
+          <ul className="m-0 ml-5 list-disc space-y-1 text-sm">
             <li><strong>Embed</strong>{" "}tokens into vectors, add positional encoding.</li>
             <li><strong>Block ×N:</strong>{" "}LayerNorm → Multi-Head Attention → Residual → LayerNorm → FFN → Residual.</li>
             <li><strong>Final LayerNorm</strong>{" "}after the last block.</li>
@@ -930,9 +930,9 @@ activation σ = ReLU (original) or GELU (modern).`}
 
         <h3>The spec</h3>
 
-        <div className="not-prose rounded-xl border border-indigo-200 dark:border-indigo-900 bg-indigo-50/60 dark:bg-indigo-950/30 p-5 my-4 text-sm">
-          <div className="font-bold mb-3">Build a self-contained attention module that passes three tests.</div>
-          <ol className="list-decimal ml-5 space-y-2">
+        <div className="not-prose my-4 rounded-xl border border-indigo-200 bg-indigo-50/60 p-5 text-sm dark:border-indigo-900 dark:bg-indigo-950/30">
+          <div className="mb-3 font-bold">Build a self-contained attention module that passes three tests.</div>
+          <ol className="ml-5 list-decimal space-y-2">
             <li>
               <strong>Implement</strong> <code>attention(Q, K, V)</code> returning a <code>(n × d)</code> matrix — the formula from Part 3.
               Use the numerically-stable softmax (subtract the row max first).
@@ -983,7 +983,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         </ul>
 
         <Callout variant="insight" title="Milestones">
-          <ol className="list-decimal ml-5 m-0 space-y-1 text-sm">
+          <ol className="m-0 ml-5 list-decimal space-y-1 text-sm">
             <li><strong>Matrix ops work.</strong>{" "}Unit-test matmul and transpose on tiny cases. If these are wrong, nothing downstream will be right.</li>
             <li><strong>Unmasked attention matches the worked example.</strong>{" "}Row 0 ≈ [0.305, 0.694]. This is the single most important correctness check.</li>
             <li><strong>Causal mask works.</strong>{" "}Row 0 attention weights are [1, 0, 0, 0]; row 3 weights sum to 1 over positions 0–3.</li>
@@ -1070,7 +1070,7 @@ activation σ = ReLU (original) or GELU (modern).`}
       </Checkpoint>
 
       {/* NEXT MODULE */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Onward to geometry</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Module 6 pulls the camera back: what <em>are</em>{" "}those vectors floating through attention? <strong>Embeddings</strong> — numbers that turn into geometry.
@@ -1078,7 +1078,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         </p>
         <Link
           href="/courses/ai/modules/embeddings-intro"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
         >
           Continue to Module 6 →
         </Link>

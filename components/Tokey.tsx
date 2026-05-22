@@ -128,10 +128,10 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
       {/* Hidden below `sm` (640px). The 56×56 button + speech bubble would
           otherwise cover quiz CTAs and checkpoint actions on phones — sighted
           mobile users lose the mascot, screen reader users still hear it. */}
-      <div className="hidden sm:flex fixed bottom-4 right-4 z-50 items-end gap-2 pointer-events-none print:hidden">
+      <div className="pointer-events-none fixed right-4 bottom-4 z-50 hidden items-end gap-2 sm:flex print:hidden">
         {visible && message && !minimized && (
           <div
-            className="pointer-events-auto max-w-xs rounded-2xl rounded-br-sm bg-white dark:bg-slate-800 border-2 border-indigo-300 dark:border-indigo-700 shadow-xl px-4 py-3 text-sm animate-slide-up"
+            className="animate-slide-up pointer-events-auto max-w-xs rounded-2xl rounded-br-sm border-2 border-indigo-300 bg-white px-4 py-3 text-sm shadow-xl dark:border-indigo-700 dark:bg-slate-800"
             // aria-hidden because the live region above already announces this
             // — otherwise screen readers would read it twice.
             aria-hidden="true"
@@ -141,7 +141,7 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
         )}
         <button
           onClick={() => setMinimized((m) => !m)}
-          className={`pointer-events-auto w-14 h-14 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 shadow-lg flex items-center justify-center text-3xl hover:scale-110 transition-transform ${message ? MOOD_ANIMATION[message.mood] : ""}`}
+          className={`pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 text-3xl shadow-lg transition-transform hover:scale-110 ${message ? MOOD_ANIMATION[message.mood] : ""}`}
           title={minimized ? "Show Tokey" : "Hide Tokey"}
           aria-label={minimized ? "Show Tokey mascot" : "Hide Tokey mascot"}
           aria-pressed={minimized}

@@ -24,19 +24,19 @@ export default function MultimodalModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 4 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Multimodal inputs</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Multimodal inputs</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Pictures, PDFs, screenshots. The model can see now — what does that change?
         </p>
         <BookmarkButton courseId="ai" moduleSlug="multimodal" />
@@ -44,17 +44,17 @@ export default function MultimodalModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 dark:border-sky-800 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 bg-gradient-to-br from-sky-50 to-blue-50 p-6 dark:border-sky-800 dark:from-sky-950/40 dark:to-blue-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A working understanding of vision models — not as magic, but as &quot;tokens, but the
           token grid is now 2-D&quot;. Plus the receipt parser project, which is the canonical
           &quot;photo in, JSON out&quot; pipeline.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>How vision models tokenize an image (and why that matters for cost)</li>
           <li>Sending images to Claude from Spring AI — base64 vs URL</li>
           <li>Structured extraction with JSON schemas and validation</li>
@@ -75,7 +75,7 @@ export default function MultimodalModule() {
       {/* PART 1: WHAT MULTIMODAL REALLY MEANS                                */}
       {/* ================================================================= */}
       <section id="what-multimodal">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — What &quot;multimodal&quot; really means</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — What &quot;multimodal&quot; really means</h2>
 
         <p>
           The marketing version: &quot;the model can see images now.&quot; That&apos;s true but
@@ -83,7 +83,7 @@ export default function MultimodalModule() {
           determines whether your feature works or burns money.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Images become tokens</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Images become tokens</h3>
 
         <p>
           Remember Module 1 — text gets chopped into tokens, and the model only sees those tokens.
@@ -107,7 +107,7 @@ export default function MultimodalModule() {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">It&apos;s the same transformer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">It&apos;s the same transformer</h3>
 
         <p>
           Once the image is tokenized, it&apos;s just more tokens flowing into the same attention
@@ -123,14 +123,14 @@ export default function MultimodalModule() {
           You just have an image (or several) somewhere in the message.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">What vision models are good at — and what they aren&apos;t</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">What vision models are good at — and what they aren&apos;t</h3>
 
         <p>Roughly, by 2025-era capability:</p>
 
-        <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/20 p-4">
-            <h4 className="font-bold text-emerald-700 dark:text-emerald-400 mb-2">Reliable</h4>
-            <ul className="text-sm space-y-1 list-disc pl-5">
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50/50 p-4 dark:border-emerald-800 dark:bg-emerald-950/20">
+            <h4 className="mb-2 font-bold text-emerald-700 dark:text-emerald-400">Reliable</h4>
+            <ul className="list-disc space-y-1 pl-5 text-sm">
               <li>Reading printed text (receipts, signs, slides)</li>
               <li>Describing scenes, identifying objects</li>
               <li>Reading tables and structured layouts</li>
@@ -139,9 +139,9 @@ export default function MultimodalModule() {
               <li>Reading handwriting that&apos;s not too messy</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20 p-4">
-            <h4 className="font-bold text-rose-700 dark:text-rose-400 mb-2">Unreliable</h4>
-            <ul className="text-sm space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-rose-300 bg-rose-50/50 p-4 dark:border-rose-800 dark:bg-rose-950/20">
+            <h4 className="mb-2 font-bold text-rose-700 dark:text-rose-400">Unreliable</h4>
+            <ul className="list-disc space-y-1 pl-5 text-sm">
               <li>Counting many items (&gt; 20)</li>
               <li>Pixel-precise geometry (&quot;is X to the left of Y by 3px?&quot;)</li>
               <li>Reading very small text (resize matters)</li>
@@ -191,7 +191,7 @@ export default function MultimodalModule() {
       {/* PART 2: SENDING IMAGES TO THE MODEL                                 */}
       {/* ================================================================= */}
       <section id="image-input">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — Sending images to the model</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Sending images to the model</h2>
 
         <p>
           There are three ways to put an image into a Claude request: a public URL, a base64 blob,
@@ -199,7 +199,7 @@ export default function MultimodalModule() {
           because they cover 99% of cases.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The raw HTTP shape</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The raw HTTP shape</h3>
 
         <p>
           Before Spring AI does its magic, here&apos;s what the wire actually looks like for the
@@ -244,7 +244,7 @@ anthropic-version: 2023-06-01
           tends to ground better that way.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">From Spring AI</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">From Spring AI</h3>
 
         <p>
           Spring AI hides the JSON shape behind <code>UserMessage</code> and a <code>Media</code>
@@ -295,15 +295,15 @@ public class ReceiptVisionService {
           handing in a <code>ByteArrayResource</code> built from a multipart upload.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">URL vs base64 — when to use which</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">URL vs base64 — when to use which</h3>
 
-        <div className="not-prose overflow-x-auto my-6">
-          <table className="w-full text-sm border-collapse">
+        <div className="not-prose my-6 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2">Approach</th>
-                <th className="text-left p-2">Use when</th>
-                <th className="text-left p-2">Watch out for</th>
+                <th className="p-2 text-left">Approach</th>
+                <th className="p-2 text-left">Use when</th>
+                <th className="p-2 text-left">Watch out for</th>
               </tr>
             </thead>
             <tbody>
@@ -331,7 +331,7 @@ public class ReceiptVisionService {
           small enough that a 33% inflation is fine.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Resizing on the server</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Resizing on the server</h3>
 
         <p>
           Don&apos;t trust the client to resize. The phone might, the desktop browser usually
@@ -420,7 +420,7 @@ public class ImageResizer {
       {/* PART 3: STRUCTURED EXTRACTION                                       */}
       {/* ================================================================= */}
       <section id="structured-extraction">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Structured extraction from images</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Structured extraction from images</h2>
 
         <p>
           Reading text from an image is easy. Getting the model to spit out a JSON object you can
@@ -428,7 +428,7 @@ public class ImageResizer {
           structured output — but with images, the failure modes are sneakier.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Define the schema first, prompt second</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Define the schema first, prompt second</h3>
 
         <p>
           When you&apos;re extracting data from a picture, your schema is your contract. Write it
@@ -464,7 +464,7 @@ public record Receipt(
           it as a triage signal: under 0.7? Send to manual review.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spring AI&apos;s entity converter</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spring AI&apos;s entity converter</h3>
 
         <p>
           Spring AI can map directly to your record. You give it the class, it injects the JSON
@@ -501,7 +501,7 @@ public record Receipt(
           fails, you get an exception — not a half-broken object.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Validation: never trust the extraction</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Validation: never trust the extraction</h3>
 
         <p>
           The schema gives you type safety. It does <em>not</em>{" "}give you truth. The model can return
@@ -536,7 +536,7 @@ public record Receipt(
           ]}
         />
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Few-shot for tricky formats</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Few-shot for tricky formats</h3>
 
         <p>
           Some receipts are weird. European receipts use commas as decimal separators. Some
@@ -601,7 +601,7 @@ public record Receipt(
       {/* PART 4: FILES, PDFS                                                 */}
       {/* ================================================================= */}
       <section id="files-and-pdfs">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Files, PDFs, and the upload path</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Files, PDFs, and the upload path</h2>
 
         <p>
           PDFs are the most common &quot;is this an image?&quot; question you&apos;ll hit. Answer:
@@ -609,7 +609,7 @@ public record Receipt(
           invoice PDF has actual text inside. You handle them differently.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The decision tree</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The decision tree</h3>
 
         <CodeBlock lang="plain">{`┌─ Is it a PDF? ─────────────────┐
 │                                │
@@ -632,7 +632,7 @@ public record Receipt(
           what extraction returns.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Native PDF support (Claude)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Native PDF support (Claude)</h3>
 
         <p>
           Claude accepts PDFs directly as a content type — internally it does the rasterize-or-text
@@ -655,7 +655,7 @@ var response = chat.prompt()
           is a great topic to revisit when we hit document-AI use cases.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The upload endpoint</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The upload endpoint</h3>
 
         <p>
           Multipart upload from the browser is a well-trodden path. The interesting bit is what you
@@ -720,7 +720,7 @@ public class ReceiptController {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The frontend upload UI</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The frontend upload UI</h3>
 
         <p>
           Plain old <code>&lt;input type=&quot;file&quot;&gt;</code> with <code>FormData</code>.
@@ -815,7 +815,7 @@ export function ReceiptUploader() {
       {/* PART 5: PROJECT — RECEIPT PARSER                                    */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: receipt parser</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: receipt parser</h2>
 
         <p>
           You&apos;ve seen all the pieces. Now build the thing. This project is small enough to
@@ -823,11 +823,11 @@ export function ReceiptUploader() {
           resume.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">What you&apos;re building</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">What you&apos;re building</h3>
 
         <p>A two-page app:</p>
 
-        <ul className="list-disc pl-6 space-y-1 my-4">
+        <ul className="my-4 list-disc space-y-1 pl-6">
           <li><strong>Upload page:</strong>{" "}drag-and-drop or file picker. Shows a preview, then the spinner, then the parsed receipt.</li>
           <li><strong>History page:</strong>{" "}list of receipts you&apos;ve parsed, total spent per merchant, total per month.</li>
         </ul>
@@ -837,7 +837,7 @@ export function ReceiptUploader() {
           that catches reconciliation errors, and a tiny JDBC store for history.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Architecture</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Architecture</h3>
 
         <CodeBlock lang="plain">{`┌─────────────────────────────────────────────────────────────────────┐
 │  Browser                                                            │
@@ -870,7 +870,7 @@ export function ReceiptUploader() {
 │       └─ ReceiptStore.save() ─→ Postgres                            │
 └─────────────────────────────────────────────────────────────────────┘`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Schema</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Schema</h3>
 
         <CodeBlock lang="plain">{`-- V1__receipts.sql
 CREATE TABLE receipts (
@@ -899,7 +899,7 @@ CREATE UNIQUE INDEX receipts_user_image_idx ON receipts (user_id, image_sha256);
           rather than duplicates).
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The validation layer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The validation layer</h3>
 
         <CodeBlock lang="java">{`package com.example.receipts.validate;
 
@@ -944,7 +944,7 @@ public class ReceiptValidator {
           and let the user fix it on the history page.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The history aggregations</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The history aggregations</h3>
 
         <p>
           The history page is just two SQL queries. Let Postgres do the work:
@@ -965,9 +965,9 @@ WHERE user_id = ?
 GROUP BY 1
 ORDER BY 1 DESC;`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1 my-4">
+        <ul className="my-4 list-disc space-y-1 pl-6">
           <li><strong>Categorize line items.</strong>{" "}Add a follow-up call: given the line items, classify each into &quot;food&quot;/&quot;drink&quot;/&quot;tip&quot;/etc. (Single LLM call, structured output, batched.)</li>
           <li><strong>Currency conversion.</strong>{" "}Convert non-USD totals using a public FX API. Store both raw and converted.</li>
           <li><strong>Duplicate detection.</strong>{" "}Beyond the SHA hash — embed a normalized fingerprint (merchant + date + total) and warn if two receipts within 24 hours look identical.</li>
@@ -975,11 +975,11 @@ ORDER BY 1 DESC;`}</CodeBlock>
           <li><strong>Export.</strong>{" "}CSV or QIF for tax season.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Acceptance criteria</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Acceptance criteria</h3>
 
         <p>You&apos;re done when:</p>
 
-        <ul className="list-disc pl-6 space-y-1 my-4">
+        <ul className="my-4 list-disc space-y-1 pl-6">
           <li>You can drag a phone photo of a receipt onto the page and get a populated table back within ~5 seconds.</li>
           <li>The validator catches contrived bad receipts (you can hand-edit the JSON to confirm) and flags them for review.</li>
           <li>The same image uploaded twice updates the row instead of inserting a duplicate.</li>
@@ -1019,7 +1019,7 @@ ORDER BY 1 DESC;`}</CodeBlock>
       {/* FINAL QUIZ                                                          */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Final quiz</h2>
 
         <Checkpoint moduleSlug="multimodal" id="final" title="Final quiz" xp={50} celebration="Phase 4 complete. Frontend AI integration is now in your toolkit.">
           <Quiz
@@ -1084,21 +1084,21 @@ ORDER BY 1 DESC;`}</CodeBlock>
         </Checkpoint>
       </section>
 
-      <section className="not-prose mt-16 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <p className="text-sm text-slate-500 mb-4">Phase 4 complete — onward.</p>
-        <div className="flex flex-col sm:flex-row gap-3">
+      <section className="not-prose mt-16 border-t border-slate-200 pt-8 dark:border-slate-800">
+        <p className="mb-4 text-sm text-slate-500">Phase 4 complete — onward.</p>
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Link
             href="/courses/ai/modules/chat-interface"
-            className="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-600 p-4 transition"
+            className="flex-1 rounded-xl border border-slate-300 p-4 transition hover:border-sky-400 dark:border-slate-700 dark:hover:border-sky-600"
           >
-            <div className="text-xs uppercase tracking-wider text-slate-400 mb-1">Previous</div>
+            <div className="mb-1 text-xs tracking-wider text-slate-400 uppercase">Previous</div>
             <div className="font-bold">Module 21 · Full chat interface</div>
           </Link>
           <Link
             href="/courses/ai/modules/agents-intro"
-            className="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-600 p-4 transition"
+            className="flex-1 rounded-xl border border-slate-300 p-4 transition hover:border-sky-400 dark:border-slate-700 dark:hover:border-sky-600"
           >
-            <div className="text-xs uppercase tracking-wider text-slate-400 mb-1">Up next</div>
+            <div className="mb-1 text-xs tracking-wider text-slate-400 uppercase">Up next</div>
             <div className="font-bold">Phase 5 · Agents &amp; advanced patterns</div>
           </Link>
         </div>

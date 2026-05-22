@@ -43,7 +43,7 @@ export default function Confetti({ active, count = 40 }: { active: boolean; coun
       {pieces.map((p) => (
         <div
           key={p.id}
-          className="absolute top-0 animate-confetti"
+          className="animate-confetti absolute top-0"
           style={{
             left: `${p.left}%`,
             width: `${p.size}px`,

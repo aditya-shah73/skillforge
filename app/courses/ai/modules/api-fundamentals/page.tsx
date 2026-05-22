@@ -38,21 +38,21 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Claude API fundamentals
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Auth, models, parameters — from zero to your first real request.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="api-fundamentals" />
@@ -79,16 +79,16 @@ flowchart LR
         <p>The body has three things that matter:</p>
 
         <div className="not-prose my-6 grid gap-3 md:grid-cols-3">
-          <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-1"><code>model</code></div>
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300"><code>model</code></div>
             <div className="text-sm">Which Claude. <code>claude-sonnet-4-5</code>, <code>claude-opus-4-5</code>, <code>claude-haiku-4-5</code>. Different price/speed/quality tradeoffs.</div>
           </div>
-          <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-1"><code>messages</code></div>
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300"><code>messages</code></div>
             <div className="text-sm">An array of turns. Each has a <code>role</code> (<code>user</code> or <code>assistant</code>) and <code>content</code> (the text). The model continues the array.</div>
           </div>
-          <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-1"><code>max_tokens</code></div>
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300"><code>max_tokens</code></div>
             <div className="text-sm">Hard ceiling on the reply. Required. Always. The model will never produce more than this — even mid-sentence.</div>
           </div>
         </div>
@@ -201,28 +201,28 @@ flowchart LR
         </p>
 
         <div className="not-prose my-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border-2 border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">Haiku</div>
-            <div className="text-xs text-emerald-700 dark:text-emerald-400 font-mono mb-3">claude-haiku-4-5</div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border-2 border-emerald-300 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">Haiku</div>
+            <div className="mb-3 font-mono text-xs text-emerald-700 dark:text-emerald-400">claude-haiku-4-5</div>
+            <div className="space-y-1.5 text-xs">
               <div><strong>Cheapest, fastest.</strong></div>
               <div>Good for: classification, extraction, simple Q&amp;A, high-volume internal tools.</div>
               <div>Bad for: anything requiring multi-step reasoning, code review, nuanced writing.</div>
             </div>
           </div>
-          <div className="rounded-xl border-2 border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 p-4">
-            <div className="font-bold text-amber-900 dark:text-amber-200 mb-1">Sonnet ★</div>
-            <div className="text-xs text-amber-700 dark:text-amber-400 font-mono mb-3">claude-sonnet-4-5</div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 font-bold text-amber-900 dark:text-amber-200">Sonnet ★</div>
+            <div className="mb-3 font-mono text-xs text-amber-700 dark:text-amber-400">claude-sonnet-4-5</div>
+            <div className="space-y-1.5 text-xs">
               <div><strong>The default. Use this unless you have a reason not to.</strong></div>
               <div>Good for: most coding, agents, RAG, customer-facing apps.</div>
               <div>Sonnet 4.5 is the workhorse — fast enough for interactive use, smart enough for hard problems.</div>
             </div>
           </div>
-          <div className="rounded-xl border-2 border-purple-300 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/30 p-4">
-            <div className="font-bold text-purple-900 dark:text-purple-200 mb-1">Opus</div>
-            <div className="text-xs text-purple-700 dark:text-purple-400 font-mono mb-3">claude-opus-4-5</div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border-2 border-purple-300 bg-purple-50 p-4 dark:border-purple-800 dark:bg-purple-950/30">
+            <div className="mb-1 font-bold text-purple-900 dark:text-purple-200">Opus</div>
+            <div className="mb-3 font-mono text-xs text-purple-700 dark:text-purple-400">claude-opus-4-5</div>
+            <div className="space-y-1.5 text-xs">
               <div><strong>Smartest, slowest, priciest.</strong></div>
               <div>Good for: deep reasoning, hard refactors, multi-step planning, edge cases Sonnet flubs.</div>
               <div>Bad for: anything where latency matters or you call it 1000×/min.</div>
@@ -232,7 +232,7 @@ flowchart LR
 
         <Callout variant="info" title="Picking a model — the dumb-simple heuristic">
           <p className="mb-2">When in doubt:</p>
-          <ol className="list-decimal pl-5 space-y-1 m-0">
+          <ol className="m-0 list-decimal space-y-1 pl-5">
             <li>Build everything on <strong>Sonnet</strong>.</li>
             <li>Once it works, try Haiku for the high-volume paths and see if quality holds.</li>
             <li>Drop to Opus <em>only</em>{" "}for the specific call where Sonnet visibly fails.</li>
@@ -307,16 +307,16 @@ flowchart LR
         </p>
 
         <div className="not-prose my-6 grid gap-3 md:grid-cols-3">
-          <div className="p-4 rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50/50 dark:bg-sky-950/30">
-            <div className="text-xs uppercase tracking-wider text-sky-700 dark:text-sky-300 font-bold mb-2">temperature: 0.0</div>
+          <div className="rounded-xl border border-sky-300 bg-sky-50/50 p-4 dark:border-sky-800 dark:bg-sky-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">temperature: 0.0</div>
             <div className="text-sm">Greedy. Same prompt → same output (mostly). Use for: extraction, classification, code gen, anything you&apos;ll diff against expected output.</div>
           </div>
-          <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-2">temperature: 0.7</div>
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">temperature: 0.7</div>
             <div className="text-sm">A common &quot;safe middle&quot; for general use. Some variation, still coherent. Use for: chat, RAG answers, anything where small phrasing changes are fine.</div>
           </div>
-          <div className="p-4 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/30">
-            <div className="text-xs uppercase tracking-wider text-rose-700 dark:text-rose-300 font-bold mb-2">temperature: 1.0 (Anthropic default)</div>
+          <div className="rounded-xl border border-rose-300 bg-rose-50/50 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">temperature: 1.0 (Anthropic default)</div>
             <div className="text-sm">Anthropic&apos;s default if you don&apos;t pass one. Maximum spread. Use for: brainstorming, creative writing where you want surprising outputs.</div>
           </div>
         </div>
@@ -474,7 +474,7 @@ flowchart LR
             If you want to skip the form-filling, this URL pre-loads all the right settings:{" "}
             <a
               href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=claude-code-reviewer&name=claude-code-reviewer&description=AI%20code%20reviewer%20CLI&packageName=com.example.codereviewer&dependencies=spring-ai-anthropic"
-              className="text-indigo-600 hover:underline break-all"
+              className="break-all text-indigo-600 hover:underline"
               target="_blank"
               rel="noreferrer"
             >
@@ -890,24 +890,24 @@ Needs work.
         <h3>Common errors and how to fix them</h3>
 
         <div className="not-prose my-6 space-y-3">
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">401 authentication_error</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">401 authentication_error</div>
             <div className="text-sm">Your API key isn&apos;t set or is wrong. Re-check <code>echo $ANTHROPIC_API_KEY</code>. Common cause: you set it in one shell, then ran from a different one. (IntelliJ Run Configs are scoped to the run, not your terminal.)</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">404 not_found_error</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">404 not_found_error</div>
             <div className="text-sm">Your model string doesn&apos;t match a real model. Copy-paste exactly from <a href="https://docs.anthropic.com/en/docs/models" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">the model docs</a>.</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">429 rate_limit_error</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">429 rate_limit_error</div>
             <div className="text-sm">You&apos;re calling too fast or hit your monthly tier&apos;s cap. New accounts have low limits — wait a minute and retry, or top up at the console.</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">No qualifying bean of type &apos;ChatClient.Builder&apos;</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">No qualifying bean of type &apos;ChatClient.Builder&apos;</div>
             <div className="text-sm">Spring AI&apos;s autoconfig didn&apos;t fire. 99% of the time this means the <code>spring-ai-starter-model-anthropic</code> dep didn&apos;t resolve — re-run <code>./mvnw clean install</code> and check for download errors.</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">App hangs at startup, no output</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">App hangs at startup, no output</div>
             <div className="text-sm">Spring tried to read <code>${"${ANTHROPIC_API_KEY}"}</code> but the var is empty. The placeholder resolves to literal <code>${"${ANTHROPIC_API_KEY}"}</code> which the API rejects on the first call. Set the env var and restart.</div>
           </div>
         </div>
@@ -1014,7 +1014,7 @@ Needs work.
       {/* ================================================================= */}
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
-      <section className="mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-900 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/40 dark:to-yellow-950/40">
+      <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/40 dark:to-yellow-950/40">
         <h3 className="mt-0 mb-2">Module 9 done → Module 10 next</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You can call Claude. Now we go deeper into the Spring AI side: multi-turn conversations, structured output (<code>.entity(MyDto.class)</code> directly into a typed object), advisors (Spring AI&apos;s middleware-style hooks for memory, logging, and rate-limiting), and the personal journal assistant project. Same Claude API underneath — much more leverage on top.
@@ -1022,13 +1022,13 @@ Needs work.
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/ai/modules/spring-ai"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-200/60 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-300/60 dark:hover:bg-amber-900/60 transition"
+            className="inline-flex items-center gap-2 rounded-lg bg-amber-200/60 px-5 py-2.5 text-sm font-medium text-amber-700 transition hover:bg-amber-300/60 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/60"
           >
             Module 10 — Spring AI integration →
           </Link>
           <Link
             href="/courses/ai"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-100 dark:hover:bg-amber-900/40 transition"
+            className="inline-flex items-center gap-2 rounded-lg border border-amber-300 px-5 py-2.5 text-sm font-medium text-amber-700 transition hover:bg-amber-100 dark:border-amber-800 dark:text-amber-200 dark:hover:bg-amber-900/40"
           >
             ← All modules
           </Link>

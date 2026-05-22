@@ -23,19 +23,19 @@ export default function EmbeddingsDeepModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 3 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Embeddings deep dive</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Embeddings deep dive</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Module 6 was the geometry. This is the engineering.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="embeddings-deep" />
@@ -43,24 +43,24 @@ export default function EmbeddingsDeepModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           You already know what an embedding <em>is</em> — a point in vector space, with cosine similarity as the
           ruler. This module is about shipping with embeddings: which model to pick, how to call it from Spring Boot,
           where it costs you, and why brute-force search starts hurting at scale. By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Pick an embedding model with confidence — by <strong>dimension, cost, latency, and quality</strong>.</li>
           <li>Wire one up in <strong>Spring AI 1.0.x</strong>{" "}and batch your calls so you don&apos;t go broke.</li>
           <li>Understand <strong>Matryoshka embeddings</strong>{" "}and when truncating dimensions is free money.</li>
           <li>Feel the <strong>curse of dimensionality</strong>{" "}with real numbers — and know exactly when brute force breaks.</li>
           <li>Ship a Spring Boot <strong>semantic bookmark search</strong>{" "}that works on a corpus of 30+ items.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           This is the on-ramp for the rest of Phase 3. Module 16 introduces pgvector to fix the brute-force problem you
           create here. Module 17 layers retrieval on top. Module 18 puts the whole RAG pipeline behind a chat UI.
         </p>
@@ -70,7 +70,7 @@ export default function EmbeddingsDeepModule() {
       {/* PART 1: THE EMBEDDING MODEL MARKETPLACE                            */}
       {/* ================================================================= */}
       <section id="models">
-        <h2 className="text-2xl font-bold mt-10 mb-3">Part 1 — The embedding model marketplace</h2>
+        <h2 className="mt-10 mb-3 text-2xl font-bold">Part 1 — The embedding model marketplace</h2>
 
         <p>
           In Module 6 we hand-crafted three-dimensional vectors so you could see the math. In production, nobody
@@ -78,7 +78,7 @@ export default function EmbeddingsDeepModule() {
           which API, which dimension, and which trade-off you&apos;re consciously making.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">The 2026 landscape</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">The 2026 landscape</h3>
 
         <p>
           Here&apos;s what the actual menu looks like as of writing. Numbers shift, but the shape is stable: a few hosted
@@ -86,14 +86,14 @@ export default function EmbeddingsDeepModule() {
           conspicuous absence.
         </p>
 
-        <div className="overflow-x-auto my-4">
-          <table className="text-sm w-full border-collapse">
+        <div className="my-4 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left py-2 pr-4">Model</th>
-                <th className="text-left py-2 pr-4">Dims</th>
-                <th className="text-left py-2 pr-4">Price (per 1M tokens)</th>
-                <th className="text-left py-2 pr-4">Notes</th>
+                <th className="py-2 pr-4 text-left">Model</th>
+                <th className="py-2 pr-4 text-left">Dims</th>
+                <th className="py-2 pr-4 text-left">Price (per 1M tokens)</th>
+                <th className="py-2 pr-4 text-left">Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -146,14 +146,14 @@ export default function EmbeddingsDeepModule() {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The three axes you&apos;re actually trading off</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The three axes you&apos;re actually trading off</h3>
 
         <p>
           When somebody asks &quot;which embedding model should I use,&quot; they&apos;re asking three different questions
           at once. Untangle them:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Quality</strong> — how often does the right document end up in your top-k results? Measured on
             benchmarks like MTEB, but the only number that matters is your own <em>recall@k</em>{" "}on your own data.
@@ -175,7 +175,7 @@ export default function EmbeddingsDeepModule() {
           as your corpus grows.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">MTEB and why the leaderboard lies a little</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">MTEB and why the leaderboard lies a little</h3>
 
         <p>
           <a className="text-indigo-600 hover:underline" href="https://huggingface.co/spaces/mteb/leaderboard" target="_blank" rel="noreferrer">MTEB</a>{" "}
@@ -183,7 +183,7 @@ export default function EmbeddingsDeepModule() {
           classification, clustering, and reranking. It&apos;s genuinely useful, but two things to keep in mind:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>
             <strong>Benchmark contamination is real.</strong>{" "}A model fine-tuned on (or near) MTEB tasks will look
             artificially strong. Suspicious when a tiny no-name model tops the list.
@@ -204,7 +204,7 @@ export default function EmbeddingsDeepModule() {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Matryoshka embeddings — free dimension reduction</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Matryoshka embeddings — free dimension reduction</h3>
 
         <p>
           Some modern embedders (OpenAI&apos;s v3, Nomic, Voyage) are trained as <strong>Matryoshka</strong>{" "}models —
@@ -244,7 +244,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
                   <p className="text-sm">
                     Constraints: low traffic (~100 queries/day), no PII restrictions, want best quality.
                   </p>
-                  <p className="text-sm mt-2">
+                  <p className="mt-2 text-sm">
                     <strong>Pick:</strong> <code>text-embedding-3-large</code>, truncate to 1024 dims via Matryoshka.
                     The corpus is small enough that the 6× price doesn&apos;t matter (50k × 500 tokens = 25M tokens
                     → ~$3 to index the whole thing once). Quality wins.
@@ -259,7 +259,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
                   <p className="text-sm">
                     Constraints: re-embed every night, latency budget per search ~50ms, English.
                   </p>
-                  <p className="text-sm mt-2">
+                  <p className="mt-2 text-sm">
                     <strong>Pick:</strong> <code>text-embedding-3-small</code> at 512 dims (truncated). 20M × 100
                     tokens = 2B tokens nightly = ~$40/night. The 1024-dim option doubles cost and search latency for
                     marginal recall gains. If costs become a problem, self-host BGE on a GPU instance.
@@ -274,7 +274,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
                   <p className="text-sm">
                     Constraints: data cannot leave the hospital network. Reasonable hardware budget.
                   </p>
-                  <p className="text-sm mt-2">
+                  <p className="mt-2 text-sm">
                     <strong>Pick:</strong>{" "}Self-hosted <code>BAAI/bge-large-en-v1.5</code> via Ollama or a Triton
                     server. The hosted-API options are off the table by policy. Run a 50-pair eval against
                     BioBERT-derived alternatives if recall is weak; medical text often benefits from
@@ -333,7 +333,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
       {/* PART 2: CALLING EMBEDDERS FROM SPRING BOOT                         */}
       {/* ================================================================= */}
       <section id="spring">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — Calling embedders from Spring Boot</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Calling embedders from Spring Boot</h2>
 
         <p>
           Spring AI 1.0.x abstracts embedding providers behind a single interface: <code>EmbeddingModel</code>.
@@ -341,7 +341,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           three methods do everything you&apos;ll ever need.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">The interface</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">The interface</h3>
 
         <CodeBlock lang="java" caption="org.springframework.ai.embedding.EmbeddingModel — the relevant methods">{`public interface EmbeddingModel {
 
@@ -361,7 +361,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           <code>call()</code> when you need the metadata (token counts for cost tracking, mostly).
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Picking a provider in pom.xml</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Picking a provider in pom.xml</h3>
 
         <p>
           You add <em>one</em>{" "}starter dep. Spring Boot autoconfigures an <code>EmbeddingModel</code> bean from it.
@@ -403,7 +403,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">A minimal embedding service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">A minimal embedding service</h3>
 
         <CodeBlock lang="java" caption="EmbeddingService.java — what 90% of your code looks like">{`package com.example.search;
 
@@ -436,7 +436,7 @@ public class EmbeddingService {
           it, you call it. No HTTP client, no auth plumbing, no JSON shape to memorize.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Batching: the single biggest performance win</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Batching: the single biggest performance win</h3>
 
         <p>
           Embedding 10,000 documents one at a time means 10,000 round-trips. Each carries TLS handshake amortization,
@@ -503,7 +503,7 @@ public class EmbeddingService {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">L2 normalization — what Spring AI does for you</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">L2 normalization — what Spring AI does for you</h3>
 
         <p>
           Cosine similarity and dot product produce identical rankings <em>if</em>{" "}both vectors are unit-length
@@ -528,7 +528,7 @@ public class EmbeddingService {
           Quick rules of thumb (verify with your provider&apos;s docs):
         </p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>OpenAI <code>text-embedding-3-*</code></strong> — returns L2-normalized vectors.</li>
           <li><strong>Voyage</strong> — returns L2-normalized vectors.</li>
           <li><strong>Cohere <code>embed-*-v3</code></strong> — returns L2-normalized vectors.</li>
@@ -545,7 +545,7 @@ public class EmbeddingService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Caching embeddings — yes, you should</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Caching embeddings — yes, you should</h3>
 
         <p>
           This is a <em>different</em>{" "}caching from Module 13&apos;s prompt caching. Embedding caching is purely
@@ -632,7 +632,7 @@ public class CachedEmbeddingService {
       {/* PART 3: THE CURSE OF DIMENSIONALITY                                */}
       {/* ================================================================= */}
       <section id="curse">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — The curse of dimensionality (with numbers)</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — The curse of dimensionality (with numbers)</h2>
 
         <p>
           Module 6 mentioned the curse of dimensionality and promised we&apos;d come back to it. Here we are.
@@ -640,7 +640,7 @@ public class CachedEmbeddingService {
           high-dimensional space. Two of those things matter for embedding search:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li><strong>Distances concentrate.</strong>{" "}In very high dimensions, the &quot;nearest&quot; and &quot;farthest&quot; points in a random cloud become almost the same distance away.</li>
           <li><strong>Brute force scales linearly.</strong>{" "}Comparing a query to N vectors of dimension d costs O(N·d). For N=100M and d=1024, that&apos;s ~100 billion floating-point ops <em>per query</em>.</li>
         </ol>
@@ -650,7 +650,7 @@ public class CachedEmbeddingService {
           way to feel the problem is to look at real numbers.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Why distances concentrate — a tiny experiment</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Why distances concentrate — a tiny experiment</h3>
 
         <p>
           Generate N random points in a unit cube of dimension d. For each point, compute its distance to every
@@ -726,7 +726,7 @@ public class CachedEmbeddingService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Brute force: when does it stop being fine?</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Brute force: when does it stop being fine?</h3>
 
         <p>
           In Module 6&apos;s Java project, you brute-forced ~10 vectors. That&apos;s instant. Production corpora
@@ -734,14 +734,14 @@ public class CachedEmbeddingService {
           <code>N · d</code> floating-point multiply-adds per query.
         </p>
 
-        <div className="overflow-x-auto my-4">
-          <table className="text-sm w-full border-collapse">
+        <div className="my-4 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left py-2 pr-4">Corpus size N</th>
-                <th className="text-left py-2 pr-4">d = 384</th>
-                <th className="text-left py-2 pr-4">d = 1024</th>
-                <th className="text-left py-2 pr-4">d = 3072</th>
+                <th className="py-2 pr-4 text-left">Corpus size N</th>
+                <th className="py-2 pr-4 text-left">d = 384</th>
+                <th className="py-2 pr-4 text-left">d = 1024</th>
+                <th className="py-2 pr-4 text-left">d = 3072</th>
               </tr>
             </thead>
             <tbody>
@@ -841,7 +841,7 @@ public class CachedEmbeddingService {
       {/* PART 4: PROJECT — SEMANTIC BOOKMARK SEARCH                         */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Project: semantic bookmark search</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Project: semantic bookmark search</h2>
 
         <p>
           Time to build. You&apos;re going to ship a Spring Boot app that takes a hard-coded list of 30 bookmarks
@@ -851,19 +851,19 @@ public class CachedEmbeddingService {
           Module 16 introduces an index.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Step 1 — Spin up the project</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Step 1 — Spin up the project</h3>
 
         <p>
           Use the same <a className="text-indigo-600 hover:underline" href="https://start.spring.io" target="_blank" rel="noreferrer">Spring Initializr</a>{" "}
           recipe as Module 13: Java 21, Spring Boot 3.4+, Maven. Dependencies:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Spring Web</strong> — for the search endpoint and a tiny static UI.</li>
           <li><strong>Spring AI OpenAI</strong> (or Ollama, if you&apos;re self-hosting). This pulls in the <code>EmbeddingModel</code> bean.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 2 — Configuration</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2 — Configuration</h3>
 
         <CodeBlock lang="plain" caption="src/main/resources/application.yml">{`spring:
   ai:
@@ -877,7 +877,7 @@ public class CachedEmbeddingService {
 server:
   port: 8080`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 3 — Bookmark and BookmarkStore</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3 — Bookmark and BookmarkStore</h3>
 
         <CodeBlock lang="java" caption="Bookmark.java — a record with the fields we need">{`package com.example.bookmarks;
 
@@ -929,7 +929,7 @@ public class BookmarkStore {
     public record Scored(Bookmark bookmark, double score) {}
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 4 — Indexing at startup</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4 — Indexing at startup</h3>
 
         <p>
           We embed all 30 bookmarks once, in a single batched call, when the app starts. After that the store is
@@ -978,7 +978,7 @@ public class BookmarkIndexer {
     record Seed(String url, String title, String description) {}
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 5 — A reasonable seed corpus</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5 — A reasonable seed corpus</h3>
 
         <p>
           You want enough variety that semantic search has something to chew on. Here&apos;s a 30-bookmark starter
@@ -1041,7 +1041,7 @@ public class SeedData {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 6 — The search controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6 — The search controller</h3>
 
         <CodeBlock lang="java" caption="SearchController.java">{`package com.example.bookmarks;
 
@@ -1081,7 +1081,7 @@ public class SearchController {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 7 — A tiny static UI (optional but fun)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7 — A tiny static UI (optional but fun)</h3>
 
         <p>
           Drop this at <code>src/main/resources/static/index.html</code>. It&apos;s a single-file search box that
@@ -1131,7 +1131,7 @@ public class SearchController {
 </body>
 </html>`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 8 — Run it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 8 — Run it</h3>
 
         <CodeBlock lang="plain">{`export OPENAI_API_KEY=sk-...
 ./mvnw spring-boot:run`}</CodeBlock>
@@ -1145,7 +1145,7 @@ public class SearchController {
         </p>
 
         <Callout variant="warn" title="Common errors & fixes">
-          <ul className="list-disc pl-6 space-y-2 mt-2">
+          <ul className="mt-2 list-disc space-y-2 pl-6">
             <li><strong>&quot;No qualifying bean of type EmbeddingModel&quot;</strong> — your <code>pom.xml</code> is missing the embedding starter. <code>spring-ai-starter-model-openai</code> is the one you want for OpenAI.</li>
             <li><strong>&quot;OPENAI_API_KEY is not set&quot;</strong> — exported in the wrong shell, or your IDE&apos;s run config doesn&apos;t see your shell env. In IntelliJ, set the env var in Run/Debug Configurations.</li>
             <li><strong>All scores hover around 0.2–0.3</strong> — your seed corpus is too narrow, or your queries are way out of distribution. Add diversity.</li>
@@ -1168,7 +1168,7 @@ public class SearchController {
       {/* PART 5: FINAL QUIZ                                                 */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 5 — Final quiz</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5 — Final quiz</h2>
 
         <Quiz
           kind="Final quiz"
@@ -1240,7 +1240,7 @@ public class SearchController {
         </Checkpoint>
       </section>
 
-      <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
+      <div className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
         <Link href="/courses/ai/modules/prompt-caching" className="text-indigo-600 hover:underline">← Module 13: Prompt caching</Link>
         <Link href="/courses/ai/modules/pgvector" className="text-indigo-600 hover:underline">Module 16: Vector DBs &amp; pgvector →</Link>
       </div>

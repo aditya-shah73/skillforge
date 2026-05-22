@@ -9,21 +9,21 @@ export default function WelcomeModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-slate-500 to-slate-400 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-slate-500 to-slate-400 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 0 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Welcome
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Read this first. It&apos;s five minutes and will save you hours.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="welcome" />
@@ -135,14 +135,14 @@ export default function WelcomeModule() {
         </ol>
       </section>
 
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Ready?</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Module 1 is a 15-minute intro to tokenization — the first thing that ever surprised you about an LLM bill.
         </p>
         <Link
           href="/courses/ai/modules/tokenization"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
         >
           Start Module 1 →
         </Link>

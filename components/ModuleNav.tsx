@@ -56,19 +56,19 @@ export default function ModuleNav({
   return (
     <nav
       aria-label="Module navigation"
-      className="not-prose print:hidden mt-12 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-800 pt-6"
+      className="not-prose mt-12 grid grid-cols-1 gap-3 border-t border-slate-200 pt-6 sm:grid-cols-2 dark:border-slate-800 print:hidden"
     >
       {prev ? (
         <Link
           href={`/courses/${slug}/modules/${prev.slug}`}
-          className="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition hover:-translate-y-0.5 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md"
+          className="group flex flex-col rounded-xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-700"
         >
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1 inline-flex items-center gap-1">
+          <span className="mb-1 inline-flex items-center gap-1 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             <span className="transition-transform group-hover:-translate-x-1">←</span>
             Previous · Module {prev.number}
           </span>
           <span className="text-sm font-semibold tracking-tight">{prev.title}</span>
-          <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">{prev.subtitle}</span>
+          <span className="mt-1 line-clamp-1 text-xs text-slate-500 dark:text-slate-400">{prev.subtitle}</span>
         </Link>
       ) : (
         <div /> /* placeholder to keep next on the right when no prev */
@@ -76,14 +76,14 @@ export default function ModuleNav({
       {next ? (
         <Link
           href={`/courses/${slug}/modules/${next.slug}`}
-          className="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition hover:-translate-y-0.5 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md sm:text-right sm:items-end"
+          className="group flex flex-col rounded-xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md sm:items-end sm:text-right dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-700"
         >
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1 inline-flex items-center gap-1">
+          <span className="mb-1 inline-flex items-center gap-1 text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             Next · Module {next.number}
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </span>
           <span className="text-sm font-semibold tracking-tight">{next.title}</span>
-          <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">{next.subtitle}</span>
+          <span className="mt-1 line-clamp-1 text-xs text-slate-500 dark:text-slate-400">{next.subtitle}</span>
         </Link>
       ) : null}
     </nav>

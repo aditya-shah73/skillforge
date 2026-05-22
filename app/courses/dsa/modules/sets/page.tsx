@@ -72,13 +72,13 @@ flowchart LR
       <ModuleProgress moduleSlug="sets" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold tracking-wide uppercase">
+        <div className="mt-3 block w-fit rounded-full bg-gradient-to-r from-emerald-500 to-green-500 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
       </div>
 
@@ -102,7 +102,7 @@ flowchart LR
         </p>
 
         <Mermaid chart={setModel} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           <code>add</code> is &quot;put if absent&quot;. The boolean return tells you whether the element was new.
         </p>
 
@@ -260,7 +260,7 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
         </p>
 
         <Mermaid chart={freqPattern} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           The map is the answer factory. Every &quot;does X happen / how often / which is most common&quot; problem
           reads off it.
         </p>
@@ -351,7 +351,7 @@ boolean isAnagram(String s, String t) {
         </p>
 
         <Mermaid chart={slidingWindow} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Right pointer expands the window; the left pointer contracts when the invariant breaks. The frequency
           map is the bookkeeping.
         </p>
@@ -534,15 +534,15 @@ boolean isAnagram(String s, String t) {
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
-          <h3 className="text-2xl font-bold mt-0 mb-2 text-white">Module 12 complete</h3>
-          <p className="text-emerald-50 mb-4">
+          <h3 className="mt-0 mb-2 text-2xl font-bold text-white">Module 12 complete</h3>
+          <p className="mb-4 text-emerald-50">
             Sets and frequency counting put a lot of medium-difficulty problems within reach. Next up: trees —
             the recursive shape that powers traversal, search trees, heaps, and basically all of Phase 4&apos;s
             graphs.
           </p>
           <Link
             href="/courses/dsa/modules/trees"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-emerald-700 font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 no-underline shadow-md transition hover:shadow-lg"
           >
             Next: Trees &amp; binary trees →
           </Link>

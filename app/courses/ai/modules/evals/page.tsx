@@ -24,36 +24,36 @@ export default function EvalsModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 6 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Evals</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Evals</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The hardest part of shipping LLM features isn&apos;t writing the prompt. It&apos;s knowing whether the prompt got worse.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="evals" />
         <ModuleProgress moduleSlug="evals" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-pink-300 dark:border-pink-800 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/40 dark:to-rose-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-pink-300 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-800 dark:from-pink-950/40 dark:to-rose-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The mental model and the wiring for shipping AI features without flying blind. By the
           end you&apos;ll have a Spring Boot eval harness that runs against a golden set, scores
           with an LLM-as-judge, and fails CI when quality regresses below a threshold.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Why traditional unit tests don&apos;t work for LLM outputs (and what does)</li>
           <li>How to build a golden set that&apos;s actually useful — and how to keep it from rotting</li>
           <li>LLM-as-judge: the rubric, the bias traps, and when to trust it</li>
@@ -1062,7 +1062,7 @@ class EvalHarnessIT {
       <Callout variant="info" title="The exercise">
         Build a working version of this harness against any small chat endpoint you wrote
         in earlier modules (Module 18&apos;s RAG endpoint is ideal). Steps:
-        <ol className="mt-2 list-decimal pl-5 space-y-1 mb-0">
+        <ol className="mt-2 mb-0 list-decimal space-y-1 pl-5">
           <li>Pick or build the system under test (10 min)</li>
           <li>Author 15 golden cases — 5 representative, 5 adversarial, 5 regression — in YAML (~30 min, the slow part)</li>
           <li>Wire the JudgeService and EvalHarness from above (~30 min)</li>
@@ -1078,7 +1078,7 @@ class EvalHarnessIT {
           before they ship. The hardest part isn&apos;t the code — it&apos;s the discipline
           to write the rubric carefully and to add a case for every prod issue.
         </p>
-        <p className="text-sm text-slate-500 dark:text-slate-400 italic mt-3">
+        <p className="mt-3 text-sm text-slate-500 italic dark:text-slate-400">
           Mark this done when you&apos;ve got the harness running locally <em>and</em>{" "}
           you&apos;ve tested that a deliberately-broken PR fails the gate.
         </p>
@@ -1164,12 +1164,12 @@ class EvalHarnessIT {
         />
       </Checkpoint>
 
-      <section className="not-prose my-12 rounded-2xl border-2 border-pink-300 dark:border-pink-800 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/40 dark:to-rose-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-12 rounded-2xl border-2 border-pink-300 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-800 dark:from-pink-950/40 dark:to-rose-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🚀</span>
-          <h3 className="font-bold text-lg m-0">Next up</h3>
+          <h3 className="m-0 text-lg font-bold">Next up</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
           <strong>Module 29 — Security &amp; guardrails</strong>: prompt injection, PII
           handling, output filtering, jailbreak resistance. The other half of production
           safety. Once you have evals to catch quality regressions, security keeps the bad

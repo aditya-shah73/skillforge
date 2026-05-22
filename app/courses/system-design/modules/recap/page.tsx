@@ -55,19 +55,19 @@ export default function Page() {
     <article className="prose-custom">
       <BookmarkButton courseId="system-design" moduleSlug="recap" />
       <ModuleProgress moduleSlug="recap" checkpoints={CHECKPOINTS} />
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
       </header>
 
       <section className="my-8">
@@ -77,8 +77,8 @@ export default function Page() {
           give you a compass. When someone hands you a vague design problem, what do you reach for first, and why?
         </p>
 
-        <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50/60 dark:bg-slate-900/40">
-          <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">What you&apos;ll walk out with</p>
+        <div className="my-8 rounded-xl border border-slate-200 bg-slate-50/60 p-6 dark:border-slate-800 dark:bg-slate-900/40">
+          <p className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">What you&apos;ll walk out with</p>
           <ul className="space-y-2 text-sm">
             <li>A single mental map covering the six layers of every system you&apos;ll design.</li>
             <li>A &quot;first questions&quot; checklist for novel problems.</li>
@@ -90,7 +90,7 @@ export default function Page() {
 
       {/* ============================== PART 1 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 1 — The compass</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 1 — The compass</h2>
         <p>
           Every system design problem can be decomposed into the same handful of layers. Once you internalize them,
           you stop staring at a blank page when someone says &quot;design Twitter.&quot;
@@ -98,7 +98,7 @@ export default function Page() {
 
         <Mermaid chart={compass} />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The six layers</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The six layers</h3>
         <ol className="space-y-3">
           <li>
             <strong>Foundations.</strong>{" "}Latency budgets, throughput targets, SLOs, consistency requirements.
@@ -131,7 +131,7 @@ export default function Page() {
           this breaks?&quot;). The toolbox doesn&apos;t change. The order of operations does.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">First-pass questions for any new design</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">First-pass questions for any new design</h3>
         <ol className="space-y-2">
           <li><strong>Read or write heavy?</strong>{" "}Drives caching strategy, DB choice, replication shape.</li>
           <li><strong>What&apos;s the consistency requirement?</strong>{" "}Strong, read-your-writes, eventual? Different stacks.</li>
@@ -179,7 +179,7 @@ export default function Page() {
 
       {/* ============================== PART 2 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 2 — Picking the right tool</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 2 — Picking the right tool</h2>
         <p>
           The toolbox is the same across the industry: Postgres, Redis, Kafka, Cassandra, S3, Elasticsearch, Spanner,
           DynamoDB. The skill isn&apos;t knowing them all — it&apos;s knowing when each earns its place.
@@ -204,8 +204,8 @@ export default function Page() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">When you reach for the wrong one</h3>
-        <ul className="space-y-2 mt-4">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">When you reach for the wrong one</h3>
+        <ul className="mt-4 space-y-2">
           <li>
             <strong>RDBMS as a queue.</strong> &quot;Just a status column we poll.&quot; Works at low volume,
             collapses under load. Use a real queue.
@@ -233,7 +233,7 @@ export default function Page() {
           because they&apos;re shiny.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The consistency dial</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The consistency dial</h3>
         <p>
           You learned the lattice in module 4: linearizable, sequential, causal, read-your-writes, eventual. Most
           systems mix levels by design — strong for money, eventual for likes, causal for chat. Knowing where the dial
@@ -278,20 +278,20 @@ export default function Page() {
 
       {/* ============================== PART 3 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 3 — The traps that catch experienced designers</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 3 — The traps that catch experienced designers</h2>
         <p>
           You can know all the patterns and still walk into the same five mistakes that catch every senior. Naming
           them out loud is half the fix.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Trap 1 — &quot;It scales linearly&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 1 — &quot;It scales linearly&quot;</h3>
         <p>
           Your design works at 1k qps. Multiplying everything by 10 does NOT mean it works at 10k qps. Hot keys
           dominate. Coordination overhead grows. Network becomes the bottleneck. The number that matters is &quot;what
           breaks first as we scale,&quot; and you almost never see it without testing.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Trap 2 — Trusting the happy path</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 2 — Trusting the happy path</h3>
         <p>
           Diagrams show successful flows. Reality is timeouts, partial failures, slow responses, network partitions,
           and zombie nodes. The design isn&apos;t real until you&apos;ve walked the failure modes for every arrow on
@@ -304,21 +304,21 @@ export default function Page() {
           answers, and it&apos;s the failure mode most designs gloss over.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Trap 3 — Premature optimization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 3 — Premature optimization</h3>
         <p>
           Sharding before you have a scale problem. Adding a cache before you have a latency problem. Microservices
           before the monolith hurts. Each of these has a complexity tax and you&apos;re paying for value you
           haven&apos;t demonstrated yet.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Trap 4 — Ignoring operability</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 4 — Ignoring operability</h3>
         <p>
           A design isn&apos;t complete without answers to: How do you deploy it? How do you observe it? How do you
           page on-call when it breaks? How do you roll it back? &quot;The code works on my laptop&quot; is not a system
           design.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Trap 5 — Forgetting the human boundaries</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 5 — Forgetting the human boundaries</h3>
         <p>
           Conway&apos;s law: your system shape will mirror your team shape. If two teams own one service, you&apos;ll
           have constant merge conflicts and unclear oncall. If one team owns ten services, you&apos;ll burn out. The
@@ -363,7 +363,7 @@ export default function Page() {
 
       {/* ============================== PART 4 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 4 — Mock interview transcripts</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 4 — Mock interview transcripts</h2>
         <p>
           You have the patterns. You have the compass. The last gap is what a real senior interview <em>sounds</em>{" "}
           like — the cadence, the clarifying questions, the moment a candidate pauses and says &quot;let me think about
@@ -380,13 +380,13 @@ export default function Page() {
         </Callout>
 
         {/* ============== Transcript 1: URL shortener ============== */}
-        <h3 className="text-xl font-semibold mt-10 mb-3">Transcript 1 — &quot;Design a URL shortener&quot; (backend)</h3>
-        <p className="text-sm text-slate-500 italic mb-4">
+        <h3 className="mt-10 mb-3 text-xl font-semibold">Transcript 1 — &quot;Design a URL shortener&quot; (backend)</h3>
+        <p className="mb-4 text-sm text-slate-500 italic">
           Senior backend interview, 50 minutes. Candidate is a mid-level Java/Spring engineer interviewing for a senior
           role. The interviewer is a staff engineer.
         </p>
 
-        <div className="space-y-4 my-6 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50/40 dark:bg-slate-900/30">
+        <div className="my-6 space-y-4 rounded-xl border border-slate-200 bg-slate-50/40 p-6 dark:border-slate-800 dark:bg-slate-900/30">
           <p>
             <strong>Interviewer:</strong> {`I'd like you to design a URL shortener — something like bit.ly. Take it wherever you want.`}
           </p>
@@ -578,10 +578,10 @@ export default function Page() {
           </ul>
         </Callout>
 
-        <h4 className="text-lg font-semibold mt-8 mb-3">Contrast — the mediocre version</h4>
-        <p className="text-sm text-slate-500 italic mb-4">Same problem, weaker candidate. Notice what&apos;s missing.</p>
+        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast — the mediocre version</h4>
+        <p className="mb-4 text-sm text-slate-500 italic">Same problem, weaker candidate. Notice what&apos;s missing.</p>
 
-        <div className="space-y-3 my-6 rounded-xl border border-amber-200 dark:border-amber-900/50 p-6 bg-amber-50/40 dark:bg-amber-950/20">
+        <div className="my-6 space-y-3 rounded-xl border border-amber-200 bg-amber-50/40 p-6 dark:border-amber-900/50 dark:bg-amber-950/20">
           <p>
             <strong>Interviewer:</strong> {`Design a URL shortener.`}
           </p>
@@ -643,13 +643,13 @@ export default function Page() {
         </Callout>
 
         {/* ============== Transcript 2: Twitter feed UI ============== */}
-        <h3 className="text-xl font-semibold mt-12 mb-3">Transcript 2 — &quot;Design a Twitter feed UI&quot; (frontend)</h3>
-        <p className="text-sm text-slate-500 italic mb-4">
+        <h3 className="mt-12 mb-3 text-xl font-semibold">Transcript 2 — &quot;Design a Twitter feed UI&quot; (frontend)</h3>
+        <p className="mb-4 text-sm text-slate-500 italic">
           Senior frontend interview, 50 minutes. The candidate is a Java/Spring engineer with React experience
           interviewing for a full-stack senior role.
         </p>
 
-        <div className="space-y-4 my-6 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50/40 dark:bg-slate-900/30">
+        <div className="my-6 space-y-4 rounded-xl border border-slate-200 bg-slate-50/40 p-6 dark:border-slate-800 dark:bg-slate-900/30">
           <p>
             <strong>Interviewer:</strong> {`I'd like you to design the Twitter home feed UI. Focus on the client side — assume the backend gives you whatever endpoints you ask for.`}
           </p>
@@ -851,10 +851,10 @@ export default function Page() {
           </ul>
         </Callout>
 
-        <h4 className="text-lg font-semibold mt-8 mb-3">Contrast — the mediocre version</h4>
-        <p className="text-sm text-slate-500 italic mb-4">Same problem, weaker candidate.</p>
+        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast — the mediocre version</h4>
+        <p className="mb-4 text-sm text-slate-500 italic">Same problem, weaker candidate.</p>
 
-        <div className="space-y-3 my-6 rounded-xl border border-amber-200 dark:border-amber-900/50 p-6 bg-amber-50/40 dark:bg-amber-950/20">
+        <div className="my-6 space-y-3 rounded-xl border border-amber-200 bg-amber-50/40 p-6 dark:border-amber-900/50 dark:bg-amber-950/20">
           <p>
             <strong>Interviewer:</strong> {`Design the Twitter feed UI.`}
           </p>
@@ -910,7 +910,7 @@ export default function Page() {
         </Callout>
 
         {/* ============== Wrap-up ============== */}
-        <h3 className="text-xl font-semibold mt-12 mb-3">The five senior signals you saw in both transcripts</h3>
+        <h3 className="mt-12 mb-3 text-xl font-semibold">The five senior signals you saw in both transcripts</h3>
         <ol className="space-y-2">
           <li>
             <strong>Scope clarification before solution.</strong>{" "}Five questions in the first 90 seconds. Both
@@ -937,7 +937,7 @@ export default function Page() {
           </li>
         </ol>
 
-        <h3 className="text-xl font-semibold mt-10 mb-3">The five things mediocre candidates do</h3>
+        <h3 className="mt-10 mb-3 text-xl font-semibold">The five things mediocre candidates do</h3>
         <ol className="space-y-2">
           <li>
             <strong>Jump straight to a tool.</strong> &quot;I&apos;ll use MongoDB / React + Redux.&quot; Tool-first is
@@ -1043,8 +1043,8 @@ export default function Page() {
       </section>
 
       {/* ============================== Closing ============================== */}
-      <section className="my-12 rounded-xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 p-8">
-        <h2 className="text-2xl font-bold mb-3">You have the toolkit</h2>
+      <section className="my-12 rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h2 className="mb-3 text-2xl font-bold">You have the toolkit</h2>
         <p>
           43 modules of patterns and tradeoffs. The compass gives you the order: foundations, data, traffic,
           reliability, evolution, security. The toolbox gives you the components. The traps give you humility.
@@ -1056,7 +1056,7 @@ export default function Page() {
       </section>
 
       <section className="my-12">
-        <h3 className="text-lg font-semibold mb-3">Next up</h3>
+        <h3 className="mb-3 text-lg font-semibold">Next up</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Module 45: Capstone — design a code review platform end to end. Bring the compass.
         </p>

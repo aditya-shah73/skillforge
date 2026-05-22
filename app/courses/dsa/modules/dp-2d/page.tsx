@@ -87,13 +87,13 @@ flowchart LR
       <ModuleProgress moduleSlug="dp-2d" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 7 · Module 34 · 2D DP
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~2.5–3h · assumes dp-intro and dp-1d are done</p>
       </div>
@@ -1022,8 +1022,8 @@ answer: dp[N][W]`}</CodeBlock>
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/30 dark:to-pink-950/30 border border-fuchsia-200 dark:border-fuchsia-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">
+        <div className="not-prose mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-6 dark:border-fuchsia-800/40 dark:from-fuchsia-950/30 dark:to-pink-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">
             Next up · Module 35 — Advanced DP: intervals, trees, bitmask
           </h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
@@ -1035,7 +1035,7 @@ answer: dp[N][W]`}</CodeBlock>
           </p>
           <Link
             href="/courses/dsa/modules/dp-advanced"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Advanced DP →
           </Link>

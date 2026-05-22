@@ -24,19 +24,19 @@ export default function PromptEngineeringModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Prompt engineering</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Prompt engineering</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The techniques that squeeze 80% more reliability out of the same model — with zero code, zero fine-tuning, and zero API calls today.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="prompt-engineering" />
@@ -44,16 +44,16 @@ export default function PromptEngineeringModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🧠</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Every previous module has been about the model&apos;s side. This one flips the table:
           what do <em>you</em>{" "}write to make the model do what you want? By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Understand prompts as <strong>context assembly</strong>, not incantations.</li>
           <li>Write effective <strong>system prompts</strong>{" "}that pin down role, rules, and output shape.</li>
           <li>Use <strong>few-shot examples</strong>{" "}to teach patterns without training.</li>
@@ -181,16 +181,16 @@ export default function PromptEngineeringModule() {
 
         <h3>Bad system prompts vs. good system prompts</h3>
 
-        <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-2">❌ Vague &amp; Wishful</div>
-            <pre className="text-xs whitespace-pre-wrap leading-relaxed m-0 font-mono">{`You are a helpful assistant.
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase dark:text-rose-400">❌ Vague &amp; Wishful</div>
+            <pre className="m-0 font-mono text-xs leading-relaxed whitespace-pre-wrap">{`You are a helpful assistant.
 Be nice and accurate.
 Don't make things up.`}</pre>
           </div>
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">✓ Specific &amp; Operational</div>
-            <pre className="text-xs whitespace-pre-wrap leading-relaxed m-0 font-mono">{`You are a code-review assistant for a
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">✓ Specific &amp; Operational</div>
+            <pre className="m-0 font-mono text-xs leading-relaxed whitespace-pre-wrap">{`You are a code-review assistant for a
 Java/Spring codebase. Review diffs for:
  1. Null-safety bugs
  2. Unclosed resources
@@ -309,23 +309,23 @@ Output: { "allowed": false, "reasons": ["UPDATE without WHERE clause"] }
         <h3>A worked before/after</h3>
         <p>Task: extract action items from meeting notes.</p>
 
-        <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-2">Zero-shot</div>
-            <pre className="text-[11px] whitespace-pre-wrap leading-relaxed m-0 font-mono">{`Extract action items from these meeting notes:
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase dark:text-rose-400">Zero-shot</div>
+            <pre className="m-0 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`Extract action items from these meeting notes:
 
 "Alice will check the migration script by Friday.
  Bob is blocked on the Figma file.
  We decided to push the release to next sprint."
 
 Format: ???`}</pre>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 mb-0 italic">
+            <p className="mt-3 mb-0 text-xs text-slate-600 italic dark:text-slate-400">
               Result varies wildly — sometimes bullets, sometimes JSON, sometimes prose. Owner/date inconsistent.
             </p>
           </div>
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">Few-shot</div>
-            <pre className="text-[11px] whitespace-pre-wrap leading-relaxed m-0 font-mono">{`Extract action items from meeting notes.
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Few-shot</div>
+            <pre className="m-0 font-mono text-[11px] leading-relaxed whitespace-pre-wrap">{`Extract action items from meeting notes.
 
 NOTES: "Sam will update the README tonight. Priya is waiting on design."
 ITEMS:
@@ -340,7 +340,7 @@ NOTES: "Alice will check the migration script by Friday.
 Bob is blocked on the Figma file.
 We decided to push the release to next sprint."
 ITEMS:`}</pre>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 mb-0 italic">
+            <p className="mt-3 mb-0 text-xs text-slate-600 italic dark:text-slate-400">
               Now the format is locked. Decisions (not action items) get skipped. Blocked tasks get marked.
             </p>
           </div>
@@ -405,10 +405,10 @@ ITEMS:`}</pre>
           LLMs produce every token using a fixed amount of compute. For a hard question the model cannot &quot;think harder&quot; internally — it only has one forward pass to decide the next token. But it <em>can</em>{" "}spend more forward passes by writing reasoning down first, then concluding. This is chain-of-thought (CoT).
         </p>
 
-        <div className="not-prose my-6 mx-auto max-w-xl p-5 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/30">
-          <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold mb-2">The magic phrase</div>
+        <div className="not-prose mx-auto my-6 max-w-xl rounded-xl border border-amber-300 bg-amber-50/40 p-5 dark:border-amber-800 dark:bg-amber-950/30">
+          <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-400">The magic phrase</div>
           <div className="font-mono text-sm">&quot;Let&apos;s think step by step.&quot;</div>
-          <p className="text-xs mt-2 m-0 text-slate-600 dark:text-slate-400">
+          <p className="m-0 mt-2 text-xs text-slate-600 dark:text-slate-400">
             Adding this phrase at the right place (or an equivalent: &quot;Work through this carefully,&quot; &quot;First, reason out loud, then answer&quot;) famously improves accuracy on multi-step reasoning problems by double-digit percentages.
           </p>
         </div>
@@ -418,33 +418,33 @@ ITEMS:`}</pre>
           Take a classic CoT benchmark question. Watch what changes between &quot;just answer&quot; and &quot;think first, then answer&quot;:
         </p>
         <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
-          <div className="p-4 rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="text-xs uppercase tracking-wider text-rose-700 dark:text-rose-400 font-bold mb-2">Naive prompt</div>
-            <div className="text-sm font-mono whitespace-pre-wrap mb-3">{`Roger has 5 tennis balls.
+          <div className="rounded-xl border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-400">Naive prompt</div>
+            <div className="mb-3 font-mono text-sm whitespace-pre-wrap">{`Roger has 5 tennis balls.
 He buys 2 more cans, with 3
 balls per can. How many
 balls does he have now?
 
 Answer:`}</div>
-            <div className="text-xs uppercase tracking-wider opacity-70 mb-1">Model output</div>
-            <div className="text-sm font-mono">11 ✗</div>
-            <p className="text-xs mt-2 m-0 opacity-70">
+            <div className="mb-1 text-xs tracking-wider uppercase opacity-70">Model output</div>
+            <div className="font-mono text-sm">11 ✗</div>
+            <p className="m-0 mt-2 text-xs opacity-70">
               Smaller models often skip a step (e.g. 5 + 2×3 → forget to multiply, or 5 + 2 + 3). One forward pass to commit, no room to verify.
             </p>
           </div>
-          <div className="p-4 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/40 dark:bg-emerald-950/30">
-            <div className="text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold mb-2">CoT prompt</div>
-            <div className="text-sm font-mono whitespace-pre-wrap mb-3">{`Roger has 5 tennis balls.
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50/40 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-400">CoT prompt</div>
+            <div className="mb-3 font-mono text-sm whitespace-pre-wrap">{`Roger has 5 tennis balls.
 He buys 2 more cans, with 3
 balls per can. How many
 balls does he have now?
 
 Let's think step by step.`}</div>
-            <div className="text-xs uppercase tracking-wider opacity-70 mb-1">Model output</div>
-            <div className="text-sm font-mono whitespace-pre-wrap">{`2 cans × 3 balls = 6 new balls.
+            <div className="mb-1 text-xs tracking-wider uppercase opacity-70">Model output</div>
+            <div className="font-mono text-sm whitespace-pre-wrap">{`2 cans × 3 balls = 6 new balls.
 5 + 6 = 11.
 Answer: 11. ✓`}</div>
-            <p className="text-xs mt-2 m-0 opacity-70">
+            <p className="m-0 mt-2 text-xs opacity-70">
               Each intermediate line is now context for the next forward pass. The model effectively gets 3 passes of compute instead of 1.
             </p>
           </div>
@@ -800,14 +800,14 @@ Output:`}</CodeBlock>
       {/* ================================================================= */}
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Next up: Module 8 — Phase 1 revision notes</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           One last stop before Phase 2: we trace an entire real Claude request end-to-end, touching every concept from Modules 1–7. If anything still feels fuzzy, that module is where it snaps into place.
         </p>
         <Link
           href="/courses/ai/modules/recap"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
         >
           Start Module 8 →
         </Link>

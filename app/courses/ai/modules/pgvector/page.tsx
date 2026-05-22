@@ -23,19 +23,19 @@ export default function PgvectorModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 3 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Vector DBs &amp; pgvector</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Vector DBs &amp; pgvector</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           When brute-force isn&apos;t cutting it, and you don&apos;t want a second database.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="pgvector" />
@@ -43,17 +43,17 @@ export default function PgvectorModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           In Module 15 you indexed bookmarks in a <code>HashMap</code>. That works until it doesn&apos;t. Today
           you learn the standard production answer in the Spring/Java world: <strong>Postgres + pgvector</strong>.
           One database for both your business data and your vectors, with real ANN indexes underneath.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Why you&apos;d add a vector column to your existing Postgres instead of running Pinecone</li>
           <li>The two pgvector indexes — <strong>HNSW</strong>{" "}and <strong>IVFFlat</strong> — what each does, when each wins</li>
           <li>How to tune <code>m</code>, <code>ef_construction</code>, <code>ef_search</code>, <code>lists</code>, <code>probes</code> without flailing</li>
@@ -66,16 +66,16 @@ export default function PgvectorModule() {
       {/* PART 1: WHY A VECTOR DATABASE                                       */}
       {/* ================================================================= */}
       <section id="why-vdb">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Why a vector database</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Why a vector database</h2>
 
         <p>
           You can &quot;do vector search&quot; with a <code>List&lt;float[]&gt;</code> in memory and a for-loop. Module 15
           proved it: thirty bookmarks, brute-force cosine, instant results. So when does that stop working?
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Three things break first</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Three things break first</h3>
 
-        <ol className="list-decimal pl-6 space-y-3">
+        <ol className="list-decimal space-y-3 pl-6">
           <li>
             <strong>Restart cost.</strong>{" "}Your in-memory store is empty when the JVM boots. With 100k vectors
             at 1024 dims, that&apos;s 400 MB to re-embed on every deploy — and a bill from your embedding
@@ -94,17 +94,17 @@ export default function PgvectorModule() {
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The two answers</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The two answers</h3>
 
         <p>The industry split into two camps for solving this:</p>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2"></th>
-                <th className="text-left p-2">Dedicated vector DB</th>
-                <th className="text-left p-2">Vector extension on existing DB</th>
+                <th className="p-2 text-left"></th>
+                <th className="p-2 text-left">Dedicated vector DB</th>
+                <th className="p-2 text-left">Vector extension on existing DB</th>
               </tr>
             </thead>
             <tbody>
@@ -133,13 +133,13 @@ export default function PgvectorModule() {
         </div>
 
         <Callout variant="info" title="Why this course teaches pgvector">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             For 90% of the apps a Spring Boot team ships, the vectors are <em>secondary</em>{" "}to the actual
             domain — bookmarks belong to users, issues belong to projects, docs belong to spaces. You already
             have a Postgres for that. Adding <code>CREATE EXTENSION vector;</code> is a one-line change.
             Operating a second specialized database isn&apos;t.
           </p>
-          <p className="text-sm m-0 mt-2">
+          <p className="m-0 mt-2 text-sm">
             If you grow past pgvector&apos;s sweet spot, the migration to a dedicated DB is mostly mechanical
             (your embeddings don&apos;t change). Start where the friction is lowest.
           </p>
@@ -180,7 +180,7 @@ export default function PgvectorModule() {
       {/* PART 2: PGVECTOR SETUP & BASICS                                     */}
       {/* ================================================================= */}
       <section id="pgvector-setup">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — pgvector setup &amp; basics</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — pgvector setup &amp; basics</h2>
 
         <p>
           pgvector is a Postgres extension that adds a <code>vector</code> column type, distance operators,
@@ -188,7 +188,7 @@ export default function PgvectorModule() {
           RDS, Google Cloud SQL, Supabase, Neon, and most managed Postgres providers.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Local setup with Docker</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Local setup with Docker</h3>
 
         <CodeBlock lang="plain">{`# Run Postgres 16 with pgvector pre-installed
 docker run --name pg-vec \\
@@ -206,7 +206,7 @@ postgres=# \\dx
 ---------+---------+------------+------------------------------
  vector  | 0.8.0   | public     | vector data type and ivfflat...`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The vector column type</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The vector column type</h3>
 
         <p>You declare a column with a fixed dimension. The DB enforces it on insert.</p>
 
@@ -221,7 +221,7 @@ postgres=# \\dx
 );`}</CodeBlock>
 
         <Callout variant="warn" title="The dimension is part of the schema">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             <code>vector(1536)</code> and <code>vector(3072)</code> are different types. Switching embedding
             models almost always means an <code>ALTER TABLE</code> + a re-embed of every row. Decide your model
             before you populate the table — or design for the migration explicitly (a second column, a backfill
@@ -229,7 +229,7 @@ postgres=# \\dx
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The three distance operators</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The three distance operators</h3>
 
         <p>
           pgvector exposes three distance operators. Pick the one that matches how your embedding model was
@@ -237,12 +237,12 @@ postgres=# \\dx
         </p>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2">Operator</th>
-                <th className="text-left p-2">Distance</th>
-                <th className="text-left p-2">Use when</th>
+                <th className="p-2 text-left">Operator</th>
+                <th className="p-2 text-left">Distance</th>
+                <th className="p-2 text-left">Use when</th>
               </tr>
             </thead>
             <tbody>
@@ -266,7 +266,7 @@ postgres=# \\dx
         </div>
 
         <Callout variant="info" title="Inner product trick">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             If your vectors are L2-normalized (length = 1), inner product and cosine give the same ranking
             but inner product avoids a square root. OpenAI&apos;s embeddings are pre-normalized, so
             <code> &lt;#&gt; </code> is the cheapest correct choice. (The negative is because Postgres sorts
@@ -274,7 +274,7 @@ postgres=# \\dx
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Your first query</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Your first query</h3>
 
         <p>No index, no tuning — just the cosine operator over a sequential scan:</p>
 
@@ -327,7 +327,7 @@ LIMIT 5;`}</CodeBlock>
       {/* PART 3: HNSW VS IVFFLAT                                             */}
       {/* ================================================================= */}
       <section id="indexes">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — HNSW vs IVFFlat</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — HNSW vs IVFFlat</h2>
 
         <p>
           Without an index, pgvector does a sequential scan: every row, every query. That&apos;s fine for
@@ -337,7 +337,7 @@ LIMIT 5;`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title='"Approximate" means you might miss a true top-k result'>
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             ANN indexes don&apos;t guarantee they&apos;ll find the literal closest vector — they aim for
             <em> recall@10 </em>{" "}in the 95–99% range. For a search UI, that&apos;s invisible. For exact-match
             de-duplication or compliance use cases where missing one means a bug, you may want to keep a
@@ -345,7 +345,7 @@ LIMIT 5;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">HNSW: the modern default</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">HNSW: the modern default</h3>
 
         <p>
           HNSW (Hierarchical Navigable Small World) builds a multi-layer graph where each node is a vector and
@@ -363,7 +363,7 @@ SET hnsw.ef_search = 40;`}</CodeBlock>
 
         <p>The three knobs:</p>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong><code>m</code></strong> — max edges per node. Higher = better recall, bigger index, slower
             build. Default 16. Don&apos;t go below 8; rarely worth going above 32.
@@ -380,7 +380,7 @@ SET hnsw.ef_search = 40;`}</CodeBlock>
           </li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">IVFFlat: the older partition-based index</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">IVFFlat: the older partition-based index</h3>
 
         <p>
           IVFFlat clusters vectors into <code>lists</code> partitions (basically k-means). At query time, it
@@ -395,7 +395,7 @@ SET hnsw.ef_search = 40;`}</CodeBlock>
 SET ivfflat.probes = 10;`}</CodeBlock>
 
         <Callout variant="warn" title="IVFFlat needs data before you build it">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             IVFFlat clusters during <code>CREATE INDEX</code>. If you build the index on an empty table and
             then insert, the partitions are garbage. Build IVFFlat <em>after</em>{" "}a representative bulk load,
             or rebuild it after major data changes. HNSW doesn&apos;t have this problem — it&apos;s
@@ -403,15 +403,15 @@ SET ivfflat.probes = 10;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Which one should I use?</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Which one should I use?</h3>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2"></th>
-                <th className="text-left p-2">HNSW</th>
-                <th className="text-left p-2">IVFFlat</th>
+                <th className="p-2 text-left"></th>
+                <th className="p-2 text-left">HNSW</th>
+                <th className="p-2 text-left">IVFFlat</th>
               </tr>
             </thead>
             <tbody>
@@ -508,7 +508,7 @@ SET ivfflat.probes = 10;`}</CodeBlock>
           ]}
         />
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Hybrid filtering: the gotcha</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Hybrid filtering: the gotcha</h3>
 
         <p>
           The killer feature of pgvector is filtering with <code>WHERE</code> in the same query. But there&apos;s
@@ -532,7 +532,7 @@ LIMIT 10;`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="The over-fetch pattern">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             A common workaround: ask the index for more results than you need (<code>LIMIT 100</code>),
             apply your filter in a CTE, then take the top <code>k</code>. You burn some extra ANN candidates
             but guarantee that filtered results aren&apos;t starved. pgvector 0.7+ has &quot;iterative index
@@ -584,7 +584,7 @@ LIMIT 10;`}</CodeBlock>
       {/* PART 4: PROJECT — DUPLICATE ISSUE DETECTOR                          */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Project: duplicate issue detector</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Project: duplicate issue detector</h2>
 
         <p>
           Time to ship. You&apos;re going to build a small service that ingests GitHub-style issues, embeds
@@ -593,18 +593,18 @@ LIMIT 10;`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="What you'll need">
-          <p className="text-sm m-0 mb-2">
+          <p className="m-0 mb-2 text-sm">
             • Java 21, Spring Boot 3.5+, Maven<br />
             • Docker (for Postgres + pgvector)<br />
             • An <code>OPENAI_API_KEY</code> environment variable (or swap the embedding starter for any provider you set up in Module 15)
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 1 — Spring Initializr deps</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1 — Spring Initializr deps</h3>
 
         <p>From <a className="text-emerald-600 hover:underline" href="https://start.spring.io">start.spring.io</a>, generate a project with:</p>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li><strong>Spring Web</strong></li>
           <li><strong>Spring Data JDBC</strong></li>
           <li><strong>PostgreSQL Driver</strong></li>
@@ -613,7 +613,7 @@ LIMIT 10;`}</CodeBlock>
           <li><strong>PGvector Vector Database</strong> (under Spring AI) — the Spring AI <code>VectorStore</code> that targets pgvector</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 2 — Run the database</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2 — Run the database</h3>
 
         <CodeBlock lang="plain">{`docker run --name pg-vec-issues \\
   -e POSTGRES_PASSWORD=secret \\
@@ -621,7 +621,7 @@ LIMIT 10;`}</CodeBlock>
   -p 5432:5432 \\
   -d pgvector/pgvector:pg16`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 3 — application.yml</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3 — application.yml</h3>
 
         <CodeBlock lang="plain">{`spring:
   datasource:
@@ -649,7 +649,7 @@ LIMIT 10;`}</CodeBlock>
           painful when you need to evolve.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 4 — Flyway migration</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4 — Flyway migration</h3>
 
         <p>Create <code>src/main/resources/db/migration/V1__init.sql</code>:</p>
 
@@ -675,7 +675,7 @@ CREATE INDEX issue_state_idx ON issue (state);`}</CodeBlock>
           time later — and IVFFlat outright requires post-load building.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 5 — The Issue record and repository</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5 — The Issue record and repository</h3>
 
         <CodeBlock lang="java">{`package com.example.issues;
 
@@ -744,7 +744,7 @@ public class IssueRepository {
 }`}</CodeBlock>
 
         <Callout variant="info" title="PGvector helper class">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             <code>com.pgvector.PGvector</code> ships with the <code>com.pgvector:pgvector</code> dependency
             (the Spring AI starter pulls it in transitively). It serializes a <code>float[]</code> into the
             wire format Postgres expects. Without it you&apos;d be hand-formatting <code>&apos;[0.1, 0.2,
@@ -752,7 +752,7 @@ public class IssueRepository {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 6 — The IssueService</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 6 — The IssueService</h3>
 
         <CodeBlock lang="java">{`package com.example.issues;
 
@@ -797,7 +797,7 @@ public class IssueService {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="The 0.20 threshold is a starting point, not a law">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Whether 0.20 cosine distance means &quot;duplicate&quot; depends entirely on your embedding model
             and the kind of text you&apos;re embedding. Build a labeled set of 50 known-duplicate pairs and
             50 known-different pairs from your real data, plot the distance histograms, and pick the threshold
@@ -805,7 +805,7 @@ public class IssueService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 7 — The controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 7 — The controller</h3>
 
         <CodeBlock lang="java">{`package com.example.issues;
 
@@ -837,7 +837,7 @@ public class IssueController {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 8 — Bulk-load some issues, then build the index</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 8 — Bulk-load some issues, then build the index</h3>
 
         <p>
           For a realistic test, scrape (or just paste) ~200 issues from a real public repo. Once they&apos;re
@@ -854,7 +854,7 @@ CREATE INDEX issue_embedding_hnsw_idx
           Restart the app — Flyway runs the new migration. Postgres reports build progress in the logs.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 9 — Try it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 9 — Try it</h3>
 
         <CodeBlock lang="plain">{`# Ingest a few issues
 curl -X POST localhost:8080/api/issues -H 'Content-Type: application/json' \\
@@ -872,7 +872,7 @@ curl -X POST localhost:8080/api/issues/check-duplicate -H 'Content-Type: applica
 
 # Expected: #101 and #102 with similarity > 0.85; #103 way down the list`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 10 — Watch the planner</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 10 — Watch the planner</h3>
 
         <p>
           Once you have a few thousand issues, run an <code>EXPLAIN ANALYZE</code> on the duplicate-check query
@@ -892,7 +892,7 @@ LIMIT 5;
 -- selective that brute force IS faster.`}</CodeBlock>
 
         <Callout variant="info" title="Common pitfalls">
-          <ul className="text-sm m-0 list-disc pl-5 space-y-1">
+          <ul className="m-0 list-disc space-y-1 pl-5 text-sm">
             <li><code>ERROR: type &quot;vector&quot; does not exist</code> — you forgot <code>CREATE EXTENSION vector</code> (Flyway runs it in V1 above).</li>
             <li><code>expected 1536 dimensions, got 3072</code> — you switched embedding models without changing the column type. Either ALTER the column or reset the DB.</li>
             <li>Recall feels off — check that you&apos;re using the same operator class in CREATE INDEX (<code>vector_cosine_ops</code>) and in queries (<code>&lt;=&gt;</code>). Mixing cosine and L2 silently bypasses the index.</li>
@@ -900,9 +900,9 @@ LIMIT 5;
           </ul>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Add a <code>repo</code> column and filter duplicates within the same repo.</li>
           <li>When the duplicate confidence is low (similarity 0.5–0.75), still surface results but mark them &quot;related&quot;, not &quot;duplicate&quot;.</li>
           <li>Build a 50-pair labeled eval set, sweep the threshold, plot precision/recall curves.</li>
@@ -923,7 +923,7 @@ LIMIT 5;
       {/* PART 5: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Final quiz</h2>
 
         <Quiz
           kind="Final check"
@@ -996,11 +996,11 @@ LIMIT 5;
       </section>
 
       {/* FOOTER NAV */}
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
-        <Link href="/courses/ai/modules/embeddings-deep" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
+      <footer className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
+        <Link href="/courses/ai/modules/embeddings-deep" className="text-slate-600 hover:text-emerald-600 dark:text-slate-400">
           ← Module 15: Embeddings deep dive
         </Link>
-        <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline font-semibold">
+        <Link href="/courses/ai/modules/rag-architecture" className="font-semibold text-emerald-600 hover:underline">
           Module 17: RAG architecture →
         </Link>
       </footer>

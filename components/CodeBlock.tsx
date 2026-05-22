@@ -169,16 +169,16 @@ export default function CodeBlock({
 }) {
   const lines = children.replace(/\n$/, "").split("\n");
   return (
-    <div className="not-prose my-5 rounded-lg overflow-hidden border border-slate-700 bg-slate-950 shadow-sm">
+    <div className="not-prose my-5 overflow-hidden rounded-lg border border-slate-700 bg-slate-950 shadow-sm">
       {caption && (
-        <div className="px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs text-slate-400 font-mono flex items-center gap-2">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-rose-500/70" />
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500/70" />
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+        <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2 font-mono text-xs text-slate-400">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-rose-500/70" />
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-500/70" />
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
           <span className="ml-2">{caption}</span>
         </div>
       )}
-      <pre className="overflow-x-auto p-4 text-[13px] leading-relaxed font-mono text-slate-200">
+      <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-relaxed text-slate-200">
         <code>
           {lines.map((line, i) => (
             <React.Fragment key={i}>

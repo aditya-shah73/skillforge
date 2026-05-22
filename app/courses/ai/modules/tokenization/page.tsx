@@ -46,21 +46,21 @@ flowchart TD
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Tokenization
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Why does the AI charge me by the tok<em>what</em>?
         </p>
         <BookmarkButton courseId="ai" moduleSlug="tokenization" />
@@ -73,7 +73,7 @@ flowchart TD
         <h2>Part 1: The setup</h2>
 
         <p>You send this to Claude:</p>
-        <blockquote className="border-l-4 border-indigo-400 pl-4 italic text-slate-700 dark:text-slate-300 my-4">
+        <blockquote className="my-4 border-l-4 border-indigo-400 pl-4 text-slate-700 italic dark:text-slate-300">
           &quot;The quick brown fox jumps over the lazy dog&quot;
         </blockquote>
         <p>Nine words. Simple, right?</p>
@@ -108,16 +108,16 @@ flowchart TD
 
         <p>Imagine you&apos;re teaching a friend who only speaks math. You want to tell them about dogs.</p>
 
-        <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/30 p-4">
-            <div className="font-semibold text-rose-900 dark:text-rose-200 mb-2">❌ Option A: Every word → a number</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        <div className="my-6 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 dark:border-rose-900 dark:bg-rose-950/30">
+            <div className="mb-2 font-semibold text-rose-900 dark:text-rose-200">❌ Option A: Every word → a number</div>
+            <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
               English has ~170,000 words. Your friend memorizes a huge table. And what about &quot;doggo&quot;? &quot;Doggos&quot;? Misspellings break everything.
             </p>
           </div>
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-            <div className="font-semibold text-emerald-900 dark:text-emerald-200 mb-2">✅ Option B: Chunks → numbers</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
+            <div className="mb-2 font-semibold text-emerald-900 dark:text-emerald-200">✅ Option B: Chunks → numbers</div>
+            <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
               &quot;Dogs&quot; = <code>dog</code> + <code>s</code>. &quot;Running&quot; = <code>run</code> + <code>ning</code>. Your friend memorizes ~50,000 reusable chunks, and can handle words they&apos;ve never seen.
             </p>
           </div>
@@ -175,7 +175,7 @@ flowchart TD
         <p>Here&apos;s where it gets fun. Tokenization has quirks that will hit you in production.</p>
 
         <h3>Quirk #1: Spaces matter</h3>
-        <ul className="list-disc ml-6 space-y-1 my-3">
+        <ul className="my-3 ml-6 list-disc space-y-1">
           <li><code>&quot;hello&quot;</code> → 1 token</li>
           <li><code>&quot; hello&quot;</code> (with a leading space) → 1 token, but a <strong>different</strong>{" "}token</li>
         </ul>
@@ -184,7 +184,7 @@ flowchart TD
         </p>
 
         <h3>Quirk #2: Common words are cheap, rare words are expensive</h3>
-        <ul className="list-disc ml-6 space-y-1 my-3">
+        <ul className="my-3 ml-6 list-disc space-y-1">
           <li><code>&quot;the&quot;</code> → 1 token</li>
           <li><code>&quot;antidisestablishmentarianism&quot;</code> → 6 tokens</li>
         </ul>
@@ -193,7 +193,7 @@ flowchart TD
         </p>
 
         <h3>Quirk #3: Non-English is EXPENSIVE</h3>
-        <ul className="list-disc ml-6 space-y-1 my-3">
+        <ul className="my-3 ml-6 list-disc space-y-1">
           <li><code>&quot;Hello, how are you?&quot;</code> → ~6 tokens</li>
           <li><code>&quot;你好，你好吗？&quot;</code> (same thing in Chinese) → ~14 tokens</li>
         </ul>
@@ -234,7 +234,7 @@ flowchart TD
 
         <p>Three concrete things this means for your application:</p>
 
-        <div className="space-y-4 my-6">
+        <div className="my-6 space-y-4">
           <NumberedPoint n={1} title="Your bill is per-token, not per-request">
             Sending 10,000 tokens of context on every request? Your bill scales with that. Not with request count.
           </NumberedPoint>
@@ -440,7 +440,7 @@ public class SafeChatService {
       {/* RECAP */}
       <section>
         <h2>✅ What you now know</h2>
-        <ul className="list-none space-y-2 my-6">
+        <ul className="my-6 list-none space-y-2">
           {[
             "Tokens are the actual unit LLMs process — not words, not characters",
             "BPE tokenizers split text into ~50K reusable chunks",
@@ -449,30 +449,30 @@ public class SafeChatService {
             "In Spring Boot: inject TokenCountEstimator as a singleton bean and truncate proactively",
           ].map((item) => (
             <li key={item} className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center mt-0.5 font-bold">✓</span>
+              <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">✓</span>
               <span>{item}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-6">
-          <div className="text-xs font-semibold uppercase tracking-wider mb-2 opacity-80">Up next</div>
-          <h3 className="text-xl font-bold mb-2">Module 2: Supervised learning foundations</h3>
-          <p className="text-sm opacity-90 mb-4">
+      <footer className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-800">
+        <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white">
+          <div className="mb-2 text-xs font-semibold tracking-wider uppercase opacity-80">Up next</div>
+          <h3 className="mb-2 text-xl font-bold">Module 2: Supervised learning foundations</h3>
+          <p className="mb-4 text-sm opacity-90">
             Now that you know what a token IS, we&apos;ll look at how the model learns what to DO with them. We&apos;ll cover regression, loss functions, and gradient descent — using intuition, not heavy math.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
               href="/courses/ai/modules/ml-basics"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
+              className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50"
             >
               Start Module 2 →
             </Link>
             <Link
               href="/courses/ai"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
             >
               ← All modules
             </Link>
@@ -487,12 +487,12 @@ public class SafeChatService {
 function NumberedPoint({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-4">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950 border-2 border-indigo-400 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold">
+      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-400 bg-indigo-100 font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
         {n}
       </div>
       <div>
-        <div className="font-semibold mb-1">{title}</div>
-        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed m-0">{children}</p>
+        <div className="mb-1 font-semibold">{title}</div>
+        <p className="m-0 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{children}</p>
       </div>
     </div>
   );

@@ -33,13 +33,13 @@ export default function BookmarkButton({
       aria-pressed={active}
       aria-label={active ? "Remove bookmark" : "Bookmark this module"}
       title={active ? "Bookmarked — click to remove" : "Bookmark this module"}
-      className={`print:hidden inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition print:hidden ${
         active
           ? "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200"
           : "border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:text-amber-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:border-amber-700 dark:hover:text-amber-300"
       }`}
     >
-      <span aria-hidden className={active ? "" : "grayscale opacity-70"}>
+      <span aria-hidden className={active ? "" : "opacity-70 grayscale"}>
         {active ? "★" : "☆"}
       </span>
       <span>{active ? "Bookmarked" : "Bookmark"}</span>

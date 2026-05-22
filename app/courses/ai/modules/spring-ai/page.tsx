@@ -39,21 +39,21 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Spring AI integration
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The Spring-native way to call LLMs — memory, structured output, advisors, all the leverage.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="spring-ai" />
@@ -180,25 +180,25 @@ public class CreativeWriter {
         <h3>The three implementations you&apos;ll see</h3>
 
         <div className="not-prose my-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30 p-4">
-            <div className="font-bold text-sm mb-1"><code>InMemoryChatMemoryRepository</code></div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-sm font-bold"><code>InMemoryChatMemoryRepository</code></div>
+            <div className="space-y-1.5 text-xs">
               <div>HashMap. Lost on restart.</div>
               <div>Use for: dev, tests, single-instance prototypes.</div>
               <div>Bad for: anything multi-instance or meant to outlive a JVM.</div>
             </div>
           </div>
-          <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30 p-4">
-            <div className="font-bold text-sm mb-1"><code>JdbcChatMemoryRepository</code></div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-sm font-bold"><code>JdbcChatMemoryRepository</code></div>
+            <div className="space-y-1.5 text-xs">
               <div>Postgres / MySQL / etc.</div>
               <div>Use for: production. Survives restarts, multi-instance safe.</div>
               <div>Spring AI ships the schema; bootstrap with <code>spring.ai.chat.memory.repository.jdbc.initialize-schema=embedded</code> (or use Flyway/Liquibase yourself if you already have them).</div>
             </div>
           </div>
-          <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30 p-4">
-            <div className="font-bold text-sm mb-1"><code>CassandraChatMemoryRepository</code></div>
-            <div className="text-xs space-y-1.5">
+          <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-1 text-sm font-bold"><code>CassandraChatMemoryRepository</code></div>
+            <div className="space-y-1.5 text-xs">
               <div>For when chat history is genuinely huge.</div>
               <div>Use for: scale where Postgres would buckle.</div>
               <div>Most apps don&apos;t need this.</div>
@@ -398,17 +398,17 @@ JSON response following this format without deviation.
         <h3>When to use <code>.entity(...)</code> vs <code>.content()</code></h3>
 
         <div className="not-prose my-6 grid gap-3 md:grid-cols-2">
-          <div className="p-4 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/40 dark:bg-emerald-950/30">
-            <div className="text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-300 font-bold mb-2">Use .entity(...) when</div>
-            <ul className="text-sm m-0 pl-4 list-disc">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50/40 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Use .entity(...) when</div>
+            <ul className="m-0 list-disc pl-4 text-sm">
               <li>The result is data, not prose (extraction, classification, scoring).</li>
               <li>Downstream code will call <code>.field()</code> on it.</li>
               <li>You&apos;d otherwise be parsing strings.</li>
             </ul>
           </div>
-          <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/30">
-            <div className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-bold mb-2">Use .content() when</div>
-            <ul className="text-sm m-0 pl-4 list-disc">
+          <div className="rounded-xl border border-amber-300 bg-amber-50/40 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Use .content() when</div>
+            <ul className="m-0 list-disc pl-4 text-sm">
               <li>The output is meant for a human (chat, summaries, code review).</li>
               <li>The shape is loose / variable.</li>
               <li>You want the model to use markdown formatting.</li>
@@ -613,7 +613,7 @@ public class LoggingAdvisor implements CallAdvisor {
           <p className="m-0">
             <a
               href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.5.0&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=journal-assistant&name=journal-assistant&description=Journal%20assistant%20with%20memory&packageName=com.example.journal&dependencies=spring-ai-anthropic"
-              className="text-indigo-600 hover:underline break-all"
+              className="break-all text-indigo-600 hover:underline"
               target="_blank"
               rel="noreferrer"
             >
@@ -914,20 +914,20 @@ Session ended.`}</CodeBlock>
         <h3>Common errors</h3>
 
         <div className="not-prose my-6 space-y-3">
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">JsonProcessingException on .entity()</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">JsonProcessingException on .entity()</div>
             <div className="text-sm">The model returned malformed JSON. Most common cause: <code>temperature</code> too high for extraction. Drop to <code>0.0</code> as we did. If it still happens, your record has a field type the model can&apos;t fill (e.g. an enum without clear instructions).</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">No bean of type &apos;ChatMemory&apos; available</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">No bean of type &apos;ChatMemory&apos; available</div>
             <div className="text-sm">Your <code>MemoryConfig</code> isn&apos;t being picked up. Verify the package matches (<code>com.example.journal</code>) so component scan finds it.</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">Memory not working — every turn looks fresh</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">Memory not working — every turn looks fresh</div>
             <div className="text-sm">You&apos;re passing different conversation IDs each turn. Generate one UUID at session start and reuse it for all <code>reflect(...)</code> calls.</div>
           </div>
-          <div className="p-4 rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/30">
-            <div className="font-bold text-sm text-rose-800 dark:text-rose-300 mb-1">CallAdvisor / AdvisedRequest can&apos;t be resolved</div>
+          <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
+            <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">CallAdvisor / AdvisedRequest can&apos;t be resolved</div>
             <div className="text-sm">Check your Spring AI version. The advisor API was renamed across milestones; make sure your BOM pins the latest <code>1.x</code> release, and re-run <code>./mvnw clean install</code>.</div>
           </div>
         </div>
@@ -1018,7 +1018,7 @@ Session ended.`}</CodeBlock>
       {/* ================================================================= */}
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
-      <section className="mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-900 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/40 dark:to-yellow-950/40">
+      <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/40 dark:to-yellow-950/40">
         <h3 className="mt-0 mb-2">Module 10 done → Module 11 next</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You can now talk to Claude with memory and typed output. Module 11 turns it around: <strong>Claude calls your code</strong>. We&apos;ll wire Spring AI tool callbacks to your Java methods (and a real GraphQL endpoint), so the LLM can fetch live data, run actions, and chain tool calls. The agent foundation begins here.
@@ -1026,13 +1026,13 @@ Session ended.`}</CodeBlock>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/ai/modules/tool-use"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-600 text-white font-medium text-sm hover:bg-amber-700 transition"
+            className="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-amber-700"
           >
             Module 11 — Tool use →
           </Link>
           <Link
             href="/courses/ai"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-200 font-medium text-sm hover:bg-amber-100 dark:hover:bg-amber-900/40 transition"
+            className="inline-flex items-center gap-2 rounded-lg border border-amber-300 px-5 py-2.5 text-sm font-medium text-amber-700 transition hover:bg-amber-100 dark:border-amber-800 dark:text-amber-200 dark:hover:bg-amber-900/40"
           >
             ← All modules
           </Link>

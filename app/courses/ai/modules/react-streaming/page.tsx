@@ -24,19 +24,19 @@ export default function ReactStreamingModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 4 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">React streaming patterns</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">React streaming patterns</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Module 12 streamed tokens out of Spring Boot. This module catches them in React without
           melting your component tree.
         </p>
@@ -45,16 +45,16 @@ export default function ReactStreamingModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 dark:border-sky-800 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 bg-gradient-to-br from-sky-50 to-blue-50 p-6 dark:border-sky-800 dark:from-sky-950/40 dark:to-blue-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A small, headless chat UI library — the components you&apos;ll reuse for every AI feature
           you ship from here on. By the end of the module:
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>You can consume an SSE stream from a browser — and you know why <code>EventSource</code> isn&apos;t enough</li>
           <li>A <code>useStreamingChat</code> hook with a clean state machine (idle / streaming / done / error) and abort support</li>
           <li>Optimistic message rendering, mid-stream tool-call rendering, and recovery from dropped streams</li>
@@ -75,7 +75,7 @@ export default function ReactStreamingModule() {
       {/* PART 1: WHY STREAMING CHANGES THE UX                                */}
       {/* ================================================================= */}
       <section id="why-streaming">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Why streaming changes the UX</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Why streaming changes the UX</h2>
 
         <p>
           The first time you wire up an LLM call from a button-click, you build it the same way you&apos;d
@@ -91,7 +91,7 @@ export default function ReactStreamingModule() {
           total time is identical.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The perceived-latency math</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The perceived-latency math</h3>
 
         <p>Concrete numbers from a typical Claude Sonnet response on a coding question:</p>
 
@@ -119,7 +119,7 @@ Streaming:
           don&apos;t tolerate dead air.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">When streaming is wrong</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">When streaming is wrong</h3>
 
         <p>
           Streaming is not free. It locks you into incremental rendering, makes error handling harder
@@ -129,7 +129,7 @@ Streaming:
 
         <p>Skip streaming when:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>The response is short enough that the spinner is invisible.</strong>{" "}Classification, yes/no, single-word output — non-streaming is simpler and the user can&apos;t tell.</li>
           <li><strong>You need the whole structured output before doing anything.</strong>{" "}If the LLM is producing JSON for your code to consume, partial JSON is useless — wait for it.</li>
           <li><strong>The output goes to a non-human consumer.</strong>{" "}Cron job, webhook, batch process. Nobody&apos;s watching.</li>
@@ -137,7 +137,7 @@ Streaming:
 
         <p>Stream when:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>A human is reading prose as it appears.</strong>{" "}Chat. Long-form generation. Q&amp;A. Code explanation.</li>
           <li><strong>You want to surface tool calls live</strong> (&quot;Searching docs…&quot; → &quot;Reading 3 results…&quot; → &quot;Drafting answer…&quot;). We&apos;ll cover this in Part 4.</li>
           <li><strong>Generation can take more than ~2 seconds.</strong>{" "}That&apos;s the spinner-tolerance threshold for most users.</li>
@@ -176,7 +176,7 @@ Streaming:
       {/* PART 2: SSE IN THE BROWSER                                          */}
       {/* ================================================================= */}
       <section id="browser-sse">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — SSE in the browser, properly</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — SSE in the browser, properly</h2>
 
         <p>
           Module 12 set up the server side: Spring Boot returns a <code>text/event-stream</code> response
@@ -184,7 +184,7 @@ Streaming:
           consume that stream. One is famous and inadequate; the other is what you&apos;ll actually use.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Option A: <code>EventSource</code> (the famous one)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Option A: <code>EventSource</code> (the famous one)</h3>
 
         <p>
           The browser ships an <code>EventSource</code> API specifically for SSE. It auto-reconnects,
@@ -197,7 +197,7 @@ es.onerror = () => es.close();`}</CodeBlock>
 
         <p>This is great — for demos. It falls apart in production for two reasons:</p>
 
-        <ol className="list-decimal pl-6 space-y-1">
+        <ol className="list-decimal space-y-1 pl-6">
           <li>
             <strong>It only does GET.</strong>{" "}Your chat request has a body — messages, tool config,
             session ID, model parameters. None of that fits in a query string. (And query strings show
@@ -210,7 +210,7 @@ es.onerror = () => es.close();`}</CodeBlock>
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Option B: <code>fetch</code> + <code>ReadableStream</code> (the right one)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Option B: <code>fetch</code> + <code>ReadableStream</code> (the right one)</h3>
 
         <p>
           Modern <code>fetch</code> returns a response with a <code>body</code> that&apos;s a
@@ -276,7 +276,7 @@ export async function* streamChat(
 
         <p>Three things worth noting in this code:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>
             <strong>It&apos;s an async generator.</strong>{" "}Consumers loop with <code>for await</code>,
             which is the cleanest possible way to render incoming tokens.
@@ -299,7 +299,7 @@ export async function* streamChat(
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A mock SSE endpoint for development</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A mock SSE endpoint for development</h3>
 
         <p>
           Rather than depend on a running Spring Boot server while you&apos;re building the React side,
@@ -463,14 +463,14 @@ export async function POST() {
       {/* PART 3: useStreamingChat                                            */}
       {/* ================================================================= */}
       <section id="use-streaming-chat">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — The <code>useStreamingChat</code> hook</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — The <code>useStreamingChat</code> hook</h2>
 
         <p>
           The async generator is the engine. The hook is the dashboard the rest of your app talks to.
           We want it to:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>Hold a list of messages (user + assistant)</li>
           <li>Expose a <code>send(text)</code> function</li>
           <li>Track a status: <code>idle</code> / <code>streaming</code> / <code>error</code></li>
@@ -478,7 +478,7 @@ export async function POST() {
           <li>Append tokens to the in-flight assistant message as they arrive</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The state shape</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The state shape</h3>
 
         <CodeBlock lang="plain">{`// useStreamingChat.ts
 import { useCallback, useRef, useState } from "react";
@@ -566,9 +566,9 @@ export function useStreamingChat() {
   return { messages, status, error, send, stop };
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Five things this hook gets right</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Five things this hook gets right</h3>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Single source of truth for both messages.</strong>{" "}The user message and the
             in-flight assistant message both go into <code>messages</code> immediately. No separate
@@ -603,7 +603,7 @@ export function useStreamingChat() {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Using the hook</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Using the hook</h3>
 
         <CodeBlock lang="plain">{`// ChatExample.tsx
 import { useStreamingChat } from "./useStreamingChat";
@@ -691,7 +691,7 @@ export function ChatExample() {
       {/* PART 4: OPTIMISTIC UI & TOOL RESULTS                                */}
       {/* ================================================================= */}
       <section id="optimistic-tools">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Optimistic UI &amp; tool results</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Optimistic UI &amp; tool results</h2>
 
         <p>
           The basics are working. Now let&apos;s deal with the realities: the assistant doesn&apos;t
@@ -699,7 +699,7 @@ export function ChatExample() {
           happening. Streams also drop. We need to handle both.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Surfacing tool calls live</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Surfacing tool calls live</h3>
 
         <p>
           When the model calls a tool, your backend sees something like:
@@ -771,7 +771,7 @@ export type Message =
           of the output.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A <code>&lt;StreamingMessage&gt;</code> component</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A <code>&lt;StreamingMessage&gt;</code> component</h3>
 
         <CodeBlock lang="plain">{`// StreamingMessage.tsx
 import type { Message, MessagePart } from "./useStreamingChat";
@@ -805,7 +805,7 @@ function Part({ part }: { part: MessagePart }) {
   );
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Auto-scroll: harder than it looks</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Auto-scroll: harder than it looks</h3>
 
         <p>
           Every chat UI wants to auto-scroll as new tokens land. But you can&apos;t just scroll on every
@@ -840,7 +840,7 @@ export function useAutoScroll<T>(dep: T) {
           scrolling back down rejoins the live stream.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Recovering from dropped streams</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Recovering from dropped streams</h3>
 
         <p>
           Streams can fail mid-flight. WiFi drops, the server crashes, a load balancer kills an idle
@@ -849,7 +849,7 @@ export function useAutoScroll<T>(dep: T) {
 
         <p>Three useful behaviors:</p>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Mark the assistant message as failed but keep what arrived.</strong>{" "}Don&apos;t
             erase content. Show an inline &quot;⚠ stream interrupted&quot; below it.
@@ -946,7 +946,7 @@ export function useAutoScroll<T>(dep: T) {
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: chat UI component library</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: chat UI component library</h2>
 
         <p>
           Build a small, reusable chat UI library. Three components, one hook, one mock endpoint.
@@ -954,9 +954,9 @@ export function useAutoScroll<T>(dep: T) {
           in five lines.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Project scope</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Project scope</h3>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Hook:</strong> <code>useStreamingChat</code> — the one from Part 3, extended with the parts model from Part 4.</li>
           <li><strong>Component:</strong> <code>&lt;StreamingMessage&gt;</code> — renders one message, handles text + tool parts.</li>
           <li><strong>Component:</strong> <code>&lt;MessageList&gt;</code> — renders an array of messages with <code>useAutoScroll</code>.</li>
@@ -965,7 +965,7 @@ export function useAutoScroll<T>(dep: T) {
           <li><strong>Demo page:</strong> <code>app/chat-demo/page.tsx</code> — wires it all together; this is your manual test bed.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Setup</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Setup</h3>
 
         <CodeBlock lang="plain">{`npx create-next-app@latest chat-ui-lab --typescript --app --no-tailwind
 cd chat-ui-lab
@@ -975,7 +975,7 @@ mkdir -p src/app/chat-demo`}</CodeBlock>
 
         <p>(Tailwind optional — the components should be unstyled enough that consumers can theme them.)</p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Mock endpoint with one tool call</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Mock endpoint with one tool call</h3>
 
         <p>
           The mock should emit a tool call halfway through the stream so you can see your tool-rendering
@@ -1012,7 +1012,7 @@ export async function POST() {
   });
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Demo page (the manual test)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Demo page (the manual test)</h3>
 
         <CodeBlock lang="plain">{`// app/chat-demo/page.tsx
 "use client";
@@ -1037,11 +1037,11 @@ export default function ChatDemo() {
   );
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Acceptance criteria</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Acceptance criteria</h3>
 
         <p>You&apos;ve shipped this when:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>Tokens appear in the UI within ~100ms of the mock starting to emit them.</li>
           <li>The tool-call appears as a styled badge with a &quot;running&quot; → &quot;done&quot; transition.</li>
           <li>Clicking <strong>Stop</strong>{" "}mid-stream keeps the partial assistant content and re-enables the input.</li>
@@ -1050,9 +1050,9 @@ export default function ChatDemo() {
           <li>The components have no styling tied to the demo page; they&apos;re drop-in usable elsewhere.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Markdown rendering</strong> — use <code>react-markdown</code> with safe defaults to render the text parts.</li>
           <li><strong>Code block syntax highlighting</strong> — your AI is going to emit a lot of code. Make it readable.</li>
           <li><strong>Continue button</strong>{" "}on errored messages, as in Part 4.</li>
@@ -1072,7 +1072,7 @@ export default function ChatDemo() {
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final check"
@@ -1145,11 +1145,11 @@ export default function ChatDemo() {
       </section>
 
       {/* FOOTER NAV */}
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
-        <Link href="/courses/ai/modules/rag-spring" className="text-slate-600 dark:text-slate-400 hover:text-sky-600">
+      <footer className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
+        <Link href="/courses/ai/modules/rag-spring" className="text-slate-600 hover:text-sky-600 dark:text-slate-400">
           ← Module 18: RAG in Spring Boot
         </Link>
-        <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline font-semibold">
+        <Link href="/courses/ai/modules/chat-interface" className="font-semibold text-sky-600 hover:underline">
           Module 21: Full chat interface →
         </Link>
       </footer>

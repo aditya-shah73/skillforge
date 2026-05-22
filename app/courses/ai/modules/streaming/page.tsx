@@ -41,21 +41,21 @@ sequenceDiagram
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Streaming with Server-Sent Events
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Token-by-token from Claude → Spring Boot → the browser. The UX upgrade users notice instantly.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="streaming" />
@@ -70,7 +70,7 @@ sequenceDiagram
 
       {/* ===================== Part 1 ===================== */}
       <section id="why-stream">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 1 — Why stream at all</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 1 — Why stream at all</h2>
 
         <p>
           Time-to-first-token vs. time-to-completion. They&apos;re wildly different. With <code>.call()</code> they look identical to the user — both are the same wait. With streaming you collapse <em>perceived</em>{" "}latency to the time-to-first-token, while total generation time stays the same.
@@ -85,8 +85,8 @@ sequenceDiagram
           Users perceive the streamed version as <strong>3-5x faster</strong>{" "}in usability studies, even though total generation is unchanged. The cost of <em>not</em>{" "}streaming a chat UI is a product that feels broken next to a competitor that does stream.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">When NOT to stream</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">When NOT to stream</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Structured output (<code>.entity()</code>)</strong> — you can&apos;t parse partial JSON safely. Wait for the full response.</li>
           <li><strong>Tool use loops</strong> — intermediate tool calls happen mid-stream and complicate the UI. Stream only the final natural-language response, or use a richer protocol.</li>
           <li><strong>Server-side processing</strong> — if you&apos;re going to embed/index/post-process the reply, just call and wait. Streaming buys you nothing.</li>
@@ -125,14 +125,14 @@ sequenceDiagram
 
       {/* ===================== Part 2 ===================== */}
       <section id="sse-mechanics">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 2 — SSE mechanics</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 2 — SSE mechanics</h2>
 
         <p>
           You have three real choices for streaming server → browser: <strong>Server-Sent Events (SSE)</strong>, <strong>WebSockets</strong>, and <strong>chunked HTTP</strong>. For LLM streaming, SSE is almost always the right answer.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">SSE in 30 seconds</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">SSE in 30 seconds</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li>It&apos;s plain HTTP — works through firewalls, proxies, CDNs, no upgrade dance.</li>
           <li>One-way, server → client. (LLM responses are one-way — perfect fit.)</li>
           <li>The server sets <code>Content-Type: text/event-stream</code> and writes lines like <code>data: hello\n\n</code>.</li>
@@ -164,7 +164,7 @@ data: {"totalTokens": 412}
 
         <Mermaid chart={flowDiagram} />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Why not WebSockets?</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Why not WebSockets?</h3>
         <p>
           WebSockets are bidirectional, which is overkill for streaming a response. They require an upgrade handshake, don&apos;t play as nicely with HTTP middleware, and you have to handle reconnection yourself. <strong>Use WebSockets when both directions need to push data live</strong> (collaborative editing, multiplayer games). For LLM responses, SSE is simpler in every way.
         </p>
@@ -202,7 +202,7 @@ data: {"totalTokens": 412}
 
       {/* ===================== Part 3 ===================== */}
       <section id="spring-flux">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 3 — Spring AI <code>.stream()</code> &amp; Flux</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 3 — Spring AI <code>.stream()</code> &amp; Flux</h2>
 
         <p>
           Spring AI&apos;s streaming API mirrors the call API. Where <code>.call()</code> returns a <code>ChatResponse</code> (or <code>String</code> via <code>.content()</code>), <code>.stream()</code> returns a <strong>reactive <code>Flux</code></strong> — a stream of zero-or-more values produced asynchronously.
@@ -223,7 +223,7 @@ Flux<ChatResponse> responses = chatClient.prompt()
 // Subscribe and print to stdout
 chunks.subscribe(System.out::print);`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Flux in 60 seconds</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Flux in 60 seconds</h3>
         <p>
           A <code>Flux&lt;T&gt;</code> is from Project Reactor (Spring&apos;s reactive library). Think of it as a lazy, async <code>Stream&lt;T&gt;</code> — you describe operations on it, and they don&apos;t run until something subscribes.
         </p>
@@ -245,7 +245,7 @@ Mono<String> fullText = chunks.collect(Collectors.joining());
 // Block and get the full reply (anti-pattern in a controller, fine for tests)
 String full = chunks.collect(Collectors.joining()).block();`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Returning a Flux from a Spring controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Returning a Flux from a Spring controller</h3>
         <p>
           This is where it all clicks. Spring WebFlux and Spring MVC both let you <strong>return a <code>Flux</code> directly</strong>{" "}from a controller method, and Spring serializes it as SSE for you:
         </p>
@@ -305,7 +305,7 @@ public class StoryController {
 
       {/* ===================== Part 4 ===================== */}
       <section id="browser-side">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 4 — Consuming SSE in the browser</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 4 — Consuming SSE in the browser</h2>
 
         <p>
           The browser side is one built-in API: <code>EventSource</code>. No library needed.
@@ -331,7 +331,7 @@ es.onerror = (err) => {
           <code>onmessage</code> handles unnamed events (the <code>data: ...</code> lines from the default Spring serialization). The named <code>&quot;done&quot;</code> listener only fires if your server explicitly emits an SSE frame with <code>event: done</code> — Spring won&apos;t do this automatically when you return <code>Flux&lt;String&gt;</code>. If you want a terminal signal, return <code>Flux&lt;ServerSentEvent&lt;String&gt;&gt;</code> on the server and emit one with <code>.event(&quot;done&quot;)</code> after the stream completes; otherwise just rely on <code>onerror</code> + closing on stream end.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">React patterns (preview — Phase 4 covers this in depth)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">React patterns (preview — Phase 4 covers this in depth)</h3>
         <CodeBlock lang="plain" caption="Bare-bones React hook for streamed text">{`function useStream(url) {
   const [text, setText] = useState("");
   const [done, setDone] = useState(false);
@@ -350,7 +350,7 @@ es.onerror = (err) => {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="EventSource gotchas">
-          <ul className="list-disc pl-6 space-y-1 mt-2">
+          <ul className="mt-2 list-disc space-y-1 pl-6">
             <li><strong>Only GET</strong> — no POST. If your prompt is too long for a query string, either gzip-encode it or use the streaming variant of <code>fetch</code> with a <code>ReadableStream</code> reader instead.</li>
             <li><strong>No custom headers</strong> — including <code>Authorization</code>. Browsers ship with this limit. Workaround: cookies, or use <code>fetch</code> + manual SSE parsing.</li>
             <li><strong>Auto-reconnects on disconnect</strong> — usually a feature, but for one-shot generations it can re-fire your prompt. Always <code>es.close()</code> on completion.</li>
@@ -384,45 +384,45 @@ es.onerror = (err) => {
 
       {/* ===================== Part 5: Project ===================== */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 5 — Project: Live story generator</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5 — Project: Live story generator</h2>
 
         <p>
           A web endpoint that streams a short story about whatever topic you give it, plus a one-page HTML client to watch it stream live in your browser. End-to-end: Claude → Spring → SSE → browser.
         </p>
 
         <Callout variant="spring" title="What you'll build">
-          <ul className="list-disc pl-6 space-y-1 mt-2">
+          <ul className="mt-2 list-disc space-y-1 pl-6">
             <li>A <code>StoryController</code> with <code>GET /story/stream?topic=...</code> returning <code>Flux&lt;String&gt;</code>.</li>
             <li>A second endpoint <code>GET /</code> that serves a tiny HTML page with the EventSource client.</li>
             <li>(Optional) <code>doOnNext</code> logging so you can watch chunks roll past in your console.</li>
           </ul>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 1 — Scaffold</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 1 — Scaffold</h3>
         <Callout variant="info" title="Path A — Browser (start.spring.io)">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li>Open the <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=story-stream&name=story-stream&description=Streaming%20story%20generator&packageName=com.example.story&dependencies=spring-ai-anthropic,web" target="_blank" rel="noreferrer">pre-filled link</a> (note: this one includes <strong>Spring Web</strong>{" "}in addition to Anthropic — we&apos;re running an HTTP server now).</li>
             <li>Click <strong>GENERATE</strong>, unzip to <code>~/code/story-stream</code>.</li>
           </ol>
         </Callout>
 
         <Callout variant="info" title="Path B — IntelliJ Initializr">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li><strong>File → New → Project → Spring Initializr</strong>. Group <code>com.example</code>, Artifact <code>story-stream</code>, Maven, Java 21, Jar.</li>
             <li>In Dependencies pick <strong>Spring Web</strong>{" "}AND <strong>Anthropic (Spring AI)</strong>.</li>
             <li>Finish.</li>
           </ol>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 2 — Verify scaffold</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2 — Verify scaffold</h3>
         <CodeBlock lang="plain">{`cd ~/code/story-stream
 ./mvnw -version
 ls src/main/java/com/example/story/`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 3 — Set API key</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3 — Set API key</h3>
         <CodeBlock lang="plain">{`export ANTHROPIC_API_KEY="sk-ant-..."`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 4 — application.properties</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4 — application.properties</h3>
         <CodeBlock lang="plain" caption="src/main/resources/application.properties">{`spring.application.name=story-stream
 server.port=8080
 
@@ -431,7 +431,7 @@ spring.ai.anthropic.chat.options.model=claude-sonnet-4-5
 spring.ai.anthropic.chat.options.max-tokens=512
 spring.ai.anthropic.chat.options.temperature=0.9`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 5 — The streaming controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5 — The streaming controller</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/story/StoryController.java">{`package com.example.story;
 
 import org.slf4j.Logger;
@@ -476,7 +476,7 @@ public class StoryController {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 6 — Static HTML client</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6 — Static HTML client</h3>
         <p>
           Drop a single HTML file in <code>src/main/resources/static/index.html</code>. Spring Boot serves anything in <code>static/</code> at the root URL by default.
         </p>
@@ -519,7 +519,7 @@ public class StoryController {
 </body>
 </html>`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 7 — Run it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7 — Run it</h3>
         <CodeBlock lang="plain">{`./mvnw spring-boot:run`}</CodeBlock>
 
         <p className="mt-3">Then open <a className="text-indigo-600 hover:underline" href="http://localhost:8080" target="_blank" rel="noreferrer">http://localhost:8080</a>. Type a topic and hit Generate — words should start appearing within ~300ms and continue rolling for 5-10 seconds.</p>
@@ -538,7 +538,7 @@ data:  time
 ... (etc)`}</CodeBlock>
 
         <Callout variant="warn" title="Common errors & fixes">
-          <ul className="list-disc pl-6 space-y-2 mt-2">
+          <ul className="mt-2 list-disc space-y-2 pl-6">
             <li><strong>Browser shows the whole story at once</strong> — buffering. Test with <code>curl -N</code>; if curl streams but browser doesn&apos;t, suspect compression or proxy. Locally on <code>localhost</code> this should always work; if it doesn&apos;t, check that you returned <code>Flux&lt;String&gt;</code> (not <code>Mono&lt;String&gt;</code> or a collected <code>String</code>).</li>
             <li><strong>EventSource fires &quot;error&quot; immediately</strong> — usually a 500 from the backend. Check the Spring console for the real exception.</li>
             <li><strong>404 on /story/stream</strong> — make sure your controller is in a package under <code>com.example.story</code> so Spring component-scans it. Default package or wrong package = no auto-discovery.</li>
@@ -555,7 +555,7 @@ data:  time
 
       {/* ===================== Part 6: Final Quiz ===================== */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final quiz"
@@ -624,7 +624,7 @@ data:  time
         </Checkpoint>
       </section>
 
-      <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
+      <div className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
         <Link href="/courses/ai/modules/tool-use" className="text-indigo-600 hover:underline">← Module 11: Tool use</Link>
         <Link href="/courses/ai/modules/prompt-caching" className="text-indigo-600 hover:underline">Module 13: Prompt caching →</Link>
       </div>

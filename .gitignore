@@ -13,6 +13,15 @@
 # testing
 /coverage
 
+# playwright — snapshots live in tests/**/__screenshots__/ and ARE committed
+# (they're our visual-regression baseline). Everything else is run output:
+#   test-results/   — diff PNGs and traces from failing runs
+#   playwright-report/ — HTML report (regenerated each run)
+#   playwright/.cache/ — browser binaries cache
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
 # next.js
 /.next/
 /out/

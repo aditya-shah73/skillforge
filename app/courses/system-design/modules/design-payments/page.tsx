@@ -38,19 +38,19 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
       </header>
       <BookmarkButton courseId="system-design" moduleSlug="design-payments" />
 
@@ -400,7 +400,7 @@ public ResponseEntity<Void> stripeWebhook(
         />
       </Checkpoint>
 
-      <section className="my-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+      <section className="my-12 border-t border-slate-200 pt-8 dark:border-slate-800">
         <h2>Course wrap</h2>
         <p>
           That&apos;s the case-study arc. From URL shorteners to payments, the pattern repeats: identify the dominant pressure, pick

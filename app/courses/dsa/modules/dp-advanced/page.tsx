@@ -116,13 +116,13 @@ flowchart TD
       <ModuleProgress moduleSlug="dp-advanced" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 7 · Module 35 · Closeout
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~2–2.5h · ends with Phase 7 wrap-up</p>
       </div>
@@ -993,8 +993,8 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/30 dark:to-pink-950/30 border border-fuchsia-200 dark:border-fuchsia-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Phase 7 complete · Dynamic Programming</h3>
+        <div className="not-prose mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-6 dark:border-fuchsia-800/40 dark:from-fuchsia-950/30 dark:to-pink-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Phase 7 complete · Dynamic Programming</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Four modules, five state shapes. From &quot;DP intuition&quot; (memoize the recursion) to 1D, 2D,
             interval, tree, and bitmask DP. You can now reach for the right family from the shape of the input —
@@ -1003,23 +1003,23 @@ answer: min over i != 0 of (dp[FULL][i] + dist[i][0])
           </p>
           <Link
             href="/courses/dsa"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Back to the course outline →
           </Link>
         </div>
 
-        <div className="not-prose mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40">
-          <p className="text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 font-semibold">Up next · Phase 8 · Module 37</p>
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mt-1 mb-2">Tries</h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+        <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-6 dark:border-amber-800 dark:from-amber-950/40 dark:to-orange-950/40">
+          <p className="text-xs font-semibold tracking-wider text-amber-700 uppercase dark:text-amber-300">Up next · Phase 8 · Module 37</p>
+          <h3 className="mt-1 mb-2 text-xl font-semibold text-slate-900 dark:text-slate-100">Tries</h3>
+          <p className="mb-4 text-sm text-slate-600 dark:text-slate-400">
             The prefix-tree structure for string problems. When a hashmap of strings is good but a trie is great:
             autocomplete, prefix-search, word-search, and the &quot;all words sharing a prefix in O(prefix
             length)&quot; superpower.
           </p>
           <Link
             href="/courses/dsa/modules/tries"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Tries →
           </Link>

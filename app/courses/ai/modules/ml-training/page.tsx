@@ -28,19 +28,19 @@ export default function MLTrainingModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">How models actually learn</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">How models actually learn</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Gradient descent, learning rate, overfitting, evaluation — the loop that turns data into weights.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="ml-training" />
@@ -48,23 +48,23 @@ export default function MLTrainingModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🎯</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Module 2 gave you a model that can <em>predict</em>{" "}and a loss that can <em>score</em>. This module is the missing middle:
           the thing that takes bad weights and makes them good. By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Derive <strong>gradient descent</strong>{" "}by hand and explain why the minus sign is there.</li>
           <li>Diagnose a <strong>learning-rate</strong>{" "}disaster from a loss curve alone.</li>
           <li>Tell <strong>overfitting</strong>{" "}apart from <strong>underfitting</strong>{" "}on sight.</li>
           <li>Pick the right <strong>metric</strong> (RMSE vs accuracy vs F1) for a problem you&apos;ve never seen.</li>
           <li>Finish your Java linear-regression project — now it <em>trains itself</em>.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           Same deal as before: orange &quot;Confidence check&quot; boxes appear where implementing-from-scratch
           is the real skill. Don&apos;t skip them.
         </p>
@@ -109,7 +109,7 @@ export default function MLTrainingModule() {
           For each weight <code>w</code>, the update rule is:
         </p>
 
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           Don&apos;t panic at the symbols. <code>∂L / ∂w</code> just means &quot;how does the loss change if I nudge this one weight a tiny bit?&quot; — a slope. The funny <code>∂</code> is the same idea as a derivative <code>d/dx</code>, except we have many weights so we use partials.
         </p>
 
@@ -149,7 +149,7 @@ where:
 
         <GradientBowl />
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 italic">
+        <p className="text-xs text-slate-500 italic dark:text-slate-400">
           Notice: steps are <em>big</em>{" "}at the sides (steep slope → big gradient → big step) and <em>tiny</em>{" "}near the bottom (shallow slope → small gradient → small step).
           The algorithm self-corrects. That&apos;s a huge deal.
         </p>
@@ -198,7 +198,7 @@ L = (−1.0)²  =  1.0`}
        = 2 · (−1.0) · 4
        = −8.0`}
                   </CodeBlock>
-                  <p className="m-0 mb-2 text-xs italic text-slate-600 dark:text-slate-400">
+                  <p className="m-0 mb-2 text-xs text-slate-600 italic dark:text-slate-400">
                     That was the chain rule in action — the trick of breaking a derivative into &quot;outer × inner&quot;. You don&apos;t need to derive this by hand in real code; PyTorch and TensorFlow do it for you automatically (it&apos;s called <strong>autograd</strong>). But seeing it once helps the rest stop feeling like magic.
                   </p>
                   <p className="m-0 text-xs italic">
@@ -238,31 +238,31 @@ L = (−1.0)²  =  1.0`}
           In the worked example we used <em>one</em>{" "}data point to compute the gradient. In real training, you have a choice:
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">Batch GD</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">Batch GD</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Compute the gradient using <em>all</em>{" "}training examples, average them, then take one step.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Most accurate gradient, but slow on big datasets. Each step touches every example.
             </p>
           </div>
-          <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-4 text-sm">
-            <div className="font-bold text-amber-900 dark:text-amber-200 mb-1">Stochastic GD (SGD)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm dark:border-amber-800 dark:bg-amber-950/40">
+            <div className="mb-1 font-bold text-amber-900 dark:text-amber-200">Stochastic GD (SGD)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               One example at a time. Step after every single one.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Very fast per step, but noisy — path zig-zags down the hill.
             </p>
           </div>
-          <div className="rounded-xl border border-violet-300 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/40 p-4 text-sm">
-            <div className="font-bold text-violet-900 dark:text-violet-200 mb-1">Mini-batch GD</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
+            <div className="mb-1 font-bold text-violet-900 dark:text-violet-200">Mini-batch GD</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               A small batch (32, 64, 256) per step. The sweet spot.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               What everyone actually does. GPU-friendly, decent gradient estimate, fast.
             </p>
           </div>
@@ -324,31 +324,31 @@ L = (−1.0)²  =  1.0`}
 
         <h3>The three failure modes (and the Goldilocks zone)</h3>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-1">Too small (e.g. 0.0001)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">Too small (e.g. 0.0001)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Loss drops — but painfully slowly. Hours of training to reach what a better η gets in minutes.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Curve: a gentle, almost-flat glide downward that never seems to stop dropping.
             </p>
           </div>
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">Goldilocks (e.g. 0.01)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">Goldilocks (e.g. 0.01)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Loss drops sharply at first, then plateaus as the model converges.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Curve: classic &quot;elbow&quot; shape — steep early, flat later. This is what you want.
             </p>
           </div>
-          <div className="rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 p-4 text-sm">
-            <div className="font-bold text-rose-900 dark:text-rose-200 mb-1">Too big (e.g. 1.0)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/40">
+            <div className="mb-1 font-bold text-rose-900 dark:text-rose-200">Too big (e.g. 1.0)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Loss oscillates or explodes. You overshoot the minimum every step — or worse, each step lands further uphill than the last.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Curve: bouncing up and down, or marching upward to NaN.
             </p>
           </div>
@@ -461,31 +461,31 @@ L = (−1.0)²  =  1.0`}
 
         <h3>Underfitting, good fit, overfitting — a visual</h3>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-1">Underfit (high bias)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">Underfit (high bias)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Model is too simple to capture the pattern. Think: fitting a straight line to data that&apos;s obviously curvy.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Symptom: train loss is BAD and test loss is BAD. Both ~equally bad.
             </p>
           </div>
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">Good fit</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">Good fit</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Model captures the real signal but ignores the noise. Generalizes.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Symptom: train loss is LOW and test loss is LOW — and they&apos;re close to each other.
             </p>
           </div>
-          <div className="rounded-xl border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 p-4 text-sm">
-            <div className="font-bold text-rose-900 dark:text-rose-200 mb-1">Overfit (high variance)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/40">
+            <div className="mb-1 font-bold text-rose-900 dark:text-rose-200">Overfit (high variance)</div>
+            <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
               Model is so flexible it memorizes the training points, including the noise.
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400 italic">
+            <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Symptom: train loss is VERY LOW, test loss is HIGH. BIG GAP between them.
             </p>
           </div>
@@ -546,7 +546,7 @@ L = (−1.0)²  =  1.0`}
                     Train loss: 0.8. Test loss on 100 new points: 0.85.
                     The two numbers are close, and neither is zero — the model is slightly underfit (it can&apos;t hit exactly because of the noise), but the gap is tiny.
                   </p>
-                  <p className="m-0 italic text-xs">This is the healthy case.</p>
+                  <p className="m-0 text-xs italic">This is the healthy case.</p>
                 </>
               ),
             },
@@ -558,7 +558,7 @@ L = (−1.0)²  =  1.0`}
                     Train loss: 0.01. Test loss: 47.3.
                     The wiggly curve wraps through every training point exactly — that&apos;s why train loss is near zero. But on new data, it predicts wildly — the wiggles match <em>noise</em>, not signal.
                   </p>
-                  <p className="m-0 italic text-xs">This is overfitting. The low train loss lied to you.</p>
+                  <p className="m-0 text-xs italic">This is overfitting. The low train loss lied to you.</p>
                 </>
               ),
             },
@@ -570,7 +570,7 @@ L = (−1.0)²  =  1.0`}
                     Train loss: 24. Test loss: 25.
                     The model just predicts the mean of y — it can&apos;t capture any slope at all.
                   </p>
-                  <p className="m-0 italic text-xs">This is underfitting. Both losses are high, and close.</p>
+                  <p className="m-0 text-xs italic">This is underfitting. Both losses are high, and close.</p>
                 </>
               ),
             },
@@ -646,7 +646,7 @@ L = (−1.0)²  =  1.0`}
               <p className="mb-2"><strong>Explain in 2 minutes:</strong>{" "}What&apos;s overfitting, what&apos;s underfitting, and how do you tell them apart?</p>
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
-                <p className="text-xs mt-2">
+                <p className="mt-2 text-xs">
                   A model <em>underfits</em>{" "}when it&apos;s too simple to capture the real pattern — both train and test loss are bad, and about equal.
                   It <em>overfits</em>{" "}when it&apos;s so flexible it memorizes the training data including noise — train loss is near zero but test loss is high. The telltale signal is the <em>gap</em>: underfit has no gap, overfit has a huge one.
                   Bias is error from being too simple; variance is error from being too sensitive to which training examples you happened to get. The trade-off is that lowering one usually raises the other.
@@ -667,7 +667,7 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
               </CodeBlock>
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
-                <p className="text-xs mt-2">
+                <p className="mt-2 text-xs">
                   Overfitting — badly. Train and val tracked together through epoch 10, then train kept dropping while val <em>rose</em>.
                   By epoch 50 there&apos;s a 4× gap. Early stopping around epoch 10–15 would have shipped the best model. You&apos;d also consider reducing model capacity or adding regularization.
                 </p>
@@ -693,7 +693,7 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
     return "OK";
 }`}
                 </CodeBlock>
-                <p className="text-xs mt-2 italic">
+                <p className="mt-2 text-xs italic">
                   The thresholds are judgment calls — &quot;high&quot; and &quot;big&quot; depend on your problem&apos;s scale. In practice you&apos;d compare <em>relative</em>{" "}gap
                   (gap / trainLoss) and set thresholds from a baseline, not hardcoded numbers.
                 </p>
@@ -730,31 +730,31 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
 
         <h3>Regression metrics</h3>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-1">RMSE (Root Mean Square Error)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300 font-mono">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-1 font-bold text-emerald-900 dark:text-emerald-200">RMSE (Root Mean Square Error)</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               sqrt(MSE) = sqrt(mean((y − ŷ)²))
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Same units as y. If y is dollars, RMSE is dollars. Penalizes big errors more than small ones.
             </p>
           </div>
-          <div className="rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-1">MAE (Mean Absolute Error)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300 font-mono">
+          <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">MAE (Mean Absolute Error)</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               mean(|y − ŷ|)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Same units as y. Treats all errors linearly — a 1000-off is exactly 1000× worse than a 1-off.
             </p>
           </div>
-          <div className="rounded-xl border border-violet-300 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/40 p-4 text-sm">
-            <div className="font-bold text-violet-900 dark:text-violet-200 mb-1">R² (coefficient of determination)</div>
-            <p className="text-xs m-0 mb-2 text-slate-700 dark:text-slate-300 font-mono">
+          <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
+            <div className="mb-1 font-bold text-violet-900 dark:text-violet-200">R² (coefficient of determination)</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               1 − (SS_res / SS_tot)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Unitless, between −∞ and 1. &quot;1.0 = perfect, 0 = no better than predicting the mean.&quot;
             </p>
           </div>
@@ -824,7 +824,7 @@ R² = 1 − SS_res/SS_tot
    = 1 − 0.075
    = 0.925`}
                   </CodeBlock>
-                  <p className="text-xs italic mt-2 m-0">
+                  <p className="m-0 mt-2 text-xs italic">
                     R² = 0.925 means our model explains about 92.5% of the variance in y. Baseline (predicting the mean) would give R² = 0. Perfect predictions give R² = 1.
                   </p>
                 </>
@@ -873,20 +873,20 @@ R² = 1 − SS_res/SS_tot
           Every binary prediction falls into one of four buckets:
         </p>
 
-        <div className="grid grid-cols-2 gap-2 my-4 not-prose max-w-md">
-          <div className="rounded border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 p-3 text-xs">
+        <div className="not-prose my-4 grid max-w-md grid-cols-2 gap-2">
+          <div className="rounded border border-emerald-300 bg-emerald-50 p-3 text-xs dark:bg-emerald-950/40">
             <div className="font-bold">TP — True Positive</div>
             <div>Predicted fraud, actually fraud. ✓</div>
           </div>
-          <div className="rounded border border-rose-300 bg-rose-50 dark:bg-rose-950/40 p-3 text-xs">
+          <div className="rounded border border-rose-300 bg-rose-50 p-3 text-xs dark:bg-rose-950/40">
             <div className="font-bold">FP — False Positive</div>
             <div>Predicted fraud, actually legit. False alarm.</div>
           </div>
-          <div className="rounded border border-rose-300 bg-rose-50 dark:bg-rose-950/40 p-3 text-xs">
+          <div className="rounded border border-rose-300 bg-rose-50 p-3 text-xs dark:bg-rose-950/40">
             <div className="font-bold">FN — False Negative</div>
             <div>Predicted legit, actually fraud. The miss.</div>
           </div>
-          <div className="rounded border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 p-3 text-xs">
+          <div className="rounded border border-emerald-300 bg-emerald-50 p-3 text-xs dark:bg-emerald-950/40">
             <div className="font-bold">TN — True Negative</div>
             <div>Predicted legit, actually legit. ✓</div>
           </div>
@@ -896,31 +896,31 @@ R² = 1 − SS_res/SS_tot
           From those four numbers you derive the real metrics:
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-4 not-prose">
-          <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-4 text-sm">
-            <div className="font-bold text-amber-900 dark:text-amber-200 mb-1">Precision</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm dark:border-amber-800 dark:bg-amber-950/40">
+            <div className="mb-1 font-bold text-amber-900 dark:text-amber-200">Precision</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               TP / (TP + FP)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               &quot;When I said fraud, was it actually fraud?&quot; Punishes false alarms.
             </p>
           </div>
-          <div className="rounded-xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-1">Recall (a.k.a. sensitivity)</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">Recall (a.k.a. sensitivity)</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               TP / (TP + FN)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               &quot;Of all the real fraud, how much did I catch?&quot; Punishes misses.
             </p>
           </div>
-          <div className="rounded-xl border border-violet-300 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/40 p-4 text-sm">
-            <div className="font-bold text-violet-900 dark:text-violet-200 mb-1">F1 score</div>
-            <p className="text-xs m-0 mb-2 font-mono text-slate-700 dark:text-slate-300">
+          <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
+            <div className="mb-1 font-bold text-violet-900 dark:text-violet-200">F1 score</div>
+            <p className="m-0 mb-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               2·P·R / (P+R)
             </p>
-            <p className="text-xs m-0 text-slate-600 dark:text-slate-400">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Harmonic mean of precision and recall. One number, when both matter and you can&apos;t trade off.
             </p>
           </div>
@@ -1007,7 +1007,7 @@ is the expensive part.`}
    = 0.64 / 1.20
    ≈ 0.53    → 53%`}
                   </CodeBlock>
-                  <p className="text-xs italic m-0 mt-2">
+                  <p className="m-0 mt-2 text-xs italic">
                     F1 weights a low precision-OR-low-recall harshly (harmonic mean is like that). An F1 of 0.53 is a more honest number than &quot;98.6% accuracy&quot;.
                   </p>
                 </>
@@ -1050,7 +1050,7 @@ is the expensive part.`}
               <p className="mb-2"><strong>Explain in 2 minutes:</strong>{" "}I give you a new classification problem. Walk me through how you&apos;d decide between accuracy, precision, recall, and F1.</p>
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
-                <div className="text-xs mt-2 space-y-2">
+                <div className="mt-2 space-y-2 text-xs">
                   <p>
                     First: is the dataset balanced? If yes (~50/50), accuracy is fine as a rough read. If no, accuracy is dangerous — a model that always predicts the majority class will score high.
                   </p>
@@ -1082,7 +1082,7 @@ is the expensive part.`}
               </CodeBlock>
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
-                <p className="text-xs mt-2">
+                <p className="mt-2 text-xs">
                   Precision. TP over (TP + FP) — &quot;of the ones I flagged as positive, how many were actually positive?&quot;
                   It never looks at FN, so it doesn&apos;t care about misses. That&apos;s the signature of precision vs recall.
                 </p>
@@ -1109,7 +1109,7 @@ is the expensive part.`}
     return 2.0 * precision * recall / (precision + recall);
 }`}
                 </CodeBlock>
-                <p className="text-xs mt-2 italic">
+                <p className="mt-2 text-xs italic">
                   The <code>tp == 0</code> guard handles the degenerate case where both precision and recall are zero (would otherwise be 0/0).
                 </p>
               </details>
@@ -1168,7 +1168,7 @@ touch TrainingRunner.java`}
 
         <h3>Step 2 — the code (three files)</h3>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 italic">
+        <p className="text-xs text-slate-500 italic dark:text-slate-400">
           Paste these in. Compile with <code>javac *.java</code>, run with <code>java TrainingRunner</code>. You should see the loss drop over ~500 iterations and a final RMSE and R² printed at the end.
         </p>
 
@@ -1614,16 +1614,16 @@ b -= learningRate * gradB;`}
           xp={15}
         />
 
-        <div className="not-prose my-8 rounded-2xl border-2 border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 p-6">
-          <div className="flex items-center gap-2 mb-3">
+        <div className="not-prose my-8 rounded-2xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-teal-950/40">
+          <div className="mb-3 flex items-center gap-2">
             <span className="text-2xl">🎓</span>
-            <h3 className="font-bold text-lg m-0">Module 3 done.</h3>
+            <h3 className="m-0 text-lg font-bold">Module 3 done.</h3>
           </div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
             You can now describe <em>everything</em>{" "}that happens when a linear model trains — the data, the forward pass, the loss, the gradient, the update, the evaluation.
             You have a working Java implementation of all of it. When you see &quot;training&quot; in any ML library from this point on, you&apos;ll recognize the moving parts.
           </p>
-          <p className="text-sm text-slate-700 dark:text-slate-300 m-0">
+          <p className="m-0 text-sm text-slate-700 dark:text-slate-300">
             Next up: <strong>neural networks</strong>. The twist is that there are more weights, arranged in <em>layers</em>, with nonlinear activations between them — and the gradient has to be
             propagated backward through all of them. But the outer loop is the same loop you just wrote.
           </p>
@@ -1631,17 +1631,17 @@ b -= learningRate * gradB;`}
       </section>
       </Checkpoint>
 
-      <footer className="not-prose mt-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-6">
-        <div className="text-xs uppercase tracking-wider opacity-80 mb-1">Up next</div>
-        <h3 className="text-xl font-bold mb-2">Module 4: Neural networks</h3>
-        <p className="text-sm opacity-90 mb-4">
+      <footer className="not-prose mt-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 p-6 text-white">
+        <div className="mb-1 text-xs tracking-wider uppercase opacity-80">Up next</div>
+        <h3 className="mb-2 text-xl font-bold">Module 4: Neural networks</h3>
+        <p className="mb-4 text-sm opacity-90">
           More weights, arranged in layers, with nonlinearities in between. Same outer training loop you just wrote — backprop just routes the gradient through every layer.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link href="/courses/ai/modules/neural-networks" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition">
+          <Link href="/courses/ai/modules/neural-networks" className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50">
             Start Module 4 →
           </Link>
-          <Link href="/courses/ai" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition">
+          <Link href="/courses/ai" className="inline-flex items-center gap-2 rounded-lg border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10">
             ← All modules
           </Link>
         </div>

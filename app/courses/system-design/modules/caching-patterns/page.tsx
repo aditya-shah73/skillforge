@@ -45,25 +45,25 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="caching-patterns" />
         <ModuleProgress moduleSlug="caching-patterns" checkpoints={CHECKPOINTS} />
       </header>
 
       <section className="my-10">
-        <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
+        <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
           <li>The four caching patterns (cache-aside, write-through, write-back, refresh-ahead) and the workloads each one fits.</li>
           <li>TTL strategy, jitter, and the four ways invalidation goes wrong.</li>
@@ -86,9 +86,9 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="caching-patterns" id="patterns" title="Four patterns" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 1 — The four patterns</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1 — The four patterns</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">Cache-aside (lazy loading)</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Cache-aside (lazy loading)</h3>
         <p>
           The application is in charge. On read: check the cache, miss → load from DB, populate the cache, return.
           On write: update the DB, invalidate or update the cache. This is the default and what 90% of teams use.
@@ -129,7 +129,7 @@ public class UserService {
           writes (more on this in Part 2). Stale data lives in the cache until TTL or invalidation.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Write-through</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Write-through</h3>
         <p>
           Writes go through the cache. The cache is responsible for persisting to the underlying store before
           acknowledging. The cache is always consistent with the DB <em>for keys that are in the cache</em>.
@@ -147,7 +147,7 @@ public class UserService {
           write-through natively — you&apos;re building a custom layer.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Write-back (write-behind)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Write-back (write-behind)</h3>
         <p>
           Writes go to the cache only. The cache asynchronously flushes to the DB later, in batches. Wildly fast,
           wildly dangerous. If the cache crashes before flushing, you lose data.
@@ -161,7 +161,7 @@ public class UserService {
           a bad day is acceptable.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Refresh-ahead</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Refresh-ahead</h3>
         <p>
           The cache proactively reloads keys that are about to expire, before they expire. Hot keys never see a miss
           from the user&apos;s perspective.
@@ -218,9 +218,9 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="caching-patterns" id="ttl-invalidation" title="TTL & invalidation" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 2 — TTL &amp; invalidation</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2 — TTL &amp; invalidation</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">TTL is the laziest correct invalidation</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">TTL is the laziest correct invalidation</h3>
         <p>
           A TTL says: &quot;this entry is valid for N seconds; after that, refetch.&quot; It&apos;s the simplest
           invalidation strategy and it works because eventually-consistent data is usually fine. Pick TTLs based on
@@ -242,7 +242,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The four invalidation bugs</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The four invalidation bugs</h3>
         <p>
           Almost every caching bug fits into one of these:
         </p>
@@ -302,7 +302,7 @@ public class UserService {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Negative caching</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Negative caching</h3>
         <p>
           When a key doesn&apos;t exist in the DB, you usually still want to cache that fact. Otherwise an attacker
           (or a bug) requesting nonexistent keys hits the DB on every request — &quot;cache penetration.&quot;
@@ -358,7 +358,7 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="caching-patterns" id="what-to-cache" title="What to cache" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 3 — What to cache (and what not to)</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3 — What to cache (and what not to)</h2>
 
         <p>
           Caching has a cost: invalidation complexity, memory, debugging time when staleness causes a bug. The
@@ -373,7 +373,7 @@ public class UserService {
           <li><strong>Is the cache hit rate going to be high?</strong>{" "}If you have a long tail of unique queries, hit rate stays low and the cache adds latency without benefit.</li>
         </ol>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Good cache candidates</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Good cache candidates</h3>
         <ul>
           <li><strong>User profile data.</strong>{" "}Read on every page load, changes rarely, staleness of seconds to minutes is fine.</li>
           <li><strong>Configuration / feature flags.</strong>{" "}Read on every request, changes via deploys, stale-by-minutes is fine.</li>
@@ -383,7 +383,7 @@ public class UserService {
           <li><strong>HTML fragments / page sections.</strong>{" "}Rendering cost &gt; cache lookup cost.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Bad cache candidates</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Bad cache candidates</h3>
         <ul>
           <li><strong>Anything where staleness causes correctness bugs.</strong>{" "}Inventory counts, account balances, fraud-detection state. Cache the read path at your peril.</li>
           <li><strong>Low-cardinality data already cached by the DB.</strong>{" "}Postgres has a buffer cache. If your &quot;hot&quot; query is on a small table that fits in shared_buffers, Postgres is already serving it from RAM at sub-millisecond latency.</li>
@@ -400,7 +400,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Multi-level caching</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Multi-level caching</h3>
         <p>
           Real systems often have several layers:
         </p>
@@ -496,7 +496,7 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="caching-patterns" id="personalization" title="Personalization caching" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 4 — Personalization caching</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 4 — Personalization caching</h2>
 
         <p>
           Everything before this part assumed the cached value was the same for everyone — a product page, a config
@@ -506,7 +506,7 @@ public class UserService {
           need to be re-tuned around cardinality.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Global vs per-user: the cardinality spectrum</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Global vs per-user: the cardinality spectrum</h3>
         <p>
           Cache one entry that covers everyone — a homepage HTML fragment, a top-10 trending list — and you get a
           near-100% hit rate from a single key. Memory is trivial, latency is great, life is good. Now make that
@@ -530,7 +530,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Cache key cardinality explosion</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Cache key cardinality explosion</h3>
         <p>
           The seductive bug: you start with <code>feed:userId</code>, then someone asks for a locale-aware variant,
           then a device-class split, then an A/B experiment, then a feature flag set. Each dimension multiplies the
@@ -564,7 +564,7 @@ public class UserService {
           (and often desirable — see TTL section below), but it does mean you take a load spike on rollout. Plan for it.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Cold start</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Cold start</h3>
         <p>
           The first request from a new user is, by definition, a cache miss. If your personalized response takes
           800ms to compute end-to-end, that user&apos;s first impression is an 800ms blank screen. Three mitigations,
@@ -580,7 +580,7 @@ public class UserService {
           option 2 with a planned upgrade to option 3 once they have the infra to support it.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">TTL strategy for personalized data</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">TTL strategy for personalized data</h3>
         <p>
           Personalization data has a wider range of natural lifetimes than the data we cached in Part 2. Match the
           TTL to the actual rate of change, not to an arbitrary default:
@@ -600,7 +600,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The hot user problem</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The hot user problem</h3>
         <p>
           User traffic is not uniformly distributed. A celebrity, a popular brand account, or an internal admin user
           can attract 1000x the read traffic of a normal user. Their per-user cache entry becomes a hot key, and a
@@ -617,7 +617,7 @@ public class UserService {
           <li><strong>Don&apos;t personalize at all for these accounts.</strong>{" "}A celebrity feed is read by millions of strangers; personalizing the celebrity-side response makes no sense. Serve the global, denormalized version and skip the per-user computation.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Stale-while-revalidate for personalization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Stale-while-revalidate for personalization</h3>
         <p>
           The most useful pattern in this entire section. The idea: when a personalized cache entry is past its
           freshness threshold but still within its hard TTL, serve the stale value immediately and trigger an async
@@ -693,9 +693,9 @@ public class FeedService {
         />
       </Checkpoint>
 
-      <section className="my-12 p-6 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-        <h2 className="text-xl font-semibold mb-3">What this didn&apos;t cover</h2>
-        <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+      <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
+        <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
+        <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Redis-specific architecture (single, sentinel, cluster) — that&apos;s the next module.</li>
           <li>Hot keys, thundering herd, and the operational realities of running a distributed cache at scale — also next module.</li>
           <li>HTTP-level caching (Cache-Control, ETag, Vary) — relevant but a different layer of the stack.</li>
@@ -704,7 +704,7 @@ public class FeedService {
       </section>
 
       <section className="my-12 text-center">
-        <p className="text-sm text-slate-500 mb-2">Next up</p>
+        <p className="mb-2 text-sm text-slate-500">Next up</p>
         <Link href="/courses/system-design/modules/distributed-cache-deep" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
           Distributed caches deep dive: Redis architecture, hot keys, and operations →
         </Link>

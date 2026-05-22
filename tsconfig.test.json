@@ -1,0 +1,14 @@
+{
+  // Separate TS project for Playwright tests + config. Next.js's `next build`
+  // runs the TS compiler against the root tsconfig.json and the `next` plugin
+  // chokes on Playwright-specific `use` options (reducedMotion, colorScheme)
+  // because it doesn't know they're valid for the test runner. Excluding
+  // tests/ from the root project keeps `next build` happy; this file gives
+  // IDEs the right typings for the test sources.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["tests/**/*.ts", "playwright.config.ts"],
+  "exclude": ["node_modules"]
+}

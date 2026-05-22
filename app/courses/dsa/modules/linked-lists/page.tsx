@@ -80,13 +80,13 @@ flowchart LR
       <ModuleProgress moduleSlug="linked-lists" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold tracking-wide uppercase">
+        <div className="mt-3 block w-fit rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
       </div>
 
@@ -167,7 +167,7 @@ class MyLinkedList<E> {
         </p>
 
         <Mermaid chart={nodeChain} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Each box is a heap allocation. The arrows are <code>next</code> references. <code>head</code> is the only handle into the chain.
         </p>
 
@@ -300,7 +300,7 @@ class MyLinkedList<E> {
         </p>
 
         <Mermaid chart={dummyHead} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           The <code>dummy</code> node holds no data. The first real element is <code>dummy.next</code>. Inserting and removing at the front becomes the same code as inserting and removing in the middle.
         </p>
 
@@ -349,7 +349,7 @@ public void addAt(int i, E v) {
         </ul>
 
         <Mermaid chart={fastSlow} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           After 2 iterations on a 5-node list: <code>slow</code> is at the middle (C), <code>fast</code> is at E. One more step and <code>fast</code> falls off the end — return <code>slow</code>.
         </p>
 
@@ -608,8 +608,8 @@ public Node<Integer> reverseList(Node<Integer> head) {
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border border-amber-200 dark:border-amber-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 8 — Stacks</h3>
+        <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-800/40 dark:from-amber-950/30 dark:to-yellow-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 8 — Stacks</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             LIFO. The call stack is a stack. Bracket matching is a stack. Reverse Polish notation is a stack. And monotonic
             stacks unlock a class of problems (next-greater-element, daily temperatures) that look impossible until you
@@ -617,7 +617,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
           </p>
           <Link
             href="/courses/dsa/modules/stacks"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Module 8 — Stacks →
           </Link>

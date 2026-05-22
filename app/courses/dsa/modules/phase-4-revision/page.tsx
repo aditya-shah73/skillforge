@@ -34,23 +34,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-sky-500 to-blue-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 4 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 4 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The whole graph chapter — representations, BFS/DFS, shortest paths, topological sort — compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-4-revision" />
@@ -59,10 +59,10 @@ flowchart LR
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 4</strong> — every representation, every traversal, every shortest-path algorithm, every named pattern from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/dsa/modules/graphs-intro" className="text-sky-600 hover:underline">Graphs intro &amp; representations</Link>, <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">BFS &amp; DFS</Link>, and <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Shortest path &amp; topological sort</Link>.
         </p>
       </section>
@@ -71,14 +71,14 @@ flowchart LR
       {/* SECTION 2 — Graph representations table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Graph representations</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Graph representations</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Two ways to store a graph. The default is adjacency list. The matrix wins in three specific cases.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Representation</th>
                 <th className="px-4 py-3 font-semibold">Space</th>
@@ -117,7 +117,7 @@ flowchart LR
           When you see <code>O(V + E)</code>, that&apos;s &quot;linear in the graph size&quot; — BFS and DFS hit it. <code>O((V + E) log V)</code> is Dijkstra with a binary heap. <code>O(V·E)</code> is Bellman-Ford. <code>O(V³)</code> is Floyd-Warshall. Memorize these four; every Phase 4 algorithm lands on one of them.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/graphs-intro" className="text-sky-600 hover:underline">Module 17 — Graphs intro</Link>.
         </p>
       </section>
@@ -126,18 +126,18 @@ flowchart LR
       {/* SECTION 3 — BFS vs DFS decision */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. BFS vs DFS — when each one is right</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. BFS vs DFS — when each one is right</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Same template, different data structure. Queue → BFS (nearest first). Stack → DFS (deepest first). The choice is dictated by what the problem actually asks.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-sky-200 dark:border-sky-900 p-5 bg-sky-50/40 dark:bg-sky-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">BFS · queue · nearest first</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-sky-200 bg-sky-50/40 p-5 dark:border-sky-900 dark:bg-sky-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">BFS · queue · nearest first</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Reach for BFS when the problem says <strong>shortest</strong>, <strong>minimum number of steps</strong>, <strong>fewest moves</strong>, or asks about <strong>levels</strong>{" "}from a source.
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-3">
+            <ul className="mb-3 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Shortest path on unweighted graphs</li>
               <li>Level-by-level expansion (Rotting Oranges)</li>
               <li>Word ladder, fewest transformations</li>
@@ -159,12 +159,12 @@ while (!queue.isEmpty()) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-900 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">DFS · stack/recursion · deepest first</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-900 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">DFS · stack/recursion · deepest first</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Reach for DFS when the problem is about <strong>connectivity</strong>, <strong>cycles</strong>, <strong>topological order</strong>, or <strong>backtracking</strong>{" "}over an implicit tree of states.
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-3">
+            <ul className="mb-3 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Connected components (Number of Islands)</li>
               <li>Cycle detection (3-color directed)</li>
               <li>Topological sort via post-order</li>
@@ -186,7 +186,7 @@ while (!queue.isEmpty()) {
           If the question contains the word <strong>shortest</strong>, <strong>minimum</strong>, or <strong>fewest</strong> — BFS. Otherwise — connectivity, &quot;is there a path&quot;, &quot;count components&quot;, &quot;detect a cycle&quot; — DFS is usually simpler. Both are <code>O(V + E)</code> time.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18 — BFS &amp; DFS</Link>.
         </p>
       </section>
@@ -195,14 +195,14 @@ while (!queue.isEmpty()) {
       {/* SECTION 4 — Iterative vs recursive DFS */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Iterative DFS vs recursive DFS</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Iterative DFS vs recursive DFS</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Recursive DFS is shorter and the default. Iterative DFS is the safety net when the graph can be deep enough to blow the JVM stack.
         </p>
 
-        <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5 mb-4">
-          <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">BAD — recursive DFS on a skewed/long graph</div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+          <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">BAD — recursive DFS on a skewed/long graph</div>
+          <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
             On a chain of 10⁶ nodes (linked-list-shaped graph, or a path graph), recursive DFS will <code>StackOverflowError</code> long before it finishes. The JVM thread stack is ~512KB–1MB; each frame is ~50–100 bytes; you blow it around depth 5,000–10,000.
           </p>
           <CodeBlock lang="java">{`// RISKY — depth = longest path in the graph
@@ -214,9 +214,9 @@ void dfs(int u) {
 }`}</CodeBlock>
         </div>
 
-        <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-          <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">GOOD — explicit Deque on the heap</div>
-          <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+          <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">GOOD — explicit Deque on the heap</div>
+          <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
             The heap is gigabytes, not kilobytes. An explicit <code>ArrayDeque</code> handles graphs that would crash a recursive version. Same visit set, same complexity, different memory region.
           </p>
           <CodeBlock lang="java">{`void dfsIterative(int start) {
@@ -237,7 +237,7 @@ void dfs(int u) {
           Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS visits them in <em>reverse</em>{" "}order (last-pushed comes off first). If the problem expects a specific output order, push children in reverse to match recursion. Not a correctness issue for connectivity / cycle / topo — only for problems that grade by exact sequence.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18 — BFS &amp; DFS</Link>.
         </p>
       </section>
@@ -246,14 +246,14 @@ void dfs(int u) {
       {/* SECTION 5 — Shortest path family */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. The shortest-path family</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. The shortest-path family</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Four algorithms. The right one is dictated by two questions: <strong>are edges weighted?</strong>{" "}and <strong>can weights be negative?</strong>
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Algorithm</th>
                 <th className="px-4 py-3 font-semibold">Edge weights</th>
@@ -295,7 +295,7 @@ void dfs(int u) {
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Dijkstra in one block — the version you should be able to type from memory</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Dijkstra in one block — the version you should be able to type from memory</h3>
         <CodeBlock lang="java" caption="Dijkstra with lazy deletion via the staleness check">{`public int[] dijkstra(int n, List<List<int[]>> adj, int source) {
     int[] dist = new int[n];
     Arrays.fill(dist, Integer.MAX_VALUE);
@@ -324,7 +324,7 @@ void dfs(int u) {
           No crash, no exception — just incorrect distances. Once a node is finalized, Dijkstra never reconsiders it; a negative edge from a later node could have lowered its true distance but Dijkstra refuses to look back. Use Bellman-Ford when weights can be negative.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19 — Shortest path</Link>.
         </p>
       </section>
@@ -333,22 +333,22 @@ void dfs(int u) {
       {/* SECTION 6 — Topological sort */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Topological sort — Kahn&apos;s vs DFS post-order</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Topological sort — Kahn&apos;s vs DFS post-order</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Two ways to linearize a DAG so every edge u→v has u before v. Cycle detection comes free with either one — if topo sort fails, you have a cycle.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={dagChart} />
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
+          <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
             Valid topological orderings of this DAG: <code>[A, B, C, D, E]</code> and <code>[A, C, B, D, E]</code> — B and C are independent siblings, either may come first.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Kahn&apos;s · BFS over in-degrees</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Kahn&apos;s · BFS over in-degrees</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Iterative. Compute in-degrees, enqueue all in-degree-0 nodes, pop and decrement neighbors&apos; in-degrees, enqueue when they hit 0. If fewer than V nodes get processed, there&apos;s a cycle.
             </p>
             <CodeBlock lang="java">{`int[] inDegree = new int[n];
@@ -371,9 +371,9 @@ while (!queue.isEmpty()) {
 if (idx != n) { /* CYCLE */ }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-900 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">DFS post-order · push when done, reverse</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-900 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">DFS post-order · push when done, reverse</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Recursive. Append each node in post-order (after all its descendants have been processed), then reverse. The 3-color WHITE/GRAY/BLACK variant additionally detects cycles via back-edges to GRAY.
             </p>
             <CodeBlock lang="java">{`List<Integer> order = new ArrayList<>();
@@ -395,7 +395,7 @@ Collections.reverse(order);`}</CodeBlock>
           A node never has its in-degree reach 0 if it&apos;s part of a cycle (the cycle&apos;s edges keep contributing). So the &quot;processed fewer than V&quot; check is a perfect cycle detector — no extra bookkeeping, no recursion stack. This is why Kahn&apos;s is the more popular choice in practice for &quot;Course Schedule&quot;-style problems.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19 — Topological sort</Link>.
         </p>
       </section>
@@ -404,47 +404,47 @@ Collections.reverse(order);`}</CodeBlock>
       {/* SECTION 7 — The 5 named patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. The 5 named patterns from Phase 4</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. The 5 named patterns from Phase 4</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each card has the <strong>tell</strong> — the phrase in the problem statement that should make the pattern fire in your head.
         </p>
 
         <div className="space-y-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 1 · Flood fill (DFS on a grid)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 1 · Flood fill (DFS on a grid)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>The tell:</strong> &quot;count the islands / regions / connected groups&quot; on a 2D grid. Outer scan finds component starts; inner DFS marks all cells.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 200 · Number of Islands</strong>. Mutate the grid as the visited marker for O(1) space.</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 2 · Level-by-level BFS (multi-source)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 2 · Level-by-level BFS (multi-source)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>The tell:</strong> &quot;how many minutes / steps until [thing] spreads everywhere?&quot; Seed the queue with <em>every</em>{" "}initial source at level 0, freeze <code>queue.size()</code> at the top of each level, increment a counter per level.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 994 · Rotting Oranges</strong>, <strong>LC 542 · 01 Matrix</strong>, <strong>LC 286 · Walls and Gates</strong>.</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 3 · Bidirectional BFS</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 3 · Bidirectional BFS</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>The tell:</strong> &quot;shortest transformation from A to B&quot; on a huge but sparse graph (word ladder). Run BFS from <em>both ends</em>, expand the smaller frontier each round, stop when they meet. Cuts the search from O(b^d) to O(2·b^(d/2)).
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 127 · Word Ladder</strong>. Plain BFS works; bidirectional is the optimization the interviewer wants to hear.</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 4 · Dijkstra with PriorityQueue</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 4 · Dijkstra with PriorityQueue</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>The tell:</strong>{" "}weighted edges, non-negative, &quot;shortest&quot; or &quot;cheapest&quot; or &quot;minimum time&quot;. Min-heap of <code>(dist, node)</code>, lazy deletion via the staleness check <code>if (d &gt; dist[u]) continue;</code>.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 743 · Network Delay Time</strong>, <strong>LC 787 · Cheapest Flights Within K Stops</strong>, <strong>LC 1631 · Path With Minimum Effort</strong>.</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Pattern 5 · Course schedule (topological sort)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 5 · Course schedule (topological sort)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>The tell:</strong> &quot;can you finish?&quot;, &quot;in what order?&quot;, &quot;build before&quot;, &quot;prereqs&quot;. Kahn&apos;s BFS over in-degrees — boolean version returns <code>processed == n</code>; ordering version returns the array.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 207 · Course Schedule</strong>, <strong>LC 210 · Course Schedule II</strong>, <strong>LC 269 · Alien Dictionary</strong>.</p>
@@ -456,15 +456,15 @@ Collections.reverse(order);`}</CodeBlock>
       {/* SECTION 8 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Five gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost real engineers real hours — and silently passes some test cases while failing others. The most painful kind of bug.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Forgetting <code>visited[]</code> on a graph with cycles</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Forgetting <code>visited[]</code> on a graph with cycles</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Trees have no cycles, so a missing <code>visited[]</code> still terminates. Graphs do — and BFS/DFS on a cyclic graph without a visited set loops forever (or until the queue/stack exhausts memory).
             </p>
             <CodeBlock lang="java">{`// BAD — infinite loop on any cycle
@@ -481,9 +481,9 @@ void dfs(int u) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Using DFS for shortest path on an unweighted graph</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Using DFS for shortest path on an unweighted graph</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               DFS finds <em>a</em>{" "}path. It doesn&apos;t find the <em>shortest</em>{" "}one — it can dive deep into the wrong branch and return a 50-edge path when a 3-edge path exists. For unweighted shortest path, always BFS.
             </p>
             <CodeBlock lang="java">{`// BAD — DFS reports "first path found", not shortest
@@ -511,9 +511,9 @@ int bfsShortest(int start, int target) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Dijkstra on a graph with negative weights</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Dijkstra on a graph with negative weights</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               No crash. No exception. Dijkstra silently returns wrong distances because it finalizes nodes greedily; a later negative edge could have lowered a finalized node&apos;s true distance, but Dijkstra refuses to look back.
             </p>
             <CodeBlock lang="java">{`// BAD — wrong distances on graphs with negative edges (e.g., FX rebates)
@@ -533,9 +533,9 @@ for (int i = 0; i < n - 1; i++) {
 // V-th pass: any further improvement = negative cycle reachable from source`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Not handling disconnected components</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Not handling disconnected components</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               A single BFS/DFS from node 0 only covers node 0&apos;s component. If the graph has islands, the other components never get visited — your &quot;count cycles&quot; or &quot;detect bipartite&quot; check silently misses half the graph.
             </p>
             <CodeBlock lang="java">{`// BAD — only checks one component
@@ -554,9 +554,9 @@ boolean isBipartite(List<List<Integer>> adj) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Forgetting the undirected double-add</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Forgetting the undirected double-add</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               &quot;The graph is undirected&quot; means each edge goes both ways. If you add the edge only once, you&apos;ve built a directed graph by accident — BFS from u finds v, but BFS from v doesn&apos;t find u. No NullPointer, no compile error, just silently wrong answers.
             </p>
             <CodeBlock lang="java">{`// BAD — built a directed graph from an undirected input
@@ -577,8 +577,8 @@ for (int[] e : edges) {
       {/* SECTION 9 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -641,8 +641,8 @@ for (int[] e : edges) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 via-white to-sky-50 dark:from-cyan-950/30 dark:via-slate-900 dark:to-sky-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 via-white to-sky-50 p-6 dark:border-cyan-900 dark:from-cyan-950/30 dark:via-slate-900 dark:to-sky-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">
           Phase 4 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now read a graph problem and pick the algorithm in seconds</h3>
@@ -654,7 +654,7 @@ for (int[] e : edges) {
         </p>
         <Link
           href="/courses/dsa/modules/java-collections"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-sky-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-sky-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Java Collections in Depth →
         </Link>

@@ -35,23 +35,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/system-design"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-rose-500 to-orange-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-rose-500 to-orange-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 1 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 1 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Estimation numbers, scaling ladder, CAP/PACELC, consistency models — every foundation from Phase 1 compressed to a reference card you re-read in 15 minutes before a system-design interview.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-1-revision" />
@@ -60,10 +60,10 @@ flowchart LR
 
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 1</strong> — every number, every rung, every trade-off from the four previous modules, compressed into tables and decision cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before an interview, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The four modules you&apos;re consolidating: <Link href="/courses/system-design/modules/back-of-envelope" className="text-cyan-600 hover:underline">Back-of-envelope estimation</Link>, <Link href="/courses/system-design/modules/scaling-ladder" className="text-cyan-600 hover:underline">The scaling ladder</Link>, <Link href="/courses/system-design/modules/cap-pacelc" className="text-cyan-600 hover:underline">CAP &amp; PACELC</Link>, and <Link href="/courses/system-design/modules/consistency-models" className="text-cyan-600 hover:underline">Consistency models</Link>.
         </p>
 
@@ -76,12 +76,12 @@ flowchart LR
       {/* SECTION 1 — Latency + capacity math cheat-sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Latency numbers + capacity math</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Latency numbers + capacity math</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The unit system every design discussion uses. Memorize the order of magnitude, not the exact digits.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Latency table — five tiers, four orders of magnitude</h3>
+        <h3 className="mb-2 text-base font-semibold">Latency table — five tiers, four orders of magnitude</h3>
         <CodeBlock lang="plain" caption="The numbers you cite from memory in the first 30 seconds of any design">{`OP                                   LATENCY     TIER     MENTAL ANCHOR
 L1 cache reference                   ~1 ns       ns       Clock tick on a 1GHz CPU
 Branch mispredict                    ~3 ns       ns       Cost of guessing wrong at an if
@@ -102,7 +102,7 @@ Cross-continent (US ↔ EU)            ~150 ms     slow     Half a second for a 
           <p className="m-0">99% of design discussions are really about one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong>{" "}Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers and you can reason about feasibility in 10 seconds.</p>
         </Callout>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Capacity math — the four conversions</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Capacity math — the four conversions</h3>
         <CodeBlock lang="plain" caption="Every back-of-envelope is one of these four lines">{`# 1. QPS from users
 average_QPS  = (DAU × actions_per_user_per_day) / 86_400
 peak_QPS     = average_QPS × peak_factor    # 2–3x consumer, 5–10x B2B
@@ -116,7 +116,7 @@ bandwidth = peak_QPS × bytes_per_response   # both directions
 # 4. Memory (cache working set)
 hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The shortcut every senior knows</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The shortcut every senior knows</h3>
         <CodeBlock lang="plain" caption="DAU → QPS without long division">{`1M  DAU × 1 action/day   ≈ 12     QPS    (avg)
 100M DAU × 1 action/day  ≈ 1,200  QPS    (avg)
 1B  DAU × 1 action/day   ≈ 12,000 QPS    (avg)
@@ -124,10 +124,10 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
 # One-liner: DAU in millions × actions/day ≈ avg QPS in dozens.
 # Then peak = 2–3× for consumer, 5–10× for B2B.`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Per-server rules of thumb</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Per-server rules of thumb</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Axis</th>
                 <th className="px-4 py-3 font-semibold">Per-box ceiling</th>
@@ -164,7 +164,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
           </table>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/back-of-envelope" className="text-cyan-600 hover:underline">Module 1 — Back-of-envelope estimation</Link>.
         </p>
       </section>
@@ -173,14 +173,14 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 2 — The scaling ladder */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. The scaling ladder — six rungs, in order</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The scaling ladder — six rungs, in order</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When traffic grows, you walk these rungs roughly in order. Skipping rungs is how systems get over-engineered.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">#</th>
                 <th className="px-4 py-3 font-semibold">Rung</th>
@@ -240,7 +240,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
           <p className="m-0">When someone says &quot;let&apos;s add Kafka,&quot; ask: <em>which rung is that, and have we exhausted the cheaper rungs?</em>{" "}Most slow services I&apos;ve been paged for were one bad query, one undersized pool, or one missing index. The ladder starts at the bottom for a reason. <strong>If your service is at 30% CPU and someone wants to add a queue, the answer is no.</strong></p>
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/scaling-ladder" className="text-cyan-600 hover:underline">Module 2 — The scaling ladder</Link>.
         </p>
       </section>
@@ -249,16 +249,16 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 3 — Mermaid diagram of the ladder */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The ladder, in one picture</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The ladder, in one picture</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Green rungs are cheap and reversible. Amber/red rungs are where architecture starts to lock in.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={ladderChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Rungs 1–3 are reversible.</strong>{" "}Bigger box, more boxes, externalize session — all undo cleanly. Do them aggressively.</li>
           <li><strong>Rung 4 (cache) is the first one-way door.</strong>{" "}Once your reads depend on cache hit rate, your invalidation strategy becomes part of your contract. Pick cache-aside until you have a reason not to.</li>
           <li><strong>Rung 5 (sharding) reshapes your schema.</strong>{" "}Joins across shards either die or get pushed to the app layer. Resharding is one of the hardest operations in distributed systems.</li>
@@ -270,8 +270,8 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 4 — CAP / PACELC */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. CAP &amp; PACELC — corrected</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. CAP &amp; PACELC — corrected</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The bumper sticker is wrong. The real claim is narrower and more useful.
         </p>
 
@@ -279,10 +279,10 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
           <p className="m-0"><strong>CAP:</strong>{" "}during a network partition, a distributed system must give up either linearizability (C) or per-request availability (A). Partition tolerance isn&apos;t a choice — networks fail. <strong>PACELC:</strong>{" "}and when there&apos;s no partition, you still have to choose between latency (L) and consistency (C). The &quot;else&quot; clause is where 99% of real design lives, because partitions are rare.</p>
         </Callout>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Where the popular datastores sit</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Where the popular datastores sit</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Datastore</th>
                 <th className="px-4 py-3 font-semibold">PACELC slot</th>
@@ -349,7 +349,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
           <p className="m-0">Don&apos;t ask &quot;CP or AP?&quot; — ask three concrete questions: <strong>(1)</strong>{" "}What happens to a write during a partition? <strong>(2)</strong>{" "}What happens to a read during a partition? <strong>(3)</strong>{" "}In normal operation, does a write wait for replicas? Three answers and you&apos;ve placed the system on the matrix.</p>
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/cap-pacelc" className="text-cyan-600 hover:underline">Module 3 — CAP &amp; PACELC</Link>.
         </p>
       </section>
@@ -358,14 +358,14 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 5 — Consistency models */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Consistency models — pick the weakest that&apos;s safe</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Consistency models — pick the weakest that&apos;s safe</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The hierarchy from strongest to weakest. Each model lets through specific bugs the stronger ones forbid.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Model</th>
                 <th className="px-4 py-3 font-semibold">Guarantee</th>
@@ -418,13 +418,13 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
           <p className="m-0">Linearizable ⊃ sequential ⊃ causal ⊃ eventual. If a system gives you linearizable, you also get every weaker guarantee for free. If it only gives you eventual, you have to layer the stronger ones (read-your-writes via leader pinning, monotonic reads via session stickiness) at the application level.</p>
         </Callout>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The four session guarantees (Bayou, 1995)</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The four session guarantees (Bayou, 1995)</h3>
         <CodeBlock lang="plain" caption="Cheaper than linearizability, catches the common UX bugs">{`1. Read-your-writes      — if YOU wrote it, YOUR next read sees it
 2. Monotonic reads       — within a session, time only moves forward
 3. Monotonic writes      — your writes apply in the order you issued
 4. Writes-follow-reads   — a write you make is ordered after what you just read`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/consistency-models" className="text-cyan-600 hover:underline">Module 4 — Consistency models</Link>.
         </p>
       </section>
@@ -433,35 +433,35 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 6 — Consistency decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Picking a model per call site</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Picking a model per call site</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Consistency is rarely a database-wide decision in 2026. It&apos;s a per-endpoint decision. The senior move is naming the model your call site needs and then verifying your stack delivers it.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">Pick linearizable</div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">When the invariant is unrecoverable if violated — money, inventory, uniqueness, locks.</p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Pick linearizable</div>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When the invariant is unrecoverable if violated — money, inventory, uniqueness, locks.</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">bank balance · flash-sale stock · unique username · leader election</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Pick causal</div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">When order between related events is visible to users, but unrelated events can be parallel.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Pick causal</div>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When order between related events is visible to users, but unrelated events can be parallel.</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">comment threads · chat · collaborative editing</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Pick read-your-writes</div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">When users edit and then immediately read their own content.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pick read-your-writes</div>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When users edit and then immediately read their own content.</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">profile pages · settings · drafts · own-content views</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-500 mb-2">Pick monotonic reads</div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">When users page through a feed or watch a timeline grow.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-500 uppercase">Pick monotonic reads</div>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When users page through a feed or watch a timeline grow.</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">infinite-scroll feeds · timelines · pagination</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 sm:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Eventual is fine</div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">When staleness is invisible to users for tens of seconds and the cost of stronger guarantees is real (cross-region writes, refused requests during partitions).</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 sm:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Eventual is fine</div>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When staleness is invisible to users for tens of seconds and the cost of stronger guarantees is real (cross-region writes, refused requests during partitions).</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">like counters · view counts · driver-location streams · trending-now lists</code>
           </div>
         </div>
@@ -475,15 +475,15 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 7 — Gotchas (BAD/GOOD pairs) */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Four gotchas that bite in real designs</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Four gotchas that bite in real designs</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The mistakes that show up in design reviews and post-mortems. If you only remember four things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Quoting average QPS as if it were peak</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Quoting average QPS as if it were peak</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               You divide DAU by 86,400 and call it done. Then production hits 9pm Eastern and your average becomes irrelevant. <strong>Always multiply by a peak factor.</strong>
             </p>
             <CodeBlock lang="plain">{`// BAD — provisioning for average means getting paged at peak
@@ -498,9 +498,9 @@ peak_QPS    = avg_QPS × peak_factor ≈ 29_000
 # capacity plan: 30k QPS + room for known spikes (Black Friday, viral event)`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Forgetting bandwidth in the storage math</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Forgetting bandwidth in the storage math</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               QPS and storage are obvious. Bandwidth is invisible until the NIC saturates. Big payloads × moderate QPS gets you there faster than you&apos;d think.
             </p>
             <CodeBlock lang="plain">{`// BAD — only checked QPS, missed the NIC
@@ -514,9 +514,9 @@ bandwidth = 200_000 × 500 bytes = 100 MB/s ≈ 0.8 Gbps
 # Need ≥2 nodes just for bandwidth, plus more for HA.`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · &quot;Eventually consistent&quot; treated as &quot;might be stale forever&quot;</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · &quot;Eventually consistent&quot; treated as &quot;might be stale forever&quot;</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Eventual means convergence in the absence of new writes — typically milliseconds to seconds in healthy systems. It does NOT mean &quot;stale forever&quot; — but it also doesn&apos;t prevent specific UX bugs. The fix isn&apos;t to give up; it&apos;s to layer session guarantees on top.
             </p>
             <CodeBlock lang="java">{`// BAD — Cassandra default, user edits profile, refresh shows old name
@@ -535,9 +535,9 @@ public ProfileResponse updateName(Long userId, String newName) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Skipping rungs on the scaling ladder</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Skipping rungs on the scaling ladder</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The team is at rung 1 (single box at 30% CPU) and someone proposes rung 6 (Kafka). Adding async complexity to a system that&apos;s bored is how technical debt is born.
             </p>
             <CodeBlock lang="plain">{`// BAD — symptom: latency spikes, p99 climbing
@@ -559,8 +559,8 @@ public ProfileResponse updateName(Long userId, String newName) {
       {/* SECTION 8 — Self-assessment (5 non-gating Quizzes) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -625,7 +625,7 @@ public ProfileResponse updateName(Long userId, String newName) {
       {/* ============================================================ */}
       <section className="not-prose mb-12">
         <Callout variant="spring" title="You're ready for Phase 2 when…">
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 m-0">
+          <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>You can convert any DAU number to average &amp; peak QPS in 10 seconds, without writing it down.</li>
             <li>You can size storage, bandwidth, and cache memory for a sketched system on a napkin — and remember to include all four axes, including bandwidth.</li>
             <li>You can name the rung any production system is currently on, and the one cheaper rung the team probably skipped.</li>
@@ -639,8 +639,8 @@ public ProfileResponse updateName(Long userId, String newName) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-900 bg-gradient-to-br from-amber-50 via-white to-yellow-50 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">
           Phase 1 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You have the foundations</h3>
@@ -652,7 +652,7 @@ public ProfileResponse updateName(Long userId, String newName) {
         </p>
         <Link
           href="/courses/system-design/modules/sql-vs-nosql"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: SQL vs NoSQL →
         </Link>

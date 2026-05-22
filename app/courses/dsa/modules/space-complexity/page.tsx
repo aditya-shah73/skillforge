@@ -53,21 +53,21 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/dsa" className="text-emerald-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Space complexity & the call stack
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Auxiliary vs total space, why recursion costs memory, and what the JVM is really doing under the hood.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="space-complexity" />
@@ -778,7 +778,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
       </Checkpoint>
 
       {/* Forward-look panel */}
-      <section className="mt-12 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+      <section className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
         <h3 className="mt-0 mb-2">What you&apos;ll have when this module clears</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You can read a Java method and call out its time AND space complexity at sight. You know why deep linear recursion crashes the JVM, and you&apos;ve watched it happen with your own debugger. You can articulate the time-vs-space trade-off — the move that turns most "can you optimize this?" interview questions into a clean conversation.
@@ -789,7 +789,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
         <div className="mt-5">
           <Link
             href="/courses/dsa/modules/amortized-analysis"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-rose-600 hover:to-orange-600 transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-sm transition hover:from-rose-600 hover:to-orange-600 hover:shadow-md"
           >
             Continue to Module 3: Amortized analysis →
           </Link>

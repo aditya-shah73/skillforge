@@ -70,19 +70,19 @@ export default function Page() {
     <article className="prose-custom">
       <BookmarkButton courseId="system-design" moduleSlug="capstone" />
       <ModuleProgress moduleSlug="capstone" checkpoints={CHECKPOINTS} />
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
       </header>
 
       <Callout variant="info" title="What this capstone is">
@@ -98,8 +98,8 @@ export default function Page() {
           our constraints.
         </p>
 
-        <div className="my-8 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-slate-50/60 dark:bg-slate-900/40">
-          <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">What you&apos;ll walk out with</p>
+        <div className="my-8 rounded-xl border border-slate-200 bg-slate-50/60 p-6 dark:border-slate-800 dark:bg-slate-900/40">
+          <p className="mb-3 text-sm font-semibold tracking-wider text-slate-500 uppercase">What you&apos;ll walk out with</p>
           <ul className="space-y-2 text-sm">
             <li>A complete architecture for a non-trivial multi-service system.</li>
             <li>Justified tradeoffs at every box: why this DB, why this queue, why this consistency level.</li>
@@ -112,13 +112,13 @@ export default function Page() {
 
       {/* ============================== PART 1 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 1 — Requirements and capacity</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 1 — Requirements and capacity</h2>
         <p>
           Before any boxes on a diagram, we pin down what we&apos;re building and at what scale. Designs go wrong when
           this step is skipped.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Functional requirements</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Functional requirements</h3>
         <ul className="space-y-2">
           <li>Users create pull requests against a target branch.</li>
           <li>Reviewers leave inline (file/line) and general comments. Threaded replies.</li>
@@ -128,7 +128,7 @@ export default function Page() {
           <li>Audit log of every state-changing action.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Non-functional requirements</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Non-functional requirements</h3>
         <ul className="space-y-2">
           <li><strong>Latency:</strong>{" "}p99 &lt; 300ms for PR view; &lt; 150ms for comment post.</li>
           <li><strong>Availability:</strong> 99.9% (~8.7h of allowed downtime/year).</li>
@@ -136,7 +136,7 @@ export default function Page() {
           <li><strong>Scale:</strong> 5,000 devs, ~2,000 PRs/day, ~50 comments/PR average. Bursty during business hours.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Back-of-envelope</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Back-of-envelope</h3>
         <CodeBlock lang="plain" caption="Capacity model">{`Users:                  5,000 devs
 PRs/day:                2,000 (peak ~5x average → ~5 PRs/sec at peak)
 Comments/PR:            ~50 average, ~500 max
@@ -156,7 +156,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
           channels × dependent listeners) is the actual hot path. Always design for the burst, not the average.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What the numbers tell us</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What the numbers tell us</h3>
         <ul className="space-y-2">
           <li>This is NOT Twitter scale. Don&apos;t over-engineer. A handful of services, a few datastores, done.</li>
           <li>Read-heavy: caching matters. Hot PR views are the read driver.</li>
@@ -202,7 +202,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
 
       {/* ============================== PART 2 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 2 — High-level architecture and data plane</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 2 — High-level architecture and data plane</h2>
         <p>
           With requirements pinned, we sketch the system and decide where the bytes live. Six services, four
           datastores, one streaming backbone.
@@ -210,7 +210,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
 
         <Mermaid chart={overviewArchitecture} />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Service decomposition</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Service decomposition</h3>
         <ul className="space-y-2">
           <li><strong>Review service.</strong>{" "}PRs, branches, reviewers, status, merges. Source of truth for PR lifecycle.</li>
           <li><strong>Comment service.</strong>{" "}Inline + general comments, threads, reactions. Owned table to keep it scalable.</li>
@@ -226,7 +226,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
           nature; they don&apos;t belong in the request path. Search is naturally a read replica fed by events.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Datastore choices, justified</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Datastore choices, justified</h3>
         <ul className="space-y-3">
           <li>
             <strong>Postgres for review + comment data.</strong>{" "}ACID, joins (PR ↔ reviewer ↔ comment), modest scale.
@@ -250,7 +250,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
           </li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Schema sketch — Review service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Schema sketch — Review service</h3>
         <CodeBlock lang="plain" caption="Postgres tables (Review service)">{`pull_request
   id              UUID PK
   repo_id         UUID
@@ -286,7 +286,7 @@ pr_status_check
           PRs (author + state); fetch one PR (PK).
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Sharding and replication</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Sharding and replication</h3>
         <ul className="space-y-2">
           <li><strong>At year-1 scale:</strong>{" "}single Postgres primary + 2 read replicas per service. No sharding.</li>
           <li><strong>If we need to scale:</strong>{" "}shard by <code>repo_id</code> — a repo&apos;s PRs/comments are naturally co-located, queries don&apos;t cross repos.</li>
@@ -348,19 +348,19 @@ pr_status_check
 
       {/* ============================== PART 3 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 3 — Traffic plane and reliability</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 3 — Traffic plane and reliability</h2>
         <p>
           Now: how requests actually flow, and what keeps the system honest when things break.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">PR lifecycle</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">PR lifecycle</h3>
         <Mermaid chart={reviewLifecycle} />
         <p className="mt-4">
           Every state transition emits a Kafka event. That&apos;s the seam where notifications, audit, and search hook
           in — none of them sit in the request path.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Comment write — the hot path</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Comment write — the hot path</h3>
         <Mermaid chart={commentFanout} />
 
         <CodeBlock lang="java" caption="Comment write with idempotency and outbox">{`@PostMapping("/comments")
@@ -395,7 +395,7 @@ public ResponseEntity<Comment> create(
           background poller ships it to Kafka. At-least-once delivery, atomic with the DB write.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Read path — PR view caching</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Read path — PR view caching</h3>
         <ul className="space-y-2">
           <li>UI requests <code>GET /pr/{`{id}`}</code> via API gateway.</li>
           <li>Cache check in Redis (key = <code>pr:{`{id}`}:v{`{version}`}</code>, TTL 60s).</li>
@@ -407,7 +407,7 @@ public ResponseEntity<Comment> create(
           pattern avoids stale-read confusion when reviewers approve.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Reliability — what breaks, and how we contain it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Reliability — what breaks, and how we contain it</h3>
         <ul className="space-y-3">
           <li>
             <strong>Notification service down.</strong>{" "}Kafka buffers events. When it recovers, consumers catch up.
@@ -436,7 +436,7 @@ public ResponseEntity<Comment> create(
           (separate thread pools per dependency) prevent one slow service from saturating the gateway.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Observability</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Observability</h3>
         <ul className="space-y-2">
           <li><strong>Metrics:</strong>{" "}RED (rate, errors, duration) per endpoint; per-consumer Kafka lag; cache hit ratio.</li>
           <li><strong>Logs:</strong>{" "}structured JSON; trace ID propagated end-to-end (W3C traceparent).</li>
@@ -493,19 +493,19 @@ public ResponseEntity<Comment> create(
 
       {/* ============================== PART 4 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 4 — Security and rollout</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 4 — Security and rollout</h2>
         <p>
           Security is woven through every layer. Rollout is how we ship without breaking 5,000 engineers&apos; days.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Identity and access</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Identity and access</h3>
         <ul className="space-y-2">
           <li><strong>Users:</strong>{" "}SSO via the corporate IdP (OAuth2 + OIDC, PKCE). No app-managed passwords.</li>
           <li><strong>Service-to-service:</strong>{" "}mTLS via service mesh. Each pod has a SPIFFE identity from the mesh CA.</li>
           <li><strong>Authorization:</strong>{" "}repo-level roles (admin, maintainer, contributor); enforced at the data layer (<code>WHERE repo_id IN :allowed</code>), not just the controller.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Threat model — what we care about</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Threat model — what we care about</h3>
         <ClassifyChallenge
           title="Threats vs controls"
           prompt="Match each threat to the primary control."
@@ -525,7 +525,7 @@ public ResponseEntity<Comment> create(
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Rollout plan</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Rollout plan</h3>
         <ol className="space-y-3">
           <li>
             <strong>Phase 0 — internal alpha.</strong>{" "}Deploy to a single repo&apos;s team (~10 devs). Real PRs.
@@ -553,14 +553,14 @@ public ResponseEntity<Comment> create(
           alone Friday afternoon.
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Schema evolution</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Schema evolution</h3>
         <ul className="space-y-2">
           <li>Expand-contract for breaking changes: add new column, dual-write, backfill, switch reads, drop old.</li>
           <li>Liquibase / Flyway for migrations, applied in CI before code rolls out.</li>
           <li>Kafka topics versioned via subject naming or schema registry (Avro/Protobuf with compatibility checks).</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Failure modes we explicitly accept</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Failure modes we explicitly accept</h3>
         <ul className="space-y-2">
           <li><strong>Search lag during high write bursts.</strong>{" "}Up to 30s. Acceptable.</li>
           <li><strong>Notification delays during incident recovery.</strong>{" "}Up to a few minutes. Acceptable.</li>
@@ -617,48 +617,48 @@ public ResponseEntity<Comment> create(
 
       {/* ============================== PART 5 ============================== */}
       <section className="my-12">
-        <h2 className="text-2xl font-bold mb-4">Part 5 — Defending the design</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 5 — Defending the design</h2>
         <p>
           The final test of any architecture isn&apos;t whether you can draw it. It&apos;s whether you can defend the
           decisions when someone smart pushes back. Here are the questions you&apos;ll get and how to answer them.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;Why not just use GitHub?&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;Why not just use GitHub?&quot;</h3>
         <p>
           Cost at 5k devs, data residency requirements, custom workflow integrations. Out of scope for this
           conversation, but a real architect would push back here too — &quot;build vs buy&quot; is itself a design
           decision.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;Why Postgres and not DynamoDB?&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;Why Postgres and not DynamoDB?&quot;</h3>
         <p>
           Joins. Reviewer assignments span PRs, users, repos. ACID matters for state transitions. Modest scale doesn&apos;t
           force a key-value model. DynamoDB would force application-side joins and weaker transactional semantics for
           no benefit at this scale.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;Why six services? You&apos;re over-decomposed.&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;Why six services? You&apos;re over-decomposed.&quot;</h3>
         <p>
           Fair pushback. The minimum justifiable: review (PRs), comment (different volume + access pattern), notify
           (async, side-effecting). Search and audit can start as libraries inside review service and split later when
           they earn it. Day-one footprint can be 3 services, growing to 6.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;Why Kafka and not RabbitMQ or SQS?&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;Why Kafka and not RabbitMQ or SQS?&quot;</h3>
         <p>
           Replay. Audit and search both need to consume the same events with different lag tolerances; if we add a new
           consumer (analytics in year 2), we want to backfill from the log. Kafka&apos;s durable log is the right tool.
           RabbitMQ would force per-consumer queues and lose replay.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;What if traffic 10x&apos;s overnight?&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;What if traffic 10x&apos;s overnight?&quot;</h3>
         <p>
           Postgres goes to read replicas + connection pool tuning first; sharding by <code>repo_id</code> is the second
           lever. Kafka and Redis scale horizontally with capacity. The bottleneck likely shows up in Postgres write
           throughput on the comment service — that&apos;s the first thing to shard.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">&quot;What&apos;s the single point of failure?&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;What&apos;s the single point of failure?&quot;</h3>
         <p>
           Honest answer: the API gateway, until we run multiple instances behind a load balancer (which we do in prod).
           Beyond that: the corporate IdP — if SSO is down, no logins, but in-flight sessions continue. Kafka brokers
@@ -720,8 +720,8 @@ public ResponseEntity<Comment> create(
       </section>
 
       {/* ============================== Closing ============================== */}
-      <section className="my-12 rounded-xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 p-8">
-        <h2 className="text-2xl font-bold mb-3">You did the thing</h2>
+      <section className="my-12 rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h2 className="mb-3 text-2xl font-bold">You did the thing</h2>
         <p>
           You walked a system from blank page to defensible architecture. Six services, four datastores, a streaming
           backbone, a security model, a rollout plan, and an honest list of what could go wrong. That&apos;s
@@ -738,7 +738,7 @@ public ResponseEntity<Comment> create(
       </section>
 
       <section className="my-12">
-        <h3 className="text-lg font-semibold mb-3">Next up — Phase 8: Frontend System Design</h3>
+        <h3 className="mb-3 text-lg font-semibold">Next up — Phase 8: Frontend System Design</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
           The same patterns — rendering strategies, state shape, real-time, virtualization — applied to the browser. Three case studies (feed UI, real-time UI) and a closing phase-revision card. Then pick a real system at work and describe it end-to-end. The first time you do it on something live, this all clicks.
         </p>

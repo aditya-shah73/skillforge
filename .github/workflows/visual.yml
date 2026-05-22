@@ -1,0 +1,102 @@
+# Visual regression sweep.
+#
+# What it does:
+#   1. Builds the production bundle (matches what runs in prod)
+#   2. Boots `next start` via Playwright's `webServer` hook
+#   3. Renders 9 routes across 3 viewports → 27 screenshots
+#   4. Diffs against committed baselines in tests/visual.spec.ts-snapshots/
+#   5. Fails (and uploads the diff PNGs) if any screenshot drifts >0.5%
+#
+# Why we run it on every PR:
+#   The bugs that prompted this workflow (Tokey overlap, sticky header
+#   overcrowding, table clipping at 360px) all shipped because nobody had
+#   a fast feedback loop for "does this still look right on mobile". A 90-second
+#   CI run that posts diff PNGs on the PR fixes that.
+#
+# When CI fails:
+#   - Open the "Visual diffs" artifact at the bottom of the workflow run
+#   - Each failing test produces `<name>-actual.png` and `<name>-diff.png`
+#   - If the diff is intentional: run `npm run test:visual:update` locally,
+#     commit the new baselines, re-push
+#   - If the diff is regressive: fix the bug, re-push (no baseline update)
+#
+# Why pin Playwright/Chromium via `npx playwright install --with-deps`:
+#   Baselines are darwin (developer laptops) and linux (CI). Pixel-level
+#   font rendering differs across OSes. We work around this with
+#   `maxDiffPixelRatio: 0.01` in playwright.config.ts (allows ~0.5% drift).
+#   If that ratio proves too lax, we'd run baselines in CI too.
+
+name: visual
+
+on:
+  pull_request:
+    # Only run when something user-visible could have changed. Skip on
+    # CI/lockfile-only changes.
+    paths:
+      - "app/**"
+      - "components/**"
+      - "lib/**"
+      - "public/**"
+      - "tests/**"
+      - "playwright.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tailwind.config.*"
+      - "postcss.config.*"
+      - ".github/workflows/visual.yml"
+  push:
+    branches: [main]
+
+# Cancel in-progress runs of this workflow on the same ref. Saves CI minutes
+# when someone force-pushes a fix on top of a still-running run.
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # `next start` reads NODE_ENV; force production so we test what ships.
+      NODE_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # `--with-deps` installs the system libraries Playwright's Chromium needs
+      # on Ubuntu (libnspr4, libnss3, etc). Without it the headless browser
+      # silently fails to launch on a fresh CI runner.
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Next.js
+        run: npm run build
+
+      # Playwright spawns `npm run start` itself via the `webServer` block in
+      # playwright.config.ts and waits for localhost:3000 before running tests.
+      # If you want to debug a flaky boot, set DEBUG=pw:webserver in env.
+      - name: Run visual tests
+        run: npm run test:visual
+
+      # On failure, upload the diff PNGs + traces so the PR author can see
+      # exactly which pixels moved. Tab through the artifact's
+      # `test-results/<test-name>/` folders — each has actual.png, expected.png
+      # and diff.png.
+      - name: Upload Playwright diff artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diff-${{ github.run_id }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

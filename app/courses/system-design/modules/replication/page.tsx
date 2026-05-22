@@ -44,25 +44,25 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="replication" />
         <ModuleProgress moduleSlug="replication" checkpoints={CHECKPOINTS} />
       </header>
 
       <section className="my-10">
-        <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
+        <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
           <li>The leader-follower model in concrete terms — sync vs async, what happens during failover, and what Spring code looks like.</li>
           <li>Multi-leader and leaderless replication, and why <code>R + W &gt; N</code> is the quorum rule everyone keeps writing on whiteboards.</li>
@@ -85,7 +85,7 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="replication" id="leader-follower" title="Leader-follower" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 1 — Leader-follower (the default)</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Leader-follower (the default)</h2>
 
         <p>
           Postgres, MySQL, and most relational databases ship with leader-follower replication. One node accepts writes
@@ -95,7 +95,7 @@ export default function Page() {
 
         <Mermaid chart={leaderDiagram} />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Synchronous vs asynchronous</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Synchronous vs asynchronous</h3>
         <p>
           The fundamental knob:
         </p>
@@ -128,7 +128,7 @@ hot_standby_feedback = on   # tells leader not to vacuum rows the follower is re
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Failover — when the leader dies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Failover — when the leader dies</h3>
         <p>
           A leader-follower setup needs a way to promote a follower when the leader dies. This is harder than it sounds:
         </p>
@@ -151,7 +151,7 @@ hot_standby_feedback = on   # tells leader not to vacuum rows the follower is re
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Routing reads to replicas</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Routing reads to replicas</h3>
         <p>
           With one leader and several followers, reads should go to the followers. Spring makes this clean with
           <code>AbstractRoutingDataSource</code>:
@@ -209,9 +209,9 @@ public class OrderQueryService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="replication" id="quorums" title="Multi-leader & quorums" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 2 — Multi-leader &amp; leaderless quorums</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Multi-leader &amp; leaderless quorums</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">Multi-leader: every region writes locally</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Multi-leader: every region writes locally</h3>
         <p>
           One leader is a write bottleneck and a single point of failure for writes. Multi-leader (sometimes called
           active-active) gives you a leader in every region. Each leader accepts writes locally and asynchronously
@@ -238,7 +238,7 @@ public class OrderQueryService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Leaderless: Cassandra and Dynamo</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Leaderless: Cassandra and Dynamo</h3>
         <p>
           No leader at all. Every node accepts writes. The client (or a coordinator on its behalf) sends each write
           to multiple nodes; same for reads. You configure how many nodes must respond before the operation is considered
@@ -247,7 +247,7 @@ public class OrderQueryService {
 
         <Mermaid chart={quorumDiagram} />
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">The R + W &gt; N rule</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">The R + W &gt; N rule</h3>
         <p>
           With N replicas, write to W of them, read from R of them. If <strong>R + W &gt; N</strong>, every read overlaps
           with at least one node that saw the latest write. By comparing version numbers across the R responses, you can
@@ -286,7 +286,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Sloppy quorums and hinted handoff</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Sloppy quorums and hinted handoff</h3>
         <p>
           What if the &quot;real&quot; replicas for a key are unreachable but other nodes are healthy? A
           <em>sloppy quorum</em>{" "}writes to the next available nodes instead, with a hint saying &quot;hey, when the
@@ -321,7 +321,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
       </Checkpoint>
 
       <Checkpoint moduleSlug="replication" id="lag" title="Replication lag in production" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 3 — Replication lag in production</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Replication lag in production</h2>
 
         <p>
           Replication lag is the elapsed time between a write being committed on the leader and being visible on a
@@ -333,7 +333,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           <li><strong>Crisis:</strong>{" "}tens of seconds to minutes. Long-running transaction on leader, network issue, follower CPU-bound during replay, vacuum lock contention.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What causes lag spikes</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What causes lag spikes</h3>
         <ul>
           <li><strong>Big transactions on the leader.</strong>{" "}A 10M-row UPDATE blocks WAL streaming until commit, then replays as a single chunk on every follower.</li>
           <li><strong>Slow follower replay.</strong>{" "}Postgres single-threaded WAL replay is a real bottleneck. If the follower can&apos;t keep up with peak write rate, lag grows.</li>
@@ -351,7 +351,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Read-your-writes — three concrete strategies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Read-your-writes — three concrete strategies</h3>
         <p>
           The most-violated consistency property in real apps. Three patterns to fix it:
         </p>
@@ -385,7 +385,7 @@ protected Object determineCurrentLookupKey() {
 
         <p><strong>3. Wait for replication.</strong>{" "}Some clients can return the WAL position of a write. The follower lets you ask &quot;have you replayed up to LSN X?&quot; and you wait until yes. Postgres exposes this as <code>pg_wal_lsn_diff</code>. More work, more correct.</p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Monotonic reads</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Monotonic reads</h3>
         <p>
           A subtler property: a user shouldn&apos;t see time go backwards. You read a comment at 14:32:00 (replica A,
           which is current). You refresh at 14:32:01 and the comment is gone (replica B, which is 30 seconds behind).
@@ -408,7 +408,7 @@ protected Object determineCurrentLookupKey() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Monitoring lag</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Monitoring lag</h3>
         <p>
           You should always have a dashboard for replication lag, in seconds, with alerts. The Postgres query is:
         </p>
@@ -456,9 +456,9 @@ SELECT
         />
       </Checkpoint>
 
-      <section className="my-12 p-6 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-        <h2 className="text-xl font-semibold mb-3">What this didn&apos;t cover</h2>
-        <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+      <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
+        <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
+        <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Logical vs physical replication (Postgres logical replication for selective table sync, schema migrations).</li>
           <li>Raft and Paxos explicitly — the consensus algorithms behind systems that promise stronger guarantees (etcd, Spanner). They show up in the consistency module.</li>
           <li>Backup and PITR (point-in-time recovery) — different problem, related toolchain.</li>
@@ -467,7 +467,7 @@ SELECT
       </section>
 
       <section className="my-12 text-center">
-        <p className="text-sm text-slate-500 mb-2">Next up</p>
+        <p className="mb-2 text-sm text-slate-500">Next up</p>
         <Link href="/courses/system-design/modules/caching-patterns" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
           Caching patterns: cache-aside, write-through, and the four ways to get invalidation wrong →
         </Link>

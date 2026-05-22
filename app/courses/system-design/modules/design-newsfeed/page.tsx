@@ -79,32 +79,32 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="design-newsfeed" />
       </header>
 
       <ModuleProgress moduleSlug={mod.slug} checkpoints={CHECKPOINTS} />
 
-      <section className="my-10 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-900 bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/40 dark:to-pink-950/40">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs uppercase tracking-wider font-bold text-fuchsia-700 dark:text-fuchsia-300">The opener</span>
+      <section className="my-10 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-6 dark:border-fuchsia-900 dark:from-fuchsia-950/40 dark:to-pink-950/40">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">The opener</span>
         </div>
-        <p className="text-base leading-relaxed m-0">
+        <p className="m-0 text-base leading-relaxed">
           The interviewer says: <em>&quot;Design a news feed. Like Instagram or Facebook home.&quot;</em>{" "}The whole problem is one sentence: <strong>given a user, return the most recent posts from the people they follow, ranked, in &lt;200ms.</strong>{" "}The hard part is the asymmetry — most users have a few hundred followers, but a celebrity has 50 million, and the strategy that works for the average user breaks for the celebrity. The senior signal is recognizing that no single fanout strategy works for both, and proposing a <strong>hybrid</strong>.
         </p>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-0">
+        <p className="mt-3 mb-0 text-sm text-slate-600 dark:text-slate-400">
           We&apos;ll use the framework: clarify, estimate, API + data, high-level, deep-dive on the fanout choice. The fanout decision IS the interview here — get it right and the rest follows.
         </p>
       </section>
@@ -770,8 +770,8 @@ public class RankedFeedController {
         </p>
       </Checkpoint>
 
-      <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
-        <p className="text-sm uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-300 mb-2">Up next</p>
+      <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
+        <p className="mb-2 text-sm font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Up next</p>
         <p className="m-0 text-base">
           Module 36: Design Twitter. Newsfeed + timelines + search + trending — a busier surface area, but the framework you just used on news feed handles all of it.
         </p>

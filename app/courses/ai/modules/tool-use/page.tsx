@@ -37,21 +37,21 @@ sequenceDiagram
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Tool use & function calling
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Stop pasting data into prompts. Let the model call your code.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="tool-use" />
@@ -66,7 +66,7 @@ sequenceDiagram
 
       {/* ===================== Part 1 ===================== */}
       <section id="why-tools">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 1 — Why tool use exists</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 1 — Why tool use exists</h2>
 
         <p>
           The model is frozen knowledge. Its training cutoff is months or years ago, it cannot read your database, it cannot call your APIs, and even if it could, you wouldn&apos;t want to grant it raw network access. So how do you build a feature like &quot;list my open Jira tickets&quot;? You can&apos;t cram every ticket into the prompt — that&apos;s expensive and stale a minute later. You can&apos;t fine-tune in real time.
@@ -82,8 +82,8 @@ sequenceDiagram
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">When you actually need this</h3>
-        <ul className="list-disc pl-6 space-y-2">
+        <h3 className="mt-8 mb-3 text-xl font-semibold">When you actually need this</h3>
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Live data</strong> — current ticket status, today&apos;s metrics, real user records.</li>
           <li><strong>Side effects</strong> — create a Jira issue, send an email, update a row.</li>
           <li><strong>Computation the model is bad at</strong> — exact arithmetic, regex, calling a deterministic algorithm.</li>
@@ -123,7 +123,7 @@ sequenceDiagram
 
       {/* ===================== Part 2 ===================== */}
       <section id="the-loop">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 2 — The tool execution loop</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 2 — The tool execution loop</h2>
 
         <p>
           One mental model worth burning in: tool use is a loop, not a single call. Spring AI hides the loop most of the time, but if you don&apos;t know it&apos;s there, you&apos;ll be confused when the model calls three tools in a row, when it loops forever, or when you need to set a max-iterations cap.
@@ -131,11 +131,11 @@ sequenceDiagram
 
         <Mermaid chart={toolLoopDiagram} />
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">What the wire actually carries</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">What the wire actually carries</h3>
         <p>
           Each request to the API now includes a <code>tools</code> array — every tool you&apos;re willing to expose, with name, description, and input schema. The response is one of two things:
         </p>
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Plain text</strong> — model answered without needing a tool. You&apos;re done.</li>
           <li><strong>A <code>tool_use</code> block</strong> — model wants you to run something. You execute, then send a follow-up request that includes a matching <code>tool_result</code>. The model produces the next response (which might be more text, or yet another tool call).</li>
         </ul>
@@ -177,13 +177,13 @@ sequenceDiagram
 
       {/* ===================== Part 3 ===================== */}
       <section id="spring-tools">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 3 — Tools in Spring AI</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 3 — Tools in Spring AI</h2>
 
         <p>
           The good news: you do not write JSON schemas by hand. Spring AI inspects your method signatures, generates the schema, and binds tool calls back to the method. There are two ways to register a tool — <strong>per-call</strong>{" "}via <code>@Tool</code> annotations on a regular Spring bean&apos;s methods, or <strong>programmatic</strong>{" "}via <code>MethodToolCallback</code> if you need runtime flexibility.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The simplest case: <code>@Tool</code> on a bean method</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The simplest case: <code>@Tool</code> on a bean method</h3>
 
         <CodeBlock lang="java" caption="UserTools.java">{`package com.example.tools;
 
@@ -226,7 +226,7 @@ public class UserTools {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Programmatic: <code>MethodToolCallback</code></h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Programmatic: <code>MethodToolCallback</code></h3>
         <p>
           If you need to register tools dynamically (per-tenant tool sets, feature-flagged tools, tools loaded from config), build them programmatically:
         </p>
@@ -276,9 +276,9 @@ String answer = chatClient.prompt()
 
       {/* ===================== Part 4 ===================== */}
       <section id="schemas-and-safety">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 4 — Schemas &amp; safety</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 4 — Schemas &amp; safety</h2>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">What the model actually sees</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">What the model actually sees</h3>
         <p>
           Spring AI&apos;s reflection-based schema generation handles primitives, records, lists, maps, and enums out of the box. Here&apos;s a tool that takes a more complex input:
         </p>
@@ -312,7 +312,7 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
           Notice <code>Status</code> became an <code>enum</code> in the schema — that&apos;s a strong constraint. The API will reject tool calls whose inputs don&apos;t conform, and the model is heavily biased to stay inside the enum (it&apos;s built into the prompt the platform synthesizes from your schema). It&apos;s not a hard decoding constraint the way some libraries enforce, so still <em>validate the value defensively</em>{" "}in your tool handler — but in practice the model nearly always gives you a valid value. Use enums where you want strict values; use plain strings where you want flexibility.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Three things that bite people in production</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Three things that bite people in production</h3>
 
         <Callout variant="warn" title="1. Privilege escalation via tool">
           <p>
@@ -360,14 +360,14 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
 
       {/* ===================== Part 5: Project ===================== */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 5 — Project: GraphQL-aware assistant</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5 — Project: GraphQL-aware assistant</h2>
 
         <p>
           You&apos;re going to build a CLI assistant that answers questions about a small fake &quot;company&quot; — users, projects, and issues — by calling tools that simulate GraphQL resolvers. The same pattern works for a real GraphQL backend: replace the in-memory store with a <code>WebClient</code> that POSTs queries.
         </p>
 
         <Callout variant="spring" title="What you'll wire up">
-          <ul className="list-disc pl-6 space-y-1 mt-2">
+          <ul className="mt-2 list-disc space-y-1 pl-6">
             <li>A <code>FakeGraph</code> service holding the seed data (users, projects, issues).</li>
             <li>Three tools — <code>findUser</code>, <code>listProjects</code>, <code>findIssuesByLabel</code>.</li>
             <li>A <code>GraphAssistant</code> service that calls Claude with all three tools registered.</li>
@@ -375,11 +375,11 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
           </ul>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 1 — Scaffold the project</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 1 — Scaffold the project</h3>
         <p>Same flow as Modules 9 and 10. Either path works:</p>
 
         <Callout variant="info" title="Path A — Browser (start.spring.io)">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li>Open this pre-filled link: <a className="text-indigo-600 hover:underline" href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.1&packaging=jar&jvmVersion=21&groupId=com.example&artifactId=graph-assistant&name=graph-assistant&description=GraphQL-aware%20assistant&packageName=com.example.graph&dependencies=spring-ai-anthropic" target="_blank" rel="noreferrer">start.spring.io with everything pre-filled</a>.</li>
             <li>Click <strong>GENERATE</strong>{" "}at the bottom.</li>
             <li>Unzip the download somewhere sensible — e.g. <code>~/code/graph-assistant</code>.</li>
@@ -388,7 +388,7 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
         </Callout>
 
         <Callout variant="info" title="Path B — IntelliJ Initializr">
-          <ol className="list-decimal pl-6 space-y-1 mt-2">
+          <ol className="mt-2 list-decimal space-y-1 pl-6">
             <li><strong>File → New → Project → Spring Initializr</strong>.</li>
             <li>Group <code>com.example</code>, Artifact <code>graph-assistant</code>, Type <strong>Maven</strong>, Language <strong>Java</strong>, JDK <strong>21</strong>, Packaging <strong>Jar</strong>.</li>
             <li>Next. Spring Boot <strong>3.4.x</strong>. In Dependencies, add <strong>Anthropic (Spring AI)</strong>.</li>
@@ -396,15 +396,15 @@ public List<Issue> findIssues(@ToolParam(description = "Filter criteria") IssueF
           </ol>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 2 — Verify scaffold</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2 — Verify scaffold</h3>
         <CodeBlock lang="plain">{`cd ~/code/graph-assistant
 ./mvnw -version    # should print Maven + JDK 21
 ls src/main/java/com/example/graph/    # should contain GraphAssistantApplication.java`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 3 — Set your API key</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3 — Set your API key</h3>
         <CodeBlock lang="plain">{`export ANTHROPIC_API_KEY="sk-ant-..."`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 4 — application.properties</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4 — application.properties</h3>
         <CodeBlock lang="plain" caption="src/main/resources/application.properties">{`spring.application.name=graph-assistant
 spring.main.web-application-type=none
 spring.main.banner-mode=off
@@ -415,7 +415,7 @@ spring.ai.anthropic.chat.options.model=claude-sonnet-4-5
 spring.ai.anthropic.chat.options.temperature=0.2
 spring.ai.anthropic.chat.options.max-tokens=1024`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 5 — The fake graph backend</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5 — The fake graph backend</h3>
         <p>This stand-in for a real GraphQL service holds three tables in memory:</p>
 
         <CodeBlock lang="java" caption="src/main/java/com/example/graph/FakeGraph.java">{`package com.example.graph;
@@ -461,7 +461,7 @@ public class FakeGraph {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 6 — Wrap it as tools</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6 — Wrap it as tools</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/graph/GraphTools.java">{`package com.example.graph;
 
 import org.springframework.ai.tool.annotation.Tool;
@@ -497,7 +497,7 @@ public class GraphTools {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 7 — The assistant service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7 — The assistant service</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/graph/GraphAssistant.java">{`package com.example.graph;
 
 import org.springframework.ai.chat.client.ChatClient;
@@ -530,7 +530,7 @@ public class GraphAssistant {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 8 — CLI runner</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 8 — CLI runner</h3>
         <CodeBlock lang="java" caption="src/main/java/com/example/graph/GraphCli.java">{`package com.example.graph;
 
 import org.springframework.boot.CommandLineRunner;
@@ -570,7 +570,7 @@ public class GraphCli implements CommandLineRunner {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Step 9 — Run it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 9 — Run it</h3>
         <CodeBlock lang="plain">{`./mvnw spring-boot:run`}</CodeBlock>
 
         <p className="mt-3">Expected session:</p>
@@ -598,7 +598,7 @@ you> quit
 Bye.`}</CodeBlock>
 
         <Callout variant="warn" title="Common errors & fixes">
-          <ul className="list-disc pl-6 space-y-2 mt-2">
+          <ul className="mt-2 list-disc space-y-2 pl-6">
             <li><strong>&quot;No qualifying bean of type ChatClient.Builder&quot;</strong> — your <code>pom.xml</code> is missing <code>spring-ai-starter-model-anthropic</code>. Re-check the dependency.</li>
             <li><strong>Model never calls a tool, just makes things up</strong> — your tool descriptions are too vague. Beef them up; add example values.</li>
             <li><strong>Loop runs a handful of tool calls and aborts</strong> — Spring AI&apos;s tool-execution loop has a built-in iteration cap to prevent runaway loops. Either your tool returns nonsense (check what it returns by logging), or the question genuinely needs more steps. Raise the cap via <code>ToolCallingChatOptions</code> when you build the request (e.g.{" "}<code>ToolCallingChatOptions.builder().toolExecutionEligibilityPredicate(...)</code>), or via the per-property knob your Spring AI version exposes — names have shifted across milestones, so check the docs for your version.</li>
@@ -615,7 +615,7 @@ Bye.`}</CodeBlock>
 
       {/* ===================== Part 6: Final Quiz ===================== */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-4">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final quiz"
@@ -684,7 +684,7 @@ Bye.`}</CodeBlock>
         </Checkpoint>
       </section>
 
-      <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
+      <div className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
         <Link href="/courses/ai/modules/spring-ai" className="text-indigo-600 hover:underline">← Module 10: Spring AI integration</Link>
         <Link href="/courses/ai/modules/streaming" className="text-indigo-600 hover:underline">Module 12: Streaming with SSE →</Link>
       </div>

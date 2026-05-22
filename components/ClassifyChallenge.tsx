@@ -83,23 +83,23 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
   }
 
   return (
-    <div className="not-prose my-8 rounded-xl border-2 border-violet-300 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-950/40 dark:to-indigo-950/40 overflow-hidden shadow-sm">
-      <div className="px-5 py-3 border-b border-violet-200 dark:border-violet-900 bg-violet-100/50 dark:bg-violet-950/60">
-        <div className="flex items-center gap-2 flex-wrap justify-between">
+    <div className="not-prose my-8 overflow-hidden rounded-xl border-2 border-violet-300 bg-gradient-to-br from-violet-50 to-indigo-50 shadow-sm dark:border-violet-800 dark:from-violet-950/40 dark:to-indigo-950/40">
+      <div className="border-b border-violet-200 bg-violet-100/50 px-5 py-3 dark:border-violet-900 dark:bg-violet-950/60">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="text-lg">🗂️</span>
-            <h4 className="font-bold text-sm uppercase tracking-wider text-violet-900 dark:text-violet-200">
+            <h4 className="text-sm font-bold tracking-wider text-violet-900 uppercase dark:text-violet-200">
               {title}
             </h4>
           </div>
-          <div className="text-xs font-mono text-violet-900 dark:text-violet-200">
+          <div className="font-mono text-xs text-violet-900 dark:text-violet-200">
             {correctCount}/{items.length} correct
           </div>
         </div>
-        <p className="text-sm text-violet-800 dark:text-violet-200 mt-1">{prompt}</p>
+        <p className="mt-1 text-sm text-violet-800 dark:text-violet-200">{prompt}</p>
       </div>
 
-      <div className="p-5 space-y-3">
+      <div className="space-y-3 p-5">
         {items.map((item) => {
           const chosen = answers[item.id];
           const isCorrect = chosen === item.answer;
@@ -109,12 +109,12 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
           return (
             <div
               key={item.id}
-              className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 space-y-2"
+              className="space-y-2 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900"
             >
-              <div className="text-sm text-slate-800 dark:text-slate-200 font-medium">
+              <div className="text-sm font-medium text-slate-800 dark:text-slate-200">
                 {item.label}
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex flex-wrap gap-2">
                 {buckets.map((b) => {
                   const c = COLOR_MAP[b.color];
                   const picked = chosen === b.id;
@@ -125,11 +125,11 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
                       key={b.id}
                       onClick={() => choose(item.id, b.id)}
                       disabled={!!chosen}
-                      className={`px-3 py-1.5 text-xs font-semibold rounded-md border-2 transition ${
+                      className={`rounded-md border-2 px-3 py-1.5 text-xs font-semibold transition ${
                         shouldBeGreen
-                          ? "bg-emerald-500 text-white border-emerald-600"
+                          ? "border-emerald-600 bg-emerald-500 text-white"
                           : shouldBeRed
-                          ? "bg-rose-500 text-white border-rose-600"
+                          ? "border-rose-600 bg-rose-500 text-white"
                           : picked
                           ? `${c.bgDark} ${c.text} ${c.border}`
                           : chosen
@@ -144,16 +144,16 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
               </div>
               {chosen && (
                 <div
-                  className={`text-xs p-2 rounded ${
+                  className={`rounded p-2 text-xs ${
                     isCorrect
-                      ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-900"
-                      : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200 border border-rose-200 dark:border-rose-900"
+                      ? "border border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200"
+                      : "border border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200"
                   }`}
                 >
                   {isCorrect ? "✓ Correct. " : `✗ Nope — it's ${correctBucket.label}. `}
                   {item.explanation}
                   {!isCorrect && chosenBucket && (
-                    <span className="block mt-1 opacity-75">
+                    <span className="mt-1 block opacity-75">
                       (You picked {chosenBucket.label}.)
                     </span>
                   )}
@@ -164,7 +164,7 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
         })}
 
         {done && (
-          <div className="flex items-center justify-between gap-2 flex-wrap pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
             <div
               className={`text-sm font-semibold ${
                 correctCount === items.length
@@ -178,7 +178,7 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
             </div>
             <button
               onClick={reset}
-              className="px-3 py-1.5 rounded-md border border-violet-300 dark:border-violet-700 bg-white/50 dark:bg-slate-900 text-xs font-semibold text-violet-900 dark:text-violet-200 hover:bg-violet-100 dark:hover:bg-violet-950"
+              className="rounded-md border border-violet-300 bg-white/50 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-100 dark:border-violet-700 dark:bg-slate-900 dark:text-violet-200 dark:hover:bg-violet-950"
             >
               Reset
             </button>

@@ -24,19 +24,19 @@ export default function ChatInterfaceModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 4 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Full chat interface</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Full chat interface</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           React on the front, Spring Boot on the back, tool-use in the middle. End-to-end, no mocks.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="chat-interface" />
@@ -44,16 +44,16 @@ export default function ChatInterfaceModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 dark:border-sky-800 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-sky-300 bg-gradient-to-br from-sky-50 to-blue-50 p-6 dark:border-sky-800 dark:from-sky-950/40 dark:to-blue-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A real chat product. Not a demo, not a mock — the full stack with sessions, history, tool
           calls, and the operational concerns you hit in production.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Module 20&apos;s components, now wired to a real Spring Boot SSE endpoint</li>
           <li>Session and message persistence — refreshes don&apos;t lose conversations</li>
           <li>Streaming tool calls (Module 11) all the way through to a structured UI</li>
@@ -74,7 +74,7 @@ export default function ChatInterfaceModule() {
       {/* PART 1: FRONTEND ↔ BACKEND WIRING                                  */}
       {/* ================================================================= */}
       <section id="frontend-backend">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Frontend ↔ backend wiring</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Frontend ↔ backend wiring</h2>
 
         <p>
           We have a Next.js frontend (Module 20) and a Spring Boot backend (Modules 11 + 12). Now
@@ -82,13 +82,13 @@ export default function ChatInterfaceModule() {
           beginners reliably trip:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-1">
+        <ol className="list-decimal space-y-1 pl-6">
           <li>CORS — the backend has to allow the frontend&apos;s origin</li>
           <li>Reverse proxy / dev rewrite — so you don&apos;t hard-code <code>localhost:8080</code> in fetch calls</li>
           <li>The shape of the request — multi-turn means sending the whole history, not just the latest message</li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">CORS, the way that won&apos;t bite you later</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">CORS, the way that won&apos;t bite you later</h3>
 
         <p>
           Spring Boot defaults to denying cross-origin requests, which is correct. For local dev your
@@ -153,7 +153,7 @@ export default nextConfig;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The chat request shape</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The chat request shape</h3>
 
         <p>
           The frontend sends the entire conversation history on every turn. The model is stateless;
@@ -178,7 +178,7 @@ Content-Type: application/json
           model.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The Spring controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The Spring controller</h3>
 
         <CodeBlock lang="java">{`// ChatController.java
 package com.example.standup.api;
@@ -235,7 +235,7 @@ public class ChatController {
 
         <p>Three things worth flagging in this controller:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>
             <strong>Returns <code>Flux&lt;String&gt;</code></strong> — Spring will frame each emission as
             its own SSE chunk when the produces type is <code>text/event-stream</code>. We hand-format
@@ -300,7 +300,7 @@ public class ChatController {
       {/* PART 2: SESSIONS                                                    */}
       {/* ================================================================= */}
       <section id="sessions">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — Sessions and conversation memory</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Sessions and conversation memory</h2>
 
         <p>
           The frontend holds the conversation in <code>messages</code> state. That works until the
@@ -308,11 +308,11 @@ public class ChatController {
           you can resume from.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">What &quot;session&quot; means here</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">What &quot;session&quot; means here</h3>
 
         <p>Three different things people call a &quot;session,&quot; clearly separated:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Auth session:</strong> &quot;who is this user.&quot; Cookies, JWT, OAuth — whatever your stack already does. Out of scope for this module.</li>
           <li><strong>Conversation session:</strong> &quot;which thread is this turn part of.&quot; A UUID per conversation. Multiple per user.</li>
           <li><strong>Model session:</strong> &quot;memory the model retains across turns.&quot; You build this by replaying the conversation history on every call.</li>
@@ -323,7 +323,7 @@ public class ChatController {
           conversation, identified by a UUID, with a list of messages.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A minimal session store</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A minimal session store</h3>
 
         <CodeBlock lang="java">{`// ConversationStore.java
 package com.example.standup.session;
@@ -388,7 +388,7 @@ CREATE TABLE messages (
 
 CREATE INDEX idx_messages_conversation ON messages (conversation_id, created_at);`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Wire it into the controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Wire it into the controller</h3>
 
         <p>
           Persist on the way in (the user message), on the way out (the final assistant message), and
@@ -444,7 +444,7 @@ public Flux<String> stream(@RequestBody ChatRequest req) {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The frontend side: load and continue</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The frontend side: load and continue</h3>
 
         <p>
           On mount, check the URL for a <code>?session=...</code> query param. If present, load history
@@ -499,7 +499,7 @@ export function useChatSession(userId: string) {
           conversation. (Add auth checks on the backend before exposing this in production.)
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Trimming history when it gets long</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Trimming history when it gets long</h3>
 
         <p>
           Conversations grow. After 50 turns you&apos;re sending 50,000+ tokens of history on every
@@ -507,7 +507,7 @@ export function useChatSession(userId: string) {
           strategies, in order of sophistication:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong>Last-N turns.</strong>{" "}Keep the last 10 user-assistant pairs. Simple, predictable,
             loses information beyond that horizon.
@@ -575,7 +575,7 @@ export function useChatSession(userId: string) {
       {/* PART 3: STREAMING TOOL RESULTS                                     */}
       {/* ================================================================= */}
       <section id="tool-results">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Streaming tool results to the UI</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Streaming tool results to the UI</h2>
 
         <p>
           Module 20 modeled tool calls as message parts on the frontend. We never wired up the backend
@@ -594,7 +594,7 @@ export function useChatSession(userId: string) {
           Same data, but the user knows what the model did. Trust comes from visibility.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spring AI&apos;s low-level streaming events</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spring AI&apos;s low-level streaming events</h3>
 
         <p>
           The high-level <code>.content()</code> stream from Module 12 only emits text tokens. To
@@ -671,7 +671,7 @@ private Flux<String> toSseFrames(ChatResponse chatResponse) {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Wiring tool results back</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Wiring tool results back</h3>
 
         <p>
           Spring AI&apos;s default tool-loop runs the tool, feeds the result back into the model, and
@@ -733,7 +733,7 @@ public class ToolService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The frontend already handles this</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The frontend already handles this</h3>
 
         <p>
           Module 20&apos;s <code>reduceChunk</code> already accepts <code>tool_call</code> and
@@ -855,14 +855,14 @@ public class ToolService {
       {/* PART 4: PRODUCTION POLISH                                          */}
       {/* ================================================================= */}
       <section id="production">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Production polish</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Production polish</h2>
 
         <p>
           A working chat is not a shippable chat. Five concerns separate &quot;works on my
           machine&quot; from &quot;handles real users.&quot;
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">1. Rate limits</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">1. Rate limits</h3>
 
         <p>
           One user can&apos;t fire 50 chat requests per minute and exhaust your API budget. Cap
@@ -891,7 +891,7 @@ if (!rateLimiter.tryConsume(userId)) {
                      "data: [DONE]\\n\\n");
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">2. Token budgeting per request</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">2. Token budgeting per request</h3>
 
         <p>
           Cap the input size. Trim history before sending; reject prompts above some token threshold.
@@ -908,7 +908,7 @@ if (totalTokens > 50_000) {
           (Trimming strategy: drop oldest first, but keep the system prompt and the latest user turn.)
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">3. Logging without leaking</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">3. Logging without leaking</h3>
 
         <p>
           Log enough to debug, never enough to leak. The temptation is to log every prompt and
@@ -917,7 +917,7 @@ if (totalTokens > 50_000) {
 
         <p>The minimum useful set of fields:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Always log:</strong>{" "}session id, user id, request timestamp, latency to first token, total tokens, total latency, tool calls (name + duration, not arguments), error reason</li>
           <li><strong>Conditionally log (sampled, redacted):</strong>{" "}hash of the prompt for grouping similar queries, length of prompt and response in tokens</li>
           <li><strong>Never log:</strong>{" "}raw prompts, raw responses, raw tool inputs/outputs, anything containing user-supplied content unless redacted</li>
@@ -931,21 +931,21 @@ if (totalTokens > 50_000) {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">4. Graceful degradation</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">4. Graceful degradation</h3>
 
         <p>
           The Anthropic API will sometimes return 5xx, time out, or rate-limit you. Decide what your
           UX does in each case:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>5xx from the model:</strong>{" "}retry once with a small jitter, then surface a clear error to the user with a retry button.</li>
           <li><strong>API rate limit (429):</strong>{" "}queue with a polite delay; if it persists past 30s, fail with &quot;experiencing high load — try again in a moment.&quot;</li>
           <li><strong>Slow tokens (no token in 30s):</strong>{" "}abort with &quot;the model is being slow; here&apos;s what we have so far.&quot;</li>
           <li><strong>Tool failures:</strong>{" "}let Spring AI&apos;s loop see the error; many models will gracefully recover (&quot;I tried to look that up but the search service was down — let me try a different approach&quot;).</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">5. The first-token timeout</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">5. The first-token timeout</h3>
 
         <p>
           The single most important production metric for a chat product is <em>time to first token</em>.
@@ -1015,7 +1015,7 @@ return chatClient.prompt()
       {/* PART 5: PROJECT                                                    */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: team standup bot</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: team standup bot</h2>
 
         <p>
           Build a chat product your team would actually use: ask it &quot;what shipped yesterday?&quot;
@@ -1024,7 +1024,7 @@ return chatClient.prompt()
           with sessions from this module.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Architecture</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Architecture</h3>
 
         <CodeBlock lang="plain">{`┌─────────────────────────┐         ┌──────────────────────────────┐
 │  Next.js (port 3000)    │         │  Spring Boot (port 8080)     │
@@ -1044,11 +1044,11 @@ return chatClient.prompt()
                                     │  tickets (project data)      │
                                     └──────────────────────────────┘`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Tools the bot exposes</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Tools the bot exposes</h3>
 
         <p>Three tools, all backed by a fake <code>tickets</code> table you seed with test data:</p>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li>
             <code>searchShipped(team, since, until)</code> — returns tickets marked &quot;shipped&quot; in the date range.
           </li>
@@ -1060,7 +1060,7 @@ return chatClient.prompt()
           </li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Seeding test data</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Seeding test data</h3>
 
         <CodeBlock lang="plain">{`-- V2__seed_tickets.sql
 CREATE TABLE tickets (
@@ -1086,9 +1086,9 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
   ('GRO-2010', 'Welcome email A/B test', 'growth', 'ravi',  'shipped', '2026-04-27 11:15+00'),
   ('GRO-2014', 'Pricing page redesign',   'growth', 'maya',  'in_progress', NULL);`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Build order</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Build order</h3>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Backend basics.</strong>{" "}Spring Boot with Postgres, Flyway migrations for
             <code>conversations</code> + <code>messages</code> + <code>tickets</code>. Seed data.
@@ -1116,11 +1116,11 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Acceptance criteria</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Acceptance criteria</h3>
 
         <p>You&apos;ve shipped this when:</p>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li>Asking &quot;what did the platform team ship yesterday?&quot; produces a list of
               tickets sourced from the DB, with the tool-call visible mid-stream.</li>
           <li>Refreshing the page restores the conversation from the URL query param.</li>
@@ -1133,9 +1133,9 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           <li>Logs contain session/user/timing/tool data — but no raw prompts or model outputs.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1">
+        <ul className="list-disc space-y-1 pl-6">
           <li><strong>Markdown rendering</strong> — the bot is going to emit bullet lists and bold text. Render them.</li>
           <li><strong>Slack-style mentions</strong> — let users <code>@mention</code> teammates and have the bot prefer those people in tool results.</li>
           <li><strong>Daily digest job</strong> — a Spring scheduled task that runs the same prompt every morning and posts the result somewhere (file, email, Slack webhook).</li>
@@ -1156,7 +1156,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final check"
@@ -1228,11 +1228,11 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
       </section>
 
       {/* FOOTER NAV */}
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
-        <Link href="/courses/ai/modules/react-streaming" className="text-slate-600 dark:text-slate-400 hover:text-sky-600">
+      <footer className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
+        <Link href="/courses/ai/modules/react-streaming" className="text-slate-600 hover:text-sky-600 dark:text-slate-400">
           ← Module 20: React streaming patterns
         </Link>
-        <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline font-semibold">
+        <Link href="/courses/ai/modules/multimodal" className="font-semibold text-sky-600 hover:underline">
           Module 22: Multimodal inputs →
         </Link>
       </footer>

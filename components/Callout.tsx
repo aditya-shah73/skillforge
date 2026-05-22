@@ -43,11 +43,11 @@ export default function Callout({
   const s = variantStyles[variant];
   return (
     <div className={`my-6 rounded-xl border-l-4 ${s.border} ${s.bg} p-5`}>
-      <div className={`flex items-center gap-2 mb-2 font-semibold text-sm uppercase tracking-wide ${s.title}`}>
+      <div className={`mb-2 flex items-center gap-2 text-sm font-semibold tracking-wide uppercase ${s.title}`}>
         <span className="text-lg">{s.icon}</span>
         <span>{title || s.label}</span>
       </div>
-      <div className="text-sm leading-relaxed prose-custom">{children}</div>
+      <div className="prose-custom text-sm leading-relaxed">{children}</div>
     </div>
   );
 }

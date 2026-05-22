@@ -101,13 +101,13 @@ flowchart TB
       <ModuleProgress moduleSlug="tries" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-semibold tracking-wide uppercase">
+        <div className="mt-3 block w-fit rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~1.5–2h · Phase 8 · Advanced &amp; Interview Prep</p>
       </div>
@@ -244,7 +244,7 @@ List<String> wordsWithPrefix(String prefix) {
         <h3>Inserting <code>cat</code>, <code>car</code>, <code>card</code></h3>
 
         <Mermaid chart={trieShape} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Stars (★) mark <code>isEnd</code> nodes. The path root → c → a → t spells &quot;cat&quot;. The path
           root → c → a → r spells &quot;car&quot; — and the same r-node continues to d to spell &quot;card&quot;.
         </p>
@@ -257,7 +257,7 @@ List<String> wordsWithPrefix(String prefix) {
         </p>
 
         <Mermaid chart={sharing} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           A HashSet stores three independent strings. A trie stores their <em>shared structure</em>{" "}once.
         </p>
 
@@ -1036,8 +1036,8 @@ class TrieNode {
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-rose-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Module 37 complete · Tries</h3>
+        <div className="not-prose mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-rose-800/40 dark:from-pink-950/30 dark:to-rose-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Module 37 complete · Tries</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Prefix queries demystified. You can now implement a trie from scratch, recognize trie problems on sight,
             apply the DFS-plus-trie combo on a grid, and reason about when a hashmap is the right call instead.
@@ -1046,7 +1046,7 @@ class TrieNode {
           </p>
           <Link
             href="/courses/dsa/modules/union-find"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Next: Union-Find (Disjoint Set Union) →
           </Link>

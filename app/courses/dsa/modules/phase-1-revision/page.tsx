@@ -41,23 +41,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-rose-500 to-orange-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-rose-500 to-orange-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 1 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 1 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The whole Big-O / space / amortized story compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-1-revision" />
@@ -66,10 +66,10 @@ flowchart LR
 
       {/* INTRO — set expectations, this is a map not a tutorial */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 1</strong> — every rule, every curve, every gotcha from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Big-O from zero</Link>, <Link href="/courses/dsa/modules/space-complexity" className="text-emerald-600 hover:underline">Space complexity &amp; the call stack</Link>, and <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Best, average, worst &amp; amortized analysis</Link>.
         </p>
       </section>
@@ -78,14 +78,14 @@ flowchart LR
       {/* SECTION 1 — The 7 curves */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. The 7 curves</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The 7 curves</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Memorize the order. Every Big-O answer you give in an interview lands on one of these seven.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Curve</th>
                 <th className="px-4 py-3 font-semibold">Name</th>
@@ -148,11 +148,11 @@ flowchart LR
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           Rule of thumb at <code>n = 1000</code>: O(n²) is a million ops (~1ms, fine). At <code>n = 10⁶</code> it&apos;s a trillion (~hours, not fine). At <code>n = 20</code>, O(2ⁿ) is a million; at <code>n = 40</code> it&apos;s a trillion. Exponential breaks at much smaller n than you&apos;d think.
         </p>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
         </p>
       </section>
@@ -161,13 +161,13 @@ flowchart LR
       {/* SECTION 2 — Big-O calculation rules */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. The 4 calculation rules</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The 4 calculation rules</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Apply in this order. Most Big-O questions are settled by rules 1–3.
         </p>
 
-        <h3 className="text-lg font-semibold mt-6 mb-2">Rule 1 — Drop constants</h3>
-        <p className="text-slate-700 dark:text-slate-300 not-prose">
+        <h3 className="mt-6 mb-2 text-lg font-semibold">Rule 1 — Drop constants</h3>
+        <p className="not-prose text-slate-700 dark:text-slate-300">
           <code>O(2n)</code>, <code>O(3n)</code>, <code>O(500n)</code> are all <code>O(n)</code>. Big-O is about <em>growth rate</em>, not actual operation count.
         </p>
         <CodeBlock lang="java" caption="Two passes — still O(n)">{`int sumThenMax(int[] a) {
@@ -178,8 +178,8 @@ flowchart LR
     return s + m;                    // total 2n → O(n)
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">Rule 2 — Drop lower-order terms</h3>
-        <p className="text-slate-700 dark:text-slate-300 not-prose">
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 2 — Drop lower-order terms</h3>
+        <p className="not-prose text-slate-700 dark:text-slate-300">
           <code>O(n² + n)</code> is <code>O(n²)</code>. <code>O(n log n + n)</code> is <code>O(n log n)</code>. The dominant term wins; the others are noise at large n.
         </p>
         <CodeBlock lang="java" caption="Setup + nested loop — the nested loop dominates">{`void check(int[] a) {
@@ -192,8 +192,8 @@ flowchart LR
     // n log n + n²  →  O(n²)
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">Rule 3 — Multiply nested loops</h3>
-        <p className="text-slate-700 dark:text-slate-300 not-prose">
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 3 — Multiply nested loops</h3>
+        <p className="not-prose text-slate-700 dark:text-slate-300">
           Inner runs once <em>per</em>{" "}outer iteration. Multiply the bounds. If they&apos;re both <code>n</code> → <code>O(n²)</code>. If outer is <code>n</code> and inner is <code>m</code> → <code>O(n·m)</code>.
         </p>
         <CodeBlock lang="java" caption="Two different bounds — keep them separate">{`boolean hasPair(int[] users, int[] orders) {
@@ -205,8 +205,8 @@ flowchart LR
     return false;
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">Rule 4 — Add sequential blocks (then drop lower-order)</h3>
-        <p className="text-slate-700 dark:text-slate-300 not-prose">
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 4 — Add sequential blocks (then drop lower-order)</h3>
+        <p className="not-prose text-slate-700 dark:text-slate-300">
           Independent blocks: add their complexities, then apply rule 2.
         </p>
         <CodeBlock lang="java" caption="Three sequential passes — drop everything but the dominant">{`void pipeline(int[] a) {
@@ -218,7 +218,7 @@ flowchart LR
     // n log n + n + n²  →  O(n²)
 }`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-6 not-prose">
+        <p className="not-prose mt-6 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
         </p>
       </section>
@@ -227,39 +227,39 @@ flowchart LR
       {/* SECTION 3 — Reading code for Big-O, 5 patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Reading code for Big-O — the 5 patterns</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Reading code for Big-O — the 5 patterns</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When you see this shape, you say this complexity. No further analysis needed.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Pattern 1 · single loop</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">for i in 0..n: work()</code>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 1 · single loop</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">for i in 0..n: work()</code>
             <div className="font-mono text-sm font-semibold">→ O(n)</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">Pattern 2 · nested loops</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">for i: for j: work()</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-orange-600 uppercase">Pattern 2 · nested loops</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">for i: for j: work()</code>
             <div className="font-mono text-sm font-semibold">→ O(n²) — or O(n·m) if different sizes</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Pattern 3 · halving</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">while n &gt; 0: n /= 2</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 3 · halving</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">while n &gt; 0: n /= 2</code>
             <div className="font-mono text-sm font-semibold">→ O(log n)</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Pattern 4 · sort + scan</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">sort(a); for x in a: work()</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Pattern 4 · sort + scan</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">sort(a); for x in a: work()</code>
             <div className="font-mono text-sm font-semibold">→ O(n log n) — sort dominates</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 sm:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Pattern 5 · recursion with two calls</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">f(n) = f(n-1) + f(n-2) + work()</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 sm:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Pattern 5 · recursion with two calls</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">f(n) = f(n-1) + f(n-2) + work()</code>
             <div className="font-mono text-sm font-semibold">→ O(2ⁿ) without memo, O(n) with memo</div>
           </div>
         </div>
@@ -268,7 +268,7 @@ flowchart LR
           <strong>The shortcut:</strong>{" "}when you see a recursive call, the time complexity is roughly <em>branching factor</em> ^ <em>depth</em>. One call per frame → linear. Two calls per frame, depth n → 2ⁿ. Memoization cuts this to <em>distinct subproblems × work per subproblem</em>.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
         </p>
       </section>
@@ -277,18 +277,18 @@ flowchart LR
       {/* SECTION 4 — Space complexity cheat sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Space complexity cheat sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Space complexity cheat sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When an interviewer asks &quot;and what&apos;s the space complexity?&quot;, they almost always mean <em>auxiliary</em>{" "}space.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Auxiliary space</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Auxiliary space</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Extra memory <em>beyond the input</em>{" "}that your algorithm allocates. This is what the interviewer cares about.
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>In-place sort → O(1) auxiliary</li>
               <li>Merge sort → O(n) auxiliary (the temp arrays)</li>
               <li>BFS with a queue → O(n) auxiliary</li>
@@ -296,12 +296,12 @@ flowchart LR
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">JVM stack vs heap</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">JVM stack vs heap</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               In Java, memory comes from two regions:
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Stack</strong>: ~512KB–1MB per thread. Holds call frames, local primitives, references. Recursion lives here.</li>
               <li><strong>Heap</strong>: gigabytes. Every <code>new</code> goes here — arrays, objects, ArrayList internals.</li>
               <li>Java has <strong>no tail-call optimization</strong>. Deep recursion = StackOverflowError.</li>
@@ -309,10 +309,10 @@ flowchart LR
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Recursion depth → stack space</h3>
+        <h3 className="mb-2 text-base font-semibold">Recursion depth → stack space</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Algorithm</th>
                 <th className="px-4 py-3 font-semibold">Max recursion depth</th>
@@ -371,7 +371,7 @@ flowchart LR
           <strong>The Java-specific gotcha:</strong>{" "}recursion depth past ~5,000–10,000 frames will throw <code>StackOverflowError</code>. For tree algorithms on a skewed tree of n = 10⁶ nodes, you need an iterative version with an explicit stack on the heap.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/space-complexity" className="text-emerald-600 hover:underline">Module 2 — Space complexity &amp; the call stack</Link>.
         </p>
       </section>
@@ -380,43 +380,43 @@ flowchart LR
       {/* SECTION 5 — Best / average / worst */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Best vs average vs worst — when each one matters</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Best vs average vs worst — when each one matters</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Big-O is an envelope of three cases. The interviewer is usually asking about worst-case unless they say otherwise — but you should know all three.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">
-            <div className="p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Best case</div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+          <div className="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0 dark:divide-slate-800">
+            <div className="bg-emerald-50/40 p-5 dark:bg-emerald-950/20">
+              <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Best case</div>
+              <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 The luckiest input. Rarely useful on its own — but knowing it tells you the theoretical floor.
               </p>
-              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+              <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>Insertion sort on sorted: O(n)</li>
                 <li>Quicksort on perfectly partitioned: O(n log n)</li>
                 <li>HashMap lookup no collisions: O(1)</li>
               </ul>
             </div>
 
-            <div className="p-5 bg-amber-50/40 dark:bg-amber-950/20">
-              <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Average case</div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+            <div className="bg-amber-50/40 p-5 dark:bg-amber-950/20">
+              <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Average case</div>
+              <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 What you actually pay in practice. The honest answer for randomized inputs.
               </p>
-              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+              <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>Quicksort: O(n log n)</li>
                 <li>HashMap.get: O(1)</li>
                 <li>Insertion sort: O(n²)</li>
               </ul>
             </div>
 
-            <div className="p-5 bg-rose-50/40 dark:bg-rose-950/20">
-              <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Worst case</div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+            <div className="bg-rose-50/40 p-5 dark:bg-rose-950/20">
+              <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Worst case</div>
+              <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 The guarantee. What you commit to in an SLA or a P99 latency target.
               </p>
-              <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+              <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>Quicksort: O(n²) — bad pivot</li>
                 <li>HashMap.get: O(n) — all collide</li>
                 <li>Insertion sort: O(n²)</li>
@@ -429,7 +429,7 @@ flowchart LR
           <strong>Decision rule:</strong>{" "}for a hot path in a production service with P99 latency requirements, <em>only worst-case matters</em>. For a one-shot script over random data, average is fine. Best case is only interesting when describing a particular structure&apos;s adaptive behavior (like insertion sort being O(n) on already-sorted data — that&apos;s why TimSort starts with insertion sort on small runs).
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3 — Best, average, worst &amp; amortized analysis</Link>.
         </p>
       </section>
@@ -438,16 +438,16 @@ flowchart LR
       {/* SECTION 6 — Amortized analysis */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Amortized analysis in one diagram</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Amortized analysis in one diagram</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           ArrayList.add is O(1) amortized but O(n) worst-case. The picture explains why.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={doublingChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Most adds cost 1 op</strong> (just write to the next free slot). Rare adds trigger a resize — copy the whole array to a new one of double capacity. Those cost <code>1 + currentSize</code>.
           </li>
@@ -469,7 +469,7 @@ flowchart LR
           <strong>Amortized O(1) ≠ worst-case O(1).</strong>{" "}A single <code>add()</code> can still take O(n). For P99-sensitive systems (real-time games, trading, latency-critical APIs), pre-size your buffer or accept the spike — don&apos;t rely on the amortized number to hold per-call.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3 — Best, average, worst &amp; amortized analysis</Link>.
         </p>
       </section>
@@ -478,14 +478,14 @@ flowchart LR
       {/* SECTION 7 — Java Collections Big-O cheat sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Java Collections Big-O cheat sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Java Collections Big-O cheat sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Memorize the rows you actually use. The ones marked <em>amortized</em>{" "}are the gotcha rows.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Collection</th>
                 <th className="px-4 py-3 font-semibold">Access</th>
@@ -495,7 +495,7 @@ flowchart LR
                 <th className="px-4 py-3 font-semibold">Note</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">ArrayList</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)</td>
@@ -572,7 +572,7 @@ flowchart LR
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           Full deep dive: <Link href="/courses/dsa/modules/java-collections" className="text-emerald-600 hover:underline">Module 21 — Java Collections Framework deep dive</Link> (Phase 5).
         </p>
       </section>
@@ -581,15 +581,15 @@ flowchart LR
       {/* SECTION 8 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">8. Three gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">8. Three gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost real engineers real hours. If you only remember three things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · String concatenation in a loop</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · String concatenation in a loop</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               In Java, <code>String</code> is immutable. <code>s += x</code> in a loop builds a brand-new string each iteration, copying every prior character. <strong>That&apos;s O(n²)</strong>, not O(n). Use <code>StringBuilder</code>.
             </p>
             <CodeBlock lang="java">{`// BAD — O(n²)
@@ -602,9 +602,9 @@ for (String w : words) sb.append(w);
 String s = sb.toString();`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · <code>list.contains()</code> inside a loop</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · <code>list.contains()</code> inside a loop</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <code>ArrayList.contains</code> is O(n). Calling it inside a loop of size n is O(n²). Convert to <code>HashSet</code> once for O(1) lookups.
             </p>
             <CodeBlock lang="java">{`// BAD — O(n²)
@@ -621,9 +621,9 @@ for (int x : nums) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Recursion depth on big inputs</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Recursion depth on big inputs</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               A recursive tree traversal on a skewed tree of n = 10⁶ nodes will <code>StackOverflowError</code> long before it returns. The big-O time is fine; the call-stack space is the killer. Convert to an iterative version using an explicit <code>Deque</code> on the heap.
             </p>
             <CodeBlock lang="java">{`// RISKY for skewed trees — stack depth = tree height
@@ -653,8 +653,8 @@ int sum(TreeNode root) {
       {/* SECTION 9 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">9. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">9. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -717,8 +717,8 @@ int sum(TreeNode root) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-amber-200 dark:border-amber-900 bg-gradient-to-br from-amber-50 via-white to-yellow-50 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">
           Phase 1 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now read code for complexity on sight</h3>
@@ -730,7 +730,7 @@ int sum(TreeNode root) {
         </p>
         <Link
           href="/courses/dsa/modules/arrays"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Linear Data Structures →
         </Link>

@@ -51,23 +51,23 @@ export default function Phase3RevisionModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/ai"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-emerald-500 to-green-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 3 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           {mod.title}
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           {mod.subtitle}
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-3-revision" />
@@ -76,10 +76,10 @@ export default function Phase3RevisionModule() {
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This is not new material. It&apos;s a <strong>map of Phase 3</strong> — every decision, every operator, every gotcha from embeddings, pgvector, RAG architecture, and the Spring AI pipeline, compressed onto one page. If something here is unfamiliar, jump back to the source module. If it&apos;s familiar, keep reading. Treat this as the page you re-read on the plane the morning you ship the RAG feature.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The four modules you&apos;re consolidating: <Link href="/courses/ai/modules/embeddings-deep" className="text-emerald-600 hover:underline">Embeddings deep dive</Link>, <Link href="/courses/ai/modules/pgvector" className="text-emerald-600 hover:underline">Vector DBs &amp; pgvector</Link>, <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">RAG architecture</Link>, and <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline">RAG in Spring Boot end-to-end</Link>.
         </p>
 
@@ -94,15 +94,15 @@ export default function Phase3RevisionModule() {
       {/* SECTION 1 — Embeddings cheat-sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Embeddings cheat-sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Embeddings cheat-sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           An embedding is a <strong>fixed-length vector of floats</strong>{" "}that places a piece of text at a coordinate in a learned semantic space. Two texts that mean similar things land near each other; the distance metric is how you measure &quot;near&quot;.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Pick a model — dimensions vs quality vs cost</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Pick a model — dimensions vs quality vs cost</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Model</th>
                 <th className="px-4 py-3 font-semibold">Dims</th>
@@ -145,10 +145,10 @@ export default function Phase3RevisionModule() {
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Distance metrics — and why most of the time it doesn&apos;t matter</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Distance metrics — and why most of the time it doesn&apos;t matter</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Metric</th>
                 <th className="px-4 py-3 font-semibold">Formula intuition</th>
@@ -183,7 +183,7 @@ export default function Phase3RevisionModule() {
           <strong>The L2-normalization trick:</strong>{" "}OpenAI, Voyage, Cohere, BGE all return L2-normalized vectors (length 1). On normalized vectors, <em>cosine and inner product give the same ranking</em>, but inner product is ~30% faster because there&apos;s no division. Use <code>{`<#>`}</code> over <code>{`<=>`}</code> when you know your vectors are normalized — and remember to <em>negate</em>{" "}the result if your code expects &quot;smaller is closer&quot;, since pgvector returns negative inner product.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/embeddings-deep" className="text-emerald-600 hover:underline">Module 15 — Embeddings deep dive</Link>.
         </p>
       </section>
@@ -192,14 +192,14 @@ export default function Phase3RevisionModule() {
       {/* SECTION 2 — Vector DBs & pgvector */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Vector DBs &amp; pgvector — HNSW vs IVFFlat</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Vector DBs &amp; pgvector — HNSW vs IVFFlat</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Below ~50k rows, brute-force kNN over a sequential scan is fine. Past that, you need an Approximate Nearest Neighbor index. pgvector ships two: HNSW and IVFFlat. Pick HNSW.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Dimension</th>
                 <th className="px-4 py-3 font-semibold">HNSW</th>
@@ -246,7 +246,7 @@ export default function Phase3RevisionModule() {
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Index creation — what you actually type</h3>
+        <h3 className="mb-2 text-base font-semibold">Index creation — what you actually type</h3>
         <CodeBlock lang="plain" caption="HNSW index — the default you should reach for">{`-- enable the extension once per database
 CREATE EXTENSION IF NOT EXISTS vector;
 
@@ -289,7 +289,7 @@ LIMIT  10;`}</CodeBlock>
           <strong>The metadata-filter gotcha:</strong>{" "}a <code>WHERE tenant_id = ?</code> on top of an ANN index can blow up recall — pgvector applies the ANN search first, then filters, so you can lose most of your candidates. Fix: <strong>partial indexes per tenant</strong>{" "}if you have few tenants, or use the iterative-scan feature (pgvector 0.8+) to keep scanning until you have enough post-filter results. Always pre-filter on cheap columns; never trust top-K to survive an aggressive WHERE clause.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/pgvector" className="text-emerald-600 hover:underline">Module 16 — Vector DBs &amp; pgvector</Link>.
         </p>
       </section>
@@ -298,23 +298,23 @@ LIMIT  10;`}</CodeBlock>
       {/* SECTION 3 — The RAG pipeline diagram */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The RAG pipeline on one diagram</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The RAG pipeline on one diagram</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every RAG system you&apos;ll build looks like this. Ingest happens once (or when the corpus changes); query happens per request. The shared piece is the vector store.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={ragPipelineChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Ingest is offline</strong>: load documents, split into chunks, embed (batched!), write to the vector store with metadata.</li>
           <li><strong>Query is online</strong>: embed the user&apos;s question with the <em>same model</em>, retrieve top-K by similarity, optionally re-rank with a cross-encoder, assemble a grounded prompt, generate.</li>
           <li><strong>Citations close the loop</strong>: every chunk that made it into the prompt should round-trip back to the user as a source link — both for trust and for debugging your retrieval.</li>
           <li><strong>The two failure modes you should always be debugging:</strong>{" "}the right chunk didn&apos;t make it into top-K (retrieval bug — fix chunking, top-K, or the embedding model), or it did and the LLM ignored it (generation bug — fix the prompt template or re-rank harder).</li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
         </p>
       </section>
@@ -323,53 +323,53 @@ LIMIT  10;`}</CodeBlock>
       {/* SECTION 4 — Chunking strategies */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Chunking — the lever that matters most</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Chunking — the lever that matters most</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Bad chunking is the single most common reason a RAG system feels stupid. Each strategy has a regime where it wins.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Fixed-size · 256 tokens</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Cut every N tokens. Mid-sentence splits, mid-table splits.</p>
+        <div className="mb-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Fixed-size · 256 tokens</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Cut every N tokens. Mid-sentence splits, mid-table splits.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: corpus is huge, uniform prose, you need the baseline.</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Sentence-boundary</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Split on <code>. ! ?</code>, pack sentences into chunks up to a max. Never splits mid-sentence.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Sentence-boundary</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Split on <code>. ! ?</code>, pack sentences into chunks up to a max. Never splits mid-sentence.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: prose-heavy corpus (docs, articles).</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Recursive character</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Try paragraph splits first, fall back to sentence, fall back to word. The LangChain default.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Recursive character</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Try paragraph splits first, fall back to sentence, fall back to word. The LangChain default.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: mixed-format corpora, a sensible default.</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-2">Structural (markdown-aware)</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Split on headings — H1/H2/H3. Each chunk is one logical section.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase">Structural (markdown-aware)</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Split on headings — H1/H2/H3. Each chunk is one logical section.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: technical docs, runbooks, anything with a TOC. Usually the best.</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-violet-600 mb-2">Semantic</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Embed sentences, cut where consecutive sentences are far apart in embedding space.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-violet-600 uppercase">Semantic</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Embed sentences, cut where consecutive sentences are far apart in embedding space.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: long, topic-drifting prose. Adds embedding cost at ingest.</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">Sliding-window overlap</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">Any chunker + N tokens overlap between adjacent chunks. Cheap insurance against boundary loss.</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Sliding-window overlap</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Any chunker + N tokens overlap between adjacent chunks. Cheap insurance against boundary loss.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: always. 10–20% overlap is nearly free.</div>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Chunk size vs recall — the curve</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Chunk size vs recall — the curve</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Chunk size</th>
                 <th className="px-4 py-3 font-semibold">Recall behavior</th>
@@ -400,7 +400,7 @@ LIMIT  10;`}</CodeBlock>
           <strong>Metadata you should always attach to every chunk:</strong> <code>source</code> (file/URL), <code>section</code> or <code>heading</code>, <code>page</code> or <code>line_range</code>, <code>tenant_id</code> or <code>workspace_id</code>, <code>created_at</code>. The first three power citations, the fourth powers multi-tenancy, the fifth powers &quot;only retrieve from docs newer than X&quot;. Skipping this at ingest is the #1 reason a v2 ships an embarrassing schema migration.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
         </p>
       </section>
@@ -409,15 +409,15 @@ LIMIT  10;`}</CodeBlock>
       {/* SECTION 5 — Retrieval & context assembly */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Retrieval &amp; context assembly</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Retrieval &amp; context assembly</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Three levers compose: how many you retrieve (top-K), which retrievers you blend (hybrid), and how you re-order before prompting (re-rank + ordering).
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-5">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Top-K choice</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <div className="mb-5 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Top-K choice</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>K = 1</strong>: fragile. One bad nearest neighbor and the answer is wrong.</li>
               <li><strong>K = 4–10</strong>: the practical range. Diversity + headroom for re-ranking.</li>
               <li><strong>K &gt; 20</strong>: only if you re-rank aggressively or expand into &quot;parent&quot; documents afterward.</li>
@@ -425,9 +425,9 @@ LIMIT  10;`}</CodeBlock>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-sky-50/40 dark:bg-sky-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Hybrid retrieval (vector + BM25)</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-sky-50/40 p-5 dark:border-slate-800 dark:bg-sky-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Hybrid retrieval (vector + BM25)</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Vector catches paraphrases. BM25 catches exact tokens (error codes, IDs, function names).</li>
               <li>Run both, fuse with <strong>Reciprocal Rank Fusion</strong>: <code>score = Σ 1/(60 + rank_i)</code>.</li>
               <li>In Postgres: <code>tsvector @@ tsquery</code> for BM25-ish + <code>embedding {`<=>`} $1</code> for vector, fused in app code.</li>
@@ -435,9 +435,9 @@ LIMIT  10;`}</CodeBlock>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-violet-50/40 dark:bg-violet-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300 mb-2">Re-ranking with a cross-encoder</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-violet-50/40 p-5 dark:border-slate-800 dark:bg-violet-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-violet-700 uppercase dark:text-violet-300">Re-ranking with a cross-encoder</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Bi-encoder (the embedding model): one tower per side, cheap, used for retrieval.</li>
               <li>Cross-encoder: query + chunk go through the same model — much more accurate, much slower.</li>
               <li>Retrieve K = 50 with embeddings, re-rank to top 5–8 with a cross-encoder. Standard pattern.</li>
@@ -445,9 +445,9 @@ LIMIT  10;`}</CodeBlock>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Context-window budget</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Context-window budget</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Budget by tokens, not chunk count. Reserve room for: system prompt, history, citations, response.</li>
               <li>Rule of thumb: retrieved chunks ≤ 40–60% of the input budget.</li>
               <li>Past ~50K tokens, attention quality degrades and cost spikes — don&apos;t cram &quot;in case&quot;.</li>
@@ -468,7 +468,7 @@ Sources:
 Question: {user_question}
 Answer:`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
         </p>
       </section>
@@ -477,12 +477,12 @@ Answer:`}</CodeBlock>
       {/* SECTION 6 — Spring AI + pgvector end-to-end */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">6. Spring AI + pgvector end-to-end</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">6. Spring AI + pgvector end-to-end</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           The three primitives you actually use in Spring AI for RAG: <code>EmbeddingModel</code>, <code>VectorStore</code>, and <code>QuestionAnswerAdvisor</code>. Everything else is plumbing.
         </p>
 
-        <h3 className="text-lg font-semibold mt-6 mb-2">Embedding service — one call per batch, always</h3>
+        <h3 className="mt-6 mb-2 text-lg font-semibold">Embedding service — one call per batch, always</h3>
         <CodeBlock lang="java" caption="Batched embedding via Spring AI's EmbeddingModel">{`@Service
 public class EmbeddingService {
     private final EmbeddingModel model;
@@ -498,7 +498,7 @@ public class EmbeddingService {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">VectorStore — the abstraction over pgvector</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">VectorStore — the abstraction over pgvector</h3>
         <CodeBlock lang="java" caption="Ingest: Document → VectorStore.add() with metadata">{`@Service
 public class DocsService {
     private final VectorStore store;
@@ -528,7 +528,7 @@ public class DocsService {
     return store.similaritySearch(req);
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">QuestionAnswerAdvisor — RAG in 10 lines</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">QuestionAnswerAdvisor — RAG in 10 lines</h3>
         <CodeBlock lang="java" caption="Advisor: retrieve + assemble + generate, wired into ChatClient">{`@Service
 public class AnswerService {
     private final ChatClient chat;
@@ -547,8 +547,8 @@ public class AnswerService {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-lg font-semibold mt-8 mb-2">When to use the advisor vs roll your own</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 not-prose">
+        <h3 className="mt-8 mb-2 text-lg font-semibold">When to use the advisor vs roll your own</h3>
+        <ul className="not-prose list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Advisor:</strong>{" "}internal tools, chatbots, prototypes — anywhere you don&apos;t need explicit citation control or custom prompt assembly.</li>
           <li><strong>Hand-rolled (retrieve + prompt yourself):</strong>{" "}when you need numbered citations, structured output, a custom rerank step, or hybrid (BM25 + vector) retrieval. Drop to <code>JdbcTemplate</code> for the hybrid query; keep <code>VectorStore</code> for ingest.</li>
           <li><strong>The 80/20 split:</strong>{" "}advisor handles the easy 80%; the hard 20% always wants direct control.</li>
@@ -558,7 +558,7 @@ public class AnswerService {
           <strong>Same model on both sides.</strong>{" "}Whatever <code>EmbeddingModel</code> you embed your corpus with, the <code>VectorStore</code> must use the <em>same one</em>{" "}for query embeddings. Mismatched models = vectors in different spaces = retrieval returns garbage. If you change models, you must <strong>re-embed the entire corpus</strong>.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-6 not-prose">
+        <p className="not-prose mt-6 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline">Module 18 — RAG in Spring Boot end-to-end</Link>.
         </p>
       </section>
@@ -567,15 +567,15 @@ public class AnswerService {
       {/* SECTION 7 — Common gotchas (BAD/GOOD pairs) */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Four gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Four gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has burned real engineers. If you only remember four things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Chunks too small lose context</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Chunks too small lose context</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               50-token chunks have noisy embeddings — there&apos;s not enough text to define a stable point in semantic space. You retrieve near-misses for everything.
             </p>
             <CodeBlock lang="java" caption="BAD — 50-token chunks, mid-sentence breaks">{`// 50 token chunks — too small, mid-sentence
@@ -586,9 +586,9 @@ TextSplitter splitter = new TokenTextSplitter(300, 50, 50, 10000, true);
 List<Document> chunks = splitter.apply(docs);`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · top-K=1 with no diversity</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · top-K=1 with no diversity</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               K=1 means one bad nearest neighbor = wrong answer. And without MMR or re-ranking, top-K often returns near-duplicates from the same document — wasting the window.
             </p>
             <CodeBlock lang="java" caption="BAD — single chunk, no diversity">{`List<Document> ctx = store.similaritySearch(
@@ -601,9 +601,9 @@ List<Document> candidates = store.similaritySearch(
 List<Document> top = reranker.rerank(q, candidates, 5);  // cohere/bge/voyage`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · No tenant/workspace filter</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · No tenant/workspace filter</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               In any multi-user system, an unfiltered similarity search will happily return Tenant B&apos;s chunks to Tenant A. This is a data-leak bug, not a relevance bug.
             </p>
             <CodeBlock lang="java" caption="BAD — global similarity search, no scope">{`List<Document> ctx = store.similaritySearch(
@@ -616,9 +616,9 @@ List<Document> top = reranker.rerank(q, candidates, 5);  // cohere/bge/voyage`}<
 );`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Re-embedding the corpus on every query</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Re-embedding the corpus on every query</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Embed corpus chunks <strong>once</strong>{" "}at ingest, store the vectors, reuse forever. Re-embedding the corpus per query torches your embedding budget and turns p99 latency into seconds.
             </p>
             <CodeBlock lang="java" caption="BAD — embeds all docs on every query">{`public List<Document> search(String q, List<String> allDocs) {
@@ -647,8 +647,8 @@ public List<Document> search(String q) {
       {/* SECTION 8 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -712,10 +712,10 @@ public List<Document> search(String q) {
       {/* SECTION 9 — You're ready for Phase 4 when... */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-3">9. You&apos;re ready for Phase 4 when...</h2>
+        <h2 className="mb-3 text-2xl font-bold tracking-tight">9. You&apos;re ready for Phase 4 when...</h2>
 
-        <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 via-white to-green-50 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30 p-6">
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-none pl-0">
+        <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
+          <ul className="list-none space-y-2 pl-0 text-sm text-slate-700 dark:text-slate-300">
             <li>✓ You can pick an embedding model on the cost / dimensions / recall axes without thinking twice — and you know why text-embedding-3-small with matryoshka truncation is the sane default.</li>
             <li>✓ You reach for <strong>HNSW</strong>{" "}by default, know how to tune <code>ef_search</code> at query time, and know which pgvector operator (<code>{`<=>`}</code>, <code>{`<#>`}</code>, <code>{`<->`}</code>) matches your operator class.</li>
             <li>✓ You can draw the full RAG pipeline on a whiteboard: <strong>load → split → embed → store → embed-query → retrieve → re-rank → assemble → generate</strong>, and explain which stage owns which failure mode.</li>
@@ -730,8 +730,8 @@ public List<Document> search(String q) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-sky-200 dark:border-sky-900 bg-gradient-to-br from-sky-50 via-white to-blue-50 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
           Phase 3 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can ship a production RAG feature</h3>
@@ -743,7 +743,7 @@ public List<Document> search(String q) {
         </p>
         <Link
           href="/courses/ai/modules/react-streaming"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Frontend AI Integration →
         </Link>

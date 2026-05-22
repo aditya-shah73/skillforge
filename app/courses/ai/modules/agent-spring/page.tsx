@@ -23,37 +23,37 @@ export default function AgentSpringModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 5 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Agents in Spring Boot</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Agents in Spring Boot</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Spring AI runs the loop for you. That&apos;s convenient — until you need it not to.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="agent-spring" />
         <ModuleProgress moduleSlug="agent-spring" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The Module 24 research agent rebuilt the Spring AI way — same loop, same stopping
           conditions, but with the framework doing the boring parts. Plus the trick that
           matters most in production: knowing exactly when to <em>turn off</em>{" "}the framework
           and run the loop yourself.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Defining tools as Spring beans with <code>@Tool</code> annotation</li>
           <li>How <code>ChatClient</code>&apos;s auto-loop works (and its hidden iteration cap)</li>
           <li>When to flip <code>internalToolExecutionEnabled = false</code> and own the loop</li>
@@ -73,7 +73,7 @@ export default function AgentSpringModule() {
       {/* PART 1: TOOLS THE SPRING AI WAY                                     */}
       {/* ================================================================= */}
       <section id="spring-tools">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Tools the Spring AI way</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Tools the Spring AI way</h2>
 
         <p>
           In Module 11 you wired tool definitions by hand: JSON schemas, name strings,
@@ -81,7 +81,7 @@ export default function AgentSpringModule() {
           register it, done.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">@Tool: the short version</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">@Tool: the short version</h3>
 
         <CodeBlock lang="java">{`import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
@@ -115,7 +115,7 @@ public class ResearchTools {
           A few things to notice:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             The <code>@Tool</code> description becomes the tool description sent to the model.
             Treat it like a tiny piece of prompt — the model reads it to decide whether to
@@ -143,7 +143,7 @@ public class ResearchTools {
           time on these strings. They&apos;re where most agent tuning happens.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Wiring tools to a ChatClient</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Wiring tools to a ChatClient</h3>
 
         <p>
           Once your tool service exists, attach it to a <code>ChatClient</code> at the call
@@ -206,7 +206,7 @@ public class ResearchController {
       {/* PART 2: THE AUTO-LOOP                                               */}
       {/* ================================================================= */}
       <section id="auto-loop">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — The auto-loop and why to opt out</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The auto-loop and why to opt out</h2>
 
         <p>
           Here&apos;s the surprise: the previous example is already a working agent. When you
@@ -228,7 +228,7 @@ public class ResearchController {
           a problem when you need any of:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>Custom stopping conditions (token budget, time budget, &quot;stop after first refund&quot;).</li>
           <li>Streaming intermediate steps to a UI (&quot;agent is searching... agent is reading X&quot;).</li>
           <li>Logging every turn for audit / debugging.</li>
@@ -236,7 +236,7 @@ public class ResearchController {
           <li>Coordinating multiple agents (Module 26).</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Opting out: own the loop</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Opting out: own the loop</h3>
 
         <p>
           The escape hatch is a single config flag. Set it and Spring AI returns control to you
@@ -267,7 +267,7 @@ ChatResponse response = chat.prompt()
           chat-client, message types, and observability still in play.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The full manual loop in Spring</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The full manual loop in Spring</h3>
 
         <CodeBlock lang="java">{`public String runManualLoop(String question, int maxIterations) {
     List<Message> history = new ArrayList<>();
@@ -316,7 +316,7 @@ ChatResponse response = chat.prompt()
           there&apos;s always a way to disable auto-execution.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">When to use which mode</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">When to use which mode</h3>
 
         <WorkedExample
           title="Auto-loop vs manual loop — pick one"
@@ -330,7 +330,7 @@ ChatResponse response = chat.prompt()
                     User asks a question, the model maybe calls <code>search_docs</code> 1–2
                     times, then answers. No streaming, no audit log, no destructive ops.
                   </p>
-                  <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
+                  <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Auto-loop.</strong>{" "}The default does exactly what you want.
                     Manual loop would just be more code with no benefit.
                   </p>
@@ -345,7 +345,7 @@ ChatResponse response = chat.prompt()
                     Same shape, but one of the tools moves money. Even if the model is well
                     behaved 99% of the time, you need to inspect tool calls before they fire.
                   </p>
-                  <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
+                  <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Manual loop.</strong>{" "}Add a check between &quot;model emitted tool
                     call&quot; and &quot;execute&quot;. For destructive tools, gate on a confirm
                     step or human approval.
@@ -361,7 +361,7 @@ ChatResponse response = chat.prompt()
                     User wants to see progress: &quot;searching for...&quot;, &quot;reading
                     article 1&quot;, &quot;cross-checking&quot;. The agent might run 6 turns.
                   </p>
-                  <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
+                  <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Manual loop.</strong>{" "}You need to emit SSE events between turns —
                     impossible to do cleanly when the loop is hidden inside Spring.
                   </p>
@@ -376,7 +376,7 @@ ChatResponse response = chat.prompt()
                     Three fixed steps. Reread Module 24 Part 4 if you forgot — this is a
                     workflow, not an agent.
                   </p>
-                  <p className="border-l-2 border-emerald-500 pl-3 mt-2 text-sm">
+                  <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Neither — write a workflow.</strong>{" "}Two structured-output LLM
                     calls and direct service-method invocations. No loop needed.
                   </p>
@@ -450,14 +450,14 @@ ChatResponse response = chat.prompt()
       {/* PART 3: MEMORY AND STATE                                            */}
       {/* ================================================================= */}
       <section id="memory-state">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Memory and state across turns</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Memory and state across turns</h2>
 
         <p>
           Module 24 covered memory <em>conceptually</em>. Now let&apos;s wire each kind in
           Spring AI specifically.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Short-term: ChatMemory</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Short-term: ChatMemory</h3>
 
         <p>
           Spring AI ships a <code>MessageWindowChatMemory</code> bean (and a JDBC-backed
@@ -507,13 +507,13 @@ public class AgentConfig {
           Configure a window size (e.g. 20 messages) or use a summary-compaction strategy.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Long-term: a separate store</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Long-term: a separate store</h3>
 
         <p>
           For cross-session memory, treat it like RAG (Modules 14–17). The pattern:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-1 mb-4">
+        <ol className="mb-4 list-decimal space-y-1 pl-6">
           <li>At the end of a session, run a one-shot LLM call: &quot;Summarize what we should remember about this user.&quot;</li>
           <li>Embed the summary, store in a per-user vector index.</li>
           <li>At the start of the next session, search that index with the new question and inject results into the system prompt.</li>
@@ -557,7 +557,7 @@ public class UserMemoryService {
           docs — different namespace, same machinery.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Scratchpad as a tool</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Scratchpad as a tool</h3>
 
         <p>
           The scratchpad pattern from Module 24 is best implemented as two more
@@ -659,14 +659,14 @@ public class Scratchpad {
       {/* PART 4: STOPPING IN PRODUCTION                                      */}
       {/* ================================================================= */}
       <section id="stopping">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Stopping conditions in production</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Stopping conditions in production</h2>
 
         <p>
           Module 24 covered the stopping conditions conceptually. Now the production cuts:
           where Spring lets you wire each one in, and which combinations matter.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Iteration cap</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Iteration cap</h3>
 
         <p>
           With auto-loop, Spring AI has an internal cap (typically configurable via the chat
@@ -680,7 +680,7 @@ public class Scratchpad {
     return PartialResult.of(history, "Hit iteration cap; here's what I learned so far: ...");
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Token budget</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Token budget</h3>
 
         <p>
           Each <code>ChatResponse</code> includes usage metadata. Tally it across turns and
@@ -707,7 +707,7 @@ if (totalInput > MAX_INPUT_TOKENS || totalOutput > MAX_OUTPUT_TOKENS) {
           actual cost intent.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Wall-clock timeouts and cancellation</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Wall-clock timeouts and cancellation</h3>
 
         <p>
           For user-facing agents, some user is staring at a spinner. They&apos;ll bail at 30s
@@ -743,7 +743,7 @@ public DeferredResult<String> runAgent(@RequestBody String question) {
           the loop and check it at the top of each iteration.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Repeated-tool-call detection</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Repeated-tool-call detection</h3>
 
         <p>
           Same pattern as Module 24. In Spring you have full access to the
@@ -765,7 +765,7 @@ if (!seen.add(fingerprint)) {
     continue;
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Observability — Micrometer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Observability — Micrometer</h3>
 
         <p>
           Spring AI integrates with Micrometer out of the box. Every model call is timed and
@@ -860,7 +860,7 @@ public class AgentMetrics {
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: code migration agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: code migration agent</h2>
 
         <p>
           Time for an agent that does something visibly real. We&apos;re building a small
@@ -876,9 +876,9 @@ public class AgentMetrics {
           Treat the kill switch as required equipment, not optional.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spec</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spec</h3>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>Inputs: repo path, migration brief (free text), max-files cap.</li>
           <li>Tools: <code>list_files</code>, <code>read_file</code>, <code>write_file</code>, <code>run_tests</code>, <code>git_diff</code>.</li>
           <li>Manual loop with <code>internalToolExecutionEnabled = false</code> — we want every step visible.</li>
@@ -888,7 +888,7 @@ public class AgentMetrics {
           <li>Final output: a list of files changed + the build status.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The tool service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The tool service</h3>
 
         <CodeBlock lang="java">{`@Service
 public class CodeTools {
@@ -941,7 +941,7 @@ public class CodeTools {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The agent loop</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The agent loop</h3>
 
         <CodeBlock lang="java">{`@Service
 public class MigrationAgent {
@@ -1011,7 +1011,7 @@ public class MigrationAgent {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The system prompt does heavy lifting</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The system prompt does heavy lifting</h3>
 
         <CodeBlock lang="plain">{`You are a careful code migration agent. Goal: apply the user's requested
 migration to this Java repository, one file at a time, verifying as you go.
@@ -1045,9 +1045,9 @@ Never:
   - Make changes outside the migration scope.
   - Disable tests to make the build pass.`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Test cases to actually run</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Test cases to actually run</h3>
 
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             <strong>Trivial migration on a 5-file repo:</strong> &quot;rename all uses of class
             <code>Foo</code> to <code>Bar</code>&quot;. Should converge in &lt;15 iterations.
@@ -1098,11 +1098,11 @@ Never:
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Putting it together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it together</h2>
 
         <p>You&apos;ve now got the full Spring AI agent toolkit:</p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li><code>@Tool</code> annotations turn beans into agent-callable tools.</li>
           <li>Auto-loop is the default — flip it off when you need control.</li>
           <li>Three memory layers each have a Spring AI mechanism: <code>ChatMemory</code>, <code>VectorStore</code>, <code>@Tool</code>-backed scratchpad.</li>
@@ -1234,8 +1234,8 @@ Never:
           />
         </Checkpoint>
 
-        <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
-          <p className="font-semibold mb-2">Coming up next:</p>
+        <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
+          <p className="mb-2 font-semibold">Coming up next:</p>
           <p className="text-sm">
             <strong>Module 26 — Multi-agent patterns</strong>: when one agent isn&apos;t
             enough. Orchestrator/subagent, parallel fanout, evaluator-optimizer loops, and

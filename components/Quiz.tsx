@@ -130,7 +130,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
   }
 
   return (
-    <div className="my-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-900 bg-indigo-50/50 dark:bg-indigo-950/30 p-4 sm:p-6" role="group" aria-label={`${kind}: ${question}`}>
+    <div className="my-8 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-4 sm:p-6 dark:border-indigo-900 dark:bg-indigo-950/30" role="group" aria-label={`${kind}: ${question}`}>
       {/* Visually-hidden status for screen readers. polite (not assertive) so
           it doesn't interrupt the user mid-keystroke when they tab through
           options; the result is meant to be confirming, not urgent. */}
@@ -142,20 +142,20 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
       >
         {statusMessage}
       </div>
-      <div className="flex items-center gap-2 mb-3 justify-between">
-        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
           {kind}
         </span>
         {reward && (
-          <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300 animate-slide-up">
+          <span className="animate-slide-up inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">
             +{reward.gained} XP
             {reward.multiplier > 1 && <span className="text-orange-600 dark:text-orange-400">· {reward.multiplier}x</span>}
             {reward.speed && <span className="text-amber-600 dark:text-amber-400">· ⚡ speed</span>}
           </span>
         )}
       </div>
-      <p className="text-base font-medium mb-4 leading-relaxed">{question}</p>
+      <p className="mb-4 text-base leading-relaxed font-medium">{question}</p>
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -184,23 +184,23 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
               className={className}
               disabled={locked}
             >
-              <div className="flex items-start gap-3 min-w-0">
-                <span className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold ${
+              <div className="flex min-w-0 items-start gap-3">
+                <span className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 text-xs font-bold ${
                   showAsCorrect ? "border-emerald-500 bg-emerald-500 text-white" :
                   isWrongSelected ? "border-rose-500 bg-rose-500 text-white" :
                   "border-slate-300 dark:border-slate-700"
                 }`}>
                   {showAsCorrect ? "✓" : isWrongSelected ? "✗" : String.fromCharCode(65 + i)}
                 </span>
-                <span className="flex-1 min-w-0 text-sm leading-relaxed break-words">{opt.label}</span>
+                <span className="min-w-0 flex-1 text-sm leading-relaxed break-words">{opt.label}</span>
               </div>
               {isRevealedCorrect && opt.explanation && (
-                <div className="mt-3 ml-9 text-sm text-emerald-800 dark:text-emerald-200 border-l-2 border-emerald-400 pl-3">
+                <div className="mt-3 ml-9 border-l-2 border-emerald-400 pl-3 text-sm text-emerald-800 dark:text-emerald-200">
                   <strong>Nice. </strong>{opt.explanation}
                 </div>
               )}
               {isWrongSelected && opt.explanation && (
-                <div className="mt-3 ml-9 text-sm text-rose-800 dark:text-rose-200 border-l-2 border-rose-400 pl-3">
+                <div className="mt-3 ml-9 border-l-2 border-rose-400 pl-3 text-sm text-rose-800 dark:text-rose-200">
                   <strong>{hardcoreMode ? "Wrong. " : "Not quite. "}</strong>{opt.explanation}
                   {!hardcoreMode && <em> Try another.</em>}
                 </div>
@@ -210,7 +210,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
         })}
       </div>
       {hint && !locked && (
-        <p className="mt-4 text-xs text-slate-500 dark:text-slate-400 italic">💡 {hint}</p>
+        <p className="mt-4 text-xs text-slate-500 italic dark:text-slate-400">💡 {hint}</p>
       )}
     </div>
   );

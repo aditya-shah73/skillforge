@@ -24,19 +24,19 @@ export default function AgentsIntroModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 5 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Agent fundamentals</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Agent fundamentals</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           A loop, a tool list, and a stopping condition. That&apos;s the whole trick.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="agents-intro" />
@@ -44,17 +44,17 @@ export default function AgentsIntroModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A demystified definition of &quot;agent&quot;. Most blog posts make agents sound like
           a new technology. They&apos;re not — they&apos;re Module 11 (tool use) wrapped in a
           while loop. Once you see that, the rest is engineering.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The ReAct loop traced step by step on paper, not abstractly</li>
           <li>The three kinds of memory and which problems each solves</li>
           <li>A taxonomy of when agents are the right answer — and when they&apos;re overkill</li>
@@ -74,7 +74,7 @@ export default function AgentsIntroModule() {
       {/* PART 1: WHAT AN AGENT ACTUALLY IS                                   */}
       {/* ================================================================= */}
       <section id="what-is-agent">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — What an &quot;agent&quot; actually is</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — What an &quot;agent&quot; actually is</h2>
 
         <p>
           The internet has decided &quot;agent&quot; means everything from a Zapier workflow to
@@ -93,13 +93,13 @@ export default function AgentsIntroModule() {
           tool use:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li><strong>A goal</strong> — usually the user&apos;s message, sometimes a longer brief from a system prompt.</li>
           <li><strong>A toolbox</strong> — the same JSON-schema tool definitions you wrote in Module 11.</li>
           <li><strong>A loop</strong> — keep calling the model with the conversation-so-far until it stops asking for tools.</li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Workflow vs agent — the line that matters</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Workflow vs agent — the line that matters</h3>
 
         <p>
           The most useful distinction (borrowed from Anthropic&apos;s &quot;Building Effective
@@ -137,7 +137,7 @@ AGENT (LLM picks the steps):
           workflow.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The shortest possible agent</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The shortest possible agent</h3>
 
         <p>
           To prove the &quot;loop + tools&quot; framing, here&apos;s the entire kernel of an agent
@@ -217,7 +217,7 @@ while True:
       {/* PART 2: THE REACT LOOP                                              */}
       {/* ================================================================= */}
       <section id="react-loop">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — The ReAct loop, by hand</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The ReAct loop, by hand</h2>
 
         <p>
           ReAct is the canonical pattern: <strong>Reason</strong>{" "}then <strong>Act</strong>, in a
@@ -247,7 +247,7 @@ while True:
           structured tool-call objects.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A trace, end to end</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A trace, end to end</h3>
 
         <p>
           Let&apos;s actually walk one of these. Pretend we&apos;re building a research agent and
@@ -323,7 +323,7 @@ while True:
                   <p>
                     Model output (no tool call this time):
                   </p>
-                  <p className="border-l-2 border-indigo-400 pl-3 italic text-sm">
+                  <p className="border-l-2 border-indigo-400 pl-3 text-sm italic">
                     Japan&apos;s 2023 GDP was about $4.21T USD; Germany&apos;s was $4.46T. Germany
                     overtook Japan to become the world&apos;s third-largest economy that year — a
                     shift driven by yen depreciation and Germany&apos;s nominal growth.
@@ -339,7 +339,7 @@ while True:
           ]}
         />
 
-        <h3 className="text-xl font-bold mt-8 mb-3">What you provide vs what the model provides</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">What you provide vs what the model provides</h3>
 
         <p>
           A common confusion: who&apos;s in charge of what? Drawing the line cleanly:
@@ -364,14 +364,14 @@ THE MODEL provides:
           the conversation. The agent &quot;loop&quot; lives in your code, not the model&apos;s.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stopping conditions — the most-skipped part</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stopping conditions — the most-skipped part</h3>
 
         <p>
           The natural stopping condition is &quot;the model returned no tool calls&quot;. But you
           need belt-and-braces, because models can sometimes get into loops:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li><strong>Iteration cap</strong> — hard ceiling like 10–25 steps. If hit, the agent must summarize what it has and stop. Not optional.</li>
           <li><strong>Token budget</strong> — total input+output tokens. Convert your cost cap into a token cap and check it each turn.</li>
           <li><strong>Wall-clock timeout</strong> — for user-facing agents, 60s is generous. Streaming partial progress helps, but the timeout still matters.</li>
@@ -449,7 +449,7 @@ THE MODEL provides:
       {/* PART 3: MEMORY                                                      */}
       {/* ================================================================= */}
       <section id="memory">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Memory: short, long, and scratch</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Memory: short, long, and scratch</h2>
 
         <p>
           &quot;Agent memory&quot; is another overloaded term. Three different mechanisms get
@@ -457,14 +457,14 @@ THE MODEL provides:
           memory code when you needed 30. Let&apos;s name them.
         </p>
 
-        <div className="overflow-x-auto my-6">
-          <table className="w-full text-sm border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden">
+        <div className="my-6 overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-lg border border-slate-300 text-sm dark:border-slate-700">
             <thead className="bg-slate-100 dark:bg-slate-800">
               <tr>
-                <th className="text-left p-3 border-b border-slate-300 dark:border-slate-700">Kind</th>
-                <th className="text-left p-3 border-b border-slate-300 dark:border-slate-700">Lives in</th>
-                <th className="text-left p-3 border-b border-slate-300 dark:border-slate-700">Lifetime</th>
-                <th className="text-left p-3 border-b border-slate-300 dark:border-slate-700">Used for</th>
+                <th className="border-b border-slate-300 p-3 text-left dark:border-slate-700">Kind</th>
+                <th className="border-b border-slate-300 p-3 text-left dark:border-slate-700">Lives in</th>
+                <th className="border-b border-slate-300 p-3 text-left dark:border-slate-700">Lifetime</th>
+                <th className="border-b border-slate-300 p-3 text-left dark:border-slate-700">Used for</th>
               </tr>
             </thead>
             <tbody>
@@ -490,7 +490,7 @@ THE MODEL provides:
           </table>
         </div>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Short-term: just the message list</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Short-term: just the message list</h3>
 
         <p>
           The model already has memory — it&apos;s called the conversation history. Every tool
@@ -504,13 +504,13 @@ THE MODEL provides:
           enormous, but a busy agent can fill it. When that happens, you&apos;re looking at:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li><strong>Sliding window</strong> — drop the oldest tool results once they&apos;re consumed.</li>
           <li><strong>Summary compaction</strong> — periodically replace N old messages with a one-paragraph summary.</li>
           <li><strong>Scratchpad offload</strong> — when a tool returns a 50k-token doc, write it to disk and pass the model a 100-word abstract + a <code>read_file</code> handle. (More on this in a moment.)</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Long-term: across sessions</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Long-term: across sessions</h3>
 
         <p>
           Want the agent to remember &quot;this user prefers metric units&quot; tomorrow? That&apos;s
@@ -540,12 +540,12 @@ system_prompt = base_prompt + "\\n\\nRelevant context about this user:\\n" +
           long-term memory and <em>when</em>. Two patterns:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li><strong>Explicit save tool</strong> — give the agent a <code>remember(fact)</code> tool. The agent decides what&apos;s worth saving. Simple, transparent, sometimes too sparse.</li>
           <li><strong>End-of-session distillation</strong> — when the agent run ends, run a separate &quot;reflector&quot; LLM call: <em>&quot;Given this transcript, what facts about the user should we save?&quot;</em>{" "}More thorough, more expensive.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Scratchpad: the trick people miss</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Scratchpad: the trick people miss</h3>
 
         <p>
           The pattern that makes long-running agents <em>cheap</em>: don&apos;t put big tool
@@ -634,7 +634,7 @@ Scratchpad (cheap):
       {/* PART 4: WHEN NOT TO USE AN AGENT                                    */}
       {/* ================================================================= */}
       <section id="when-not">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — When NOT to use an agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — When NOT to use an agent</h2>
 
         <p>
           This is the most undervalued skill in agent engineering: knowing when to <em>not</em>{" "}
@@ -648,9 +648,9 @@ Scratchpad (cheap):
           straight code. Reach for an agent only when the answer to both is no.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Bad fits — concrete examples</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Bad fits — concrete examples</h3>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>&quot;Summarize this document&quot;</strong> — one model call. No tools. No loop.
             Don&apos;t put it in an agent.
@@ -675,9 +675,9 @@ Scratchpad (cheap):
           </li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Good fits</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Good fits</h3>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>Research / exploration</strong> — &quot;find me the answer to this open-ended
             question&quot;. The path of search → read → search-again → synthesize isn&apos;t
@@ -785,7 +785,7 @@ Scratchpad (cheap):
       {/* PART 5: THE PROJECT                                                 */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: research agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: research agent</h2>
 
         <p>
           Time to build one. We&apos;ll keep it small but real: a CLI research agent that takes
@@ -799,9 +799,9 @@ Scratchpad (cheap):
           have the loop fully in front of you, with no magic.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spec</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spec</h3>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>CLI: <code>java ResearchAgent &quot;your question&quot;</code></li>
           <li>Two tools: <code>web_search(query)</code> and <code>fetch_url(url)</code></li>
           <li>Iteration cap: 10 turns</li>
@@ -817,7 +817,7 @@ Scratchpad (cheap):
           move on.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Tool definitions</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Tool definitions</h3>
 
         <CodeBlock lang="java">{`public record Tool(String name, String description, Map<String, Object> inputSchema) {}
 
@@ -846,7 +846,7 @@ public static final List<Tool> TOOLS = List.of(
     )
 );`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The loop</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The loop</h3>
 
         <CodeBlock lang="java">{`public class ResearchAgent {
     private static final int MAX_ITERATIONS = 10;
@@ -918,7 +918,7 @@ public static final List<Tool> TOOLS = List.of(
           just printing to stdout — because retrofitting it after a bad demo is misery.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The system prompt</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The system prompt</h3>
 
         <p>
           The system prompt is doing real work here: setting the role, naming the tools, and —
@@ -949,13 +949,13 @@ Stop conditions (stop using tools and answer):
 
 Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Test cases to actually run</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Test cases to actually run</h3>
 
         <p>
           Don&apos;t ship until you&apos;ve seen all of these in the trace log:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             <strong>Single-hop fact:</strong> &quot;What year was the OpenSSL Heartbleed bug
             disclosed?&quot; — should resolve in 1–2 tool calls.
@@ -1014,13 +1014,13 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Putting it together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it together</h2>
 
         <p>
           You now have a working mental model that&apos;ll carry you through the rest of Phase 5:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>An agent is an LLM in a loop with tools and stop conditions.</li>
           <li>The loop lives in your code; the model only emits decisions.</li>
           <li>ReAct = think, act, observe, repeat.</li>
@@ -1160,8 +1160,8 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
           />
         </Checkpoint>
 
-        <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
-          <p className="font-semibold mb-2">Coming up next:</p>
+        <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
+          <p className="mb-2 font-semibold">Coming up next:</p>
           <p className="text-sm">
             <strong>Module 25 — Agents in Spring Boot</strong>: rebuild the research agent
             using Spring AI&apos;s native tool execution and chat memory, and learn when to

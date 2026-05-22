@@ -98,6 +98,36 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Progress, completed checkpoints, and quiz state all live in browser localStorage — clearing site data resets everything. There is a one-time migration on first load that moves the old `ai-course-progress-v1` key to `skillforge-progress-v1`, so existing learners don't lose XP or streaks.
 
+## Quality gates
+
+Two automated checks run on every PR. Both also run locally with one command each. Learning the local invocations means CI failures are easy to reproduce.
+
+### Lint (`npm run lint`)
+
+ESLint runs three rule sets:
+
+- **`next/core-web-vitals`** — Next.js best practices, React-hooks rules, JSX accessibility rules from `eslint-plugin-jsx-a11y`
+- **`next/typescript`** — TypeScript correctness on top of `@typescript-eslint`
+- **`eslint-plugin-tailwindcss`** in strict mode — class-order normalization, contradicting-classname detection (e.g. `px-2 px-4`), shorthand enforcement (e.g. `mx-2 my-2` → `m-2`)
+
+If lint fails, run `npx eslint . --fix` to auto-fix everything mechanical (class order, shorthands). The remaining errors are real and need human judgment.
+
+### Visual regression (`npm run test:visual`)
+
+Playwright renders 9 curated routes at 3 viewports each — 27 screenshots per run — and diffs against committed baselines in `tests/visual.spec.ts-snapshots/`.
+
+Why: bugs like Tokey mascot overlap, sticky header overflow, and table clipping at 360px shipped because nobody had a fast way to check "does this still look right on phones." The diff is the check.
+
+```bash
+npm run build            # required — tests run against `next start`
+npm run test:visual      # diff against baselines
+npm run test:visual:update  # accept current rendering as new baseline
+```
+
+When a diff is intentional (you redesigned a page, you changed a token chip color), run `test:visual:update` and commit the new PNGs alongside your code change. CI also produces diff PNGs on failure — find them in the `playwright-diff-<run-id>` artifact on the GitHub Actions run.
+
+Configuration lives in `playwright.config.ts` (viewports, determinism knobs) and `tests/visual.spec.ts` (route list). Adding a new route to the sweep is one line in `ROUTES`.
+
 ## Project structure
 
 ```

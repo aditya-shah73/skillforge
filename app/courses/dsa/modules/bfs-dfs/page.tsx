@@ -109,13 +109,13 @@ flowchart TB
       <ModuleProgress moduleSlug="bfs-dfs" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-sky-500 to-blue-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 4 · Module 18 · Core
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~2.5–3h · the engine of every graph algorithm</p>
       </div>
@@ -797,9 +797,9 @@ void sink(char[][] grid, int r, int c) {
           ]}
         />
 
-        <div className="not-prose mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/30 dark:to-blue-950/30 border border-sky-200 dark:border-sky-800/40">
-          <p className="text-sm uppercase tracking-wider font-bold text-sky-700 dark:text-sky-300 mb-2">Up next · Module 19</p>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Shortest path &amp; topological sort</h3>
+        <div className="not-prose mt-8 mb-8 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 to-blue-50 p-6 dark:border-sky-800/40 dark:from-sky-950/30 dark:to-blue-950/30">
+          <p className="mb-2 text-sm font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Up next · Module 19</p>
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Shortest path &amp; topological sort</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             BFS solves shortest-path on unweighted graphs. For weighted graphs, you need Dijkstra. For ordering tasks
             with dependencies, you need topological sort — and Kahn&apos;s algorithm gives you a slick BFS-based
@@ -807,7 +807,7 @@ void sink(char[][] grid, int r, int c) {
           </p>
           <Link
             href="/courses/dsa/modules/shortest-path"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Shortest path →
           </Link>

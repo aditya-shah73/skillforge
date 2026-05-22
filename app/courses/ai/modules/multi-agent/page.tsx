@@ -24,36 +24,36 @@ export default function MultiAgentModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 5 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Multi-agent patterns</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Multi-agent patterns</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           One agent is hard. Two agents is harder. Make sure the second agent earns its keep.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="multi-agent" />
         <ModuleProgress moduleSlug="multi-agent" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A working catalog of multi-agent patterns — when each helps, when each backfires, and
           how to wire them in Spring without inventing a fragile distributed system. Plus a PR
           review panel that runs three specialized reviewers in parallel against the same diff.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The four patterns: prompt chaining, routing, parallelization, orchestrator/subagent</li>
           <li>Where evaluator-optimizer fits and when it&apos;s worth the cost</li>
           <li>Parallelization in Spring — virtual threads, structured concurrency, error budgets</li>
@@ -72,7 +72,7 @@ export default function MultiAgentModule() {
       {/* PART 1: WHY MULTIPLE                                                */}
       {/* ================================================================= */}
       <section id="why-multiple">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Why ever use more than one agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Why ever use more than one agent</h2>
 
         <p>
           Default position: one agent is plenty. Modern frontier models with 200k context
@@ -83,7 +83,7 @@ export default function MultiAgentModule() {
 
         <p>The legitimate reasons:</p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>Different specialties need different prompts.</strong>{" "}A &quot;security
             reviewer&quot; system prompt and a &quot;style reviewer&quot; system prompt are
@@ -111,7 +111,7 @@ export default function MultiAgentModule() {
         </ul>
 
         <Callout variant="warn" title="Bad reasons (every one is a real pitch we've heard)">
-          <ul className="list-disc pl-5 space-y-1 text-sm">
+          <ul className="list-disc space-y-1 pl-5 text-sm">
             <li>&quot;It&apos;s more like a real team.&quot;</li>
             <li>&quot;The diagram looks more impressive.&quot;</li>
             <li>&quot;Each agent has its own personality.&quot;</li>
@@ -122,7 +122,7 @@ export default function MultiAgentModule() {
           engineering one, not aesthetic.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The cost reality</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The cost reality</h3>
 
         <p>
           Be honest about the bill before you decide. Each subagent has its own context, its
@@ -180,7 +180,7 @@ export default function MultiAgentModule() {
       {/* PART 2: THE FOUR PATTERNS                                           */}
       {/* ================================================================= */}
       <section id="patterns">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — The four patterns that cover 90%</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The four patterns that cover 90%</h2>
 
         <p>
           Anthropic&apos;s &quot;Building Effective Agents&quot; post named these and the names
@@ -188,7 +188,7 @@ export default function MultiAgentModule() {
           see in the wild is one of these four (or a combination).
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">1. Prompt chaining (a workflow)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">1. Prompt chaining (a workflow)</h3>
 
         <p>
           Step A&apos;s output is Step B&apos;s input. Each step is a different LLM call (often
@@ -209,7 +209,7 @@ Each box is one LLM call. No loops. No tools (or one tool per box).`}</CodeBlock
           70% of &quot;multi-agent&quot; pitches in disguise.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">2. Routing</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">2. Routing</h3>
 
         <p>
           A small, cheap LLM (or classifier) picks which downstream agent handles the request.
@@ -235,13 +235,13 @@ Each box is one LLM call. No loops. No tools (or one tool per box).`}</CodeBlock
           biggest model — but committing to the right specialist does.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">3. Parallelization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">3. Parallelization</h3>
 
         <p>
           Run N agents on the same input concurrently, then merge. Two flavors:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>Sectioning</strong> — each agent handles a different aspect of the same
             input. (Security review, performance review, style review of the same diff.)
@@ -274,7 +274,7 @@ Voting:
           one we&apos;ll lean on for the project.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">4. Orchestrator / subagent</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">4. Orchestrator / subagent</h3>
 
         <p>
           One agent (the orchestrator) plans the work and delegates pieces to subagents,
@@ -306,7 +306,7 @@ Voting:
           coordination.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Bonus: evaluator-optimizer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Bonus: evaluator-optimizer</h3>
 
         <p>
           A loop where one agent produces and another critiques, until the critique is happy
@@ -459,14 +459,14 @@ Voting:
       {/* PART 3: PARALLELIZATION DONE RIGHT                                  */}
       {/* ================================================================= */}
       <section id="parallelization">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Parallelization done right</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Parallelization done right</h2>
 
         <p>
           Parallelization sounds easy: run three model calls at once, wait for all, merge. The
           gotchas are in the &quot;wait for all&quot; and &quot;merge&quot; parts.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The naive version (and why it&apos;s usually fine)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The naive version (and why it&apos;s usually fine)</h3>
 
         <CodeBlock lang="java">{`@Service
 public class ParallelReviewer {
@@ -491,7 +491,7 @@ public class ParallelReviewer {
           block waiting on HTTP without consuming OS threads.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Structured concurrency: the better version</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Structured concurrency: the better version</h3>
 
         <p>
           Java 21–24 incubated <code>StructuredTaskScope</code> as a preview; JDK 25 finalized
@@ -526,14 +526,14 @@ public class ParallelReviewer {
           is already reactive. The API call shape is the same.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Partial failure: the question to answer up front</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Partial failure: the question to answer up front</h3>
 
         <p>
           When one of three reviewers fails (timeout, rate limit, network), what do you do?
           There are three reasonable answers and you need to pick one before shipping:
         </p>
 
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             <strong>All-or-nothing.</strong>{" "}Any failure → fail the request. Easiest to reason
             about. Use when results are tightly coupled (voting needs all votes).
@@ -579,13 +579,13 @@ private String safeCall(ChatClient client, String diff, String role) {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Voting: aggregating the answers</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Voting: aggregating the answers</h3>
 
         <p>
           The voting flavor needs an aggregator. Three patterns, in order of complexity:
         </p>
 
-        <ul className="list-disc pl-6 space-y-2 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>Plain majority</strong> — N classifiers, take the mode. Cheapest. Works
             well for binary or small-cardinality outputs.
@@ -672,14 +672,14 @@ private String safeCall(ChatClient client, String diff, String role) {
       {/* PART 4: ANTI-PATTERNS                                               */}
       {/* ================================================================= */}
       <section id="antipatterns">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Multi-agent anti-patterns</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Multi-agent anti-patterns</h2>
 
         <p>
           Most public multi-agent demos are anti-pattern showcases. Here&apos;s what to avoid,
           with the failure modes you&apos;ll actually see.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The chatty multi-agent</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The chatty multi-agent</h3>
 
         <p>
           Two or more agents that &quot;converse&quot; with each other in free-form natural
@@ -701,7 +701,7 @@ Agent A: "While you're at it, Z?"
           the feature.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Role bloat</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Role bloat</h3>
 
         <p>
           The system prompt for each agent grows to 800 words of personality, &quot;values&quot;,
@@ -715,7 +715,7 @@ Agent A: "While you're at it, Z?"
           rules. Add detail only when you can show it changes behavior on real inputs.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Infinite delegation</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Infinite delegation</h3>
 
         <p>
           Subagents are themselves orchestrators that delegate to sub-subagents that delegate
@@ -723,13 +723,13 @@ Agent A: "While you're at it, Z?"
           and the cost ramps geometrically.
         </p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>Cap delegation depth at 1 (orchestrator → subagent, no sub-subagents).</li>
           <li>If a subagent &quot;needs&quot; to delegate further, that&apos;s a sign your decomposition is wrong.</li>
           <li>If the temptation to nest is real, consider whether the orchestrator should be doing more in-process instead.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spec drift between agents</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spec drift between agents</h3>
 
         <p>
           Agent A produces output that Agent B is supposed to consume. Both are configured
@@ -739,13 +739,13 @@ Agent A: "While you're at it, Z?"
 
         <p>The fix: contract the interface like any other API.</p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>Use structured output between agents (JSON schemas, not prose).</li>
           <li>Test the integration end-to-end with golden examples.</li>
           <li>Version the contract; treat it like an API change when you modify it.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The &quot;crew&quot; trap</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The &quot;crew&quot; trap</h3>
 
         <p>
           Several frameworks (CrewAI, AutoGen, etc.) market &quot;a crew of specialized
@@ -825,7 +825,7 @@ Agent A: "While you're at it, Z?"
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: PR review panel</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: PR review panel</h2>
 
         <p>
           Time to ship a parallelized multi-agent system that earns its keep. We&apos;re
@@ -841,9 +841,9 @@ Agent A: "While you're at it, Z?"
           motivating than a synthetic example.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Spec</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Spec</h3>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>Input: a unified diff string (hunks for one or more files).</li>
           <li>Three reviewers, each with its own ChatClient + system prompt + structured output.</li>
           <li>Run in parallel using <code>StructuredTaskScope</code>.</li>
@@ -852,7 +852,7 @@ Agent A: "While you're at it, Z?"
           <li>Endpoint: <code>POST /api/review</code> with the diff in the body.</li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The output schema</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The output schema</h3>
 
         <p>
           Structured output is the contract. Define it once, share it across reviewers — that
@@ -882,7 +882,7 @@ public record ReviewReport(
 public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 public enum Verdict  { APPROVE, REQUEST_CHANGES, COMMENT }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The reviewer ChatClients</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The reviewer ChatClients</h3>
 
         <p>
           Each reviewer is just a <code>ChatClient</code> with a sharply-scoped system prompt.
@@ -953,7 +953,7 @@ public class ReviewerConfig {
           findings — which is the whole point of sectioning.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The fan-out service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The fan-out service</h3>
 
         <CodeBlock lang="java">{`@Service
 public class PrReviewService {
@@ -1028,9 +1028,9 @@ public class PrReviewService {
           one or two findings, not just list them.
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Test cases to actually run</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Test cases to actually run</h3>
 
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
+        <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             <strong>Clean diff:</strong>{" "}a small, well-written change. All three reviewers
             should produce empty findings; verdict = APPROVE.
@@ -1091,11 +1091,11 @@ public class PrReviewService {
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Putting it all together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it all together</h2>
 
         <p>That&apos;s Phase 5. You&apos;ve gone from:</p>
 
-        <ul className="list-disc pl-6 space-y-1 mb-4">
+        <ul className="mb-4 list-disc space-y-1 pl-6">
           <li><strong>Module 24:</strong>{" "}what an agent is, by hand — a loop with tools and stop conditions</li>
           <li><strong>Module 25:</strong>{" "}agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
           <li><strong>Module 26:</strong>{" "}when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
@@ -1225,8 +1225,8 @@ public class PrReviewService {
           />
         </Checkpoint>
 
-        <div className="mt-12 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/30">
-          <p className="font-semibold mb-2">Coming up next — Phase 6: Production &amp; Capstone</p>
+        <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
+          <p className="mb-2 font-semibold">Coming up next — Phase 6: Production &amp; Capstone</p>
           <p className="text-sm">
             <strong>Module 28 (Evals)</strong>: how do you actually know your LLM feature is
             getting better, not worse? Golden sets, LLM-as-judge, regression testing.

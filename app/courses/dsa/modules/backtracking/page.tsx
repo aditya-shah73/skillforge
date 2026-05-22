@@ -139,13 +139,13 @@ diag2 (r-c=-1): (1,2), (2,3)"]
       <ModuleProgress moduleSlug="backtracking" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 6 · Module 28 · Algorithmic Techniques
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~2.5–3h · the engine of every &quot;enumerate all valid X&quot; problem</p>
       </div>
@@ -1007,12 +1007,12 @@ private boolean dfs(char[][] board, int r, int c, String word, int idx) {
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
-          <p className="text-xs uppercase tracking-wider text-indigo-700 dark:text-indigo-300 font-semibold">Up next · Module 29</p>
-          <Link href="/courses/dsa/modules/greedy" className="block mt-2 text-xl font-bold text-slate-900 dark:text-slate-100 no-underline hover:text-indigo-700 dark:hover:text-indigo-300">
+        <div className="not-prose mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+          <p className="text-xs font-semibold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">Up next · Module 29</p>
+          <Link href="/courses/dsa/modules/greedy" className="mt-2 block text-xl font-bold text-slate-900 no-underline hover:text-indigo-700 dark:text-slate-100 dark:hover:text-indigo-300">
             Greedy algorithms →
           </Link>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
             Backtracking explores everything. Greedy commits early. The trick is knowing when each is safe.
           </p>
         </div>

@@ -36,23 +36,23 @@ sequenceDiagram
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/ai"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 2 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 2 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Claude API, Spring AI, tool use, streaming, prompt caching — the backend AI toolkit on one card.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-2-revision" />
@@ -61,10 +61,10 @@ sequenceDiagram
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 2</strong> — every wire format, every Spring AI shape, every gotcha from the five backend-integration modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module. Treat this as the page you re-read before walking into a design review for an LLM-backed feature.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/ai/modules/api-fundamentals" className="text-amber-600 hover:underline">Claude API fundamentals</Link>, <Link href="/courses/ai/modules/spring-ai" className="text-amber-600 hover:underline">Spring AI deep dive</Link>, <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Tool use &amp; function calling</Link>, <Link href="/courses/ai/modules/streaming" className="text-amber-600 hover:underline">Streaming with SSE</Link>, and <Link href="/courses/ai/modules/prompt-caching" className="text-amber-600 hover:underline">Prompt caching</Link>.
         </p>
 
@@ -79,12 +79,12 @@ sequenceDiagram
       {/* SECTION 1 — Claude API fundamentals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Claude API on one page</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Claude API on one page</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           One HTTPS POST to <code>/v1/messages</code>. Three required things in the body. Stateless across calls.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">The request shape</h3>
+        <h3 className="mb-2 text-base font-semibold">The request shape</h3>
         <CodeBlock lang="plain" caption="POST https://api.anthropic.com/v1/messages">{`{
   "model":      "claude-sonnet-4-5",                  // required — which Claude
   "max_tokens": 1024,                                 // required — hard ceiling on the reply
@@ -99,7 +99,7 @@ sequenceDiagram
   "stream":      false                                // optional — SSE on/off
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The response shape</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The response shape</h3>
         <CodeBlock lang="plain" caption="200 OK · application/json">{`{
   "id":      "msg_01ABC...",
   "type":    "message",
@@ -114,10 +114,10 @@ sequenceDiagram
   }
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">system vs user vs assistant — which goes where</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">system vs user vs assistant — which goes where</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Field</th>
                 <th className="px-4 py-3 font-semibold">Where it lives in the JSON</th>
@@ -154,10 +154,10 @@ sequenceDiagram
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">temperature, top_p, max_tokens — when to touch what</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">temperature, top_p, max_tokens — when to touch what</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Knob</th>
                 <th className="px-4 py-3 font-semibold">Range</th>
@@ -192,10 +192,10 @@ sequenceDiagram
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Picking a model</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Picking a model</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Model</th>
                 <th className="px-4 py-3 font-semibold">Capability</th>
@@ -234,7 +234,7 @@ sequenceDiagram
           Start on Sonnet. Move down to Haiku only after you&apos;ve measured Sonnet&apos;s quality on your task and Haiku still passes your eval. Move up to Opus only when Sonnet measurably fails on your hardest reasoning cases. Never pick by &quot;feel&quot; — pick by eval.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/api-fundamentals" className="text-amber-600 hover:underline">Module 9 — Claude API fundamentals</Link>.
         </p>
       </section>
@@ -243,12 +243,12 @@ sequenceDiagram
       {/* SECTION 2 — Spring AI */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Spring AI — the ChatClient pattern</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Spring AI — the ChatClient pattern</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           You inject <code>ChatClient.Builder</code> (the singleton), call <code>.build()</code> per service with the defaults that service wants, and use the fluent prompt API everywhere.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Defaults vs per-call</h3>
+        <h3 className="mb-2 text-base font-semibold">Defaults vs per-call</h3>
         <CodeBlock lang="java" caption="One builder, many configured clients">{`@Service
 class TerseSummarizer {
     private final ChatClient chatClient;
@@ -272,14 +272,14 @@ class TerseSummarizer {
     }
 }`}</CodeBlock>
 
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-4">
+        <p className="mt-3 mb-4 text-sm text-slate-600 dark:text-slate-400">
           Rule: <code>.defaultXxx()</code> on the builder applies to every call from that client. Anything inside <code>.prompt()...</code> overrides for one call. More specific wins.
         </p>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The pieces, mapped</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The pieces, mapped</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Spring AI piece</th>
                 <th className="px-4 py-3 font-semibold">What it maps to</th>
@@ -331,8 +331,8 @@ class TerseSummarizer {
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Advisors — the middleware chain</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+        <h3 className="mt-6 mb-2 text-base font-semibold">Advisors — the middleware chain</h3>
+        <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
           An <code>Advisor</code> wraps a call. The chain runs in declared order on the way in, reverse order on the way out — same pattern as a Spring filter chain or a Java interceptor stack.
         </p>
         <CodeBlock lang="java" caption="Composing advisors">{`chatClient.prompt()
@@ -345,8 +345,8 @@ class TerseSummarizer {
     .call()
     .content();`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Observability — what Spring AI gives you free</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <h3 className="mt-6 mb-2 text-base font-semibold">Observability — what Spring AI gives you free</h3>
+        <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Micrometer metrics</strong>{" "}on every call: <code>spring.ai.chat.client</code> timer with tags for model and gen_ai operation. Tokens are recorded as <code>gen_ai.token.usage</code> counters.
           </li>
@@ -358,7 +358,7 @@ class TerseSummarizer {
           </li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/spring-ai" className="text-amber-600 hover:underline">Module 10 — Spring AI deep dive</Link>.
         </p>
       </section>
@@ -367,16 +367,16 @@ class TerseSummarizer {
       {/* SECTION 3 — Mermaid: tool-use loop */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The tool-use loop in one picture</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The tool-use loop in one picture</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The model never executes your tool. It emits a <code>tool_use</code> block; you execute and reply with a <code>tool_result</code>; the model continues. That&apos;s the whole protocol.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={toolUseLoop} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Spring AI drives the loop for you.</strong>{" "}When you call <code>.tools(myService)</code> and the model returns <code>tool_use</code>, Spring AI finds the matching <code>@Tool</code> method, invokes it, packages the return value as <code>tool_result</code>, and re-calls the API — all before your <code>chatClient.call()</code> returns.
           </li>
@@ -388,7 +388,7 @@ class TerseSummarizer {
           </li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11 — Tool use &amp; function calling</Link>.
         </p>
       </section>
@@ -397,24 +397,24 @@ class TerseSummarizer {
       {/* SECTION 4 — Tool use decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Tool use — when, what, how</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Tool use — when, what, how</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A tool is a Java method the model can ask you to invoke. You hand it back the return value, the model decides what to do next.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Use a tool when…</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Use a tool when…</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>The data is small, structured, and on-demand (look up one user by email).</li>
               <li>The model decides <em>whether</em>{" "}to fetch — not every turn needs it.</li>
               <li>You need a side effect (send email, create ticket, write a row).</li>
               <li>Multiple lookups are required, dynamically composed.</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Use retrieval (RAG) when…</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Use retrieval (RAG) when…</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>The data is big and unstructured (docs, code, knowledge base).</li>
               <li>Every turn needs context — there&apos;s nothing to decide.</li>
               <li>Semantic similarity is the right primitive, not keyed lookup.</li>
@@ -423,7 +423,7 @@ class TerseSummarizer {
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Tool schema — the three things the model needs</h3>
+        <h3 className="mb-2 text-base font-semibold">Tool schema — the three things the model needs</h3>
         <CodeBlock lang="plain" caption="A tool definition the API actually sees">{`{
   "name":        "lookup_user_by_email",
   "description": "Find a user record by their email address. Returns user_id, name, and signup date. Returns null if not found.",
@@ -436,11 +436,11 @@ class TerseSummarizer {
   }
 }`}</CodeBlock>
 
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 mb-3">
+        <p className="mt-3 mb-3 text-sm text-slate-600 dark:text-slate-400">
           The <strong>description is the prompt</strong>. The model picks tools by reading their descriptions, not by reading your code. Be specific about inputs, outputs, side effects, and when <em>not</em>{" "}to use the tool.
         </p>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">Spring AI equivalent — @Tool annotation</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">Spring AI equivalent — @Tool annotation</h3>
         <CodeBlock lang="java" caption="The Spring way — Spring extracts schema from the method signature">{`@Service
 class UserLookupTools {
     @Tool(description = "Find a user record by their email address. " +
@@ -460,7 +460,7 @@ chatClient.prompt()
     .call()
     .content();`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11 — Tool use &amp; function calling</Link>.
         </p>
       </section>
@@ -469,19 +469,19 @@ chatClient.prompt()
       {/* SECTION 5 — Streaming */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Streaming with SSE — server to client</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Streaming with SSE — server to client</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Spring Boot returns a <code>Flux&lt;String&gt;</code>, Spring serializes each emission as one SSE event, the browser&apos;s <code>EventSource</code> (or <code>fetch</code> streaming) consumes them.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">The pipeline in one diagram (prose form)</h3>
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50/40 dark:bg-slate-900/40 mb-4">
-          <div className="font-mono text-xs text-slate-700 dark:text-slate-300 leading-6">
+        <h3 className="mb-2 text-base font-semibold">The pipeline in one diagram (prose form)</h3>
+        <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/40 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+          <div className="font-mono text-xs leading-6 text-slate-700 dark:text-slate-300">
             Anthropic <span className="text-amber-600">→</span> chunks <span className="text-amber-600">→</span> Spring AI <code>Flux&lt;String&gt;</code> <span className="text-amber-600">→</span> <code>@GetMapping(produces=TEXT_EVENT_STREAM_VALUE)</code> <span className="text-amber-600">→</span> SSE wire (<code>data: chunk\n\n</code>) <span className="text-amber-600">→</span> React <code>EventSource</code> / <code>fetch</code> reader <span className="text-amber-600">→</span> append to UI state on each event
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">The Spring side</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">The Spring side</h3>
         <CodeBlock lang="java" caption="Return Flux<String> from a controller; Spring writes SSE for you">{`@RestController
 class StreamController {
     private final ChatClient chatClient;
@@ -495,7 +495,7 @@ class StreamController {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The React side</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The React side</h3>
         <CodeBlock lang="ts" caption="EventSource — the simple path">{`useEffect(() => {
   const es = new EventSource(\`/api/stream?q=\${encodeURIComponent(query)}\`);
   es.onmessage = (e) => setText((prev) => prev + e.data);
@@ -519,10 +519,10 @@ class StreamController {
   }
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The four gotchas you will hit</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">The four gotchas you will hit</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Symptom</th>
                 <th className="px-4 py-3 font-semibold">Cause</th>
@@ -554,7 +554,7 @@ class StreamController {
           </table>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/streaming" className="text-amber-600 hover:underline">Module 12 — Streaming with SSE</Link>.
         </p>
       </section>
@@ -563,15 +563,15 @@ class StreamController {
       {/* SECTION 6 — Prompt caching */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Prompt caching — what, when, how much it saves</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Prompt caching — what, when, how much it saves</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Mark a prefix with <code>cache_control</code>. Identical prefixes within the TTL bill input tokens at ~10% of normal. Cache writes cost a premium (~25% extra) — so cache things you&apos;ll reuse.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">The pricing model in one table</h3>
+        <h3 className="mb-2 text-base font-semibold">The pricing model in one table</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Token category</th>
                 <th className="px-4 py-3 font-semibold">Cost relative to normal input</th>
@@ -603,15 +603,15 @@ class StreamController {
           </table>
         </div>
 
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
           <strong>Break-even rule of thumb:</strong>{" "}if you&apos;ll reuse the same prefix at least twice within the TTL, caching is already a win. The premium write is amortized away on hit #2.
         </p>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">What to cache (and what not to)</h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Cache this</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <h3 className="mt-6 mb-2 text-base font-semibold">What to cache (and what not to)</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Cache this</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>System prompt</strong> — long, stable, sent on every call</li>
               <li><strong>Tool definitions</strong> — same input_schema on every turn</li>
               <li><strong>Few-shot examples</strong> — your demonstrations don&apos;t change call-to-call</li>
@@ -619,9 +619,9 @@ class StreamController {
               <li><strong>Early conversation turns</strong>{" "}in a long chat — they&apos;re replayed every turn</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Don&apos;t bother</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Don&apos;t bother</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>The latest user turn</strong> — different every time</li>
               <li><strong>Anything with a timestamp / today&apos;s date</strong> — kills cache reuse</li>
               <li><strong>Short prompts</strong> &lt; a few hundred tokens — write premium isn&apos;t worth it</li>
@@ -631,19 +631,19 @@ class StreamController {
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Invalidation rules — the byte-exact gotcha</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Invalidation rules — the byte-exact gotcha</h3>
         <Callout variant="warn" title="The cache is keyed on exact bytes up to the marker">
           One whitespace difference, one timestamp, one user&apos;s name interpolated in — and you have a cache miss. Treat cached prefixes like <em>immutable strings</em>: change them only via deliberate releases. If your system prompt contains <code>&quot;Today is 2026-05-13&quot;</code>, your hit rate is 0% on day two. Move volatile content into the <em>user</em>{" "}message, not the system prompt.
         </Callout>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">TTL</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <h3 className="mt-4 mb-2 text-base font-semibold">TTL</h3>
+        <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Default</strong> — 5 minutes from last access. Each hit refreshes the TTL.</li>
           <li><strong>Extended</strong> — 1 hour, opt-in. Higher write premium, longer reuse window. Worth it for long-form chat tabs.</li>
           <li><strong>Past the TTL</strong> — next call writes a fresh entry (premium-billed again).</li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/prompt-caching" className="text-amber-600 hover:underline">Module 13 — Prompt caching</Link>.
         </p>
       </section>
@@ -652,15 +652,15 @@ class StreamController {
       {/* SECTION 7 — BAD/GOOD gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Four gotchas that bite people in production</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Four gotchas that bite people in production</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost someone real money or a real outage. If you only remember four things, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · System prompt jammed into a user message</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · System prompt jammed into a user message</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Putting persona / rules in the first <em>user</em>{" "}message instead of the <code>system</code> field works, but it kills cache reuse, weakens the &quot;mode&quot; signal to the model, and breaks Spring AI&apos;s <code>defaultSystem</code> pattern.
             </p>
             <CodeBlock lang="java" caption="BAD — system instructions disguised as user text">{`chatClient.prompt()
@@ -672,9 +672,9 @@ class StreamController {
     .call().content();`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · tool_result without matching tool_use_id</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · tool_result without matching tool_use_id</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               When you reply to a <code>tool_use</code>, the <code>tool_result</code> block must include the same <code>tool_use_id</code> the model emitted. Mismatched ID or missing ID → 400 error. With parallel tool calls, every <code>tool_use_id</code> from the assistant turn needs a matching <code>tool_result</code> in the next user turn.
             </p>
             <CodeBlock lang="plain" caption="BAD — tool_result with no matching id">{`// assistant turn contained: tool_use { id: "toolu_01", name: "lookup", ... }
@@ -694,9 +694,9 @@ class StreamController {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Streaming &quot;works on localhost, hangs in prod&quot;</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Streaming &quot;works on localhost, hangs in prod&quot;</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Tokens stream perfectly in dev. In staging behind nginx / ALB, the user sees nothing until the full response is done, then everything at once. The proxy is buffering. SSE needs explicit no-buffer headers <em>and</em>{" "}a heartbeat to survive idle timeouts.
             </p>
             <CodeBlock lang="java" caption="BAD — relying on defaults, no keepalive">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -718,9 +718,9 @@ public ResponseEntity<Flux<ServerSentEvent<String>>> stream(@RequestParam String
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Hardcoded model name</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Hardcoded model name</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Hardcoding <code>&quot;claude-sonnet-4-5&quot;</code> in service code means you can&apos;t swap to Haiku for cheap routes, can&apos;t A/B test, can&apos;t pin a version when something regresses. Drive it from config and inject per-service.
             </p>
             <CodeBlock lang="java" caption="BAD — model string literal in service">{`public String classify(String text) {
@@ -750,8 +750,8 @@ public String classify(String text) {
       {/* SECTION 8 — Quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -816,7 +816,7 @@ public String classify(String text) {
       {/* ============================================================ */}
       <section className="not-prose mb-12">
         <Callout variant="spring" title="You're ready for Phase 3 when…">
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 m-0">
+          <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>You can sketch the JSON body of a Claude API call from memory — <code>model</code>, <code>max_tokens</code>, <code>system</code>, <code>messages</code> — and know which fields are required.</li>
             <li>You can explain why you inject <code>ChatClient.Builder</code> and not <code>ChatClient</code>, and what <code>.defaultSystem</code> vs per-call <code>.system</code> buys you.</li>
             <li>You can describe the tool-use loop end to end — <code>tool_use</code> block out, <code>tool_result</code> block back in, stop on <code>end_turn</code> — and explain what Spring AI&apos;s <code>@Tool</code> handles for you.</li>
@@ -829,8 +829,8 @@ public String classify(String text) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 via-white to-green-50 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
           Phase 2 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can ship a real LLM backend</h3>
@@ -842,7 +842,7 @@ public String classify(String text) {
         </p>
         <Link
           href="/courses/ai/modules/embeddings-deep"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Embeddings deep dive →
         </Link>

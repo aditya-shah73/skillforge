@@ -22,34 +22,34 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Back-of-envelope estimation</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Back-of-envelope estimation</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Latency numbers, QPS math, and capacity sizing — the arithmetic you&apos;ll do out loud in every interview and every design review.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="back-of-envelope" />
         <ModuleProgress moduleSlug="back-of-envelope" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-rose-300 dark:border-rose-800 bg-gradient-to-br from-rose-50 to-orange-50 dark:from-rose-950/40 dark:to-orange-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-rose-300 bg-gradient-to-br from-rose-50 to-orange-50 p-6 dark:border-rose-800 dark:from-rose-950/40 dark:to-orange-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The ability to produce defensible numbers in seconds. By the end you can sketch storage, QPS, and bandwidth for any consumer-scale system on a napkin — and explain every assumption.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The latency table — L1 cache to cross-region — committed to memory with mental anchors</li>
           <li>QPS math: DAU → average QPS → peak QPS, including the read/write skew</li>
           <li>Capacity sizing: storage, bandwidth, connections, memory budgets</li>
@@ -76,12 +76,12 @@ export default function Page() {
         </p>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left py-2 pr-4 font-bold">Operation</th>
-                <th className="text-left py-2 pr-4 font-bold">Latency</th>
-                <th className="text-left py-2 font-bold">Mental anchor</th>
+                <th className="py-2 pr-4 text-left font-bold">Operation</th>
+                <th className="py-2 pr-4 text-left font-bold">Latency</th>
+                <th className="py-2 text-left font-bold">Mental anchor</th>
               </tr>
             </thead>
             <tbody className="text-slate-700 dark:text-slate-300">
@@ -534,14 +534,14 @@ public class DataSourceConfig {
       </section>
       </Checkpoint>
 
-      <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
+      <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Up next: the scaling ladder</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You can now produce numbers. Module 2 is about what to <em>do</em>{" "}with them — vertical, horizontal, stateless, cache, shard, async, in that order, and the conditions that move you up each rung.
         </p>
         <Link
           href="/courses/system-design/modules/scaling-ladder"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-cyan-600 hover:to-blue-600 transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-sm transition hover:from-cyan-600 hover:to-blue-600 hover:shadow-md"
         >
           Module 2: The scaling ladder →
         </Link>

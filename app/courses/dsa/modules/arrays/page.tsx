@@ -78,21 +78,21 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/dsa" className="text-emerald-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Arrays &amp; dynamic arrays
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The simplest data structure, and the one every other one quietly relies on. Fixed arrays, the doubling trick, ArrayList internals, and the patterns that fall out for free.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="arrays" />
@@ -119,7 +119,7 @@ flowchart TB
         </Callout>
 
         <Mermaid chart={memoryLayout} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           An int[6] in memory. The base address points at slot 0. <code>arr[3]</code> is computed as <code>base + 3 × 4</code> — a single address arithmetic.
         </p>
 
@@ -397,7 +397,7 @@ public void add(E e) {
 
         <div className="not-prose my-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-100 dark:bg-slate-900 text-left">
+            <thead className="bg-slate-100 text-left dark:bg-slate-900">
               <tr>
                 <th className="px-4 py-3 font-semibold">Operation</th>
                 <th className="px-4 py-3 font-semibold">Cost</th>
@@ -450,7 +450,7 @@ public void add(E e) {
         </p>
 
         <Mermaid chart={insertShift} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Insert 99 at index 2. The whole tail shifts right one slot before we can write. That shift is the O(n) cost.
         </p>
 
@@ -670,23 +670,23 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
 
         <h3>Step-by-step</h3>
 
-        <ol className="space-y-4 not-prose">
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 1 — Skeleton + size, isEmpty, capacity</div>
+        <ol className="not-prose space-y-4">
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 1 — Skeleton + size, isEmpty, capacity</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Allocate <code>elements = new Object[4]</code> in the no-arg constructor. Wire up <code>size()</code>, <code>isEmpty()</code>, <code>capacity()</code> as pure field accessors. Confirm they all compile.
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 2 — get and set with bounds checking</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 2 — get and set with bounds checking</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Throw <code>IndexOutOfBoundsException</code> for <code>i &lt; 0</code> or <code>i &gt;= size</code>. Note the bound is <code>size</code>, not <code>capacity</code> — slots beyond size are not yours to read.
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 3 — add(v) with growth</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 3 — add(v) with growth</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">Implement append. When <code>size == elements.length</code>, call <code>grow()</code>:</p>
               <ul className="my-2">
@@ -699,8 +699,8 @@ int rangeSum = prefix[r + 1] - prefix[l];   // O(1) per query!`}</CodeBlock>
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 4 — add(i, v) and remove(i) with shifts</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 4 — add(i, v) and remove(i) with shifts</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">For insert at <code>i</code>:</p>
               <CodeBlock lang="java">{`if (size == elements.length) grow();
@@ -712,15 +712,15 @@ size++;`}</CodeBlock>
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 5 — Watch amortized O(1) emerge</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 5 — Watch amortized O(1) emerge</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Write a <code>main</code> that does <code>add(i)</code> for i in 0..n−1 and prints <code>(n, copyCount, copyCount/(double)n)</code> at every power of 2. The third column should converge to a small constant near 1 — that&apos;s amortized O(1) per add (the writes are not counted; only the shift/grow copies are). Try n = 1, 2, 4, 8, ..., 2^20.
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 6 — LeetCode warm-ups</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 6 — LeetCode warm-ups</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Solve these two using the prefix-sum pattern from Part 4:
               <ul className="my-2">
@@ -799,7 +799,7 @@ size++;`}</CodeBlock>
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 p-8 text-white shadow-xl">
-          <div className="text-xs font-bold uppercase tracking-wider mb-2 opacity-80">
+          <div className="mb-2 text-xs font-bold tracking-wider uppercase opacity-80">
             ✦ Phase 2 · Module {mod.number} complete
           </div>
           <h3 className="mt-0 mb-2 text-white">You can defend every line of ArrayList now</h3>
@@ -811,7 +811,7 @@ size++;`}</CodeBlock>
           </p>
           <Link
             href="/courses/dsa/modules/strings"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-amber-700 font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-amber-700 no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Module 6 — Strings &amp; string building →
           </Link>

@@ -64,8 +64,8 @@ export default function ModuleProgress({
 
   return (
     <div className="mt-6 mb-2">
-      <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-        <span className="font-semibold uppercase tracking-wider">Module progress</span>
+      <div className="mb-2 flex items-center justify-between text-xs text-slate-500">
+        <span className="font-semibold tracking-wider uppercase">Module progress</span>
         <span className="font-mono">{completed}/{total} checkpoints</span>
       </div>
       <div
@@ -74,14 +74,14 @@ export default function ModuleProgress({
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={`Module progress: ${completed} of ${total} checkpoints complete`}
-        className="relative h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden"
+        className="relative h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
       >
         <div
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-700 rounded-full"
+          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-700"
           style={{ width: `${pct}%` }}
         />
       </div>
-      <ul className="flex justify-between mt-2 gap-1 list-none p-0" aria-label="Checkpoints">
+      <ul className="mt-2 flex list-none justify-between gap-1 p-0" aria-label="Checkpoints">
         {checkpoints.map((c) => {
           const isDone = done.includes(c.id);
           return (
@@ -89,7 +89,7 @@ export default function ModuleProgress({
               key={c.id}
               title={`${c.title} — ${isDone ? "complete" : "incomplete"}`}
               aria-label={`${c.title}: ${isDone ? "complete" : "incomplete"}`}
-              className={`flex-1 h-1.5 rounded-full transition-colors ${isDone ? "bg-emerald-500" : "bg-slate-200 dark:bg-slate-800"}`}
+              className={`h-1.5 flex-1 rounded-full transition-colors ${isDone ? "bg-emerald-500" : "bg-slate-200 dark:bg-slate-800"}`}
             />
           );
         })}

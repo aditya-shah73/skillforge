@@ -35,23 +35,23 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 8 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 8 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The closing reference card before mock interviews. Tries, union-find, advanced graphs, UMPIRE, pattern keywords — everything you need within arm&apos;s reach during a live phone screen.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-8-revision" />
@@ -60,13 +60,13 @@ flowchart TB
 
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This is the final reference card. You&apos;ve finished every algorithm and data-structure module in the course; the only thing left between you and a real interview is <em>composing</em>{" "}what you know under time pressure. That&apos;s what this card is for. It&apos;s not a tutorial — it&apos;s the page you keep open in another tab while you do mock interviews, the page you re-read 15 minutes before the real thing.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/dsa/modules/tries" className="text-emerald-600 hover:underline">Tries</Link>, <Link href="/courses/dsa/modules/union-find" className="text-emerald-600 hover:underline">Union-Find / DSU</Link>, <Link href="/courses/dsa/modules/advanced-graph" className="text-emerald-600 hover:underline">Advanced graph algorithms</Link>, <Link href="/courses/dsa/modules/interview-framework" className="text-emerald-600 hover:underline">Interview problem-solving framework</Link>, and the <Link href="/courses/dsa/modules/capstone" className="text-emerald-600 hover:underline">Capstone 20-problem set</Link>.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           If anything below feels unfamiliar, jump back to the source module. If it&apos;s all familiar, you&apos;re interview-ready — close the laptop and book a mock.
         </p>
       </section>
@@ -81,14 +81,14 @@ flowchart TB
       {/* SECTION 2 — Tries: when and why */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Tries — when and why</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Tries — when and why</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A trie (prefix tree) stores a set of strings as a tree of single-character edges. Shared prefixes share nodes.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={trieShape} />
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
+          <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
             Trie holding <code>car</code>, <code>cat</code>, <code>cap</code>. The <code>ca</code> prefix is stored once and shared.
           </p>
         </div>
@@ -127,10 +127,10 @@ class Trie {
     }
 }`}</CodeBlock>
 
-        <div className="grid md:grid-cols-2 gap-4 mt-6">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pick a trie when…</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pick a trie when…</div>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Prefix queries.</strong> &quot;Find every word starting with <code>str</code>&quot; — autocomplete, search-as-you-type.</li>
               <li><strong>Sorted-by-prefix iteration.</strong>{" "}DFS the subtree to enumerate matches in lexical order for free.</li>
               <li><strong>Dictionary-walk algorithms.</strong>{" "}Word Search II, Replace Words — walk the input and the trie in lockstep, pruning whole branches when no child matches.</li>
@@ -138,9 +138,9 @@ class Trie {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Stick with a HashMap when…</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Stick with a HashMap when…</div>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Only exact-match lookups.</strong> <code>HashSet.contains(word)</code> is O(L) too, with no per-node pointer overhead.</li>
               <li><strong>Keys aren&apos;t strings.</strong>{" "}Tries are character-path-shaped; numbers, tuples, and objects don&apos;t fit.</li>
               <li><strong>Memory budget is tight.</strong>{" "}A <code>TrieNode[26]</code> child array costs ~200 bytes per node even if mostly empty. For pure exact-match the hashmap wins by a wide margin on space.</li>
@@ -153,7 +153,7 @@ class Trie {
           If the problem statement contains the word <em>prefix</em>, <em>autocomplete</em>, <em>starts with</em>, or asks you to enumerate matches in lexical order — reach for a trie. Otherwise, default to <code>HashMap</code> or <code>HashSet</code>.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/tries" className="text-emerald-600 hover:underline">Module 37 — Tries</Link>.
         </p>
       </section>
@@ -162,8 +162,8 @@ class Trie {
       {/* SECTION 3 — Union-Find / DSU reference */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Union-Find / DSU reference</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Union-Find / DSU reference</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Disjoint-set union. Two operations — <code>find(x)</code> and <code>union(a, b)</code> — over a partition of <code>0..n-1</code>. With both standard optimizations enabled, every operation is amortized <strong>O(α(n))</strong>, which is &lt; 5 for any input that fits in the universe. Effectively O(1).
         </p>
 
@@ -211,10 +211,10 @@ class Trie {
     public int componentSize(int x)         { return size[find(x)]; }
 }`}</CodeBlock>
 
-        <div className="grid md:grid-cols-2 gap-4 mt-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">Classic uses</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">Classic uses</div>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Kruskal&apos;s MST.</strong>{" "}Sort edges, union endpoints if not already connected.</li>
               <li><strong>Connected components.</strong>{" "}Online — answer queries as edges stream in.</li>
               <li><strong>Cycle detection</strong> (undirected). An edge whose endpoints already share a root would close a cycle.</li>
@@ -223,9 +223,9 @@ class Trie {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">Why <code>union</code> returns boolean</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">Why <code>union</code> returns boolean</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               The return bit answers &quot;did this edge bridge two components, or was it redundant?&quot; — exactly the question Kruskal, Redundant Connection, and online cycle detection all ask.
             </p>
             <CodeBlock lang="java">{`// Kruskal in 5 lines
@@ -242,7 +242,7 @@ for (int[] e : edges) {
           A recursive <code>find()</code> with path compression looks elegant but blows the stack at n ≈ 10⁴–10⁵ if the tree starts skewed. The two-pass iterative version above achieves full compression with zero recursion depth. Use it.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/union-find" className="text-emerald-600 hover:underline">Module 38 — Union-Find / DSU</Link>.
         </p>
       </section>
@@ -251,14 +251,14 @@ for (int[] e : edges) {
       {/* SECTION 4 — Advanced graph algorithms table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Advanced graph algorithms at a glance</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Advanced graph algorithms at a glance</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five algorithms cover almost every weighted-graph interview question. Pick by edge weights, problem type, and graph density.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Algorithm</th>
                 <th className="px-4 py-3 font-semibold">Time</th>
@@ -311,7 +311,7 @@ for (int[] e : edges) {
           Dijkstra doesn&apos;t throw on a negative edge — it returns wrong answers, quietly. If the problem hints that a weight could be negative (refunds, deltas, score adjustments), switch to Bellman-Ford before you start coding. Don&apos;t discover this in review.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/advanced-graph" className="text-emerald-600 hover:underline">Module 39 — Advanced graph algorithms</Link> (Dijkstra is reviewed from <Link href="/courses/dsa/modules/shortest-path" className="text-emerald-600 hover:underline">Module 19 — Shortest path</Link>, Phase 4).
         </p>
       </section>
@@ -320,39 +320,39 @@ for (int[] e : edges) {
       {/* SECTION 5 — UMPIRE framework */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. UMPIRE — the live-interview script</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. UMPIRE — the live-interview script</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A six-stage pipeline you run for every problem. Under stress, working memory shrinks; UMPIRE answers &quot;what do I do next?&quot; so you can spend your brain on the actual problem.
         </p>
 
         <div className="space-y-3">
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">U</span> · Understand</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">U</span> · Understand</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Restate the problem in your own words. Confirm input/output types, ranges, and at least two edge cases (empty, duplicates, single element). <strong>Good looks like:</strong> &quot;Let me make sure I understand — given an array of N integers where N can be up to 10⁵, and integer values can be negative, return…&quot;</p>
           </div>
 
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">M</span> · Match</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">M</span> · Match</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Pattern-recognize. Which family does this belong to — two pointers, sliding window, BFS, DP, greedy, graph, trie? <strong>Good looks like:</strong> &quot;This looks like a shortest-path problem on a weighted graph — Dijkstra by default. Are weights non-negative?&quot;</p>
           </div>
 
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">P</span> · Plan</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">P</span> · Plan</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Whiteboard the algorithm in plain English before you touch the keyboard. State the data structures, the invariant, and the target complexity. <strong>Good looks like:</strong> &quot;I&apos;ll keep a min-heap of (distance, node). Pop the closest unfinalized node, relax its neighbors. O((V+E) log V) time, O(V) space.&quot;</p>
           </div>
 
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">I</span> · Implement</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">I</span> · Implement</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Code it. Narrate every nontrivial choice as you go — variable names, why this data structure, why this loop bound. <strong>Good looks like:</strong> &quot;I&apos;m using <code>long</code> for the distance because edge weights can be up to 10⁹ and I might sum V of them.&quot;</p>
           </div>
 
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">R</span> · Review</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">R</span> · Review</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Trace a small example through the code by hand. Catch off-by-ones, wrong base cases, missing null-checks. <strong>Good looks like:</strong> &quot;Let me walk through with the input <code>[1, 2, 3]</code>… at i=0, low=0, high=2…&quot;</p>
           </div>
 
-          <div className="rounded-xl border border-pink-200 dark:border-pink-900 bg-pink-50/40 dark:bg-pink-950/20 p-4">
-            <div className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1"><span className="font-mono text-base">E</span> · Evaluate</div>
+          <div className="rounded-xl border border-pink-200 bg-pink-50/40 p-4 dark:border-pink-900 dark:bg-pink-950/20">
+            <div className="mb-1 text-sm font-bold text-pink-700 dark:text-pink-300"><span className="font-mono text-base">E</span> · Evaluate</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">State final time and space complexity, and what would change at scale. <strong>Good looks like:</strong> &quot;Time O(N log N) from the sort. Space O(N) for the heap. At N = 10⁹ I&apos;d swap the in-memory sort for an external merge sort or a streaming algorithm.&quot;</p>
           </div>
         </div>
@@ -361,7 +361,7 @@ for (int[] e : edges) {
           The framework&apos;s value isn&apos;t the order — you may circle back from <em>I</em>{" "}to <em>P</em>{" "}when implementation reveals a flaw. The value is that it gives you <strong>vocabulary the interviewer recognizes</strong>. Saying &quot;let me match this to a pattern&quot; or &quot;before I evaluate, let me trace through one example&quot; signals seniority more than the code itself.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/interview-framework" className="text-emerald-600 hover:underline">Module 40 — Interview problem-solving framework</Link>.
         </p>
       </section>
@@ -370,14 +370,14 @@ for (int[] e : edges) {
       {/* SECTION 6 — Pattern recognition cheat sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Pattern recognition cheat sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Pattern recognition cheat sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The Match stage in one table. Read the keyword in the problem statement → reach for the pattern in the right column.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">If the problem says…</th>
                 <th className="px-4 py-3 font-semibold">Reach for…</th>
@@ -473,15 +473,15 @@ for (int[] e : edges) {
       {/* SECTION 7 — Communicate while coding */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Communicate-while-coding — the exact phrases</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Communicate-while-coding — the exact phrases</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The interviewer doesn&apos;t grade the code on the screen — they grade the engineer they&apos;d trust on a Slack thread at midnight. These are the phrases that signal &quot;senior&quot; at each UMPIRE phase.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Understand</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Understand</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;Let me restate to make sure I have it right…&quot;</li>
               <li>&quot;What&apos;s the maximum N? And the value range?&quot;</li>
               <li>&quot;Can the input be empty? Can it contain duplicates?&quot;</li>
@@ -489,18 +489,18 @@ for (int[] e : edges) {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Match</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Match</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;This smells like a sliding-window problem because…&quot;</li>
               <li>&quot;The mention of &lsquo;shortest path&rsquo; on weighted edges makes me think Dijkstra.&quot;</li>
               <li>&quot;Before optimizing, let me make sure brute force would even work — N is 30, so 2ⁿ is fine.&quot;</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Plan</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Plan</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;I&apos;ll use a HashMap from value → index, scan once. O(n) time, O(n) space.&quot;</li>
               <li>&quot;The invariant I&apos;ll maintain is: <em>everything left of <code>i</code> is already sorted.</em>&quot;</li>
               <li>&quot;Edge case: if the input is empty I&apos;ll return early.&quot;</li>
@@ -508,27 +508,27 @@ for (int[] e : edges) {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Implement</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Implement</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;I&apos;m using <code>long</code> here because the sum can exceed <code>Integer.MAX_VALUE</code>.&quot;</li>
               <li>&quot;This is a strictly-less-than because the right index is exclusive.&quot;</li>
               <li>&quot;I&apos;ll factor this out into a helper for readability — would you prefer it inline?&quot;</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Review</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Review</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;Let me trace through with <code>[1, 2, 3]</code> step by step.&quot;</li>
               <li>&quot;At i = 0, low = 0, high = 2, mid = 1…&quot;</li>
               <li>&quot;The empty-input case: the loop never enters, and we return 0. Good.&quot;</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-2">During Evaluate</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-600 uppercase">During Evaluate</div>
+            <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>&quot;Time: O(n log n) from the sort, which dominates.&quot;</li>
               <li>&quot;Space: O(n) for the heap, plus O(log n) for recursion.&quot;</li>
               <li>&quot;If N grew to 10⁹, this wouldn&apos;t fit in memory — I&apos;d move to external sort.&quot;</li>
@@ -546,39 +546,39 @@ for (int[] e : edges) {
       {/* SECTION 8 — Interview-day gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Interview-day gotchas</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Interview-day gotchas</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five behaviors that tank otherwise-strong candidates. Each one is fixable in one sentence.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Coding before clarifying input bounds</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> &quot;Got it.&quot; <em>(starts typing)</em></p>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Coding before clarifying input bounds</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong> &quot;Got it.&quot; <em>(starts typing)</em></p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;Before I code — what&apos;s the max N? Can values be negative? Empty input? Duplicates allowed?&quot; Knowing N is 30 vs 10⁹ changes whether brute force is acceptable.</p>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Not stating Big-O before implementing</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Write the code first, then the interviewer asks for complexity and you discover it&apos;s O(n³) and panic.</p>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Not stating Big-O before implementing</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Write the code first, then the interviewer asks for complexity and you discover it&apos;s O(n³) and panic.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;My plan is O(n log n) time, O(n) space — does that meet the bar before I write it?&quot; If they say &quot;can you do better?&quot;, you&apos;ve saved 10 minutes of wasted typing.</p>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Silent debugging</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Two minutes of staring at the screen in total silence after a test case fails.</p>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Silent debugging</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Two minutes of staring at the screen in total silence after a test case fails.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;That output looks off — let me trace through. At i=2 we should have low=1, but the code has low=2… ah, I&apos;m updating low before the check. Let me move that line.&quot; Talk while you debug; the interviewer is grading the process, not just the result.</p>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Skipping brute force for the &quot;clever&quot; solution</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spend 15 minutes trying to remember the O(n) trick, fail, run out of time with nothing on the screen.</p>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Skipping brute force for the &quot;clever&quot; solution</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spend 15 minutes trying to remember the O(n) trick, fail, run out of time with nothing on the screen.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;The brute force here is O(n²) with nested loops. Let me write that first, then we can optimize.&quot; A working O(n²) beats a broken O(n) every single time. Most interviewers will accept the brute force and ask &quot;can you do better?&quot; — and you now have a baseline to build on.</p>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Not asking for hints when stuck</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spiral in silence for five minutes, hoping inspiration strikes.</p>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Not asking for hints when stuck</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong className="text-rose-700 dark:text-rose-300">BAD:</strong>{" "}Spiral in silence for five minutes, hoping inspiration strikes.</p>
             <p className="text-sm text-slate-700 dark:text-slate-300"><strong className="text-emerald-700 dark:text-emerald-300">GOOD:</strong> &quot;I&apos;m considering two approaches — a hashmap pass or a sort + two pointers. Is there a simpler angle I&apos;m missing?&quot; Asking for a nudge is normal collaboration. Silence is what eats your score.</p>
           </div>
         </div>
@@ -588,8 +588,8 @@ for (int[] e : edges) {
       {/* SECTION 9 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five interview-meta recall checks. No XP, no gating. If you blank on one of these, re-read the source module before booking a mock.
         </p>
 
@@ -652,8 +652,8 @@ for (int[] e : edges) {
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / closing */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-emerald-950/30 dark:via-slate-900 dark:to-teal-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-teal-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
           Course complete
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re done with DSA in Java.</h3>
@@ -666,13 +666,13 @@ for (int[] e : edges) {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/dsa"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-emerald-300 dark:border-emerald-700 bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-300 font-semibold text-sm hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg border border-emerald-300 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 no-underline transition hover:bg-emerald-50 dark:border-emerald-700 dark:bg-slate-900 dark:text-emerald-300 dark:hover:bg-emerald-950/30"
           >
             ← Back to course overview
           </Link>
           <Link
             href="/courses/dsa/modules/capstone"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Try the capstone problem set →
           </Link>

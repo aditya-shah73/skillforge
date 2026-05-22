@@ -46,21 +46,21 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/dsa" className="text-emerald-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Big-O from zero
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Growth rates, why we ignore constants, and the 7 curves you&apos;ll meet for the rest of your career.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="big-o" />
@@ -335,13 +335,13 @@ flowchart LR
         </p>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left py-2 pr-4 font-bold">Big-O</th>
-                <th className="text-left py-2 pr-4 font-bold">Name</th>
-                <th className="text-left py-2 pr-4 font-bold">Canonical example</th>
-                <th className="text-left py-2 font-bold">n=1M ops (rough)</th>
+                <th className="py-2 pr-4 text-left font-bold">Big-O</th>
+                <th className="py-2 pr-4 text-left font-bold">Name</th>
+                <th className="py-2 pr-4 text-left font-bold">Canonical example</th>
+                <th className="py-2 text-left font-bold">n=1M ops (rough)</th>
               </tr>
             </thead>
             <tbody className="text-slate-700 dark:text-slate-300">
@@ -912,7 +912,7 @@ n = 1000000
       {/* Forward-look panel — sits outside the final Checkpoint so it reads as
           "what's next" rather than a celebration before the gate clears. The
           Checkpoint's own celebration prop fires the actual completion moment. */}
-      <section className="mt-12 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
+      <section className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
         <h3 className="mt-0 mb-2">What you&apos;ll have when this module clears</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You&apos;ll be able to name the seven curves, justify why constants and lower-order terms vanish, read a Java method and call out its Big-O on sight, and you&apos;ll have seen the curves with your own eyes on a real benchmark. That&apos;s the foundation.
@@ -923,7 +923,7 @@ n = 1000000
         <div className="mt-5">
           <Link
             href="/courses/dsa/modules/space-complexity"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-rose-600 hover:to-orange-600 transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-sm transition hover:from-rose-600 hover:to-orange-600 hover:shadow-md"
           >
             Continue to Module 2: Space complexity →
           </Link>

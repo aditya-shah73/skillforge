@@ -38,23 +38,23 @@ flowchart TD
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 7 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 7 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The whole DP story — decision framework, six state shapes, memo vs tab, the space tricks — compressed to a reference card you can re-read in 20 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-7-revision" />
@@ -63,10 +63,10 @@ flowchart TD
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 7</strong> — every recurrence, every template, every gotcha from the four DP modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The four modules you&apos;re consolidating: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">DP intuition — memoization &amp; overlapping subproblems</Link>, <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">1D DP patterns</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">2D DP &amp; grid DP</Link>, and <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Advanced DP — intervals, trees, bitmask</Link>.
         </p>
       </section>
@@ -75,13 +75,13 @@ flowchart TD
       {/* SECTION 1 — The DP decision framework */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. &quot;Is this a DP problem?&quot; — the decision framework</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. &quot;Is this a DP problem?&quot; — the decision framework</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Three signals to check before you touch a single line of code. If all three light up, the rest of the work is just choosing top-down or bottom-up.
         </p>
 
-        <div className="rounded-xl border border-fuchsia-200 dark:border-fuchsia-900 bg-fuchsia-50/40 dark:bg-fuchsia-950/20 p-5 mb-4">
-          <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-3">The 3-signal checklist</div>
+        <div className="mb-4 rounded-xl border border-fuchsia-200 bg-fuchsia-50/40 p-5 dark:border-fuchsia-900 dark:bg-fuchsia-950/20">
+          <div className="mb-3 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">The 3-signal checklist</div>
 
           <div className="space-y-3">
             <div className="flex gap-3">
@@ -107,7 +107,7 @@ flowchart TD
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={decisionChart} />
         </div>
 
@@ -115,7 +115,7 @@ flowchart TD
           <strong>The mental model:</strong>{" "}DP = brute-force recursion + a cache. Always write the brute-force recursion first. The state (the args that uniquely identify a subproblem) becomes your memo key, and that same state becomes your dp-table index when you flip it to bottom-up.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32 — DP intuition</Link>.
         </p>
       </section>
@@ -124,14 +124,14 @@ flowchart TD
       {/* SECTION 2 — Top-down vs bottom-up */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Top-down (memo) vs bottom-up (tab) — when each one wins</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Top-down (memo) vs bottom-up (tab) — when each one wins</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Same time complexity, same answer. The trade-offs are in stack depth, constant factor, ease of derivation, and whether you can space-optimize.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Axis</th>
                 <th className="px-4 py-3 font-semibold">Top-down · memoization</th>
@@ -187,7 +187,7 @@ flowchart TD
           <strong>Decision rule:</strong>{" "}derive the recurrence top-down, then translate to bottom-up if the constant factor matters or you want to space-optimize. The recursion is how you <em>think</em>; the table is how you <em>ship</em>.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32 — DP intuition</Link>.
         </p>
       </section>
@@ -196,57 +196,57 @@ flowchart TD
       {/* SECTION 3 — The 6 state-shape templates */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The 6 DP state-shape templates</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The 6 DP state-shape templates</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every DP problem you&apos;ll see fits one of these six shapes. Recognize the shape, the recurrence almost writes itself.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Shape 1 · 1D, decision at index i</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i]</code> = best answer using/ending at index i</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> <code>dp[i] = f(dp[i-1], dp[i-2], ...)</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n) / O(n) → O(1)</div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Shape 1 · 1D, decision at index i</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[i]</code> = best answer using/ending at index i</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong> <code>dp[i] = f(dp[i-1], dp[i-2], ...)</code></div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(n) / O(n) → O(1)</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}House Robber, Climbing Stairs</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Shape 2 · 2D, i × j string family</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> over two sequences A[..i], B[..j]</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}match → diagonal; else min/max of three neighbors</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(min(m,n))</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Shape 2 · 2D, i × j string family</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[i][j]</code> over two sequences A[..i], B[..j]</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong>{" "}match → diagonal; else min/max of three neighbors</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(min(m,n))</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Edit Distance, LCS</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Shape 3 · Grid (m × n) path counting</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> = ways/cost to reach cell (i, j)</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong> <code>dp[i][j] = dp[i-1][j] + dp[i][j-1]</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(n)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Shape 3 · Grid (m × n) path counting</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[i][j]</code> = ways/cost to reach cell (i, j)</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong> <code>dp[i][j] = dp[i-1][j] + dp[i][j-1]</code></div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(m·n) / O(m·n) → O(n)</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Unique Paths, Minimum Path Sum</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">Shape 4 · Interval DP (i…j range)</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[i][j]</code> = answer for subrange A[i..j]</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}split point k: <code>dp[i][j] = min/max over k of f(dp[i][k], dp[k+1][j])</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n³) / O(n²)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-orange-600 uppercase">Shape 4 · Interval DP (i…j range)</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[i][j]</code> = answer for subrange A[i..j]</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong>{" "}split point k: <code>dp[i][j] = min/max over k of f(dp[i][k], dp[k+1][j])</code></div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(n³) / O(n²)</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Matrix Chain, Burst Balloons</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">Shape 5 · Tree DP (rooted at node)</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[node]</code> often with a 2nd dim for include/exclude</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}post-order DFS, combine children&apos;s answers</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(n) / O(n)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-orange-600 uppercase">Shape 5 · Tree DP (rooted at node)</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[node]</code> often with a 2nd dim for include/exclude</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong>{" "}post-order DFS, combine children&apos;s answers</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(n) / O(n)</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}House Robber III, Tree Diameter</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Shape 6 · Bitmask DP (subset state)</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>State:</strong> <code>dp[mask][i]</code> = best path visiting set <code>mask</code> ending at <code>i</code></div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Transition:</strong>{" "}for each j not in mask: try extending</div>
-            <div className="text-xs text-slate-600 dark:text-slate-400 mb-1"><strong>Time / Space:</strong>{" "}O(2ⁿ · n²) / O(2ⁿ · n)</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Shape 6 · Bitmask DP (subset state)</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>State:</strong> <code>dp[mask][i]</code> = best path visiting set <code>mask</code> ending at <code>i</code></div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Transition:</strong>{" "}for each j not in mask: try extending</div>
+            <div className="mb-1 text-xs text-slate-600 dark:text-slate-400"><strong>Time / Space:</strong>{" "}O(2ⁿ · n²) / O(2ⁿ · n)</div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Canonical:</strong>{" "}Travelling Salesman, Assign Cookies</div>
           </div>
         </div>
@@ -255,7 +255,7 @@ flowchart TD
           <strong>Pick the shape from the input.</strong>{" "}One sequence, decision per index → Shape 1. Two strings → Shape 2. A grid → Shape 3. &quot;Best way to split this range&quot; → Shape 4. A tree → Shape 5. n ≤ 20 and you&apos;re visiting subsets → Shape 6. The shape tells you the dimensions; the dimensions tell you the time complexity.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Sources: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33 — 1D DP</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34 — 2D DP</Link>, <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35 — Advanced DP</Link>.
         </p>
       </section>
@@ -264,33 +264,33 @@ flowchart TD
       {/* SECTION 4 — 1D DP detail: fib → climb → rob progression */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. 1D DP — Fibonacci → Climbing Stairs → House Robber</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. 1D DP — Fibonacci → Climbing Stairs → House Robber</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The same recurrence shape three times, with progressively more interesting transitions. All three space-optimize to O(1) with two rolling variables.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-3 mb-5">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Fibonacci</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong>{" "}i-th Fibonacci number</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Transition:</strong> <code>dp[i] = dp[i-1] + dp[i-2]</code></div>
+        <div className="mb-5 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-4 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Fibonacci</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>dp[i]:</strong>{" "}i-th Fibonacci number</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>Transition:</strong> <code>dp[i] = dp[i-1] + dp[i-2]</code></div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Base:</strong> <code>dp[0]=0, dp[1]=1</code></div>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Climbing Stairs</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong> # ways to reach step i</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Transition:</strong> <code>dp[i] = dp[i-1] + dp[i-2]</code></div>
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-4 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Climbing Stairs</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>dp[i]:</strong> # ways to reach step i</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>Transition:</strong> <code>dp[i] = dp[i-1] + dp[i-2]</code></div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Base:</strong> <code>dp[0]=1, dp[1]=1</code> (literally fib)</div>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-fuchsia-50/40 dark:bg-fuchsia-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">House Robber</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>dp[i]:</strong>{" "}max money robbing houses 0..i-1</div>
-            <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Transition:</strong> <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code></div>
+          <div className="rounded-xl border border-slate-200 bg-fuchsia-50/40 p-4 dark:border-slate-800 dark:bg-fuchsia-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">House Robber</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>dp[i]:</strong>{" "}max money robbing houses 0..i-1</div>
+            <div className="mb-1 text-xs text-slate-700 dark:text-slate-300"><strong>Transition:</strong> <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code></div>
             <div className="text-xs text-slate-700 dark:text-slate-300"><strong>Base:</strong> <code>dp[0]=0, dp[1]=nums[0]</code></div>
           </div>
         </div>
 
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
           Each only looks back two cells, so the whole <code>dp[]</code> array is wasteful. Two <code>int</code>s suffice — that&apos;s the O(n) → O(1) space win:
         </p>
 
@@ -311,7 +311,7 @@ public int rob(int[] nums) {
           Any 1D DP whose transition uses a <em>constant</em>{" "}number of recent values (dp[i-1], dp[i-2], ...) collapses to O(1) space using that many rolling vars. <strong>LIS does NOT collapse</strong> — it reads every previous dp[j]. <strong>Coin Change does NOT collapse</strong> — it reads dp[a-c] for arbitrary coin sizes.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33 — 1D DP patterns</Link>.
         </p>
       </section>
@@ -320,26 +320,26 @@ public int rob(int[] nums) {
       {/* SECTION 5 — 2D DP detail: Edit Distance */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. 2D DP — Edit Distance as the canonical example</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. 2D DP — Edit Distance as the canonical example</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           <strong>LC 72 · Edit Distance (Levenshtein).</strong>{" "}Minimum number of insert / delete / replace ops to turn string A into string B. The recurrence has three cases; the table makes it obvious.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40 mb-4">
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">The transition</div>
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+          <div className="mb-3 text-xs font-bold tracking-wider text-slate-500 uppercase">The transition</div>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li><strong>If a[i-1] == b[j-1]:</strong> <code>dp[i][j] = dp[i-1][j-1]</code> — free, characters already match.</li>
             <li><strong>Else:</strong> <code>dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])</code> — pick the cheapest of replace, delete, insert.</li>
             <li><strong>Base row/col:</strong> <code>dp[i][0] = i</code> (delete all of A), <code>dp[0][j] = j</code> (insert all of B).</li>
           </ul>
         </div>
 
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
           The dp table for <code>&quot;horse&quot; → &quot;ros&quot;</code> looks like this. Every cell is filled from its top, left, and top-left neighbor — that&apos;s why it&apos;s O(m·n) time and (naively) O(m·n) space:
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
-          <table className="w-full text-sm text-center font-mono">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+          <table className="w-full text-center font-mono text-sm">
             <thead className="bg-slate-50 dark:bg-slate-900/50">
               <tr>
                 <th className="px-3 py-2"></th>
@@ -360,7 +360,7 @@ public int rob(int[] nums) {
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+        <p className="mb-4 text-xs text-slate-500 dark:text-slate-400">
           Bottom-right is the answer: 3 edits. (replace h→r, delete r, delete e.)
         </p>
 
@@ -409,7 +409,7 @@ public int rob(int[] nums) {
     return prev[n];
 }`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34 — 2D DP &amp; grid DP</Link>.
         </p>
       </section>
@@ -418,14 +418,14 @@ public int rob(int[] nums) {
       {/* SECTION 6 — Bitmask DP teaser */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Bitmask DP — when state is a subset</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Bitmask DP — when state is a subset</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When your subproblem is &quot;over which subset of these n items have I made a decision?&quot;, the subset itself is the state. Encode the membership as bits of an <code>int</code> — bit k set = item k is in the set. Works while n ≤ ~20 (2²⁰ ≈ 1M states).
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40 mb-4">
-          <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">The bit operations you&apos;ll use</div>
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+          <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">The bit operations you&apos;ll use</div>
+          <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li><code>mask | (1 &lt;&lt; k)</code> — add item k to the set</li>
             <li><code>mask &amp; ~(1 &lt;&lt; k)</code> — remove item k</li>
             <li><code>(mask &gt;&gt; k) &amp; 1</code> — is item k in the set?</li>
@@ -459,11 +459,11 @@ public int tsp(int[][] dist) {
     return best;
 }`}</CodeBlock>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           Time: O(2ⁿ · n²). Space: O(2ⁿ · n). At n = 20 that&apos;s ~400M ops — borderline, but tractable.
         </p>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35 — Advanced DP</Link>.
         </p>
       </section>
@@ -472,15 +472,15 @@ public int tsp(int[][] dist) {
       {/* SECTION 7 — The 5 gotchas in BAD/GOOD format */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Five gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost real engineers real hours. If you only remember five things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Top-down memo with no base case</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Top-down memo with no base case</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The recursion calls itself forever, or returns garbage from the cache because you stored a half-baked answer. <strong>Always</strong>{" "}check the base case <em>before</em>{" "}the cache lookup.
             </p>
             <CodeBlock lang="java">{`// BAD — recurses past 0 into negative indices, StackOverflow
@@ -501,9 +501,9 @@ int rob(int[] nums, int i, Integer[] memo) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · HashMap memo when an array would do</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · HashMap memo when an array would do</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               If your state is a small integer range, use an <code>int[]</code> or <code>Integer[]</code>. <code>HashMap</code> boxing, hashing, and chaining add a 5–10× constant-factor slowdown. Reserve HashMap memo for sparse or non-integer state.
             </p>
             <CodeBlock lang="java">{`// BAD — Map<Integer,Integer> hashing every lookup
@@ -526,9 +526,9 @@ int f(int n, int[] memo) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Forgetting to <em>store</em>{" "}the result after computing it</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Forgetting to <em>store</em>{" "}the result after computing it</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               You added a cache lookup at the top but forgot to write the result back. The function still recomputes every subproblem — still O(2ⁿ). Easy to miss when refactoring.
             </p>
             <CodeBlock lang="java">{`// BAD — lookup but no store. Still O(2^n).
@@ -546,9 +546,9 @@ int fib(int n, Integer[] memo) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Off-by-one in tabulation indices</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Off-by-one in tabulation indices</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The dp table has size <code>n + 1</code> with a phantom &quot;empty prefix&quot; row, so <code>dp[i]</code> answers for the first <code>i</code> items — but <code>nums[i-1]</code> is the i-th item. Mixing the two indexing schemes is the most common DP bug.
             </p>
             <CodeBlock lang="java">{`// BAD — reads nums[i] inside a loop that runs i = 1..n. ArrayIndexOutOfBounds at i = n.
@@ -562,9 +562,9 @@ for (int i = 1; i <= n; i++) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Integer overflow in counting problems</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Integer overflow in counting problems</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Path-counting DPs (Unique Paths, Decode Ways, Climbing Stairs) produce numbers that grow exponentially. By n = 60 you&apos;ve blown through <code>Integer.MAX_VALUE</code> (~2.1 × 10⁹). Use <code>long</code>, or take mod if the problem specifies one.
             </p>
             <CodeBlock lang="java">{`// BAD — int overflow on large grids
@@ -586,8 +586,8 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
       {/* SECTION 8 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -650,8 +650,8 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
       {/* ============================================================ */}
       {/* SECTION 9 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 via-white to-rose-50 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
           Phase 7 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can derive a DP recurrence from a problem statement</h3>
@@ -663,7 +663,7 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
         </p>
         <Link
           href="/courses/dsa/modules/tries"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Advanced &amp; Interview Prep →
         </Link>

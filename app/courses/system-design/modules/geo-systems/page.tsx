@@ -38,32 +38,32 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="geo-systems" />
         <ModuleProgress moduleSlug="geo-systems" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🌍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A budget for latency you can actually defend, and a clean way to think about where state lives versus where compute happens. Geo-distribution is mostly about the speed of light and being honest about it.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The latency floor light imposes on cross-region calls — and what to do about it</li>
           <li>Active-passive vs active-active vs sharded-by-region: when each is the right answer</li>
           <li>What CDNs cache, what edge compute can and can&apos;t do, and the read/write asymmetry</li>
@@ -542,9 +542,9 @@ public class SyncController {
 
       </Checkpoint>
 
-      <section className="not-prose my-12 rounded-2xl border-2 border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <h3 className="font-bold text-lg mb-2">Module wrap</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-0">
+      <section className="not-prose my-12 rounded-2xl border-2 border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <h3 className="mb-2 text-lg font-bold">Module wrap</h3>
+        <p className="mb-0 text-sm text-slate-700 dark:text-slate-300">
           Geo-distribution is mostly an exercise in respecting the speed of light and being honest about where state lives. Pick one of three topologies, write down your conflict and failover stories in plain words, and layer CDNs and edge compute over a regional architecture rather than as a substitute for one. Most multi-region projects fail because the team hoped state would just &quot;be&quot; everywhere. It won&apos;t. State has a home, and your design either acknowledges that home or fights it forever.
         </p>
       </section>

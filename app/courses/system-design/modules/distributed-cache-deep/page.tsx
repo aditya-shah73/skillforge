@@ -58,25 +58,25 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="distributed-cache-deep" />
         <ModuleProgress moduleSlug="distributed-cache-deep" checkpoints={CHECKPOINTS} />
       </header>
 
       <section className="my-10">
-        <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
+        <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
           <li>Redis topologies (single, sentinel, cluster) and when each one is the right call.</li>
           <li>Spring&apos;s <code>@Cacheable</code> stack and when to drop down to <code>RedisTemplate</code>.</li>
@@ -99,9 +99,9 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="redis-arch" title="Redis architecture" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 1 — Redis architecture &amp; Spring integration</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Redis architecture &amp; Spring integration</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">Three deployment shapes</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Three deployment shapes</h3>
 
         <p><strong>1. Single instance.</strong>{" "}One Redis process. Fast, simple, single point of failure. Fine for dev or for caches where losing the cache means falling back to the DB and shrugging.</p>
 
@@ -145,7 +145,7 @@ export default function Page() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Spring integration: @Cacheable vs RedisTemplate</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Spring integration: @Cacheable vs RedisTemplate</h3>
 
         <p>Spring offers two integration levels:</p>
 
@@ -234,9 +234,9 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="hot-keys" title="Hot keys & herd" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 2 — Hot keys, thundering herd, and big keys</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Hot keys, thundering herd, and big keys</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">The hot key problem</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">The hot key problem</h3>
         <p>
           Consistent hashing distributes keys across nodes. It does not distribute <em>traffic</em>{" "}across nodes.
           If one key (Beyoncé&apos;s profile, the homepage feed, today&apos;s big news article) is read millions of
@@ -247,7 +247,7 @@ public class UserService {
           milliseconds. The cluster looks healthy by aggregate metrics; the experience is bad.
         </p>
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Three real mitigations</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Three real mitigations</h3>
 
         <p><strong>1. Replicate the hot key to multiple nodes (read-side fan-out).</strong>{" "}Store <code>hotkey#1</code>, <code>hotkey#2</code>, …, <code>hotkey#10</code> all with the same value. Readers pick a random suffix per request. The load spreads across 10 keys, which the cluster spreads across (up to) 10 nodes. Updates are 10x more work.</p>
 
@@ -265,7 +265,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Thundering herd on cache miss</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Thundering herd on cache miss</h3>
         <p>
           Hot key + cache expiry is the cache stampede recipe. Take a key being read 10,000 times per second. TTL
           expires. In the next 100ms, 1,000 concurrent requests all miss the cache. All 1,000 hit the DB. The DB sees
@@ -319,7 +319,7 @@ public class UserService {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Big keys: the silent killer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Big keys: the silent killer</h3>
         <p>
           Big keys (anything &gt;100KB, definitely anything &gt;1MB) cause problems even if traffic is moderate:
         </p>
@@ -365,9 +365,9 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="operations" title="Operations" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 3 — Operational realities</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Operational realities</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">Eviction policies</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Eviction policies</h3>
         <p>
           A cache with a memory limit needs a policy for what to evict when full. Redis offers eight policies; in
           practice you pick from three:
@@ -386,7 +386,7 @@ public class UserService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Persistence: RDB vs AOF</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Persistence: RDB vs AOF</h3>
         <p>
           Caches don&apos;t strictly need persistence — losing the cache means falling back to the DB. But warm-up time
           matters. Cold cache after restart = DB stampede.
@@ -401,7 +401,7 @@ public class UserService {
           because the cost of warm-up + DB pressure is the actual concern, not the cached values themselves.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What happens when Redis dies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What happens when Redis dies</h3>
         <p>
           You should know exactly what your service does when Redis is unreachable. Two failure modes:
         </p>
@@ -447,7 +447,7 @@ public User get(long id) {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Cache warming</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Cache warming</h3>
         <p>
           Cold caches after restart are dangerous. Strategies:
         </p>
@@ -458,7 +458,7 @@ public User get(long id) {
           <li><strong>Slow rollout.</strong>{" "}Don&apos;t restart all cache nodes at once. Drain one, restart, let it warm naturally, move to the next.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Monitoring you actually need</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Monitoring you actually need</h3>
         <ul>
           <li><strong>Hit rate.</strong>{" "}Hits / (hits + misses). &lt;50% means your cache is doing nothing useful.</li>
           <li><strong>Memory usage.</strong> % of maxmemory used. Approach 100% means evictions are happening.</li>
@@ -499,9 +499,9 @@ public User get(long id) {
         />
       </Checkpoint>
 
-      <section className="my-12 p-6 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-        <h2 className="text-xl font-semibold mb-3">What this didn&apos;t cover</h2>
-        <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+      <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
+        <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
+        <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Redis Streams, Pub/Sub, and using Redis as a queue / messaging substrate.</li>
           <li>Memcached vs Redis tradeoffs in detail (Memcached: simpler, multi-threaded; Redis: richer data types, persistence).</li>
           <li>Aerospike, Hazelcast, and other distributed in-memory stores.</li>
@@ -510,7 +510,7 @@ public User get(long id) {
       </section>
 
       <section className="my-12 text-center">
-        <p className="text-sm text-slate-500 mb-2">Next up</p>
+        <p className="mb-2 text-sm text-slate-500">Next up</p>
         <Link href="/courses/system-design/modules/search-systems" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
           Search systems: when LIKE &apos;%foo%&apos; isn&apos;t enough →
         </Link>

@@ -87,13 +87,13 @@ flowchart TB
       <ModuleProgress moduleSlug="bit-manipulation" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 6 · Module 30 · Closeout
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~1.5–2h · ends with Phase 6 wrap-up</p>
       </div>
@@ -991,90 +991,90 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
           tractable. The map of Phase 6:
         </p>
 
-        <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-3 my-6">
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M18</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Two pointers</h4>
+        <div className="not-prose my-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M18</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Two pointers</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when an array is sorted (or sortable) and you need pairs/triples that satisfy a relation. The two
               indices walk inward (or in the same direction) and prune the search space linearly.
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M19</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Sliding window</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M19</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Sliding window</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when you want a contiguous subarray (or substring) that satisfies an invariant. Expand the right
               pointer until the invariant breaks; contract the left until it&apos;s restored. O(n).
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M20</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Binary search</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M20</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Binary search</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when the search space is monotonic — sorted array, or any predicate that flips from false to true
               exactly once. Includes &quot;binary-search the answer&quot; for parametric problems. O(log n).
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M21</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Sorting</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M21</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Sorting</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when ordering simplifies the rest of the algorithm — interval problems, deduplication, two-pointer
               setups. Most languages ship merge or quick. O(n log n).
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M22</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Recursion &amp; D&amp;C</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M22</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Recursion &amp; D&amp;C</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when the problem decomposes naturally into independent (or near-independent) subproblems. Master
               theorem gives O(complexity); base case and combine step are the contracts that matter.
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M23</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Backtracking</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M23</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Backtracking</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when you need to enumerate or search combinatorial space — subsets, permutations, placements.
               Choose / explore / unchoose. Prune early to escape the exponential.
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M24</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Greedy</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M24</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Greedy</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when each local optimum provably leads to the global one — exchange argument, matroid structure,
               or proof by induction. When greedy is wrong, it&apos;s spectacularly wrong; check small cases first.
             </p>
           </div>
 
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/30 p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-mono text-indigo-700 dark:text-indigo-300">M25</span>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 m-0">Bit manipulation</h4>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 dark:border-indigo-800 dark:bg-indigo-950/30">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-xs text-indigo-700 dark:text-indigo-300">M25</span>
+              <h4 className="m-0 text-sm font-bold text-slate-900 dark:text-slate-100">Bit manipulation</h4>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
               Use when the input is naturally binary (flags, presence) or when XOR&apos;s self-cancellation collapses
               an O(n)-space problem to O(1). Bitmask is a 32-element set in disguise.
             </p>
@@ -1148,8 +1148,8 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 border border-indigo-200 dark:border-indigo-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Phase 6 complete · Algorithmic Techniques</h3>
+        <div className="not-prose mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800/40 dark:from-indigo-950/30 dark:to-purple-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Phase 6 complete · Algorithmic Techniques</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Eight techniques. Two pointers, sliding window, binary search, sorting, recursion, backtracking, greedy,
             and bit manipulation. You now have a vocabulary for reading a problem statement and picking the right
@@ -1158,22 +1158,22 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
           </p>
           <Link
             href="/courses/dsa"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Back to the course outline →
           </Link>
         </div>
 
-        <div className="not-prose mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-800 bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/40 dark:to-pink-950/40">
-          <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Phase 7 · Module 32</p>
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mt-1 mb-2">DP Intro — Memoization &amp; Tabulation</h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+        <div className="not-prose mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-6 dark:border-fuchsia-800 dark:from-fuchsia-950/40 dark:to-pink-950/40">
+          <p className="text-xs font-semibold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">Up next · Phase 7 · Module 32</p>
+          <h3 className="mt-1 mb-2 text-xl font-semibold text-slate-900 dark:text-slate-100">DP Intro — Memoization &amp; Tabulation</h3>
+          <p className="mb-4 text-sm text-slate-600 dark:text-slate-400">
             Memoization, overlapping subproblems, and the patterns that turn O(2^n) into O(n²). Phase 7 takes the
             recursion-with-cache trick we just glimpsed and turns it into a rigorous problem-solving framework.
           </p>
           <Link
             href="/courses/dsa/modules/dp-intro"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to DP Intro →
           </Link>

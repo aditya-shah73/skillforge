@@ -29,19 +29,19 @@ export default function MLBasicsModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Supervised learning foundations</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Supervised learning foundations</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Problem types, features, labels, loss — slow, deep, with worked examples.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="ml-basics" />
@@ -49,20 +49,20 @@ export default function MLBasicsModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🎯</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           By the end of this module, for <em>every</em>{" "}concept below, you should be able to do three things:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Explain it</strong>{" "}out loud in 2 minutes to a friend over coffee.</li>
           <li><strong>Recognize it</strong>{" "}when you see it in real code (Python, Java, whatever).</li>
           <li><strong>Implement a toy version</strong>{" "}of it from scratch in Java.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           Throughout the module, you&apos;ll see orange &quot;Confidence check&quot; boxes. Use them. If you can&apos;t hit all three bars on a concept, re-read that section — don&apos;t let it slip.
         </p>
       </section>
@@ -100,7 +100,7 @@ export default function MLBasicsModule() {
           When people say &quot;machine learning,&quot; they&apos;re almost always talking about one of three setups. The difference is <strong>what kind of feedback the model gets while learning</strong>.
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-3 my-6 not-prose">
+        <div className="not-prose my-6 grid gap-3 sm:grid-cols-3">
           <FlavorCard
             icon="🎓"
             name="Supervised"
@@ -250,40 +250,40 @@ export default function MLBasicsModule() {
           A <strong>light switch</strong>{" "}outputs one of two states: on or off. There&apos;s nothing &quot;in between.&quot; Either you&apos;re right or you&apos;re wrong — no &quot;close enough.&quot;
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-4 my-6 not-prose">
-          <div className="rounded-xl border-2 border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-5">
-            <div className="flex items-center gap-2 mb-2">
+        <div className="not-prose my-6 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border-2 border-sky-300 bg-sky-50 p-5 dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-2 flex items-center gap-2">
               <span className="text-2xl">🌡️</span>
-              <h4 className="font-bold text-sky-900 dark:text-sky-200 m-0">Regression</h4>
+              <h4 className="m-0 font-bold text-sky-900 dark:text-sky-200">Regression</h4>
             </div>
-            <p className="text-sm text-sky-950 dark:text-sky-100 m-0 mb-2">
+            <p className="m-0 mb-2 text-sm text-sky-950 dark:text-sky-100">
               <strong>Output is a number</strong>{" "}on a continuous scale.
             </p>
-            <ul className="text-xs text-sky-900 dark:text-sky-200 list-disc ml-4 space-y-1 m-0">
+            <ul className="m-0 ml-4 list-disc space-y-1 text-xs text-sky-900 dark:text-sky-200">
               <li>House price ($425,000)</li>
               <li>Tomorrow&apos;s temperature (73.4°F)</li>
               <li>Time-to-resolve-ticket (4.3 hours)</li>
               <li>Expected revenue next quarter</li>
             </ul>
-            <p className="text-xs text-sky-800 dark:text-sky-300 mt-3 italic m-0">
+            <p className="m-0 mt-3 text-xs text-sky-800 italic dark:text-sky-300">
               &quot;How much?&quot; / &quot;How many?&quot; / &quot;How long?&quot;
             </p>
           </div>
-          <div className="rounded-xl border-2 border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 p-5">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="rounded-xl border-2 border-rose-300 bg-rose-50 p-5 dark:border-rose-800 dark:bg-rose-950/40">
+            <div className="mb-2 flex items-center gap-2">
               <span className="text-2xl">🚦</span>
-              <h4 className="font-bold text-rose-900 dark:text-rose-200 m-0">Classification</h4>
+              <h4 className="m-0 font-bold text-rose-900 dark:text-rose-200">Classification</h4>
             </div>
-            <p className="text-sm text-rose-950 dark:text-rose-100 m-0 mb-2">
+            <p className="m-0 mb-2 text-sm text-rose-950 dark:text-rose-100">
               <strong>Output is a category</strong>{" "}from a fixed set.
             </p>
-            <ul className="text-xs text-rose-900 dark:text-rose-200 list-disc ml-4 space-y-1 m-0">
+            <ul className="m-0 ml-4 list-disc space-y-1 text-xs text-rose-900 dark:text-rose-200">
               <li>Spam / not spam</li>
               <li>Cat / dog / bird</li>
               <li>Ticket priority: P0 / P1 / P2 / P3</li>
               <li>Fraud / not fraud</li>
             </ul>
-            <p className="text-xs text-rose-800 dark:text-rose-300 mt-3 italic m-0">
+            <p className="m-0 mt-3 text-xs text-rose-800 italic dark:text-rose-300">
               &quot;Which one?&quot; / &quot;Is it X?&quot;
             </p>
           </div>
@@ -304,35 +304,35 @@ export default function MLBasicsModule() {
           The whole reason we make this distinction is that <strong>these two problems use different loss functions and different model outputs</strong>, so you have to know which one you&apos;re solving before you can even write the training code.
         </p>
 
-        <div className="overflow-x-auto my-5 not-prose">
-          <table className="text-sm w-full border-collapse">
+        <div className="not-prose my-5 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-900">
-                <th className="text-left p-2 border border-slate-300 dark:border-slate-700"></th>
-                <th className="text-left p-2 border border-slate-300 dark:border-slate-700 text-sky-800 dark:text-sky-300">Regression</th>
-                <th className="text-left p-2 border border-slate-300 dark:border-slate-700 text-rose-800 dark:text-rose-300">Classification</th>
+                <th className="border border-slate-300 p-2 text-left dark:border-slate-700"></th>
+                <th className="border border-slate-300 p-2 text-left text-sky-800 dark:border-slate-700 dark:text-sky-300">Regression</th>
+                <th className="border border-slate-300 p-2 text-left text-rose-800 dark:border-slate-700 dark:text-rose-300">Classification</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="p-2 border border-slate-300 dark:border-slate-700 font-semibold">Model output</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">a single number</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">probabilities over K classes</td>
+                <td className="border border-slate-300 p-2 font-semibold dark:border-slate-700">Model output</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">a single number</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">probabilities over K classes</td>
               </tr>
               <tr className="bg-slate-50 dark:bg-slate-950">
-                <td className="p-2 border border-slate-300 dark:border-slate-700 font-semibold">Main loss</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">MSE (mean squared error)</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Cross-entropy loss</td>
+                <td className="border border-slate-300 p-2 font-semibold dark:border-slate-700">Main loss</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">MSE (mean squared error)</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Cross-entropy loss</td>
               </tr>
               <tr>
-                <td className="p-2 border border-slate-300 dark:border-slate-700 font-semibold">Main metric</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">RMSE, R²</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Accuracy, F1, precision/recall</td>
+                <td className="border border-slate-300 p-2 font-semibold dark:border-slate-700">Main metric</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">RMSE, R²</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Accuracy, F1, precision/recall</td>
               </tr>
               <tr className="bg-slate-50 dark:bg-slate-950">
-                <td className="p-2 border border-slate-300 dark:border-slate-700 font-semibold">Final layer</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">linear (raw number)</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">softmax / sigmoid (probability)</td>
+                <td className="border border-slate-300 p-2 font-semibold dark:border-slate-700">Final layer</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">linear (raw number)</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">softmax / sigmoid (probability)</td>
               </tr>
             </tbody>
           </table>
@@ -476,58 +476,58 @@ export default function MLBasicsModule() {
 
         <h3>The six-part anatomy</h3>
 
-        <div className="grid sm:grid-cols-2 gap-3 my-5 not-prose">
+        <div className="not-prose my-5 grid gap-3 sm:grid-cols-2">
           <AnatomyCard n={1} title="Features (X)" color="rose">
             The inputs. The stuff you measure about each example and hand to the model.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               house → {"{"}size, bedrooms, zip, year_built{"}"}
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               Also called: inputs, predictors, independent variables, X.
             </div>
           </AnatomyCard>
           <AnatomyCard n={2} title="Label (y)" color="amber">
             The output you&apos;re trying to predict. The &quot;right answer&quot; for training examples.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               house → price: $425,000
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               Also called: target, ground truth, dependent variable, y.
             </div>
           </AnatomyCard>
           <AnatomyCard n={3} title="Training set" color="emerald">
             ~70–80% of your data. Features + labels, both visible. The model studies this.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               [(X₁, y₁), (X₂, y₂), ..., (Xₙ, yₙ)]
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               Gradient descent runs against this pile.
             </div>
           </AnatomyCard>
           <AnatomyCard n={4} title="Validation set" color="sky">
             ~10–15%. Used <em>during</em>{" "}training to pick hyperparameters (model size, learning rate) without touching the test set.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               (same shape, different rows)
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               Also called: dev set.
             </div>
           </AnatomyCard>
           <AnatomyCard n={5} title="Test set" color="indigo">
             ~10–15%. Touched ONCE, at the very end. This is your honest report of model quality.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               (same shape, different rows)
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               Never tune against this — it corrupts the benchmark.
             </div>
           </AnatomyCard>
           <AnatomyCard n={6} title="Model + weights" color="violet">
             The function that maps X → prediction. Plus its tunable numbers (weights) that training updates.
-            <div className="mt-2 text-xs opacity-80 font-mono">
+            <div className="mt-2 font-mono text-xs opacity-80">
               ŷ = f(X; w, b)
             </div>
-            <div className="mt-1 text-xs opacity-70 italic">
+            <div className="mt-1 text-xs italic opacity-70">
               &quot;ŷ&quot; (y-hat) is a prediction; &quot;y&quot; without a hat is the truth.
             </div>
           </AnatomyCard>
@@ -561,9 +561,9 @@ Training data shape:   X ∈ ℝ^(n × d),  y ∈ ℝ^n
 One prediction:        ŷᵢ = f(Xᵢ; w, b)
 Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
 
-        <div className="not-prose my-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-5 text-sm">
-          <div className="font-bold text-slate-800 dark:text-slate-200 mb-3">Decoded, line by line:</div>
-          <ul className="list-disc ml-5 space-y-2 text-slate-700 dark:text-slate-300 m-0">
+        <div className="not-prose my-5 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="mb-3 font-bold text-slate-800 dark:text-slate-200">Decoded, line by line:</div>
+          <ul className="m-0 ml-5 list-disc space-y-2 text-slate-700 dark:text-slate-300">
             <li>
               <strong><code>X ∈ ℝ^(n × d)</code></strong> reads as: <em>&quot;X is a grid of real numbers with n rows and d columns.&quot;</em>{" "}
               The funny <code>∈</code> is just &quot;is a member of&quot; (think: <em>belongs to</em>). <code>ℝ</code> is &quot;the real numbers.&quot; The exponent <code>(n × d)</code> is the shape — rows by columns. So: a spreadsheet with one row per example and one column per feature.
@@ -594,18 +594,18 @@ Goal:                  make ŷᵢ ≈ yᵢ  for all i`}</CodeBlock>
           You can throw the world&apos;s best neural network at a house-price problem, but if your only feature is <code>zip_code_first_digit</code>, you&apos;ll be beaten by a middle-schooler with a tape measure. Garbage features → garbage predictions, no matter the model.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3 my-5 not-prose">
-          <div className="rounded-lg border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 p-4 text-sm">
-            <div className="font-bold text-rose-900 dark:text-rose-200 mb-2">❌ Weak features</div>
-            <ul className="list-disc ml-4 space-y-1 text-rose-950 dark:text-rose-100">
+        <div className="not-prose my-5 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/40">
+            <div className="mb-2 font-bold text-rose-900 dark:text-rose-200">❌ Weak features</div>
+            <ul className="ml-4 list-disc space-y-1 text-rose-950 dark:text-rose-100">
               <li><code>listing_id</code> (just a database key; no signal)</li>
               <li><code>date_string</code> as raw text (&quot;2026-04-12&quot;)</li>
               <li><code>zip_code</code> as a number (treats 90210 as &quot;larger&quot; than 10001)</li>
             </ul>
           </div>
-          <div className="rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-2">✅ Engineered features</div>
-            <ul className="list-disc ml-4 space-y-1 text-emerald-950 dark:text-emerald-100">
+          <div className="rounded-lg border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-2 font-bold text-emerald-900 dark:text-emerald-200">✅ Engineered features</div>
+            <ul className="ml-4 list-disc space-y-1 text-emerald-950 dark:text-emerald-100">
               <li><code>size_sqft</code> (raw, but genuinely predictive)</li>
               <li><code>age_at_sale = year_sold − year_built</code> (derived)</li>
               <li><code>zip_code_one_hot[N]</code> (one column per zip — lets model learn each zip&apos;s premium)</li>
@@ -750,7 +750,7 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
           <p className="m-0 mb-2">
             Every ML model you&apos;ve heard of works this way — just with more numbers. A rough ladder:
           </p>
-          <ul className="list-disc ml-5 space-y-1 m-0 text-sm">
+          <ul className="m-0 ml-5 list-disc space-y-1 text-sm">
             <li><strong>Linear regression (1 feature):</strong> 2 numbers. ~16 bytes.</li>
             <li><strong>Spam classifier on 1000 word features:</strong> ~1,001 numbers. ~8 KB.</li>
             <li><strong>Small image model (ResNet-18):</strong> ~11 million parameters. ~44 MB.</li>
@@ -766,7 +766,7 @@ On disk, at 8 bytes per double:  4 × 8 = 32 bytes.
           <p className="m-0 mb-2">
             A lot of practical ML engineering is just consequences of &quot;a model is a pile of floats.&quot; Examples you&apos;ll hit later in this course:
           </p>
-          <ul className="list-disc ml-5 space-y-1 m-0 text-sm">
+          <ul className="m-0 ml-5 list-disc space-y-1 text-sm">
             <li><strong>Model files live in S3 / artifact stores</strong>, not in your git repo. They&apos;re big binary blobs.</li>
             <li><strong>Loading is slow</strong> (hundreds of MB → minutes). Always do it once at startup, never per-request. That&apos;s why our Spring service puts it behind an <code>@Bean</code>.</li>
             <li><strong>Inference is memory-bound.</strong>{" "}A 16 GB model can&apos;t fit on a laptop GPU. This is why &quot;quantization&quot; (store floats as 4-bit ints instead of 16-bit floats) is a huge deal — it shrinks the file 4×.</li>
@@ -842,7 +842,7 @@ MSE: 0  ← perfect fit!`}</CodeBlock>
               body: (
                 <>
                   <p>Zoom out. We:</p>
-                  <ol className="list-decimal ml-5 space-y-1">
+                  <ol className="ml-5 list-decimal space-y-1">
                     <li>Chose a family of models (lines: <code>ŷ = w·x + b</code>).</li>
                     <li>Picked starting weights (30, 50) — any guess works.</li>
                     <li>Measured loss on the training set (MSE = 8367).</li>
@@ -1000,7 +1000,7 @@ public final class LinearRegression {
           <strong>In plain English:</strong>{" "}for each example, subtract the truth from your prediction, square the gap, then average those squared gaps across all examples. Smaller number = better model.
         </p>
 
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           The formula below is the same idea in math shorthand. You don&apos;t need to memorize it — you just need to recognize it when you see it in a model&apos;s code or a paper. The big sigma (Σ) just means &quot;add these up,&quot; and the subscript <code>i</code> means &quot;for each training example.&quot;
         </p>
 
@@ -1016,7 +1016,7 @@ public final class LinearRegression {
 
         <p>Three things are happening here; each deserves a sentence:</p>
 
-        <div className="space-y-3 my-5 not-prose">
+        <div className="not-prose my-5 space-y-3">
           <Tile n={1} title="Subtract: prediction − truth">
             The raw error. Can be positive (over-predicted) or negative (under-predicted).
           </Tile>
@@ -1029,7 +1029,7 @@ public final class LinearRegression {
         </div>
 
         <Callout variant="insight" title="Why square specifically? Three reasons.">
-          <ul className="list-disc ml-5 space-y-1 m-0">
+          <ul className="m-0 ml-5 list-disc space-y-1">
             <li><strong>Sign problem fixed.</strong>{" "}Squares are non-negative, so +5 and −5 don&apos;t cancel.</li>
             <li><strong>Differentiable everywhere.</strong>{" "}Unlike <code>|x|</code> (absolute value, which has a kink at zero), <code>x²</code> is smooth — essential for gradient descent.</li>
             <li><strong>Matches the Gaussian assumption.</strong>{" "}If you believe the noise in your data is normally distributed (a bell curve), then maximum-likelihood estimation literally gives you MSE. This is why it&apos;s the default.</li>
@@ -1048,16 +1048,16 @@ public final class LinearRegression {
           Same idea, but instead of squaring, we take the <strong>absolute value</strong>. An error of 10 contributes exactly 10 — not 100.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-3 my-4 not-prose">
-          <div className="rounded-lg border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-4 text-sm">
-            <div className="font-bold text-sky-900 dark:text-sky-200 mb-2">MSE says:</div>
-            <p className="text-sky-950 dark:text-sky-100 m-0">
+        <div className="not-prose my-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
+            <div className="mb-2 font-bold text-sky-900 dark:text-sky-200">MSE says:</div>
+            <p className="m-0 text-sky-950 dark:text-sky-100">
               &quot;One huge error is WORSE than ten medium errors.&quot; Will aggressively avoid big misses, even at the cost of more small ones.
             </p>
           </div>
-          <div className="rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-sm">
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 mb-2">MAE says:</div>
-            <p className="text-emerald-950 dark:text-emerald-100 m-0">
+          <div className="rounded-lg border border-emerald-300 bg-emerald-50 p-4 text-sm dark:border-emerald-800 dark:bg-emerald-950/40">
+            <div className="mb-2 font-bold text-emerald-900 dark:text-emerald-200">MAE says:</div>
+            <p className="m-0 text-emerald-950 dark:text-emerald-100">
               &quot;All errors count proportionally to their size.&quot; More tolerant of outliers — they don&apos;t dominate the loss.
             </p>
           </div>
@@ -1073,7 +1073,7 @@ public final class LinearRegression {
           <strong>In plain English:</strong>{" "}if the error is small (less than some threshold <code>δ</code>), behave like MSE — square it. If the error is big, switch to MAE — just take the absolute value, scaled. Best of both: smooth for small errors, robust against outliers.
         </p>
 
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           The curly brace is &quot;case analysis&quot; — read it as &quot;if the top condition holds use the top expression, otherwise use the bottom one.&quot; Same idea as an <code>if/else</code> in code.
         </p>
 
@@ -1095,7 +1095,7 @@ Huber(ŷ, y) = ⎨
           <strong>In plain English:</strong>{" "}look at the probability the model gave to the correct class. Take its <code>log</code>, flip the sign. That&apos;s your loss. If the model was very confident in the right answer, this number is near zero. If the model was confident in a wrong answer, this number is huge. That&apos;s it.
         </p>
 
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           The formula below looks scary because it spells out two cases (two classes vs. many classes). You can ignore the symbols on first read — the next paragraph below the formula explains what the model &quot;feels&quot; for each level of confidence.
         </p>
 
@@ -1127,34 +1127,34 @@ Where:
 
         <h3>Picking the right loss: a cheat sheet</h3>
 
-        <div className="overflow-x-auto my-5 not-prose">
-          <table className="text-sm w-full border-collapse">
+        <div className="not-prose my-5 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-900">
-                <th className="text-left p-2 border border-slate-300 dark:border-slate-700">Situation</th>
-                <th className="text-left p-2 border border-slate-300 dark:border-slate-700">Use</th>
+                <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Situation</th>
+                <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Use</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Regression, clean data</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>MSE</strong> (default)</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Regression, clean data</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>MSE</strong> (default)</td>
               </tr>
               <tr className="bg-slate-50 dark:bg-slate-950">
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Regression with outliers you don&apos;t trust</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>MAE</strong>{" "}or <strong>Huber</strong></td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Regression with outliers you don&apos;t trust</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>MAE</strong>{" "}or <strong>Huber</strong></td>
               </tr>
               <tr>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Binary classification (spam/not, fraud/not)</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>Binary cross-entropy</strong> + sigmoid output</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Binary classification (spam/not, fraud/not)</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>Binary cross-entropy</strong> + sigmoid output</td>
               </tr>
               <tr className="bg-slate-50 dark:bg-slate-950">
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Multi-class classification</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>Categorical cross-entropy</strong> + softmax output</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Multi-class classification</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>Categorical cross-entropy</strong> + softmax output</td>
               </tr>
               <tr>
-                <td className="p-2 border border-slate-300 dark:border-slate-700">Next-token prediction (LLMs)</td>
-                <td className="p-2 border border-slate-300 dark:border-slate-700"><strong>Cross-entropy</strong>{" "}over the vocabulary</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700">Next-token prediction (LLMs)</td>
+                <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>Cross-entropy</strong>{" "}over the vocabulary</td>
               </tr>
             </tbody>
           </table>
@@ -1303,7 +1303,7 @@ loss = nn.CrossEntropyLoss()               → PyTorch: CE (with softmax built i
 
         <Callout variant="spring" title="How this section works">
           <p className="m-0 mb-2"><strong>Run first, build second.</strong>{" "}You&apos;ll do it in two passes:</p>
-          <ol className="list-decimal ml-5 space-y-1 m-0 text-sm">
+          <ol className="m-0 ml-5 list-decimal space-y-1 text-sm">
             <li><strong>Pass 1 — run the reference code.</strong>{" "}Copy three files, compile, run, watch it print predictions. Get a feel for the shape.</li>
             <li><strong>Pass 2 — implement the core methods yourself.</strong>{" "}Three small exercises where you re-build <code>predict()</code>, <code>mse()</code>, and the OOD guard without peeking. Compare your version to the reference.</li>
           </ol>
@@ -1494,7 +1494,7 @@ RMSE ≈ 8.7  (off by ~$8–9k on average)`}</CodeBlock>
           Now you&apos;ve seen the whole thing run. Time to re-build the three pieces that actually <em>do ML</em>. Each exercise gives you a stub with TODOs; try to fill it in without looking at the reference above, then reveal the solution and compare. It&apos;s fine to keep the running code open in a tab — just don&apos;t scroll up to peek at the answer.
         </p>
 
-        <p className="text-sm text-slate-600 dark:text-slate-400 italic">
+        <p className="text-sm text-slate-600 italic dark:text-slate-400">
           Tip: copy each stub into a scratch file (e.g. <code>Scratch.java</code> with a <code>main</code> that calls your method). That way you can <code>javac Scratch.java &amp;&amp; java Scratch</code> and see it actually work — much faster feedback than eyeballing.
         </p>
 
@@ -1694,15 +1694,15 @@ public class HousePriceService {
 
         <h3>Your assignment</h3>
 
-        <div className="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 p-5 my-5 not-prose">
-          <ol className="list-decimal ml-5 space-y-2 text-sm text-indigo-950 dark:text-indigo-100">
+        <div className="not-prose my-5 rounded-xl border-2 border-indigo-300 bg-indigo-50 p-5 dark:border-indigo-800 dark:bg-indigo-950/40">
+          <ol className="ml-5 list-decimal space-y-2 text-sm text-indigo-950 dark:text-indigo-100">
             <li>Create a Spring Boot project (or use an existing one).</li>
             <li>Add the three classes above: <code>LinearRegression</code>, <code>Metrics</code>, <code>ModelConfig</code> + <code>HousePriceService</code>.</li>
             <li>Add a tiny <code>@RestController</code> exposing <code>GET /api/estimate?size=2.5</code> that returns the estimate.</li>
             <li>Write a unit test asserting: <code>predict([5.0])</code> with the hardcoded weights returns ~320. Also test the guard throws for out-of-range sizes.</li>
             <li>Bonus: add a second feature (bedrooms) by extending the weights array to <code>{`{46.0, 15.0}`}</code> and updating the service and controller.</li>
           </ol>
-          <p className="text-xs text-indigo-800 dark:text-indigo-300 mt-4 italic m-0">
+          <p className="m-0 mt-4 text-xs text-indigo-800 italic dark:text-indigo-300">
             Module 3 ships the training loop. Your model will still work — you&apos;ll just be able to find the weights automatically instead of hardcoding them.
           </p>
         </div>
@@ -1801,7 +1801,7 @@ public class HousePriceService {
       {/* ================================================================= */}
       <section>
         <h2>✅ What you now know</h2>
-        <ul className="list-none space-y-2 my-6">
+        <ul className="my-6 list-none space-y-2">
           {[
             "ML comes in three flavors: supervised (data has answers), unsupervised (data has no answers), reinforcement (feedback from an environment). This module is all supervised.",
             "Supervised problems split into regression (predict a number) and classification (predict a category). Different outputs, different losses, different metrics.",
@@ -1812,30 +1812,30 @@ public class HousePriceService {
             "You can now build a linear-regression model and an MSE helper in Java from scratch — and wrap them in a Spring service with an out-of-distribution guard.",
           ].map((item) => (
             <li key={item} className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center mt-0.5 font-bold">✓</span>
+              <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">✓</span>
               <span>{item}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-6">
-          <div className="text-xs font-semibold uppercase tracking-wider mb-2 opacity-80">Up next · Module 3</div>
-          <h3 className="text-xl font-bold mb-2">How models actually learn</h3>
-          <p className="text-sm opacity-90 mb-4">
+      <footer className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-800">
+        <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white">
+          <div className="mb-2 text-xs font-semibold tracking-wider uppercase opacity-80">Up next · Module 3</div>
+          <h3 className="mb-2 text-xl font-bold">How models actually learn</h3>
+          <p className="mb-4 text-sm opacity-90">
             You can predict and measure loss — but you&apos;ve been finding weights by hand. Time to automate it. Gradient descent, learning-rate tuning, the full training loop, overfitting and how to fight it, and evaluation metrics (RMSE, R², accuracy, precision, recall, F1). You&apos;ll finish the Java project by adding the training loop that learns <code>w</code> and <code>b</code> automatically.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
               href="/courses/ai/modules/ml-training"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-indigo-700 font-medium text-sm hover:bg-indigo-50 transition"
+              className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50"
             >
               Start Module 3 →
             </Link>
             <Link
               href="/courses/ai"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white font-medium text-sm hover:bg-white/10 transition"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
             >
               ← All modules
             </Link>
@@ -1854,12 +1854,12 @@ public class HousePriceService {
 function Tile({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-4">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950 border-2 border-indigo-400 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold">
+      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-400 bg-indigo-100 font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
         {n}
       </div>
       <div>
-        <div className="font-semibold mb-1">{title}</div>
-        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed m-0">{children}</p>
+        <div className="mb-1 font-semibold">{title}</div>
+        <p className="m-0 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{children}</p>
       </div>
     </div>
   );
@@ -1894,22 +1894,22 @@ function FlavorCard({
   }[color];
   return (
     <div className={`rounded-xl border p-4 text-sm ${palette}`}>
-      <div className="flex items-center gap-2 mb-1">
+      <div className="mb-1 flex items-center gap-2">
         <span className="text-2xl">{icon}</span>
-        <h4 className={`font-bold m-0 ${accent}`}>{name}</h4>
+        <h4 className={`m-0 font-bold ${accent}`}>{name}</h4>
       </div>
-      <p className={`text-xs italic m-0 mb-3 ${accent}`}>{tagline}</p>
+      <p className={`m-0 mb-3 text-xs italic ${accent}`}>{tagline}</p>
       <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
         <div>
-          <strong className="opacity-70 uppercase tracking-wider text-[10px]">Example</strong>
+          <strong className="text-[10px] tracking-wider uppercase opacity-70">Example</strong>
           <div>{example}</div>
         </div>
         <div>
-          <strong className="opacity-70 uppercase tracking-wider text-[10px]">Data shape</strong>
+          <strong className="text-[10px] tracking-wider uppercase opacity-70">Data shape</strong>
           <div>{signature}</div>
         </div>
         <div>
-          <strong className="opacity-70 uppercase tracking-wider text-[10px]">Seen in</strong>
+          <strong className="text-[10px] tracking-wider uppercase opacity-70">Seen in</strong>
           <div>{examples}</div>
         </div>
       </div>
@@ -1938,8 +1938,8 @@ function AnatomyCard({
   }[color];
   return (
     <div className={`rounded-xl border p-4 text-sm ${palette}`}>
-      <div className="flex items-baseline gap-2 mb-1">
-        <span className="text-xs font-mono opacity-60">#{n}</span>
+      <div className="mb-1 flex items-baseline gap-2">
+        <span className="font-mono text-xs opacity-60">#{n}</span>
         <span className="font-bold">{title}</span>
       </div>
       <div>{children}</div>

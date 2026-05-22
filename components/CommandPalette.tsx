@@ -214,7 +214,7 @@ export default function CommandPalette() {
 
   return (
     <div
-      className="print:hidden fixed inset-0 z-[60] flex items-start justify-center px-4 pt-[10vh]"
+      className="fixed inset-0 z-[60] flex items-start justify-center px-4 pt-[10vh] print:hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
@@ -228,16 +228,16 @@ export default function CommandPalette() {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
-        <div className="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 px-4">
-          <span aria-hidden className="text-slate-400 text-base">⌕</span>
+      <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex items-center gap-3 border-b border-slate-200 px-4 dark:border-slate-800">
+          <span aria-hidden className="text-base text-slate-400">⌕</span>
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onInputKey}
             placeholder="Search courses, modules, or jump to a section…"
-            className="flex-1 bg-transparent py-3.5 text-sm outline-none focus-visible:outline-none placeholder:text-slate-400"
+            className="flex-1 bg-transparent py-3.5 text-sm outline-none placeholder:text-slate-400 focus-visible:outline-none"
             role="combobox"
             aria-expanded="true"
             aria-controls={listboxId}
@@ -247,7 +247,7 @@ export default function CommandPalette() {
             }
             aria-label="Search courses, modules, or jump to a section"
           />
-          <kbd className="hidden sm:inline-block rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-500">
+          <kbd className="hidden rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500 sm:inline-block dark:border-slate-700 dark:bg-slate-800">
             esc
           </kbd>
         </div>
@@ -276,42 +276,42 @@ export default function CommandPalette() {
                 tabIndex={-1}
                 onMouseEnter={() => setActiveIndex(i)}
                 onClick={() => choose(item)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition ${
+                className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition ${
                   i === activeIndex
                     ? "bg-indigo-50 dark:bg-indigo-950/40"
                     : "hover:bg-slate-50 dark:hover:bg-slate-800/60"
                 }`}
               >
                 <span
-                  className={`shrink-0 inline-flex items-center justify-center rounded-md bg-gradient-to-br ${item.badgeColor} text-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider min-w-[52px] sm:min-w-[64px] text-center`}
+                  className={`inline-flex shrink-0 items-center justify-center rounded-md bg-gradient-to-br ${item.badgeColor} min-w-[52px] px-1.5 py-0.5 text-center text-[10px] font-bold tracking-wider text-white uppercase sm:min-w-[64px]`}
                 >
                   {item.badge}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold truncate">{item.title}</span>
+                    <span className="truncate text-sm font-semibold">{item.title}</span>
                     {item.bookmark && (
-                      <span aria-label="Bookmarked" title="Bookmarked" className="text-amber-500 shrink-0">★</span>
+                      <span aria-label="Bookmarked" title="Bookmarked" className="shrink-0 text-amber-500">★</span>
                     )}
                   </span>
-                  <span className="block text-xs text-slate-500 dark:text-slate-400 truncate">
+                  <span className="block truncate text-xs text-slate-500 dark:text-slate-400">
                     {item.subtitle}
                   </span>
                 </span>
-                <span aria-hidden className="text-slate-300 dark:text-slate-600 text-xs">↵</span>
+                <span aria-hidden className="text-xs text-slate-300 dark:text-slate-600">↵</span>
               </button>
             ))
           )}
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800 px-4 py-2 text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-[11px] text-slate-500 dark:border-slate-800">
           <span className="flex items-center gap-2">
-            <kbd className="rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 font-mono">↑↓</kbd>
+            <kbd className="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">↑↓</kbd>
             navigate
-            <kbd className="rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 font-mono">↵</kbd>
+            <kbd className="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">↵</kbd>
             open
-            <span className="hidden sm:inline-flex items-center gap-1">
-              <kbd className="rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 font-mono">?</kbd>
+            <span className="hidden items-center gap-1 sm:inline-flex">
+              <kbd className="rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">?</kbd>
               shortcuts
             </span>
           </span>

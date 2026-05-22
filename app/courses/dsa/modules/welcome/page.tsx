@@ -9,21 +9,21 @@ export default function DsaWelcomeModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/dsa" className="text-emerald-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-slate-500 to-slate-400 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-slate-500 to-slate-400 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 0 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Welcome
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Read this first. It&apos;s five minutes and will save you weeks of grinding the wrong way.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="welcome" />
@@ -184,14 +184,14 @@ export default function DsaWelcomeModule() {
         </ol>
       </section>
 
-      <section className="mt-12 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40">
+      <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-emerald-900 dark:from-emerald-950/40 dark:to-teal-950/40">
         <h3 className="mt-0 mb-2">Ready?</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Module 1 is Big-O from absolute zero — the mental model that makes everything else make sense.
         </p>
         <Link
           href="/courses/dsa/modules/big-o"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-emerald-600 hover:to-teal-600 transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-sm transition hover:from-emerald-600 hover:to-teal-600 hover:shadow-md"
         >
           Start Module 1: Big-O →
         </Link>

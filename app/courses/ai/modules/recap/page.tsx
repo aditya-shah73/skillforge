@@ -25,19 +25,19 @@ export default function RecapModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Phase 1 revision notes</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Phase 1 revision notes</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           One real Claude request, traced end to end, touching every concept from Modules 1–7. If a link is still fuzzy, this is where it snaps.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="recap" />
@@ -45,15 +45,15 @@ export default function RecapModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">🧵</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           By the end of this module you should be able to walk a teammate through <em>what actually happens</em>{" "}between pressing Enter on a Claude query and the first token streaming back — grounded in every concept you&apos;ve seen so far:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Module 1</strong> — tokenization, BPE, context windows</li>
           <li><strong>Module 2–3</strong> — features, loss, gradient descent, training</li>
           <li><strong>Module 4</strong> — neural networks, layers, activations, backprop</li>
@@ -61,7 +61,7 @@ export default function RecapModule() {
           <li><strong>Module 6</strong> — embeddings, vector space, cosine similarity</li>
           <li><strong>Module 7</strong> — prompts as context assembly</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           No new concepts here. No new project. Just the map that makes all the existing pieces fit.
         </p>
       </section>
@@ -88,7 +88,7 @@ export default function RecapModule() {
 
         <h3>The bird&apos;s-eye view</h3>
         <div className="not-prose my-6">
-          <pre className="text-[11px] leading-tight p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 overflow-x-auto">{`Your JSON
+          <pre className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-4 text-[11px] leading-tight dark:border-slate-800 dark:bg-slate-950">{`Your JSON
    ↓
 [1] Prompt assembly        →  system + user glued with role markers
    ↓
@@ -169,7 +169,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         <p>
           Inside Claude lives a gigantic matrix: one row per token in the vocabulary (~200k rows), each row a learned vector (say, 4096 numbers). That&apos;s the <strong>embedding table</strong>.
         </p>
-        <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
+        <div className="not-prose mx-auto my-4 max-w-md rounded-lg border border-slate-200 bg-slate-50 p-4 text-center font-mono text-sm dark:border-slate-800 dark:bg-slate-900">
           E shape: [vocab_size, d_model] = [~200_000, 4096]
         </div>
         <p>
@@ -216,7 +216,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         <p>
           For every token position, the block asks: <em>which other positions should I look at, and how much should I mix them in?</em>
         </p>
-        <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
+        <div className="not-prose mx-auto my-4 max-w-md rounded-lg border border-slate-200 bg-slate-50 p-4 text-center font-mono text-sm dark:border-slate-800 dark:bg-slate-900">
           Attention(Q, K, V) = softmax(Q · Kᵀ / √d_k) · V
         </div>
         <p>
@@ -248,9 +248,9 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           Each sub-layer&apos;s output is <em>added</em>{" "}to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks — direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
         </p>
 
-        <div className="not-prose my-6 p-5 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/20">
-          <div className="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold mb-3">Every transformer block, in one diagram</div>
-          <pre className="text-xs leading-tight m-0 font-mono overflow-x-auto">{`    x  ──────────────────────────┐
+        <div className="not-prose my-6 rounded-xl border-2 border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-800 dark:bg-indigo-950/20">
+          <div className="mb-3 text-xs font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">Every transformer block, in one diagram</div>
+          <pre className="m-0 overflow-x-auto font-mono text-xs leading-tight">{`    x  ──────────────────────────┐
     │                             │
   LayerNorm                       │
     │                             │
@@ -410,10 +410,10 @@ T → ∞:   all logits get squashed toward equality
           Everything we just walked through is <strong>inference</strong>. It happens in milliseconds on Anthropic&apos;s servers and does <em>not</em>{" "}change the weights. Those weights came from training — months of the process you learned in Modules 2 and 3, just at a mind-bending scale.
         </p>
 
-        <div className="not-prose my-6 grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2">Training (months, $$$)</div>
-            <ul className="text-xs space-y-1 m-0 pl-4">
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-amber-200 bg-amber-50/40 p-5 dark:border-amber-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase dark:text-amber-400">Training (months, $$$)</div>
+            <ul className="m-0 space-y-1 pl-4 text-xs">
               <li>Read trillions of tokens of text</li>
               <li>For each, predict the next token (Module 2: loss = cross-entropy)</li>
               <li>Compute gradient (Module 3 + Module 4&apos;s backprop)</li>
@@ -422,9 +422,9 @@ T → ∞:   all logits get squashed toward equality
               <li>Then: instruction-tune (RLHF) on human feedback</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">Inference (milliseconds, what you&apos;re calling)</div>
-            <ul className="text-xs space-y-1 m-0 pl-4">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Inference (milliseconds, what you&apos;re calling)</div>
+            <ul className="m-0 space-y-1 pl-4 text-xs">
               <li>Tokenize input (Module 1)</li>
               <li>Embed + add position (Module 6 + RoPE)</li>
               <li>80 transformer blocks: attention (Module 5) + FFN (Module 4)</li>
@@ -462,8 +462,8 @@ T → ∞:   all logits get squashed toward equality
         <h2>The 2-minute explanation, out loud</h2>
         <p>Here&apos;s the Phase 1 capstone skill: explain what happened in your Claude request without skipping steps and without jargon the listener can&apos;t define. Try saying this out loud:</p>
 
-        <div className="not-prose my-6 p-5 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20">
-          <p className="text-sm m-0 leading-relaxed">
+        <div className="not-prose my-6 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/40 p-5 dark:bg-indigo-950/20">
+          <p className="m-0 text-sm leading-relaxed">
             <em>
               &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm — added so gradients survived training — were still doing their job here at inference. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
             </em>
@@ -633,15 +633,15 @@ T → ∞:   all logits get squashed toward equality
           />
 
           {/* ---------- WRAP ---------- */}
-          <div className="not-prose mt-10 rounded-2xl border-2 border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 p-6">
-            <div className="flex items-center gap-2 mb-3">
+          <div className="not-prose mt-10 rounded-2xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-teal-950/40">
+            <div className="mb-3 flex items-center gap-2">
               <span className="text-2xl">🎓</span>
-              <h3 className="font-bold text-lg m-0">If you got 7 or 8 right…</h3>
+              <h3 className="m-0 text-lg font-bold">If you got 7 or 8 right…</h3>
             </div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               You can describe the entire Phase 1 stack — tokens, weights, training, neural networks, attention, embeddings, prompt assembly, decode loop — without notes. That&apos;s the bar for moving on.
             </p>
-            <p className="text-sm text-slate-700 dark:text-slate-300 m-0">
+            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">
               <strong>5–6 right?</strong>{" "}Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong>{" "}Don&apos;t skip — Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
             </p>
           </div>
@@ -651,7 +651,7 @@ T → ∞:   all logits get squashed toward equality
       {/* ================================================================= */}
       {/* NEXT PHASE                                                         */}
       {/* ================================================================= */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Phase 1 complete → Phase 2 incoming</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Everything from here on in assumes the pipeline you just traced. Phase 2 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking — but now you actually know what those tokens are.
@@ -659,13 +659,13 @@ T → ∞:   all logits get squashed toward equality
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/ai/modules/api-fundamentals"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-medium text-sm hover:bg-indigo-700 transition"
+            className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
           >
             Module 9 — Claude API fundamentals →
           </Link>
           <Link
             href="/courses/ai"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-200 font-medium text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition"
+            className="inline-flex items-center gap-2 rounded-lg border border-indigo-300 px-5 py-2.5 text-sm font-medium text-indigo-700 transition hover:bg-indigo-100 dark:border-indigo-800 dark:text-indigo-200 dark:hover:bg-indigo-900/40"
           >
             ← All modules
           </Link>

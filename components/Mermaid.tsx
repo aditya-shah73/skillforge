@@ -78,7 +78,7 @@ export default function Mermaid({ chart }: { chart: string }) {
   return (
     <div
       ref={ref}
-      className="my-6 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-center overflow-x-auto"
+      className="my-6 flex justify-center overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );

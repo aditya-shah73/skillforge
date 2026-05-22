@@ -24,19 +24,19 @@ export default function RagSpringModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 3 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">RAG in Spring Boot end-to-end</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">RAG in Spring Boot end-to-end</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Architecture meets keyboard. Spring AI&apos;s VectorStore + pgvector, all the way through.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="rag-spring" />
@@ -44,16 +44,16 @@ export default function RagSpringModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           You designed RAG in Module 17. Now you build it. End of this module: you have a Spring Boot service
           that ingests Markdown docs, indexes them in pgvector, and answers user questions with citations.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Spring AI&apos;s RAG primitives — <code>VectorStore</code>, <code>Document</code>, <code>DocumentReader</code>, <code>DocumentTransformer</code>, <code>DocumentWriter</code></li>
           <li>A real ingestion pipeline you can extend: read → chunk → enrich → embed → store</li>
           <li>The two query patterns: hand-rolled retrieval + manual prompt, vs. <code>QuestionAnswerAdvisor</code></li>
@@ -66,13 +66,13 @@ export default function RagSpringModule() {
       {/* PART 1: SPRING AI'S RAG PRIMITIVES                                  */}
       {/* ================================================================= */}
       <section id="spring-ai-rag">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — Spring AI&apos;s RAG primitives</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Spring AI&apos;s RAG primitives</h2>
 
         <p>
           Spring AI ships a small set of RAG building blocks. The three that matter most:
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Document — the unit of currency</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Document — the unit of currency</h3>
 
         <p>
           Spring AI&apos;s <code>Document</code> is a record of <code>(id, text, metadata)</code>. Both
@@ -97,7 +97,7 @@ Document doc = new Document(
           your retriever returns chunks, the metadata is right there for citations.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">VectorStore — one interface, many backends</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">VectorStore — one interface, many backends</h3>
 
         <p>
           <code>VectorStore</code> abstracts away &quot;which vector DB&quot;. The same code works against
@@ -130,7 +130,7 @@ public class DocsService {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Why we still drop to JDBC sometimes">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             <code>VectorStore</code> is great for the 80% case. For hybrid (BM25 + vector) retrieval, custom
             SQL with joins, or anything that needs an exotic <code>EXPLAIN ANALYZE</code>-driven query plan,
             you&apos;ll drop to <code>JdbcTemplate</code> like we did in Module 16. The two coexist fine — use
@@ -138,11 +138,11 @@ public class DocsService {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">DocumentReader / Transformer / Writer — the ingestion shape</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">DocumentReader / Transformer / Writer — the ingestion shape</h3>
 
         <p>Spring AI organizes ingestion into three roles:</p>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong><code>DocumentReader</code></strong> — produces <code>List&lt;Document&gt;</code> from a
             source. Built-ins: <code>TikaDocumentReader</code> (PDF, DOCX, etc.), <code>JsonReader</code>,
@@ -170,7 +170,7 @@ public class DocsService {
     .forEach(store::add);          // embedded + persisted`}</CodeBlock>
 
         <Callout variant="warn" title="Spring AI vs. roll-your-own — when to use which">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Spring AI&apos;s <code>VectorStore</code> auto-creates a <code>vector_store</code> table with a
             specific schema. For prototypes that&apos;s wonderful — three lines and you have RAG. For
             production where you want to evolve the schema, join with business tables, or add hybrid
@@ -214,7 +214,7 @@ public class DocsService {
       {/* PART 2: THE INGESTION PIPELINE                                      */}
       {/* ================================================================= */}
       <section id="ingestion">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — The ingestion pipeline</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The ingestion pipeline</h2>
 
         <p>
           Time to write code. We&apos;re going to build the indexing path: read a folder of Markdown files,
@@ -222,11 +222,11 @@ public class DocsService {
           (Module 17&apos;s biggest win), and store them in pgvector.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Project setup</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Project setup</h3>
 
         <p>From <a className="text-emerald-600 hover:underline" href="https://start.spring.io">start.spring.io</a>:</p>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Spring Web</li>
           <li>Spring Data JDBC</li>
           <li>PostgreSQL Driver</li>
@@ -277,7 +277,7 @@ spring:
           and a Flyway migration the moment you need to evolve.)
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A markdown reader</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A markdown reader</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.ingest;
 
@@ -319,7 +319,7 @@ public class MarkdownFolderReader {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A structural chunker as a DocumentTransformer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A structural chunker as a DocumentTransformer</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.ingest;
 
@@ -376,7 +376,7 @@ public class MarkdownH2Splitter implements DocumentTransformer {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A contextual-prefix transformer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A contextual-prefix transformer</h3>
 
         <p>
           The Module 17 lesson: prepend a one-sentence document-context summary to each chunk before embedding.
@@ -424,14 +424,14 @@ public class ContextualPrefixEnricher implements DocumentTransformer {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Cheap model, big leverage">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Use the cheapest chat model your provider offers for the contextual-prefix call. Haiku-class on
             Anthropic, gpt-4o-mini on OpenAI. The call quality matters less than the structure — &quot;name
             the section and topic&quot; is easy. Cost on a 1k-chunk corpus is single-digit dollars, paid once.
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Wiring the pipeline</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Wiring the pipeline</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.ingest;
 
@@ -487,7 +487,7 @@ public class IngestionConfig {
 #   embedded + stored`}</CodeBlock>
 
         <Callout variant="warn" title="Idempotency">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             <code>store.add</code> doesn&apos;t deduplicate by content. Running ingestion twice double-stores.
             For real use, either (a) wipe the store before each ingest in dev, (b) compute a stable
             <code> chunk_hash </code> per chunk and skip if it&apos;s already present, or (c) version your
@@ -530,7 +530,7 @@ public class IngestionConfig {
       {/* PART 3: QUERY PATH WITH CITATIONS                                   */}
       {/* ================================================================= */}
       <section id="query">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Query path with citations</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Query path with citations</h2>
 
         <p>
           You can index. Now you need to answer questions. We&apos;ll build the query path the explicit way
@@ -538,7 +538,7 @@ public class IngestionConfig {
           the explicit version for Spring AI&apos;s <code>QuestionAnswerAdvisor</code>.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">A retrieval service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">A retrieval service</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.query;
 
@@ -567,7 +567,7 @@ public class RetrievalService {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Assembling the prompt with numbered citations</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Assembling the prompt with numbered citations</h3>
 
         <p>
           Module 17&apos;s Part 4 prompt template, made concrete. Each retrieved <code>Document</code> becomes
@@ -644,7 +644,7 @@ public class AnswerService {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The controller</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.query;
 
@@ -679,7 +679,7 @@ public class QaController {
   ]
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Citation verification (optional but worth it)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Citation verification (optional but worth it)</h3>
 
         <p>
           The model claims chunk [1] said something. Did it? A simple post-check: extract the citation indices
@@ -704,7 +704,7 @@ public class QaController {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Use Anthropic's citations API when you can">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             If you&apos;re calling Claude directly (not OpenAI), use the native <code>citations</code> feature
             instead of regex-parsing <code>[1]</code> markers. The model returns structured citation objects
             tied to character ranges of input documents — no parsing, no false matches. Spring AI will route
@@ -746,7 +746,7 @@ public class QaController {
       {/* PART 4: QUESTIONANSWERADVISOR IN PRACTICE                           */}
       {/* ================================================================= */}
       <section id="advisor">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — QuestionAnswerAdvisor in practice</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — QuestionAnswerAdvisor in practice</h2>
 
         <p>
           Spring AI ships a built-in advisor that hides most of Part 3&apos;s plumbing. The catch: by hiding
@@ -754,7 +754,7 @@ public class QaController {
           explicit version when you need fine control.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The advisor in 10 lines</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The advisor in 10 lines</h3>
 
         <CodeBlock lang="java">{`package com.example.ragdocs.query;
 
@@ -788,7 +788,7 @@ public class AdvisorAnswerService {
           them, prepends them as context, and lets the model answer. You write zero retrieval code.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">What you give up</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">What you give up</h3>
 
         <p>
           The advisor is opinionated. The default prompt template is fine but generic. If you want to
@@ -806,15 +806,15 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
 
 // retrievedDocs has the source/section metadata you need for a Sources panel.`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">When to use which</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">When to use which</h3>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2"></th>
-                <th className="text-left p-2">QuestionAnswerAdvisor</th>
-                <th className="text-left p-2">Hand-rolled (Part 3)</th>
+                <th className="p-2 text-left"></th>
+                <th className="p-2 text-left">QuestionAnswerAdvisor</th>
+                <th className="p-2 text-left">Hand-rolled (Part 3)</th>
               </tr>
             </thead>
             <tbody>
@@ -848,7 +848,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
         </div>
 
         <Callout variant="info" title="Combining with chat memory">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             For a real chat-with-docs UX you want both <code>QuestionAnswerAdvisor</code> (for retrieval) and
             <code> MessageChatMemoryAdvisor</code> (for conversation history). Register both on the same
             ChatClient builder; Spring AI orders them so memory is added to the prompt and the user&apos;s
@@ -891,7 +891,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
       {/* PART 5: PROJECT — CHAT WITH YOUR DOCS                               */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: chat with your docs</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: chat with your docs</h2>
 
         <p>
           Time to ship a real thing. You&apos;re going to combine everything from Modules 14–17 into a
@@ -901,19 +901,19 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
         </p>
 
         <Callout variant="info" title="Recommended starting point">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Reuse the project skeleton you set up in Part 2 (deps, application.yml, ingestion pipeline). This
             project is mostly about wiring the query path together with citations and a minimal UI.
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 1 — Pick your corpus</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1 — Pick your corpus</h3>
 
         <p>
           Pick a real Markdown corpus you can host locally. Some good choices:
         </p>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Your team&apos;s internal wiki, exported as Markdown</li>
           <li>The {" "}<a className="text-emerald-600 hover:underline" href="https://docs.spring.io/spring-framework/reference/">Spring Framework reference</a> (parts of it ship as Markdown source)</li>
           <li>Any open-source project&apos;s <code>docs/</code> folder (e.g. Next.js, Postgres, Kubernetes)</li>
@@ -925,7 +925,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           ingestion takes longer than you have patience for during this lab.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 2 — Ingest with the pipeline from Part 2</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2 — Ingest with the pipeline from Part 2</h3>
 
         <CodeBlock lang="plain">{`./mvnw spring-boot:run -Dspring-boot.run.arguments="--ingest,/path/to/your/docs"`}</CodeBlock>
 
@@ -938,11 +938,11 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
 
 # Expected: a few hundred to a few thousand rows; avg content length ~500–2000 chars`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 3 — Decide: advisor vs hand-rolled</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3 — Decide: advisor vs hand-rolled</h3>
 
         <p>For this project, use the <strong>hand-rolled service from Part 3</strong>. Reasons:</p>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>You want a structured Sources DTO returned to the UI</li>
           <li>You want full control over the chunk-formatting prompt template</li>
           <li>You want to add citation verification</li>
@@ -955,7 +955,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           probably useful).
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 4 — A minimal frontend</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4 — A minimal frontend</h3>
 
         <p>
           Drop a single static <code>src/main/resources/static/index.html</code>. Plain HTML + a tiny JS
@@ -1016,11 +1016,11 @@ q.addEventListener('keydown', async (e) => {
 
         <p>Open <code>http://localhost:8080</code>, ask a question, watch the magic.</p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 5 — Make it good</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5 — Make it good</h3>
 
         <p>This is where the lab earns its keep. Run through these checks:</p>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Ask 10 real questions.</strong>{" "}Mix easy (clear single-section answer) with hard
             (multi-section synthesis). Note where it&apos;s weak.
@@ -1040,9 +1040,9 @@ q.addEventListener('keydown', async (e) => {
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Add streaming (Module 12) so answers appear token-by-token while the sources panel renders immediately on retrieval.</li>
           <li>Add prompt caching (Module 13) on the system prompt — cuts per-turn cost noticeably.</li>
           <li>Add idempotent re-ingestion: compute a chunk hash, skip already-stored chunks, delete stale ones from a previous version of the doc.</li>
@@ -1063,7 +1063,7 @@ q.addEventListener('keydown', async (e) => {
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final check"
@@ -1136,11 +1136,11 @@ q.addEventListener('keydown', async (e) => {
       </section>
 
       {/* FOOTER NAV */}
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
-        <Link href="/courses/ai/modules/rag-architecture" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
+      <footer className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
+        <Link href="/courses/ai/modules/rag-architecture" className="text-slate-600 hover:text-emerald-600 dark:text-slate-400">
           ← Module 17: RAG architecture
         </Link>
-        <Link href="/courses/ai/modules/react-streaming" className="text-emerald-600 hover:underline font-semibold">
+        <Link href="/courses/ai/modules/react-streaming" className="font-semibold text-emerald-600 hover:underline">
           Module 20: React streaming patterns →
         </Link>
       </footer>

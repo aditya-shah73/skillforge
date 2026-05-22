@@ -45,23 +45,23 @@ flowchart TD
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 6 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 6 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Eight algorithmic techniques — two pointers, sliding window, binary search, sorting, recursion, backtracking, greedy, bits — each with its tell, template, and classic example on a single dense card.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-6-revision" />
@@ -70,10 +70,10 @@ flowchart TD
 
       {/* INTRO — set expectations + backlinks to all eight source modules */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It is a <strong>map of Phase 6</strong> — every pattern, every template, every gotcha from the eight previous modules, compressed into tables and reference cards. Phase 6 is the largest phase in the course (eight techniques, ~17 hours of source content) which is why this revision is the longest of the seven. Treat it as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The eight modules you&apos;re consolidating:{" "}
           <Link href="/courses/dsa/modules/two-pointers" className="text-indigo-600 hover:underline">Two pointers</Link>,{" "}
           <Link href="/courses/dsa/modules/sliding-window" className="text-indigo-600 hover:underline">Sliding window</Link>,{" "}
@@ -90,12 +90,12 @@ flowchart TD
       {/* SECTION 1 — Decision tree for picking a pattern */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. The pattern-picker decision tree</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The pattern-picker decision tree</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The mental shortcut you run in the first 60 seconds of any Phase 6-style problem. Each leaf is one of the eight techniques.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={patternPicker} />
         </div>
 
@@ -108,14 +108,14 @@ flowchart TD
       {/* SECTION 2 — The 8-pattern recognition table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. The 8-pattern recognition table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The 8-pattern recognition table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When you see the &quot;tell&quot; on the left, you reach for the technique on the right. Memorize this table; it&apos;s 80% of the value of the whole phase.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Technique</th>
                 <th className="px-4 py-3 font-semibold">The tell (when you see this in the problem)</th>
@@ -128,56 +128,56 @@ flowchart TD
               <tr>
                 <td className="px-4 py-3 font-semibold text-emerald-600">Two pointers</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Sorted array&quot;, &quot;find a pair&quot;, &quot;palindrome&quot;, &quot;remove duplicates in place&quot;</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">while (l &lt; r) { /* move l++ or r-- */ }</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">while (l &lt; r) { /* move l++ or r-- */ }</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(n)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 167 Two Sum II, LC 11 Container With Most Water</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-emerald-600">Sliding window</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Contiguous subarray/substring&quot;, &quot;longest/shortest with property X&quot;, &quot;at most k of Y&quot;</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">expand r; while invariant broken: contract l</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">expand r; while invariant broken: contract l</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(n)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 3 Longest Substring w/o Repeats, LC 76 Min Window Substring</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-emerald-600">Binary search</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Sorted input, OR a <em>monotone</em>{" "}predicate over an answer range (&quot;smallest x such that feasible(x)&quot;)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">while (l &lt; r) mid = l + (r-l)/2</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">while (l &lt; r) mid = l + (r-l)/2</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(log n) or O(n log m)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 704 Binary Search, LC 875 Koko Eating Bananas</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-amber-600">Sorting</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Merge intervals&quot;, &quot;k-th something&quot;, &quot;group by&quot; — sorting unlocks two-pointer / greedy on top</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">Arrays.sort(a); /* then walk */</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">Arrays.sort(a); /* then walk */</td>
                 <td className="px-4 py-3 font-mono text-amber-600">O(n log n)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 56 Merge Intervals, LC 215 Kth Largest</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-indigo-600">Recursion / D&amp;C</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Problem is self-similar: solve smaller version + combine</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">if (base) return; combine(f(left), f(right))</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">if (base) return; combine(f(left), f(right))</td>
                 <td className="px-4 py-3 font-mono text-amber-600">depends on recurrence</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 50 Pow(x,n), LC 23 Merge K Sorted Lists</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-orange-600">Backtracking</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;All subsets&quot;, &quot;all permutations&quot;, &quot;all paths&quot;, &quot;N-queens&quot; — enumerate combinatorial space</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">choose → recurse → unchoose</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">choose → recurse → unchoose</td>
                 <td className="px-4 py-3 font-mono text-rose-600">O(2ⁿ) or O(n!)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 78 Subsets, LC 46 Permutations, LC 51 N-Queens</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-orange-600">Greedy</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Local choice looks optimal AND you can prove it (exchange argument). Intervals, scheduling, frontiers.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">sort; for x: take if /* locally best */</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">sort; for x: take if /* locally best */</td>
                 <td className="px-4 py-3 font-mono text-amber-600">O(n log n) usually</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 55 Jump Game, LC 435 Non-overlapping Intervals</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-purple-600">Bit manipulation</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Find the one&quot; (XOR), &quot;count bits&quot;, &quot;subset enumeration&quot;, &quot;state ≤ 20 elements&quot; (bitmask)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400 font-mono text-xs">mask &amp; (1 &lt;&lt; i), mask ^= x, mask &amp;= mask-1</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">mask &amp; (1 &lt;&lt; i), mask ^= x, mask &amp;= mask-1</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(n) or O(2ⁿ · n)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 136 Single Number, LC 191 Number of 1 Bits</td>
               </tr>
@@ -190,15 +190,15 @@ flowchart TD
       {/* SECTION 3 — Two pointers detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Two pointers — opposite-end vs same-direction</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Two pointers — opposite-end vs same-direction</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Two flavors. They look similar in code but they answer different questions. The <strong>sorted-array tell</strong>{" "}is what tips you into opposite-end; partition / dedup / fast-slow is same-direction.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Opposite-end (converging)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-4 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Opposite-end (converging)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Pointers start at the two ends and walk toward each other. The array <strong>must be sorted</strong> (or have some monotone structure). Use for: Two Sum II, palindrome check, Container With Most Water.
             </p>
             <CodeBlock lang="java" caption="Two Sum II — sorted input">{`int[] twoSum(int[] a, int target) {
@@ -213,9 +213,9 @@ flowchart TD
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">Same-direction (fast/slow, partition)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-indigo-50/40 p-5 dark:border-slate-800 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">Same-direction (fast/slow, partition)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Both pointers start at the left. <code>fast</code> scans; <code>slow</code> marks the boundary of &quot;already-processed&quot;. Use for: remove duplicates, Move Zeroes, Dutch flag.
             </p>
             <CodeBlock lang="java" caption="Remove duplicates from sorted array">{`int dedup(int[] a) {
@@ -236,7 +236,7 @@ flowchart TD
           Two-pointer correctness lives in <em>one invariant</em>. Opposite-end: &quot;the answer, if it exists, is inside [l, r].&quot; Same-direction: &quot;a[0..slow] is the processed prefix.&quot; If you can write the invariant down in one sentence, the move rule (l++, r--, swap, etc.) writes itself.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/two-pointers" className="text-indigo-600 hover:underline">Module 23 — Two pointers</Link>.
         </p>
       </section>
@@ -245,12 +245,12 @@ flowchart TD
       {/* SECTION 4 — Sliding window detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Sliding window — fixed vs variable</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Sliding window — fixed vs variable</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A window is a same-direction two-pointer with state in the middle. Fixed-size windows are easy (one pointer effectively). Variable windows are the famous &quot;expand then contract&quot; pattern.
         </p>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">Fixed window — just slide</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">Fixed window — just slide</h3>
         <CodeBlock lang="java" caption="LC 643 — Max average of a fixed k-sized window">{`double maxAverage(int[] a, int k) {
     long sum = 0;
     for (int i = 0; i < k; i++) sum += a[i];   // prime the window
@@ -262,7 +262,7 @@ flowchart TD
     return (double) best / k;
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Variable window — expand then contract</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Variable window — expand then contract</h3>
         <CodeBlock lang="java" caption="The canonical template">{`int variableWindow(int[] a) {
     int l = 0, best = 0;
     // any state you need: counts, sum, frequency map, etc.
@@ -285,7 +285,7 @@ flowchart TD
     return best;
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Window + frequency map — &quot;at most k distinct&quot;</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Window + frequency map — &quot;at most k distinct&quot;</h3>
         <CodeBlock lang="java" caption="Longest substring with at most k distinct characters">{`int longestKDistinct(String s, int k) {
     Map<Character, Integer> count = new HashMap<>();
     int l = 0, best = 0;
@@ -304,7 +304,7 @@ flowchart TD
           Expand <em>first</em>, then contract until the invariant holds again, then record. If you record before contracting, you count windows that violate the invariant. If you contract before expanding, you starve the window. Always: expand, contract-to-fix, record.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/sliding-window" className="text-indigo-600 hover:underline">Module 24 — Sliding window</Link>.
         </p>
       </section>
@@ -313,21 +313,21 @@ flowchart TD
       {/* SECTION 5 — Binary search detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Binary search — the off-by-one minefield</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Binary search — the off-by-one minefield</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Pick <em>one</em>{" "}convention and stick to it. The convention rules below are for half-open <code>[l, r)</code> — the one that&apos;s easiest to extend to lower/upper bound.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Question</th>
                 <th className="px-4 py-3 font-semibold">Convention A: closed [l, r]</th>
                 <th className="px-4 py-3 font-semibold">Convention B: half-open [l, r)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono text-xs">
+            <tbody className="divide-y divide-slate-100 font-mono text-xs dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-sans">Initial r</td>
                 <td className="px-4 py-3">n - 1</td>
@@ -346,7 +346,7 @@ flowchart TD
               <tr>
                 <td className="px-4 py-3 font-sans">Move right after a[mid] &gt; t</td>
                 <td className="px-4 py-3">r = mid - 1</td>
-                <td className="px-4 py-3">r = mid    <span className="text-slate-400 font-sans">(no -1!)</span></td>
+                <td className="px-4 py-3">r = mid    <span className="font-sans text-slate-400">(no -1!)</span></td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans">Lower bound (first ≥ t)</td>
@@ -362,8 +362,8 @@ flowchart TD
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">Binary-search the answer (LC 875 — Koko Eating Bananas)</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+        <h3 className="mt-4 mb-2 text-base font-semibold">Binary-search the answer (LC 875 — Koko Eating Bananas)</h3>
+        <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">
           When the array isn&apos;t sorted but the <em>answer</em>{" "}lives in a known range and there&apos;s a monotone predicate <code>feasible(x)</code>, you binary-search over the answer range. Total time is <code>O(n · log(max))</code>.
         </p>
         <CodeBlock lang="java" caption="Smallest eating speed k such that all piles finish in ≤ h hours">{`int minEatingSpeed(int[] piles, int h) {
@@ -390,7 +390,7 @@ boolean canFinish(int[] piles, int k, int h) {
           (1) What is the answer? (2) What range does it live in? (3) Is there a monotone predicate <code>feasible(x)</code> — i.e. if x works, does x+1 work? (4) Can you compute <code>feasible</code> in O(n)? (5) Do you want the smallest feasible or the largest? If you can answer all five, the binary search writes itself.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/binary-search" className="text-indigo-600 hover:underline">Module 25 — Binary search</Link>.
         </p>
       </section>
@@ -399,14 +399,14 @@ boolean canFinish(int[] piles, int k, int h) {
       {/* SECTION 6 — Sorting algorithms table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Sorting algorithms — the comparison table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Sorting algorithms — the comparison table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Memorize this. The interview question is almost always &quot;tell me about merge sort&quot; or &quot;why is quicksort O(n²) in the worst case?&quot; — you need these numbers at the tip of your tongue.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Algorithm</th>
                 <th className="px-4 py-3 font-semibold">Best</th>
@@ -417,7 +417,7 @@ boolean canFinish(int[] piles, int k, int h) {
                 <th className="px-4 py-3 font-semibold">Notes</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">Bubble</td>
                 <td className="px-4 py-3 text-amber-600">O(n)</td>
@@ -477,14 +477,14 @@ boolean canFinish(int[] piles, int k, int h) {
         </div>
 
         <Callout variant="info" title="What Arrays.sort actually uses in Java">
-          <ul className="list-disc pl-5 space-y-1 text-sm">
+          <ul className="list-disc space-y-1 pl-5 text-sm">
             <li><code>Arrays.sort(int[])</code> and other primitive overloads → <strong>dual-pivot Quicksort</strong> (Vladimir Yaroslavskiy). Fast, in-place, unstable — but primitives have no identity so stability doesn&apos;t matter.</li>
             <li><code>Arrays.sort(Object[])</code> and <code>Collections.sort(List)</code> → <strong>TimSort</strong>. Stable, O(n log n) worst case, O(n) on nearly-sorted input. The cost is O(n) auxiliary space.</li>
             <li>Two different algorithms because primitives don&apos;t need stability; objects often do (e.g. sorting people by name, then sorting by age — you want age-equal people to stay in name order).</li>
           </ul>
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/sorting" className="text-indigo-600 hover:underline">Module 26 — Sorting algorithms</Link>.
         </p>
       </section>
@@ -493,12 +493,12 @@ boolean canFinish(int[] piles, int k, int h) {
       {/* SECTION 7 — Recursion + backtracking template */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Recursion &amp; backtracking — the choose/explore/unchoose pattern</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Recursion &amp; backtracking — the choose/explore/unchoose pattern</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Recursion is the <em>trust-the-recursive-call</em>{" "}contract. Backtracking is recursion plus mutation that you undo. The template is the same skeleton every time.
         </p>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">The pseudocode template</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">The pseudocode template</h3>
         <CodeBlock lang="java" caption="The backtracking skeleton">{`void backtrack(State state, List<List<X>> results) {
     if (isComplete(state)) {
         results.add(snapshot(state));   // record a solution
@@ -512,7 +512,7 @@ boolean canFinish(int[] piles, int k, int h) {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Real Java: LC 78 Subsets</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Real Java: LC 78 Subsets</h3>
         <CodeBlock lang="java" caption="Enumerate all 2ⁿ subsets — the include-or-skip pattern">{`List<List<Integer>> subsets(int[] nums) {
     List<List<Integer>> out = new ArrayList<>();
     backtrack(nums, 0, new ArrayList<>(), out);
@@ -533,7 +533,7 @@ void backtrack(int[] nums, int i, List<Integer> path, List<List<Integer>> out) {
     path.remove(path.size() - 1);         // unchoose — this is the backtrack
 }`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">Real Java: LC 46 Permutations</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Real Java: LC 46 Permutations</h3>
         <CodeBlock lang="java" caption="Permutations — visited[] tracks what's already in the path">{`List<List<Integer>> permute(int[] nums) {
     List<List<Integer>> out = new ArrayList<>();
     backtrack(nums, new boolean[nums.length], new ArrayList<>(), out);
@@ -559,7 +559,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
           When you write the recursive call, <em>assume it works on the smaller input</em>. Don&apos;t trace through it — that&apos;s how you go insane. Just trust it, write the base case, and write what to do with its return value. The compiler / call stack handles the rest.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Sources: <Link href="/courses/dsa/modules/recursion" className="text-indigo-600 hover:underline">Module 27 — Recursion &amp; D&amp;C</Link>,{" "}
           <Link href="/courses/dsa/modules/backtracking" className="text-indigo-600 hover:underline">Module 28 — Backtracking</Link>.
         </p>
@@ -569,18 +569,18 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
       {/* SECTION 8 — Greedy decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">8. Greedy — when it works, when it fails</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">8. Greedy — when it works, when it fails</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Greedy is fast and clean when it works, and catastrophically wrong when it doesn&apos;t. The whole skill is knowing which side of the line you&apos;re on.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">When greedy works</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-4 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">When greedy works</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               You can prove an <strong>exchange argument</strong>: take any optimal solution, swap in the greedy choice, and the result is still at least as good.
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Interval scheduling</strong> (LC 435): sort by end time, take any interval that doesn&apos;t overlap.</li>
               <li><strong>Jump Game</strong> (LC 55): track the furthest reachable index — local maximum is global.</li>
               <li><strong>Coin change with canonical denominations</strong> (USD: 1, 5, 10, 25): always take the largest coin that fits.</li>
@@ -588,12 +588,12 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
             </ul>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">When greedy fails — use DP</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">When greedy fails — use DP</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               The local choice has nonlocal consequences. The greedy answer differs from the optimum.
             </p>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Coin change with weird denominations</strong> (e.g. {`{1, 3, 4}`} to make 6): greedy says 4+1+1 (3 coins), but 3+3 (2 coins) is better. Needs DP.</li>
               <li><strong>0/1 Knapsack</strong>: taking the highest value-per-weight item first is wrong in general.</li>
               <li><strong>Longest path in a DAG</strong>: locally short edges can lead to globally long paths.</li>
@@ -606,7 +606,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
           When you suspect greedy might work, <em>code it AND code brute force</em>, then run them against each other on random inputs of size n ≤ 8. If they ever disagree, greedy is wrong and you need DP. This is the single most useful technique for distinguishing &quot;greedy that works&quot; from &quot;greedy that just feels like it should work.&quot;
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/greedy" className="text-indigo-600 hover:underline">Module 29 — Greedy algorithms</Link>.
         </p>
       </section>
@@ -615,14 +615,14 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
       {/* SECTION 9 — Bit manipulation reference */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">9. Bit manipulation — operators reference</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">9. Bit manipulation — operators reference</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Java has seven bitwise operators. Three you use every day (<code>&amp;</code>, <code>|</code>, <code>^</code>), three you confuse (<code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>&gt;&gt;&gt;</code>), and one you forget exists (<code>~</code>).
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Operator</th>
                 <th className="px-4 py-3 font-semibold">Name</th>
@@ -630,45 +630,45 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
                 <th className="px-4 py-3 font-semibold">Classic use</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono dark:divide-slate-800">
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">&amp;</td>
+                <td className="px-4 py-3 font-bold text-purple-600">&amp;</td>
                 <td className="px-4 py-3 font-sans">AND</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">1 iff both bits are 1</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Test a bit: <code>(n &gt;&gt; i) &amp; 1</code>. Clear lowest bit: <code>n &amp; (n - 1)</code>.</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">|</td>
+                <td className="px-4 py-3 font-bold text-purple-600">|</td>
                 <td className="px-4 py-3 font-sans">OR</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">1 iff at least one bit is 1</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Set bit i: <code>n |= (1 &lt;&lt; i)</code></td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">^</td>
+                <td className="px-4 py-3 font-bold text-purple-600">^</td>
                 <td className="px-4 py-3 font-sans">XOR</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">1 iff bits differ. a ^ a = 0, a ^ 0 = a.</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Toggle bit i: <code>n ^= (1 &lt;&lt; i)</code>. Find the unique element in a list of pairs.</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">~</td>
+                <td className="px-4 py-3 font-bold text-purple-600">~</td>
                 <td className="px-4 py-3 font-sans">NOT</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Flip every bit. <code>~n == -n - 1</code> in two&apos;s complement.</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Make an all-ones mask, isolate lowest set bit: <code>n &amp; -n</code> uses ~ internally.</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">&lt;&lt;</td>
+                <td className="px-4 py-3 font-bold text-purple-600">&lt;&lt;</td>
                 <td className="px-4 py-3 font-sans">Left shift</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Shift bits left, fill with 0. <code>n &lt;&lt; k == n · 2ᵏ</code>.</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Build a single-bit mask: <code>1 &lt;&lt; i</code></td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">&gt;&gt;</td>
+                <td className="px-4 py-3 font-bold text-purple-600">&gt;&gt;</td>
                 <td className="px-4 py-3 font-sans">Arithmetic right shift</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Shift right, fill with the <em>sign bit</em>. Negative stays negative.</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Signed divide-by-2: <code>n &gt;&gt; 1</code>. Use for signed math.</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 text-purple-600 font-bold">&gt;&gt;&gt;</td>
+                <td className="px-4 py-3 font-bold text-purple-600">&gt;&gt;&gt;</td>
                 <td className="px-4 py-3 font-sans">Logical (unsigned) right shift</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Shift right, fill with 0 regardless of sign.</td>
                 <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Treating an <code>int</code> as 32 unsigned bits. The safe-midpoint trick: <code>(l + r) &gt;&gt;&gt; 1</code>.</td>
@@ -685,7 +685,7 @@ a ^= b;   // now a holds original b`}</CodeBlock>
           The third move alone is interview-trivia; the self-inverse property is the one you actually use to find missing/duplicate elements in O(n) time and O(1) space.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/bit-manipulation" className="text-indigo-600 hover:underline">Module 30 — Bit manipulation</Link>.
         </p>
       </section>
@@ -694,15 +694,15 @@ a ^= b;   // now a holds original b`}</CodeBlock>
       {/* SECTION 10 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">10. Six gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">10. Six gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has cost real engineers (and real interview candidates) real hours. Burn them in.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Integer overflow in binary-search midpoint</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Integer overflow in binary-search midpoint</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <code>(lo + hi) / 2</code> overflows when <code>lo + hi &gt; Integer.MAX_VALUE</code>. Sounds rare, but it bit the JDK&apos;s own <code>Arrays.binarySearch</code> for a decade. The fix: use the subtraction form.
             </p>
             <CodeBlock lang="java">{`// BAD — overflows for large lo + hi
@@ -715,9 +715,9 @@ int mid = lo + (hi - lo) / 2;
 int mid = (lo + hi) >>> 1;`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Forgetting to contract the sliding window</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Forgetting to contract the sliding window</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Easy to expand on every iteration of <code>r</code> and forget to shrink from <code>l</code> when the invariant breaks. You end up reporting windows that violate the constraint.
             </p>
             <CodeBlock lang="java">{`// BAD — only ever expands, never contracts
@@ -738,9 +738,9 @@ for (int r = 0; r < n; r++) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Using <code>&gt;&gt;</code> instead of <code>&gt;&gt;&gt;</code> for unsigned shift</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Using <code>&gt;&gt;</code> instead of <code>&gt;&gt;&gt;</code> for unsigned shift</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <code>&gt;&gt;</code> propagates the sign bit. When you&apos;re treating an <code>int</code> as 32 bits (e.g. counting all set bits, hashing, iterating bitmasks), a negative input will fill with 1s and your loop runs forever or produces garbage.
             </p>
             <CodeBlock lang="java">{`// BAD — for n < 0, this is an infinite loop because >> keeps the sign bit
@@ -764,9 +764,9 @@ int countBits(int n) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Forgetting to unchoose in backtracking</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Forgetting to unchoose in backtracking</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The whole point of backtracking is shared mutable state. If you forget to undo your choice, sibling recursive calls inherit a polluted state and the output is garbage.
             </p>
             <CodeBlock lang="java">{`// BAD — path is never popped, so it grows forever
@@ -790,9 +790,9 @@ void backtrack(List<Integer> path, ...) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Greedy on a non-greedy problem</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Greedy on a non-greedy problem</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Coin change is the classic trap. Greedy works for USD denominations but fails for {`{1, 3, 4}`} on target 6. Always look for a counterexample or sanity-check against brute force.
             </p>
             <CodeBlock lang="java">{`// BAD — greedy on {1, 3, 4} target 6 returns 3 coins (4+1+1)
@@ -817,9 +817,9 @@ int coinsDP(int[] coins, int target) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 6 · Recursion depth on a skewed input</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 6 · Recursion depth on a skewed input</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Quicksort on already-sorted input with a naive pivot, or a recursive tree traversal on a linked-list-shaped tree, blows the call stack. The fix is randomized pivot (quicksort) or an iterative version with an explicit <code>Deque</code> (tree).
             </p>
             <CodeBlock lang="java">{`// RISKY — already-sorted input + first-element pivot = O(n) depth
@@ -843,8 +843,8 @@ int partition(int[] a, int lo, int hi) {
       {/* SECTION 11 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">11. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">11. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Six quick recall checks (one extra because this phase has eight modules). No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -918,8 +918,8 @@ int partition(int[] a, int lo, int hi) {
       {/* ============================================================ */}
       {/* SECTION 12 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-900 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 p-6 dark:border-fuchsia-900 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">
           Phase 6 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now name the technique on sight</h3>
@@ -931,7 +931,7 @@ int partition(int[] a, int lo, int hi) {
         </p>
         <Link
           href="/courses/dsa/modules/dp-intro"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Dynamic Programming →
         </Link>

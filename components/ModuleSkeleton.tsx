@@ -29,7 +29,7 @@ export default function ModuleSkeleton({
       <div className="mb-8 h-4 w-1/3 rounded bg-slate-200 dark:bg-slate-800" />
 
       {/* Body — a few representative blocks */}
-      <div className="space-y-3 mb-6">
+      <div className="mb-6 space-y-3">
         <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800" />
         <div className="h-4 w-11/12 rounded bg-slate-200 dark:bg-slate-800" />
         <div className="h-4 w-10/12 rounded bg-slate-200 dark:bg-slate-800" />
@@ -39,7 +39,7 @@ export default function ModuleSkeleton({
       {/* Code block placeholder */}
       <div className="mb-6 h-40 w-full rounded-xl bg-slate-200 dark:bg-slate-800" />
 
-      <div className="space-y-3 mb-6">
+      <div className="mb-6 space-y-3">
         <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800" />
         <div className="h-4 w-11/12 rounded bg-slate-200 dark:bg-slate-800" />
         <div className="h-4 w-10/12 rounded bg-slate-200 dark:bg-slate-800" />

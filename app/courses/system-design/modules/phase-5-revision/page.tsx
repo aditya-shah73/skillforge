@@ -30,23 +30,23 @@ stateDiagram-v2
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/system-design"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 5 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 5 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Consensus, sagas, clocks, geo-indexing, cost — the deep-systems reference card you can re-read in 20 minutes before an interview.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-5-revision" />
@@ -55,10 +55,10 @@ stateDiagram-v2
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This is not new material. It&apos;s a <strong>map of Phase 5</strong> — the deep distributed-systems primitives compressed into tables and cards. If something looks unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before a senior systems interview, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/system-design/modules/consensus" className="text-indigo-600 hover:underline">Consensus</Link>, <Link href="/courses/system-design/modules/distributed-transactions" className="text-indigo-600 hover:underline">Distributed transactions &amp; sagas</Link>, <Link href="/courses/system-design/modules/clock-time" className="text-indigo-600 hover:underline">Clocks &amp; time</Link>, <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geo-distributed systems</Link>, and <Link href="/courses/system-design/modules/cost-capacity" className="text-indigo-600 hover:underline">Cost &amp; capacity planning</Link>.
         </p>
       </section>
@@ -67,47 +67,47 @@ stateDiagram-v2
       {/* SECTION 1 — Consensus */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Consensus — Raft in one card</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Consensus — Raft in one card</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Raft has three sub-problems. Most interview answers fit on the back of an index card.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">1 · Leader election</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">1 · Leader election</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Followers run a randomized election timeout. When one fires, that node becomes a candidate, bumps the term, and asks for votes. Majority → leader. Split vote → new election.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               Randomized timeouts (150–300ms) are the trick that prevents split-vote loops.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">2 · Log replication</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">2 · Log replication</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               All writes flow through the leader. The leader appends to its log, replicates to followers, and commits only when a <em>majority</em>{" "}has acknowledged. Followers apply in log order.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               Reads can go to the leader for linearizability, or to followers for stale-but-fast.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">3 · Safety</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">3 · Safety</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               A leader can only be elected if it has all committed entries (election restriction). Once a value is committed it&apos;s never overwritten. <strong>Safety holds under any network conditions; liveness needs partial synchrony.</strong>
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               FLP impossibility says you can&apos;t guarantee both. Raft picks safety.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Quorum math — the odd-number rule</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Quorum math — the odd-number rule</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Cluster size N</th>
                 <th className="px-4 py-3 font-semibold">Majority quorum</th>
@@ -135,7 +135,7 @@ stateDiagram-v2
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Rare. Write latency suffers; only when you span many DCs.</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-rose-600 font-semibold">4 / 6 (even)</td>
+                <td className="px-4 py-3 font-mono font-semibold text-rose-600">4 / 6 (even)</td>
                 <td className="px-4 py-3 font-mono">3 / 4</td>
                 <td className="px-4 py-3 font-mono">1 / 2</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Never. Even sizes buy you nothing — same F as N-1, more write cost, split-vote risk.</td>
@@ -143,14 +143,14 @@ stateDiagram-v2
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+        <p className="mb-4 text-xs text-slate-500 dark:text-slate-400">
           Formula: <code>N = 2F + 1</code>. Pick N, get F = (N−1)/2 tolerated failures.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Use consensus FOR</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Use consensus FOR</div>
+            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Cluster config / service discovery (etcd, Consul, ZooKeeper)</li>
               <li>Leader election for another system (Kafka KRaft controller, HDFS NameNode HA)</li>
               <li>Distributed locks / leases with strong correctness</li>
@@ -158,9 +158,9 @@ stateDiagram-v2
             </ul>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Do NOT use consensus for</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Do NOT use consensus for</div>
+            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>The data plane (user requests, app writes — too slow, single-leader bottleneck)</li>
               <li>High-volume per-key state (use sharded primary/replica or a CRDT instead)</li>
               <li>Anything you can solve with idempotency + eventual consistency</li>
@@ -173,7 +173,7 @@ stateDiagram-v2
           <strong>The senior-engineer move:</strong>{" "}consensus is a control-plane tool. If you find yourself reaching for Raft to coordinate every user write, you&apos;re on the wrong path — push the consensus into a small metadata layer (shard assignments, leader leases) and let the data plane be eventually consistent or sharded with single-writer per shard.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/consensus" className="text-indigo-600 hover:underline">Consensus &amp; Raft</Link>.
         </p>
       </section>
@@ -182,44 +182,44 @@ stateDiagram-v2
       {/* SECTION 2 — Distributed transactions & sagas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Distributed transactions &amp; sagas</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Distributed transactions &amp; sagas</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           2PC is the textbook answer and the production wrong answer. Sagas are how real systems do it.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">2PC — why we avoid it</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">2PC — why we avoid it</div>
+            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Blocking:</strong>{" "}a participant that voted YES is locked until the coordinator decides — could be forever if the coordinator crashes.</li>
               <li><strong>Coordinator SPOF:</strong>{" "}coordinator failure between phase 1 and 2 leaves participants in limbo.</li>
               <li><strong>Locks span network round-trips</strong> — kills throughput. Lock duration = max(participant latency).</li>
               <li><strong>Heterogeneous resource managers</strong>{" "}need XA support — most modern services don&apos;t.</li>
             </ul>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
+            <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
               Acceptable inside a single DB cluster. Across services? Almost never.
             </p>
           </div>
 
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Saga — what we actually do</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Saga — what we actually do</div>
+            <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>A sequence of local transactions</strong>, each with a compensating action.</li>
               <li>If step k fails, run compensations for steps k−1, k−2, … 1 in reverse.</li>
               <li><strong>No global lock.</strong>{" "}Each local transaction commits independently.</li>
               <li><strong>You give up atomicity</strong>{" "}for availability — the system passes through inconsistent intermediate states.</li>
               <li>Pairs with the <strong>outbox pattern</strong>{" "}to emit events reliably from each local transaction.</li>
             </ul>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
+            <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
               The compensation is part of the design, not an afterthought.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Orchestration vs choreography</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Orchestration vs choreography</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Dimension</th>
                 <th className="px-4 py-3 font-semibold">Orchestration</th>
@@ -256,8 +256,8 @@ stateDiagram-v2
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Outbox pattern — reliable event emission</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mb-2 text-base font-semibold">Outbox pattern — reliable event emission</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The classic bug: you commit a DB transaction, then publish an event to Kafka. The DB commit succeeds, the publish fails — and downstream services never hear about it. The fix:
         </p>
         <CodeBlock lang="plain">{`-- In one local transaction, write business data AND the outbox row
@@ -270,11 +270,11 @@ COMMIT;
 -- A background relay reads outbox rows and publishes to Kafka.
 -- If the publish fails, the relay retries — the outbox row is durable.
 -- Once published, mark the row processed (or delete it).`}</CodeBlock>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
+        <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
           The outbox makes the saga&apos;s event emission as durable as the local transaction itself. Without it, every saga step has a window where it can lose events.
         </p>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/distributed-transactions" className="text-indigo-600 hover:underline">Distributed transactions &amp; sagas</Link>.
         </p>
       </section>
@@ -283,16 +283,16 @@ COMMIT;
       {/* SECTION 3 — Raft state machine diagram */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Raft state machine, visualized</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Raft state machine, visualized</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every node is in exactly one of three states. Every transition is driven by a timeout, a vote, or a term mismatch.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={raftChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Follower</strong>{" "}is the default. It accepts AppendEntries from the leader and resets its election timer on every valid heartbeat.
           </li>
@@ -316,28 +316,28 @@ COMMIT;
       {/* SECTION 4 — Clocks & time */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Clocks &amp; time — the lies your wall clock tells</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Clocks &amp; time — the lies your wall clock tells</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Time in a distributed system is not a number. It&apos;s a model. Pick the right model for the question.
         </p>
 
-        <div className="rounded-xl border border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20 p-5 mb-6">
-          <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Wall clocks lie</div>
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 m-0">
+        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50/40 p-5 dark:border-amber-900 dark:bg-amber-950/20">
+          <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Wall clocks lie</div>
+          <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li><strong>NTP skew:</strong> ~10–100ms across well-synced hosts; seconds across regions; minutes on a misconfigured box.</li>
             <li><strong>Leap seconds:</strong>{" "}wall clock can jump backwards. Linux can repeat a second. Both have broken production code.</li>
             <li><strong>VM pauses / GC stalls:</strong>{" "}the process can be frozen for hundreds of ms; the wall clock keeps ticking around it.</li>
             <li><strong>Clock drift</strong>{" "}on cheap hardware — a watch crystal can drift by seconds per day if NTP fails.</li>
           </ul>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 mb-0">
+          <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
             Rule: never use a wall-clock timestamp as the source of truth for ordering, conflict resolution, or distributed correctness.
           </p>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Clock model decision table</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Clock model decision table</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Model</th>
                 <th className="px-4 py-3 font-semibold">What it gives you</th>
@@ -384,7 +384,7 @@ COMMIT;
           <strong>Lamport vs vector in one sentence:</strong>{" "}Lamport tells you <em>if A came before B</em>; vector tells you <em>whether A and B are even related</em>. If you need to detect concurrent writes (for conflict resolution), Lamport is not enough.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/clock-time" className="text-indigo-600 hover:underline">Clocks &amp; time</Link>.
         </p>
       </section>
@@ -393,42 +393,42 @@ COMMIT;
       {/* SECTION 5 — Geospatial */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Geospatial indexing — pick the right shape</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Geospatial indexing — pick the right shape</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           &quot;Find nearby&quot; is a 2D problem; B-tree indexes are 1D. You need a spatial index.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">Geohash</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Geohash</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Encode (lat, lng) as a string by recursively bisecting the world. <strong>Shared prefix ≈ nearby.</strong> 12-char hash ≈ centimeter precision.
             </p>
-            <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-1 list-disc pl-4 m-0">
+            <ul className="m-0 list-disc space-y-1 pl-4 text-xs text-slate-500 dark:text-slate-400">
               <li>Pros: stores as a string, indexes in any DB, easy prefix queries.</li>
               <li>Cons: edge effect — nearby points across a cell boundary have very different prefixes.</li>
               <li>Use for: Redis geo, simple proximity, hashtag-style sharding.</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">Quadtree</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Quadtree</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Recursive 4-way split of a 2D region, splitting only when a cell holds too many points. <strong>Density-balanced.</strong>
             </p>
-            <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-1 list-disc pl-4 m-0">
+            <ul className="m-0 list-disc space-y-1 pl-4 text-xs text-slate-500 dark:text-slate-400">
               <li>Pros: adapts to data density (Manhattan splits more than the Pacific).</li>
               <li>Cons: tree balance changes as data shifts; harder to shard.</li>
               <li>Use for: in-memory geo indexes (Uber dispatch, ride-sharing).</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">S2 cells (Google)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">S2 cells (Google)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Hierarchical cells on a <em>sphere</em>, projected from a cube. Sphere-aware (no pole/equator distortion). Each cell has a 64-bit ID with a hierarchy you can truncate.
             </p>
-            <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-1 list-disc pl-4 m-0">
+            <ul className="m-0 list-disc space-y-1 pl-4 text-xs text-slate-500 dark:text-slate-400">
               <li>Pros: accurate at global scale; great for distance/area math.</li>
               <li>Cons: heavier library; conceptual overhead.</li>
               <li>Use for: Google Maps, large-scale geo systems where Earth&apos;s curvature matters.</li>
@@ -436,9 +436,9 @@ COMMIT;
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-          <h3 className="text-base font-semibold mt-0 mb-2">k-Nearest Neighbors — two approaches</h3>
-          <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 m-0">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+          <h3 className="mt-0 mb-2 text-base font-semibold">k-Nearest Neighbors — two approaches</h3>
+          <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>
               <strong>Geohash + 8-neighbor scan:</strong>{" "}compute the geohash cell of the query point, fetch points in that cell AND its 8 neighbors, then sort by exact distance. The neighbor scan is the part everyone forgets — without it, you miss points just across a cell boundary.
             </li>
@@ -451,7 +451,7 @@ COMMIT;
           </ul>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Sources: <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geo-distributed systems</Link> (latency framing) and <Link href="/courses/system-design/modules/design-rideshare" className="text-indigo-600 hover:underline">Design a rideshare service</Link> (geo-indexing primitives in depth).
         </p>
       </section>
@@ -460,15 +460,15 @@ COMMIT;
       {/* SECTION 6 — Cost & capacity */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Cost &amp; capacity — $/QPS as the unit</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; capacity — $/QPS as the unit</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Senior engineers think in dollars per QPS, dollars per GB-month, dollars per million requests. Get fluent in the ratios.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Storage tiers — pick the right one</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
+        <h3 className="mb-2 text-base font-semibold">Storage tiers — pick the right one</h3>
+        <div className="mb-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Tier</th>
                 <th className="px-4 py-3 font-semibold">Latency</th>
@@ -480,66 +480,66 @@ COMMIT;
               <tr>
                 <td className="px-4 py-3 font-semibold">Hot (RAM / Redis)</td>
                 <td className="px-4 py-3 font-mono">&lt; 1ms</td>
-                <td className="px-4 py-3 text-rose-600 font-semibold">$$$$$</td>
+                <td className="px-4 py-3 font-semibold text-rose-600">$$$$$</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cache, sessions, leaderboards</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Warm (SSD DB)</td>
                 <td className="px-4 py-3 font-mono">1–10ms</td>
-                <td className="px-4 py-3 text-amber-600 font-semibold">$$$</td>
+                <td className="px-4 py-3 font-semibold text-amber-600">$$$</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Primary OLTP, working set</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Cold (Object store)</td>
                 <td className="px-4 py-3 font-mono">10–100ms</td>
-                <td className="px-4 py-3 text-emerald-600 font-semibold">$</td>
+                <td className="px-4 py-3 font-semibold text-emerald-600">$</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Backups, blobs, data lake, infrequent reads</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Archive (Glacier)</td>
                 <td className="px-4 py-3 font-mono">minutes–hours</td>
-                <td className="px-4 py-3 text-emerald-700 font-semibold">¢</td>
+                <td className="px-4 py-3 font-semibold text-emerald-700">¢</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Compliance, &quot;just in case&quot;, legal hold</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Scale up vs out vs cache</h3>
-        <div className="grid md:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">Scale UP</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <h3 className="mb-2 text-base font-semibold">Scale up vs out vs cache</h3>
+        <div className="mb-6 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Scale UP</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Bigger box. Simple, no code changes.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               Pick first when: state is hard to shard (RDBMS primary), workload fits one machine. Ceiling: physical limit + sunk cost.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">Scale OUT</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Scale OUT</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               More boxes, shard or replicate.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               Pick when: stateless services, or state already shardable. Cost: coordination, hot-shard risk, cross-shard queries.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">CACHE</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">CACHE</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Put the working set in RAM.
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 m-0">
+            <p className="m-0 text-xs text-slate-500 dark:text-slate-400">
               Pick when: read-heavy, working set fits in memory, staleness is tolerable. Cost: invalidation, thundering herd, two sources of truth.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Pricing plans — when each one wins</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mb-2 text-base font-semibold">Pricing plans — when each one wins</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Plan</th>
                 <th className="px-4 py-3 font-semibold">Discount vs on-demand</th>
@@ -574,11 +574,11 @@ COMMIT;
           <strong>The portfolio approach:</strong>{" "}reserve enough capacity to cover your P50 traffic (steady baseline) → fill peaks with on-demand → run batch/async workloads on spot. A mature shop blends all three and tracks blended $/QPS as a KPI.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           <strong>Overprovision discipline:</strong>{" "}target P99 latency under SLO with headroom (typically 30–50%) for traffic spikes, deploys, and AZ failures. Running &quot;hot&quot; (90%+ utilization) saves money until the first incident, then costs you ten times what you saved.
         </p>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/cost-capacity" className="text-indigo-600 hover:underline">Cost &amp; capacity planning</Link>.
         </p>
       </section>
@@ -587,15 +587,15 @@ COMMIT;
       {/* SECTION 7 — Common gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Common gotchas — BAD vs GOOD</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Common gotchas — BAD vs GOOD</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has bitten real teams. If you only remember five things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Using consensus for the data plane</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Using consensus for the data plane</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Routing every user write through Raft because &quot;we need strong consistency&quot; gives you a single-leader bottleneck and write latency = network RTT to majority. Push consensus into a tiny metadata layer; let the data plane scale independently.
             </p>
             <CodeBlock lang="plain">{`# BAD — every order goes through a Raft cluster
@@ -607,9 +607,9 @@ client -> router (reads shard map from etcd/Raft, ~0 QPS on Raft)
        -> shard-N primary (scales horizontally)`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Saga without compensations</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Saga without compensations</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               You wrote the happy path and called it a saga. When step 3 fails, steps 1 and 2 are left committed and nobody undoes them. That&apos;s not a saga — that&apos;s a bug.
             </p>
             <CodeBlock lang="plain">{`# BAD — no compensation. Step 3 fails → inventory reserved, payment charged, no order.
@@ -626,9 +626,9 @@ catch step k failure:
   run compensations for steps k-1 ... 1`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Ordering events by wall clock</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Ordering events by wall clock</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Two services write events tagged with <code>System.currentTimeMillis()</code>. Their clocks differ by 200ms. Now causally-later events sort earlier in your event log, and your conflict resolution picks the wrong winner.
             </p>
             <CodeBlock lang="java">{`// BAD — wall clock as ordering key
@@ -643,9 +643,9 @@ saveEvent(event);
 // Sort by lamport for ordering; show displayTime in the UI.`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Geohash without the neighbor scan</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Geohash without the neighbor scan</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               You query for geohash prefix <code>dr5ru</code> and miss the restaurant that&apos;s 50m away because its geohash starts with <code>dr5rv</code>. The neighbor scan exists for exactly this reason.
             </p>
             <CodeBlock lang="plain">{`# BAD — single-cell scan misses near-edge points
@@ -659,9 +659,9 @@ candidates = db.scan(prefix in cells)
 results = sortByHaversine(candidates, query)[:k]`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Autoscaling on CPU instead of queue depth</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Autoscaling on CPU instead of queue depth</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               For an async worker reading from a queue, CPU is a lagging indicator — by the time it spikes you&apos;re already minutes behind. Scale on queue depth (or message age) so capacity grows <em>before</em>{" "}the backlog hurts.
             </p>
             <CodeBlock lang="plain">{`# BAD — CPU-based autoscale on a queue worker
@@ -680,8 +680,8 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       {/* SECTION 8 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -745,7 +745,7 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       {/* SECTION 9 — "You're ready for Phase 6 when..." */}
       {/* ============================================================ */}
       <Callout variant="spring" title="You're ready for Phase 6 when…">
-        <ul className="m-0 space-y-1 list-disc pl-5">
+        <ul className="m-0 list-disc space-y-1 pl-5">
           <li>You can explain Raft on a whiteboard in 5 minutes — three sub-problems, quorum math, when it&apos;s the wrong tool.</li>
           <li>You can pick saga vs 2PC without thinking, and you instinctively reach for the outbox pattern to emit events.</li>
           <li>You never propose a design that orders events by wall-clock timestamp. You know when Lamport is enough and when you need vector clocks.</li>
@@ -757,8 +757,8 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-900 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 p-6 dark:border-fuchsia-900 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">
           Phase 5 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now reason about the deep distributed-systems primitives</h3>
@@ -770,7 +770,7 @@ metric: sqs_approximate_age_of_oldest_message > 30s
         </p>
         <Link
           href="/courses/system-design/modules/interview-framework"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Case Studies →
         </Link>

@@ -47,25 +47,25 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="partitioning-sharding" />
         <ModuleProgress moduleSlug="partitioning-sharding" checkpoints={CHECKPOINTS} />
       </header>
 
       <section className="my-10">
-        <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
+        <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
           <li>A clear sense of <em>when</em>{" "}a single Postgres stops being enough — and when it&apos;s still fine.</li>
           <li>The three sharding strategies (hash, range, directory) and the workloads each one lives or dies on.</li>
@@ -89,7 +89,7 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="why-partition" title="Why partition" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 1 — Why partition (and why not)</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Why partition (and why not)</h2>
 
         <p>
           A single Postgres on a beefy box (say 64 cores, 512GB RAM, NVMe) can handle a remarkable amount. We&apos;re talking
@@ -125,7 +125,7 @@ export default function Page() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">What does &quot;partition&quot; actually mean?</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">What does &quot;partition&quot; actually mean?</h3>
         <p>
           Two flavors that get conflated:
         </p>
@@ -139,7 +139,7 @@ export default function Page() {
         </p>
 
         <Mermaid chart={partitionDiagram} />
-        <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+        <p className="text-sm text-slate-500 italic dark:text-slate-400">
           The router applies a function to the partition key (here, <code>user_id % 4</code>) and sends the request to the
           owning shard. Everything in sharding flows from this picture — the question is just how the router decides.
         </p>
@@ -167,14 +167,14 @@ export default function Page() {
       </Checkpoint>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="strategies" title="Three strategies" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 2 — Three sharding strategies</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Three sharding strategies</h2>
 
         <p>
           Once you&apos;ve decided to shard, the real question is: how do you map a row to a shard? There are three answers
           worth knowing. Each has a workload it loves and a workload it ruins.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Hash sharding</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Hash sharding</h3>
         <p>
           Take a hash of the partition key, mod by the number of shards, that&apos;s where it goes. Most KV stores
           and most &quot;just shard the users table&quot; designs use this.
@@ -196,7 +196,7 @@ export default function Page() {
           every shard. Anything that wants ordered scans suffers.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Range sharding</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Range sharding</h3>
         <p>
           Each shard owns a contiguous range of the key space. Shard 0: <code>user_id 0..999_999</code>.
           Shard 1: <code>1_000_000..1_999_999</code>. And so on. HBase, Bigtable, and Postgres native range partitioning
@@ -221,7 +221,7 @@ export default function Page() {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Directory / lookup sharding</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Directory / lookup sharding</h3>
         <p>
           A separate service maps each key to its shard. <code>tenant_42 → shard_3</code>. <code>tenant_77 → shard_1</code>.
           Vitess uses this. Many B2B SaaS platforms use this when shards are tenants.
@@ -285,7 +285,7 @@ export default function Page() {
       </Checkpoint>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="consistent-hashing" title="Consistent hashing" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 3 — Consistent hashing &amp; resharding</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Consistent hashing &amp; resharding</h2>
 
         <p>
           Here&apos;s the disaster scenario. You&apos;re running 4 shards with naive <code>hash(key) % 4</code> routing.
@@ -298,7 +298,7 @@ export default function Page() {
           same problem in CDN caches, and it&apos;s now the foundation of Cassandra, DynamoDB, Riak, and most KV stores.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">The ring</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">The ring</h3>
         <p>
           Imagine a circle. Both keys and nodes get hashed onto positions on the circle (say, 0 to 2³² - 1).
           Each key is owned by the next node clockwise from its position. To find the owner of a key, hash it,
@@ -312,7 +312,7 @@ export default function Page() {
 
         <Mermaid chart={ringDiagram} />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Why virtual nodes are non-negotiable</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Why virtual nodes are non-negotiable</h3>
         <p>
           With one position per node, the ring is uneven. By bad luck, Node A might own 40% of the ring while Node C
           owns 10%. And when a node fails, all of its load lands on exactly one neighbor — instant hot spot.
@@ -346,7 +346,7 @@ export default function Page() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Resharding without consistent hashing</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Resharding without consistent hashing</h3>
         <p>
           Plenty of systems are stuck with mod-N sharding because they were built before they expected to scale.
           The standard escape hatch is <strong>double-writing during migration</strong>:
@@ -375,7 +375,7 @@ export default function Page() {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Hot shards even with consistent hashing</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Hot shards even with consistent hashing</h3>
         <p>
           Consistent hashing distributes <em>keys</em>{" "}evenly. It does <strong>not</strong>{" "}distribute <em>traffic</em>{" "}evenly
           if traffic is skewed. If user_id 42 is Beyoncé and gets 5% of all reads, the shard owning her data is on fire
@@ -410,9 +410,9 @@ export default function Page() {
         />
       </Checkpoint>
 
-      <section className="my-12 p-6 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-        <h2 className="text-xl font-semibold mb-3">What this didn&apos;t cover</h2>
-        <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+      <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
+        <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
+        <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Two-phase commit and saga patterns for cross-shard transactions (covered in transactions deep dive).</li>
           <li>Specific operational tooling: Vitess, Citus, ShardingSphere — same ideas, different ergonomics.</li>
           <li>Resharding strategies for systems already running mod-N, beyond the sketch in Part 3.</li>
@@ -421,7 +421,7 @@ export default function Page() {
       </section>
 
       <section className="my-12 text-center">
-        <p className="text-sm text-slate-500 mb-2">Next up</p>
+        <p className="mb-2 text-sm text-slate-500">Next up</p>
         <Link href="/courses/system-design/modules/replication" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
           Replication: leaders, followers, and the lag you have to live with →
         </Link>

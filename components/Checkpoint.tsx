@@ -164,13 +164,13 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
           the container past the viewport edge. The progress badge is hidden
           below sm — it duplicates info that's available inline, and the two
           floating badges colliding at 360px is uglier than dropping one. */}
-      <div className="relative my-12 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-emerald-50/30 dark:bg-emerald-950/20 p-4 sm:p-6 min-w-0">
-        <div className="absolute -top-3 left-4 px-3 py-0.5 text-xs font-bold rounded-full bg-emerald-500 text-white flex items-center gap-1 max-w-[calc(100%-2rem)] truncate">
+      <div className="relative my-12 min-w-0 rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50/30 p-4 sm:p-6 dark:border-emerald-800 dark:bg-emerald-950/20">
+        <div className="absolute -top-3 left-4 flex max-w-[calc(100%-2rem)] items-center gap-1 truncate rounded-full bg-emerald-500 px-3 py-0.5 text-xs font-bold text-white">
           <span className="shrink-0">{completed ? "✓" : "◆"}</span>
           <span className="truncate">Checkpoint · {title}</span>
         </div>
         {showProgress && (
-          <div className="hidden sm:block absolute -top-3 right-4 px-3 py-0.5 text-[10px] font-semibold rounded-full bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300">
+          <div className="absolute -top-3 right-4 hidden rounded-full border border-emerald-300 bg-white px-3 py-0.5 text-[10px] font-semibold text-emerald-700 sm:block dark:border-emerald-800 dark:bg-slate-900 dark:text-emerald-300">
             {done} / {total} answered
           </div>
         )}
@@ -178,19 +178,19 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
           {children}
         </CheckpointContext.Provider>
         {completed && (
-          <div className="mt-4 text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
+          <div className="mt-4 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
             ✓ Completed — nice work.
           </div>
         )}
         {!completed && !effectiveManual && total > 0 && done < total && (
-          <div className="mt-4 text-xs text-emerald-700/70 dark:text-emerald-300/70 italic">
+          <div className="mt-4 text-xs text-emerald-700/70 italic dark:text-emerald-300/70">
             Answer every quiz above to clear this checkpoint.
           </div>
         )}
         {!completed && effectiveManual && (
           <button
             onClick={fire}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
           >
             {manualLabel} · +{xp} XP
           </button>

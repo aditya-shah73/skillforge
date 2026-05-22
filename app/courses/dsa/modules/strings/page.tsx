@@ -72,21 +72,21 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/dsa" className="text-emerald-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 2 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Strings &amp; string building
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Strings are arrays in disguise. The twist is immutability — and the trap of <code>+</code> in a loop. Plus the patterns (anagram, palindrome, frequency counting) that interview problems hide behind.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="strings" />
@@ -208,7 +208,7 @@ return result;`}</CodeBlock>
         </p>
 
         <Mermaid chart={concatChain} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Each <code>+</code> allocates a fresh <code>String</code> and copies the previous payload. The chain is O(n²) in copies.
         </p>
 
@@ -349,7 +349,7 @@ for (int i = 0; i < n; i++) {
         </ul>
 
         <Mermaid chart={sbModel} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           StringBuilder = mutable char[] + count + doubling. <code>toString()</code> takes an immutable snapshot.
         </p>
 
@@ -607,9 +607,9 @@ return new ArrayList<>(groups.values());`}</CodeBlock>
 
         <h3>Step-by-step</h3>
 
-        <ol className="space-y-4 not-prose">
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 1 — buildBad and buildGood (the + trap)</div>
+        <ol className="not-prose space-y-4">
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 1 — buildBad and buildGood (the + trap)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">Two methods that produce a string of <code>n</code> identical chars:</p>
               <CodeBlock lang="java">{`String buildBad(int n)  { String s = ""; for (int i = 0; i < n; i++) s = s + 'a'; return s; }
@@ -618,29 +618,29 @@ String buildGood(int n) { StringBuilder sb = new StringBuilder(n); for (int i = 
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 2 — isAnagram (frequency-array pattern)</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 2 — isAnagram (frequency-array pattern)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Implement <code>boolean isAnagram(String a, String b)</code> using the int[26] / single-pass cancellation trick from Part 4. Test with: <code>(&quot;listen&quot;, &quot;silent&quot;) → true</code>, <code>(&quot;rat&quot;, &quot;car&quot;) → false</code>, <code>(&quot;a&quot;, &quot;ab&quot;) → false</code> (length mismatch).
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 3 — isPalindrome (two pointers)</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 3 — isPalindrome (two pointers)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Implement <code>boolean isPalindrome(String s)</code> with two pointers. Then make a second version <code>isPalindromeAlphanum(String s)</code> that ignores non-letters and is case-insensitive — that&apos;s LeetCode 125. Test with: <code>(&quot;A man, a plan, a canal: Panama&quot;) → true</code>.
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 4 — reverseString (in-place char[])</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 4 — reverseString (in-place char[])</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               LeetCode 344 (&ldquo;Reverse String&rdquo;) gives you a <code>char[]</code> directly and asks you to reverse it in place — no return value. Implement with two pointers from both ends. Verify the array is mutated.
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 5 — Timing harness</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 5 — Timing harness</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">Write a <code>main</code> that runs each method on inputs of size n = 1k, 10k, 100k, and (only for the good version) 1M. Print:</p>
               <CodeBlock lang="java">{`long t0 = System.nanoTime();
@@ -651,8 +651,8 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
             </div>
           </li>
 
-          <li className="rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/40 p-4">
-            <div className="font-semibold text-amber-900 dark:text-amber-200 text-sm mb-1">Step 6 — LeetCode warm-ups</div>
+          <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 6 — LeetCode warm-ups</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               The three problems your three methods solve:
               <ul className="my-2">
@@ -732,7 +732,7 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 p-8 text-white shadow-xl">
-          <div className="text-xs font-bold uppercase tracking-wider mb-2 opacity-80">
+          <div className="mb-2 text-xs font-bold tracking-wider uppercase opacity-80">
             ✦ Phase 2 · Module {mod.number} complete
           </div>
           <h3 className="mt-0 mb-2 text-white">Strings, demystified</h3>
@@ -744,7 +744,7 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           </p>
           <Link
             href="/courses/dsa/modules/linked-lists"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-amber-700 font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-amber-700 no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Module 7 — Linked lists →
           </Link>

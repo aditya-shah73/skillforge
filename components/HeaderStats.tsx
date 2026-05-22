@@ -30,7 +30,7 @@ export default function HeaderStats() {
   }, [xp, mounted]);
 
   if (!mounted) {
-    return <div className="shrink-0 w-28 sm:w-40 h-9" />;
+    return <div className="h-9 w-28 shrink-0 sm:w-40" />;
   }
 
   return (
@@ -40,19 +40,19 @@ export default function HeaderStats() {
     // hidden (still tracked + announced via tooltips elsewhere) and combo
     // chip shows only when active. Toggles bumped to 36×36 (closer to the
     // 44px tap-target minimum without ballooning the header height).
-    <div className="shrink-0 flex flex-nowrap items-center gap-1 sm:gap-2 text-sm">
+    <div className="flex shrink-0 flex-nowrap items-center gap-1 text-sm sm:gap-2">
       {combo >= 2 && (
         <Tooltip
           label={
             <>
               <span className="font-semibold text-orange-600 dark:text-orange-300">Combo ×{combo}</span>
-              <span className="block mt-1">
+              <span className="mt-1 block">
                 {combo} correct answers in a row. Multiplier kicks in at 3 (×1.5) and 5+ (×2). One wrong answer resets it.
               </span>
             </>
           }
         >
-          <div className="px-2.5 py-1 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold flex items-center gap-1 animate-bounce tabular-nums">
+          <div className="flex animate-bounce items-center gap-1 rounded-full bg-gradient-to-r from-orange-400 to-red-500 px-2.5 py-1 font-bold text-white tabular-nums">
             🔥 <span className="font-mono">{combo}×</span>
           </div>
         </Tooltip>
@@ -62,7 +62,7 @@ export default function HeaderStats() {
           label={
             <>
               <span className="font-semibold text-amber-700 dark:text-amber-300">Day streak</span>
-              <span className="block mt-1">
+              <span className="mt-1 block">
                 {streak} day{streak === 1 ? "" : "s"} in a row. Clear at least one quiz checkpoint each day to keep it alive — miss a day and it resets.
               </span>
             </>
@@ -70,7 +70,7 @@ export default function HeaderStats() {
         >
           {/* Streak chip hidden below sm — it's nice-to-have and the row is
               cramped on phones. The XP pill still surfaces the headline number. */}
-          <div className="hidden sm:flex px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 font-semibold items-center gap-1 tabular-nums">
+          <div className="hidden items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 font-semibold text-amber-800 tabular-nums sm:flex dark:bg-amber-950 dark:text-amber-200">
             🔥 {streak}
           </div>
         </Tooltip>
@@ -79,13 +79,13 @@ export default function HeaderStats() {
         label={
           <>
             <span className="font-semibold text-indigo-700 dark:text-indigo-300">XP</span>
-            <span className="block mt-1">
+            <span className="mt-1 block">
               Earned by clearing quiz checkpoints. Chain correct answers for a combo: <span className="font-mono">×1.5</span> at 3 in a row, <span className="font-mono">×2</span> at 5+. Quick answers earn a <span className="font-mono">+5</span> speed bonus.
             </span>
           </>
         }
       >
-        <div className="px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-semibold font-mono flex items-center gap-1 tabular-nums">
+        <div className="flex items-center gap-1 rounded-full bg-indigo-100 px-2.5 py-1 font-mono font-semibold text-indigo-700 tabular-nums dark:bg-indigo-950 dark:text-indigo-300">
           <span aria-hidden>⚡</span>
           <span>{displayXp}</span>
         </div>
@@ -96,7 +96,7 @@ export default function HeaderStats() {
             <span className={`font-semibold ${hardcoreMode ? "text-rose-600 dark:text-rose-300" : "text-slate-700 dark:text-slate-200"}`}>
               Hardcore mode {hardcoreMode ? "ON" : "OFF"}
             </span>
-            <span className="block mt-1">
+            <span className="mt-1 block">
               {hardcoreMode
                 ? "Wrong quiz answers lock in — no retries. Click to disable."
                 : "You can retry quiz questions until you get them right. Click to enable hardcore."}
@@ -108,9 +108,9 @@ export default function HeaderStats() {
           onClick={toggleHardcore}
           aria-label={hardcoreMode ? "Disable hardcore mode" : "Enable hardcore mode"}
           aria-pressed={hardcoreMode}
-          className={`shrink-0 w-9 h-9 rounded-full text-base flex items-center justify-center transition ${
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-base transition ${
             hardcoreMode
-              ? "bg-rose-100 dark:bg-rose-950/60 ring-1 ring-rose-300 dark:ring-rose-800"
+              ? "bg-rose-100 ring-1 ring-rose-300 dark:bg-rose-950/60 dark:ring-rose-800"
               : "hover:bg-slate-200 dark:hover:bg-slate-800"
           }`}
         >
@@ -124,7 +124,7 @@ export default function HeaderStats() {
             <span className="font-semibold text-slate-700 dark:text-slate-200">
               Sound {soundEnabled ? "ON" : "OFF"}
             </span>
-            <span className="block mt-1">
+            <span className="mt-1 block">
               {soundEnabled
                 ? "Quiz feedback chimes — correct, wrong, combo, level-up — will play. Click to mute."
                 : "Quiz feedback chimes are muted. Click to unmute."}
@@ -136,7 +136,7 @@ export default function HeaderStats() {
           onClick={toggleSound}
           aria-label={soundEnabled ? "Mute sound effects" : "Unmute sound effects"}
           aria-pressed={soundEnabled}
-          className="shrink-0 w-9 h-9 rounded-full text-base hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center transition"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-base transition hover:bg-slate-200 dark:hover:bg-slate-800"
         >
           {soundEnabled ? "🔊" : "🔇"}
         </button>

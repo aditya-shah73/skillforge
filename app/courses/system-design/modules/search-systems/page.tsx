@@ -52,25 +52,25 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="search-systems" />
         <ModuleProgress moduleSlug="search-systems" checkpoints={CHECKPOINTS} />
       </header>
 
       <section className="my-10">
-        <h2 className="text-2xl font-semibold mb-4">What you&apos;ll walk out with</h2>
+        <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
           <li>A clear sense of when Postgres&apos;s built-in search is enough — and when it categorically isn&apos;t.</li>
           <li>How an inverted index actually works, and the intuition behind BM25 ranking.</li>
@@ -94,9 +94,9 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="search-systems" id="why-search" title="Why DB isn't enough" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 1 — Why a database isn&apos;t a search engine</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Why a database isn&apos;t a search engine</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">The LIKE trap</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">The LIKE trap</h3>
         <p>
           Every search feature in history started with this query:
         </p>
@@ -115,7 +115,7 @@ export default function Page() {
           <li><strong>No typo tolerance:</strong> &quot;wol socks&quot; finds nothing.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Postgres full-text search: the &quot;maybe enough&quot; option</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Postgres full-text search: the &quot;maybe enough&quot; option</h3>
         <p>
           Before reaching for Elasticsearch, know that Postgres ships with a real full-text search engine.
           <code> tsvector</code> and <code>tsquery</code> with a <code>GIN</code> index handle a lot:
@@ -152,7 +152,7 @@ LIMIT 20;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">When Postgres FTS stops being enough</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">When Postgres FTS stops being enough</h3>
         <ul>
           <li><strong>Multi-language tokenization with quality.</strong>{" "}Postgres ships English, Spanish, etc., but Chinese/Japanese/Korean tokenization is weak compared to ES analyzers.</li>
           <li><strong>Real-time scoring with custom ranking signals.</strong> &quot;Boost recent items 2x, in-stock items 3x, sponsored items by ad bid.&quot; Possible in Postgres but contortions; native in ES.</li>
@@ -195,9 +195,9 @@ LIMIT 20;`}</CodeBlock>
       </Checkpoint>
 
       <Checkpoint moduleSlug="search-systems" id="inverted-index" title="Inverted index & BM25" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 2 — Inverted index &amp; BM25</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Inverted index &amp; BM25</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">The inverted index, drawn out</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">The inverted index, drawn out</h3>
         <p>
           A normal index goes <em>document → tokens it contains</em>. An inverted index flips this:
           <em> token → list of documents that contain it</em>. The token map is the lookup; the list is called a
@@ -222,7 +222,7 @@ LIMIT 20;`}</CodeBlock>
           primitive.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Tokenization, stemming, normalization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Tokenization, stemming, normalization</h3>
         <p>
           Before indexing, documents go through an <em>analyzer</em>:
         </p>
@@ -238,7 +238,7 @@ LIMIT 20;`}</CodeBlock>
           &quot;wool socks&quot; in a query don&apos;t collide. This trips up everyone at least once.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">BM25 — the ranking function that ate the world</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">BM25 — the ranking function that ate the world</h3>
         <p>
           When a query matches multiple docs, you need to rank them. BM25 is the standard. The intuition (no
           formula needed):
@@ -297,7 +297,7 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
           thing that&apos;s a one-liner in ES and a paragraph of SQL in Postgres.
         </p>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Sharding the index</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Sharding the index</h3>
         <p>
           Elasticsearch shards an index across nodes the same way other systems shard data. A query hits all shards
           (in parallel), each returns its top-K candidates, the coordinator merges them, returns the global top-K.
@@ -344,9 +344,9 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
       </Checkpoint>
 
       <Checkpoint moduleSlug="search-systems" id="production" title="Production patterns" xp={25}>
-        <h2 className="text-2xl font-semibold mb-4">Part 3 — Production patterns</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Production patterns</h2>
 
-        <h3 className="text-xl font-semibold mt-4 mb-3">Postgres + Elasticsearch — the standard architecture</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Postgres + Elasticsearch — the standard architecture</h3>
         <p>
           The pattern that&apos;s won:
         </p>
@@ -358,7 +358,7 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
 
         <Mermaid chart={cdcPipelineDiagram} />
 
-        <h3 className="text-xl font-semibold mt-6 mb-3">Dual-write vs CDC</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Dual-write vs CDC</h3>
 
         <p><strong>Dual-write (application-level):</strong>{" "}the service that writes to Postgres also writes to ES. Simple, easy to reason about. <em>Doesn&apos;t survive failures.</em>{" "}If the ES write fails after the Postgres write commits, your two stores are now inconsistent. Retry queues help but don&apos;t fully solve it.</p>
 
@@ -406,7 +406,7 @@ public Product create(CreateProductRequest req) {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Indexing lag</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Indexing lag</h3>
         <p>
           With CDC, ES is always behind Postgres. Typical lag: hundreds of milliseconds to a few seconds in steady
           state. Spikes during high write volume or slow indexer.
@@ -419,7 +419,7 @@ public Product create(CreateProductRequest req) {
           <li><strong>Stale facets.</strong> &quot;42 results&quot; might be 41 by the time the user clicks through. Usually acceptable, occasionally not.</li>
         </ul>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Reindexing without downtime</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Reindexing without downtime</h3>
         <p>
           Schema changes in ES (new fields, changed analyzers, different tokenization) typically require reindexing.
           The pattern:
@@ -442,7 +442,7 @@ public Product create(CreateProductRequest req) {
           </p>
         </Callout>
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">When ES and Postgres disagree</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">When ES and Postgres disagree</h3>
         <p>
           They will. Disagreements come from:
         </p>
@@ -469,7 +469,7 @@ public Product create(CreateProductRequest req) {
           ]}
         />
 
-        <h3 className="text-xl font-semibold mt-8 mb-3">Spring Data Elasticsearch in production</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Spring Data Elasticsearch in production</h3>
 
         <CodeBlock lang="java" caption="Production-shaped query with filtering and ranking">{`@Service
 public class ProductSearchService {
@@ -512,9 +512,9 @@ public class ProductSearchService {
         />
       </Checkpoint>
 
-      <section className="my-12 p-6 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-        <h2 className="text-xl font-semibold mb-3">What this didn&apos;t cover</h2>
-        <ul className="text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+      <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
+        <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
+        <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Vector search and hybrid retrieval (BM25 + embeddings) — that&apos;s its own module.</li>
           <li>Learned ranking (LambdaMART, neural rerankers) on top of BM25 first-stage retrieval.</li>
           <li>Specific Debezium configuration, Kafka Connect ergonomics, ES cluster sizing.</li>
@@ -523,7 +523,7 @@ public class ProductSearchService {
       </section>
 
       <section className="my-12 text-center">
-        <p className="text-sm text-slate-500 mb-2">Phase 2 complete</p>
+        <p className="mb-2 text-sm text-slate-500">Phase 2 complete</p>
         <Link href="/courses/system-design" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
           Back to all modules — Phase 3 covers messaging and event-driven systems →
         </Link>

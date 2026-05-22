@@ -24,19 +24,19 @@ export default function EmbeddingsIntroModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 1 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Embeddings: numbers become geometry</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Embeddings: numbers become geometry</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Why &quot;king − man + woman ≈ queen&quot; isn&apos;t a party trick — it&apos;s the whole reason semantic search works.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="embeddings-intro" />
@@ -44,23 +44,23 @@ export default function EmbeddingsIntroModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Module 1 turned text into token IDs — integers. Integers are terrible for meaning: 5 and 6 are &quot;close&quot;
           but <code>cat</code> token 5 has nothing to do with <code>dog</code> token 6. Embeddings fix that. By the end you&apos;ll:
         </p>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal ml-5">
+        <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
           <li>Explain why <strong>vector space</strong>{" "}is the right home for meaning.</li>
           <li>Derive <strong>cosine similarity</strong>{" "}from the dot product, and compute it by hand.</li>
           <li>Tell the difference between <strong>static</strong> (word2vec) and <strong>contextual</strong> (BERT/OpenAI) embeddings.</li>
           <li>Build a <strong>nearest-neighbor search</strong>{" "}in Java and see semantic lookup actually work.</li>
           <li>Know when cosine fails and why <strong>curse of dimensionality</strong>{" "}will haunt you in Phase 3.</li>
         </ol>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
+        <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           This module is the gateway to Phase 3 (RAG). Shaky intuition here means the vector DB chapter will feel like magic. Don&apos;t skip the worked examples.
         </p>
       </section>
@@ -131,7 +131,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <p>
           Once words live in vector space, you can do <em>arithmetic</em>{" "}on them. The classic example, from word2vec (2013):
         </p>
-        <div className="not-prose my-6 mx-auto max-w-lg p-5 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-950/30 text-center">
+        <div className="not-prose mx-auto my-6 max-w-lg rounded-xl border border-amber-300 bg-amber-50/60 p-5 text-center dark:border-amber-800 dark:bg-amber-950/30">
           <div className="font-mono text-lg">king − man + woman ≈ queen</div>
         </div>
         <p>
@@ -192,10 +192,10 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <p>
           The obvious one. For vectors <code>a</code> and <code>b</code>:
         </p>
-        <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
+        <div className="not-prose mx-auto my-4 max-w-md rounded-lg border border-slate-200 bg-slate-50 p-4 text-center font-mono text-sm dark:border-slate-800 dark:bg-slate-900">
           d(a, b) = √( Σᵢ (aᵢ − bᵢ)² )
         </div>
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           That&apos;s just the Pythagorean theorem in n dimensions: subtract the vectors element by element, square the differences, add them up, take the square root. Same recipe you used in high school for the distance between two points on a grid — just with more numbers per point.
         </p>
         <p>
@@ -211,10 +211,10 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <p>
           The dot product is defined as:
         </p>
-        <div className="not-prose my-4 mx-auto max-w-md p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center font-mono text-sm">
+        <div className="not-prose mx-auto my-4 max-w-md rounded-lg border border-slate-200 bg-slate-50 p-4 text-center font-mono text-sm dark:border-slate-800 dark:bg-slate-900">
           a · b = Σᵢ aᵢ · bᵢ = |a| · |b| · cos(θ)
         </div>
-        <p className="text-xs italic text-slate-600 dark:text-slate-400">
+        <p className="text-xs text-slate-600 italic dark:text-slate-400">
           Two ways to read the same number. <strong>Computationally:</strong>{" "}pair up the entries of <code>a</code> and <code>b</code>, multiply each pair, add them all up — one number out. <strong>Geometrically:</strong>{" "}that number equals the lengths of the two arrows multiplied together, times the cosine of the angle between them. The first form tells you how to compute it; the second tells you what it means.
         </p>
         <p>
@@ -224,10 +224,10 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
 
         <h3>Candidate 3 (the winner): cosine similarity</h3>
         <p>Divide the dot product by both lengths — lengths cancel, leaving only the angle:</p>
-        <div className="not-prose my-6 mx-auto max-w-xl p-5 rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 text-center">
-          <div className="text-[11px] uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold mb-2">Cosine similarity</div>
+        <div className="not-prose mx-auto my-6 max-w-xl rounded-xl border-2 border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-5 text-center dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
+          <div className="mb-2 text-[11px] font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">Cosine similarity</div>
           <div className="font-mono text-lg">cos(a, b) = (a · b) / ( |a| · |b| )</div>
-          <div className="text-xs text-slate-600 dark:text-slate-400 mt-2">where |a| = √(Σᵢ aᵢ²)</div>
+          <div className="mt-2 text-xs text-slate-600 dark:text-slate-400">where |a| = √(Σᵢ aᵢ²)</div>
         </div>
         <p>
           The output lives in <code>[−1, +1]</code>:
@@ -377,16 +377,16 @@ static double cosine(double[] a, double[] b) {
           Not all embedding models are the same. There are two big families.
         </p>
 
-        <div className="not-prose grid md:grid-cols-2 gap-4 my-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2">Static (word2vec, GloVe)</div>
-            <p className="text-sm m-0 mb-2">One vector per word, forever. The word <code>bank</code> has exactly one embedding — even though a river bank and a savings bank are different concepts.</p>
-            <p className="text-xs text-slate-500 m-0">Fast, tiny, obsolete for new work. Still useful for quick prototypes and teaching.</p>
+        <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase dark:text-amber-400">Static (word2vec, GloVe)</div>
+            <p className="m-0 mb-2 text-sm">One vector per word, forever. The word <code>bank</code> has exactly one embedding — even though a river bank and a savings bank are different concepts.</p>
+            <p className="m-0 text-xs text-slate-500">Fast, tiny, obsolete for new work. Still useful for quick prototypes and teaching.</p>
           </div>
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-2">Contextual (BERT, OpenAI, Cohere, Voyage)</div>
-            <p className="text-sm m-0 mb-2">Embeddings depend on the surrounding sentence. &quot;Sat by the <strong>bank</strong>{" "}of the river&quot; and &quot;deposited at the <strong>bank</strong>&quot; produce different vectors for <code>bank</code>.</p>
-            <p className="text-xs text-slate-500 m-0">What every production system uses in 2026. The transformer (Module 5) is the machine under the hood.</p>
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-800 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">Contextual (BERT, OpenAI, Cohere, Voyage)</div>
+            <p className="m-0 mb-2 text-sm">Embeddings depend on the surrounding sentence. &quot;Sat by the <strong>bank</strong>{" "}of the river&quot; and &quot;deposited at the <strong>bank</strong>&quot; produce different vectors for <code>bank</code>.</p>
+            <p className="m-0 text-xs text-slate-500">What every production system uses in 2026. The transformer (Module 5) is the machine under the hood.</p>
           </div>
         </div>
 
@@ -758,7 +758,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
       {/* ================================================================= */}
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
-      <section className="mt-12 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40">
+      <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Next up: Module 7 — Prompt engineering</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You&apos;ve built the model-side understanding. Next you turn it around and learn how to
@@ -766,7 +766,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
         </p>
         <Link
           href="/courses/ai/modules/prompt-engineering"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
         >
           Start Module 7 →
         </Link>

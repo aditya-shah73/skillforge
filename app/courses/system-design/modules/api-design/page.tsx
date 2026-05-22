@@ -38,32 +38,32 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase {mod.phaseNumber} · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{mod.title}</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">{mod.subtitle}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">{mod.subtitle}</p>
         <BookmarkButton courseId="system-design" moduleSlug="api-design" />
         <ModuleProgress moduleSlug="api-design" checkpoints={CHECKPOINTS} />
       </header>
 
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📐</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           The senior version of REST. Not &quot;use the right HTTP verb&quot; — that&apos;s table stakes — but the contracts that make APIs survive scale: versioning, pagination, idempotency, and error shapes that don&apos;t lie. Plus the honest tradeoffs between REST, gRPC, and GraphQL.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>HTTP verb semantics that actually matter (safe vs idempotent vs neither)</li>
           <li>The status codes you&apos;ll defend in code review (and the 404-vs-403 judgment call)</li>
           <li>Cursor pagination, idempotency keys, structured error contracts — the production trio</li>
@@ -88,23 +88,23 @@ export default function Page() {
         </p>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">Verb</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">Safe?</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">Idempotent?</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">Typical use</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">Verb</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">Safe?</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">Idempotent?</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">Typical use</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>GET</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Read a resource</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>HEAD</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Read just the headers</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>OPTIONS</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Discover allowed verbs / CORS preflight</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>POST</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">No</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">No</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Create, or non-idempotent action</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>PUT</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">No</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Replace a resource entirely</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>DELETE</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">No</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Yes</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Remove a resource</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700"><code>PATCH</code></td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">No</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Usually no</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Partial update</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>GET</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Read a resource</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>HEAD</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Read just the headers</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>OPTIONS</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Discover allowed verbs / CORS preflight</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>POST</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">No</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">No</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Create, or non-idempotent action</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>PUT</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">No</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Replace a resource entirely</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>DELETE</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">No</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Yes</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Remove a resource</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700"><code>PATCH</code></td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">No</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Usually no</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Partial update</td></tr>
             </tbody>
           </table>
         </div>
@@ -486,23 +486,23 @@ message Payment {
 
         <h3>The honest comparison</h3>
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">Dimension</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">REST</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">gRPC</th>
-                <th className="px-3 py-2 text-left border border-slate-300 dark:border-slate-700">GraphQL</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">Dimension</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">REST</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">gRPC</th>
+                <th className="border border-slate-300 px-3 py-2 text-left dark:border-slate-700">GraphQL</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Wire format</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">JSON (text)</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Protobuf (binary)</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">JSON (text)</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Schema</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Out-of-band (OpenAPI)</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">In-band (.proto)</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">In-band (SDL)</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Browser support</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Native</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">grpc-web bridge</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Native (it&apos;s HTTP)</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Streaming</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">SSE / WebSockets bolt-on</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">First-class</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Subscriptions (often WS)</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">CDN cache</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Free for GET</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Hard (POST + binary)</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Hard (POST, queries vary)</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Debuggability</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">curl, paste in browser</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">grpcurl, BloomRPC</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">GraphiQL, Apollo Studio</td></tr>
-              <tr><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Where it shines</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Public APIs, cacheable reads</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Internal RPC, low latency</td><td className="px-3 py-2 border border-slate-300 dark:border-slate-700">Many clients, varied needs</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Wire format</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">JSON (text)</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Protobuf (binary)</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">JSON (text)</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Schema</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Out-of-band (OpenAPI)</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">In-band (.proto)</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">In-band (SDL)</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Browser support</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Native</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">grpc-web bridge</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Native (it&apos;s HTTP)</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Streaming</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">SSE / WebSockets bolt-on</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">First-class</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Subscriptions (often WS)</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">CDN cache</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Free for GET</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Hard (POST + binary)</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Hard (POST, queries vary)</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Debuggability</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">curl, paste in browser</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">grpcurl, BloomRPC</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">GraphiQL, Apollo Studio</td></tr>
+              <tr><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Where it shines</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Public APIs, cacheable reads</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Internal RPC, low latency</td><td className="border border-slate-300 px-3 py-2 dark:border-slate-700">Many clients, varied needs</td></tr>
             </tbody>
           </table>
         </div>
@@ -818,14 +818,14 @@ N×M coupling.                         are decoupled from clients.`}</CodeBlock>
         </p>
       </section>
 
-      <section className="mt-12 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-900 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/40 dark:to-blue-950/40">
+      <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Next up</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Spring Cloud Gateway — the actual edge gateway in Java. Routing, filters, edge rate-limiting, JWT auth offload, and how Spring&apos;s reactive gateway handles all of it without putting business logic in the wrong place.
         </p>
         <Link
           href="/courses/system-design/modules/spring-cloud-gateway"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow-md hover:from-cyan-600 hover:to-blue-600 transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-sm transition hover:from-cyan-600 hover:to-blue-600 hover:shadow-md"
         >
           Continue to Spring Cloud Gateway →
         </Link>

@@ -26,23 +26,23 @@ export default function CapstoneModule() {
         ← All modules
       </Link>
 
-      <div className="mt-6 mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-pink-500 to-rose-500 text-white">
+      <div className="mt-6 mb-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-bold text-white">
         Phase 6 · Module 32 · Capstone
       </div>
-      <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">~1 week (8 daily sessions) · Production &amp; Capstone</div>
-      <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Capstone: an end-to-end AI engineering assistant</h1>
-      <p className="text-lg text-slate-600 dark:text-slate-300 italic mb-6">
+      <div className="mb-2 text-xs text-slate-500 dark:text-slate-400">~1 week (8 daily sessions) · Production &amp; Capstone</div>
+      <h1 className="mb-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Capstone: an end-to-end AI engineering assistant</h1>
+      <p className="mb-6 text-lg text-slate-600 italic dark:text-slate-300">
         The portfolio piece. Everything you&apos;ve learned, in one shippable system.
       </p>
 
       <BookmarkButton courseId="ai" moduleSlug="capstone" />
       <ModuleProgress moduleSlug={SLUG} checkpoints={CHECKPOINTS} />
 
-      <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-900">
-        <h3 className="text-base font-bold text-pink-900 dark:text-pink-200 mt-0 mb-3">
+      <div className="my-8 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h3 className="mt-0 mb-3 text-base font-bold text-pink-900 dark:text-pink-200">
           What you&apos;ll walk out with
         </h3>
-        <ul className="text-sm text-pink-900/90 dark:text-pink-200/90 mb-0 space-y-1">
+        <ul className="mb-0 space-y-1 text-sm text-pink-900/90 dark:text-pink-200/90">
           <li>A <strong>working AI engineering assistant</strong> — Spring Boot + Postgres/pgvector + a streaming React UI.</li>
           <li>RAG over a real codebase, an <strong>agent loop with tools</strong>, and structured outputs.</li>
           <li>Eval gates and security guards wired into CI — not bolted on later.</li>
@@ -114,24 +114,24 @@ export default function CapstoneModule() {
       </p>
 
       <div className="my-6 overflow-x-auto">
-        <table className="w-full text-sm border-collapse">
+        <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-slate-100 dark:bg-slate-800">
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Component</th>
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Course modules it tests</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Component</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Course modules it tests</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Embedding + chunking pipeline</td><td className="border border-slate-300 dark:border-slate-700 p-2">14, 16</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">pgvector index + hybrid retrieval</td><td className="border border-slate-300 dark:border-slate-700 p-2">15, 17</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Spring AI ChatClient + structured outputs</td><td className="border border-slate-300 dark:border-slate-700 p-2">10</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Tool definitions + dispatch</td><td className="border border-slate-300 dark:border-slate-700 p-2">11, 22</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">SSE streaming end-to-end</td><td className="border border-slate-300 dark:border-slate-700 p-2">12, 18</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Prompt caching of system prompt + tool defs</td><td className="border border-slate-300 dark:border-slate-700 p-2">13</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">React chat UI with citations</td><td className="border border-slate-300 dark:border-slate-700 p-2">18, 19</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Agent loop with stop conditions</td><td className="border border-slate-300 dark:border-slate-700 p-2">21, 22</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Eval harness in CI</td><td className="border border-slate-300 dark:border-slate-700 p-2">24</td></tr>
-            <tr><td className="border border-slate-300 dark:border-slate-700 p-2">Input/output guardrails</td><td className="border border-slate-300 dark:border-slate-700 p-2">25</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Embedding + chunking pipeline</td><td className="border border-slate-300 p-2 dark:border-slate-700">14, 16</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">pgvector index + hybrid retrieval</td><td className="border border-slate-300 p-2 dark:border-slate-700">15, 17</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Spring AI ChatClient + structured outputs</td><td className="border border-slate-300 p-2 dark:border-slate-700">10</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Tool definitions + dispatch</td><td className="border border-slate-300 p-2 dark:border-slate-700">11, 22</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">SSE streaming end-to-end</td><td className="border border-slate-300 p-2 dark:border-slate-700">12, 18</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Prompt caching of system prompt + tool defs</td><td className="border border-slate-300 p-2 dark:border-slate-700">13</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">React chat UI with citations</td><td className="border border-slate-300 p-2 dark:border-slate-700">18, 19</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Agent loop with stop conditions</td><td className="border border-slate-300 p-2 dark:border-slate-700">21, 22</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Eval harness in CI</td><td className="border border-slate-300 p-2 dark:border-slate-700">24</td></tr>
+            <tr><td className="border border-slate-300 p-2 dark:border-slate-700">Input/output guardrails</td><td className="border border-slate-300 p-2 dark:border-slate-700">25</td></tr>
           </tbody>
         </table>
       </div>
@@ -860,28 +860,28 @@ conversation:
         />
       </Checkpoint>
 
-      <div className="my-12 p-8 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 text-white">
-        <h3 className="text-xl font-bold text-white mt-0 mb-3">You finished the course.</h3>
-        <p className="text-white/95 mb-3">
+      <div className="my-12 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 p-8 text-white">
+        <h3 className="mt-0 mb-3 text-xl font-bold text-white">You finished the course.</h3>
+        <p className="mb-3 text-white/95">
           27 modules. Tokenization to capstone. Java from scratch through Spring AI through agents through evals.
           You wrote linear regression with no library. You wrote attention with no library. You shipped a RAG
           pipeline, an agent loop, a streaming chat UI, an eval harness, an injection corpus, and a capstone that
           ties them all together.
         </p>
-        <p className="text-white/95 mb-3">
+        <p className="mb-3 text-white/95">
           Most people who say they &quot;know AI&quot; have done a fraction of this. You can defend every layer.
           You know <em>why</em>{" "}RAG beats fine-tuning for facts, why evals belong in CI, why hybrid retrieval beats
           pure vector search, why the agent loop needs a stop condition. You can answer the system-design
           questions because you built the systems.
         </p>
-        <p className="text-white/95 mb-0">
+        <p className="mb-0 text-white/95">
           Now go build something. The capstone is a starting point, not a finish line. Ship the side project. Take
           the work home. The next AI thing your company tries to launch — be the engineer who already knows how
           it works.
         </p>
       </div>
 
-      <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-8 mb-12">
+      <p className="mt-8 mb-12 text-center text-sm text-slate-500 dark:text-slate-400">
         — Fin —
       </p>
         <ModuleNav courseId="ai" currentSlug="capstone" />

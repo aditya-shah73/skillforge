@@ -56,23 +56,23 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/system-design"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 6 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 6 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           The 6-step framework + 7 design archetypes (TinyURL, newsfeed, Twitter, chat, rate limiter, rideshare, payments) on one card.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-6-revision" />
@@ -84,7 +84,7 @@ flowchart TB
         <Callout variant="insight">
           <strong>How to use this card.</strong>{" "}This is not new material — it&apos;s a map of the eight Phase 6 modules compressed into reference cards. Read it once cold to test recall. Re-read it on the train to a phone screen. If an archetype card feels unfamiliar, the source module is one click away.
         </Callout>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-4">
+        <p className="mt-4 leading-relaxed text-slate-700 dark:text-slate-300">
           The eight modules you&apos;re consolidating: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">the 6-step framework</Link>, <Link href="/courses/system-design/modules/design-tinyurl" className="text-fuchsia-600 hover:underline">TinyURL</Link>, <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">news feed</Link>, <Link href="/courses/system-design/modules/design-twitter" className="text-fuchsia-600 hover:underline">Twitter</Link>, <Link href="/courses/system-design/modules/design-chat" className="text-fuchsia-600 hover:underline">chat</Link>, <Link href="/courses/system-design/modules/design-rate-limiter" className="text-fuchsia-600 hover:underline">rate limiter</Link>, <Link href="/courses/system-design/modules/design-rideshare" className="text-fuchsia-600 hover:underline">rideshare</Link>, and <Link href="/courses/system-design/modules/design-payments" className="text-fuchsia-600 hover:underline">payments</Link>.
         </p>
       </section>
@@ -93,60 +93,60 @@ flowchart TB
       {/* SECTION 1 — The 6-step framework */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. The 6-step interview framework</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The 6-step interview framework</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Same order every time. The minute hand on the clock moves whether you&apos;re ready or not — having a script means you spend zero seconds deciding what to do next.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-6">
+        <div className="mb-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={frameworkChart} />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-fuchsia-50/40 dark:bg-fuchsia-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">Step 1 · Clarify (5 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Three buckets:</p>
-            <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-fuchsia-50/40 p-4 dark:border-slate-800 dark:bg-fuchsia-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">Step 1 · Clarify (5 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Three buckets:</p>
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-700 dark:text-slate-300">
               <li><strong>Functional:</strong>{" "}what does the user do? (post, follow, read feed)</li>
               <li><strong>Non-functional:</strong>{" "}latency target, consistency, availability, durability</li>
               <li><strong>Scale:</strong>{" "}DAU, peak QPS, geo distribution, read:write ratio</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-fuchsia-50/40 dark:bg-fuchsia-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 mb-2">Step 2 · Estimate (5 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">Three numbers, in this order:</p>
-            <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-4">
+          <div className="rounded-xl border border-slate-200 bg-fuchsia-50/40 p-4 dark:border-slate-800 dark:bg-fuchsia-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">Step 2 · Estimate (5 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Three numbers, in this order:</p>
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-700 dark:text-slate-300">
               <li><strong>QPS:</strong>{" "}DAU × actions/user/day ÷ 86,400 × peak factor (≈3×)</li>
               <li><strong>Storage:</strong>{" "}writes/day × bytes/write × retention × replication factor</li>
               <li><strong>Bandwidth:</strong>{" "}QPS × bytes/response (cache-miss path)</li>
             </ul>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-pink-50/40 dark:bg-pink-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">Step 3 · API (5 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-pink-50/40 p-4 dark:border-slate-800 dark:bg-pink-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">Step 3 · API (5 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               3–6 endpoints. <code>POST /resource</code>, <code>GET /resource/:id</code>, plus the read paths. Mention pagination, idempotency keys, response shape.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-pink-50/40 dark:bg-pink-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">Step 4 · Data model (5 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-pink-50/40 p-4 dark:border-slate-800 dark:bg-pink-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">Step 4 · Data model (5 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Core tables, primary keys, partition keys, secondary indexes. Pick SQL vs NoSQL with a one-line justification (joins? scale? schema flex?).
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-rose-50/40 dark:bg-rose-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Step 5 · High-level (10 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-rose-50/40 p-4 dark:border-slate-800 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Step 5 · High-level (10 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Boxes-and-arrows: client → LB → API → cache → DB, plus queues/workers/search/CDN where they belong. Trace one read and one write end-to-end.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-rose-50/40 dark:bg-rose-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Step 6 · Deep dive (15 min)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-rose-50/40 p-4 dark:border-slate-800 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Step 6 · Deep dive (15 min)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               The interviewer picks the bottleneck. Common probes: hot keys, fanout, consistency, scaling the DB, failure modes, dedupe, race conditions.
             </p>
           </div>
@@ -156,7 +156,7 @@ flowchart TB
           <strong>The single most common failure mode</strong>{" "}is skipping step 1 and jumping straight to boxes-and-arrows. The interviewer will let you do it — and then ding you for missing requirements they never had to state aloud.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">Module 33 — The interview framework</Link>.
         </p>
       </section>
@@ -165,18 +165,18 @@ flowchart TB
       {/* SECTION 2 — Fanout diagram */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. The fanout decision (push vs pull)</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The fanout decision (push vs pull)</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The single most-asked tradeoff in this phase. Newsfeed, Twitter, and chat group fanout all live on this axis.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={fanoutChart} />
         </div>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Axis</th>
                 <th className="px-4 py-3 font-semibold">Fanout-on-write (push)</th>
@@ -219,7 +219,7 @@ flowchart TB
           </table>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">Module 35 — Design a news feed</Link>.
         </p>
       </section>
@@ -228,106 +228,106 @@ flowchart TB
       {/* SECTION 3 — 7 archetypes one-pagers */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The 7 design archetypes</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The 7 design archetypes</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           One card per archetype: the key insight, a 3-line data model, and a hot-take paragraph. If you can recite all seven cold, you can survive any L5+ system-design loop.
         </p>
 
         <div className="space-y-4">
           {/* TinyURL */}
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Archetype 1 · TinyURL</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Archetype 1 · TinyURL</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}read-heavy ratio (~100:1), so cache aggressively. The whole service is essentially a giant KV lookup with a base62 encoder bolted on.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`urls(short_code PK, long_url, owner_id, created_at, expires_at)
 counters(host_id PK, next_id)   -- range-allocated, avoids hot key
 custom_aliases(alias PK, short_code FK)  -- optional reservations`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               The encoding question is base62 (a-z, A-Z, 0-9 = 62 chars; 7 chars = 3.5 trillion URLs). Generate IDs from a shared counter that hands out ranges to each host (so each host gets 1000 IDs at a time, no per-request roundtrip). Custom aliases are just a uniqueness check against the same table. The redirect path must be sub-10ms — pin the cache in front of the DB and accept eventual consistency on expiration. <Link href="/courses/system-design/modules/design-tinyurl" className="text-emerald-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Newsfeed */}
-          <div className="rounded-xl border border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Archetype 2 · News feed</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-amber-200 bg-amber-50/40 p-5 dark:border-amber-900 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Archetype 2 · News feed</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}the entire design hinges on push vs pull vs hybrid (see table above). Hybrid wins for real traffic because the distribution of follower counts is power-law.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`posts(post_id PK, author_id, content, created_at)
 follows(follower_id, followee_id, PK(follower_id, followee_id))
 feed_cache(user_id, post_id, score, PK(user_id, score DESC))  -- materialized for push users`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Push for normal users (instantly fan out to followers&apos; feed caches in Redis). For celebrities (say &gt; 10K followers), <strong>don&apos;t push</strong>; instead, on each reader&apos;s feed assembly, pull the celebrity&apos;s recent posts and merge them with the pre-materialized normal-user feed. This bounds the worst-case write cost while keeping read latency low. Ranking, ML scoring, and ad insertion are layered on top of this read path. <Link href="/courses/system-design/modules/design-newsfeed" className="text-amber-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Twitter */}
-          <div className="rounded-xl border border-sky-200 dark:border-sky-900 bg-sky-50/40 dark:bg-sky-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">Archetype 3 · Twitter</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-sky-200 bg-sky-50/40 p-5 dark:border-sky-900 dark:bg-sky-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Archetype 3 · Twitter</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}Twitter = newsfeed + search + trending. Each of those three is its own subsystem with its own data store; the trick is sequencing them in your design so you don&apos;t try to do it all with one DB.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`tweets(tweet_id PK, author_id, body, ts)         -- primary store (Cassandra/sharded SQL)
 es_tweets_index                                  -- Elasticsearch sidecar populated via CDC
 trending(hashtag, window_start, count, PK(hashtag, window_start))`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Newsfeed reuses the hybrid fanout from above. Search is a sidecar Elasticsearch cluster populated by Change Data Capture from the tweet store — never query the primary for full-text. Trending is a sliding-window count over hashtag events: bucket counts in 1-min windows, sum the last N windows, top-K via a heap. Each subsystem can be scaled independently, and that&apos;s the whole point. <Link href="/courses/system-design/modules/design-twitter" className="text-sky-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Chat */}
-          <div className="rounded-xl border border-violet-200 dark:border-violet-900 bg-violet-50/40 dark:bg-violet-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300 mb-2">Archetype 4 · Chat</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-violet-200 bg-violet-50/40 p-5 dark:border-violet-900 dark:bg-violet-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-violet-700 uppercase dark:text-violet-300">Archetype 4 · Chat</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}chat is the only archetype where the connection layer is stateful. WebSocket connections pin a user to a single server, and your load balancer has to know it.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`conversations(conv_id PK, type ENUM('1:1','group'), created_at)
 messages(conv_id, msg_id, sender_id, body, ts, PK(conv_id, msg_id))  -- partitioned by conv_id
 presence_cache(user_id → connection_server, ttl 30s in Redis)`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Connection layer is stateful WebSocket servers behind a sticky LB (consistent-hash on user_id). Message ordering is per-conversation: partition the messages table by conv_id, assign monotonic msg_id from a per-conversation sequencer (or hybrid logical clock). Group fanout = look up each member&apos;s connection-server in the presence cache and publish via Redis pub/sub or Kafka; offline users get a push notification through APNs/FCM. The hard part isn&apos;t the schema — it&apos;s the reconnection/backfill story when a user&apos;s connection drops mid-conversation. <Link href="/courses/system-design/modules/design-chat" className="text-violet-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Rate limiter */}
-          <div className="rounded-xl border border-orange-200 dark:border-orange-900 bg-orange-50/40 dark:bg-orange-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-300 mb-2">Archetype 5 · Distributed rate limiter</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-orange-200 bg-orange-50/40 p-5 dark:border-orange-900 dark:bg-orange-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-orange-700 uppercase dark:text-orange-300">Archetype 5 · Distributed rate limiter</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}the algorithm is easy (token bucket). The scary part is doing it atomically across N gateway nodes with sub-millisecond latency, and choosing whether to <em>fail open</em>{" "}or <em>fail closed</em>{" "}when Redis is down.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`Redis key: rl:{user_id}:{endpoint}
   → value = (tokens, last_refill_ts)
 Lua script (EVAL): refill, decrement, return allow/deny  -- atomic, one RTT`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Token bucket parameters: capacity (burst) and refill rate (sustained). Key is per-user OR per-IP OR per-endpoint — usually all three layered. The atomic update is done in a Lua script via <code>EVAL</code>, which makes the refill + check + decrement a single Redis op. Degradation strategy is the interview gotcha: <strong>fail open</strong> (allow through on Redis outage — preserves availability, accepts abuse risk) or <strong>fail closed</strong> (reject everything — preserves backend, kills user trust). Pick based on whether the protected resource is more sensitive to overload or to outage. <Link href="/courses/system-design/modules/design-rate-limiter" className="text-orange-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Rideshare */}
-          <div className="rounded-xl border border-teal-200 dark:border-teal-900 bg-teal-50/40 dark:bg-teal-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300 mb-2">Archetype 6 · Rideshare</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-teal-200 bg-teal-50/40 p-5 dark:border-teal-900 dark:bg-teal-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-teal-700 uppercase dark:text-teal-300">Archetype 6 · Rideshare</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}five subsystems (geo-index, dispatch, ETA, surge, payment). The matching round-trip — driver candidate → offer → accept/reject → fall back to next candidate — is the hard part because it&apos;s low-latency and stateful.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`drivers(driver_id PK, status, last_geohash, last_seen)  -- updated every 4s via WebSocket
 geo_index(geohash → set of driver_ids)                  -- Redis ZSET or S2 cells
 trips(trip_id PK, rider_id, driver_id, state, route, fare)`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Drivers stream GPS over WebSocket every few seconds; their location lives in a geo-index (geohash prefix or S2 cells) for O(log n) k-NN queries. Dispatch = look up candidates in the geo-index, rank by ETA × surge × driver-rating, offer to top candidate, wait 10s, fall back to next. ETA uses a road-graph router (OSRM/Valhalla) plus historical traffic. Surge is a feedback loop over unmet demand per cell. Payment is a separate service (see archetype 7). The hardest tradeoff is consistency of driver state vs latency of the match — short-pessimistic-locks per offer is the usual answer. <Link href="/courses/system-design/modules/design-rideshare" className="text-teal-600 hover:underline">Source →</Link>
             </p>
           </div>
 
           {/* Payments */}
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Archetype 7 · Payments</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Archetype 7 · Payments</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               <strong>Key insight:</strong>{" "}money is different. Idempotency keys are mandatory, the ledger is append-only, and reconciliation against the gateway is the source of truth. Boring is the goal — cleverness in payments is a code smell.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`ledger(entry_id PK, txn_id, account, amount_cents, currency, type, ts)  -- append-only, double-entry
 idempotency(idem_key PK, body_hash, status, response_blob, ts)
 reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Every financial event becomes two or more ledger entries that sum to zero (double-entry). The client owns the idempotency key; the server stores the response blob and replays it on retry. <strong>Never modify a posted ledger entry</strong> — corrections are <em>reversing entries</em>{" "}appended to the log so the audit trail is intact. Every night, fetch the gateway&apos;s settlement report and match each line to a ledger entry; mismatches go to a queue for human review. The interviewer wants to hear &quot;append&quot;, &quot;balanced&quot;, &quot;idempotent&quot;, and &quot;reversing entry&quot; — in that order. <Link href="/courses/system-design/modules/design-payments" className="text-rose-600 hover:underline">Source →</Link>
             </p>
           </div>
@@ -338,22 +338,22 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
       {/* SECTION 4 — Cross-cutting infra table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Cross-cutting infra — which archetype needs which</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Cross-cutting infra — which archetype needs which</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           If you can fill in this grid from memory, you can pattern-match any new design prompt onto the right combination of components.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Archetype</th>
-                <th className="px-4 py-3 font-semibold text-center">Cache</th>
-                <th className="px-4 py-3 font-semibold text-center">Queue</th>
-                <th className="px-4 py-3 font-semibold text-center">Search index</th>
-                <th className="px-4 py-3 font-semibold text-center">Geo index</th>
-                <th className="px-4 py-3 font-semibold text-center">WebSocket</th>
-                <th className="px-4 py-3 font-semibold text-center">Ledger</th>
+                <th className="px-4 py-3 text-center font-semibold">Cache</th>
+                <th className="px-4 py-3 text-center font-semibold">Queue</th>
+                <th className="px-4 py-3 text-center font-semibold">Search index</th>
+                <th className="px-4 py-3 text-center font-semibold">Geo index</th>
+                <th className="px-4 py-3 text-center font-semibold">WebSocket</th>
+                <th className="px-4 py-3 text-center font-semibold">Ledger</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -424,7 +424,7 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           ●●● = central to the design · ●● = important but not the headline · ● = supporting · — = not required.
         </p>
       </section>
@@ -433,15 +433,15 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
       {/* SECTION 5 — Common gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Four gotchas that sink interviews</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Four gotchas that sink interviews</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each one is a real anti-pattern that&apos;s ended real interview loops. If you only remember four things from this card, make it these.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Jumping into HLD without clarifying</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Jumping into HLD without clarifying</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The interviewer says &quot;design Twitter&quot; — and you start drawing boxes 30 seconds later. You will miss the scale numbers, miss the read:write ratio, and design for the wrong tradeoffs.
             </p>
             <CodeBlock lang="plain">{`# BAD — straight to boxes
@@ -458,9 +458,9 @@ Candidate: "Before I draw anything — DAU? Read:write ratio? Latency target?
 Interviewer: [gives you everything you need, you design for the right thing]`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Fanout-on-write for a celebrity</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Fanout-on-write for a celebrity</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               A single tweet from a user with 100M followers in a pure push model = 100M Redis writes. Your fanout queue will be hours behind by lunchtime.
             </p>
             <CodeBlock lang="plain">{`# BAD — push for everyone
@@ -479,9 +479,9 @@ def on_post(post):
 # Reader merges: pre-materialized feed ⊕ live pull of celebrity posts`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Chat without sticky LB</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Chat without sticky LB</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               WebSockets are <em>stateful</em>. If a user&apos;s message comes in on server A but their connection is held by server B, the message has nowhere to go. Round-robin load balancing breaks chat.
             </p>
             <CodeBlock lang="plain">{`# BAD — round-robin L4 LB in front of WS servers
@@ -496,9 +496,9 @@ def on_post(post):
 # To deliver to a user: look up their server in presence, route there.`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Mutating a ledger entry</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Mutating a ledger entry</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               You posted the wrong amount. Your instinct is to <code>UPDATE ledger SET amount = ... WHERE id = ...</code>. Stop. You just destroyed the audit trail. Compliance will not approve this design.
             </p>
             <CodeBlock lang="plain">{`-- BAD — direct mutation, audit trail is gone
@@ -520,8 +520,8 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       {/* SECTION 6 — Self-assessment quizzes */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">6. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">6. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Six recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -604,8 +604,8 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       {/* ============================================================ */}
       {/* SECTION 8 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 via-white to-rose-50 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
           Phase 6 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can run a 45-minute design loop end-to-end</h3>
@@ -617,7 +617,7 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
         </p>
         <Link
           href="/courses/system-design/modules/migration-patterns"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Production &amp; Capstone →
         </Link>

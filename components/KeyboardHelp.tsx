@@ -99,7 +99,7 @@ export default function KeyboardHelp() {
 
   return (
     <div
-      className="print:hidden fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[10vh]"
+      className="fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[10vh] print:hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Keyboard shortcuts"
@@ -113,36 +113,36 @@ export default function KeyboardHelp() {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-5 py-3">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3 dark:border-slate-800">
           <h2 className="text-sm font-bold tracking-tight">Keyboard shortcuts</h2>
           <button
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Close"
-            className="rounded p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition"
+            className="rounded p-1 text-slate-400 transition hover:text-slate-700 dark:hover:text-slate-200"
           >
             ✕
           </button>
         </div>
 
-        <div className="max-h-[60vh] overflow-y-auto px-5 py-4 space-y-5">
+        <div className="max-h-[60vh] space-y-5 overflow-y-auto px-5 py-4">
           {sections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <h3 className="mb-2 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
                 {section.title}
               </h3>
               <ul className="space-y-1.5">
                 {section.items.map((sc) => (
                   <li key={sc.label} className="flex items-center justify-between gap-3 text-sm">
                     <span className="text-slate-700 dark:text-slate-300">{sc.label}</span>
-                    <span className="flex items-center gap-1 shrink-0">
+                    <span className="flex shrink-0 items-center gap-1">
                       {sc.keys.map((k) => (
                         <Kbd key={k}>{k}</Kbd>
                       ))}
                       {sc.alt && (
                         <>
-                          <span className="text-[11px] text-slate-400 mx-1">or</span>
+                          <span className="mx-1 text-[11px] text-slate-400">or</span>
                           {sc.alt.map((k) => (
                             <Kbd key={k}>{k}</Kbd>
                           ))}
@@ -156,7 +156,7 @@ export default function KeyboardHelp() {
           ))}
         </div>
 
-        <div className="border-t border-slate-200 dark:border-slate-800 px-5 py-2.5 text-[11px] text-slate-500 flex items-center justify-between">
+        <div className="flex items-center justify-between border-t border-slate-200 px-5 py-2.5 text-[11px] text-slate-500 dark:border-slate-800">
           <span>Press <Kbd>?</Kbd> any time to open this list.</span>
           <Kbd>Esc</Kbd>
         </div>
@@ -167,7 +167,7 @@ export default function KeyboardHelp() {
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex items-center justify-center min-w-[1.5rem] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 text-[11px] font-mono text-slate-600 dark:text-slate-300">
+    <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[11px] text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
       {children}
     </kbd>
   );

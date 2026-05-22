@@ -44,22 +44,22 @@ flowchart LR
       <ModuleProgress moduleSlug="capstone" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold uppercase tracking-wider">
+        <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 8 · Module {mod.number} · Capstone
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-slate-100">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-500">~4–5h · the final module of the course</p>
       </div>
 
-      <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-900 not-prose">
-        <h3 className="text-base font-bold text-pink-900 dark:text-pink-200 mt-0 mb-3">
+      <div className="not-prose my-8 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h3 className="mt-0 mb-3 text-base font-bold text-pink-900 dark:text-pink-200">
           What you&apos;ll walk out with
         </h3>
-        <ul className="text-sm text-pink-900/90 dark:text-pink-200/90 mb-0 space-y-1 list-disc pl-5">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-pink-900/90 dark:text-pink-200/90">
           <li>A <strong>portfolio repo</strong>{" "}with 20 solved problems, each with a 1–2 paragraph writeup naming the pattern, the alternatives you ruled out, and the complexity.</li>
           <li>Reflexive <strong>pattern recognition</strong>{" "}on the 20 most common problem shapes — the muscle memory the rest of the course was building.</li>
           <li>Confidence reading a problem statement and saying out loud, &quot;this is X because Y,&quot; before writing a single line.</li>
@@ -1224,22 +1224,22 @@ private int dfs(int r, int c) {
           ]}
         />
 
-        <div className="not-prose mt-12 p-8 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 text-white">
-          <h3 className="text-xl font-bold text-white mt-0 mb-3">You finished the course.</h3>
-          <p className="text-white/95 mb-3">
+        <div className="not-prose mt-12 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 p-8 text-white">
+          <h3 className="mt-0 mb-3 text-xl font-bold text-white">You finished the course.</h3>
+          <p className="mb-3 text-white/95">
             34 modules. From Big-O notation through every linear data structure, hashing, trees, graphs, the
             algorithmic techniques, dynamic programming in five flavors, advanced graph topics, the interview
             framework, and a 20-problem capstone with writeups. You built ArrayList from scratch. You built a
             HashMap. You built a heap. You wrote BFS, DFS, Dijkstra, Union-Find, and seven kinds of DP — all in
             Java, by hand, with intuition first.
           </p>
-          <p className="text-white/95 mb-3">
+          <p className="mb-3 text-white/95">
             Most engineers who say they &quot;know DSA&quot; have done a fraction of this. You can defend every
             pattern. You know <em>why</em>{" "}sliding window fails on negatives, why heapify is O(n) not O(n log n),
             why Dijkstra needs non-negative weights, why DP beats greedy on non-canonical coin sets. You can
             answer the system-design-flavored algorithm questions because you built the structures.
           </p>
-          <p className="text-white/95 mb-0">
+          <p className="mb-0 text-white/95">
             Now go practice. The capstone is a starting line, not a finish line. Three problems a day, writeups,
             spaced repetition on the misses. The next interview your company puts you on the loop for — be the
             engineer who already knows what to reach for.
@@ -1249,13 +1249,13 @@ private int dfs(int r, int c) {
         <div className="not-prose mt-8 flex justify-center">
           <Link
             href="/courses/dsa"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-3 font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Back to the course outline →
           </Link>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-8 mb-12">
+        <p className="mt-8 mb-12 text-center text-sm text-slate-500 dark:text-slate-400">
           — Fin —
         </p>
       </section>

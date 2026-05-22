@@ -66,3 +66,28 @@ Reuse components from `components/` rather than inventing new patterns:
 `lib/courses/<id>.ts` is the single source of truth for each course. Flipping a module's `status: "coming-soon"` → `"available"` is what makes it show up as playable on its course page. The course page and the platform picker both derive counts dynamically — don't hardcode "N modules" anywhere in app code.
 
 (`lib/modules.ts` is a temporary back-compat shim re-exporting from `lib/courses/ai`. Existing module pages still import from it. New imports should target `lib/courses/<id>` directly.)
+
+# Quality gates (CI)
+
+Two checks run on every PR. If you touch UI code, expect to interact with both.
+
+## Lint — `npm run lint`
+
+Tailwind class order is enforced as an error. After any edit that adds or reorders Tailwind classes, run `npx eslint . --fix` before committing — it fixes class order, contradicting classnames, and shorthand opportunities mechanically. The remaining lint errors (jsx-a11y violations, react-hooks issues) are real and need a human-judgment fix.
+
+When elevating a new lint rule to `error`, run `--fix` first to see if the violations are mechanical. Don't ship a rule that produces hundreds of un-auto-fixable errors without a plan to clean them up.
+
+## Visual regression — `npm run test:visual`
+
+Playwright snapshots 9 routes × 3 viewports (mobile-360, tablet-768, desktop-1280). Baselines live in `tests/visual.spec.ts-snapshots/` and ARE committed.
+
+When you change UI:
+
+1. `npm run build` — required, tests run against `next start`
+2. `npm run test:visual` — see what diffs
+3. If the diff is intentional: `npm run test:visual:update` and commit the new PNGs **in the same PR** as the code change
+4. If the diff is regressive: fix the bug; re-run; don't update baselines
+
+Routes are defined in `tests/visual.spec.ts` (`ROUTES` array). To add a route to the sweep, append one line — it's cheap (~3 snapshots per route).
+
+If you're adding a new component that animates or has timing-sensitive behavior, audit `tests/visual.spec.ts` to make sure your route either (a) waits the animation out before screenshotting or (b) masks the moving element. Don't add `waitForTimeout` longer than 1 second — `reducedMotion: "reduce"` in `playwright.config.ts` already collapses animation duration.

@@ -40,23 +40,23 @@ export default function Phase5RevisionModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/ai"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 5 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 5 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           ReAct, agent loops in Spring, multi-agent orchestration — the agent reference card.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-5-revision" />
@@ -65,10 +65,10 @@ export default function Phase5RevisionModule() {
 
       {/* INTRO */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This is the map of Phase 5 — the ReAct loop, what an agent actually is in Spring, the multi-agent patterns, and (most importantly) the failure modes that bite teams who reach for an agent on every problem. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Agent fundamentals</Link>, <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Agents in Spring Boot</Link>, and <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Multi-agent patterns</Link>.
         </p>
 
@@ -81,44 +81,44 @@ export default function Phase5RevisionModule() {
       {/* SECTION 1 — Agent fundamentals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. Agent fundamentals — what&apos;s actually under the hood</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Agent fundamentals — what&apos;s actually under the hood</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Strip away the marketing. An agent is tool-use in a while loop with a stopping condition.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">The ReAct loop</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-indigo-50/40 p-5 dark:border-slate-800 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">The ReAct loop</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Three steps repeated until the model stops asking for tools:
             </p>
-            <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-decimal pl-5">
+            <ol className="list-decimal space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Thought</strong> — model reasons about what to do next</li>
               <li><strong>Action</strong> — model emits a <code>tool_use</code> block</li>
               <li><strong>Observation</strong> — runtime executes the tool, appends the <code>tool_result</code> to the conversation</li>
             </ol>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+            <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Repeat. The model decides on each turn whether to call another tool or emit a final answer. That&apos;s the whole trick.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-purple-50/40 dark:bg-purple-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 mb-2">Three kinds of memory</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-purple-50/40 p-5 dark:border-slate-800 dark:bg-purple-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-purple-700 uppercase dark:text-purple-300">Three kinds of memory</div>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Scratchpad</strong> — the message list itself. The model&apos;s working memory within one task.</li>
               <li><strong>Summarized history</strong> — when the scratchpad blows past your context window, compress old turns into a summary turn.</li>
               <li><strong>External store</strong> — durable memory across sessions (vector DB, KV store, database). Read via a tool, write via a tool.</li>
             </ul>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+            <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Most production agents need all three. The scratchpad is automatic; the other two are work.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Stopping conditions — every one of these must be wired</h3>
+        <h3 className="mb-2 text-base font-semibold">Stopping conditions — every one of these must be wired</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Condition</th>
                 <th className="px-4 py-3 font-semibold">When it fires</th>
@@ -164,7 +164,7 @@ export default function Phase5RevisionModule() {
           <strong>The mental model:</strong>{" "}agent = LLM + toolbox + loop + stopping condition. If you can&apos;t name your stopping conditions, you don&apos;t have an agent — you have an unbounded process.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24 — Agent fundamentals</Link>.
         </p>
       </section>
@@ -173,14 +173,14 @@ export default function Phase5RevisionModule() {
       {/* SECTION 2 — When NOT to use an agent */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. When NOT to use an agent — the decision table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. When NOT to use an agent — the decision table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The hardest part of agent engineering is choosing to not build one.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">If the problem looks like…</th>
                 <th className="px-4 py-3 font-semibold">Build this instead</th>
@@ -222,29 +222,29 @@ export default function Phase5RevisionModule() {
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">The three failure modes of un-constrained agents</h3>
-        <div className="grid md:grid-cols-3 gap-3">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Infinite loop</div>
+        <h3 className="mb-2 text-base font-semibold">The three failure modes of un-constrained agents</h3>
+        <div className="grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Infinite loop</div>
             <p className="text-xs text-slate-700 dark:text-slate-300">
               Model calls the same tool with the same args, sees the same result, decides to call it again. No max-iteration cap means your process runs until you kill it.
             </p>
           </div>
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Drift</div>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Drift</div>
             <p className="text-xs text-slate-700 dark:text-slate-300">
               The agent loses the plot ten turns in — starts solving a different problem, or pursues an irrelevant tangent that&apos;s now in its scratchpad and biasing every subsequent step.
             </p>
           </div>
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Cost explosion</div>
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Cost explosion</div>
             <p className="text-xs text-slate-700 dark:text-slate-300">
               Each turn re-sends the entire scratchpad. Turn 20 might re-process 50K tokens of prior context. One request can cost dollars; a bad day can cost thousands.
             </p>
           </div>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24 — Agent fundamentals</Link>.
         </p>
       </section>
@@ -253,16 +253,16 @@ export default function Phase5RevisionModule() {
       {/* SECTION 3 — Mermaid: the agent loop */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. The agent tool loop, end-to-end</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The agent tool loop, end-to-end</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The flow your Spring service implements. The two exit edges are the only two things that should ever terminate the loop — everything else is a bug.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={agentLoopChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Every box on this diagram needs structured logging.</strong>{" "}When something goes wrong in production, you need to see exactly which iteration, which tool, which args, and which result.
           </li>
@@ -274,7 +274,7 @@ export default function Phase5RevisionModule() {
           </li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring Boot</Link>.
         </p>
       </section>
@@ -283,49 +283,49 @@ export default function Phase5RevisionModule() {
       {/* SECTION 4 — Agents in Spring Boot */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Agents in Spring Boot — the five moving parts</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Agents in Spring Boot — the five moving parts</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           What lives where in a production Spring agent service.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">1. Tool registry</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">1. Tool registry</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               A <code>Map&lt;String, Tool&gt;</code> of tool name → executor. Each <code>Tool</code> exposes its JSON schema (for the model) and an <code>execute(args)</code> method (for the runtime). Register beans; the agent looks up by name when a <code>tool_use</code> arrives.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">2. Loop controller</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">2. Loop controller</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Owns the three caps: <code>maxIterations</code>, <code>maxTokens</code>, <code>wallClockBudgetMs</code>. Decrements / accumulates after each turn, checks before the next model call, halts cleanly when any one trips.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">3. State machine</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">3. State machine</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Four states: <code>RUNNING</code> → <code>AWAITING_TOOL</code> → <code>RUNNING</code> → <code>DONE</code> or <code>FAILED</code>. Each transition is logged. The state is what you serialize if you need to checkpoint a long-running agent and resume later.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">4. Idempotent tool execution</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">4. Idempotent tool execution</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Tools must be safe to retry. Use an idempotency key built from <code>(toolName, args-hash)</code>. Cache results within a single agent run so the model can&apos;t accidentally re-bill you for the same lookup three turns in a row.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40 md:col-span-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">5. Structured final output</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 md:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">5. Structured final output</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               The final answer should not be free-form text. Define a JSON schema (or a Java record) for what &quot;done&quot; looks like, and ask the model for it via the structured-output pattern. Your callers downstream parse a typed object, not a paragraph.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">The minimal loop in Spring</h3>
+        <h3 className="mb-2 text-base font-semibold">The minimal loop in Spring</h3>
         <CodeBlock lang="java" caption="AgentRunner.run — the entire control flow">{`public AgentResult run(AgentTask task) {
     List<Message> messages = new ArrayList<>(task.initialMessages());
     int iterations = 0;
@@ -359,7 +359,7 @@ export default function Phase5RevisionModule() {
           <strong>The whole production agent is this loop plus observability.</strong>{" "}Frameworks add convenience, not magic. If your agent is misbehaving, you debug it by reading the message list turn by turn — there&apos;s nowhere else for the bug to hide.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring Boot</Link>.
         </p>
       </section>
@@ -368,15 +368,15 @@ export default function Phase5RevisionModule() {
       {/* SECTION 5 — Multi-agent patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Multi-agent patterns — when one agent isn&apos;t enough</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Multi-agent patterns — when one agent isn&apos;t enough</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           You move from one agent to many when the work splits naturally into specialist roles OR when you can parallelize independent subproblems.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-indigo-50/40 dark:bg-indigo-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-2">Orchestrator + subagents</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-4 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-indigo-50/40 p-5 dark:border-slate-800 dark:bg-indigo-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">Orchestrator + subagents</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               A top-level agent decomposes the task, spawns specialist subagents, collects their outputs, reconciles. Each subagent has its own tool subset and context window.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -384,9 +384,9 @@ export default function Phase5RevisionModule() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-purple-50/40 dark:bg-purple-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 mb-2">Peer-to-peer (handoff)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-purple-50/40 p-5 dark:border-slate-800 dark:bg-purple-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-purple-700 uppercase dark:text-purple-300">Peer-to-peer (handoff)</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Agents pass the conversation to one another based on the current need. The &quot;triage&quot; agent hands off to a &quot;billing&quot; agent which hands off to a &quot;refund&quot; agent. No central controller.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -394,9 +394,9 @@ export default function Phase5RevisionModule() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-pink-50/40 dark:bg-pink-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">Fan-out + reduce</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-pink-50/40 p-5 dark:border-slate-800 dark:bg-pink-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">Fan-out + reduce</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Same subagent type, N parallel instances, each working on a slice of the input. A reducer combines results. Think MapReduce with LLMs.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -405,8 +405,8 @@ export default function Phase5RevisionModule() {
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Isolation, communication, and the &quot;why not one bigger context&quot; question</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <h3 className="mb-2 text-base font-semibold">Isolation, communication, and the &quot;why not one bigger context&quot; question</h3>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Context isolation</strong>{" "}is the main reason multi-agent works. Each subagent gets only what it needs — its own context window, its own tools, its own scratchpad. The orchestrator never sees the subagent&apos;s 10K-token exploration; only its 300-token summary. That keeps cost linear in <em>useful</em>{" "}work, not total work.
           </li>
@@ -422,7 +422,7 @@ export default function Phase5RevisionModule() {
           <strong>Multi-agent is not free.</strong>{" "}Each subagent is a full agent — its own loop, its own caps, its own observability. A 3-subagent orchestrator has 4 agents to monitor. Don&apos;t reach for it unless one agent has genuinely failed to deliver.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26 — Multi-agent patterns</Link>.
         </p>
       </section>
@@ -431,14 +431,14 @@ export default function Phase5RevisionModule() {
       {/* SECTION 6 — Cost & latency */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Cost &amp; latency — the agent engineer&apos;s budget sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; latency — the agent engineer&apos;s budget sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every step is a round-trip. Every round-trip costs money and milliseconds. Internalize this.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Lever</th>
                 <th className="px-4 py-3 font-semibold">What it does</th>
@@ -484,7 +484,7 @@ export default function Phase5RevisionModule() {
           <strong>The single most expensive habit:</strong>{" "}a verbose scratchpad. Every &quot;Let me think about this step by step…&quot; in turn 1 gets re-sent on turns 2, 3, 4, 5… by turn 10 you&apos;ve re-billed it ten times. Keep reasoning concise; keep the scratchpad summarized; cap iterations; cache tools. In that order.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26 — Multi-agent patterns</Link> &amp; <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring</Link>.
         </p>
       </section>
@@ -493,15 +493,15 @@ export default function Phase5RevisionModule() {
       {/* SECTION 7 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Four gotchas that bite teams</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Four gotchas that bite teams</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has actually torpedoed a real agent in production. Pin them to your mental fridge.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Unbounded loop with no caps</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Unbounded loop with no caps</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               A <code>while (!done)</code> with no iteration, token, or wall-clock cap is a bug. Period. The model can decide to call tools forever. One stuck request can drain a five-figure budget overnight.
             </p>
             <CodeBlock lang="java">{`// BAD — runs until the heat death of the universe (or your billing alert)
@@ -525,9 +525,9 @@ while (true) {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Emitting raw exception text as tool_result</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Emitting raw exception text as tool_result</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               When a tool throws, never pipe the exception message straight back to the model. Raw stack traces can contain attacker-controlled input from the original args (prompt-injection vector), they leak internals, and they tend to send the model spiraling on irrelevant details. Return a structured error.
             </p>
             <CodeBlock lang="java">{`// BAD — raw exception text re-enters the model context
@@ -549,9 +549,9 @@ try {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Shared mutable state across subagents</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Shared mutable state across subagents</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               If two subagents run in parallel and write to the same in-memory structure, you have a concurrency bug waiting to happen. The whole point of fan-out is isolation; let each subagent build its own result and have the orchestrator reconcile.
             </p>
             <CodeBlock lang="java">{`// BAD — subagents append to a shared list under no lock
@@ -567,9 +567,9 @@ List<Finding> findings = files.parallelStream()
     .toList();`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Reaching for an agent when a pipeline would do</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Reaching for an agent when a pipeline would do</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The most expensive bug isn&apos;t in the agent — it&apos;s the decision to build an agent at all. If the steps are fixed and known, a pipeline is cheaper, faster, more reliable, and easier to debug. Adding a loop just to feel modern is how you ship a $40K/month feature that could have cost $400.
             </p>
             <CodeBlock lang="java" caption="When the steps are fixed: just call them.">{`// BAD — agent for a fixed pipeline
@@ -592,8 +592,8 @@ String summary = llm.summarize(c, invoices); // ONE model call
       {/* SECTION 8 — Self-assessment */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually have this loaded?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -656,12 +656,12 @@ String summary = llm.summarize(c, invoices); // ONE model call
       {/* ============================================================ */}
       {/* SECTION 9 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-pink-200 dark:border-pink-900 bg-gradient-to-br from-pink-50 via-white to-rose-50 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-pink-700 dark:text-pink-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
           Phase 5 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re ready for Phase 6 when…</h3>
-        <ul className="mb-4 text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="mb-4 list-disc space-y-2 pl-5 text-slate-700 dark:text-slate-300">
           <li>You can describe the ReAct loop in one sentence (Thought → Action → Observation → repeat) and name your three stopping caps before you start coding.</li>
           <li>You instinctively reach for a pipeline first and only escalate to an agent when the path is genuinely unknown at runtime.</li>
           <li>You can sketch the Spring agent loop on a napkin — registry, controller, state machine, idempotent tools, structured output — without referring back.</li>
@@ -673,7 +673,7 @@ String summary = llm.summarize(c, invoices); // ONE model call
         </p>
         <Link
           href="/courses/ai/modules/evals"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Evals →
         </Link>

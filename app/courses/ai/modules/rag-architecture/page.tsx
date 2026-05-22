@@ -24,19 +24,19 @@ export default function RagArchitectureModule() {
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link href="/courses/ai" className="text-indigo-600 hover:underline">← All modules</Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-xs font-bold tracking-wider text-transparent uppercase">
             Phase 3 · Module {mod.number}
           </span>
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">RAG architecture</h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">RAG architecture</h1>
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Stop bolting embeddings onto an LLM. Build retrieval that earns its place in the prompt.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="rag-architecture" />
@@ -44,18 +44,18 @@ export default function RagArchitectureModule() {
       </header>
 
       {/* PROMISE BOX */}
-      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/40 dark:to-green-950/40 p-6">
-        <div className="flex items-center gap-2 mb-3">
+      <section className="not-prose my-8 rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
+        <div className="mb-3 flex items-center gap-2">
           <span className="text-2xl">📍</span>
-          <h3 className="font-bold text-lg m-0">What you&apos;ll walk out with</h3>
+          <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           RAG is the most-deployed and most-misunderstood pattern in AI engineering. By the end of this module
           you&apos;ll have a working <strong>mental model of every stage</strong> — chunking, retrieval,
           reranking, assembly — and you&apos;ll be able to explain why each one exists and when each one
           breaks.
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-0">
+        <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>What RAG actually is, and the 3 problems it&apos;s designed to solve</li>
           <li>The four chunking strategies (fixed, recursive, semantic, structural) and how to pick</li>
           <li>How retrieval really works: top-k vs MMR, hybrid (BM25 + vector), reranking</li>
@@ -68,7 +68,7 @@ export default function RagArchitectureModule() {
       {/* PART 1: WHAT RAG ACTUALLY SOLVES                                    */}
       {/* ================================================================= */}
       <section id="what-rag">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 1 — What RAG actually solves</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — What RAG actually solves</h2>
 
         <p>
           RAG (<strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration) is a pattern,
@@ -76,36 +76,36 @@ export default function RagArchitectureModule() {
           snippets and stuff them into the prompt. The LLM answers using those snippets as ground truth.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The three problems RAG solves</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The three problems RAG solves</h3>
 
         <div className="not-prose my-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <div className="text-2xl mb-2">🕰️</div>
-            <h4 className="font-semibold mb-1">Knowledge cutoff</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <div className="mb-2 text-2xl">🕰️</div>
+            <h4 className="mb-1 font-semibold">Knowledge cutoff</h4>
+            <p className="m-0 text-sm text-slate-600 dark:text-slate-400">
               The LLM was trained months ago. Your docs changed yesterday. RAG closes the gap by retrieving
               fresh content at query time.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <div className="text-2xl mb-2">🔒</div>
-            <h4 className="font-semibold mb-1">Private data</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <div className="mb-2 text-2xl">🔒</div>
+            <h4 className="mb-1 font-semibold">Private data</h4>
+            <p className="m-0 text-sm text-slate-600 dark:text-slate-400">
               The model never saw your internal wiki, your customers&apos; tickets, or your codebase. RAG lets
               you feed those in without retraining.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <div className="text-2xl mb-2">📚</div>
-            <h4 className="font-semibold mb-1">Hallucination control</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <div className="mb-2 text-2xl">📚</div>
+            <h4 className="mb-1 font-semibold">Hallucination control</h4>
+            <p className="m-0 text-sm text-slate-600 dark:text-slate-400">
               When the model has to ground its answer in cited passages, it&apos;s much harder for it to make
               things up — and easier for you to catch when it does.
             </p>
           </div>
         </div>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The shape of every RAG system</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The shape of every RAG system</h3>
 
         <p>Five stages. Always five. The names vary, the shape doesn&apos;t:</p>
 
@@ -124,10 +124,10 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           better — usually by improving chunking, retrieval, or assembly.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">When RAG is the wrong answer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">When RAG is the wrong answer</h3>
 
         <Callout variant="warn" title="Don't reach for RAG when you don't need to">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             If your &quot;knowledge&quot; fits in 50KB and changes rarely, just paste it into the system prompt
             and use prompt caching (Module 13). RAG adds two pieces of infra (vector store + embedding
             pipeline) and a whole new failure mode (retrieval misses). Use it when the knowledge is
@@ -136,16 +136,16 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">RAG vs fine-tuning vs long context</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">RAG vs fine-tuning vs long context</h3>
 
         <div className="not-prose my-6 overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b-2 border-slate-300 dark:border-slate-700">
-                <th className="text-left p-2"></th>
-                <th className="text-left p-2">RAG</th>
-                <th className="text-left p-2">Fine-tuning</th>
-                <th className="text-left p-2">Stuff it in context</th>
+                <th className="p-2 text-left"></th>
+                <th className="p-2 text-left">RAG</th>
+                <th className="p-2 text-left">Fine-tuning</th>
+                <th className="p-2 text-left">Stuff it in context</th>
               </tr>
             </thead>
             <tbody>
@@ -223,7 +223,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
       {/* PART 2: CHUNKING STRATEGIES                                         */}
       {/* ================================================================= */}
       <section id="chunking">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 2 — Chunking strategies</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Chunking strategies</h2>
 
         <p>
           You have a 200-page PDF. You can&apos;t embed 200 pages as one vector — the embedding model has a
@@ -237,51 +237,51 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           matter — your retriever returns mush, and the LLM hallucinates around it.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The four chunking strategies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The four chunking strategies</h3>
 
         <div className="not-prose my-6 space-y-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <h4 className="font-semibold m-0 mb-2">1. Fixed-size</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0 mb-2">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <h4 className="m-0 mb-2 font-semibold">1. Fixed-size</h4>
+            <p className="m-0 mb-2 text-sm text-slate-600 dark:text-slate-400">
               Split every N tokens (e.g., 512). Optionally with O tokens of overlap (e.g., 50).
             </p>
-            <p className="text-xs text-slate-500 m-0">
+            <p className="m-0 text-xs text-slate-500">
               <strong>Good for:</strong>{" "}baseline, uniform corpora (transcripts, plain prose).{" "}
               <strong>Bad for:</strong>{" "}structured docs — splits mid-paragraph, mid-sentence,
               mid-code-block.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <h4 className="font-semibold m-0 mb-2">2. Recursive (text splitter)</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0 mb-2">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <h4 className="m-0 mb-2 font-semibold">2. Recursive (text splitter)</h4>
+            <p className="m-0 mb-2 text-sm text-slate-600 dark:text-slate-400">
               Try to split on big separators first (<code>\n\n</code>), then medium (<code>\n</code>), then
               small (<code>. </code>), then characters. Stop when chunks are under your target size.
             </p>
-            <p className="text-xs text-slate-500 m-0">
+            <p className="m-0 text-xs text-slate-500">
               <strong>Good for:</strong>{" "}general prose with paragraph structure. The default in LangChain and
               Spring AI&apos;s <code>TokenTextSplitter</code> is essentially this. <strong>Sweet spot:</strong>{" "}
               start here.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <h4 className="font-semibold m-0 mb-2">3. Semantic</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0 mb-2">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <h4 className="m-0 mb-2 font-semibold">3. Semantic</h4>
+            <p className="m-0 mb-2 text-sm text-slate-600 dark:text-slate-400">
               Embed each sentence, walk through the doc, start a new chunk when consecutive sentences&apos;
               embeddings drift far apart (a topic boundary).
             </p>
-            <p className="text-xs text-slate-500 m-0">
+            <p className="m-0 text-xs text-slate-500">
               <strong>Good for:</strong>{" "}long-form essays where topic boundaries don&apos;t align with
               paragraph boundaries. <strong>Cost:</strong>{" "}embeds the corpus twice (once during chunking,
               once for storage).
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4">
-            <h4 className="font-semibold m-0 mb-2">4. Structural</h4>
-            <p className="text-sm text-slate-600 dark:text-slate-400 m-0 mb-2">
+          <div className="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+            <h4 className="m-0 mb-2 font-semibold">4. Structural</h4>
+            <p className="m-0 mb-2 text-sm text-slate-600 dark:text-slate-400">
               Use the doc&apos;s structure: split by Markdown heading, by HTML <code>&lt;section&gt;</code>,
               by code function boundary, by API endpoint.
             </p>
-            <p className="text-xs text-slate-500 m-0">
+            <p className="m-0 text-xs text-slate-500">
               <strong>Good for:</strong>{" "}docs with explicit hierarchy (READMEs, API specs, source code).
               <strong> Best when</strong>{" "}headings/structure carry semantic weight you want to preserve in
               retrieval.
@@ -289,9 +289,9 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           </div>
         </div>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The three knobs</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The three knobs</h3>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong>Chunk size.</strong>{" "}Bigger chunks = more context per hit, but vaguer embeddings (one
             vector representing more concepts). Smaller chunks = sharper embeddings, but the LLM may need 10
@@ -365,7 +365,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           ]}
         />
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The one chunking trick that always helps: contextual chunks</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The one chunking trick that always helps: contextual chunks</h3>
 
         <p>
           A 500-token chunk that says &quot;...and the timeout defaults to 30 seconds.&quot; is useless without
@@ -392,7 +392,7 @@ longer than that, the server closes it..."`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="Cost vs. quality">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Contextual chunking costs: one cheap LLM call per chunk at indexing. For a 100k-chunk corpus on
             Haiku-class pricing, that&apos;s a few dollars total — paid once. Compared to running a worse
             retriever forever, it&apos;s the easiest win in RAG.
@@ -443,23 +443,23 @@ longer than that, the server closes it..."`}</CodeBlock>
       {/* PART 3: RETRIEVAL & RERANKING                                       */}
       {/* ================================================================= */}
       <section id="retrieval">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 3 — Retrieval &amp; reranking</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Retrieval &amp; reranking</h2>
 
         <p>
           Indexing is done. The user asks a question. Now you need to find the right chunks. There&apos;s more
           to retrieval than &quot;cosine similarity, top 5&quot;.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Top-k: the baseline</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Top-k: the baseline</h3>
 
         <p>
           Embed the query, find the k chunks with the smallest cosine distance, return them. That&apos;s
           baseline RAG. It works surprisingly well for ~70% of queries. The other 30% is where the work is.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The two failure modes of pure top-k</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The two failure modes of pure top-k</h3>
 
-        <ol className="list-decimal pl-6 space-y-3">
+        <ol className="list-decimal space-y-3 pl-6">
           <li>
             <strong>Redundancy.</strong>{" "}Top 5 results might be 5 near-copies of the same paragraph,
             especially in corpora with duplicated boilerplate. The LLM gets one piece of information stated
@@ -473,7 +473,7 @@ longer than that, the server closes it..."`}</CodeBlock>
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">MMR: Maximal Marginal Relevance</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">MMR: Maximal Marginal Relevance</h3>
 
         <p>
           MMR fixes redundancy. After picking each result, it penalizes candidates that are too similar to
@@ -492,7 +492,7 @@ longer than that, the server closes it..."`}</CodeBlock>
           ships it under the same name.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Hybrid retrieval: BM25 + vector</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Hybrid retrieval: BM25 + vector</h3>
 
         <p>
           Hybrid retrieval fixes lexical misses. You run two retrievers in parallel — one vector, one keyword
@@ -515,14 +515,14 @@ RRF(c) = Σ over rankings R: 1 / (k + rank_R(c))   # k = 60 is a common default
         </p>
 
         <Callout variant="info" title="When you really need hybrid">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Domain with lots of identifiers, error codes, file paths, model numbers, SQL keywords? Hybrid is
             non-negotiable. Pure conversational corpus (think: customer-facing FAQs)? Vector alone is usually
             fine. Don&apos;t add hybrid prophylactically — measure first.
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Reranking: a second, smarter look</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Reranking: a second, smarter look</h3>
 
         <p>
           Embedding-based retrieval is a <em>recall</em>{" "}tool. It pulls the top 20–50 candidates from a corpus
@@ -549,20 +549,20 @@ LLM:                top 3–5   → answer`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="When rerankers earn their cost">
-          <p className="text-sm m-0 mb-2">
+          <p className="m-0 mb-2 text-sm">
             Reranking adds latency and a paid API call. It pays off when:
           </p>
-          <ul className="text-sm m-0 list-disc pl-5 space-y-1">
+          <ul className="m-0 list-disc space-y-1 pl-5 text-sm">
             <li>You have many near-duplicates in your top-k that an embedder can&apos;t distinguish</li>
             <li>Your queries are conversational (multi-clause, long), where simple cosine on a single embedding loses signal</li>
             <li>The cost of the LLM seeing wrong context is high (legal, medical, finance)</li>
           </ul>
-          <p className="text-sm m-0 mt-2">
+          <p className="m-0 mt-2 text-sm">
             For a small corpus or a chatbot where &quot;close enough&quot; is fine, skip it.
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The metric that actually matters: retrieval recall@k</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The metric that actually matters: retrieval recall@k</h3>
 
         <p>
           Build a 50-query golden set. For each query, hand-label which chunks <em>should</em>{" "}come back.
@@ -628,14 +628,14 @@ Average across all 50 queries → that's your retrieval quality number.`}</CodeB
       {/* PART 4: CONTEXT ASSEMBLY                                            */}
       {/* ================================================================= */}
       <section id="assembly">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 4 — Context assembly</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Context assembly</h2>
 
         <p>
           The retriever found 5 great chunks. Now you have to put them in a prompt. This is the most
           underestimated stage. A bad prompt template can squander a good retriever.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The template that almost always works</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The template that almost always works</h3>
 
         <CodeBlock lang="plain">{`SYSTEM:
 You are a helpful assistant for {product}. Answer questions using ONLY
@@ -660,7 +660,7 @@ USER:
 
         <p>Three things this template does that a naive one doesn&apos;t:</p>
 
-        <ol className="list-decimal pl-6 space-y-2">
+        <ol className="list-decimal space-y-2 pl-6">
           <li>
             <strong>Tells the model the rules of engagement.</strong> &quot;Answer using ONLY the context&quot;
             and &quot;say so if not present&quot; cuts hallucination dramatically. The model can&apos;t
@@ -678,7 +678,7 @@ USER:
           </li>
         </ol>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">The order matters: lost-in-the-middle</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">The order matters: lost-in-the-middle</h3>
 
         <p>
           When you have many context chunks, LLMs pay more attention to the start and end of the context
@@ -688,7 +688,7 @@ USER:
 
         <p>Practical implications:</p>
 
-        <ul className="list-disc pl-6 space-y-2">
+        <ul className="list-disc space-y-2 pl-6">
           <li><strong>Don&apos;t pass 50 chunks.</strong>{" "}Pass 3–5. More is almost always worse.</li>
           <li>
             <strong>Put the most relevant chunk last.</strong>{" "}Right before the user&apos;s question is the
@@ -701,7 +701,7 @@ USER:
           </li>
         </ul>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Context window budget</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Context window budget</h3>
 
         <p>
           Context isn&apos;t free. Modern long-context models charge by the token (and Module 13 covered why
@@ -724,7 +724,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
           retrieval.
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Citations as a quality signal</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Citations as a quality signal</h3>
 
         <p>
           When you ask the model to cite, you can <em>verify</em>{" "}the citations. Did chunk [2] actually say
@@ -734,7 +734,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="Anthropic's citations API">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Claude has a native <code>citations</code> feature: pass document blocks with the request, and the
             response includes structured citation objects pointing to character ranges in those documents.
             That&apos;s strictly better than parsing <code>[1]</code>-style citations out of the answer text.
@@ -789,7 +789,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
       {/* PART 5: PROJECT — DOC CHUNKING LAB                                  */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 5 — Project: doc chunking lab</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: doc chunking lab</h2>
 
         <p>
           The point of this project isn&apos;t to build production RAG (Module 18 will). It&apos;s to make
@@ -799,7 +799,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
         </p>
 
         <Callout variant="info" title="What you'll need">
-          <p className="text-sm m-0 mb-2">
+          <p className="m-0 mb-2 text-sm">
             • Java 21, Spring Boot 3.5+ (you can reuse the Module 16 project)<br />
             • The pgvector setup from Module 16<br />
             • OpenAI API key (or any embedding provider)<br />
@@ -809,7 +809,7 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 1 — A Chunker interface</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1 — A Chunker interface</h3>
 
         <CodeBlock lang="java">{`// Chunker.java
 package com.example.chunklab;
@@ -832,7 +832,7 @@ public record Chunk(
     String section   // the heading path, when known; null otherwise
 ) {}`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 2 — Four implementations</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2 — Four implementations</h3>
 
         <CodeBlock lang="java">{`// 1. Fixed-size: split on token count, no overlap
 public class FixedSizeChunker implements Chunker {
@@ -957,7 +957,7 @@ public class ContextualChunker implements Chunker {
     }
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 3 — A 20-query golden set</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3 — A 20-query golden set</h3>
 
         <p>
           Hand-pick 20 queries against your corpus. For each, hand-label which sections (by heading) contain
@@ -978,7 +978,7 @@ List<GoldenQuery> golden = List.of(
 );`}</CodeBlock>
 
         <Callout variant="warn" title="Don't skip the labeling">
-          <p className="text-sm m-0">
+          <p className="m-0 text-sm">
             Twenty queries is the minimum to discriminate between chunkers. Picking them well is the actual
             craft of this project — they should cover broad/narrow questions, identifier-heavy/conversational
             queries, single-section/multi-section answers. Spend an hour on this; it&apos;s the part you&apos;ll
@@ -986,7 +986,7 @@ List<GoldenQuery> golden = List.of(
           </p>
         </Callout>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 4 — The harness</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4 — The harness</h3>
 
         <CodeBlock lang="java">{`@Service
 public class ChunkingLab {
@@ -1028,7 +1028,7 @@ public class ChunkingLab {
     public record LabResult(String chunker, int chunkCount, double avgRecallAtK) {}
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 5 — Run the comparison</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5 — Run the comparison</h3>
 
         <CodeBlock lang="java">{`@Bean
 CommandLineRunner runLab(ChunkingLab lab, ChatClient chat, EmbeddingModel embedder) {
@@ -1053,7 +1053,7 @@ CommandLineRunner runLab(ChunkingLab lab, ChatClient chat, EmbeddingModel embedd
     };
 }`}</CodeBlock>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Step 6 — What to expect</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 6 — What to expect</h3>
 
         <p>If your golden set is well-built and your corpus has real structure, the typical pattern is:</p>
 
@@ -1067,9 +1067,9 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           beats structural by ~10 points. <strong>That&apos;s the lesson.</strong>
         </p>
 
-        <h3 className="text-xl font-bold mt-8 mb-3">Stretch goals</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
-        <ul className="list-disc pl-6 space-y-1 text-sm">
+        <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Add a hybrid retrieval variant: BM25 (Postgres ts_vector) fused with vector via RRF. Compare to vector-only.</li>
           <li>Add a reranker stage (Cohere or Voyage). Measure the recall@5 → recall@3 improvement.</li>
           <li>Try chunk sizes 256, 512, 1024, 2048 with the recursive chunker. Plot recall vs. chunk count.</li>
@@ -1089,7 +1089,7 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="text-2xl font-bold mt-12 mb-3">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
 
         <Quiz
           kind="Final check"
@@ -1161,11 +1161,11 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
       </section>
 
       {/* FOOTER NAV */}
-      <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm">
-        <Link href="/courses/ai/modules/pgvector" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600">
+      <footer className="mt-12 flex justify-between border-t border-slate-200 pt-8 text-sm dark:border-slate-800">
+        <Link href="/courses/ai/modules/pgvector" className="text-slate-600 hover:text-emerald-600 dark:text-slate-400">
           ← Module 16: Vector DBs &amp; pgvector
         </Link>
-        <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline font-semibold">
+        <Link href="/courses/ai/modules/rag-spring" className="font-semibold text-emerald-600 hover:underline">
           Module 18: RAG in Spring Boot →
         </Link>
       </footer>

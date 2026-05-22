@@ -74,23 +74,23 @@ flowchart TB
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/dsa"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-emerald-500 to-green-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 3 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 3 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Hashing, sets, trees, BSTs, heaps — the whole &quot;keyed lookup and tree-shaped data&quot; chapter compressed to a card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-3-revision" />
@@ -99,10 +99,10 @@ flowchart TB
 
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 3</strong> — every invariant, every Big-O row, every &quot;wait, why did that break in production&quot; gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/dsa/modules/hashmaps" className="text-emerald-600 hover:underline">HashMaps</Link>, <Link href="/courses/dsa/modules/sets" className="text-emerald-600 hover:underline">Sets &amp; frequency counting</Link>, <Link href="/courses/dsa/modules/trees" className="text-emerald-600 hover:underline">Trees &amp; traversals</Link>, <Link href="/courses/dsa/modules/bst" className="text-emerald-600 hover:underline">Binary search trees</Link>, and <Link href="/courses/dsa/modules/heaps" className="text-emerald-600 hover:underline">Heaps &amp; PriorityQueue</Link>.
         </p>
       </section>
@@ -111,14 +111,14 @@ flowchart TB
       {/* SECTION 1 — Big-O for the keyed structures */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. The keyed-structure Big-O table</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The keyed-structure Big-O table</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five rows. Memorize them. Every Phase 3 interview question lives on one of these lines.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Structure</th>
                 <th className="px-4 py-3 font-semibold">get / contains</th>
@@ -173,7 +173,7 @@ flowchart TB
           </table>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           *amortized — rare rehash is O(n). Java 8+ <code>HashMap</code> uses tree-bins, so a single bucket with collisions degrades to O(log n) per op, not O(n).
         </p>
 
@@ -186,16 +186,16 @@ flowchart TB
       {/* SECTION 2 — HashMap internals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. HashMap internals on a napkin</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. HashMap internals on a napkin</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The whiteboard picture every Java interviewer wants to see: key → hash → bucket → list (or tree).
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={hashMapChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5 mb-4">
+        <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Hash spread:</strong> <code>h = key.hashCode(); h ^= (h &gt;&gt;&gt; 16);</code> — mixes the high bits into the low bits so the masking step doesn&apos;t throw away entropy.
           </li>
@@ -213,8 +213,8 @@ flowchart TB
           </li>
         </ul>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">The <code>equals</code> / <code>hashCode</code> contract</h3>
-        <ol className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-decimal pl-5 mb-4">
+        <h3 className="mt-6 mb-2 text-base font-semibold">The <code>equals</code> / <code>hashCode</code> contract</h3>
+        <ol className="mb-4 list-decimal space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>If <code>a.equals(b)</code> is <code>true</code>, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong>{" "}hold. Break this and your keys will be silently lost in HashMap.</li>
           <li>If <code>a.hashCode() == b.hashCode()</code>, <code>equals</code> may or may not be true (collisions are legal).</li>
           <li>Both methods must use <em>only</em>{" "}immutable fields. Mutate a field that&apos;s in <code>hashCode</code> and the key is now in the wrong bucket — invisible to <code>get</code>.</li>
@@ -233,7 +233,7 @@ public int hashCode() {
     return Objects.hash(id, name);  // delegates to Arrays.hashCode internally
 }`}</CodeBlock>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/hashmaps" className="text-emerald-600 hover:underline">Module 11 — HashMaps</Link>.
         </p>
       </section>
@@ -242,34 +242,34 @@ public int hashCode() {
       {/* SECTION 3 — Tree traversals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Tree traversals — four walks, one tree</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Tree traversals — four walks, one tree</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The work position relative to the recursive calls is the only difference between pre/in/post-order. BFS is the odd one out — it needs a queue, not recursion.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={exampleTree} />
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Preorder · root, L, R</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">1 → 2 → 4 → 5 → 3 → 6 → 7</code>
+        <div className="mb-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Preorder · root, L, R</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">1 → 2 → 4 → 5 → 3 → 6 → 7</code>
             <div className="text-xs text-slate-500">Copy a tree, serialize, build a clone.</div>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Inorder · L, root, R</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">4 → 2 → 5 → 1 → 6 → 3 → 7</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Inorder · L, root, R</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">4 → 2 → 5 → 1 → 6 → 3 → 7</code>
             <div className="text-xs text-slate-500">On a BST: yields sorted keys. <em>The</em>{" "}BST verifier.</div>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Postorder · L, R, root</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">4 → 5 → 2 → 6 → 7 → 3 → 1</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Postorder · L, R, root</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">4 → 5 → 2 → 6 → 7 → 3 → 1</code>
             <div className="text-xs text-slate-500">Delete a tree, compute sizes, evaluate expressions.</div>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-sky-600 mb-2">BFS · level by level</div>
-            <code className="text-xs block text-slate-700 dark:text-slate-300 mb-2">1 → 2 → 3 → 4 → 5 → 6 → 7</code>
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">BFS · level by level</div>
+            <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">1 → 2 → 3 → 4 → 5 → 6 → 7</code>
             <div className="text-xs text-slate-500">Shortest path in unweighted graphs, level grouping.</div>
           </div>
         </div>
@@ -333,7 +333,7 @@ void postorder(TreeNode n, List<Integer> out) {
           <strong>Complexity for all four:</strong>{" "}O(n) time (every node touched once). Space is O(h) for DFS (recursion or explicit stack — proportional to tree height) and O(w) for BFS (queue holds the widest level, up to ~n/2 for a perfect tree).
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/trees" className="text-emerald-600 hover:underline">Module 13 — Trees &amp; traversals</Link>.
         </p>
       </section>
@@ -342,15 +342,15 @@ void postorder(TreeNode n, List<Integer> out) {
       {/* SECTION 4 — BST invariant + degradation */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. BST invariant &amp; when it falls apart</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. BST invariant &amp; when it falls apart</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The invariant is global, not local. Skewed inputs turn O(log n) into O(n) — which is exactly why Java&apos;s <code>TreeMap</code> isn&apos;t a plain BST.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">The invariant — global, not local</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">The invariant — global, not local</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               For every node <code>n</code>: <em>every</em>{" "}key in <code>n.left</code> &lt; <code>n.key</code> &lt; <em>every</em>{" "}key in <code>n.right</code>. Not just the immediate children — the whole subtree.
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -358,9 +358,9 @@ void postorder(TreeNode n, List<Integer> out) {
             </p>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">The degradation — skewed trees</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">The degradation — skewed trees</div>
+            <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Insert <code>1, 2, 3, 4, 5</code> into a plain BST: it becomes a linked list to the right. Height = n. Search/insert/delete all O(n).
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
@@ -369,10 +369,10 @@ void postorder(TreeNode n, List<Integer> out) {
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mt-2 mb-2">AVL vs Red-Black — the tradeoff Java picked</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+        <h3 className="mt-2 mb-2 text-base font-semibold">AVL vs Red-Black — the tradeoff Java picked</h3>
+        <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Property</th>
                 <th className="px-4 py-3 font-semibold">AVL</th>
@@ -403,13 +403,13 @@ void postorder(TreeNode n, List<Integer> out) {
               <tr>
                 <td className="px-4 py-3">Used in Java</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">—</td>
-                <td className="px-4 py-3 text-emerald-600 font-semibold">TreeMap, TreeSet, HashMap tree-bins</td>
+                <td className="px-4 py-3 font-semibold text-emerald-600">TreeMap, TreeSet, HashMap tree-bins</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">TreeMap operations you actually use</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">TreeMap operations you actually use</h3>
         <CodeBlock lang="java" caption="The five TreeMap moves worth memorizing">{`TreeMap<Integer, String> tm = new TreeMap<>();
 tm.put(10, "a"); tm.put(20, "b"); tm.put(30, "c");
 
@@ -419,15 +419,15 @@ tm.firstKey();        // 10
 tm.lastKey();         // 30
 tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
 
-        <h3 className="text-base font-semibold mt-4 mb-2">TreeMap vs HashMap — the picker</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5">
+        <h3 className="mt-4 mb-2 text-base font-semibold">TreeMap vs HashMap — the picker</h3>
+        <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Just key → value lookup?</strong>{" "}HashMap. It&apos;s ~5× faster on average.</li>
           <li><strong>Need sorted iteration?</strong>{" "}TreeMap. HashMap&apos;s iteration order is unspecified.</li>
           <li><strong>Range queries (&quot;all keys between A and B&quot;)?</strong>{" "}TreeMap. HashMap can&apos;t do this without scanning.</li>
           <li><strong>floor/ceiling/predecessor/successor?</strong>{" "}TreeMap, O(log n). HashMap doesn&apos;t support these.</li>
         </ul>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/bst" className="text-emerald-600 hover:underline">Module 14 — Binary search trees</Link>.
         </p>
       </section>
@@ -436,31 +436,31 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
       {/* SECTION 5 — Heap mechanics */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Heap mechanics — the array trick</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Heap mechanics — the array trick</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A binary heap is a complete binary tree, but you never allocate nodes. You allocate an array and the parent/child relationships are pure arithmetic.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={heapChart} />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">The index formulas</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 font-mono">
+        <div className="mb-4 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">The index formulas</div>
+            <ul className="space-y-2 font-mono text-sm text-slate-700 dark:text-slate-300">
               <li><code>parent(i) = (i - 1) / 2</code></li>
               <li><code>leftChild(i)  = 2*i + 1</code></li>
               <li><code>rightChild(i) = 2*i + 2</code></li>
             </ul>
-            <p className="text-xs text-slate-500 mt-3 font-sans">
+            <p className="mt-3 font-sans text-xs text-slate-500">
               No pointers, no node objects — just integer math. This is why heap-sort is in-place.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">The shape invariant</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">The shape invariant</div>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Complete:</strong>{" "}every level full except possibly the last, which fills left-to-right.</li>
               <li><strong>Heap order:</strong>{" "}every parent ≤ both children (min-heap), or ≥ both (max-heap).</li>
               <li>No ordering between siblings. The root is the min/max — nothing else is guaranteed.</li>
@@ -494,7 +494,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
           <strong>PriorityQueue is NOT FIFO.</strong>{" "}The name is misleading. It&apos;s &quot;extract-min-first.&quot; <code>poll()</code> returns the smallest element by natural ordering or the supplied comparator. For max-heap, pass <code>Comparator.reverseOrder()</code>. For top-K largest, use a min-heap of size K (counterintuitive but right).
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/dsa/modules/heaps" className="text-emerald-600 hover:underline">Module 15 — Heaps &amp; PriorityQueue</Link>.
         </p>
       </section>
@@ -503,15 +503,15 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
       {/* SECTION 6 — The 4 named patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Four patterns that show up everywhere</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Four patterns that show up everywhere</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           If you recognize the shape of the problem, the code almost writes itself.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pattern 1 · Top-K with a bounded heap</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pattern 1 · Top-K with a bounded heap</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               For top-K <em>largest</em>, keep a <strong>min-heap of size K</strong>. After every element, evict the heap&apos;s min if the heap grew past K. At the end, the heap contains exactly the K largest. Time O(n log K), space O(K) — much better than sorting which is O(n log n).
             </p>
             <CodeBlock lang="java">{`int kthLargest(int[] nums, int k) {
@@ -522,14 +522,14 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
     }
     return pq.peek();   // top of min-heap = Kth largest overall
 }`}</CodeBlock>
-            <p className="text-xs text-slate-500 mt-3">
+            <p className="mt-3 text-xs text-slate-500">
               Canonical LC: 215 (Kth Largest), 347 (Top K Frequent), 1046 (Last Stone Weight).
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pattern 2 · Frequency counting</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pattern 2 · Frequency counting</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Build a <code>Map&lt;T, Integer&gt;</code> in one pass. Use <code>merge</code> to avoid the &quot;get-or-default + put&quot; dance. Backbone of anagram problems, sliding-window counting, top-K-frequent.
             </p>
             <CodeBlock lang="java">{`Map<Character, Integer> freq = new HashMap<>();
@@ -540,9 +540,9 @@ for (char c : s.toCharArray()) {
 // 5-10x faster — no boxing, no hashing.`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pattern 3 · Anagram via sorted key (group-by)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pattern 3 · Anagram via sorted key (group-by)</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Two strings are anagrams iff their sorted character sequences are equal. Group anagrams by using the sorted form as the HashMap key. Each word costs O(k log k) to sort.
             </p>
             <CodeBlock lang="java">{`List<List<String>> groupAnagrams(String[] strs) {
@@ -555,14 +555,14 @@ for (char c : s.toCharArray()) {
     }
     return new ArrayList<>(groups.values());
 }`}</CodeBlock>
-            <p className="text-xs text-slate-500 mt-3">
+            <p className="mt-3 text-xs text-slate-500">
               Faster alternative: build a 26-int frequency vector and stringify it (<code>&quot;a1b2c0...&quot;</code>). O(k) per word.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Pattern 4 · Lowest Common Ancestor via recursion</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pattern 4 · Lowest Common Ancestor via recursion</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Recurse left and right. If both children return non-null, the current node <em>is</em>{" "}the LCA. Otherwise return whichever side found one of the targets. O(n) time, O(h) space.
             </p>
             <CodeBlock lang="java">{`TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
@@ -572,7 +572,7 @@ for (char c : s.toCharArray()) {
     if (left != null && right != null) return root;  // split point
     return left != null ? left : right;              // bubble up
 }`}</CodeBlock>
-            <p className="text-xs text-slate-500 mt-3">
+            <p className="mt-3 text-xs text-slate-500">
               On a BST you can do better: walk down comparing keys — O(h) without exploring both sides.
             </p>
           </div>
@@ -583,15 +583,15 @@ for (char c : s.toCharArray()) {
       {/* SECTION 7 — Gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Five gotchas that bite people</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that bite people</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these is a real bug someone shipped. Recognizing the shape in code review saves outages.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · Overriding <code>equals</code> without <code>hashCode</code></div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Overriding <code>equals</code> without <code>hashCode</code></div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Two objects compare equal but land in different buckets. <code>map.get(equalKey)</code> returns <code>null</code> even though the key &quot;exists.&quot; The compiler won&apos;t catch this — your tests will if you remember to write them.
             </p>
             <CodeBlock lang="java">{`// BAD — equals overridden, hashCode inherited from Object (identity)
@@ -609,9 +609,9 @@ class User {
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Mutating a key after insertion</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Mutating a key after insertion</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The key&apos;s hash is computed at insert time. Mutating a field used in <code>hashCode</code> moves the &quot;correct&quot; bucket but the entry stays where it was. The key becomes unreachable via <code>get</code>.
             </p>
             <CodeBlock lang="java">{`// BAD — mutating a key that's already in a map
@@ -623,9 +623,9 @@ map.get(u);            // null — even though the same object reference!
 // GOOD — keys should be immutable. Use a fresh object or a primitive key.`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · <code>a - b</code> in a Comparator (int overflow)</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · <code>a - b</code> in a Comparator (int overflow)</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The classic &quot;works in tests, breaks in prod with extreme values.&quot; If <code>a = Integer.MAX_VALUE</code> and <code>b = -1</code>, <code>a - b</code> overflows to a negative number — the comparator lies and the heap order is wrong.
             </p>
             <CodeBlock lang="java">{`// BAD — silent overflow on extreme inputs
@@ -637,9 +637,9 @@ PriorityQueue<Integer> pq = new PriorityQueue<>(Integer::compare);
 PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.naturalOrder());`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · Treating PriorityQueue as FIFO</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Treating PriorityQueue as FIFO</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               It implements <code>Queue</code> but it&apos;s not first-in-first-out. <code>poll()</code> returns the minimum, not the oldest. Iteration order is unspecified — only <code>peek()</code> sees the min.
             </p>
             <CodeBlock lang="java">{`// BAD — expecting FIFO from a PriorityQueue
@@ -651,9 +651,9 @@ pq.poll();   // returns 3, NOT 5
 Deque<Integer> q = new ArrayDeque<>();`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 5 · Validating BST by only checking immediate children</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Validating BST by only checking immediate children</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The invariant is global, not local. A node with <code>left.val &lt; root.val &lt; right.val</code> can still violate BST if a <em>descendant</em>{" "}of <code>left</code> exceeds <code>root.val</code>. Validate by passing down (min, max) bounds.
             </p>
             <CodeBlock lang="java">{`// BAD — only checks parent vs immediate children
@@ -680,8 +680,8 @@ boolean isBST(TreeNode n, Long min, Long max) {
       {/* SECTION 8 — Self-assessment (quizzes outside any Checkpoint) */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -744,8 +744,8 @@ boolean isBST(TreeNode n, Long min, Long max) {
       {/* ============================================================ */}
       {/* SECTION 9 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-sky-200 dark:border-sky-900 bg-gradient-to-br from-sky-50 via-white to-blue-50 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
           Phase 3 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now reach for the right keyed structure on sight</h3>
@@ -757,7 +757,7 @@ boolean isBST(TreeNode n, Long min, Long max) {
         </p>
         <Link
           href="/courses/dsa/modules/graphs-intro"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Graphs →
         </Link>

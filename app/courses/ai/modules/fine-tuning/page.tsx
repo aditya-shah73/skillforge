@@ -27,23 +27,23 @@ export default function FineTuningModule() {
         ← All modules
       </Link>
 
-      <div className="mt-6 mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-pink-500 to-rose-500 text-white">
+      <div className="mt-6 mb-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-3 py-1 text-xs font-bold text-white">
         Phase 6 · Module 30
       </div>
-      <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">~1.5h · Production &amp; Capstone</div>
-      <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Fine-tuning &amp; RLHF (when to bother)</h1>
-      <p className="text-lg text-slate-600 dark:text-slate-300 italic mb-6">
+      <div className="mb-2 text-xs text-slate-500 dark:text-slate-400">~1.5h · Production &amp; Capstone</div>
+      <h1 className="mb-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Fine-tuning &amp; RLHF (when to bother)</h1>
+      <p className="mb-6 text-lg text-slate-600 italic dark:text-slate-300">
         How model training actually works — and why RAG usually wins.
       </p>
 
       <BookmarkButton courseId="ai" moduleSlug="fine-tuning" />
       <ModuleProgress moduleSlug={SLUG} checkpoints={CHECKPOINTS} />
 
-      <div className="my-8 p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 border border-pink-200 dark:border-pink-900">
-        <h3 className="text-base font-bold text-pink-900 dark:text-pink-200 mt-0 mb-3">
+      <div className="my-8 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
+        <h3 className="mt-0 mb-3 text-base font-bold text-pink-900 dark:text-pink-200">
           What you&apos;ll walk out with
         </h3>
-        <ul className="text-sm text-pink-900/90 dark:text-pink-200/90 mb-0 space-y-1">
+        <ul className="mb-0 space-y-1 text-sm text-pink-900/90 dark:text-pink-200/90">
           <li>A working mental model of <strong>pre-training, SFT, and RLHF</strong> — what each stage does and what it costs.</li>
           <li>The math intuition behind gradient updates on a 70B-parameter model — without doing the math.</li>
           <li>A concrete <strong>decision framework</strong>: prompt vs RAG vs fine-tune, with the questions to ask before you spend a dollar.</li>
@@ -90,44 +90,44 @@ export default function FineTuningModule() {
       </p>
 
       <div className="my-6 overflow-x-auto">
-        <table className="w-full text-sm border-collapse">
+        <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-slate-100 dark:bg-slate-800">
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Stage</th>
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">What happens</th>
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Data</th>
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Cost</th>
-              <th className="border border-slate-300 dark:border-slate-700 p-2 text-left">Who does it</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Stage</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">What happens</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Data</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Cost</th>
+              <th className="border border-slate-300 p-2 text-left dark:border-slate-700">Who does it</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border border-slate-300 dark:border-slate-700 p-2"><strong>Pre-training</strong></td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Predict the next token over the whole internet</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Trillions of tokens, Common Crawl + books + code</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">$10M – $100M+</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Anthropic, OpenAI, Google</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>Pre-training</strong></td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Predict the next token over the whole internet</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Trillions of tokens, Common Crawl + books + code</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">$10M – $100M+</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Anthropic, OpenAI, Google</td>
             </tr>
             <tr>
-              <td className="border border-slate-300 dark:border-slate-700 p-2"><strong>SFT</strong> (supervised fine-tune)</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Show it labeled (prompt, ideal-response) pairs</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">10K – 1M curated examples</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">$10K – $1M</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Frontier labs &amp; large enterprise</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>SFT</strong> (supervised fine-tune)</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Show it labeled (prompt, ideal-response) pairs</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">10K – 1M curated examples</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">$10K – $1M</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Frontier labs &amp; large enterprise</td>
             </tr>
             <tr>
-              <td className="border border-slate-300 dark:border-slate-700 p-2"><strong>RLHF / RLAIF</strong></td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Reinforcement-learn from preference rankings</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">100K – 10M comparisons</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">$100K – $10M</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">Frontier labs only</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>RLHF / RLAIF</strong></td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Reinforcement-learn from preference rankings</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">100K – 10M comparisons</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">$100K – $10M</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">Frontier labs only</td>
             </tr>
             <tr>
-              <td className="border border-slate-300 dark:border-slate-700 p-2"><strong>Customer fine-tune</strong></td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">SFT (sometimes LoRA) on top of a finished model</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">100 – 100K examples</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2">$50 – $50K</td>
-              <td className="border border-slate-300 dark:border-slate-700 p-2"><strong>You</strong>, via API or open-weights</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>Customer fine-tune</strong></td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">SFT (sometimes LoRA) on top of a finished model</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">100 – 100K examples</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700">$50 – $50K</td>
+              <td className="border border-slate-300 p-2 dark:border-slate-700"><strong>You</strong>, via API or open-weights</td>
             </tr>
           </tbody>
         </table>
@@ -751,14 +751,14 @@ mid-project. Decide these BEFORE you start.]
         />
       </Checkpoint>
 
-      <div className="my-12 p-8 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 text-white">
-        <h3 className="text-xl font-bold text-white mt-0 mb-3">Next up: the capstone</h3>
-        <p className="text-white/95 mb-3">
+      <div className="my-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 p-8 text-white">
+        <h3 className="mt-0 mb-3 text-xl font-bold text-white">Next up: the capstone</h3>
+        <p className="mb-3 text-white/95">
           You&apos;ve done the whole arc — tokenization, training, transformers, embeddings, prompts, the API, tool use,
           streaming, caching, RAG, frontend integration, agents, evals, security, and now training discipline. One
           module left.
         </p>
-        <p className="text-white/95 mb-0">
+        <p className="mb-0 text-white/95">
           <strong>Module 32 — Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
           built. Streaming chat, tool use, RAG over a real codebase, agent loops, evals, security guards. The portfolio
           piece. The thing you point at when somebody asks &quot;can you actually ship AI?&quot;

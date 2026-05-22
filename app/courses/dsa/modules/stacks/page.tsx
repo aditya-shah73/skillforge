@@ -94,13 +94,13 @@ flowchart TB
       <ModuleProgress moduleSlug="stacks" checkpoints={CHECKPOINTS} />
 
       <div className="not-prose mb-8">
-        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline">
+        <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
           ← Back to DSA in Java
         </Link>
-        <div className="mt-3 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold tracking-wide uppercase">
+        <div className="mt-3 block w-fit rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           Module {mod.number} · {mod.phase}
         </div>
-        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">{mod.title}</h1>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{mod.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{mod.subtitle}</p>
       </div>
 
@@ -116,7 +116,7 @@ flowchart TB
         </p>
 
         <Mermaid chart={stackModel} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           The contract is intentionally narrow: only the top is reachable. <code>push</code>, <code>pop</code>, <code>peek</code>, <code>isEmpty</code>. All O(1).
         </p>
 
@@ -341,7 +341,7 @@ public int evalRPN(String[] tokens) {
         </p>
 
         <Mermaid chart={monotonicStack} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           Monotonic-decreasing stack of indices. When a hotter day arrives, every cooler index gets resolved (it just found its first warmer day).
         </p>
 
@@ -398,7 +398,7 @@ public int[] dailyTemperatures(int[] T) {
         </p>
 
         <Mermaid chart={callStack} />
-        <p className="text-xs text-slate-500 italic text-center -mt-2 mb-6">
+        <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
           The call stack at the moment <code>bake()</code> is running. Each frame remembers where to return to and what its local variables were. Pop a frame → control returns to the frame below.
         </p>
 
@@ -596,15 +596,15 @@ public class MinStack {
           ]}
         />
 
-        <div className="not-prose mt-12 p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 border border-amber-200 dark:border-amber-800/40">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">Up next: Module 9 — Queues &amp; deques</h3>
+        <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-800/40 dark:from-amber-950/30 dark:to-yellow-950/30">
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 9 — Queues &amp; deques</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             FIFO (the inverse of LIFO). Ring buffers and ArrayDeque under the hood. The data structure that powers
             BFS, task queues, and sliding-window algorithms.
           </p>
           <Link
             href="/courses/dsa/modules/queues"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
             Continue to Module 9 — Queues &amp; deques →
           </Link>

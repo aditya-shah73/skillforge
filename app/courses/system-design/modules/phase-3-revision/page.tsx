@@ -44,23 +44,23 @@ flowchart LR
 
   return (
     <article className="prose-custom">
-      <nav className="text-xs mb-6">
+      <nav className="mb-6 text-xs">
         <Link
           href="/courses/system-design"
-          className="inline-block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 no-underline"
+          className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300"
         >
           ← All modules
         </Link>
       </nav>
 
-      <header className="mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
-        <span className="mt-2 block w-fit px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold uppercase tracking-wider">
+      <header className="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800">
+        <span className="mt-2 block w-fit rounded-full bg-gradient-to-r from-emerald-500 to-green-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 3 · Module {mod.number} · Revision
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-3">
+        <h1 className="mt-4 mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
           Phase 3 revision notes
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 italic">
+        <p className="text-lg text-slate-600 italic dark:text-slate-400">
           API design, gateway, queues, Kafka, event-driven/CQRS — every communication pattern on one card you can re-read in 20 minutes before an interview.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-3-revision" />
@@ -69,10 +69,10 @@ flowchart LR
 
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
           This module is not new material. It&apos;s a <strong>map of Phase 3</strong> — every contract, every broker tradeoff, every pattern from the five communication modules, compressed into tables and decision cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a system-design interview, not as a tutorial.
         </p>
-        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-3">
+        <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/system-design/modules/api-design" className="text-emerald-600 hover:underline">API design</Link>, <Link href="/courses/system-design/modules/spring-cloud-gateway" className="text-emerald-600 hover:underline">Spring Cloud Gateway</Link>, <Link href="/courses/system-design/modules/message-queues" className="text-emerald-600 hover:underline">Message queues</Link>, <Link href="/courses/system-design/modules/kafka-deep" className="text-emerald-600 hover:underline">Kafka deep dive</Link>, and <Link href="/courses/system-design/modules/event-driven-cqrs" className="text-emerald-600 hover:underline">Event-driven &amp; CQRS</Link>.
         </p>
 
@@ -85,15 +85,15 @@ flowchart LR
       {/* SECTION 1 — API design cheat sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">1. API design cheat sheet</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. API design cheat sheet</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The contracts that every serious HTTP API gets right. Get these wrong and you&apos;ll feel it on day one of operating the service.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">HTTP verbs &amp; idempotency</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
+        <h3 className="mb-2 text-base font-semibold">HTTP verbs &amp; idempotency</h3>
+        <div className="mb-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Verb</th>
                 <th className="px-4 py-3 font-semibold">Safe?</th>
@@ -142,22 +142,22 @@ flowchart LR
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Versioning — pick one, never mix</h3>
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">URL-path versioning</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2 font-mono">/v1/orders, /v2/orders</p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+        <h3 className="mb-2 text-base font-semibold">Versioning — pick one, never mix</h3>
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">URL-path versioning</div>
+            <p className="mb-2 font-mono text-sm text-slate-700 dark:text-slate-300">/v1/orders, /v2/orders</p>
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li>Trivial to route at the gateway</li>
               <li>Easy to curl/test/cache</li>
               <li>Visible to clients — they know what they&apos;re calling</li>
               <li>Downside: looks &quot;not REST-pure&quot; (don&apos;t care)</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Header / media-type versioning</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2 font-mono text-xs">Accept: application/vnd.acme.v2+json</p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 list-disc pl-4">
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Header / media-type versioning</div>
+            <p className="mb-2 font-mono text-sm text-xs text-slate-700 dark:text-slate-300">Accept: application/vnd.acme.v2+json</p>
+            <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li>Same URL across versions (REST-pure)</li>
               <li>Annoying to curl, harder to cache</li>
               <li>Gateway routing needs header inspection</li>
@@ -166,10 +166,10 @@ flowchart LR
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Pagination — cursor &gt; offset</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
+        <h3 className="mb-2 text-base font-semibold">Pagination — cursor &gt; offset</h3>
+        <div className="mb-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Strategy</th>
                 <th className="px-4 py-3 font-semibold">Cost at page N</th>
@@ -194,17 +194,17 @@ flowchart LR
           </table>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Idempotency keys (the single most-skipped contract)</h3>
+        <h3 className="mb-2 text-base font-semibold">Idempotency keys (the single most-skipped contract)</h3>
         <CodeBlock lang="plain">{`POST /v1/payments HTTP/1.1
 Idempotency-Key: 5f8d7e6c-3b2a-4f1e-9c8d-7a6b5c4d3e2f
 Content-Type: application/json
 
 { "amount": 4200, "currency": "USD", "source": "card_xyz" }`}</CodeBlock>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-4 mt-3">
+        <p className="mt-3 mb-4 text-sm text-slate-700 dark:text-slate-300">
           Server stores <code>(key → response)</code> for ~24h. Same key replay returns the <em>cached response</em>, not a second charge. Mandatory on any POST that creates money, sends messages, or kicks off a workflow.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Error envelope</h3>
+        <h3 className="mb-2 text-base font-semibold">Error envelope</h3>
         <CodeBlock lang="plain">{`{
   "error": {
     "code": "INSUFFICIENT_FUNDS",
@@ -213,14 +213,14 @@ Content-Type: application/json
     "details": { "balance": 100, "required": 4200 }
   }
 }`}</CodeBlock>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-2 mt-3">
+        <p className="mt-3 mb-2 text-sm text-slate-700 dark:text-slate-300">
           Three rules: machine-readable <code>code</code> (not a string match), human-readable <code>message</code>, and a <code>requestId</code> the client can quote when they open a ticket. <code>400</code> = malformed; <code>422</code> = parsed but semantically rejected.
         </p>
 
-        <h3 className="text-base font-semibold mb-2 mt-6">REST vs gRPC — when to pick which</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">REST vs gRPC — when to pick which</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Dimension</th>
                 <th className="px-4 py-3 font-semibold">REST/JSON</th>
@@ -262,7 +262,7 @@ Content-Type: application/json
           </table>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/api-design" className="text-emerald-600 hover:underline">Module 14 — API design</Link>.
         </p>
       </section>
@@ -271,37 +271,37 @@ Content-Type: application/json
       {/* SECTION 2 — Spring Cloud Gateway */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">2. Spring Cloud Gateway — the edge in one mental model</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Spring Cloud Gateway — the edge in one mental model</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           One pipeline: <strong>route → predicates → filters → downstream</strong>. Every gateway config you&apos;ll write fits inside that arrow.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">Predicates</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">
+        <div className="mb-6 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Predicates</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">
               &quot;Does this request match this route?&quot; — Path, Method, Header, Host, Cookie, Query, RemoteAddr.
             </p>
-            <code className="text-xs block text-slate-600 dark:text-slate-400">Path=/api/orders/**</code>
+            <code className="block text-xs text-slate-600 dark:text-slate-400">Path=/api/orders/**</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">Filters (Pre)</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Filters (Pre)</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">
               Modify before forward — strip prefix, add header, auth check, rate limit, circuit break.
             </p>
-            <code className="text-xs block text-slate-600 dark:text-slate-400">StripPrefix=1</code>
+            <code className="block text-xs text-slate-600 dark:text-slate-400">StripPrefix=1</code>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-600 mb-2">Filters (Post)</div>
-            <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">Filters (Post)</div>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">
               Modify response — add CORS, strip internal headers, attach correlation ID, metrics.
             </p>
-            <code className="text-xs block text-slate-600 dark:text-slate-400">AddResponseHeader=...</code>
+            <code className="block text-xs text-slate-600 dark:text-slate-400">AddResponseHeader=...</code>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">Belongs at the edge</h3>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-6">
+        <h3 className="mb-2 text-base font-semibold">Belongs at the edge</h3>
+        <ul className="mb-6 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Auth offload</strong> — verify JWT once, pass user claims as headers downstream. Services trust the gateway.</li>
           <li><strong>Rate limiting</strong> — per-API-key, per-IP. Cheaper to drop here than to wake a service.</li>
           <li><strong>Retries with backoff</strong> — for idempotent verbs only (GET/PUT/DELETE).</li>
@@ -309,12 +309,12 @@ Content-Type: application/json
           <li><strong>TLS termination, CORS, request logging, correlation IDs.</strong></li>
         </ul>
 
-        <h3 className="text-base font-semibold mb-2">Does NOT belong at the edge</h3>
+        <h3 className="mb-2 text-base font-semibold">Does NOT belong at the edge</h3>
         <Callout variant="warn">
           <strong>Anti-patterns:</strong>{" "}business validation, DB calls, response transformation that needs domain knowledge, request fan-out to multiple services (that&apos;s a BFF, not a gateway), or per-tenant feature flags that need DB lookups. If a filter has to call a database to do its job, it belongs in a service, not at the edge.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/spring-cloud-gateway" className="text-emerald-600 hover:underline">Module 15 — Spring Cloud Gateway</Link>.
         </p>
       </section>
@@ -323,16 +323,16 @@ Content-Type: application/json
       {/* SECTION 3 — Mermaid diagram */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">3. Kafka partition → consumer-group assignment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Kafka partition → consumer-group assignment</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The picture that explains <em>everything</em>{" "}about Kafka scaling. Four partitions, two groups. Group <code>orders</code> has 5 consumers — only 4 can do work; the 5th idles. Group <code>audit</code> has 2 consumers — each takes 2 partitions.
         </p>
 
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/40 mb-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={partitionAssignmentChart} />
         </div>
 
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-2 list-disc pl-5">
+        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Partition is the unit of parallelism.</strong>{" "}Want to scale a consumer group? Add partitions. Once.</li>
           <li><strong>Consumer group is the unit of independent scaling.</strong>{" "}Two groups read the same partitions <em>at their own pace</em>, each tracking their own offsets.</li>
           <li><strong>One partition → at most one consumer in a group.</strong>{" "}Adding consumers beyond <code>numPartitions</code> wastes hardware.</li>
@@ -344,15 +344,15 @@ Content-Type: application/json
       {/* SECTION 4 — Message queues decision matrix */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">4. Message queues — the decision matrix</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Message queues — the decision matrix</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Three brokers, three different sweet spots. Pick by delivery guarantee, ordering needs, and team operating burden.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Delivery guarantees — the cost ladder</h3>
-        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
+        <h3 className="mb-2 text-base font-semibold">Delivery guarantees — the cost ladder</h3>
+        <div className="mb-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Guarantee</th>
                 <th className="px-4 py-3 font-semibold">What it means</th>
@@ -388,10 +388,10 @@ Content-Type: application/json
           <strong>DLQs:</strong>{" "}every consumer needs a dead-letter queue + a max-retry policy. A poison message will otherwise block the entire partition forever.
         </Callout>
 
-        <h3 className="text-base font-semibold mb-2 mt-6">Broker pick — when each one wins</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Broker pick — when each one wins</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
               <tr>
                 <th className="px-4 py-3 font-semibold">Broker</th>
                 <th className="px-4 py-3 font-semibold">Model</th>
@@ -422,7 +422,7 @@ Content-Type: application/json
           </table>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/message-queues" className="text-emerald-600 hover:underline">Module 16 — Message queues</Link>.
         </p>
       </section>
@@ -431,54 +431,54 @@ Content-Type: application/json
       {/* SECTION 5 — Kafka card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">5. Kafka — the five things to remember</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Kafka — the five things to remember</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Everything else is detail. If you have these five, you can answer almost any Kafka interview question.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">1 · Partition = unit of parallelism</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">1 · Partition = unit of parallelism</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Throughput is bounded by partition count, not consumer count. Pick <code>numPartitions</code> deliberately: too few = throughput ceiling; too many = rebalance pain, file-handle blowup. Common rule: target a few thousand events/sec per partition, then round up generously — partitions can be added but rarely shrunk.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">2 · Consumer group = unit of scaling</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">2 · Consumer group = unit of scaling</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Members of a group split partitions. Different groups read the same topic independently — each with their own offsets. Add a new group anytime to add a new downstream consumer (analytics, audit, fan-out replica) without affecting existing pipelines.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">3 · Offsets: auto-commit vs manual</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">3 · Offsets: auto-commit vs manual</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Auto-commit is convenient and dangerous — it commits on a timer, so you can commit an offset before you&apos;ve actually processed the message (crash → message lost). Production code does <strong>manual commit after successful processing</strong> (at-least-once).
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">4 · Exactly-once = three things together</div>
-            <ul className="text-sm text-slate-700 dark:text-slate-300 list-disc pl-5 space-y-1">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">4 · Exactly-once = three things together</div>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><code>enable.idempotence=true</code> on the producer (dedup on retry)</li>
               <li><code>transactional.id</code> + <code>initTransactions</code> for atomic multi-partition writes</li>
               <li>Consumer reads with <code>isolation.level=read_committed</code></li>
             </ul>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mt-2">
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               That gives you exactly-once <em>within Kafka</em>. End-to-end (Kafka → external DB) still needs an idempotent sink.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-white dark:bg-slate-900/40">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">5 · Rebalances hurt — minimize them</div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">5 · Rebalances hurt — minimize them</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               When a consumer joins/leaves a group, partitions are reshuffled — processing stops during the rebalance. Causes: deploys, OOM kills, long poll timeouts (<code>max.poll.interval.ms</code>). Tune <code>session.timeout.ms</code> and use cooperative rebalancing (incremental) to reduce pause time.
             </p>
           </div>
         </div>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/kafka-deep" className="text-emerald-600 hover:underline">Module 17 — Kafka deep dive</Link>.
         </p>
       </section>
@@ -487,25 +487,25 @@ Content-Type: application/json
       {/* SECTION 6 — Event-driven & CQRS */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">6. Event-driven &amp; CQRS — what each one is actually buying you</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Event-driven &amp; CQRS — what each one is actually buying you</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           These three patterns get reached for too often. Each solves a specific problem; using them when you don&apos;t have that problem is pure tax.
         </p>
 
-        <h3 className="text-base font-semibold mb-2">Event-carried state transfer vs notification-only</h3>
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-emerald-50/40 dark:bg-emerald-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-2">Notification-only event</div>
+        <h3 className="mb-2 text-base font-semibold">Event-carried state transfer vs notification-only</h3>
+        <div className="mb-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Notification-only event</div>
             <CodeBlock lang="plain">{`{
   "type": "OrderPlaced",
   "orderId": "ord_123"
 }`}</CodeBlock>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
+            <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
               Consumer must call back to the producer to fetch detail. Adds latency + coupling, but keeps the event light and the source-of-truth in one place.
             </p>
           </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-5 bg-amber-50/40 dark:bg-amber-950/20">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 mb-2">Event-carried state transfer</div>
+          <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Event-carried state transfer</div>
             <CodeBlock lang="plain">{`{
   "type": "OrderPlaced",
   "orderId": "ord_123",
@@ -513,31 +513,31 @@ Content-Type: application/json
   "amount": 4200,
   "items": [...]
 }`}</CodeBlock>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
+            <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
               Self-contained. Consumer needs no callback. Cost: event gets large; you must version the schema religiously.
             </p>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold mb-2">CQRS — split read model from write model</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mb-2 text-base font-semibold">CQRS — split read model from write model</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Write side is normalized, validates invariants, optimized for correctness. Read side is denormalized, optimized for the specific queries the UI makes. An event stream from write → read keeps them in sync (with replication lag).
         </p>
-        <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-1 list-disc pl-5 mb-6">
+        <ul className="mb-6 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Buys you:</strong>{" "}read scale independent of write scale, query shapes the UI actually wants, separate database technologies (Postgres write, Elasticsearch read).</li>
           <li><strong>Costs you:</strong>{" "}eventual consistency (the user&apos;s write may not show up in their next read for ~ms–seconds), two models to keep in sync, more moving parts.</li>
           <li><strong>Don&apos;t use for:</strong>{" "}CRUD apps where the read and write shapes are identical. You&apos;re paying the tax for no benefit.</li>
         </ul>
 
-        <h3 className="text-base font-semibold mb-2">Event sourcing — the audit + replay superpower</h3>
-        <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+        <h3 className="mb-2 text-base font-semibold">Event sourcing — the audit + replay superpower</h3>
+        <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Store the <em>events</em>{" "}as the source of truth, not the current state. Current state is a fold over the event log. You get a perfect audit trail, time-travel debugging, the ability to rebuild any projection — but every operation now lives in the event-modeling language.
         </p>
         <Callout variant="warn">
           <strong>When event sourcing is overkill:</strong>{" "}if you don&apos;t need audit, don&apos;t need replay, and your domain doesn&apos;t naturally express itself as events (most CRUD apps don&apos;t), this is a 10× complexity multiplier for zero business value. Use it for payments, ledger, ordering, regulated domains — not for the average CMS.
         </Callout>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
           Source: <Link href="/courses/system-design/modules/event-driven-cqrs" className="text-emerald-600 hover:underline">Module 18 — Event-driven &amp; CQRS</Link>.
         </p>
       </section>
@@ -546,15 +546,15 @@ Content-Type: application/json
       {/* SECTION 7 — Common gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1">7. Four gotchas that bite people in production</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Four gotchas that bite people in production</h2>
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has caused real incidents. The fix in every case is small; the cost of not knowing is large.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 1 · POST without an Idempotency-Key</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · POST without an Idempotency-Key</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Client times out → retries → server processes both → user is charged twice. The fix is six lines and one header.
             </p>
             <CodeBlock lang="java">{`// BAD — retries duplicate the payment
@@ -573,9 +573,9 @@ public Payment create(
 }`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 2 · Offset pagination on a growing table</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Offset pagination on a growing table</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               New rows insert at the top while you&apos;re paging — you see duplicates on page 2 and miss rows on page 3. And page 1000 forces the DB to scan 20,000 rows just to skip them.
             </p>
             <CodeBlock lang="plain">{`-- BAD: O(N) skip cost, unstable under inserts
@@ -589,9 +589,9 @@ ORDER BY created_at DESC, id DESC
 LIMIT 20;`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 3 · Kafka consumer commits before processing</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Kafka consumer commits before processing</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Auto-commit fires on a timer. If you crash between commit and processing, the message is lost forever. Commit <em>after</em>{" "}the work, manually.
             </p>
             <CodeBlock lang="java">{`// BAD — auto-commit silently loses messages on crash
@@ -608,9 +608,9 @@ for (ConsumerRecord<String,String> r : consumer.poll(Duration.ofSeconds(1))) {
 consumer.commitSync();`}</CodeBlock>
           </div>
 
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/40 dark:bg-rose-950/20 p-5">
-            <div className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-2">Gotcha 4 · CQRS on a CRUD that didn&apos;t need it</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
+          <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · CQRS on a CRUD that didn&apos;t need it</div>
+            <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               The team reads a CQRS article, splits read/write for a simple admin tool, and now has two services, an event bus, replication lag bugs, and a denormalized view to maintain. Nothing was actually gained.
             </p>
             <CodeBlock lang="plain">{`// BAD shape — symmetric read/write, no scale asymmetry, no separate query needs
@@ -635,8 +635,8 @@ consumer.commitSync();`}</CodeBlock>
       {/* SECTION 8 — Self-assessment */}
       {/* ============================================================ */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-1 not-prose">8. Optional self-assessment</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 not-prose">
+        <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
+        <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
           Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
@@ -701,7 +701,7 @@ consumer.commitSync();`}</CodeBlock>
       {/* ============================================================ */}
       <section className="not-prose mb-12">
         <Callout variant="spring" title="You're ready for Phase 4 when…">
-          <ul className="space-y-2 list-disc pl-5 mt-1">
+          <ul className="mt-1 list-disc space-y-2 pl-5">
             <li>You can sketch the HTTP verb contract from memory and explain why <code>Idempotency-Key</code> is mandatory on POSTs that touch money.</li>
             <li>You can describe the Spring Cloud Gateway pipeline (route → predicates → filters) and name three things that belong at the edge — and one that doesn&apos;t.</li>
             <li>You can pick a broker (SQS / RabbitMQ / Kafka) given a workload sketch, and justify the choice using delivery guarantees, ordering needs, and operational cost.</li>
@@ -715,8 +715,8 @@ consumer.commitSync();`}</CodeBlock>
       {/* ============================================================ */}
       {/* SECTION 10 — Footer / next phase */}
       {/* ============================================================ */}
-      <section className="mt-12 p-6 rounded-2xl border border-sky-200 dark:border-sky-900 bg-gradient-to-br from-sky-50 via-white to-blue-50 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
-        <div className="text-xs font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 mb-2">
+      <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
+        <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
           Phase 3 — locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now design the communication layer for any system</h3>
@@ -728,7 +728,7 @@ consumer.commitSync();`}</CodeBlock>
         </p>
         <Link
           href="/courses/system-design/modules/load-balancing"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
           Next phase: Reliability &amp; Operations →
         </Link>

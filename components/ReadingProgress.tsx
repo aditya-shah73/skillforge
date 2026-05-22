@@ -60,7 +60,7 @@ export default function ReadingProgress() {
   return (
     <div
       aria-hidden
-      className="print:hidden fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent pointer-events-none"
+      className="pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent print:hidden"
     >
       <div
         className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-[width] duration-75 ease-out"
