@@ -1165,9 +1165,18 @@ Loop exits, return a = 8.   5 + 3 = 8.  ✓`}</CodeBlock>
         </div>
 
         <div className="not-prose mt-12 p-6 rounded-2xl border border-fuchsia-200 dark:border-fuchsia-800 bg-gradient-to-br from-fuchsia-50 to-pink-50 dark:from-fuchsia-950/40 dark:to-pink-950/40">
-          <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Phase 7</p>
-          <p className="text-xl font-semibold text-slate-900 dark:text-slate-100 mt-1">Dynamic Programming</p>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">Memoization, overlapping subproblems, and the patterns that turn O(2^n) into O(n²). Coming soon.</p>
+          <p className="text-xs uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-300 font-semibold">Up next · Phase 7 · Module 32</p>
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mt-1 mb-2">DP Intro — Memoization &amp; Tabulation</h3>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+            Memoization, overlapping subproblems, and the patterns that turn O(2^n) into O(n²). Phase 7 takes the
+            recursion-with-cache trick we just glimpsed and turns it into a rigorous problem-solving framework.
+          </p>
+          <Link
+            href="/courses/dsa/modules/dp-intro"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition no-underline"
+          >
+            Continue to DP Intro →
+          </Link>
         </div>
       </section>
       </Checkpoint>

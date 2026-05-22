@@ -462,7 +462,7 @@ int badFactorial(int n) {
           about it for a while.
         </p>
 
-        <Callout variant="insight" title="The overlap is the inefficiency — and the cure is memoization (Phase 6&apos;s next big idea)">
+        <Callout variant="insight" title="The overlap is the inefficiency — and the cure is memoization (Phase 7&apos;s next big idea)">
           <p>
             Naive recursive Fibonacci isn&apos;t slow because of recursion. It&apos;s slow because the tree
             recomputes the same subproblems many times. <code>fib(2)</code> is computed three times here; in{" "}

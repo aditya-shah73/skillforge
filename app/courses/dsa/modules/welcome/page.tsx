@@ -78,7 +78,7 @@ export default function DsaWelcomeModule() {
       <section>
         <h2>How the course works</h2>
         <p>
-          The syllabus is <strong>43 modules across 9 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
+          The syllabus is <strong>43 modules across 9 phases</strong> — this welcome, 34 content modules, and 8 phase-revision cards that bookend each phase. You&apos;re reading the first one right now. Each content module is a single page with the same rhythm:
         </p>
         <ol>
           <li><strong>Analogy</strong> — the intuition, before any math or code</li>

@@ -699,7 +699,7 @@ public class HeapStress {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 15 — and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4 — sorting, recursion, and divide-and-conquer — is next.">
+      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 15 — and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4 — graphs (BFS, DFS, shortest path) — is next.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -753,8 +753,8 @@ public class HeapStress {
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Five modules of the structures that power production code: hash tables (the O(1) lookup miracle), sets,
             trees, BSTs (and their balanced cousins), and heaps. You can now reach for the right container reflexively
-            for any lookup, ordered-iteration, or top-K problem. Phase 4 — sorting, recursion, and divide-and-conquer —
-            is the algorithmic engine that runs underneath all of these.
+            for any lookup, ordered-iteration, or top-K problem. Phase 4 — graphs (BFS, DFS, shortest path) —
+            is where these structures start working together to model relationships.
           </p>
           <Link
             href="/courses/dsa"
