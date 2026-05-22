@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "eslint .",
     "test:visual": "playwright test",
-    "test:visual:update": "playwright test --update-snapshots"
+    "test:visual:update": "playwright test --update-snapshots",
+    "verify": "npm run lint && npm run build && npm run test:visual",
+    "prepare": "husky"
   },
   "dependencies": {
     "gpt-tokenizer": "^3.4.0",

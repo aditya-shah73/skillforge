@@ -67,9 +67,17 @@ Reuse components from `components/` rather than inventing new patterns:
 
 (`lib/modules.ts` is a temporary back-compat shim re-exporting from `lib/courses/ai`. Existing module pages still import from it. New imports should target `lib/courses/<id>` directly.)
 
-# Quality gates (CI)
+# Quality gates (CI + local)
 
-Two checks run on every PR. If you touch UI code, expect to interact with both.
+Two checks run on every PR — lint and visual regression. The same three-step chain (lint → build → visual) also runs locally on `git push` via a Husky hook. Failing locally is ~10× cheaper than failing in CI: catch it on your machine.
+
+## `npm run verify` — run the gate locally
+
+```bash
+npm run verify   # lint && build && test:visual, ~2-3 min total
+```
+
+A `.husky/pre-push` hook invokes this on `git push`. Bypass with `git push --no-verify` only for genuine emergencies (e.g. WIP branch, docs-only change you're certain is safe). When you intentionally change UI, regenerate baselines with `npm run test:visual:update` and commit the PNGs in the same change — otherwise the hook will block on a diff you already understand.
 
 ## Lint — `npm run lint`
 

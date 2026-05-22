@@ -100,7 +100,28 @@ Progress, completed checkpoints, and quiz state all live in browser localStorage
 
 ## Quality gates
 
-Two automated checks run on every PR. Both also run locally with one command each. Learning the local invocations means CI failures are easy to reproduce.
+Two automated checks run on every PR — lint and visual regression. The same checks run locally before every `git push` via a Husky hook, so you catch failures on your machine instead of waiting on CI.
+
+### `npm run verify` — the local gate
+
+Chains all three checks in CI order:
+
+```bash
+npm run verify
+# = npm run lint && npm run build && npm run test:visual
+```
+
+Budget: ~2–3 minutes on a warm M-class laptop (~5s lint + ~30–45s build + ~60–90s visual). The visual step dominates because Playwright runs sequentially (`workers: 1`) for deterministic snapshots.
+
+A Husky `pre-push` hook runs `npm run verify` automatically on `git push`. To bypass it in an emergency:
+
+```bash
+git push --no-verify
+```
+
+Use sparingly — if the gate would have failed, CI will catch it and the round trip will cost more than waiting locally would have. The hook is wired in `.husky/pre-push` and installed via the `prepare` script on `npm install`.
+
+If you intentionally changed a visual baseline, run `npm run test:visual:update` and commit the new PNGs *before* pushing — otherwise the hook will fail on a diff you already understand.
 
 ### Lint (`npm run lint`)
 

@@ -1,0 +1,18 @@
+# Skillforge pre-push gate.
+#
+# Runs the same three checks CI runs on every PR — lint, build, visual
+# regression — before letting a push leave your machine. Catching a
+# failure here is ~10x faster than catching it after CI starts.
+#
+# Timing budget (M-class laptop, warm caches): ~2-3 minutes.
+#   - lint:        ~5s
+#   - build:       ~30-45s
+#   - test:visual: ~60-90s (27 screenshots × Chromium render, sequential)
+#
+# Emergency bypass: `git push --no-verify`. Use sparingly — if you skip
+# the gate locally, CI will catch it and you'll wait longer on the round
+# trip than you would have here.
+#
+# To update visual baselines after intentional UI changes, run
+# `npm run test:visual:update` and commit the new PNGs *before* pushing.
+npm run verify
