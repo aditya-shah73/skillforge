@@ -71,6 +71,10 @@ Reuse components from `components/` rather than inventing new patterns:
 
 Two checks run on every PR — lint and visual regression. The same three-step chain (lint → build → visual) also runs locally on `git push` via a Husky hook. Failing locally is ~10× cheaper than failing in CI: catch it on your machine.
 
+## npm registry — `.npmrc` pins this repo to public npm
+
+A repo-level `.npmrc` overrides the user-level default registry to `https://registry.npmjs.org/`. This is here because some contributors (Intuit employees especially) have a corporate Artifactory mirror in their `~/.npmrc` — without the override, `npm install` would write internal-only tarball URLs into `package-lock.json`, and CI on GitHub-hosted runners can't reach those hosts (manifests as a 7-minute hang followed by `npm error Exit handler never called`). The override only applies inside this directory; your global npm config is untouched.
+
 ## `npm run verify` — run the gate locally
 
 ```bash
