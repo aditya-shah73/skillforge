@@ -102,4 +102,6 @@ When you change UI:
 
 Routes are defined in `tests/visual.spec.ts` (`ROUTES` array). To add a route to the sweep, append one line — it's cheap (~3 snapshots per route).
 
+Baselines are kept for both macOS (`*-darwin.png`) and Linux (`*-linux.png`) — devs running `npm run test:visual` locally on a Mac diff against darwin; CI on `ubuntu-latest` diffs against linux. To regenerate the linux set (e.g. after a UI change that the local `--update` only refreshed darwin baselines for), trigger the **visual-bootstrap** workflow manually from the Actions tab — it runs `test:visual:update` on Ubuntu and commits the resulting `*-linux.png` files back to the branch.
+
 If you're adding a new component that animates or has timing-sensitive behavior, audit `tests/visual.spec.ts` to make sure your route either (a) waits the animation out before screenshotting or (b) masks the moving element. Don't add `waitForTimeout` longer than 1 second — `reducedMotion: "reduce"` in `playwright.config.ts` already collapses animation duration.
