@@ -1,5 +1,7 @@
 # Visual regression sweep.
 #
+# Linux baselines bootstrapped via visual-bootstrap.yml on 2026-05-26.
+#
 # What it does:
 #   1. Builds the production bundle (matches what runs in prod)
 #   2. Boots `next start` via Playwright's `webServer` hook
