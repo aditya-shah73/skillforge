@@ -81,7 +81,7 @@ flowchart LR
 
       <div className="not-prose mb-8">
         <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
-          ← Back to DSA in Java
+          ← Back to Data Structures and Algorithms
         </Link>
         <div className="mt-3 block w-fit rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           Module {mod.number} · {mod.phase}

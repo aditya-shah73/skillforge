@@ -656,7 +656,7 @@ for (int[] e : edges) {
         <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
           Course complete
         </div>
-        <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re done with DSA in Java.</h3>
+        <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re done with Data Structures and Algorithms.</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Forty-two modules. Eight phases. Big-O from first principles, every linear and non-linear data structure, the full graph and DP toolkits, advanced algorithms, and the interview framework that ties it together. You have the vocabulary, the patterns, and the muscle memory.
         </p>

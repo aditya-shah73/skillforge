@@ -1,4 +1,4 @@
-// AI for Engineers — course definition.
+// AI Engineering Foundations — course definition.
 // Modules, phases, and per-course metadata for the AI track.
 
 export type Module = {
@@ -16,8 +16,8 @@ export type Module = {
 export const COURSE_META = {
   id: "ai" as const,
   slug: "ai",
-  name: "AI for Engineers",
-  shortName: "AI Course",
+  name: "AI Engineering Foundations",
+  shortName: "AI Foundations",
   tagline: "From zero ML to production AI features",
   description:
     "A hands-on AI course for working full-stack engineers. Build real intuition for LLMs, embeddings, RAG, and agents — then ship production-quality AI features on top of your existing stack (Java / Spring / React / GraphQL).",

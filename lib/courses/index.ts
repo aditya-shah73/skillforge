@@ -4,8 +4,9 @@
 import * as ai from "./ai";
 import * as dsa from "./dsa";
 import * as systemDesign from "./system-design";
+import * as frontend from "./frontend";
 
-export type CourseId = "ai" | "dsa" | "system-design";
+export type CourseId = "ai" | "dsa" | "system-design" | "frontend";
 
 export type CourseMeta = {
   id: CourseId;
@@ -20,13 +21,13 @@ export type CourseMeta = {
   status: "available" | "coming-soon";
 };
 
-export const COURSES: CourseMeta[] = [ai.COURSE_META, dsa.COURSE_META, systemDesign.COURSE_META];
+export const COURSES: CourseMeta[] = [ai.COURSE_META, dsa.COURSE_META, systemDesign.COURSE_META, frontend.COURSE_META];
 
 export function getCourseById(id: CourseId): CourseMeta | undefined {
   return COURSES.find((c) => c.id === id);
 }
 
 // Re-export per-course module data for callers that already know which course
-// they want. Most pages should import directly from "./ai", "./dsa", or
-// "./system-design" instead.
-export { ai, dsa, systemDesign };
+// they want. Most pages should import directly from "./ai", "./dsa",
+// "./system-design", or "./frontend" instead.
+export { ai, dsa, systemDesign, frontend };

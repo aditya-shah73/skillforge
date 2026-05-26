@@ -1,13 +1,13 @@
-// Data Structures & Algorithms in Java — course definition.
-// Pattern-first DSA prep for engineers returning to interview prep.
+// Data Structures and Algorithms — course definition.
+// Pattern-first DSA prep for engineers returning to interview prep. Java-implemented.
 
 import type { Module } from "./ai";
 
 export const COURSE_META = {
   id: "dsa" as const,
   slug: "dsa",
-  name: "DSA in Java",
-  shortName: "DSA Course",
+  name: "Data Structures and Algorithms",
+  shortName: "DSA",
   tagline: "Pattern-driven LeetCode prep, in Java",
   description:
     "A pattern-first course on data structures and algorithms — Big-O, arrays, hashing, trees, graphs, DP, and the named patterns LeetCode interviewers expect you to recognize on sight. Built for engineers who studied this once, years ago, and want intuition before rote memorization.",

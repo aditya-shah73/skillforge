@@ -2,7 +2,7 @@
 // Kept separate from `index.ts` to avoid pulling these into module pages
 // that only need a single course's data.
 
-import { COURSES, ai, dsa, systemDesign, type CourseId, type CourseMeta } from "./index";
+import { COURSES, ai, dsa, systemDesign, frontend, type CourseId, type CourseMeta } from "./index";
 import type { Module } from "./ai";
 
 type CourseBundle = {
@@ -14,6 +14,7 @@ const COURSE_DATA: Record<CourseId, { MODULES: Module[]; PHASES: { number: numbe
   ai,
   dsa,
   "system-design": systemDesign,
+  frontend,
 };
 
 export function getCourseData(id: CourseId) {

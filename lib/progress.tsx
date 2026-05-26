@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
-import { COURSES, ai, dsa, systemDesign } from "./courses";
+import { COURSES, ai, dsa, systemDesign, frontend } from "./courses";
 
 type Progress = {
   xp: number;
@@ -61,6 +61,7 @@ function migrateCompletedModules(raw: unknown): string[] {
     ai: ai.MODULES,
     dsa: dsa.MODULES,
     "system-design": systemDesign.MODULES,
+    frontend: frontend.MODULES,
   };
   const out = new Set<string>();
   for (const entry of raw) {

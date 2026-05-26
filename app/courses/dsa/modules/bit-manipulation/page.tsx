@@ -88,7 +88,7 @@ flowchart TB
 
       <div className="not-prose mb-8">
         <Link href="/courses/dsa" className="inline-block text-sm text-slate-500 no-underline hover:text-slate-700 dark:hover:text-slate-300">
-          ← Back to DSA in Java
+          ← Back to Data Structures and Algorithms
         </Link>
         <div className="mt-2 block w-fit rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
           Phase 6 · Module 30 · Closeout

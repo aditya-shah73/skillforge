@@ -11,17 +11,17 @@ type CheckpointDef = { id: string; title: string };
  * Derive the courseId for the current module page from the URL path.
  * Module pages are mounted under `/courses/<slug>/modules/<moduleSlug>`,
  * and course slugs are one-to-one with course ids ("ai", "dsa",
- * "system-design") — see the COURSE_META exports in /lib/courses/*. We
- * read the first segment after `/courses/` and validate it against the
- * known id set so a stray path (e.g. /courses/old-name/) returns null
- * instead of writing a junk key into progress storage.
+ * "system-design", "frontend") — see the COURSE_META exports in
+ * /lib/courses/*. We read the first segment after `/courses/` and validate
+ * it against the known id set so a stray path (e.g. /courses/old-name/)
+ * returns null instead of writing a junk key into progress storage.
  */
 function deriveCourseId(pathname: string | null): CourseId | null {
   if (!pathname) return null;
   const m = pathname.match(/^\/courses\/([^/]+)\//);
   if (!m) return null;
   const slug = m[1];
-  if (slug === "ai" || slug === "dsa" || slug === "system-design") {
+  if (slug === "ai" || slug === "dsa" || slug === "system-design" || slug === "frontend") {
     return slug;
   }
   return null;

@@ -1,4 +1,4 @@
-// System Design in Java — course definition.
+// System Design — course definition.
 // Layered system design for Java engineers: fundamentals → patterns → real designs.
 
 import type { Module } from "./ai";
@@ -6,8 +6,8 @@ import type { Module } from "./ai";
 export const COURSE_META = {
   id: "system-design" as const,
   slug: "system-design",
-  name: "System Design in Java",
-  shortName: "System Design Course",
+  name: "System Design",
+  shortName: "System Design",
   tagline: "Distributed systems, layered — fundamentals → patterns → real designs",
   description:
     "A layered system design course for Java engineers. Start with the fundamentals (CAP, consistency, scaling math), build up through storage, communication, and reliability patterns, then design real systems end-to-end. Java/Spring-flavored where it matters; concept-first everywhere else.",

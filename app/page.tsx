@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { COURSES, ai, dsa, systemDesign } from "@/lib/courses";
+import { COURSES, ai, dsa, systemDesign, frontend } from "@/lib/courses";
 import ContinueWhereYouLeftOff from "@/components/ContinueWhereYouLeftOff";
 import BookmarksSection from "@/components/BookmarksSection";
 
-const COURSE_DATA = { ai, dsa, "system-design": systemDesign } as const;
+const COURSE_DATA = { ai, dsa, "system-design": systemDesign, frontend } as const;
 
 export default function Home() {
   // Live count of available modules across every course — used by the
@@ -62,7 +62,7 @@ export default function Home() {
           </h2>
           <span className="text-xs text-slate-400">{COURSES.length} courses</span>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           {COURSES.map((course) => {
             const isAvailable = course.status === "available";
             const data = COURSE_DATA[course.id];

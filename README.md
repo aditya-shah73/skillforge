@@ -4,8 +4,8 @@ Hands-on, project-driven courses for working engineers. The whole thing is a Nex
 
 ## Tracks
 
-- **AI for Engineers** — *available now.* From zero ML background to shipping production AI features (Java / Spring / React / GraphQL). 28 modules across 6 phases (plus orientation).
-- **DSA in Java** — *available now (orientation only — content rolling out).* Pattern-first LeetCode prep for engineers returning to interview prep after years away. 34 modules across 8 phases (plus orientation), shipping one module at a time.
+- **AI Engineering Foundations** — *available now.* From zero ML background to shipping production AI features (Java / Spring / React / GraphQL). 28 modules across 6 phases (plus orientation).
+- **Data Structures and Algorithms** — *available now (orientation only — content rolling out).* Pattern-first LeetCode prep for engineers returning to interview prep after years away. 34 modules across 8 phases (plus orientation), shipping one module at a time.
 
 The home page is a course picker; pick a track and dive in.
 
@@ -21,7 +21,7 @@ The platform is opinionated. Every concept follows the same five-step contract:
 
 A checkpoint only clears when you can do three things: explain the idea in two minutes, recognize it in code you didn't write, and implement it from scratch in Java. Quizzes enforce this — you don't progress by clicking "next," you progress by answering correctly.
 
-## AI for Engineers — curriculum
+## AI Engineering Foundations — curriculum
 
 28 modules across 6 phases (plus orientation). All available today.
 
