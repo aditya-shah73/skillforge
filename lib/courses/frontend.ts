@@ -13,11 +13,12 @@ export const COURSE_META = {
   shortName: "FE Foundations",
   tagline: "From basic React to engineer-ready front-end",
   description:
-    "A deep-dive front-end course for engineers who use React but have never built a closure, predicted `this`, traced the event loop, or explained why their bundle is 800KB. JavaScript foundations → TypeScript → React internals → Next.js → performance & accessibility, with checkpoints that gate progress until you can actually explain each idea.",
+    "Deep front-end fundamentals: JavaScript internals, TypeScript for React engineers, the React rendering model, hooks and state, Next.js, performance, and accessibility. Each idea ends in a checkpoint that gates progress until you can explain it cold.",
   icon: "🎨",
   color: "from-cyan-500 to-sky-500",
   accent: "cyan",
   status: "available" as const,
+  language: "JavaScript / TypeScript",
 };
 
 // Forward-locked phase list. Phases 2–9 currently have no modules — they

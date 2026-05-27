@@ -10,11 +10,12 @@ export const COURSE_META = {
   shortName: "DSA",
   tagline: "Pattern-driven LeetCode prep, in Java",
   description:
-    "A pattern-first course on data structures and algorithms — Big-O, arrays, hashing, trees, graphs, DP, and the named patterns LeetCode interviewers expect you to recognize on sight. Built for engineers who studied this once, years ago, and want intuition before rote memorization.",
+    "Pattern-first data structures and algorithms: Big-O, arrays, hashing, trees, graphs, dynamic programming, and the named patterns LeetCode interviewers expect on sight. Every pattern comes with a worked example and a Java implementation.",
   icon: "🧩",
   color: "from-emerald-500 to-teal-500",
   accent: "emerald",
   status: "available" as const,
+  language: "Java",
 };
 
 export const PHASES = [

@@ -10,11 +10,12 @@ export const COURSE_META = {
   shortName: "System Design",
   tagline: "Distributed systems, layered — fundamentals → patterns → real designs",
   description:
-    "A layered system design course for Java engineers. Start with the fundamentals (CAP, consistency, scaling math), build up through storage, communication, and reliability patterns, then design real systems end-to-end. Java/Spring-flavored where it matters; concept-first everywhere else.",
+    "Layered system design end-to-end: CAP, consistency, scaling math, storage and communication patterns, reliability, then real designs like TinyURL, Twitter, and rideshare. Java/Spring-flavored where it matters; concept-first everywhere else.",
   icon: "🏗️",
   color: "from-cyan-500 to-blue-500",
   accent: "cyan",
   status: "available" as const,
+  language: "Java / Spring",
 };
 
 export const PHASES = [

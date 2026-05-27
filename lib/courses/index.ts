@@ -19,6 +19,10 @@ export type CourseMeta = {
   color: string;
   accent: string;
   status: "available" | "coming-soon";
+  // Primary language/stack the course is taught in. Shown on the home grid
+  // course card so the picker isn't ambiguous (the platform mixes Java, JS/TS,
+  // and language-agnostic system-design tracks).
+  language: string;
 };
 
 export const COURSES: CourseMeta[] = [ai.COURSE_META, dsa.COURSE_META, systemDesign.COURSE_META, frontend.COURSE_META];

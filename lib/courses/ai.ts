@@ -20,12 +20,13 @@ export const COURSE_META = {
   shortName: "AI Foundations",
   tagline: "From zero ML to production AI features",
   description:
-    "A hands-on AI course for working full-stack engineers. Build real intuition for LLMs, embeddings, RAG, and agents — then ship production-quality AI features on top of your existing stack (Java / Spring / React / GraphQL).",
+    "Hands-on training in modern AI: tokens and embeddings, vector search, retrieval-augmented generation, tool use, agents, evals, and fine-tuning. Each module ships a working Java/Spring feature you can drop into a real product.",
   icon: "🧠",
   // Tailwind gradient (used in headers / picker cards)
   color: "from-indigo-500 to-purple-500",
   accent: "indigo",
   status: "available" as const,
+  language: "Java / Spring",
 };
 
 export const PHASES = [

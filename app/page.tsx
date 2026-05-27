@@ -31,7 +31,7 @@ export default function Home() {
           </span>
         </h1>
         <p className="mx-auto mb-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:mx-0 sm:text-lg dark:text-slate-400">
-          Hands-on courses for working engineers. Real Java/Spring projects, checkpoints that actually gate progress. <span className="font-medium text-slate-900 dark:text-slate-100">No passive video binges.</span>
+          Hands-on courses for working engineers. Real projects in real stacks, checkpoints that actually gate progress. <span className="font-medium text-slate-900 dark:text-slate-100">No passive video binges.</span>
         </p>
 
         {/* Inline value strip — replaces the old stats row */}
@@ -107,28 +107,25 @@ export default function Home() {
                   {/* Spacer pushes meta + footer to the bottom so cards align across columns */}
                   <div className="flex-1" />
 
-                  {/* Course meta row */}
-                  <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400">
-                    <span className="inline-flex items-center gap-1">
-                      <span className="text-slate-300 dark:text-slate-600">▦</span>
-                      {isAvailable ? `${moduleCount} modules` : "modules TBD"}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <span className="text-slate-300 dark:text-slate-600">▤</span>
-                      {phaseCount} phases
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <span className="text-slate-300 dark:text-slate-600">⚙</span>
-                      Java
-                    </span>
+                  {/* Course meta — two stacked lines beat both a three-item
+                      icon row and a single bullet-separated sentence. Counts
+                      on top, language on its own line below — language reads
+                      as a stack tag rather than tail-noise on the count. */}
+                  <div className="mb-3 space-y-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                    <p>
+                      {isAvailable
+                        ? `${moduleCount} modules across ${phaseCount} phases`
+                        : `${phaseCount} phases planned`}
+                    </p>
+                    <p>{course.language}</p>
                   </div>
 
                   <div className="flex items-center justify-between border-t border-slate-100 pt-3 dark:border-slate-800">
                     <span className="text-[11px] text-slate-500">
-                      {isAvailable ? "Ready to go" : "In planning"}
+                      {isAvailable ? "" : "In planning"}
                     </span>
                     {isAvailable && (
-                      <span className={`bg-gradient-to-r text-xs font-semibold ${course.color} inline-flex items-center gap-1 bg-clip-text text-transparent`}>
+                      <span className={`bg-gradient-to-r text-xs font-semibold ${course.color} ml-auto inline-flex items-center gap-1 bg-clip-text text-transparent`}>
                         Start
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
@@ -157,7 +154,7 @@ export default function Home() {
           <ValueProp
             icon="🛠"
             title="Project-driven"
-            desc="Every module ships with a real Java/Spring build. You finish with code, not just notes."
+            desc="Every module ships with a real build in the course's stack. You finish with code, not just notes."
             accent="from-indigo-500 to-purple-500"
           />
           <ValueProp
