@@ -1,0 +1,1 @@
+- [Frontend course module authoring](project_frontend-modules.md) — how teaching modules under app/courses/frontend/modules are structured + component contracts
