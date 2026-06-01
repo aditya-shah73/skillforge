@@ -38,13 +38,14 @@ export default function Phase2RevisionModule() {
 
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This is not new material — it is a <strong>map of Phase 2</strong>. Four modules of TypeScript foundations, compressed to the answers you actually need to say out loud. If a line here makes you blink, click through to the source module and re-read that section; if it makes you nod, keep going.
+          This is not new material — it is a <strong>map of Phase 2</strong>. Five modules of TypeScript foundations, compressed to the answers you actually need to say out loud. If a line here makes you blink, click through to the source module and re-read that section; if it makes you nod, keep going.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           Modules you&apos;re consolidating:{" "}
           <Link href="/courses/frontend/modules/ts-foundations" className="text-cyan-600 hover:underline">TS foundations</Link>,{" "}
           <Link href="/courses/frontend/modules/narrowing-and-guards" className="text-cyan-600 hover:underline">Narrowing &amp; guards</Link>,{" "}
-          <Link href="/courses/frontend/modules/generics-deep" className="text-cyan-600 hover:underline">Generics</Link>, and{" "}
+          <Link href="/courses/frontend/modules/generics-deep" className="text-cyan-600 hover:underline">Generics</Link>,{" "}
+          <Link href="/courses/frontend/modules/utility-types" className="text-cyan-600 hover:underline">Utility types</Link>, and{" "}
           <Link href="/courses/frontend/modules/react-typing" className="text-cyan-600 hover:underline">Typing React</Link>.
         </p>
       </section>
@@ -100,10 +101,27 @@ export default function Phase2RevisionModule() {
       </section>
 
       {/* =============================================================== */}
-      {/* SECTION 4 — React typing */}
+      {/* SECTION 4 — Utility types */}
       {/* =============================================================== */}
       <section className="not-prose mb-12">
-        <h2 className="mb-4 text-2xl font-bold">4 · Typing React</h2>
+        <h2 className="mb-4 text-2xl font-bold">4 · Utility types &amp; type-level transformations</h2>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/40">
+          <ul className="space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+            <li><strong>Derive, don&apos;t duplicate</strong>: build types from existing ones so they can&apos;t drift. <code>Pick</code>/<code>Omit</code>{" "}carve a subset of fields; <code>Partial</code>{" "}makes every field optional (great for updaters); <code>Required</code>/<code>Readonly</code>{" "}are the inverses.</li>
+            <li><strong><code>Record&lt;K, V&gt;</code></strong>{" "}builds a lookup keyed by a union — e.g. <code>{`Record<Status, Config>`}</code>{" "}forces you to handle every status.</li>
+            <li><strong>Function utilities</strong>: <code>ReturnType&lt;F&gt;</code>{" "}and <code>Parameters&lt;F&gt;</code>{" "}read a function&apos;s types; <code>Awaited&lt;T&gt;</code>{" "}unwraps a Promise; <code>NonNullable&lt;T&gt;</code>{" "}strips <code>null/undefined</code>.</li>
+            <li><strong><code>keyof</code></strong>{" "}+ indexed access (<code>T[K]</code>) read the keys and member types of a type; <code>typeof value</code>{" "}derives a type from a runtime value.</li>
+            <li><strong>Mapped types</strong>: <code>{`{ [K in keyof T]: ... }`}</code>{" "}is how <code>Partial</code>/<code>Readonly</code>{" "}are built; <code>?</code>/<code>readonly</code>{" "}add modifiers, <code>-?</code>/<code>-readonly</code>{" "}remove them.</li>
+            <li><strong>Conditional types</strong>: <code>{`T extends U ? X : Y`}</code>, and <code>infer</code>{" "}captures a type inside the branch (that&apos;s how <code>ReturnType</code>{" "}extracts the return). <strong>Template literal types</strong>{" "}build string-literal types like <code>{`\`on\${Capitalize<K>}\``}</code>{" "}for typed handler names.</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* =============================================================== */}
+      {/* SECTION 5 — React typing */}
+      {/* =============================================================== */}
+      <section className="not-prose mb-12">
+        <h2 className="mb-4 text-2xl font-bold">5 · Typing React</h2>
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/40">
           <ul className="space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
             <li><strong>Props</strong>: declare a <code>type</code>{" "}or <code>interface</code>; let TS infer the return. Skip <code>React.FC</code>{" "}— it adds <code>children</code>{" "}implicitly and breaks generic components.</li>
@@ -117,10 +135,10 @@ export default function Phase2RevisionModule() {
       </section>
 
       {/* =============================================================== */}
-      {/* SECTION 5 — The interview answers */}
+      {/* SECTION 6 — The interview answers */}
       {/* =============================================================== */}
       <section className="not-prose mb-12">
-        <h2 className="mb-4 text-2xl font-bold">5 · The interview answers</h2>
+        <h2 className="mb-4 text-2xl font-bold">6 · The interview answers</h2>
         <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-5 dark:border-amber-900/60 dark:bg-amber-950/30">
           <p className="mb-3 text-sm font-semibold text-amber-900 dark:text-amber-200">If asked &quot;what&apos;s structural typing?&quot;:</p>
           <p className="mb-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
