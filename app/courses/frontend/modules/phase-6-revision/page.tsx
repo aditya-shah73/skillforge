@@ -169,7 +169,7 @@ export default function Phase6RevisionModule() {
             <strong>Phase 7 — Next.js (App Router) Essentials.</strong>{" "}You now own the advanced React patterns — performance, Suspense, error boundaries, portals, and composition. Phase 7 moves to the framework: <strong>Server vs Client Components</strong>, <strong>routing &amp; layouts</strong>, <strong>server data loading</strong>, <strong>Server Actions</strong>, and the <strong>rendering strategies</strong>{" "}(static, dynamic, streaming) that decide where and when your code runs.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 7+ content is rolling out — check back, or follow along as new modules ship.
+            Phase 7 and every later phase are live — keep going while the patterns are fresh.
           </p>
         </div>
       </section>

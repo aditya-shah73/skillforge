@@ -39,10 +39,10 @@ export default function Phase9RevisionModule() {
 
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This is it — the <strong>final module</strong>{" "}of Front-End Engineering Foundations. Fifty-five modules, nine phases, from <code>===</code>{" "}to system design. If you&apos;ve made it here, you didn&apos;t just learn React tricks — you built the mental models that let you <strong>explain front-end engineering cold</strong>, the kind of explanations that separate mid and senior engineers from everyone who only ever copied the snippet. <strong>Congratulations.</strong>{" "}Take a beat to notice how far that is from where you started.
+          This is it — the <strong>final module</strong>{" "}of Front-End Engineering Foundations. Fifty-seven modules across ten phases, from <code>===</code>{" "}to system design. If you&apos;ve made it here, you didn&apos;t just learn React tricks — you built the mental models that let you <strong>explain front-end engineering cold</strong>, the kind of explanations that separate mid and senior engineers from everyone who only ever copied the snippet. <strong>Congratulations.</strong>{" "}Take a beat to notice how far that is from where you started.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
-          This card does something different from every revision module before it. Instead of consolidating one phase, it <strong>recaps all nine</strong>{" "}— the load-bearing idea from each, in the order you learned them. Read it top to bottom. Anything that makes you blink, click through to that phase&apos;s reference card and re-read it; anything that makes you nod, keep moving. By the end you&apos;ll have the whole course in your head at once — which is exactly the state you want to walk into the room in.
+          This card does something different from every revision module before it. Instead of consolidating one phase, it <strong>recaps all nine learning phases</strong>{" "}(Phase 1 through Phase 9) — the load-bearing idea from each, in the order you learned them. Read it top to bottom. Anything that makes you blink, click through to that phase&apos;s reference card and re-read it; anything that makes you nod, keep moving. By the end you&apos;ll have the whole course in your head at once — which is exactly the state you want to walk into the room in.
         </p>
       </section>
 
@@ -234,7 +234,7 @@ export default function Phase9RevisionModule() {
         <h2 className="mb-4 text-2xl font-bold">You made it</h2>
         <div className="rounded-lg border border-rose-200 bg-rose-50/60 p-5 dark:border-rose-900/60 dark:bg-rose-950/30">
           <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-            <strong>That&apos;s the whole course.</strong>{" "}Nine phases, from the JavaScript under the hood to the words you say in the room. You don&apos;t just know how to use React anymore — you understand <em>why</em>{" "}it works the way it does, and you can defend every choice. That&apos;s the foundation. It doesn&apos;t expire, and it&apos;s the thing every senior front-end engineer is built on.
+            <strong>That&apos;s the whole course.</strong>{" "}Nine learning phases, from the JavaScript under the hood to the words you say in the room. You don&apos;t just know how to use React anymore — you understand <em>why</em>{" "}it works the way it does, and you can defend every choice. That&apos;s the foundation. It doesn&apos;t expire, and it&apos;s the thing every senior front-end engineer is built on.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
             So go use it. <strong>Go ship something</strong>{" "}that puts these ideas to work, and <strong>go interview</strong>{" "}like someone who can explain the whole stack cold — because now you can. Be honest about tradeoffs, narrate your thinking, and let the foundation carry you. You&apos;re ready.

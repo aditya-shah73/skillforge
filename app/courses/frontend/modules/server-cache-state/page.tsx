@@ -251,7 +251,7 @@ function useAddTodo() {
           That works, but there&apos;s a round-trip of latency before the UI updates. An <strong>optimistic update</strong>{" "}makes the UI feel instant: you write the expected result into the cache <em>immediately</em>, before the server confirms — and roll back if the request fails.
         </p>
         <p>
-          The pattern uses four mutation lifecycle hooks:
+          The pattern uses three mutation lifecycle callbacks:
         </p>
         <ul>
           <li><strong><code>onMutate</code></strong>{" "}— fires before the request. Cancel in-flight refetches, snapshot the current cache (for rollback), and write the optimistic value.</li>

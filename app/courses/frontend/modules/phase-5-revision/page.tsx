@@ -170,7 +170,7 @@ export default function Phase5RevisionModule() {
             <strong>Phase 6 — Advanced React Patterns.</strong>{" "}You now own state, forms, and data flow — the everyday toolkit. Phase 6 goes to the advanced patterns: performance at scale, Suspense and concurrent features, error boundaries, portals, and the patterns that separate senior React engineers from competent ones.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 6+ content is rolling out — check back, or follow along as new modules ship.
+            Phase 6 and every later phase are live — keep going while state and data are fresh.
           </p>
         </div>
       </section>

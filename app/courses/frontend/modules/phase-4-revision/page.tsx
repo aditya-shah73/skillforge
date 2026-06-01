@@ -167,7 +167,7 @@ export default function Phase4RevisionModule() {
             <strong>Phase 5 — State, Forms &amp; Data.</strong>{" "}Now that you own the hooks, Phase 5 is about <em>where state lives and how data flows</em>: controlled vs uncontrolled inputs, forms &amp; validation, data fetching and the race-condition trap, server cache as its own category of state, and choosing between local, lifted, global, and URL state.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 5+ content is rolling out — check back, or follow along as new modules ship.
+            Phase 5 and every later phase are live — keep going while the hooks model is fresh.
           </p>
         </div>
       </section>

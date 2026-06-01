@@ -79,7 +79,7 @@ export default function FrontendWelcomeModule() {
       <section>
         <h2>How the course works</h2>
         <p>
-          The full syllabus spans <strong>10 phases</strong>{" "}— this welcome, JavaScript foundations, TypeScript, React mental model, hooks in depth, state &amp; data, advanced patterns, Next.js, performance &amp; a11y, and interview closers. <strong>Phase 0 + Phase 1 ship first</strong>{" "}— that&apos;s the 9 modules you can complete today. Phases 2–9 are queued and will unlock as they&apos;re written.
+          The full syllabus spans <strong>10 phases</strong>{" "}— this welcome, JavaScript foundations, TypeScript, React mental model, hooks in depth, state &amp; data, advanced patterns, Next.js, performance &amp; a11y, and interview closers. <strong>All 57 modules are live</strong>{" "}— start at Phase 1 and work straight through, or jump to the phase you need.
         </p>
         <p>
           Each content module is a single page with the same rhythm:
@@ -110,7 +110,7 @@ export default function FrontendWelcomeModule() {
           The phases build deliberately:
         </p>
         <ul>
-          <li><strong>Phase 1 · JavaScript You Can Defend (7 modules)</strong>{" "}— values vs references, closures, <code>this</code>, prototypes, the event loop, async patterns, modules &amp; bundlers. The foundation everything else stands on.</li>
+          <li><strong>Phase 1 · JavaScript You Can Defend</strong>{" "}— values vs references, closures, <code>this</code>, prototypes, the event loop, async patterns, modules &amp; bundlers. The foundation everything else stands on.</li>
           <li><strong>Phase 2 · TypeScript for React Engineers</strong>{" "}— the parts of TS that actually catch bugs: narrowing, generics, utility types, typing hooks and props well.</li>
           <li><strong>Phase 3 · React Mental Model</strong>{" "}— rendering, reconciliation, why keys matter, why props are the API contract, what state actually is.</li>
           <li><strong>Phase 4 · Hooks in Depth</strong>{" "}— <code>useState</code>, <code>useEffect</code>, <code>useRef</code>, <code>useMemo</code>, <code>useCallback</code>, and the closure traps every team writes by accident.</li>
@@ -125,7 +125,7 @@ export default function FrontendWelcomeModule() {
       <section>
         <h2>Time commitment</h2>
         <p>
-          Phase 0 + Phase 1 — what you can complete today — runs about <strong>12–15 hours</strong>{" "}of focused work if you do every snippet honestly. At ~1 hour a day that&apos;s two to three weeks. By the end you&apos;ll be able to defend JavaScript internals at a level that opens doors most React engineers never realize are closed to them.
+          Phase 1 alone — the JavaScript foundations — runs about <strong>12–15 hours</strong>{" "}of focused work if you do every snippet honestly. At ~1 hour a day that&apos;s two to three weeks. By the end of just that phase you&apos;ll be able to defend JavaScript internals at a level that opens doors most React engineers never realize are closed to them.
         </p>
         <p>
           Subsequent phases vary — TS and the React internals chapters are dense; Next.js and the closers are lighter. Budget ranges are listed per module.

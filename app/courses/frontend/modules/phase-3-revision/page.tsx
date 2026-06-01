@@ -175,7 +175,7 @@ export default function Phase3RevisionModule() {
             <strong>Phase 4 — Hooks in Depth.</strong>{" "}You understand <em>why</em>{" "}hooks exist and the rules they obey. Next phase: each one, in detail. <code>useState</code>{" "}internals, <code>useReducer</code>{" "}for complex transitions, <code>useContext</code>{" "}without provider hell, custom hooks as the unit of reuse — and the rules-of-hooks story you can recite cold.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 4+ content is rolling out — check back, or follow along as new modules ship.
+            Phase 4 and every later phase are live — keep going while the React mental model is fresh.
           </p>
         </div>
       </section>

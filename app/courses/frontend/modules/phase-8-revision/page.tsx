@@ -169,7 +169,7 @@ export default function Phase8RevisionModule() {
             <strong>Phase 9 — Interview Closers.</strong>{" "}You&apos;ve covered the whole stack of front-end skills — now Phase 9 turns it into interview performance: front-end system design and how to drive the whiteboard, debugging war stories told STAR-style, rapid-fire fundamentals answered in 60 seconds, live coding challenges, and the behavioral round and how to close strong.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 9 content is rolling out — check back, or follow along as new modules ship.
+            Phase 9 — Interview Closers — is live. It&apos;s the last phase: finish strong.
           </p>
         </div>
       </section>

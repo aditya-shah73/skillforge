@@ -21,11 +21,10 @@ export const COURSE_META = {
   language: "JavaScript / TypeScript",
 };
 
-// Forward-locked phase list. Phases 2–9 currently have no modules — they
-// render as empty phase sections on the course page until we ship them.
-// Locking the names + colors here means the existing landing page logic
-// (modulesByPhase in app/courses/frontend/page.tsx) keeps working as we
-// fill modules in without any further wiring.
+// Phase list — all 10 phases (0–9) are shipped and populated. The landing
+// page (modulesByPhase in app/courses/frontend/page.tsx) derives its phase
+// sections from these names + colors, so this stays the single source of
+// truth for phase metadata.
 export const PHASES = [
   { number: 0, name: "Orientation", color: "from-slate-500 to-slate-400" },
   { number: 1, name: "JavaScript You Can Defend", color: "from-rose-500 to-orange-500" },

@@ -169,7 +169,7 @@ export default function Phase7RevisionModule() {
             <strong>Phase 8 — Performance, A11y &amp; DX.</strong>{" "}You now own the App Router: the server/client split, routing and layouts, server data loading, Server Actions, and rendering strategies. Phase 8 turns to the qualities that make an app production-grade: rendering &amp; bundle performance and Core Web Vitals, accessibility and accessible forms, front-end testing, and the developer experience that keeps a codebase fast to work in.
           </p>
           <p className="mt-3 text-sm text-slate-600 italic dark:text-slate-400">
-            Phase 8+ content is rolling out — check back, or follow along as new modules ship.
+            Phase 8 and Phase 9 are live — keep going while the App Router model is fresh.
           </p>
         </div>
       </section>
