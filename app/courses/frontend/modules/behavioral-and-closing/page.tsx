@@ -680,7 +680,7 @@ Example:   "I tend to go too deep on polishing details before getting
           <p>
             Candidates pour weeks into LeetCode and zero hours into behavioral prep, then lose the offer in the round
             they didn&apos;t practice. An hour spent writing and rehearsing this kit has a higher return than another hour of
-            algorithms, because almost no one does it. You&apos;ve built the technical foundation across nine phases — this
+            algorithms, because almost no one does it. You&apos;ve built the technical foundation across ten phases — this
             is how you make sure the room actually hears it.
           </p>
         </Callout>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MODULES, PHASES } from "@/lib/courses/dsa";
 import CourseProgress from "@/components/CourseProgress";
 import PhaseProgress from "@/components/PhaseProgress";
+import ModuleBadges from "@/components/ModuleBadges";
 
 export default function DsaHome() {
   const modulesByPhase = PHASES.map((phase) => ({
@@ -105,6 +106,7 @@ function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
       </div>
       <h3 className="mb-1 text-base font-semibold">{m.title}</h3>
       <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">{m.subtitle}</p>
+      <ModuleBadges difficulty={m.difficulty} estimatedMinutes={m.estimatedMinutes} />
       <div className="flex items-center gap-1 text-xs text-slate-500">
         <span>🛠</span>
         <span className="truncate">{m.project}</span>

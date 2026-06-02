@@ -1,9 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 /**
  * Lightweight syntax highlighter for Java + pom.xml-style code blocks
  * used in the course. No external deps — we do it with regex because
  * the code snippets here are small and well-behaved.
+ *
+ * Client component: the syntax-highlighting tokenizer below is pure (plain
+ * functions, no server-only deps) and runs fine on the client, while the
+ * copy-to-clipboard button needs `useState` + the Clipboard API.
  *
  * Color scheme (works on the dark pre background):
  *  - comments:   muted slate / italic
@@ -158,6 +164,48 @@ function renderLine(line: string, lang: Lang, key: number): React.ReactNode {
   );
 }
 
+/**
+ * Copy-to-clipboard button for a code block. Copies the raw, un-highlighted
+ * source so what lands on the clipboard is exactly what the author wrote.
+ * Shows a transient "Copied" confirmation, with a graceful fallback if the
+ * Clipboard API is unavailable (e.g. non-secure context).
+ */
+function CopyButton({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // Clipboard API unavailable (insecure context / permissions) — no-op.
+      // The code stays selectable in the <pre>, so the user can still copy it.
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label={copied ? "Copied to clipboard" : "Copy code to clipboard"}
+      className="inline-flex items-center gap-1 rounded-md border border-slate-700 bg-slate-800/80 px-2 py-1 font-mono text-[11px] font-medium text-slate-300 transition hover:border-slate-500 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+    >
+      {copied ? (
+        <>
+          <span aria-hidden>✓</span>
+          Copied
+        </>
+      ) : (
+        <>
+          <span aria-hidden>⧉</span>
+          Copy
+        </>
+      )}
+    </button>
+  );
+}
+
 export default function CodeBlock({
   children,
   lang = "java",
@@ -167,17 +215,30 @@ export default function CodeBlock({
   lang?: Lang;
   caption?: string;
 }) {
-  const lines = children.replace(/\n$/, "").split("\n");
+  const source = children.replace(/\n$/, "");
+  const lines = source.split("\n");
   return (
-    <div className="not-prose my-5 overflow-hidden rounded-lg border border-slate-700 bg-slate-950 shadow-sm">
-      {caption && (
-        <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2 font-mono text-xs text-slate-400">
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-rose-500/70" />
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-500/70" />
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
-          <span className="ml-2">{caption}</span>
+    <div className="not-prose group relative my-5 overflow-hidden rounded-lg border border-slate-700 bg-slate-950 shadow-sm">
+      {/* Header bar: always rendered so the copy button has a home. When a
+          caption is supplied we also show the traffic-light dots + label. */}
+      <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2 font-mono text-xs text-slate-400">
+        {caption ? (
+          <>
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-rose-500/70" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-500/70" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
+            <span className="ml-2 truncate">{caption}</span>
+          </>
+        ) : (
+          // No caption: label the language (skip the noisy "plain" case).
+          <span className="tracking-wider uppercase">
+            {lang === "plain" ? "" : lang}
+          </span>
+        )}
+        <div className="ml-auto">
+          <CopyButton code={source} />
         </div>
-      )}
+      </div>
       <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-relaxed text-slate-200">
         <code>
           {lines.map((line, i) => (

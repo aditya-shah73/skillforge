@@ -20,6 +20,9 @@ export default function RapidFireFundamentalsModule() {
 
   return (
     <article className="prose-custom">
+      {/* content-lint-disable count — "nine phases" refers to the learning phases
+          (Phase 1–9, excluding Orientation), and "three phases" describes DOM
+          event propagation (capture/target/bubble); neither is a course-phase total. */}
       <nav className="mb-6 text-xs">
         <Link href="/courses/frontend" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>

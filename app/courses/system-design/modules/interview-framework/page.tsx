@@ -36,6 +36,8 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
+      {/* content-lint-disable count — "six phases" here is the RESHAD interview
+          *process* (Clarify → Estimate → … → Discuss), not the course's phases. */}
       <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>

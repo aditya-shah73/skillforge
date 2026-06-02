@@ -86,6 +86,9 @@ flowchart LR
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      {/* content-lint-disable count — "40 modules" counts what the learner has
+          *already completed* before this framework module (module index 40),
+          not the 43-module course total. */}
       <BookmarkButton courseId="dsa" moduleSlug="interview-framework" />
       <ModuleProgress moduleSlug="interview-framework" checkpoints={CHECKPOINTS} />
 
@@ -107,7 +110,7 @@ flowchart LR
         <h2 id="frameworks">Why frameworks matter under pressure</h2>
 
         <p>
-          You&apos;ve made it through 32 modules. You can write a HashMap from scratch, you know when to reach for
+          You&apos;ve made it through 40 modules. You can write a HashMap from scratch, you know when to reach for
           BFS over DFS, and you can spot a 1D-DP problem from the second sentence. On a quiet Saturday morning,
           with coffee and no audience, you can solve LeetCode mediums confidently.
         </p>
@@ -333,7 +336,7 @@ A:  "Up to 50,000."`}</CodeBlock>
 
         <p>
           With the problem clarified, your second job is to ask: <em>what does this look like?</em>{" "}You&apos;ve
-          spent 32 modules learning the patterns; this is where they pay off. The match step is fast — usually 30
+          spent 40 modules learning the patterns; this is where they pay off. The match step is fast — usually 30
           seconds to a minute — but it sets the entire direction.
         </p>
 

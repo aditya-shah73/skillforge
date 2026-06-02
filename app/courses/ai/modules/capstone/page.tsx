@@ -863,7 +863,7 @@ conversation:
       <div className="my-12 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 p-8 text-white">
         <h3 className="mt-0 mb-3 text-xl font-bold text-white">You finished the course.</h3>
         <p className="mb-3 text-white/95">
-          27 modules. Tokenization to capstone. Java from scratch through Spring AI through agents through evals.
+          33 modules. Tokenization to capstone. Java from scratch through Spring AI through agents through evals.
           You wrote linear regression with no library. You wrote attention with no library. You shipped a RAG
           pipeline, an agent loop, a streaming chat UI, an eval harness, an injection corpus, and a capstone that
           ties them all together.

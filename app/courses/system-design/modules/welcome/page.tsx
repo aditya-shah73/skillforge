@@ -9,6 +9,9 @@ export default function Page() {
 
   return (
     <article className="prose-custom">
+      {/* content-lint-disable count — counts here are framed as "after this
+          welcome": "the next forty-nine modules" = 50 total − this orientation
+          module, and the per-phase bullets (Phases 1–8) sum to those 49. */}
       <nav className="mb-6 text-xs">
         <Link href="/courses/system-design" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>

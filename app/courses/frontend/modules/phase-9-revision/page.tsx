@@ -16,6 +16,9 @@ export default function Phase9RevisionModule() {
 
   return (
     <article className="prose-custom">
+      {/* content-lint-disable count — this finale recaps the nine *learning*
+          phases (Phase 1–9); Orientation (Phase 0) has no idea to consolidate,
+          so "nine phases" here is intentional, not a drift against the 10-phase total. */}
       <nav className="mb-6 text-xs">
         <Link href="/courses/frontend" className="text-cyan-600 hover:underline">← All modules</Link>
       </nav>

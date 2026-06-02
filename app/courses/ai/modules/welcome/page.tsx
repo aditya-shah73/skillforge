@@ -76,7 +76,7 @@ export default function WelcomeModule() {
       <section>
         <h2>How the course works</h2>
         <p>
-          The syllabus is <strong>28 modules across 7 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
+          The syllabus is <strong>33 modules across 7 phases</strong>. You&apos;re reading the first one right now. Each module is a single page with the same rhythm:
         </p>
         <ol>
           <li><strong>Analogy</strong> — the intuition, before any math</li>

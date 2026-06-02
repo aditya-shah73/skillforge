@@ -40,6 +40,9 @@ flowchart LR
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
+      {/* content-lint-disable count — "41 modules" here counts the patterns
+          the learner has *already completed* before reaching this capstone
+          (module index 41); the course total is 43, stated correctly below. */}
       <BookmarkButton courseId="dsa" moduleSlug="capstone" />
       <ModuleProgress moduleSlug="capstone" checkpoints={CHECKPOINTS} />
 
@@ -73,7 +76,7 @@ flowchart LR
         <h2 id="how-it-works">How this capstone works</h2>
 
         <p>
-          You&apos;ve spent 33 modules building patterns. This one is the opposite shape: <strong>almost no new
+          You&apos;ve spent 41 modules building patterns. This one is the opposite shape: <strong>almost no new
           theory, all practice.</strong>{" "}Twenty curated problems, grouped by difficulty, deliberately mixed across
           patterns so you can&apos;t guess based on which module they came from.
         </p>
@@ -123,7 +126,7 @@ flowchart LR
           <li><strong>Prefix sum</strong> — range queries on arrays, &quot;subarray sum equals K&quot; with hashmap.</li>
         </ul>
 
-        <Callout variant="insight" title="The course was 33 modules of pattern-building. This is one module of pattern-using.">
+        <Callout variant="insight" title="The course was 41 modules of pattern-building. This is one module of pattern-using.">
           <p>
             If a pattern in that list looks unfamiliar, that&apos;s a signal — go skim the relevant module first. The
             capstone doesn&apos;t teach. It tests whether the teaching took.
@@ -1011,7 +1014,7 @@ private int dfs(int r, int c) {
       </Checkpoint>
 
       {/* ───────────────── Checkpoint 6 · Final challenge ───────────────── */}
-      <Checkpoint moduleSlug="capstone" id="final" title="Final pattern-recognition challenge" xp={50} celebration="That's the course. 34 modules. You can defend every pattern and you finished a 20-problem portfolio. Go solve hundreds more on your own — you have the framework.">
+      <Checkpoint moduleSlug="capstone" id="final" title="Final pattern-recognition challenge" xp={50} celebration="That's the course. 43 modules. You can defend every pattern and you finished a 20-problem portfolio. Go solve hundreds more on your own — you have the framework.">
       <section>
         <h2 id="final">Final pattern-recognition challenge</h2>
 
@@ -1212,7 +1215,7 @@ private int dfs(int r, int c) {
         />
 
         <PartRecap
-          title="Course wrap · what you can now do that you couldn&apos;t 34 modules ago"
+          title="Course wrap · what you can now do that you couldn&apos;t 43 modules ago"
           gist="Twenty named patterns. Twenty solved capstone problems. The reflex to read a problem statement and reach for the right tool, with reasons. That&apos;s the package."
           points={[
             { takeaway: "Recognize the right pattern from a problem statement in under 60 seconds.", detail: "Across the 20 patterns, you can read the constraints and call the structure or technique by name before sketching." },
@@ -1227,7 +1230,7 @@ private int dfs(int r, int c) {
         <div className="not-prose mt-12 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-orange-500 p-8 text-white">
           <h3 className="mt-0 mb-3 text-xl font-bold text-white">You finished the course.</h3>
           <p className="mb-3 text-white/95">
-            34 modules. From Big-O notation through every linear data structure, hashing, trees, graphs, the
+            43 modules. From Big-O notation through every linear data structure, hashing, trees, graphs, the
             algorithmic techniques, dynamic programming in five flavors, advanced graph topics, the interview
             framework, and a 20-problem capstone with writeups. You built ArrayList from scratch. You built a
             HashMap. You built a heap. You wrote BFS, DFS, Dijkstra, Union-Find, and seven kinds of DP — all in

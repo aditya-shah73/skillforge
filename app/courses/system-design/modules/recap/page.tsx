@@ -72,7 +72,7 @@ export default function Page() {
 
       <section className="my-8">
         <p className="lead">
-          You&apos;ve walked through 43 modules. Replication, sharding, queues, caches, consistency models, idempotency,
+          You&apos;ve walked through 50 modules. Replication, sharding, queues, caches, consistency models, idempotency,
           migrations, security. Now we tie it together. The goal of this recap isn&apos;t to re-explain — it&apos;s to
           give you a compass. When someone hands you a vague design problem, what do you reach for first, and why?
         </p>
@@ -1046,7 +1046,7 @@ export default function Page() {
       <section className="my-12 rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 dark:border-pink-900 dark:from-pink-950/30 dark:to-rose-950/30">
         <h2 className="mb-3 text-2xl font-bold">You have the toolkit</h2>
         <p>
-          43 modules of patterns and tradeoffs. The compass gives you the order: foundations, data, traffic,
+          50 modules of patterns and tradeoffs. The compass gives you the order: foundations, data, traffic,
           reliability, evolution, security. The toolbox gives you the components. The traps give you humility.
         </p>
         <p className="mt-3">
