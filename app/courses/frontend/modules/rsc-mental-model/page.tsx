@@ -32,12 +32,12 @@ export default function RscMentalModelModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Server Components vs Client Components — the App Router mental model
+          Server Components vs Client Components, the App Router mental model
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           For years &quot;a React component&quot; meant one thing: code that runs in the browser. The App Router quietly split that
           word in two. Most of your components now run on the <em>server</em>, never ship JavaScript, and can&apos;t use a single
-          hook — and that&apos;s the <em>default</em>. Let&apos;s build the model that makes this obvious instead of magical.
+          hook, and that&apos;s the <em>default</em>. Let&apos;s build the model that makes this obvious instead of magical.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
         <ModuleProgress moduleSlug={MODULE_SLUG} checkpoints={CHECKPOINTS} />
@@ -49,14 +49,14 @@ export default function RscMentalModelModule() {
         <p className="mb-4">
           Think of a restaurant. The <strong>kitchen</strong> is the server: it has the pantry (the database), the recipes
           (secrets and API keys), and the heavy equipment. It does the prep work once and plates a finished dish. The
-          <strong> dining room</strong> is the browser: it&apos;s where the customer actually sits, reacts, and asks for things —
+          <strong> dining room</strong> is the browser: it&apos;s where the customer actually sits, reacts, and asks for things,
           &quot;more salt,&quot; &quot;take this back,&quot; &quot;I changed my mind.&quot; That back-and-forth, the <em>interactivity</em>, only
           happens in the dining room.
         </p>
         <p className="mb-4">
           You would never wheel the entire pantry and the ovens out to the customer&apos;s table just so they can add salt. You do
           the heavy, secret, data-touching work in the kitchen and send out a <em>finished plate</em>. You only put a salt
-          shaker on the table — the small interactive bit — where the customer needs to act.
+          shaker on the table, the small interactive bit, where the customer needs to act.
         </p>
         <p className="mb-4">
           That is the whole App Router model. <strong>Server Components</strong> are the kitchen: they run on the server, can
@@ -68,7 +68,7 @@ export default function RscMentalModelModule() {
         <Callout variant="info" title="The one sentence to anchor everything">
           <p>
             In the App Router, <strong>every component is a Server Component by default</strong>; you opt a subtree <em>into</em>
-            the browser with <code>&quot;use client&quot;</code>. The mental work is deciding where that boundary goes — and the
+            the browser with <code>&quot;use client&quot;</code>. The mental work is deciding where that boundary goes, and the
             reward for getting it right is a smaller bundle and a faster page.
           </p>
         </Callout>
@@ -90,23 +90,23 @@ export default function RscMentalModelModule() {
           <li>
             <strong>A Client Component runs in two places.</strong> First it runs on the server during the initial render
             (to produce the HTML you see immediately), and then its JavaScript is <em>shipped to the browser</em> and runs
-            again there to <strong>hydrate</strong> — attaching event listeners and taking over interactivity. After that it
+            again there to <strong>hydrate</strong>, attaching event listeners and taking over interactivity. After that it
             re-runs in the browser on every state change, like any React component you&apos;ve ever written.
           </li>
         </ul>
         <p className="mb-4">
-          So a Server Component is a one-shot: render, emit, gone. A Client Component is the React you already know — it
-          re-renders, holds state, runs effects — and it also got a server-side dress rehearsal to produce initial HTML.
+          So a Server Component is a one-shot: render, emit, gone. A Client Component is the React you already know, it
+          re-renders, holds state, runs effects, and it also got a server-side dress rehearsal to produce initial HTML.
         </p>
         <Callout variant="warn" title="&quot;Client Component&quot; does NOT mean &quot;client-only&quot;">
           <p>
             The biggest naming trap in the App Router. A Client Component still renders on the <em>server</em> for the initial
-            HTML — that&apos;s why you get fast first paint and SEO. The <code>&quot;use client&quot;</code> directive doesn&apos;t mean
+            HTML, that&apos;s why you get fast first paint and SEO. The <code>&quot;use client&quot;</code> directive doesn&apos;t mean
             &quot;skip the server,&quot; it means &quot;this code <strong>also</strong> ships to the browser and hydrates.&quot; The contrast is
             <em> Server Component = server only</em> vs <em>Client Component = server then browser</em>.
           </p>
         </Callout>
-        <p className="mb-4">Here is the same idea as a capability table — what each side can and can&apos;t do:</p>
+        <p className="mb-4">Here is the same idea as a capability table, what each side can and can&apos;t do:</p>
         <div className="mb-4 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -119,33 +119,33 @@ export default function RscMentalModelModule() {
             <tbody className="align-top">
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4"><code>async</code>/<code>await</code> in the component body</td>
-                <td className="py-2 pr-4">✅ yes — fetch data directly</td>
+                <td className="py-2 pr-4">✅ yes, fetch data directly</td>
                 <td className="py-2">❌ no (the component itself can&apos;t be async)</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4">Database / filesystem / secrets</td>
-                <td className="py-2 pr-4">✅ yes — runs only on the server</td>
-                <td className="py-2">❌ no — would leak to the browser</td>
+                <td className="py-2 pr-4">✅ yes, runs only on the server</td>
+                <td className="py-2">❌ no, would leak to the browser</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4"><code>useState</code>, <code>useEffect</code>, <code>useRef</code>, any hook</td>
-                <td className="py-2 pr-4">❌ no — there is no client lifecycle</td>
+                <td className="py-2 pr-4">❌ no, there is no client lifecycle</td>
                 <td className="py-2">✅ yes</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4">Event handlers (<code>onClick</code>, <code>onChange</code>)</td>
-                <td className="py-2 pr-4">❌ no — nothing in the browser to fire them</td>
+                <td className="py-2 pr-4">❌ no, nothing in the browser to fire them</td>
                 <td className="py-2">✅ yes</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4">Browser APIs (<code>window</code>, <code>localStorage</code>)</td>
-                <td className="py-2 pr-4">❌ no — they don&apos;t exist on the server</td>
+                <td className="py-2 pr-4">❌ no, they don&apos;t exist on the server</td>
                 <td className="py-2">✅ yes (after hydration / inside effects)</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4">Ships JavaScript to the browser</td>
-                <td className="py-2 pr-4">❌ never — that&apos;s the win</td>
-                <td className="py-2">✅ yes — its code is in the bundle</td>
+                <td className="py-2 pr-4">❌ never, that&apos;s the win</td>
+                <td className="py-2">✅ yes, its code is in the bundle</td>
               </tr>
             </tbody>
           </table>
@@ -162,8 +162,8 @@ export default function RscMentalModelModule() {
         <h2 className="mb-4 text-2xl font-bold">Why &quot;server by default&quot; is the right default</h2>
         <p className="mb-4">
           The old model shipped <em>everything</em> to the browser. A product page that just displays text and images still
-          downloaded all the React for it, parsed it, and ran it client-side. That JavaScript cost you nothing in features —
-          the page wasn&apos;t interactive — but you paid for it in bundle size and a slower time-to-interactive.
+          downloaded all the React for it, parsed it, and ran it client-side. That JavaScript cost you nothing in features,
+          the page wasn&apos;t interactive, but you paid for it in bundle size and a slower time-to-interactive.
         </p>
         <p className="mb-4">
           Server Components flip the economics. A component that only reads data and renders markup has <strong>no reason to
@@ -195,7 +195,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <p>
             Every component you can leave as a Server Component is JavaScript the browser never downloads, never parses, and
             never runs. &quot;Server by default&quot; means the framework assumes you want the cheap path, and asks you to explicitly
-            opt out — with <code>&quot;use client&quot;</code> — only where interactivity actually requires it.
+            opt out, with <code>&quot;use client&quot;</code>, only where interactivity actually requires it.
           </p>
         </Callout>
       </section>
@@ -207,18 +207,18 @@ export default async function ProductPage({ params }: { params: { id: string } }
           question="In the Next.js App Router, a component file with no directive at the top is which kind of component?"
           options={[
             {
-              label: "A Server Component — server is the default; you opt into the client with \"use client\"",
+              label: "A Server Component, server is the default; you opt into the client with \"use client\"",
               correct: true,
               explanation:
                 "Right. Every component in the app/ directory is a Server Component unless the file (or one it's imported from) starts with \"use client\". The default is server.",
             },
             {
-              label: "A Client Component — components are interactive by default",
+              label: "A Client Component, components are interactive by default",
               explanation:
                 "That's the old (Pages Router / CRA) model. In the App Router the default is the opposite: Server Components, which ship no JS and can't be interactive.",
             },
             {
-              label: "Neither — you must always declare \"use server\" or \"use client\" explicitly",
+              label: "Neither, you must always declare \"use server\" or \"use client\" explicitly",
               explanation:
                 "No declaration is needed for a Server Component; it's the default. (\"use server\" marks a Server Action, which is a different feature, not a component directive.)",
             },
@@ -232,17 +232,17 @@ export default async function ProductPage({ params }: { params: { id: string } }
               label: "On the server first (to produce initial HTML), then again in the browser to hydrate and on every subsequent state change",
               correct: true,
               explanation:
-                "Exactly. 'Client Component' doesn't mean client-only — it renders on the server for the initial HTML, ships its JS, then hydrates and re-renders in the browser.",
+                "Exactly. 'Client Component' doesn't mean client-only, it renders on the server for the initial HTML, ships its JS, then hydrates and re-renders in the browser.",
             },
             {
-              label: "Only in the browser — its code never touches the server",
+              label: "Only in the browser, its code never touches the server",
               explanation:
                 "A common misconception. Client Components do a server-side render for the initial HTML (that's why you get fast first paint and SEO); they just also run in the browser.",
             },
             {
               label: "Only on the server, exactly like a Server Component",
               explanation:
-                "No — that describes a Server Component. A Client Component additionally ships its JavaScript to the browser and re-runs there to handle interactivity.",
+                "No, that describes a Server Component. A Client Component additionally ships its JavaScript to the browser and re-runs there to handle interactivity.",
             },
           ]}
         />
@@ -250,11 +250,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
       {/* ───────────────────────── 4. THE BOUNDARY ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The <code>&quot;use client&quot;</code> boundary — and how it cascades</h2>
+        <h2 className="mb-4 text-2xl font-bold">The <code>&quot;use client&quot;</code> boundary, and how it cascades</h2>
         <p className="mb-4">
           <code>&quot;use client&quot;</code> is a directive you put at the <em>very top</em> of a file, above the imports. It marks an
           <strong> entry point</strong> into the client bundle. The subtle, crucial part: it doesn&apos;t just affect that one
-          file — it marks a <strong>boundary</strong>, and everything <em>imported by</em> that file becomes part of the client
+          file, it marks a <strong>boundary</strong>, and everything <em>imported by</em> that file becomes part of the client
           bundle too.
         </p>
         <pre><code>{`"use client"; // <- must be the first line, above imports
@@ -268,13 +268,13 @@ export default function AddToCartButton({ productId }: { productId: string }) {
 }`}</code></pre>
         <p className="mb-4">
           Once a module is <code>&quot;use client&quot;</code>, every module it imports is part of the same client subtree. You only
-          need the directive on the <em>top</em> file of a client subtree — the entry point. The components it imports become
+          need the directive on the <em>top</em> file of a client subtree, the entry point. The components it imports become
           Client Components automatically; you don&apos;t repeat <code>&quot;use client&quot;</code> in each of them (though doing so is
           harmless).
         </p>
         <p className="mb-4">
           The direction of the boundary matters and trips people up. <strong>A Server Component can import and render a Client
-          Component</strong> — that&apos;s the normal pattern (the server kitchen plates a salt shaker). But{" "}
+          Component</strong>, that&apos;s the normal pattern (the server kitchen plates a salt shaker). But{" "}
           <strong>a Client Component cannot import a Server Component</strong> and have it run on the server, because once
           you&apos;re in the client bundle, there&apos;s no server left to run it on.
         </p>
@@ -282,7 +282,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
           <p>
             You write a Client Component (it needs <code>useState</code>), and inside it you import a component that does a
             database query. Suddenly your build complains, or your secret leaks. The fix is almost never &quot;make the inner one a
-            Client Component too&quot; — it&apos;s to <strong>pass the server-rendered component in as a prop</strong> (usually
+            Client Component too&quot;, it&apos;s to <strong>pass the server-rendered component in as a prop</strong> (usually
             <code> children</code>), so it&apos;s rendered on the server and merely <em>slotted into</em> the client component.
           </p>
         </Callout>
@@ -316,14 +316,14 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
   );
 }`}</code></pre>
         <p className="mb-4">
-          The Client Component never <em>imports</em> the Server Component — it receives the already-rendered output as a
+          The Client Component never <em>imports</em> the Server Component, it receives the already-rendered output as a
           prop and decides where to put it. The server work stayed on the server; the client work stayed in the client. The
           boundary is respected.
         </p>
         <Callout variant="insight" title="Push the boundary down, not up">
           <p>
             The instinct to fix &quot;I need a click handler somewhere on this page&quot; by adding <code>&quot;use client&quot;</code> to the
-            whole page is the wrong one — it drags the entire subtree into the bundle. Push the boundary <em>down</em> to the
+            whole page is the wrong one, it drags the entire subtree into the bundle. Push the boundary <em>down</em> to the
             smallest leaf that actually needs it. A page can be a Server Component with a dozen tiny Client Component leaves;
             that&apos;s the shape you want.
           </p>
@@ -334,18 +334,18 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">What actually forces a component to be a Client Component</h2>
         <p className="mb-4">
-          You don&apos;t reach for <code>&quot;use client&quot;</code> on a whim — there&apos;s a concrete checklist. A component <em>must</em> be a
+          You don&apos;t reach for <code>&quot;use client&quot;</code> on a whim, there&apos;s a concrete checklist. A component <em>must</em> be a
           Client Component if it does any of these:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Uses state or lifecycle</strong> — <code>useState</code>, <code>useReducer</code>, <code>useEffect</code>, <code>useRef</code>, <code>useContext</code> (consuming a context), or any custom hook built on them.</li>
-          <li><strong>Has event handlers</strong> — <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>, etc. These are functions that must run in the browser.</li>
-          <li><strong>Uses browser-only APIs</strong> — <code>window</code>, <code>document</code>, <code>localStorage</code>, <code>navigator</code>, <code>IntersectionObserver</code>.</li>
-          <li><strong>Uses class components or React features that require the client</strong> — e.g. error boundaries (which currently must be class components).</li>
+          <li><strong>Uses state or lifecycle</strong>, <code>useState</code>, <code>useReducer</code>, <code>useEffect</code>, <code>useRef</code>, <code>useContext</code> (consuming a context), or any custom hook built on them.</li>
+          <li><strong>Has event handlers</strong>, <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>, etc. These are functions that must run in the browser.</li>
+          <li><strong>Uses browser-only APIs</strong>, <code>window</code>, <code>document</code>, <code>localStorage</code>, <code>navigator</code>, <code>IntersectionObserver</code>.</li>
+          <li><strong>Uses class components or React features that require the client</strong>, e.g. error boundaries (which currently must be class components).</li>
           <li><strong>Depends on a third-party component</strong> that itself uses any of the above without being server-compatible.</li>
         </ul>
         <p className="mb-4">
-          If none of those apply — the component just reads props/data and returns markup — leave it as a Server Component.
+          If none of those apply, the component just reads props/data and returns markup, leave it as a Server Component.
           That covers the large majority of a typical app: layouts, page shells, lists, cards, headers, footers, articles.
         </p>
         <Callout variant="info" title="A useful tie-breaker question">
@@ -370,7 +370,7 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
                 "Correct. A Client Component can't import a Server Component and have it run server-side. The composition fix is to pass the server-rendered content in as children/props so it stays a Server Component.",
             },
             {
-              label: "Import the database-query component directly inside the Client Component — \"use client\" cascades and handles it",
+              label: "Import the database-query component directly inside the Client Component, \"use client\" cascades and handles it",
               explanation:
                 "That's the trap. Importing it pulls it into the client bundle, so the DB query would try to run in the browser (leaking secrets / failing). Pass it as children instead.",
             },
@@ -389,12 +389,12 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
               label: "Doing an await fetch(...) / database read in the component body",
               correct: true,
               explanation:
-                "Right — async data fetching is something Server Components do best, directly in the body. It does NOT force the client; it's the opposite, a reason to stay server.",
+                "Right, async data fetching is something Server Components do best, directly in the body. It does NOT force the client; it's the opposite, a reason to stay server.",
             },
             {
               label: "Calling useState to hold interactive state",
               explanation:
-                "useState requires the client — there's no state/lifecycle on the server. This forces \"use client\".",
+                "useState requires the client, there's no state/lifecycle on the server. This forces \"use client\".",
             },
             {
               label: "Attaching an onClick handler to a button",
@@ -412,26 +412,26 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
 
       {/* ───────────────────────── 6. SERIALIZATION ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Crossing the boundary — the serialization rule</h2>
+        <h2 className="mb-4 text-2xl font-bold">Crossing the boundary, the serialization rule</h2>
         <p className="mb-4">
           When a Server Component renders a Client Component and passes it props, those props have to travel from the server
-          to the browser. They get <strong>serialized</strong> — turned into data the framework sends over the wire and
+          to the browser. They get <strong>serialized</strong>, turned into data the framework sends over the wire and
           rebuilds on the client. That imposes a hard rule: <strong>props passed from a Server Component to a Client
           Component must be serializable.</strong>
         </p>
         <p className="mb-4">What&apos;s serializable (fine to pass across the boundary):</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li>Primitives — strings, numbers, booleans, <code>null</code>, <code>undefined</code>, <code>bigint</code>.</li>
+          <li>Primitives, strings, numbers, booleans, <code>null</code>, <code>undefined</code>, <code>bigint</code>.</li>
           <li>Plain objects and arrays made of serializable values.</li>
           <li>Dates, <code>Map</code>, <code>Set</code> (the RSC serializer handles these).</li>
-          <li>Promises (you can pass a promise down and <code>use()</code> it in the client — a deliberate streaming feature).</li>
-          <li><strong>JSX itself</strong> — you can pass server-rendered elements as <code>children</code> or any prop, because the rendered output is serializable. This is what powers the slot pattern.</li>
+          <li>Promises (you can pass a promise down and <code>use()</code> it in the client, a deliberate streaming feature).</li>
+          <li><strong>JSX itself</strong>, you can pass server-rendered elements as <code>children</code> or any prop, because the rendered output is serializable. This is what powers the slot pattern.</li>
         </ul>
         <p className="mb-4">What&apos;s <em>not</em> serializable (will error if passed across the boundary):</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Functions</strong> — except Server Actions, which are a special, framework-handled exception (they serialize to a reference the client can call).</li>
+          <li><strong>Functions</strong>, except Server Actions, which are a special, framework-handled exception (they serialize to a reference the client can call).</li>
           <li><strong>Class instances</strong> with methods/prototypes (e.g. a live database client, a class with behavior).</li>
-          <li>Things tied to a runtime — open connections, streams, symbols (other than well-known ones).</li>
+          <li>Things tied to a runtime, open connections, streams, symbols (other than well-known ones).</li>
         </ul>
         <pre><code>{`// ❌ Won't work: passing a plain function across the boundary
 // (Server Component)
@@ -447,14 +447,14 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
           <p>
             An ordinary closure captures live JavaScript state on the server; there&apos;s no way to ship that closure&apos;s scope to
             the browser, so it can&apos;t be serialized. A <strong>Server Action</strong> is the deliberate exception: the framework
-            serializes it to a <em>reference</em> (an ID + endpoint). The client doesn&apos;t get the function&apos;s code — it gets a
+            serializes it to a <em>reference</em> (an ID + endpoint). The client doesn&apos;t get the function&apos;s code, it gets a
             token it can use to call back to the server. That&apos;s a different mechanism, which is why it&apos;s allowed.
           </p>
         </Callout>
         <Callout variant="insight" title="The interview phrasing">
           <p>
             &quot;Props crossing from a Server Component to a Client Component are serialized over the network, so they must be
-            serializable: primitives, plain objects/arrays, Dates, even JSX — but not arbitrary functions or class instances.
+            serializable: primitives, plain objects/arrays, Dates, even JSX, but not arbitrary functions or class instances.
             The one exception is Server Actions, which serialize to a callable reference rather than the function itself.&quot;
           </p>
         </Callout>
@@ -477,12 +477,12 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
             </li>
             <li>
               <strong>The directive marks a boundary that cascades.</strong> Everything a <code>&quot;use client&quot;</code> file imports
-              joins the client bundle. A Server Component can render a Client Component, but not vice-versa by import — pass
+              joins the client bundle. A Server Component can render a Client Component, but not vice-versa by import, pass
               server content down as <code>children</code> instead.
             </li>
             <li>
-              <strong>Props across the boundary must be serializable.</strong> Primitives, plain objects/arrays, Dates, JSX —
-              yes; arbitrary functions and class instances — no; Server Actions are the special allowed exception.
+              <strong>Props across the boundary must be serializable.</strong> Primitives, plain objects/arrays, Dates, JSX,
+              yes; arbitrary functions and class instances, no; Server Actions are the special allowed exception.
             </li>
             <li>
               <strong>Push the boundary down.</strong> Keep pages/layouts server-side; make only the genuinely-interactive
@@ -494,15 +494,15 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
 
       {/* ───────────────────────── 8. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — shrink the bundle by moving the boundary</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, shrink the bundle by moving the boundary</h2>
         <p className="mb-4">
           Take a fully-client page and push everything that can be a Server Component server-side, marking only the
-          genuinely-interactive leaves <code>&quot;use client&quot;</code> — then read the network tab to confirm the JS bundle shrank.
+          genuinely-interactive leaves <code>&quot;use client&quot;</code>, then read the network tab to confirm the JS bundle shrank.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
             <strong>Start from the all-client version.</strong> Build (or take) a page where the top-level component is
-            <code> &quot;use client&quot;</code> and fetches data in a <code>useEffect</code> — a product list with a search box and an
+            <code> &quot;use client&quot;</code> and fetches data in a <code>useEffect</code>, a product list with a search box and an
             &quot;add to cart&quot; button per row. Note the JS bundle size for the route in the Network tab.
           </li>
           <li>
@@ -526,7 +526,7 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
             without making the list client-side.
           </li>
           <li>
-            <strong>Measure.</strong> Reload and compare the route&apos;s JS bundle to step 1. It should be dramatically smaller —
+            <strong>Measure.</strong> Reload and compare the route&apos;s JS bundle to step 1. It should be dramatically smaller,
             you&apos;re now only shipping the search box and the button, not the whole page. Write down the before/after numbers;
             that delta is the entire point of the architecture.
           </li>
@@ -534,7 +534,7 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
             If you come from server work, Server Components will feel oddly familiar: it&apos;s server-side templating with the
-            database right there in the handler — like a controller that returns a rendered view. The new part is that the
+            database right there in the handler, like a controller that returns a rendered view. The new part is that the
             framework can interleave <em>islands</em> of client-side interactivity into that server-rendered output and
             hydrate just those islands. Think &quot;server-rendered page with a few sprinkles of JS,&quot; not &quot;SPA that happens to
             prerender.&quot;
@@ -562,7 +562,7 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
             {
               label: "Nothing is wrong; functions serialize automatically in the App Router",
               explanation:
-                "Arbitrary functions do not serialize. Only Server Actions are the special, framework-handled exception — an ordinary closure like handleClick is not.",
+                "Arbitrary functions do not serialize. Only Server Actions are the special, framework-handled exception, an ordinary closure like handleClick is not.",
             },
           ]}
         />
@@ -571,7 +571,7 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
           question={'A page is a Server Component containing 20 components. You add "use client" to the top-level page just to enable one onClick deep inside. What happens to the bundle?'}
           options={[
             {
-              label: "All 20 components (everything imported by the now-client page) get pulled into the client bundle — the opposite of what you want",
+              label: "All 20 components (everything imported by the now-client page) get pulled into the client bundle, the opposite of what you want",
               correct: true,
               explanation:
                 "Exactly. \"use client\" marks a boundary that cascades to everything imported below it. The fix is to push the directive down to the single leaf that needs the onClick, keeping the rest server-side.",
@@ -579,12 +579,12 @@ export function ClientTabs({ children }: { children: React.ReactNode }) {
             {
               label: "Only the one component with the onClick ships to the browser; \"use client\" is smart about it",
               explanation:
-                "No — the directive applies to the whole subtree imported from that file. Putting it at the top drags everything in. You must move it down to the interactive leaf.",
+                "No, the directive applies to the whole subtree imported from that file. Putting it at the top drags everything in. You must move it down to the interactive leaf.",
             },
             {
               label: "Nothing changes; \"use client\" only affects the file it's written in",
               explanation:
-                "It affects the file AND everything it imports — that's the cascade. The bundle grows to include the whole subtree.",
+                "It affects the file AND everything it imports, that's the cascade. The bundle grows to include the whole subtree.",
             },
           ]}
         />

@@ -67,7 +67,7 @@ export default function Page() {
       <section className="my-10">
         <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
-          <li>A clear sense of <em>when</em>{" "}a single Postgres stops being enough — and when it&apos;s still fine.</li>
+          <li>A clear sense of <em>when</em>{" "}a single Postgres stops being enough, and when it&apos;s still fine.</li>
           <li>The three sharding strategies (hash, range, directory) and the workloads each one lives or dies on.</li>
           <li>Why naive <code>hash(key) % N</code> is a resharding nightmare, and how consistent hashing with virtual nodes fixes it.</li>
           <li>The math: with V virtual nodes per physical node, load std dev shrinks like 1/√(V·N).</li>
@@ -78,8 +78,8 @@ export default function Page() {
       <section className="my-10">
         <p>
           Indexing speeds up lookups inside a database. Partitioning splits the data <em>across</em>{" "}databases. They solve different
-          problems and you usually need both. The mistake people make in interviews is reaching for sharding too early — &quot;we&apos;ll
-          shard by user_id&quot; — without acknowledging the operational cost. The other mistake is reaching too late, claiming
+          problems and you usually need both. The mistake people make in interviews is reaching for sharding too early, &quot;we&apos;ll
+          shard by user_id&quot;, without acknowledging the operational cost. The other mistake is reaching too late, claiming
           a single Postgres will scale to 50TB and 200k QPS because they read a blog post about it once.
         </p>
         <p>
@@ -89,7 +89,7 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="why-partition" title="Why partition" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Why partition (and why not)</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1, Why partition (and why not)</h2>
 
         <p>
           A single Postgres on a beefy box (say 64 cores, 512GB RAM, NVMe) can handle a remarkable amount. We&apos;re talking
@@ -108,7 +108,7 @@ export default function Page() {
 
         <Callout variant="warn" title="The reason that's not on the list">
           <p className="m-0">
-            &quot;We might need to scale someday.&quot; This is not a reason to shard. Sharding is a one-way door — once you
+            &quot;We might need to scale someday.&quot; This is not a reason to shard. Sharding is a one-way door, once you
             split your data, cross-shard joins, transactions, and migrations get dramatically harder. Most teams that shard
             preemptively spend years paying for complexity they didn&apos;t need. <strong>Shard when the pain is real, not before.</strong>
           </p>
@@ -118,10 +118,10 @@ export default function Page() {
           kind="Quick check"
           question="Your Postgres is at 800GB, p99 reads are 30ms, writes are 50ms, and the box is at 40% CPU. Product wants to add a feature that doubles read traffic. What's the right first move?"
           options={[
-            { label: "Shard by user_id immediately — 1.6TB is too much for one box.", correct: false, explanation: "1.6TB is not too much. People run Postgres at 10TB+ comfortably. Sharding here adds enormous operational cost for a problem you don't have." },
+            { label: "Shard by user_id immediately, 1.6TB is too much for one box.", correct: false, explanation: "1.6TB is not too much. People run Postgres at 10TB+ comfortably. Sharding here adds enormous operational cost for a problem you don't have." },
             { label: "Add a read replica and route reads to it.", correct: true, explanation: "Read replicas are the cheap, reversible scaling lever. CPU has headroom; the bottleneck (if any) is read concurrency. A replica gets you 2x read capacity in an afternoon. Shard later if it actually breaks." },
             { label: "Move to DynamoDB so you don't have to think about scaling.", correct: false, explanation: "Now you've signed up for a rewrite, lost transactions and joins, and still might not need it. The bar for leaving Postgres should be specific pain, not vibes." },
-            { label: "Vertically scale to a bigger instance.", correct: false, explanation: "The box is at 40% CPU. There's nothing to vertically scale away from yet — you'd be paying more for capacity you weren't using." },
+            { label: "Vertically scale to a bigger instance.", correct: false, explanation: "The box is at 40% CPU. There's nothing to vertically scale away from yet, you'd be paying more for capacity you weren't using." },
           ]}
         />
 
@@ -141,23 +141,23 @@ export default function Page() {
         <Mermaid chart={partitionDiagram} />
         <p className="text-sm text-slate-500 italic dark:text-slate-400">
           The router applies a function to the partition key (here, <code>user_id % 4</code>) and sends the request to the
-          owning shard. Everything in sharding flows from this picture — the question is just how the router decides.
+          owning shard. Everything in sharding flows from this picture, the question is just how the router decides.
         </p>
 
         <Quiz
           kind="Gut check"
           question="What's the one capability you almost always lose when you shard?"
           options={[
-            { label: "Indexes — they don't work on sharded data.", correct: false, explanation: "Indexes work fine per shard. Each shard is a normal database." },
-            { label: "Cross-shard transactions and joins (without a lot of pain).", correct: true, explanation: "Right. A transaction touching multiple shards needs 2PC or saga patterns, both of which are painful. Joins across shards either fan out (slow) or require denormalization. This is the big one — it shapes everything." },
-            { label: "Replication — sharded systems can't replicate.", correct: false, explanation: "Each shard typically has its own replica set. Sharding and replication are independent axes." },
-            { label: "Strong consistency on a single key.", correct: false, explanation: "Single-key consistency is preserved — that key lives on one shard. It's multi-key cross-shard consistency that gets hard." },
+            { label: "Indexes, they don't work on sharded data.", correct: false, explanation: "Indexes work fine per shard. Each shard is a normal database." },
+            { label: "Cross-shard transactions and joins (without a lot of pain).", correct: true, explanation: "Right. A transaction touching multiple shards needs 2PC or saga patterns, both of which are painful. Joins across shards either fan out (slow) or require denormalization. This is the big one, it shapes everything." },
+            { label: "Replication, sharded systems can't replicate.", correct: false, explanation: "Each shard typically has its own replica set. Sharding and replication are independent axes." },
+            { label: "Strong consistency on a single key.", correct: false, explanation: "Single-key consistency is preserved, that key lives on one shard. It's multi-key cross-shard consistency that gets hard." },
           ]}
         />
 
         <PartRecap
           title="Part 1 recap"
-          gist="Shard when storage, write throughput, or blast-radius pain is real — not before. Cross-shard joins and transactions are the price you pay."
+          gist="Shard when storage, write throughput, or blast-radius pain is real, not before. Cross-shard joins and transactions are the price you pay."
           points={[
             { takeaway: "A single Postgres scales further than people think.", detail: "64 cores + NVMe + read replicas covers a lot of ground. The crossover where sharding helps is usually >10TB or >50k writes/sec, not earlier." },
             { takeaway: "Sharding is a one-way door.", detail: "Cross-shard transactions, joins, and reshards are all expensive. Adding shards is straightforward; merging back is a project." },
@@ -167,7 +167,7 @@ export default function Page() {
       </Checkpoint>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="strategies" title="Three strategies" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Three sharding strategies</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2, Three sharding strategies</h2>
 
         <p>
           Once you&apos;ve decided to shard, the real question is: how do you map a row to a shard? There are three answers
@@ -239,7 +239,7 @@ export default function Page() {
           kind="Quick check"
           question="You're building a logging pipeline that ingests 50k events/sec keyed by event_id (UUID v4) and you mostly query by event_id. Which sharding strategy makes the most sense?"
           options={[
-            { label: "Range on event_id.", correct: false, explanation: "UUID v4 is random, so you'd get even distribution — but range buys you nothing here because you don't do range scans on UUIDs. You'd be paying for a feature you don't use." },
+            { label: "Range on event_id.", correct: false, explanation: "UUID v4 is random, so you'd get even distribution, but range buys you nothing here because you don't do range scans on UUIDs. You'd be paying for a feature you don't use." },
             { label: "Hash on event_id.", correct: true, explanation: "Random keys + point lookups + high write throughput is the textbook hash-sharding case. Even write distribution, fast point reads, no hot shards." },
             { label: "Directory keyed by event_id.", correct: false, explanation: "Per-event directory entries would be enormous and the directory itself becomes the bottleneck. Directory sharding is for coarse-grained tenants, not per-event." },
             { label: "Range on timestamp.", correct: false, explanation: "Hot shard disaster. All 50k writes/sec land on the same shard until you cross the next boundary. Classic mistake." },
@@ -257,10 +257,10 @@ export default function Page() {
           items={[
             { id: "1", label: "Cassandra-style social feed: writes keyed by user_id, reads scan recent posts for one user", answer: "hash", explanation: "Partition by user_id (hash), cluster by timestamp within the partition. Even write distribution across users, range reads within a user." },
             { id: "2", label: "Multi-tenant SaaS where tenant Acme is 100x bigger than the average tenant", answer: "directory", explanation: "Acme needs a dedicated shard so it doesn't drown its neighbors. A directory lets you place big tenants alone and pack small ones together." },
-            { id: "3", label: "Time-series metrics store, queries are 'all metrics for service X between time A and time B'", answer: "range", explanation: "Range on (service_id, time) — composite — gets you the range scan within a service. Pure timestamp range would be a hot-shard disaster, but bucketed by service it works." },
-            { id: "4", label: "URL shortener: lookup by short_code, no range scans, even traffic", answer: "hash", explanation: "Random keys, point lookups, no range queries — the classic hash-sharding workload." },
+            { id: "3", label: "Time-series metrics store, queries are 'all metrics for service X between time A and time B'", answer: "range", explanation: "Range on (service_id, time), composite, gets you the range scan within a service. Pure timestamp range would be a hot-shard disaster, but bucketed by service it works." },
+            { id: "4", label: "URL shortener: lookup by short_code, no range scans, even traffic", answer: "hash", explanation: "Random keys, point lookups, no range queries, the classic hash-sharding workload." },
             { id: "5", label: "Customer support ticket system where one bank customer accounts for 30% of traffic", answer: "directory", explanation: "Same shape as the multi-tenant case. The whale needs isolation; directory lets you carve them off." },
-            { id: "6", label: "Audit log table queried as 'show me all events from last Tuesday'", answer: "range", explanation: "Date-range queries dominate. Range sharding by date — with care to write to multiple buckets concurrently — is the natural fit." },
+            { id: "6", label: "Audit log table queried as 'show me all events from last Tuesday'", answer: "range", explanation: "Date-range queries dominate. Range sharding by date, with care to write to multiple buckets concurrently, is the natural fit." },
           ]}
         />
 
@@ -268,7 +268,7 @@ export default function Page() {
           <p className="m-0">
             For directory sharding, an <code>AbstractRoutingDataSource</code> with the tenant ID in a
             <code>ThreadLocal</code> picks the right DataSource per request. For hash sharding, you usually let
-            the driver (e.g., Vitess client, ShardingSphere) handle routing transparently — your DAO code looks
+            the driver (e.g., Vitess client, ShardingSphere) handle routing transparently, your DAO code looks
             unchanged, but the gateway parses the SQL, identifies the partition key, and routes the query.
           </p>
         </Callout>
@@ -285,7 +285,7 @@ export default function Page() {
       </Checkpoint>
 
       <Checkpoint moduleSlug="partitioning-sharding" id="consistent-hashing" title="Consistent hashing" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Consistent hashing &amp; resharding</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3, Consistent hashing &amp; resharding</h2>
 
         <p>
           Here&apos;s the disaster scenario. You&apos;re running 4 shards with naive <code>hash(key) % 4</code> routing.
@@ -302,10 +302,10 @@ export default function Page() {
         <p>
           Imagine a circle. Both keys and nodes get hashed onto positions on the circle (say, 0 to 2³² - 1).
           Each key is owned by the next node clockwise from its position. To find the owner of a key, hash it,
-          walk clockwise, find the first node — that&apos;s the owner.
+          walk clockwise, find the first node, that&apos;s the owner.
         </p>
         <p>
-          Add a node? It only steals the keys between itself and the previous node clockwise — typically about
+          Add a node? It only steals the keys between itself and the previous node clockwise, typically about
           1/N of the keyspace. Remove a node? Its keys flow to the next node clockwise. <strong>The other N-1 nodes
           don&apos;t move.</strong>{" "}That&apos;s the magic.
         </p>
@@ -315,7 +315,7 @@ export default function Page() {
         <h3 className="mt-8 mb-3 text-xl font-semibold">Why virtual nodes are non-negotiable</h3>
         <p>
           With one position per node, the ring is uneven. By bad luck, Node A might own 40% of the ring while Node C
-          owns 10%. And when a node fails, all of its load lands on exactly one neighbor — instant hot spot.
+          owns 10%. And when a node fails, all of its load lands on exactly one neighbor, instant hot spot.
         </p>
         <p>
           The fix: each physical node gets V positions on the ring. Now Node A has 256 little arcs scattered around
@@ -341,8 +341,8 @@ export default function Page() {
           options={[
             { label: "About 6/7 of keys move.", correct: false, explanation: "That'd be naive mod-based hashing. Consistent hashing's whole point is to avoid that." },
             { label: "About 1/7 of keys move.", correct: true, explanation: "Right. The new node takes over roughly 1/N+1 of the keyspace, stealing one slice from each of the existing 6 nodes. Vnodes mean those slices come from many small arcs spread evenly, so all 6 old nodes contribute proportionally." },
-            { label: "Roughly half — vnodes double the movement.", correct: false, explanation: "Vnodes don't increase movement; they smooth out which nodes contribute to it. Total movement is still ~1/(N+1)." },
-            { label: "Zero — vnodes mean the new node is empty until you rebalance manually.", correct: false, explanation: "Adding a node automatically takes ownership of arcs in the ring; data streams over from the old owners. There's no separate manual rebalance step." },
+            { label: "Roughly half, vnodes double the movement.", correct: false, explanation: "Vnodes don't increase movement; they smooth out which nodes contribute to it. Total movement is still ~1/(N+1)." },
+            { label: "Zero, vnodes mean the new node is empty until you rebalance manually.", correct: false, explanation: "Adding a node automatically takes ownership of arcs in the ring; data streams over from the old owners. There's no separate manual rebalance step." },
           ]}
         />
 
@@ -368,8 +368,8 @@ export default function Page() {
           kind="Gut check"
           question="A teammate proposes consistent hashing for a Postgres-based service. The product needs strong transactions across user accounts. What's the catch?"
           options={[
-            { label: "Consistent hashing only works with NoSQL — Postgres can't use it.", correct: false, explanation: "Vitess and Citus both use consistent-hashing-style ranges on top of Postgres/MySQL. The algorithm is database-agnostic." },
-            { label: "Consistent hashing places keys on different shards based on hash, so cross-shard transactions still need 2PC or saga patterns.", correct: true, explanation: "Right. Consistent hashing solves the resharding problem, not the cross-shard transaction problem. If two related keys hash to different shards, multi-key transactions are still painful — that doesn't change." },
+            { label: "Consistent hashing only works with NoSQL, Postgres can't use it.", correct: false, explanation: "Vitess and Citus both use consistent-hashing-style ranges on top of Postgres/MySQL. The algorithm is database-agnostic." },
+            { label: "Consistent hashing places keys on different shards based on hash, so cross-shard transactions still need 2PC or saga patterns.", correct: true, explanation: "Right. Consistent hashing solves the resharding problem, not the cross-shard transaction problem. If two related keys hash to different shards, multi-key transactions are still painful, that doesn't change." },
             { label: "Consistent hashing requires synchronous replication, which kills write throughput.", correct: false, explanation: "Replication strategy is independent of the partitioning algorithm. You can run consistent hashing with async or sync replication." },
             { label: "Postgres can't index data placed via a hash function.", correct: false, explanation: "Each shard is a normal Postgres with normal indexes. Routing happens above the database, not inside it." },
           ]}
@@ -404,7 +404,7 @@ export default function Page() {
           points={[
             { takeaway: "Naive mod-N is a resharding bomb.", detail: "Adding one node moves ~(N-1)/N of all keys. Consistent hashing moves ~1/N." },
             { takeaway: "Virtual nodes are the difference between balanced and not.", detail: "Std dev of load goes like 1/√(V·N). 256 vnodes per node is the typical default." },
-            { takeaway: "Consistent hashing solves rebalancing, not skew.", detail: "Hot keys still hammer one shard. Cache them, replicate them, or salt them — but don't pretend the algorithm fixes it." },
+            { takeaway: "Consistent hashing solves rebalancing, not skew.", detail: "Hot keys still hammer one shard. Cache them, replicate them, or salt them, but don't pretend the algorithm fixes it." },
             { takeaway: "Cross-shard transactions are still hard.", detail: "Sharding strategy is orthogonal to the multi-key transaction problem. 2PC or sagas still apply." },
           ]}
         />
@@ -414,9 +414,9 @@ export default function Page() {
         <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
         <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Two-phase commit and saga patterns for cross-shard transactions (covered in transactions deep dive).</li>
-          <li>Specific operational tooling: Vitess, Citus, ShardingSphere — same ideas, different ergonomics.</li>
+          <li>Specific operational tooling: Vitess, Citus, ShardingSphere, same ideas, different ergonomics.</li>
           <li>Resharding strategies for systems already running mod-N, beyond the sketch in Part 3.</li>
-          <li>Geo-partitioning (placing shards in regions for latency/compliance) — that&apos;s a follow-up topic.</li>
+          <li>Geo-partitioning (placing shards in regions for latency/compliance), that&apos;s a follow-up topic.</li>
         </ul>
       </section>
 

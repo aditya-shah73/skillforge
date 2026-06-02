@@ -49,7 +49,7 @@ export default function Page() {
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>How to derive a $/QPS number for a service from its bill, and what to do with it</li>
           <li>Capacity headroom: why &quot;run hot&quot; is a euphemism for &quot;page on weekends&quot;</li>
-          <li>Scaling triggers that fire before you&apos;re on fire — and the autoscaling traps to avoid</li>
+          <li>Scaling triggers that fire before you&apos;re on fire, and the autoscaling traps to avoid</li>
           <li>Where to spend, where to save, and how to refuse to do either based on vibes</li>
         </ul>
       </section>
@@ -58,10 +58,10 @@ export default function Page() {
 
         <h2>Cost is just another SLI</h2>
         <p>
-          Latency is measured per request. Availability is measured per request. Most teams measure cost per month, per service, sometimes per team. That&apos;s the wrong unit. The number that lets you reason about a service is <strong>cost per request</strong> — or its near-equivalents, $/QPS-month and $/MAU.
+          Latency is measured per request. Availability is measured per request. Most teams measure cost per month, per service, sometimes per team. That&apos;s the wrong unit. The number that lets you reason about a service is <strong>cost per request</strong>, or its near-equivalents, $/QPS-month and $/MAU.
         </p>
         <p>
-          Once you have a $/request number, every product decision becomes legible. &quot;We want to add this feature&quot; turns into &quot;it costs $0.0003 more per request.&quot; &quot;We need to scale 10x&quot; turns into &quot;our infrastructure bill goes from $40k/month to $400k/month — does the revenue justify it?&quot; You&apos;re not pretending; you&apos;re just doing arithmetic.
+          Once you have a $/request number, every product decision becomes legible. &quot;We want to add this feature&quot; turns into &quot;it costs $0.0003 more per request.&quot; &quot;We need to scale 10x&quot; turns into &quot;our infrastructure bill goes from $40k/month to $400k/month, does the revenue justify it?&quot; You&apos;re not pretending; you&apos;re just doing arithmetic.
         </p>
 
         <h2>The basic decomposition</h2>
@@ -69,15 +69,15 @@ export default function Page() {
           A typical web service&apos;s monthly cost decomposes into a few buckets. Most teams know roughly what their bill is, but not how it breaks down. The first job is to get a clean breakdown.
         </p>
         <ul>
-          <li><strong>Compute:</strong>{" "}EC2/GKE/ECS/Lambda — usually the biggest single line. Tag everything by service so you can attribute.</li>
+          <li><strong>Compute:</strong>{" "}EC2/GKE/ECS/Lambda, usually the biggest single line. Tag everything by service so you can attribute.</li>
           <li><strong>Storage:</strong>{" "}RDS, DynamoDB, S3, EBS volumes. Includes IOPS charges, which are sneaky.</li>
-          <li><strong>Network egress:</strong>{" "}outbound bytes from cloud — by far the most-overlooked cost. Cross-region replication and data leaving the cloud both bite.</li>
+          <li><strong>Network egress:</strong>{" "}outbound bytes from cloud, by far the most-overlooked cost. Cross-region replication and data leaving the cloud both bite.</li>
           <li><strong>Managed services:</strong>{" "}Kafka MSK, OpenSearch, ALBs, NAT gateways, Datadog, Snowflake. Each one is a margin the cloud or vendor takes.</li>
-          <li><strong>Idle / overhead:</strong>{" "}staging, dev, CI runners, leaked test resources. Easily 15–30% of total — finance calls this &quot;waste&quot; and they&apos;re right.</li>
+          <li><strong>Idle / overhead:</strong>{" "}staging, dev, CI runners, leaked test resources. Easily 15–30% of total, finance calls this &quot;waste&quot; and they&apos;re right.</li>
         </ul>
 
         <Callout variant="info" title="The cost iceberg">
-          <p className="m-0">For a typical mid-stage SaaS, a rough split is: compute 35-50%, storage 15-25%, egress 10-20%, managed services 15-25%, idle/overhead 10-20%. If your bill doesn&apos;t look like this, that&apos;s information — egress over 30% means you&apos;re shoveling data out of the cloud or replicating cross-region; managed services over 40% means you&apos;re paying margin to skip ops work, which is sometimes correct.</p>
+          <p className="m-0">For a typical mid-stage SaaS, a rough split is: compute 35-50%, storage 15-25%, egress 10-20%, managed services 15-25%, idle/overhead 10-20%. If your bill doesn&apos;t look like this, that&apos;s information, egress over 30% means you&apos;re shoveling data out of the cloud or replicating cross-region; managed services over 40% means you&apos;re paying margin to skip ops work, which is sometimes correct.</p>
         </Callout>
 
         <h2>Worked example: deriving $/QPS</h2>
@@ -113,7 +113,7 @@ $/request      = monthly_cost / requests
                ~= $1.14 per million requests`}</CodeBlock>
 
         <Callout variant="spring" title="Why $/QPS-month is the most useful number">
-          <p className="m-0">It tells you what an extra 1,000 QPS of capacity will cost ($1,770/month at this efficiency) and what your infrastructure looks like at scale (this service at 50,000 QPS is ~$88k/month if it scales linearly, more if it doesn&apos;t). It also normalizes across services — comparing your $/QPS to a peer team&apos;s exposes which services are efficient and which are quietly expensive. Don&apos;t skip computing it.</p>
+          <p className="m-0">It tells you what an extra 1,000 QPS of capacity will cost ($1,770/month at this efficiency) and what your infrastructure looks like at scale (this service at 50,000 QPS is ~$88k/month if it scales linearly, more if it doesn&apos;t). It also normalizes across services, comparing your $/QPS to a peer team&apos;s exposes which services are efficient and which are quietly expensive. Don&apos;t skip computing it.</p>
         </Callout>
 
         <h2>Where the model breaks</h2>
@@ -130,9 +130,9 @@ $/request      = monthly_cost / requests
         <Quiz
           question="Your team's service costs $20k/month and handles 10,000 peak QPS. A new feature is projected to add 30% load (3,000 QPS). What's the most defensible cost estimate to bring to the product review?"
           options={[
-            { label: "$0 — we're already paying for the infrastructure.", correct: false, explanation: "Adding 30% load is going to require more capacity. Sunk costs don't cover marginal load." },
+            { label: "$0, we're already paying for the infrastructure.", correct: false, explanation: "Adding 30% load is going to require more capacity. Sunk costs don't cover marginal load." },
             { label: "$2/QPS-month × 3,000 QPS = $6k/month additional, assuming current efficiency holds.", correct: true, explanation: "Compute $/QPS-month from your bill ($20k / 10k QPS = $2), apply to marginal load. This is the right baseline; you can refine it if the new feature has a different cost shape (heavier queries, more egress)." },
-            { label: "Tripling the bill to $60k/month — better safe than sorry.", correct: false, explanation: "30% load growth doesn't mean 200% cost growth. That's not a defensible estimate; it's padding so large the feature gets killed." },
+            { label: "Tripling the bill to $60k/month, better safe than sorry.", correct: false, explanation: "30% load growth doesn't mean 200% cost growth. That's not a defensible estimate; it's padding so large the feature gets killed." },
             { label: "Run a load test and extrapolate from observed cost during the test.", correct: false, explanation: "Useful as a sanity check but expensive and slow as a first-pass estimate. The $/QPS calculation gets you an answer in five minutes." },
           ]}
         />
@@ -160,12 +160,12 @@ $/request      = monthly_cost / requests
         </p>
 
         <Callout variant="warn" title="The 'just run hot' fallacy">
-          <p className="m-0">Every cost-cutting initiative eventually proposes raising utilization to 80%+ to save money. Sometimes that&apos;s right. More often it leads to an outage, a postmortem, and a quiet return to 60%. The reason: utilization is averaged over a window. A box averaging 80% over 5 minutes is hitting 100% in some 5-second windows, and 100% in CPU means request queues, which means latency spikes, which means timeouts, which means retries, which means more load. Headroom isn&apos;t waste — it&apos;s the buffer that keeps the feedback loop from running away.</p>
+          <p className="m-0">Every cost-cutting initiative eventually proposes raising utilization to 80%+ to save money. Sometimes that&apos;s right. More often it leads to an outage, a postmortem, and a quiet return to 60%. The reason: utilization is averaged over a window. A box averaging 80% over 5 minutes is hitting 100% in some 5-second windows, and 100% in CPU means request queues, which means latency spikes, which means timeouts, which means retries, which means more load. Headroom isn&apos;t waste, it&apos;s the buffer that keeps the feedback loop from running away.</p>
         </Callout>
 
         <h2>Scaling triggers that fire on time</h2>
         <p>
-          Autoscaling is mostly a question of: what metric, what threshold, what response time. The naive setup — &quot;CPU above 70%, add an instance&quot; — is a starter; production-grade setups are more careful.
+          Autoscaling is mostly a question of: what metric, what threshold, what response time. The naive setup, &quot;CPU above 70%, add an instance&quot;, is a starter; production-grade setups are more careful.
         </p>
         <ul>
           <li><strong>Lead-indicator metric.</strong>{" "}CPU is fine for compute-bound services; for I/O-bound services, scale on request queue depth, in-flight requests, or p99 latency. Choose the metric that rises before user-visible degradation, not after.</li>
@@ -175,27 +175,27 @@ $/request      = monthly_cost / requests
         </ul>
 
         <Callout variant="insight" title="Cold start is a capacity problem">
-          <p className="m-0">When you add an instance, it&apos;s not serving traffic immediately — it has to boot, pull config, warm caches, JIT, fill connection pools. For a JVM service, that can be 30-90 seconds before the new instance contributes meaningfully. Your autoscaling math has to account for this: if the spike is faster than your warm-up time, you&apos;re going to drop traffic regardless of how aggressively you scale. The fix is overprovisioning at peak (more headroom) or pre-warmed pools (more cost) — there is no third option.</p>
+          <p className="m-0">When you add an instance, it&apos;s not serving traffic immediately, it has to boot, pull config, warm caches, JIT, fill connection pools. For a JVM service, that can be 30-90 seconds before the new instance contributes meaningfully. Your autoscaling math has to account for this: if the spike is faster than your warm-up time, you&apos;re going to drop traffic regardless of how aggressively you scale. The fix is overprovisioning at peak (more headroom) or pre-warmed pools (more cost), there is no third option.</p>
         </Callout>
 
         <h2>Stateful scaling is harder</h2>
         <p>
-          Stateless services scale by adding instances behind a load balancer. Stateful services (databases, caches, event stores) scale by sharding, by replicating reads, or — most painfully — by upsizing the box and hoping. The lesson:
+          Stateless services scale by adding instances behind a load balancer. Stateful services (databases, caches, event stores) scale by sharding, by replicating reads, or, most painfully, by upsizing the box and hoping. The lesson:
         </p>
         <ul>
           <li><strong>Plan stateful capacity months ahead.</strong>{" "}Scaling a database mid-incident is a project, not an action.</li>
           <li><strong>Use read replicas for read-heavy workloads.</strong>{" "}Cheap to add, fast to scale, and they take pressure off the primary.</li>
           <li><strong>Consider sharding before you need it.</strong>{" "}Resharding a live system is among the most expensive engineering work in tech.</li>
-          <li><strong>For caches, plan for cold-start.</strong>{" "}A cluster restart with cold cache will hit the origin at full traffic — usually killing it. Stagger restarts or pre-warm.</li>
+          <li><strong>For caches, plan for cold-start.</strong>{" "}A cluster restart with cold cache will hit the origin at full traffic, usually killing it. Stagger restarts or pre-warm.</li>
         </ul>
 
         <Quiz
           question="Your service runs at 70% CPU during business hours. You're considering raising the autoscaling target to 85% to save 15% on compute. What's the most likely outcome?"
           options={[
-            { label: "You save 15%, no incidents — modern autoscalers are smart enough to handle 85%.", correct: false, explanation: "Smart autoscalers don't change the underlying math: at 85% steady-state, 5-second peaks hit 100% routinely, and request queues form. The savings are real but so is the risk." },
-            { label: "You save 15% on a normal week and have a major incident the next time traffic spikes by 30%+ before the autoscaler reacts.", correct: true, explanation: "This is the classic 'run hot' result. The savings are real on average, the cost is paid as outages during spikes. Whether it's worth it depends on your traffic shape and outage tolerance — but it is a tradeoff, not free money." },
-            { label: "Latency improves because there's less idle capacity wasting cycles.", correct: false, explanation: "Idle capacity doesn't waste cycles for other workloads — it's just headroom. Latency at higher utilization gets worse, not better, especially at p99." },
-            { label: "Nothing changes — autoscaling doesn't actually depend on the target.", correct: false, explanation: "It very much does. The target determines when the scaler fires, which determines how close you run to capacity." },
+            { label: "You save 15%, no incidents, modern autoscalers are smart enough to handle 85%.", correct: false, explanation: "Smart autoscalers don't change the underlying math: at 85% steady-state, 5-second peaks hit 100% routinely, and request queues form. The savings are real but so is the risk." },
+            { label: "You save 15% on a normal week and have a major incident the next time traffic spikes by 30%+ before the autoscaler reacts.", correct: true, explanation: "This is the classic 'run hot' result. The savings are real on average, the cost is paid as outages during spikes. Whether it's worth it depends on your traffic shape and outage tolerance, but it is a tradeoff, not free money." },
+            { label: "Latency improves because there's less idle capacity wasting cycles.", correct: false, explanation: "Idle capacity doesn't waste cycles for other workloads, it's just headroom. Latency at higher utilization gets worse, not better, especially at p99." },
+            { label: "Nothing changes, autoscaling doesn't actually depend on the target.", correct: false, explanation: "It very much does. The target determines when the scaler fires, which determines how close you run to capacity." },
           ]}
         />
 
@@ -205,7 +205,7 @@ $/request      = monthly_cost / requests
           points={[
             { takeaway: "Stateless target: 50-60% peak utilization", detail: "Stateful: 40-50%. Higher targets save money on average and cost it back as incidents during spikes." },
             { takeaway: "Scale on the right metric", detail: "CPU for compute-bound; queue depth or latency for I/O-bound. The metric should lead user impact, not lag it." },
-            { takeaway: "Cold start is your real reaction time", detail: "Adding an instance is only useful when it's serving — JVMs take 30-90s to warm. Autoscaling math must account for that gap." },
+            { takeaway: "Cold start is your real reaction time", detail: "Adding an instance is only useful when it's serving, JVMs take 30-90s to warm. Autoscaling math must account for that gap." },
           ]}
         />
 
@@ -224,7 +224,7 @@ $/request      = monthly_cost / requests
         </ul>
 
         <Callout variant="info" title="The ordering matters">
-          <p className="m-0">A team that starts with architectural rewrites before cleaning up waste is doing the hard problem first. Right-size the obvious stuff, kill the obvious idle, then go after the hard problems. The inverse — &quot;we&apos;ll save 40% by rewriting in Rust&quot; — usually misses the 25% sitting in idle staging environments and oversized boxes.</p>
+          <p className="m-0">A team that starts with architectural rewrites before cleaning up waste is doing the hard problem first. Right-size the obvious stuff, kill the obvious idle, then go after the hard problems. The inverse, &quot;we&apos;ll save 40% by rewriting in Rust&quot;, usually misses the 25% sitting in idle staging environments and oversized boxes.</p>
         </Callout>
 
         <h2>The cost-quality matrix</h2>
@@ -249,7 +249,7 @@ $/request      = monthly_cost / requests
             { id: "i5", label: "Buy 1-year savings plans for the steady-state compute baseline.", answer: "neutral", explanation: "Same compute, 30-50% cheaper, in exchange for commitment. UX unaffected if you size the commitment to actual baseline." },
             { id: "i6", label: "Drop the second region for non-critical workloads to save on cross-region traffic.", answer: "cheaper", explanation: "Real savings on egress and replicated capacity; UX hit is slightly worse failover for those workloads, which is acceptable for non-critical." },
             { id: "i7", label: "Replace managed Kafka MSK with self-hosted Kafka on EC2.", answer: "risk", explanation: "Lower bill, much higher operational risk. Now you own broker upgrades, partition rebalancing, and 3am pages. Sometimes worth it; rarely free." },
-            { id: "i8", label: "Increase request timeouts to reduce retries that double cost during incidents.", answer: "neutral", explanation: "Reduces retry storms (cheaper) without obvious UX cost; users were already waiting through the retries — surfacing a clean error sometimes improves UX." },
+            { id: "i8", label: "Increase request timeouts to reduce retries that double cost during incidents.", answer: "neutral", explanation: "Reduces retry storms (cheaper) without obvious UX cost; users were already waiting through the retries, surfacing a clean error sometimes improves UX." },
           ]}
         />
 
@@ -266,7 +266,7 @@ $/request      = monthly_cost / requests
         </ul>
 
         <Callout variant="spring" title="The cost-aware engineering mindset">
-          <p className="m-0">Cost is just another non-functional requirement, like latency or availability. Engineers who treat it that way — as a number they&apos;re responsible for, with thresholds and alerts — outperform engineers who treat it as &quot;finance&apos;s problem.&quot; The companies that scale efficiently aren&apos;t cheap; they just don&apos;t spend out of laziness. That&apos;s a skill, not a virtue.</p>
+          <p className="m-0">Cost is just another non-functional requirement, like latency or availability. Engineers who treat it that way, as a number they&apos;re responsible for, with thresholds and alerts, outperform engineers who treat it as &quot;finance&apos;s problem.&quot; The companies that scale efficiently aren&apos;t cheap; they just don&apos;t spend out of laziness. That&apos;s a skill, not a virtue.</p>
         </Callout>
 
         <Quiz
@@ -294,7 +294,7 @@ $/request      = monthly_cost / requests
       <section className="not-prose my-12 rounded-2xl border-2 border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mb-2 text-lg font-bold">Module wrap</h3>
         <p className="mb-0 text-sm text-slate-700 dark:text-slate-300">
-          Cost is engineering, not accounting. Pick a unit ($/request, $/QPS-month, $/MAU). Decompose the bill. Set capacity headroom honestly and let the autoscaler scale on a leading metric. Sequence cost work — waste, right-size, commit, re-architect — and resist the urge to do the hard one first. The goal isn&apos;t cheap infrastructure; it&apos;s infrastructure where every dollar earns its keep, and you can defend the spend with a number.
+          Cost is engineering, not accounting. Pick a unit ($/request, $/QPS-month, $/MAU). Decompose the bill. Set capacity headroom honestly and let the autoscaler scale on a leading metric. Sequence cost work, waste, right-size, commit, re-architect, and resist the urge to do the hard one first. The goal isn&apos;t cheap infrastructure; it&apos;s infrastructure where every dollar earns its keep, and you can defend the spend with a number.
         </p>
       </section>
 

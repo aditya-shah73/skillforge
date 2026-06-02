@@ -87,7 +87,7 @@ flowchart TB
           Strings &amp; string building
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Strings are arrays in disguise. The twist is immutability — and the trap of <code>+</code> in a loop. Plus the patterns (anagram, palindrome, frequency counting) that interview problems hide behind.
+          Strings are arrays in disguise. The twist is immutability, and the trap of <code>+</code> in a loop. Plus the patterns (anagram, palindrome, frequency counting) that interview problems hide behind.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="strings" />
         <ModuleProgress moduleSlug="strings" checkpoints={CHECKPOINTS} />
@@ -99,7 +99,7 @@ flowchart TB
         <h2>Part 1: A String is an array of characters with a contract</h2>
 
         <p>
-          You spent Module 5 understanding arrays. The good news: a Java <code>String</code> is, internally, an array of characters. The bad news: it&apos;s wrapped behind a class that promises one thing — <strong>you cannot modify it</strong>.
+          You spent Module 5 understanding arrays. The good news: a Java <code>String</code> is, internally, an array of characters. The bad news: it&apos;s wrapped behind a class that promises one thing, <strong>you cannot modify it</strong>.
         </p>
 
         <Callout variant="insight" title="The Java String model, in one sentence">
@@ -112,16 +112,16 @@ flowchart TB
           Three properties to internalize:
         </p>
         <ul>
-          <li><strong>Indexable in O(1).</strong> <code>s.charAt(i)</code> is array indexing under the hood — same address arithmetic, same constant-time guarantee as <code>arr[i]</code>.</li>
+          <li><strong>Indexable in O(1).</strong> <code>s.charAt(i)</code> is array indexing under the hood, same address arithmetic, same constant-time guarantee as <code>arr[i]</code>.</li>
           <li><strong>Length is cached.</strong> <code>s.length()</code> is O(1). It&apos;s a stored field, not a scan.</li>
-          <li><strong>Immutable.</strong>{" "}There is no <code>s.charAt(0) = &apos;X&apos;</code>. There is no <code>s.append(&apos;Y&apos;)</code>. Anything that &ldquo;modifies&rdquo; — <code>toLowerCase</code>, <code>substring</code>, <code>replace</code>, <code>trim</code>, <code>+</code> — allocates a new object.</li>
+          <li><strong>Immutable.</strong>{" "}There is no <code>s.charAt(0) = &apos;X&apos;</code>. There is no <code>s.append(&apos;Y&apos;)</code>. Anything that &ldquo;modifies&rdquo;, <code>toLowerCase</code>, <code>substring</code>, <code>replace</code>, <code>trim</code>, <code>+</code>, allocates a new object.</li>
         </ul>
 
         <Quiz
           kind="Gut check"
           question={`What does this print: String s = "hi"; s.toUpperCase(); System.out.println(s);`}
           options={[
-            { label: "HI", explanation: "toUpperCase doesn't mutate s — it can't, strings are immutable. It returns a new String you didn't capture." },
+            { label: "HI", explanation: "toUpperCase doesn't mutate s, it can't, strings are immutable. It returns a new String you didn't capture." },
             { label: "hi", correct: true, explanation: "Right. toUpperCase returned a new String 'HI', but you threw it away by not assigning it. The original s still points to 'hi'. The fix is s = s.toUpperCase()." },
             { label: "Empty string.", explanation: "Operations on a String never mutate it to empty. The reference is unchanged." },
             { label: "Compile error.", explanation: "It compiles fine. Forgetting to capture the return value is a runtime bug, not a compile-time one." },
@@ -133,9 +133,9 @@ flowchart TB
           Java&apos;s designers chose immutability for several practical reasons that all turn out to matter:
         </p>
         <ul>
-          <li><strong>Safe to share.</strong>{" "}Two threads reading the same <code>String</code> never need to synchronize — there&apos;s nothing to race on.</li>
+          <li><strong>Safe to share.</strong>{" "}Two threads reading the same <code>String</code> never need to synchronize, there&apos;s nothing to race on.</li>
           <li><strong>Safe as a hash key.</strong>{" "}A mutable key whose contents change after insertion would corrupt every hash map. Immutability makes <code>String</code> a safe <code>HashMap</code> key.</li>
-          <li><strong>Safe to intern / cache.</strong>{" "}The JVM keeps a pool of literal strings — <code>&quot;hello&quot;</code> appearing in two different files refers to the same object. Only possible if it can&apos;t change.</li>
+          <li><strong>Safe to intern / cache.</strong>{" "}The JVM keeps a pool of literal strings, <code>&quot;hello&quot;</code> appearing in two different files refers to the same object. Only possible if it can&apos;t change.</li>
           <li><strong>Safe to pass to security-critical APIs.</strong>{" "}If <code>openFile(path)</code> took a mutable string, an attacker could mutate <code>path</code> after the security check but before the open. (This is a real exploit class.)</li>
         </ul>
 
@@ -158,9 +158,9 @@ a.equals(c)      // true  — equals compares characters, not references`}</Code
           kind="Quick check"
           question={`Given String a = "abc"; String b = "ab" + "c"; (both compile-time constants), what is a == b?`}
           options={[
-            { label: "false — they're separately constructed.", explanation: "The Java compiler folds compile-time constant string concatenation. \"ab\" + \"c\" becomes \"abc\" at compile time and gets interned with the existing \"abc\"." },
-            { label: "true — compile-time constant folding interns both into the same object.", correct: true, explanation: "Right. javac evaluates \"ab\" + \"c\" at compile time, producing the literal \"abc\". The literal pool gives a and b the same reference. (If b were built from variables instead of literals, == would be false.)" },
-            { label: "Compile error — you can't concat at the declaration site.", explanation: "You absolutely can. Both are valid Java." },
+            { label: "false, they're separately constructed.", explanation: "The Java compiler folds compile-time constant string concatenation. \"ab\" + \"c\" becomes \"abc\" at compile time and gets interned with the existing \"abc\"." },
+            { label: "true, compile-time constant folding interns both into the same object.", correct: true, explanation: "Right. javac evaluates \"ab\" + \"c\" at compile time, producing the literal \"abc\". The literal pool gives a and b the same reference. (If b were built from variables instead of literals, == would be false.)" },
+            { label: "Compile error, you can't concat at the declaration site.", explanation: "You absolutely can. Both are valid Java." },
             { label: "Depends on the JVM.", explanation: "The literal pool behavior is part of the Java Language Specification, not JVM-specific." },
           ]}
         />
@@ -170,9 +170,9 @@ a.equals(c)      // true  — equals compares characters, not references`}</Code
           gist="A String is a length-prefixed immutable byte array. The contract is: read-only."
           points={[
             { takeaway: "charAt(i) and length() are O(1).", detail: "Indexing is array address arithmetic. Length is a stored int. Same cost as arrays." },
-            { takeaway: "Strings are immutable — every 'modifying' method returns a new object.", detail: "toUpperCase, substring, replace, trim — all allocate. The original is untouched." },
+            { takeaway: "Strings are immutable, every 'modifying' method returns a new object.", detail: "toUpperCase, substring, replace, trim, all allocate. The original is untouched." },
             { takeaway: "Use .equals() to compare contents. == compares references.", detail: "The literal pool sometimes makes == look right; that's a coincidence, not a guarantee. Always reach for .equals() for content comparison." },
-            { takeaway: "Immutability buys thread safety, hash-key safety, and the literal pool.", detail: "All three matter in real code. The cost is allocation pressure when you 'modify' often — which is what Part 2 is about." },
+            { takeaway: "Immutability buys thread safety, hash-key safety, and the literal pool.", detail: "All three matter in real code. The cost is allocation pressure when you 'modify' often, which is what Part 2 is about." },
           ]}
         />
       </section>
@@ -204,7 +204,7 @@ return result;`}</CodeBlock>
           <li>Wraps it in a new <code>String</code>.</li>
         </ol>
         <p>
-          Run that inside a loop where the left operand keeps growing, and the work is 1 + 2 + 3 + ... + n = n(n+1)/2 character-copies. Pure quadratic. At n = 100,000 that&apos;s about 5 billion copies — seconds of CPU for what should be milliseconds.
+          Run that inside a loop where the left operand keeps growing, and the work is 1 + 2 + 3 + ... + n = n(n+1)/2 character-copies. Pure quadratic. At n = 100,000 that&apos;s about 5 billion copies, seconds of CPU for what should be milliseconds.
         </p>
 
         <Mermaid chart={concatChain} />
@@ -241,10 +241,10 @@ return result;`}</CodeBlock>
               body: (
                 <>
                   <p>
-                    For n = 5 we did 15 copies. For n = 100, we&apos;d do 5,050. For n = 1,000,000, we&apos;d do 500,000,500,000 — half a trillion. That&apos;s O(n²).
+                    For n = 5 we did 15 copies. For n = 100, we&apos;d do 5,050. For n = 1,000,000, we&apos;d do 500,000,500,000, half a trillion. That&apos;s O(n²).
                   </p>
                   <p>
-                    The geometric series math from Module 3 doesn&apos;t save us here, because we&apos;re not doubling capacity — every iteration allocates exactly the right size, copying everything.
+                    The geometric series math from Module 3 doesn&apos;t save us here, because we&apos;re not doubling capacity, every iteration allocates exactly the right size, copying everything.
                   </p>
                 </>
               ),
@@ -254,7 +254,7 @@ return result;`}</CodeBlock>
 
         <Callout variant="warn" title="The compiler does NOT save you here">
           <p className="m-0">
-            <code>javac</code> rewrites a <em>single</em> <code>a + b + c</code> expression into one <code>StringBuilder</code> call — that&apos;s fine. But it can&apos;t rewrite <code>+=</code> across loop iterations, because each iteration is a separate statement. The quadratic blowup survives the compile.
+            <code>javac</code> rewrites a <em>single</em> <code>a + b + c</code> expression into one <code>StringBuilder</code> call, that&apos;s fine. But it can&apos;t rewrite <code>+=</code> across loop iterations, because each iteration is a separate statement. The quadratic blowup survives the compile.
           </p>
         </Callout>
 
@@ -271,7 +271,7 @@ for (int i = 0; i < n; i++) {
 return sb.toString();           // one final allocation, O(n)`}</CodeBlock>
 
         <p>
-          <code>StringBuilder</code> is, internally, exactly the dynamic array you built in Module 5 — a backing <code>char[]</code> with a <code>count</code> field, doubling on overflow. <code>append</code> is amortized O(1). Total work over n appends is O(n). At n = 1,000,000 you&apos;re doing about 2 million character-touches instead of half a trillion.
+          <code>StringBuilder</code> is, internally, exactly the dynamic array you built in Module 5, a backing <code>char[]</code> with a <code>count</code> field, doubling on overflow. <code>append</code> is amortized O(1). Total work over n appends is O(n). At n = 1,000,000 you&apos;re doing about 2 million character-touches instead of half a trillion.
         </p>
 
         <Quiz
@@ -279,13 +279,13 @@ return sb.toString();           // one final allocation, O(n)`}</CodeBlock>
           question="Why is StringBuilder.append() amortized O(1) but String + is O(n)?"
           options={[
             { label: "StringBuilder is implemented in native code.", explanation: "Both are pure Java. The difference is mutability and the doubling backing array, not native-vs-Java." },
-            { label: "StringBuilder reuses its growing backing array; String + must allocate-and-copy the entire current value every time.", correct: true, explanation: "Right. StringBuilder applies the Module 3 doubling trick to a char[]. String + can't — every result must be a fresh immutable String, which means full re-copy of the existing characters every time." },
+            { label: "StringBuilder reuses its growing backing array; String + must allocate-and-copy the entire current value every time.", correct: true, explanation: "Right. StringBuilder applies the Module 3 doubling trick to a char[]. String + can't, every result must be a fresh immutable String, which means full re-copy of the existing characters every time." },
             { label: "StringBuilder uses a linked list of chars internally.", explanation: "It uses a contiguous char[] (now byte[] in JDK 9+ for compact strings). Same array model as ArrayList." },
             { label: "Strings allocate on the stack, StringBuilder on the heap.", explanation: "Both allocate on the heap. The difference is in-place mutation vs allocate-fresh-each-time." },
           ]}
         />
 
-        <h3>Operator vs method — same trap, different syntax</h3>
+        <h3>Operator vs method, same trap, different syntax</h3>
         <p>
           A nastier version of the bug is <code>String.concat</code>:
         </p>
@@ -307,10 +307,10 @@ for (int i = 0; i < n; i++) {
           items={[
             { id: "string-uppercase", label: "String s = \"hi\"; s.toUpperCase();", answer: "returns-new", explanation: "Strings are immutable. toUpperCase returns a new String; the original s is unchanged." },
             { id: "sb-append", label: "StringBuilder sb = new StringBuilder(); sb.append(\"hi\");", answer: "mutates", explanation: "StringBuilder is the mutable counterpart. append modifies the internal char[] in place." },
-            { id: "string-replace", label: "s.replace('a', 'b')", answer: "returns-new", explanation: "Same rule — String can't change. A new String is returned with the substitution." },
+            { id: "string-replace", label: "s.replace('a', 'b')", answer: "returns-new", explanation: "Same rule, String can't change. A new String is returned with the substitution." },
             { id: "string-substring", label: "s.substring(2, 5)", answer: "returns-new", explanation: "Returns a new String covering the slice. The original s is untouched." },
             { id: "sb-reverse", label: "sb.reverse()", answer: "mutates", explanation: "StringBuilder.reverse mutates the buffer in place and returns this for chaining." },
-            { id: "char-array-set", label: "char[] arr = ...; arr[0] = 'X';", answer: "mutates", explanation: "char[] is just an array. Indexed write is a direct mutation — exactly what you'd expect from arrays." },
+            { id: "char-array-set", label: "char[] arr = ...; arr[0] = 'X';", answer: "mutates", explanation: "char[] is just an array. Indexed write is a direct mutation, exactly what you'd expect from arrays." },
             { id: "string-trim", label: "s.trim()", answer: "returns-new", explanation: "Strings are immutable. trim allocates a new String with whitespace removed and returns it." },
           ]}
         />
@@ -321,8 +321,8 @@ for (int i = 0; i < n; i++) {
           points={[
             { takeaway: "+ on strings always allocates a new String and copies both operands.", detail: "Inside a loop where one operand grows, total work is 1 + 2 + ... + n = O(n²)." },
             { takeaway: "javac folds a single + chain into one StringBuilder call. It cannot fold across loop iterations.", detail: "String s = a + b + c gets compiled to one builder. for(...) s += x; doesn't, because each iteration is its own expression." },
-            { takeaway: "StringBuilder is the dynamic-array-of-chars from Module 5 — same doubling trick, same amortized O(1) append.", detail: "Build with the mutable type, freeze with toString() at the end. The pattern works for any loop building one string." },
-            { takeaway: "Anything that returns String inside a loop deserves suspicion.", detail: "+, concat, replace, substring — they all allocate. If you call them n times, the loop is O(n²) at minimum." },
+            { takeaway: "StringBuilder is the dynamic-array-of-chars from Module 5, same doubling trick, same amortized O(1) append.", detail: "Build with the mutable type, freeze with toString() at the end. The pattern works for any loop building one string." },
+            { takeaway: "Anything that returns String inside a loop deserves suspicion.", detail: "+, concat, replace, substring, they all allocate. If you call them n times, the loop is O(n²) at minimum." },
           ]}
         />
       </section>
@@ -370,12 +370,12 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
           </p>
         </Callout>
 
-        <h3>StringBuffer vs StringBuilder — which one?</h3>
+        <h3>StringBuffer vs StringBuilder, which one?</h3>
         <p>
           <code>StringBuffer</code> exists for historical reasons. It&apos;s thread-safe (every method is <code>synchronized</code>), which sounds nice but costs you a lot of performance in the 99% case where you&apos;re building a string in one thread and immediately throwing the builder away.
         </p>
         <p>
-          <strong>Default to <code>StringBuilder</code>.</strong>{" "}Reach for <code>StringBuffer</code> only if you genuinely have multiple threads appending to the same builder, which is rare and usually a design smell — you&apos;d build per-thread builders and merge them.
+          <strong>Default to <code>StringBuilder</code>.</strong>{" "}Reach for <code>StringBuffer</code> only if you genuinely have multiple threads appending to the same builder, which is rare and usually a design smell, you&apos;d build per-thread builders and merge them.
         </p>
 
         <Quiz
@@ -383,15 +383,15 @@ String result = sb.toString();  // freezes to immutable String — O(n) one-time
           question="You're building a string of expected length 1,000,000. Which is fastest?"
           options={[
             { label: "String result = \"\"; for (...) result += c;", explanation: "O(n²). Half a trillion character-copies for n = 10⁶. Catastrophic." },
-            { label: "new StringBuilder(); for (...) sb.append(c);", explanation: "Fast — O(n) — but you'll do ~log₂(10⁶) ≈ 20 resizes along the way, each copying everything. Total work ≈ 2n character-copies." },
+            { label: "new StringBuilder(); for (...) sb.append(c);", explanation: "Fast, O(n), but you'll do ~log₂(10⁶) ≈ 20 resizes along the way, each copying everything. Total work ≈ 2n character-copies." },
             { label: "new StringBuilder(1_000_000); for (...) sb.append(c);", correct: true, explanation: "Right. Pre-sizing skips every resize. Total work is exactly n character-writes, no copies. About half the wall time of the no-pre-size version." },
-            { label: "new StringBuffer(1_000_000); for (...) sb.append(c);", explanation: "Same algorithmic cost as the StringBuilder pre-sized version, but every append takes a synchronized monitor — measurably slower in single-threaded code." },
+            { label: "new StringBuffer(1_000_000); for (...) sb.append(c);", explanation: "Same algorithmic cost as the StringBuilder pre-sized version, but every append takes a synchronized monitor, measurably slower in single-threaded code." },
           ]}
         />
 
-        <h3>char[] — when you want full control</h3>
+        <h3>char[], when you want full control</h3>
         <p>
-          Sometimes you want bare metal: a fixed-size char array you index by hand. The classic case is &ldquo;reverse a string in place&rdquo; — a problem that&apos;s only interesting <em>because</em>{" "}Strings are immutable, so you have to convert to <code>char[]</code> first.
+          Sometimes you want bare metal: a fixed-size char array you index by hand. The classic case is &ldquo;reverse a string in place&rdquo;, a problem that&apos;s only interesting <em>because</em>{" "}Strings are immutable, so you have to convert to <code>char[]</code> first.
         </p>
 
         <CodeBlock lang="java">{`String reverse(String s) {
@@ -429,9 +429,9 @@ String.join(",", list)           // List<String> → String with separator; O(to
           kind="Quick check"
           question="You need to count how many times each letter appears in a String s of length n. Which is the cleanest O(n)?"
           options={[
-            { label: "for each c in 'a'..'z': s.indexOf(c) — return early if not present.", explanation: "Each indexOf is O(n) and you do 26 of them — that's 26n work. Worse, indexOf only finds the first; you'd need a more complex loop. There's a single-pass solution." },
+            { label: "for each c in 'a'..'z': s.indexOf(c), return early if not present.", explanation: "Each indexOf is O(n) and you do 26 of them, that's 26n work. Worse, indexOf only finds the first; you'd need a more complex loop. There's a single-pass solution." },
             { label: "Convert to char[], then for each c, do a nested for-loop counting.", explanation: "That's O(26n) at best, O(n²) at worst. There's a single-pass solution." },
-            { label: "Build a char-keyed HashMap with one pass over s.", explanation: "Works and is O(n), but for fixed lowercase ASCII you can use a 26-int array instead — fewer allocations, faster constants." },
+            { label: "Build a char-keyed HashMap with one pass over s.", explanation: "Works and is O(n), but for fixed lowercase ASCII you can use a 26-int array instead, fewer allocations, faster constants." },
             { label: "Make int[] counts = new int[26]; for each c in s, counts[c - 'a']++;", correct: true, explanation: "Right. The 'character → small index' trick collapses a HashMap to a fixed-size int array. One pass, O(n), with tiny constants. This pattern is the basis of anagram and frequency-counting problems in Part 4." },
           ]}
         />
@@ -440,9 +440,9 @@ String.join(",", list)           // List<String> → String with separator; O(to
           title="Part 3 recap"
           gist="StringBuilder for in-loop building, char[] for indexed mutation and two-pointer scans, String for handing off finished text."
           points={[
-            { takeaway: "StringBuilder is a mutable char[] dynamic array — same model as ArrayList, same amortized O(1) append.", detail: "Backing array, count, doubling. Pre-size with new StringBuilder(n) when you know the answer to skip resize churn." },
+            { takeaway: "StringBuilder is a mutable char[] dynamic array, same model as ArrayList, same amortized O(1) append.", detail: "Backing array, count, doubling. Pre-size with new StringBuilder(n) when you know the answer to skip resize churn." },
             { takeaway: "Default to StringBuilder. Use StringBuffer only when multiple threads share the builder.", detail: "StringBuffer's synchronized methods cost time you usually don't need." },
-            { takeaway: "Convert String → char[] when you need indexed mutation.", detail: "Reverse-in-place, swap, two-pointer scans — all want char[] semantics, then one new String() at the end." },
+            { takeaway: "Convert String → char[] when you need indexed mutation.", detail: "Reverse-in-place, swap, two-pointer scans, all want char[] semantics, then one new String() at the end." },
             { takeaway: "For lowercase-letter frequency problems, int[26] beats HashMap.", detail: "counts[c - 'a']++ replaces a hash lookup with an array index. Same Big-O, dramatically smaller constants. Recurs in anagram, palindrome variants, sliding window." },
           ]}
         />
@@ -476,22 +476,22 @@ String.join(",", list)           // List<String> → String with separator; O(to
     return true;
 }`}</CodeBlock>
         <p>
-          Time: O(n). Space: O(1) — the int[26] is a constant-size buffer regardless of input length.
+          Time: O(n). Space: O(1), the int[26] is a constant-size buffer regardless of input length.
         </p>
 
         <Callout variant="insight" title="The trick is the 'cancellation' loop">
           <p className="m-0">
-            Combining +1 from <code>a</code> and -1 from <code>b</code> in the same loop is a cute optimization, but the real lesson is: you don&apos;t need a HashMap when the alphabet is small and known. <code>int[26]</code>, <code>int[128]</code> (full ASCII), or <code>int[256]</code> (extended ASCII) — pick by alphabet, not by reflex.
+            Combining +1 from <code>a</code> and -1 from <code>b</code> in the same loop is a cute optimization, but the real lesson is: you don&apos;t need a HashMap when the alphabet is small and known. <code>int[26]</code>, <code>int[128]</code> (full ASCII), or <code>int[256]</code> (extended ASCII), pick by alphabet, not by reflex.
           </p>
         </Callout>
 
         <Quiz
           kind="Quick check"
-          question="The isAnagram above has space complexity O(1). Why is that defensible — doesn't the int[26] take memory?"
+          question="The isAnagram above has space complexity O(1). Why is that defensible, doesn't the int[26] take memory?"
           options={[
             { label: "It's true that O(1) is wrong; isAnagram is O(n).", explanation: "Space and time are different axes. The function uses 26 ints regardless of input size." },
-            { label: "26 is a small constant. Big-O ignores constants — int[26] is bounded by a constant size that doesn't grow with n.", correct: true, explanation: "Right. Auxiliary space is O(1) when the buffer doesn't grow with n. Even at n = 10⁹, the int[26] is still 26 ints (~104 bytes). That's the definition of constant space." },
-            { label: "Java zero-initializes the array for free.", explanation: "Zero-init is real work, but it's bounded by the array size — which is constant here. The space claim doesn't depend on init being free." },
+            { label: "26 is a small constant. Big-O ignores constants, int[26] is bounded by a constant size that doesn't grow with n.", correct: true, explanation: "Right. Auxiliary space is O(1) when the buffer doesn't grow with n. Even at n = 10⁹, the int[26] is still 26 ints (~104 bytes). That's the definition of constant space." },
+            { label: "Java zero-initializes the array for free.", explanation: "Zero-init is real work, but it's bounded by the array size, which is constant here. The space claim doesn't depend on init being free." },
             { label: "Because Strings are immutable.", explanation: "Unrelated. Immutability affects what we can do with strings, not how much space the count array uses." },
           ]}
         />
@@ -509,12 +509,12 @@ String.join(",", list)           // List<String> → String with separator; O(to
     return true;
 }`}</CodeBlock>
         <p>
-          Time: O(n). Space: O(1). Compare to the &ldquo;reverse the string and check equals&rdquo; approach, which is O(n) time but also O(n) extra space — and reads worse.
+          Time: O(n). Space: O(1). Compare to the &ldquo;reverse the string and check equals&rdquo; approach, which is O(n) time but also O(n) extra space, and reads worse.
         </p>
 
         <Callout variant="info" title="The variants are where the trickiness lives">
           <p className="m-0">
-            &ldquo;Valid Palindrome&rdquo; on LeetCode allows non-letters and is case-insensitive — so the inner loop becomes &ldquo;skip non-letters on both sides, lower-case before comparing.&rdquo; Same shape, more conditions. &ldquo;Palindrome with at most one deletion&rdquo; is the same shape with one branch on mismatch. The pattern is: <em>two pointers from both ends, advance/skip per the rules</em>.
+            &ldquo;Valid Palindrome&rdquo; on LeetCode allows non-letters and is case-insensitive, so the inner loop becomes &ldquo;skip non-letters on both sides, lower-case before comparing.&rdquo; Same shape, more conditions. &ldquo;Palindrome with at most one deletion&rdquo; is the same shape with one branch on mismatch. The pattern is: <em>two pointers from both ends, advance/skip per the rules</em>.
           </p>
         </Callout>
 
@@ -523,7 +523,7 @@ String.join(",", list)           // List<String> → String with separator; O(to
           question="Why is the two-pointer palindrome check O(1) auxiliary space, while reversing the string and comparing is O(n)?"
           options={[
             { label: "Two pointers terminates earlier on average.", explanation: "Average-case termination affects time, not auxiliary space. Even if both ran the full n iterations, the space difference is structural." },
-            { label: "The two-pointer version uses only two int variables; reversing allocates a new n-character String.", correct: true, explanation: "Right. l, r, and the comparison char are all O(1) auxiliary space. Reversing — whether via StringBuilder.reverse() or new String(toCharArray reversed) — allocates O(n) extra. Same time, different space." },
+            { label: "The two-pointer version uses only two int variables; reversing allocates a new n-character String.", correct: true, explanation: "Right. l, r, and the comparison char are all O(1) auxiliary space. Reversing, whether via StringBuilder.reverse() or new String(toCharArray reversed), allocates O(n) extra. Same time, different space." },
             { label: "Reversing has higher Big-O for time too.", explanation: "Both are O(n) time. The difference is space, not time." },
             { label: "Java optimizes away the int variables.", explanation: "Big-O space is about asymptotic auxiliary memory the algorithm needs in principle, not about JVM optimizations." },
           ]}
@@ -564,16 +564,16 @@ for (String s : input) {
 }
 return new ArrayList<>(groups.values());`}</CodeBlock>
         <p>
-          Time: O(N · k log k) where N = number of strings, k = average string length. The <code>k log k</code> is from sorting each signature. There&apos;s an O(N · k) variant using <code>int[26]</code> as the signature key — but encoding it as a hashable key takes some care.
+          Time: O(N · k log k) where N = number of strings, k = average string length. The <code>k log k</code> is from sorting each signature. There&apos;s an O(N · k) variant using <code>int[26]</code> as the signature key, but encoding it as a hashable key takes some care.
         </p>
 
         <Quiz
           kind="Concept check"
           question="In Group Anagrams, why is sorting each string's chars (O(k log k)) and using the result as a HashMap key correct?"
           options={[
-            { label: "Sorting the same set of characters always produces the same string, so anagrams collide on the same key.", correct: true, explanation: "Right. Two strings are anagrams iff they have the same multiset of characters. Sorting deterministically canonicalizes that multiset into a string — which gives a unique HashMap key per anagram class. Different multiset → different sorted result → different bucket." },
+            { label: "Sorting the same set of characters always produces the same string, so anagrams collide on the same key.", correct: true, explanation: "Right. Two strings are anagrams iff they have the same multiset of characters. Sorting deterministically canonicalizes that multiset into a string, which gives a unique HashMap key per anagram class. Different multiset → different sorted result → different bucket." },
             { label: "Java HashMaps require sorted keys.", explanation: "They don't. Any object with a stable hashCode/equals works. Sorting is for canonicalization, not HashMap requirements." },
-            { label: "Sorting is faster than counting.", explanation: "It's actually slower asymptotically — O(k log k) vs O(k) for a count array. Sorting is just simpler to code." },
+            { label: "Sorting is faster than counting.", explanation: "It's actually slower asymptotically, O(k log k) vs O(k) for a count array. Sorting is just simpler to code." },
             { label: "Anagrams are alphabetically equivalent by definition.", explanation: "Anagrams have the same multiset of characters, not anything alphabetical. Sorting is a tool for testing the multiset condition, not a definition." },
           ]}
         />
@@ -582,9 +582,9 @@ return new ArrayList<>(groups.values());`}</CodeBlock>
           title="Part 4 recap"
           gist="Three patterns: int[26] for frequency, two pointers for palindromes, StringBuilder for transformations."
           points={[
-            { takeaway: "int[26] frequency counts in O(1) auxiliary space when alphabet is small.", detail: "counts[c - 'a']++ pattern. Anagram, palindrome variants, sliding window — same trick, different shapes." },
-            { takeaway: "Two pointers from both ends solves palindrome and its variants in O(n) time, O(1) space.", detail: "Skip-non-letters, single-deletion, k-deletion — all add inner conditions to the same outer two-pointer skeleton." },
-            { takeaway: "For 'transform a string' problems, walk the input and append to a pre-sized StringBuilder.", detail: "Run-length encoding, JSON-escape, casing rules — same skeleton, different per-character logic." },
+            { takeaway: "int[26] frequency counts in O(1) auxiliary space when alphabet is small.", detail: "counts[c - 'a']++ pattern. Anagram, palindrome variants, sliding window, same trick, different shapes." },
+            { takeaway: "Two pointers from both ends solves palindrome and its variants in O(n) time, O(1) space.", detail: "Skip-non-letters, single-deletion, k-deletion, all add inner conditions to the same outer two-pointer skeleton." },
+            { takeaway: "For 'transform a string' problems, walk the input and append to a pre-sized StringBuilder.", detail: "Run-length encoding, JSON-escape, casing rules, same skeleton, different per-character logic." },
             { takeaway: "Group anagrams = signature + HashMap bucket. The signature is the canonical form.", detail: "Sorted chars is the easy signature. A 26-int tuple is the asymptotically faster one. Either way, HashMap groups things that share a signature." },
           ]}
         />
@@ -594,7 +594,7 @@ return new ArrayList<>(groups.values());`}</CodeBlock>
       {/* PART 5: PROJECT */}
       <Checkpoint moduleSlug="strings" id="project" title="Project: anagram & palindrome lab" xp={40} celebration="You've built the three patterns by hand. The shape is in your fingers now." manual manualLabel="I built and tested it">
       <section>
-        <h2>Part 5: Project — anagram &amp; palindrome lab</h2>
+        <h2>Part 5: Project, anagram &amp; palindrome lab</h2>
 
         <p>
           Two pieces. First, a small lab class that demonstrates each of the three patterns from Part 4, with timing instrumentation so you can <em>feel</em>{" "}the O(n²) vs O(n) gap. Second, three LeetCode warm-ups that exercise each pattern.
@@ -609,7 +609,7 @@ return new ArrayList<>(groups.values());`}</CodeBlock>
 
         <ol className="not-prose space-y-4">
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 1 — buildBad and buildGood (the + trap)</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 1, buildBad and buildGood (the + trap)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">Two methods that produce a string of <code>n</code> identical chars:</p>
               <CodeBlock lang="java">{`String buildBad(int n)  { String s = ""; for (int i = 0; i < n; i++) s = s + 'a'; return s; }
@@ -619,28 +619,28 @@ String buildGood(int n) { StringBuilder sb = new StringBuilder(n); for (int i = 
           </li>
 
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 2 — isAnagram (frequency-array pattern)</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 2, isAnagram (frequency-array pattern)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               Implement <code>boolean isAnagram(String a, String b)</code> using the int[26] / single-pass cancellation trick from Part 4. Test with: <code>(&quot;listen&quot;, &quot;silent&quot;) → true</code>, <code>(&quot;rat&quot;, &quot;car&quot;) → false</code>, <code>(&quot;a&quot;, &quot;ab&quot;) → false</code> (length mismatch).
             </div>
           </li>
 
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 3 — isPalindrome (two pointers)</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 3, isPalindrome (two pointers)</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
-              Implement <code>boolean isPalindrome(String s)</code> with two pointers. Then make a second version <code>isPalindromeAlphanum(String s)</code> that ignores non-letters and is case-insensitive — that&apos;s LeetCode 125. Test with: <code>(&quot;A man, a plan, a canal: Panama&quot;) → true</code>.
+              Implement <code>boolean isPalindrome(String s)</code> with two pointers. Then make a second version <code>isPalindromeAlphanum(String s)</code> that ignores non-letters and is case-insensitive, that&apos;s LeetCode 125. Test with: <code>(&quot;A man, a plan, a canal: Panama&quot;) → true</code>.
             </div>
           </li>
 
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 4 — reverseString (in-place char[])</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 4, reverseString (in-place char[])</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
-              LeetCode 344 (&ldquo;Reverse String&rdquo;) gives you a <code>char[]</code> directly and asks you to reverse it in place — no return value. Implement with two pointers from both ends. Verify the array is mutated.
+              LeetCode 344 (&ldquo;Reverse String&rdquo;) gives you a <code>char[]</code> directly and asks you to reverse it in place, no return value. Implement with two pointers from both ends. Verify the array is mutated.
             </div>
           </li>
 
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 5 — Timing harness</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 5, Timing harness</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               <p className="mt-0">Write a <code>main</code> that runs each method on inputs of size n = 1k, 10k, 100k, and (only for the good version) 1M. Print:</p>
               <CodeBlock lang="java">{`long t0 = System.nanoTime();
@@ -652,13 +652,13 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           </li>
 
           <li className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950/40">
-            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 6 — LeetCode warm-ups</div>
+            <div className="mb-1 text-sm font-semibold text-amber-900 dark:text-amber-200">Step 6, LeetCode warm-ups</div>
             <div className="text-sm text-slate-700 dark:text-slate-300">
               The three problems your three methods solve:
               <ul className="my-2">
-                <li><strong>Valid Anagram</strong> (LC 242) — your isAnagram.</li>
-                <li><strong>Valid Palindrome</strong> (LC 125) — your isPalindromeAlphanum.</li>
-                <li><strong>Reverse String</strong> (LC 344) — your reverseString.</li>
+                <li><strong>Valid Anagram</strong> (LC 242), your isAnagram.</li>
+                <li><strong>Valid Palindrome</strong> (LC 125), your isPalindromeAlphanum.</li>
+                <li><strong>Reverse String</strong> (LC 344), your reverseString.</li>
               </ul>
               For each, write a comment at the top of the solution: time complexity, space complexity, and which pattern from Part 4 it uses.
             </div>
@@ -667,15 +667,15 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
 
         <h3>Stretch goals</h3>
         <ul>
-          <li>Add <code>longestCommonPrefix(String[] arr)</code> (LC 14) — column-by-column scan.</li>
+          <li>Add <code>longestCommonPrefix(String[] arr)</code> (LC 14), column-by-column scan.</li>
           <li>Add <code>groupAnagrams(String[] arr)</code> (LC 49) using the signature pattern.</li>
-          <li>Time <code>buildBad</code> for n = 200k, 400k, 800k. Confirm the 4× scaling per 2× input — the signature of O(n²).</li>
-          <li>Try a <code>buildPlus(int n)</code> that uses <code>+</code> in a single expression (<code>&quot;a&quot; + &quot;b&quot; + ... + &quot;z&quot;</code>, hardcoded). Decompile with <code>javap -c</code> and see <code>StringBuilder</code> in the bytecode — proof that javac fixes single-expression concat but not loops.</li>
+          <li>Time <code>buildBad</code> for n = 200k, 400k, 800k. Confirm the 4× scaling per 2× input, the signature of O(n²).</li>
+          <li>Try a <code>buildPlus(int n)</code> that uses <code>+</code> in a single expression (<code>&quot;a&quot; + &quot;b&quot; + ... + &quot;z&quot;</code>, hardcoded). Decompile with <code>javap -c</code> and see <code>StringBuilder</code> in the bytecode, proof that javac fixes single-expression concat but not loops.</li>
         </ul>
 
         <Callout variant="insight" title="Why this lab matters in interviews">
           <p className="m-0">
-            &ldquo;Why is your solution O(n) instead of O(n²)?&rdquo; is one of the most common follow-up questions on string problems. Having actually <em>seen</em>{" "}the gap on your own machine — having watched buildBad take 8 seconds on n = 100k while buildGood finishes instantly — is what makes the answer come naturally instead of memorized.
+            &ldquo;Why is your solution O(n) instead of O(n²)?&rdquo; is one of the most common follow-up questions on string problems. Having actually <em>seen</em>{" "}the gap on your own machine, having watched buildBad take 8 seconds on n = 100k while buildGood finishes instantly, is what makes the answer come naturally instead of memorized.
           </p>
         </Callout>
 
@@ -691,10 +691,10 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           kind="Final"
           question={`What's the time complexity of: String s = ""; for (int i = 0; i < n; i++) s += chars[i]; return s;`}
           options={[
-            { label: "O(n) — each += is one append.", explanation: "On String, += is not 'one append.' It allocates a new String each time and copies the entire current value. Total work is quadratic." },
-            { label: "O(n²) — each += copies the whole growing string.", correct: true, explanation: "Right. Iteration k copies k characters. Total is 1 + 2 + ... + n = n(n+1)/2 = O(n²). The fix is StringBuilder, which gives O(n)." },
-            { label: "O(n log n) — like sorting.", explanation: "There's nothing logarithmic here — no halving, no balanced tree, no sorting." },
-            { label: "O(n) amortized — javac rewrites += as StringBuilder.", explanation: "javac only folds a single + chain inside one expression. += across loop iterations stays as separate concat operations. The compiler can't help you." },
+            { label: "O(n), each += is one append.", explanation: "On String, += is not 'one append.' It allocates a new String each time and copies the entire current value. Total work is quadratic." },
+            { label: "O(n²), each += copies the whole growing string.", correct: true, explanation: "Right. Iteration k copies k characters. Total is 1 + 2 + ... + n = n(n+1)/2 = O(n²). The fix is StringBuilder, which gives O(n)." },
+            { label: "O(n log n), like sorting.", explanation: "There's nothing logarithmic here, no halving, no balanced tree, no sorting." },
+            { label: "O(n) amortized, javac rewrites += as StringBuilder.", explanation: "javac only folds a single + chain inside one expression. += across loop iterations stays as separate concat operations. The compiler can't help you." },
           ]}
         />
 
@@ -702,8 +702,8 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           kind="Final"
           question="When should you reach for char[] instead of String or StringBuilder?"
           options={[
-            { label: "Always — char[] is the fastest of the three.", explanation: "Different tools for different jobs. char[] is best for indexed mutation; for append-heavy building, StringBuilder is better." },
-            { label: "When you need to mutate by index or do two-pointer scans where reading and writing positions matters.", correct: true, explanation: "Right. char[] gives you direct indexed read/write. That's what you need for in-place reverse, in-place character swap, two-pointer mutations. StringBuilder doesn't give you that — its mutations are appends, inserts, deletes by position, not raw indexed write." },
+            { label: "Always, char[] is the fastest of the three.", explanation: "Different tools for different jobs. char[] is best for indexed mutation; for append-heavy building, StringBuilder is better." },
+            { label: "When you need to mutate by index or do two-pointer scans where reading and writing positions matters.", correct: true, explanation: "Right. char[] gives you direct indexed read/write. That's what you need for in-place reverse, in-place character swap, two-pointer mutations. StringBuilder doesn't give you that, its mutations are appends, inserts, deletes by position, not raw indexed write." },
             { label: "When the string is shorter than 16 characters.", explanation: "There's no length-based rule for picking a tool. The decision is about the operations you want to do." },
             { label: "When you don't need Unicode support.", explanation: "char arrays handle the same Unicode-as-UTF-16 model as String. Different tools, same encoding." },
           ]}
@@ -713,10 +713,10 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           kind="Final"
           question="What's the auxiliary space complexity of: boolean isPalindrome(String s) { int l=0, r=s.length()-1; while (l<r) { if (s.charAt(l) != s.charAt(r)) return false; l++; r--; } return true; }"
           options={[
-            { label: "O(n) — the input string.", explanation: "Auxiliary space excludes the input. We're asking about extra space the algorithm itself needs to allocate." },
-            { label: "O(n) — char comparisons allocate.", explanation: "charAt returns a primitive char, no allocation. == on primitives is just a CPU compare." },
-            { label: "O(1) — only two int counters and a few primitive locals.", correct: true, explanation: "Right. l, r, and the implicit per-iteration char temporaries are all bounded primitives. No heap allocation that grows with n. This is one of the wins of the two-pointer approach over 'reverse-and-compare'." },
-            { label: "O(log n) — like binary search.", explanation: "There's no halving. Both pointers advance one step at a time. Linear in time, constant in auxiliary space." },
+            { label: "O(n), the input string.", explanation: "Auxiliary space excludes the input. We're asking about extra space the algorithm itself needs to allocate." },
+            { label: "O(n), char comparisons allocate.", explanation: "charAt returns a primitive char, no allocation. == on primitives is just a CPU compare." },
+            { label: "O(1), only two int counters and a few primitive locals.", correct: true, explanation: "Right. l, r, and the implicit per-iteration char temporaries are all bounded primitives. No heap allocation that grows with n. This is one of the wins of the two-pointer approach over 'reverse-and-compare'." },
+            { label: "O(log n), like binary search.", explanation: "There's no halving. Both pointers advance one step at a time. Linear in time, constant in auxiliary space." },
           ]}
         />
 
@@ -724,9 +724,9 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           kind="Final"
           question="Which of these is the most common reason to choose StringBuffer over StringBuilder?"
           options={[
-            { label: "Better performance — StringBuffer is JVM-optimized.", explanation: "It's the opposite. StringBuffer's synchronized methods take a monitor on every call — slower in single-threaded code, which is the common case." },
+            { label: "Better performance, StringBuffer is JVM-optimized.", explanation: "It's the opposite. StringBuffer's synchronized methods take a monitor on every call, slower in single-threaded code, which is the common case." },
             { label: "It's the modern API; StringBuilder is legacy.", explanation: "Inverted. StringBuilder (Java 5+) is the modern unsynchronized API. StringBuffer (Java 1.0) is the legacy thread-safe one." },
-            { label: "Multiple threads need to append to the same builder.", correct: true, explanation: "Right — the only sound reason. StringBuffer's synchronized methods make it safe for cross-thread sharing. In single-threaded code, StringBuilder is strictly better. (And even in multi-threaded code, per-thread StringBuilders + a final merge is usually a better design than one shared StringBuffer.)" },
+            { label: "Multiple threads need to append to the same builder.", correct: true, explanation: "Right, the only sound reason. StringBuffer's synchronized methods make it safe for cross-thread sharing. In single-threaded code, StringBuilder is strictly better. (And even in multi-threaded code, per-thread StringBuilders + a final merge is usually a better design than one shared StringBuffer.)" },
             { label: "Smaller memory footprint.", explanation: "Footprint is essentially identical. The difference is the synchronization, not the layout." },
           ]}
         />
@@ -737,16 +737,16 @@ System.out.printf("n=%-7d  ms=%-5d  resultLen=%d%n", n, ms, result.length());`}<
           </div>
           <h3 className="mt-0 mb-2 text-white">Strings, demystified</h3>
           <p className="mb-4 opacity-95">
-            You see the immutable byte array. You feel the O(n²) trap of <code>+</code>. You know the three tools — <code>String</code>, <code>StringBuilder</code>, <code>char[]</code> — and which one to reach for. And you have three named patterns (frequency arrays, two pointers from ends, append-and-build) that handle a remarkable share of string interview questions.
+            You see the immutable byte array. You feel the O(n²) trap of <code>+</code>. You know the three tools, <code>String</code>, <code>StringBuilder</code>, <code>char[]</code>, and which one to reach for. And you have three named patterns (frequency arrays, two pointers from ends, append-and-build) that handle a remarkable share of string interview questions.
           </p>
           <p className="mb-4 opacity-95">
-            <strong>Up next: Module 7 — Linked lists.</strong>{" "}Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
+            <strong>Up next: Module 7, Linked lists.</strong>{" "}Where arrays are contiguous memory, linked lists are nodes-and-pointers. Different tradeoffs: O(1) head insert and remove, O(n) random access. The dummy-head trick. The fast/slow pointer pattern. And the question of why anyone ever uses a linked list at all.
           </p>
           <Link
             href="/courses/dsa/modules/linked-lists"
             className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-amber-700 no-underline shadow-md transition hover:shadow-lg"
           >
-            Continue to Module 7 — Linked lists →
+            Continue to Module 7, Linked lists →
           </Link>
         </div>
       </section>

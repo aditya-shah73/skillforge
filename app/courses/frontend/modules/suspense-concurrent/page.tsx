@@ -32,7 +32,7 @@ export default function SuspenseConcurrentModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Suspense &amp; concurrent features — <code>useTransition</code>, <code>useDeferredValue</code>
+          Suspense &amp; concurrent features, <code>useTransition</code>, <code>useDeferredValue</code>
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           You typed in a filter box and the whole page froze mid-keystroke. The old fix was a pile of <code>isLoading</code>{" "}
@@ -49,14 +49,14 @@ export default function SuspenseConcurrentModule() {
         <p className="mb-4">
           Imagine a restaurant kitchen with a single cook. Orders pile up: a customer at the counter wants a glass of
           water <em>right now</em>, while a complicated tasting menu is half-prepped on the stove. A bad cook does things
-          strictly in order — the water waits behind twenty minutes of plating, and the counter customer fumes. A good
+          strictly in order, the water waits behind twenty minutes of plating, and the counter customer fumes. A good
           cook has a <strong>triage rule</strong>: urgent, tiny requests jump the queue; slow, big jobs continue in the
           background and can even be <em>paused and restarted</em> if the order changes.
         </p>
         <p className="mb-4">
-          Before React 18, React was the bad cook. Once it started rendering an update, it ran to completion — it could
+          Before React 18, React was the bad cook. Once it started rendering an update, it ran to completion, it could
           not stop to handle something more urgent. A big re-render (filtering 10,000 rows) would block the main thread,
-          and your keystroke — the glass of water — had to wait until the whole plate was done. That&apos;s the jank.
+          and your keystroke, the glass of water, had to wait until the whole plate was done. That&apos;s the jank.
         </p>
         <p className="mb-4">
           <strong>Concurrent rendering</strong> turns React into the good cook. React can now render in the background,
@@ -78,10 +78,10 @@ export default function SuspenseConcurrentModule() {
 
       {/* ───────────────────────── 2. SUSPENSE ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Suspense — a boundary for &quot;not ready yet&quot;</h2>
+        <h2 className="mb-4 text-2xl font-bold">Suspense, a boundary for &quot;not ready yet&quot;</h2>
         <p className="mb-4">
-          <code>Suspense</code> is a component that wraps part of your tree and says: &quot;if anything inside me suspends —
-          isn&apos;t ready to render yet — show this <code>fallback</code> instead, then swap in the real content when it&apos;s
+          <code>Suspense</code> is a component that wraps part of your tree and says: &quot;if anything inside me suspends,
+          isn&apos;t ready to render yet, show this <code>fallback</code> instead, then swap in the real content when it&apos;s
           ready.&quot; You declare the loading state <em>once, at a boundary</em>, instead of threading <code>isLoading</code>{" "}
           through every component.
         </p>
@@ -92,7 +92,7 @@ export default function SuspenseConcurrentModule() {
           The mental shift is from <em>imperative</em> to <em>declarative</em> loading. Instead of &quot;if loading, render a
           spinner; else render data&quot; inside every data component, you wrap a region in <code>Suspense</code> and let any
           descendant that isn&apos;t ready trigger the one fallback. A component &quot;suspends&quot; by throwing a promise React knows
-          how to wait on — which is exactly what Suspense-enabled data sources (React Query&apos;s suspense mode, frameworks
+          how to wait on, which is exactly what Suspense-enabled data sources (React Query&apos;s suspense mode, frameworks
           like Next.js, <code>React.lazy</code>) do for you. You rarely throw it by hand.
         </p>
         <p className="mb-4">
@@ -112,14 +112,14 @@ function App() {
           <p>
             One <code>Suspense</code> around the whole page = the whole page blanks to a spinner. Several smaller boundaries
             = each region shows its own skeleton and the rest of the page stays usable. Boundary placement controls the
-            granularity of loading UI — that&apos;s the whole art of it. Wrap the slow, independent regions; leave the instant
+            granularity of loading UI, that&apos;s the whole art of it. Wrap the slow, independent regions; leave the instant
             stuff outside the boundary so it renders immediately.
           </p>
         </Callout>
         <Callout variant="warn" title="Suspense catches 'not ready', not errors">
           <p>
-            <code>Suspense</code> handles the &quot;still loading&quot; case. It does <em>not</em> catch errors thrown during render
-            — that&apos;s an <Link href="/courses/frontend/modules/error-boundaries" className="text-cyan-600 hover:underline">error boundary</Link>&apos;s
+            <code>Suspense</code> handles the &quot;still loading&quot; case. It does <em>not</em> catch errors thrown during render,
+            that&apos;s an <Link href="/courses/frontend/modules/error-boundaries" className="text-cyan-600 hover:underline">error boundary</Link>&apos;s
             job (the very next module). Real data UIs pair them: a <code>Suspense</code> for the loading state and an error
             boundary just outside it for the failure state.
           </p>
@@ -168,7 +168,7 @@ function App() {
             {
               label: "One boundary per page is illegal in React; you must have at least three",
               explanation:
-                "There's no such rule — a single boundary is valid. The reason to use several is finer-grained loading UI, not a requirement.",
+                "There's no such rule, a single boundary is valid. The reason to use several is finer-grained loading UI, not a requirement.",
             },
             {
               label: "Multiple boundaries make the widgets fetch faster",
@@ -186,24 +186,24 @@ function App() {
 
       {/* ───────────────────────── 3. CONCURRENT RENDERING ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Concurrent rendering — interruptible work</h2>
+        <h2 className="mb-4 text-2xl font-bold">Concurrent rendering, interruptible work</h2>
         <p className="mb-4">
           Here is the engine underneath the new hooks. In React 18+, rendering can be <strong>interruptible</strong>. React
           can begin rendering an update, pause partway through to handle a higher-priority update, and then either resume
-          or <em>discard</em> the in-progress work. Crucially, it does this <strong>off-screen</strong> — the user never
+          or <em>discard</em> the in-progress work. Crucially, it does this <strong>off-screen</strong>, the user never
           sees a half-rendered intermediate state.
         </p>
         <p className="mb-4">
-          The key consequence: not all updates are equal. A keystroke that updates the input&apos;s text is <strong>urgent</strong>{" "}
-          — the user must see their character appear instantly. Re-filtering a huge list based on that text is
-          <strong> non-urgent</strong> — a few milliseconds of lag there is fine. Before concurrency, both updates were
+          The key consequence: not all updates are equal. A keystroke that updates the input&apos;s text is <strong>urgent</strong>,{" "}
+          the user must see their character appear instantly. Re-filtering a huge list based on that text is
+          <strong> non-urgent</strong>, a few milliseconds of lag there is fine. Before concurrency, both updates were
           forced into the same blocking render, so the expensive filter froze the input. Concurrency lets you split them:
           let the urgent update commit immediately, and render the expensive one in the background where it can be
           interrupted by the next keystroke.
         </p>
         <Callout variant="insight" title="The mental model">
           <p>
-            Updates now have <strong>priority</strong>. &quot;Urgent&quot; updates (typing, clicking, hovering — direct feedback)
+            Updates now have <strong>priority</strong>. &quot;Urgent&quot; updates (typing, clicking, hovering, direct feedback)
             interrupt &quot;transition&quot; updates (re-rendering a big result of that input). You mark the non-urgent ones with{" "}
             <code>useTransition</code> or <code>useDeferredValue</code>; React keeps the UI responsive by always letting the
             urgent update win.
@@ -213,7 +213,7 @@ function App() {
 
       {/* ───────────────────────── 4. useTransition ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold"><code>useTransition</code> — mark an update as non-blocking</h2>
+        <h2 className="mb-4 text-2xl font-bold"><code>useTransition</code>, mark an update as non-blocking</h2>
         <p className="mb-4">
           <code>useTransition</code> gives you a <code>startTransition</code> function and an <code>isPending</code> boolean.
           Any state update you make <em>inside</em> <code>startTransition</code> is marked as a <strong>transition</strong>:
@@ -251,7 +251,7 @@ function App() {
         </p>
         <Callout variant="warn" title="startTransition is for state updates, not async work">
           <p>
-            <code>startTransition</code> marks the <em>state updates</em> inside it as non-urgent — it doesn&apos;t make slow
+            <code>startTransition</code> marks the <em>state updates</em> inside it as non-urgent, it doesn&apos;t make slow
             code run off-thread, and it isn&apos;t a place to <code>await</code> a fetch. It tells React &quot;the re-render these
             updates trigger is low priority.&quot; The win comes when the resulting render is genuinely expensive (a big list,
             a heavy tree); for a trivial update it does nothing useful.
@@ -284,7 +284,7 @@ function App() {
             {
               label: "setTab is debounced by 300ms before it applies",
               explanation:
-                "startTransition doesn't debounce. It marks the update as non-urgent and interruptible — the work starts immediately but yields to urgent updates.",
+                "startTransition doesn't debounce. It marks the update as non-urgent and interruptible, the work starts immediately but yields to urgent updates.",
             },
           ]}
         />
@@ -306,7 +306,7 @@ function App() {
             {
               label: "It cancels any in-flight fetches when a new transition starts",
               explanation:
-                "startTransition concerns render priority, not network requests. It can discard an in-progress render, but it doesn't cancel fetches — that's AbortController's job.",
+                "startTransition concerns render priority, not network requests. It can discard an in-progress render, but it doesn't cancel fetches, that's AbortController's job.",
             },
             {
               label: "It makes a trivial state update faster than a normal setState",
@@ -319,7 +319,7 @@ function App() {
 
       {/* ───────────────────────── 5. useDeferredValue ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold"><code>useDeferredValue</code> — let an expensive render lag behind</h2>
+        <h2 className="mb-4 text-2xl font-bold"><code>useDeferredValue</code>, let an expensive render lag behind</h2>
         <p className="mb-4">
           <code>useDeferredValue</code> takes a value and returns a <strong>deferred copy</strong> of it that &quot;lags behind&quot;
           during urgent updates. You feed the deferred value to the expensive part of your UI. The input updates instantly
@@ -349,31 +349,31 @@ function App() {
           results while they catch up: compare <code>query !== deferredQuery</code> to know you&apos;re showing lagging data.
         </p>
 
-        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useTransition</code> vs <code>useDeferredValue</code> — which one?</h3>
+        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useTransition</code> vs <code>useDeferredValue</code>, which one?</h3>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong><code>useTransition</code></strong> when you <em>own the state update</em> and can wrap it. You call{" "}
             <code>startTransition(() =&gt; setX(...))</code>. Best for things like tab switches, navigation, applying a
-            filter on submit — places where you control the <code>setState</code>.
+            filter on submit, places where you control the <code>setState</code>.
           </li>
           <li>
             <strong><code>useDeferredValue</code></strong> when you <em>receive a value</em> and can&apos;t (or don&apos;t want to)
-            change how it&apos;s set — e.g. a prop, or a controlled input&apos;s value you want to stay instant. You defer the value
+            change how it&apos;s set, e.g. a prop, or a controlled input&apos;s value you want to stay instant. You defer the value
             on the way <em>into</em> the expensive render.
           </li>
         </ul>
         <Callout variant="insight" title="Both replace the old hacks">
           <p>
-            For years the fix for a janky filter input was <strong>debouncing</strong> the keystroke — wait 300ms before
+            For years the fix for a janky filter input was <strong>debouncing</strong> the keystroke, wait 300ms before
             filtering. That always feels laggy and is a guess at the right delay. <code>useDeferredValue</code> is strictly
             better: the input is never delayed, and the expensive render simply yields to newer keystrokes instead of
-            waiting a fixed timer. Same for <code>isPending</code> flags hand-rolled around slow updates —{" "}
+            waiting a fixed timer. Same for <code>isPending</code> flags hand-rolled around slow updates,{" "}
             <code>useTransition</code> gives you the flag and the interruptibility for free.
           </p>
         </Callout>
         <Callout variant="warn" title="They don't make slow code fast">
           <p>
-            Neither hook reduces the <em>total</em> work — filtering 50,000 items is still expensive. What they buy is{" "}
+            Neither hook reduces the <em>total</em> work, filtering 50,000 items is still expensive. What they buy is{" "}
             <strong>responsiveness</strong>: the urgent update (your keystroke) is never blocked by the expensive one. If a
             single render is so heavy it janks even at low priority, you still need to make the work itself cheaper
             (virtualize the list, memoize the calculation, paginate). Concurrency reorders priority; it doesn&apos;t delete work.
@@ -392,7 +392,7 @@ function App() {
               placement controls loading granularity.
             </li>
             <li>
-              <strong>Concurrent rendering</strong> makes rendering interruptible and prioritized — React can pause
+              <strong>Concurrent rendering</strong> makes rendering interruptible and prioritized, React can pause
               low-priority work to handle an urgent update (a keystroke) and discard work that&apos;s no longer needed.
             </li>
             <li>
@@ -406,7 +406,7 @@ function App() {
               setState.
             </li>
             <li>
-              <strong>They replace</strong> manual <code>isLoading</code> flags and debounce hacks — and they reorder
+              <strong>They replace</strong> manual <code>isLoading</code> flags and debounce hacks, and they reorder
               priority, they don&apos;t make slow work fast.
             </li>
           </ul>
@@ -415,7 +415,7 @@ function App() {
 
       {/* ───────────────────────── 7. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — make a janky filter smooth, then a slow tab non-blocking</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, make a janky filter smooth, then a slow tab non-blocking</h2>
         <p className="mb-4">
           You&apos;ll take a UI that janks on every keystroke and fix it with <code>useDeferredValue</code>, then wrap a slow
           tab switch in <code>useTransition</code> so the old UI stays interactive. Feeling the jank disappear is what
@@ -425,7 +425,7 @@ function App() {
           <li>
             <strong>Build the janky filter.</strong> Render a list of ~20,000 items and a controlled search input that
             filters them on every keystroke. Make each item render do a little work so the filter is genuinely heavy. Type
-            fast — confirm the input visibly lags because the filter blocks each keystroke&apos;s render.
+            fast, confirm the input visibly lags because the filter blocks each keystroke&apos;s render.
           </li>
           <li>
             <strong>Smooth it with <code>useDeferredValue</code>.</strong> Compute <code>deferredQuery =
@@ -440,23 +440,23 @@ function App() {
           </li>
           <li>
             <strong>Add a slow tab switch with <code>useTransition</code>.</strong> Add two tabs where one renders an
-            expensive panel. Wrap the <code>setTab</code> call in <code>startTransition</code>. Click between tabs — confirm
+            expensive panel. Wrap the <code>setTab</code> call in <code>startTransition</code>. Click between tabs, confirm
             the click feels instant and the old panel stays interactive while the new one renders, and wire{" "}
             <code>isPending</code> to a subtle indicator.
           </li>
           <li>
             <strong>Prove interruptibility.</strong> Click tab A, then immediately click tab B before A finishes rendering.
-            Confirm React discards A&apos;s in-progress render and goes straight to B — you never see a half-rendered A.
+            Confirm React discards A&apos;s in-progress render and goes straight to B, you never see a half-rendered A.
           </li>
           <li>
-            <strong>Stretch — code-split with Suspense.</strong> Convert the heavy tab panel to{" "}
+            <strong>Stretch, code-split with Suspense.</strong> Convert the heavy tab panel to{" "}
             <code>React.lazy(() =&gt; import(...))</code> and wrap it in a <code>Suspense</code> with a skeleton fallback.
             Watch the panel&apos;s JS chunk load on first open in the Network tab, with the skeleton showing meanwhile.
           </li>
         </ol>
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
-            If you come from server work: concurrent rendering is <strong>priority scheduling</strong> for the UI thread —
+            If you come from server work: concurrent rendering is <strong>priority scheduling</strong> for the UI thread,
             React is a scheduler that preempts long-running low-priority &quot;jobs&quot; (an expensive render) when a
             high-priority one (a keystroke) arrives, and can cancel the preempted job if it&apos;s now obsolete.{" "}
             <code>useTransition</code>/<code>useDeferredValue</code> are how you assign the priority. <code>Suspense</code>{" "}
@@ -480,12 +480,12 @@ function App() {
             {
               label: "Wrap the input's value in useDeferredValue so the input itself updates less often",
               explanation:
-                "You don't defer the input — you want it instant. You defer the value feeding the EXPENSIVE render, so the heavy list lags while the input stays responsive.",
+                "You don't defer the input, you want it instant. You defer the value feeding the EXPENSIVE render, so the heavy list lags while the input stays responsive.",
             },
             {
               label: "useDeferredValue debounces the query by a fixed 300ms before filtering",
               explanation:
-                "It's not a fixed-timer debounce. The deferred value lags only as long as urgent work is pending and yields immediately to newer keystrokes — strictly better than a guessed delay.",
+                "It's not a fixed-timer debounce. The deferred value lags only as long as urgent work is pending and yields immediately to newer keystrokes, strictly better than a guessed delay.",
             },
             {
               label: "It reduces the number of items so filtering becomes cheap",
@@ -502,7 +502,7 @@ function App() {
               label: "When you receive a value (a prop, or a controlled input's value) and want to defer it into the expensive render, rather than owning and wrapping the setState yourself",
               correct: true,
               explanation:
-                "Correct. useTransition wraps a state update you own; useDeferredValue defers a value on the way into the expensive render when you can't or don't want to change how it's set. Same goal — keep urgent updates unblocked — applied at a different point.",
+                "Correct. useTransition wraps a state update you own; useDeferredValue defers a value on the way into the expensive render when you can't or don't want to change how it's set. Same goal, keep urgent updates unblocked, applied at a different point.",
             },
             {
               label: "When you want the update to run on a background thread instead of the main thread",

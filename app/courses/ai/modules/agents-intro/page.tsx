@@ -51,20 +51,20 @@ export default function AgentsIntroModule() {
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           A demystified definition of &quot;agent&quot;. Most blog posts make agents sound like
-          a new technology. They&apos;re not — they&apos;re Module 11 (tool use) wrapped in a
+          a new technology. They&apos;re not, they&apos;re Module 11 (tool use) wrapped in a
           while loop. Once you see that, the rest is engineering.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The ReAct loop traced step by step on paper, not abstractly</li>
           <li>The three kinds of memory and which problems each solves</li>
-          <li>A taxonomy of when agents are the right answer — and when they&apos;re overkill</li>
+          <li>A taxonomy of when agents are the right answer, and when they&apos;re overkill</li>
           <li>The stopping conditions that keep an agent from running forever (or your bill from running forever)</li>
           <li>A research agent project: question in, multi-step web search, cited summary out</li>
         </ul>
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 11 (tool use) is the big one — agents are tool use in a loop, so you need that
+        Module 11 (tool use) is the big one, agents are tool use in a loop, so you need that
         firmly in muscle memory. Module 9 (Claude API) for request structure. Module 7 (prompt
         engineering) for the system-prompt patterns we&apos;ll lean on. Modules 18–19 if you want
         to put a UI on the agent later.
@@ -74,7 +74,7 @@ export default function AgentsIntroModule() {
       {/* PART 1: WHAT AN AGENT ACTUALLY IS                                   */}
       {/* ================================================================= */}
       <section id="what-is-agent">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — What an &quot;agent&quot; actually is</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, What an &quot;agent&quot; actually is</h2>
 
         <p>
           The internet has decided &quot;agent&quot; means everything from a Zapier workflow to
@@ -94,12 +94,12 @@ export default function AgentsIntroModule() {
         </p>
 
         <ol className="mb-4 list-decimal space-y-2 pl-6">
-          <li><strong>A goal</strong> — usually the user&apos;s message, sometimes a longer brief from a system prompt.</li>
-          <li><strong>A toolbox</strong> — the same JSON-schema tool definitions you wrote in Module 11.</li>
-          <li><strong>A loop</strong> — keep calling the model with the conversation-so-far until it stops asking for tools.</li>
+          <li><strong>A goal</strong>, usually the user&apos;s message, sometimes a longer brief from a system prompt.</li>
+          <li><strong>A toolbox</strong>, the same JSON-schema tool definitions you wrote in Module 11.</li>
+          <li><strong>A loop</strong>, keep calling the model with the conversation-so-far until it stops asking for tools.</li>
         </ol>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Workflow vs agent — the line that matters</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Workflow vs agent, the line that matters</h3>
 
         <p>
           The most useful distinction (borrowed from Anthropic&apos;s &quot;Building Effective
@@ -162,14 +162,14 @@ while True:
         })`}</CodeBlock>
 
         <p>
-          That&apos;s the architecture diagram, the implementation, and the mental model — all in
+          That&apos;s the architecture diagram, the implementation, and the mental model, all in
           one. Every &quot;agent framework&quot; you&apos;ll see (LangChain agents, AutoGPT,
           Spring AI&apos;s agent abstractions) is a more elaborate version of these 12 lines plus
           some bells around memory, retries, and observability.
         </p>
 
         <Callout variant="spring" title="Spring AI's take">
-          Spring AI exposes this loop through <code>ChatClient</code> with tools attached — when
+          Spring AI exposes this loop through <code>ChatClient</code> with tools attached, when
           you register tool callbacks, Spring&apos;s default behavior already loops on tool calls
           for you up to a configurable limit. You can override <code>internalToolExecutionEnabled</code>
           to turn off the auto-loop and run tool calls yourself. We&apos;ll do that in Module 25 so
@@ -179,24 +179,24 @@ while True:
         <Checkpoint moduleSlug="agents-intro" id="what-is-agent" title="Agent vs workflow" xp={20}>
           <Quiz
             kind="Quick check"
-            question="A teammate says: 'We need an agent for our refund flow — user types a complaint, we look up their order, decide if it qualifies, issue the refund.' What's the right pushback?"
+            question="A teammate says: 'We need an agent for our refund flow, user types a complaint, we look up their order, decide if it qualifies, issue the refund.' What's the right pushback?"
             options={[
               {
-                label: "Sounds great — let's wire up an autonomous agent loop with refund authority.",
+                label: "Sounds great, let's wire up an autonomous agent loop with refund authority.",
                 explanation: "Giving an LLM autonomous refund authority on a fixed-shape workflow is the worst-of-both: more expensive AND riskier than a deterministic flow.",
               },
               {
-                label: "Those steps are enumerable and ordered — that's a workflow, not an agent. Use tool use, but in a fixed pipeline.",
+                label: "Those steps are enumerable and ordered, that's a workflow, not an agent. Use tool use, but in a fixed pipeline.",
                 correct: true,
                 explanation: "Exactly. The path is known: lookup → eligibility check → action. No need for the LLM to plan steps. A workflow with one or two LLM calls (extract complaint, classify eligibility) is cheaper, faster, and audit-friendlier.",
               },
               {
                 label: "Agents are always better than workflows for customer-facing things.",
-                explanation: "Almost the opposite — for customer-facing flows you usually want predictable behavior, which means workflows.",
+                explanation: "Almost the opposite, for customer-facing flows you usually want predictable behavior, which means workflows.",
               },
               {
                 label: "Use an agent but only for the lookup step.",
-                explanation: "Lookup is one tool call — using a full agent loop for it is overkill. A direct tool call (Module 11) is enough.",
+                explanation: "Lookup is one tool call, using a full agent loop for it is overkill. A direct tool call (Module 11) is enough.",
               },
             ]}
           />
@@ -205,7 +205,7 @@ while True:
 
       <PartRecap
         title="Part 1 recap"
-        gist="An agent is an LLM in a loop with tools and a stopping condition — not a new technology, just tool use plus iteration."
+        gist="An agent is an LLM in a loop with tools and a stopping condition, not a new technology, just tool use plus iteration."
         points={[
           { takeaway: "Agent = goal + toolbox + loop. The loop ends when the LLM stops asking for tools.", detail: "The 12-line kernel covers it. Frameworks add memory, retries, and observability on top of that core." },
           { takeaway: "Workflow vs agent: who decides the steps?", detail: "If you can enumerate the steps, write a workflow. If the path branches in ways you can't predict, an agent earns its keep." },
@@ -217,7 +217,7 @@ while True:
       {/* PART 2: THE REACT LOOP                                              */}
       {/* ================================================================= */}
       <section id="react-loop">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The ReAct loop, by hand</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, The ReAct loop, by hand</h2>
 
         <p>
           ReAct is the canonical pattern: <strong>Reason</strong>{" "}then <strong>Act</strong>, in a
@@ -243,7 +243,7 @@ while True:
         <p>
           Modern tool-calling APIs (Claude, OpenAI, Gemini) basically wire this in for you. The
           model emits a <code>thinking</code>-style preamble, then a tool call, then waits for the
-          observation, then thinks again. You don&apos;t have to parse anything — the SDK gives you
+          observation, then thinks again. You don&apos;t have to parse anything, the SDK gives you
           structured tool-call objects.
         </p>
 
@@ -258,10 +258,10 @@ while True:
 
         <WorkedExample
           title="A ReAct trace, step by step"
-          subtitle="Read each turn before clicking — predict what the agent does next."
+          subtitle="Read each turn before clicking, predict what the agent does next."
           steps={[
             {
-              title: "Turn 1 — model reasons about the goal",
+              title: "Turn 1, model reasons about the goal",
               body: (
                 <>
                   <p>
@@ -278,12 +278,12 @@ while True:
               ),
             },
             {
-              title: "Turn 2 — observation, then more reasoning",
+              title: "Turn 2, observation, then more reasoning",
               body: (
                 <>
                   <p>
                     Tool result (you, the host, ran the search): <em>&quot;Top result: World Bank
-                    data — Japan GDP 2023 was $4.21 trillion USD nominal.&quot;</em>
+                    data, Japan GDP 2023 was $4.21 trillion USD nominal.&quot;</em>
                   </p>
                   <p>
                     Model output: <em>&quot;Got Japan. Now Germany.&quot;</em> + tool call:
@@ -293,15 +293,15 @@ while True:
               ),
             },
             {
-              title: "Turn 3 — second observation",
+              title: "Turn 3, second observation",
               body: (
                 <>
                   <p>
-                    Tool result: <em>&quot;Top result: World Bank — Germany GDP 2023 was
+                    Tool result: <em>&quot;Top result: World Bank, Germany GDP 2023 was
                     $4.46 trillion USD nominal.&quot;</em>
                   </p>
                   <p>
-                    Model output: <em>&quot;Interesting — Germany overtook Japan in 2023. I
+                    Model output: <em>&quot;Interesting, Germany overtook Japan in 2023. I
                     should verify this is widely reported, not a glitch.&quot;</em> + tool call:
                     <code>web_search(query=&quot;Germany overtakes Japan GDP 2023&quot;)</code>
                   </p>
@@ -313,7 +313,7 @@ while True:
               ),
             },
             {
-              title: "Turn 4 — confirmation, then stop",
+              title: "Turn 4, confirmation, then stop",
               body: (
                 <>
                   <p>
@@ -325,7 +325,7 @@ while True:
                   </p>
                   <p className="border-l-2 border-indigo-400 pl-3 text-sm italic">
                     Japan&apos;s 2023 GDP was about $4.21T USD; Germany&apos;s was $4.46T. Germany
-                    overtook Japan to become the world&apos;s third-largest economy that year — a
+                    overtook Japan to become the world&apos;s third-largest economy that year, a
                     shift driven by yen depreciation and Germany&apos;s nominal growth.
                     [Sources: World Bank, Reuters, FT.]
                   </p>
@@ -364,7 +364,7 @@ THE MODEL provides:
           the conversation. The agent &quot;loop&quot; lives in your code, not the model&apos;s.
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Stopping conditions — the most-skipped part</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Stopping conditions, the most-skipped part</h3>
 
         <p>
           The natural stopping condition is &quot;the model returned no tool calls&quot;. But you
@@ -372,11 +372,11 @@ THE MODEL provides:
         </p>
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Iteration cap</strong> — hard ceiling like 10–25 steps. If hit, the agent must summarize what it has and stop. Not optional.</li>
-          <li><strong>Token budget</strong> — total input+output tokens. Convert your cost cap into a token cap and check it each turn.</li>
-          <li><strong>Wall-clock timeout</strong> — for user-facing agents, 60s is generous. Streaming partial progress helps, but the timeout still matters.</li>
-          <li><strong>Repeated-tool-call detection</strong> — if the model calls <code>web_search</code> with the exact same arguments three times, abort. It&apos;s stuck.</li>
-          <li><strong>Stop sequences</strong> — explicit &quot;final answer&quot; markers if you&apos;re using a non-tool-calling model.</li>
+          <li><strong>Iteration cap</strong>, hard ceiling like 10–25 steps. If hit, the agent must summarize what it has and stop. Not optional.</li>
+          <li><strong>Token budget</strong>, total input+output tokens. Convert your cost cap into a token cap and check it each turn.</li>
+          <li><strong>Wall-clock timeout</strong>, for user-facing agents, 60s is generous. Streaming partial progress helps, but the timeout still matters.</li>
+          <li><strong>Repeated-tool-call detection</strong>, if the model calls <code>web_search</code> with the exact same arguments three times, abort. It&apos;s stuck.</li>
+          <li><strong>Stop sequences</strong>, explicit &quot;final answer&quot; markers if you&apos;re using a non-tool-calling model.</li>
         </ul>
 
         <Callout variant="info" title="A real bill story">
@@ -397,11 +397,11 @@ THE MODEL provides:
               {
                 label: "The host stops when the model's response contains no tool calls.",
                 correct: true,
-                explanation: "That's the natural stop condition. The assistant turn has plain text and no tool_use blocks — the loop exits and that text is the final answer.",
+                explanation: "That's the natural stop condition. The assistant turn has plain text and no tool_use blocks, the loop exits and that text is the final answer.",
               },
               {
                 label: "The model decides internally when it has enough information and waits for input.",
-                explanation: "The model has no concept of 'waiting' — it produces output and that's it. The host inspects the output to decide what to do next.",
+                explanation: "The model has no concept of 'waiting', it produces output and that's it. The host inspects the output to decide what to do next.",
               },
               {
                 label: "After a fixed N iterations, always.",
@@ -415,12 +415,12 @@ THE MODEL provides:
             options={[
               {
                 label: "Lower the iteration cap from 25 to 5.",
-                explanation: "That just makes the failure cheaper. The agent is still stuck in a loop — it'll just hit the new cap faster. Doesn't fix anything.",
+                explanation: "That just makes the failure cheaper. The agent is still stuck in a loop, it'll just hit the new cap faster. Doesn't fix anything.",
               },
               {
                 label: "Detect the duplicate tool call (same name + args) and either short-circuit with a hint or abort. Then look at why the search is failing in the first place.",
                 correct: true,
-                explanation: "Yes — duplicate-call detection is the standard fix. It tells the agent 'you already tried this' (often via an injected observation), which usually un-sticks it. And the underlying cause is usually a tool returning empty or unhelpful results.",
+                explanation: "Yes, duplicate-call detection is the standard fix. It tells the agent 'you already tried this' (often via an injected observation), which usually un-sticks it. And the underlying cause is usually a tool returning empty or unhelpful results.",
               },
               {
                 label: "Add 'don't loop' to the system prompt.",
@@ -428,7 +428,7 @@ THE MODEL provides:
               },
               {
                 label: "Switch to a smarter model.",
-                explanation: "More expensive and rarely fixes loops — they're usually a symptom of a tool issue, not raw model intelligence.",
+                explanation: "More expensive and rarely fixes loops, they're usually a symptom of a tool issue, not raw model intelligence.",
               },
             ]}
           />
@@ -440,7 +440,7 @@ THE MODEL provides:
         gist="ReAct = think, act, observe, repeat. The loop lives in your code; the model only emits decisions."
         points={[
           { takeaway: "The host runs the loop, not the model.", detail: "The model emits tool-call JSON; your code executes it and appends the result. The loop terminates when the model's turn has no tool calls." },
-          { takeaway: "Reasoning between actions is what makes agents work.", detail: "Modern tool-calling APIs let the model produce thinking-style text before each action. That text isn't decoration — it's how the model self-corrects." },
+          { takeaway: "Reasoning between actions is what makes agents work.", detail: "Modern tool-calling APIs let the model produce thinking-style text before each action. That text isn't decoration, it's how the model self-corrects." },
           { takeaway: "Stopping conditions are non-negotiable.", detail: "Iteration cap, token budget, wall-clock timeout, repeated-call detection. Skip any one of these and you're one bug away from a runaway loop." },
         ]}
       />
@@ -449,7 +449,7 @@ THE MODEL provides:
       {/* PART 3: MEMORY                                                      */}
       {/* ================================================================= */}
       <section id="memory">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Memory: short, long, and scratch</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Memory: short, long, and scratch</h2>
 
         <p>
           &quot;Agent memory&quot; is another overloaded term. Three different mechanisms get
@@ -493,7 +493,7 @@ THE MODEL provides:
         <h3 className="mt-8 mb-3 text-xl font-bold">Short-term: just the message list</h3>
 
         <p>
-          The model already has memory — it&apos;s called the conversation history. Every tool
+          The model already has memory, it&apos;s called the conversation history. Every tool
           result and every reasoning turn lives in <code>messages[]</code>, and the next call
           gets the whole thing. As long as you keep appending and not truncating, the agent
           remembers everything from this run.
@@ -505,9 +505,9 @@ THE MODEL provides:
         </p>
 
         <ul className="mb-4 list-disc space-y-1 pl-6">
-          <li><strong>Sliding window</strong> — drop the oldest tool results once they&apos;re consumed.</li>
-          <li><strong>Summary compaction</strong> — periodically replace N old messages with a one-paragraph summary.</li>
-          <li><strong>Scratchpad offload</strong> — when a tool returns a 50k-token doc, write it to disk and pass the model a 100-word abstract + a <code>read_file</code> handle. (More on this in a moment.)</li>
+          <li><strong>Sliding window</strong>, drop the oldest tool results once they&apos;re consumed.</li>
+          <li><strong>Summary compaction</strong>, periodically replace N old messages with a one-paragraph summary.</li>
+          <li><strong>Scratchpad offload</strong>, when a tool returns a 50k-token doc, write it to disk and pass the model a 100-word abstract + a <code>read_file</code> handle. (More on this in a moment.)</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Long-term: across sessions</h3>
@@ -519,7 +519,7 @@ THE MODEL provides:
         </p>
 
         <p>
-          You already know how to build this — it&apos;s RAG (Modules 14–17) applied to the
+          You already know how to build this, it&apos;s RAG (Modules 14–17) applied to the
           user&apos;s own history instead of a doc corpus. At session start, embed the user&apos;s
           new query, search a per-user vector index of past facts, and stuff the top-k into the
           system prompt:
@@ -536,13 +536,13 @@ system_prompt = base_prompt + "\\n\\nRelevant context about this user:\\n" +
     format(relevant_memories)`}</CodeBlock>
 
         <p>
-          The hard part isn&apos;t the retrieval — it&apos;s deciding <em>what</em>{" "}to write to
+          The hard part isn&apos;t the retrieval, it&apos;s deciding <em>what</em>{" "}to write to
           long-term memory and <em>when</em>. Two patterns:
         </p>
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Explicit save tool</strong> — give the agent a <code>remember(fact)</code> tool. The agent decides what&apos;s worth saving. Simple, transparent, sometimes too sparse.</li>
-          <li><strong>End-of-session distillation</strong> — when the agent run ends, run a separate &quot;reflector&quot; LLM call: <em>&quot;Given this transcript, what facts about the user should we save?&quot;</em>{" "}More thorough, more expensive.</li>
+          <li><strong>Explicit save tool</strong>, give the agent a <code>remember(fact)</code> tool. The agent decides what&apos;s worth saving. Simple, transparent, sometimes too sparse.</li>
+          <li><strong>End-of-session distillation</strong>, when the agent run ends, run a separate &quot;reflector&quot; LLM call: <em>&quot;Given this transcript, what facts about the user should we save?&quot;</em>{" "}More thorough, more expensive.</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Scratchpad: the trick people miss</h3>
@@ -582,7 +582,7 @@ Scratchpad (cheap):
               {
                 label: "Have fetch_pdf save the full text to a scratchpad key and return only a short summary + a read_scratch handle. The agent fetches details on demand.",
                 correct: true,
-                explanation: "Yes — scratchpad pattern. The full text is one tool call away if needed, but doesn't bloat every subsequent model call. This is the cheap fix.",
+                explanation: "Yes, scratchpad pattern. The full text is one tool call away if needed, but doesn't bloat every subsequent model call. This is the cheap fix.",
               },
               {
                 label: "Switch to a 1M-token context model and hope.",
@@ -600,20 +600,20 @@ Scratchpad (cheap):
             options={[
               {
                 label: "The list of tool results from this run kept in the messages array.",
-                explanation: "That's short-term — it's literally just the message history of the current run.",
+                explanation: "That's short-term, it's literally just the message history of the current run.",
               },
               {
                 label: "A scratchpad file holding the text of PDFs the agent fetched this session.",
-                explanation: "Scratchpad is still single-run — it goes away (or is ignored) when the run ends.",
+                explanation: "Scratchpad is still single-run, it goes away (or is ignored) when the run ends.",
               },
               {
                 label: "A per-user vector index of preferences and facts learned across previous sessions.",
                 correct: true,
-                explanation: "Yes — long-term memory persists across runs and is retrieved at the start of the next run. Same architecture as RAG, just applied to user history.",
+                explanation: "Yes, long-term memory persists across runs and is retrieved at the start of the next run. Same architecture as RAG, just applied to user history.",
               },
               {
                 label: "The model's pre-training data.",
-                explanation: "That's the model's parametric knowledge — not part of the agent system at all and not under your control.",
+                explanation: "That's the model's parametric knowledge, not part of the agent system at all and not under your control.",
               },
             ]}
           />
@@ -622,9 +622,9 @@ Scratchpad (cheap):
 
       <PartRecap
         title="Part 3 recap"
-        gist="Three memory mechanisms with three different jobs — don't mix them up."
+        gist="Three memory mechanisms with three different jobs, don't mix them up."
         points={[
-          { takeaway: "Short-term memory is just the messages array — automatic and free, but bounded by context size.", detail: "When you're filling the window, your options are sliding window, summary compaction, or scratchpad offload." },
+          { takeaway: "Short-term memory is just the messages array, automatic and free, but bounded by context size.", detail: "When you're filling the window, your options are sliding window, summary compaction, or scratchpad offload." },
           { takeaway: "Long-term memory is RAG against per-user history.", detail: "The retrieval is easy; the hard call is what to save. Either an explicit save tool or end-of-session distillation." },
           { takeaway: "Scratchpad is the killer pattern for cost control.", detail: "Big tool results go to disk, the model gets a summary + handle. The full content is one tool call away when needed but doesn't bloat every turn." },
         ]}
@@ -634,7 +634,7 @@ Scratchpad (cheap):
       {/* PART 4: WHEN NOT TO USE AN AGENT                                    */}
       {/* ================================================================= */}
       <section id="when-not">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — When NOT to use an agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, When NOT to use an agent</h2>
 
         <p>
           This is the most undervalued skill in agent engineering: knowing when to <em>not</em>{" "}
@@ -648,28 +648,28 @@ Scratchpad (cheap):
           straight code. Reach for an agent only when the answer to both is no.
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Bad fits — concrete examples</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Bad fits, concrete examples</h3>
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>&quot;Summarize this document&quot;</strong> — one model call. No tools. No loop.
+            <strong>&quot;Summarize this document&quot;</strong>, one model call. No tools. No loop.
             Don&apos;t put it in an agent.
           </li>
           <li>
-            <strong>&quot;Classify this support ticket&quot;</strong> — one structured-output call.
+            <strong>&quot;Classify this support ticket&quot;</strong>, one structured-output call.
             Workflow.
           </li>
           <li>
-            <strong>&quot;Generate a SQL query, run it, format the results&quot;</strong> — three
+            <strong>&quot;Generate a SQL query, run it, format the results&quot;</strong>, three
             ordered steps. Workflow. (Yes, even if you&apos;re tempted by &quot;but the LLM picks
             the SQL!&quot;. The pipeline is fixed.)
           </li>
           <li>
-            <strong>Anything with strict latency budgets</strong> — agents add 2–10x latency vs a
+            <strong>Anything with strict latency budgets</strong>, agents add 2–10x latency vs a
             workflow because of the loop. If you have 500ms, agents are off the table.
           </li>
           <li>
-            <strong>Anything with strict audit/safety needs by step</strong> — if every action
+            <strong>Anything with strict audit/safety needs by step</strong>, if every action
             needs human approval, an agent loop is fighting you. Use a workflow with explicit
             approval gates.
           </li>
@@ -679,21 +679,21 @@ Scratchpad (cheap):
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>Research / exploration</strong> — &quot;find me the answer to this open-ended
+            <strong>Research / exploration</strong>, &quot;find me the answer to this open-ended
             question&quot;. The path of search → read → search-again → synthesize isn&apos;t
             knowable in advance.
           </li>
           <li>
-            <strong>Code repair / migration</strong> — read file, attempt fix, run tests, observe
+            <strong>Code repair / migration</strong>, read file, attempt fix, run tests, observe
             failure, try again. The loop and the variable depth are real.
           </li>
           <li>
-            <strong>Open-ended customer support resolution</strong> — &quot;help this user with
+            <strong>Open-ended customer support resolution</strong>, &quot;help this user with
             <em> whatever</em>{" "}they&apos;re trying to do&quot;. If you&apos;ve enumerated 30 paths
             and there&apos;s a long tail, the long tail is where the agent earns its keep.
           </li>
           <li>
-            <strong>Data exploration / SQL analytics with branching</strong> — when the next
+            <strong>Data exploration / SQL analytics with branching</strong>, when the next
             question depends entirely on what the previous query returned.
           </li>
         </ul>
@@ -727,11 +727,11 @@ Scratchpad (cheap):
             question="A PM hands you this brief: 'Users paste a CSV; we detect the schema, suggest a chart type, render the chart, and let them edit the title.' Agent or workflow?"
             options={[
               {
-                label: "Agent — the LLM should decide step by step what to do.",
+                label: "Agent, the LLM should decide step by step what to do.",
                 explanation: "The steps are enumerated right there in the brief: detect → suggest → render → edit. There's no branching that benefits from agentic planning.",
               },
               {
-                label: "Workflow — the steps are fixed and ordered. Use LLM calls for the parts that need judgment (schema detection, chart suggestion).",
+                label: "Workflow, the steps are fixed and ordered. Use LLM calls for the parts that need judgment (schema detection, chart suggestion).",
                 correct: true,
                 explanation: "Right. Fixed pipeline + LLM at two structured steps. Cheaper, faster, more predictable, easier to monitor. Agent would be overkill.",
               },
@@ -750,17 +750,17 @@ Scratchpad (cheap):
             question="You're building a 'fix my failing test' tool. The user says 'this test fails, make it pass'. Agent or workflow?"
             options={[
               {
-                label: "Workflow — fixed sequence: read test, propose patch, apply, done.",
+                label: "Workflow, fixed sequence: read test, propose patch, apply, done.",
                 explanation: "That's optimistic. The first patch usually doesn't work; the tool needs to read the failure, try again, maybe modify a different file. Variable depth = agent territory.",
               },
               {
-                label: "Agent — read test, edit code, run test, observe failure, edit again, until passing or out of attempts.",
+                label: "Agent, read test, edit code, run test, observe failure, edit again, until passing or out of attempts.",
                 correct: true,
                 explanation: "Right. The path branches based on each test run's output. You can't enumerate it ahead of time. This is the canonical good-fit for an agent loop, with iteration cap as your guardrail.",
               },
               {
                 label: "Pure code, no LLM.",
-                explanation: "Code repair generally needs the model — too many edge cases for hand-coded rules.",
+                explanation: "Code repair generally needs the model, too many edge cases for hand-coded rules.",
               },
               {
                 label: "Two-step workflow: classify the test failure, then have a specialized prompt per failure type.",
@@ -773,10 +773,10 @@ Scratchpad (cheap):
 
       <PartRecap
         title="Part 4 recap"
-        gist="Agents are powerful, expensive, and unpredictable — pick them only when the path branches in ways you can't enumerate."
+        gist="Agents are powerful, expensive, and unpredictable, pick them only when the path branches in ways you can't enumerate."
         points={[
           { takeaway: "If you can list the steps, write a workflow.", detail: "Workflows are 5-10x cheaper to build, debug, and run than agents. Most LLM features are workflows in disguise." },
-          { takeaway: "Agents earn their keep when the path depends on intermediate results.", detail: "Research, code repair, open-ended troubleshooting — anywhere the next action genuinely depends on what just happened." },
+          { takeaway: "Agents earn their keep when the path depends on intermediate results.", detail: "Research, code repair, open-ended troubleshooting, anywhere the next action genuinely depends on what just happened." },
           { takeaway: "Resume-driven engineering is real. Don't agentify for the keyword.", detail: "Most production LLM systems are 80% workflows, 20% agentic steps tucked inside. That's a feature, not a failing." },
         ]}
       />
@@ -785,7 +785,7 @@ Scratchpad (cheap):
       {/* PART 5: THE PROJECT                                                 */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: research agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: research agent</h2>
 
         <p>
           Time to build one. We&apos;ll keep it small but real: a CLI research agent that takes
@@ -812,7 +812,7 @@ Scratchpad (cheap):
 
         <Callout variant="info" title="Search backend choices">
           You can wire <code>web_search</code> to whatever you have access to: Tavily, Brave
-          Search API, SerpAPI, or even a local Wikipedia dump. Don&apos;t over-engineer this part —
+          Search API, SerpAPI, or even a local Wikipedia dump. Don&apos;t over-engineer this part,
           the agent loop is the lesson, not the search backend. Pick the one with a free tier and
           move on.
         </Callout>
@@ -914,15 +914,15 @@ public static final List<Tool> TOOLS = List.of(
 
         <Callout variant="info" title="Why we log every turn">
           Agent debugging is observability-driven. When something goes wrong (and it will), the
-          trace is the first thing you read. Build the logging in from day one — even if it&apos;s
-          just printing to stdout — because retrofitting it after a bad demo is misery.
+          trace is the first thing you read. Build the logging in from day one, even if it&apos;s
+          just printing to stdout, because retrofitting it after a bad demo is misery.
         </Callout>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">The system prompt</h3>
 
         <p>
-          The system prompt is doing real work here: setting the role, naming the tools, and —
-          critically — telling the agent <em>when to stop</em>.
+          The system prompt is doing real work here: setting the role, naming the tools, and,
+          critically, telling the agent <em>when to stop</em>.
         </p>
 
         <CodeBlock lang="plain">{`You are a research assistant. Your job is to answer the user's question
@@ -958,19 +958,19 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>
             <strong>Single-hop fact:</strong> &quot;What year was the OpenSSL Heartbleed bug
-            disclosed?&quot; — should resolve in 1–2 tool calls.
+            disclosed?&quot;, should resolve in 1–2 tool calls.
           </li>
           <li>
             <strong>Multi-hop:</strong> &quot;Compare the populations of the three Baltic states
-            as of 2024&quot; — should chain searches, possibly fetch a Wikipedia page or two.
+            as of 2024&quot;, should chain searches, possibly fetch a Wikipedia page or two.
           </li>
           <li>
             <strong>Verification path:</strong> &quot;Is it true that octopuses have nine
-            brains?&quot; — should search, find the claim, and verify with a second source.
+            brains?&quot;, should search, find the claim, and verify with a second source.
           </li>
           <li>
             <strong>Unanswerable / graceful exit:</strong> &quot;What did Sam Altman have for
-            breakfast on March 4th, 2024?&quot; — agent should give up gracefully, not loop until
+            breakfast on March 4th, 2024?&quot;, agent should give up gracefully, not loop until
             the cap.
           </li>
           <li>
@@ -997,7 +997,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         >
           <p>
             Build the research agent end-to-end. Wire it to a real (or stubbed) search backend.
-            Run all five test cases from the list above, and read every trace log line — you
+            Run all five test cases from the list above, and read every trace log line, you
             should be able to defend why the agent did each thing it did.
           </p>
           <p className="mt-3">
@@ -1014,7 +1014,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Putting it together</h2>
 
         <p>
           You now have a working mental model that&apos;ll carry you through the rest of Phase 5:
@@ -1030,7 +1030,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
 
         <p>
           <strong>Module 25</strong>{" "}takes everything you built by hand here and rebuilds it
-          using Spring AI&apos;s native abstractions — including how to keep control of the
+          using Spring AI&apos;s native abstractions, including how to keep control of the
           iteration count, observability, and stopping logic when the framework is doing some
           of it for you.
         </p>
@@ -1044,7 +1044,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         <Checkpoint moduleSlug="agents-intro" id="final" title="Final quiz" xp={30}>
           <Quiz
             kind="Quick check"
-            question="The agent's run completes — the model returned a turn with text and no tool calls. What's in messages[] at this point?"
+            question="The agent's run completes, the model returned a turn with text and no tool calls. What's in messages[] at this point?"
             options={[
               {
                 label: "Just the user's question and the final answer.",
@@ -1053,7 +1053,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
               {
                 label: "The user's question, every assistant turn (with tool calls), every tool result, and the final assistant turn.",
                 correct: true,
-                explanation: "Right — the full trace lives in messages[]. That's both the agent's working memory and your audit log for free.",
+                explanation: "Right, the full trace lives in messages[]. That's both the agent's working memory and your audit log for free.",
               },
               {
                 label: "Only the final answer; old turns are discarded after each iteration.",
@@ -1071,16 +1071,16 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
             hint="Look at the tool argument across the three calls."
             options={[
               {
-                label: "→ web_search query='Tesla Q3 2024 deliveries'\n← top 5 results returned\n→ web_search query='Tesla Q3 2024 deliveries'\n← top 5 results returned\n→ web_search query='Tesla Q3 2024 deliveries' — Healthy progress, the agent is being thorough.",
-                explanation: "Three identical calls in a row is not thoroughness — it's a stuck loop.",
+                label: "→ web_search query='Tesla Q3 2024 deliveries'\n← top 5 results returned\n→ web_search query='Tesla Q3 2024 deliveries'\n← top 5 results returned\n→ web_search query='Tesla Q3 2024 deliveries', Healthy progress, the agent is being thorough.",
+                explanation: "Three identical calls in a row is not thoroughness, it's a stuck loop.",
               },
               {
                 label: "The agent is in a stuck loop. Same call, same args, no progress. Trip a duplicate-call guard and inject a hint or abort.",
                 correct: true,
-                explanation: "Yes — duplicate-tool-call detection exists for exactly this. The first observation didn't help the model and it has nothing else to try. Inject a 'you already tried this' result, or abort.",
+                explanation: "Yes, duplicate-tool-call detection exists for exactly this. The first observation didn't help the model and it has nothing else to try. Inject a 'you already tried this' result, or abort.",
               },
               {
-                label: "This is normal — the agent is verifying.",
+                label: "This is normal, the agent is verifying.",
                 explanation: "Verification means a different query angle, not the exact same query.",
               },
               {
@@ -1102,9 +1102,9 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
                 explanation: "Single structured-output call. No loop.",
               },
               {
-                label: "Help me debug a failing test in this repo — read code, propose fix, run test, iterate until passing.",
+                label: "Help me debug a failing test in this repo, read code, propose fix, run test, iterate until passing.",
                 correct: true,
-                explanation: "Yes — variable depth, the next action depends entirely on the previous test result, and the path is unbounded. Canonical agent territory.",
+                explanation: "Yes, variable depth, the next action depends entirely on the previous test result, and the path is unbounded. Canonical agent territory.",
               },
               {
                 label: "Translate this English email to French.",
@@ -1121,23 +1121,23 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
                 explanation: "Saving the fact is half the battle. If you don't also retrieve it at the start of the next session and inject it into the prompt, the new run starts blind.",
               },
               {
-                label: "False — you also need a retrieval step at the start of new sessions to inject the saved facts back into context.",
+                label: "False, you also need a retrieval step at the start of new sessions to inject the saved facts back into context.",
                 correct: true,
                 explanation: "Right. Long-term memory is two halves: write at session end, read at session start. Skip the read and you've got a journal nobody opens.",
               },
               {
                 label: "True, as long as the storage is durable.",
-                explanation: "Durability is necessary but not sufficient — you still have to retrieve and inject.",
+                explanation: "Durability is necessary but not sufficient, you still have to retrieve and inject.",
               },
               {
-                label: "False — memory tools are useless.",
+                label: "False, memory tools are useless.",
                 explanation: "They're useful, just not magical. The retrieval-and-inject step is what makes them work.",
               },
             ]}
           />
           <Quiz
             kind="Quick check"
-            question="Which of these is genuinely the agent's job — vs the host application's?"
+            question="Which of these is genuinely the agent's job, vs the host application's?"
             options={[
               {
                 label: "Executing the database query when a sql_query tool is called.",
@@ -1146,7 +1146,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
               {
                 label: "Deciding which tool to call next given the conversation so far.",
                 correct: true,
-                explanation: "Yes — picking the next action is exactly what we delegate to the model. The host runs whatever the model picks.",
+                explanation: "Yes, picking the next action is exactly what we delegate to the model. The host runs whatever the model picks.",
               },
               {
                 label: "Enforcing the iteration cap.",
@@ -1163,7 +1163,7 @@ Never make up sources. If you couldn't find something, say so.`}</CodeBlock>
         <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
           <p className="mb-2 font-semibold">Coming up next:</p>
           <p className="text-sm">
-            <strong>Module 25 — Agents in Spring Boot</strong>: rebuild the research agent
+            <strong>Module 25, Agents in Spring Boot</strong>: rebuild the research agent
             using Spring AI&apos;s native tool execution and chat memory, and learn when to
             opt out of the framework&apos;s built-in loop to keep control. We&apos;ll add
             stopping conditions, observability, and a code-migration agent that actually

@@ -49,15 +49,15 @@ export default function EmbeddingsDeepModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          You already know what an embedding <em>is</em> — a point in vector space, with cosine similarity as the
+          You already know what an embedding <em>is</em>, a point in vector space, with cosine similarity as the
           ruler. This module is about shipping with embeddings: which model to pick, how to call it from Spring Boot,
           where it costs you, and why brute-force search starts hurting at scale. By the end you&apos;ll:
         </p>
         <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
-          <li>Pick an embedding model with confidence — by <strong>dimension, cost, latency, and quality</strong>.</li>
+          <li>Pick an embedding model with confidence, by <strong>dimension, cost, latency, and quality</strong>.</li>
           <li>Wire one up in <strong>Spring AI 1.0.x</strong>{" "}and batch your calls so you don&apos;t go broke.</li>
           <li>Understand <strong>Matryoshka embeddings</strong>{" "}and when truncating dimensions is free money.</li>
-          <li>Feel the <strong>curse of dimensionality</strong>{" "}with real numbers — and know exactly when brute force breaks.</li>
+          <li>Feel the <strong>curse of dimensionality</strong>{" "}with real numbers, and know exactly when brute force breaks.</li>
           <li>Ship a Spring Boot <strong>semantic bookmark search</strong>{" "}that works on a corpus of 30+ items.</li>
         </ol>
         <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
@@ -70,11 +70,11 @@ export default function EmbeddingsDeepModule() {
       {/* PART 1: THE EMBEDDING MODEL MARKETPLACE                            */}
       {/* ================================================================= */}
       <section id="models">
-        <h2 className="mt-10 mb-3 text-2xl font-bold">Part 1 — The embedding model marketplace</h2>
+        <h2 className="mt-10 mb-3 text-2xl font-bold">Part 1, The embedding model marketplace</h2>
 
         <p>
           In Module 6 we hand-crafted three-dimensional vectors so you could see the math. In production, nobody
-          hand-crafts anything — you call an API, you get a vector back, you store it. The interesting decisions are
+          hand-crafts anything, you call an API, you get a vector back, you store it. The interesting decisions are
           which API, which dimension, and which trade-off you&apos;re consciously making.
         </p>
 
@@ -101,7 +101,7 @@ export default function EmbeddingsDeepModule() {
                 <td className="py-2 pr-4"><code>openai/text-embedding-3-small</code></td>
                 <td className="py-2 pr-4">1536 (truncatable)</td>
                 <td className="py-2 pr-4">~$0.02</td>
-                <td className="py-2 pr-4">Cheap default. Matryoshka — truncate freely.</td>
+                <td className="py-2 pr-4">Cheap default. Matryoshka, truncate freely.</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4"><code>openai/text-embedding-3-large</code></td>
@@ -119,7 +119,7 @@ export default function EmbeddingsDeepModule() {
                 <td className="py-2 pr-4"><code>cohere/embed-english-v3</code></td>
                 <td className="py-2 pr-4">1024</td>
                 <td className="py-2 pr-4">~$0.10</td>
-                <td className="py-2 pr-4">Has explicit query/document modes — useful for asymmetric search.</td>
+                <td className="py-2 pr-4">Has explicit query/document modes, useful for asymmetric search.</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="py-2 pr-4"><code>BAAI/bge-large-en-v1.5</code></td>
@@ -137,11 +137,11 @@ export default function EmbeddingsDeepModule() {
           </table>
         </div>
 
-        <Callout variant="info" title="Wait — Anthropic doesn't make an embedding model?">
+        <Callout variant="info" title="Wait, Anthropic doesn't make an embedding model?">
           <p>
             Correct. Anthropic recommends <strong>Voyage AI</strong>{" "}for embeddings (and acquired them in 2024). The
             Claude API does not have an <code>/v1/embeddings</code> endpoint. If you&apos;re building on Claude, your
-            embedding call goes to a different vendor — most production stacks pair Claude (generation) with Voyage,
+            embedding call goes to a different vendor, most production stacks pair Claude (generation) with Voyage,
             OpenAI, or an open-source embedder.
           </p>
         </Callout>
@@ -155,16 +155,16 @@ export default function EmbeddingsDeepModule() {
 
         <ol className="list-decimal space-y-2 pl-6">
           <li>
-            <strong>Quality</strong> — how often does the right document end up in your top-k results? Measured on
+            <strong>Quality</strong>, how often does the right document end up in your top-k results? Measured on
             benchmarks like MTEB, but the only number that matters is your own <em>recall@k</em>{" "}on your own data.
           </li>
           <li>
-            <strong>Dimension</strong> — bigger vectors carry more information but cost more storage, more memory, and
+            <strong>Dimension</strong>, bigger vectors carry more information but cost more storage, more memory, and
             (linearly) more compute per similarity comparison. 1536-dim vs 768-dim is roughly 2× the disk and 2× the
             search time.
           </li>
           <li>
-            <strong>Cost &amp; latency</strong> — embedding 1M tokens at $0.02 is cheap for a one-time index. Doing it
+            <strong>Cost &amp; latency</strong>, embedding 1M tokens at $0.02 is cheap for a one-time index. Doing it
             on every user query at 80ms p99 is a different problem. Hosted vs. self-hosted lives here.
           </li>
         </ol>
@@ -179,7 +179,7 @@ export default function EmbeddingsDeepModule() {
 
         <p>
           <a className="text-indigo-600 hover:underline" href="https://huggingface.co/spaces/mteb/leaderboard" target="_blank" rel="noreferrer">MTEB</a>{" "}
-          (Massive Text Embedding Benchmark) is the canonical scoreboard — 50+ tasks across retrieval,
+          (Massive Text Embedding Benchmark) is the canonical scoreboard, 50+ tasks across retrieval,
           classification, clustering, and reranking. It&apos;s genuinely useful, but two things to keep in mind:
         </p>
 
@@ -190,7 +190,7 @@ export default function EmbeddingsDeepModule() {
           </li>
           <li>
             <strong>Your domain isn&apos;t MTEB.</strong>{" "}If your corpus is Java stack traces or pediatric oncology
-            papers, the average MTEB score tells you almost nothing. Run a small eval on your own data — even 50
+            papers, the average MTEB score tells you almost nothing. Run a small eval on your own data, even 50
             hand-labeled (query, correct-doc) pairs is enough to discriminate between candidates.
           </li>
         </ul>
@@ -200,14 +200,14 @@ export default function EmbeddingsDeepModule() {
             Before you spend a dollar embedding 10 million documents, do this: pick 50 representative queries from
             your application. For each, write down the document ID that <em>should</em>{" "}come back first. Embed your
             corpus with two candidate models, run the queries, and count how often the correct doc lands in the top
-            5. That number — recall@5 — is the only model-selection metric you actually care about.
+            5. That number, recall@5, is the only model-selection metric you actually care about.
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Matryoshka embeddings — free dimension reduction</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Matryoshka embeddings, free dimension reduction</h3>
 
         <p>
-          Some modern embedders (OpenAI&apos;s v3, Nomic, Voyage) are trained as <strong>Matryoshka</strong>{" "}models —
+          Some modern embedders (OpenAI&apos;s v3, Nomic, Voyage) are trained as <strong>Matryoshka</strong>{" "}models,
           named after the Russian nesting dolls. The trick: the model is trained so that <em>truncating</em>{" "}the
           vector still leaves a useful embedding. You can take a 1536-dim vector, keep only the first 512, and lose
           surprisingly little quality.
@@ -234,7 +234,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
         </p>
 
         <WorkedExample
-          title="Picking a model — three realistic scenarios"
+          title="Picking a model, three realistic scenarios"
           subtitle="Walk through each before peeking at the verdict."
           steps={[
             {
@@ -291,7 +291,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           question="Your team is using text-embedding-3-large at the full 3072 dimensions. Storage and search are getting expensive. What's the lowest-risk first thing to try?"
           options={[
             { label: "Switch to a different provider entirely", explanation: "Big change, big risk. Not the lowest-risk first move." },
-            { label: "Truncate to 1024 dims (Matryoshka) and re-measure recall — likely a tiny quality drop for 3× cheaper storage and search", correct: true, explanation: "Right. The model was trained for this exact use case. Measure recall@k on your eval set before and after; if it holds, you've found free money." },
+            { label: "Truncate to 1024 dims (Matryoshka) and re-measure recall, likely a tiny quality drop for 3× cheaper storage and search", correct: true, explanation: "Right. The model was trained for this exact use case. Measure recall@k on your eval set before and after; if it holds, you've found free money." },
             { label: "Drop to a 384-dim model immediately", explanation: "Possible but a bigger jump than necessary. Try the within-model truncation first." },
             { label: "Compress the vectors with PCA", explanation: "Adds complexity and a separate dimensionality-reduction artifact. Matryoshka truncation does this for free, by design." },
           ]}
@@ -302,7 +302,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           kind="Pulse check"
           question="A teammate proposes 'we'll just pick whichever embedding model tops MTEB this week.' Why is that a worse approach than running a 50-pair eval on your own data?"
           options={[
-            { label: "MTEB doesn't include retrieval tasks", explanation: "It does — retrieval is a major MTEB category." },
+            { label: "MTEB doesn't include retrieval tasks", explanation: "It does, retrieval is a major MTEB category." },
             { label: "MTEB scores can be inflated (training contamination), and even when honest they're aggregate scores across 50+ tasks that may not reflect your domain", correct: true, explanation: "Both reasons matter. A model can top MTEB by being great at clustering and mediocre at retrieval, or by quietly training on the benchmark. Your 50 hand-labeled query→doc pairs cut through both problems." },
             { label: "MTEB is paywalled", explanation: "It's free and public on HuggingFace." },
             { label: "MTEB only evaluates English", explanation: "MTEB has multilingual variants, but that's not the main concern here." },
@@ -333,17 +333,17 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
       {/* PART 2: CALLING EMBEDDERS FROM SPRING BOOT                         */}
       {/* ================================================================= */}
       <section id="spring">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Calling embedders from Spring Boot</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, Calling embedders from Spring Boot</h2>
 
         <p>
           Spring AI 1.0.x abstracts embedding providers behind a single interface: <code>EmbeddingModel</code>.
-          You depend on the abstraction and switch providers in your <code>pom.xml</code>. The contract is small —
+          You depend on the abstraction and switch providers in your <code>pom.xml</code>. The contract is small,
           three methods do everything you&apos;ll ever need.
         </p>
 
         <h3 className="mt-6 mb-3 text-xl font-semibold">The interface</h3>
 
-        <CodeBlock lang="java" caption="org.springframework.ai.embedding.EmbeddingModel — the relevant methods">{`public interface EmbeddingModel {
+        <CodeBlock lang="java" caption="org.springframework.ai.embedding.EmbeddingModel, the relevant methods">{`public interface EmbeddingModel {
 
     // The basic shape: text in, vector out.
     float[] embed(String text);
@@ -368,7 +368,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           Switching providers is a one-line change.
         </p>
 
-        <CodeBlock lang="plain" caption="pom.xml — pick exactly one">{`<!-- OpenAI -->
+        <CodeBlock lang="plain" caption="pom.xml, pick exactly one">{`<!-- OpenAI -->
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-starter-model-openai</artifactId>
@@ -386,7 +386,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
           And the matching config in <code>application.yml</code>:
         </p>
 
-        <CodeBlock lang="plain" caption="application.yml — OpenAI example">{`spring:
+        <CodeBlock lang="plain" caption="application.yml, OpenAI example">{`spring:
   ai:
     openai:
       api-key: \${OPENAI_API_KEY}
@@ -405,7 +405,7 @@ truncated = l2Normalize(truncated);`}</CodeBlock>
 
         <h3 className="mt-8 mb-3 text-xl font-semibold">A minimal embedding service</h3>
 
-        <CodeBlock lang="java" caption="EmbeddingService.java — what 90% of your code looks like">{`package com.example.search;
+        <CodeBlock lang="java" caption="EmbeddingService.java, what 90% of your code looks like">{`package com.example.search;
 
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.stereotype.Service;
@@ -440,8 +440,8 @@ public class EmbeddingService {
 
         <p>
           Embedding 10,000 documents one at a time means 10,000 round-trips. Each carries TLS handshake amortization,
-          authentication overhead, and per-request latency. Embedding 10,000 in batches of 100 means 100 round-trips
-          — and the provider can amortize their internal model cost across the batch.
+          authentication overhead, and per-request latency. Embedding 10,000 in batches of 100 means 100 round-trips,
+          and the provider can amortize their internal model cost across the batch.
         </p>
 
         <WorkedExample
@@ -476,7 +476,7 @@ public class EmbeddingService {
               body: (
                 <div>
                   <p className="text-sm">
-                    Providers cap batch size — OpenAI&apos;s v3 embedders accept up to 2048 inputs per call, but
+                    Providers cap batch size, OpenAI&apos;s v3 embedders accept up to 2048 inputs per call, but
                     will reject a request whose <em>token total</em>{" "}exceeds 300k. A safe default is batch=100 with
                     a fallback that splits if you hit a token-limit error. Bigger batches also mean longer
                     tail-latency p99s, which hurts if you&apos;re embedding live.
@@ -503,11 +503,11 @@ public class EmbeddingService {
     }
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">L2 normalization — what Spring AI does for you</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">L2 normalization, what Spring AI does for you</h3>
 
         <p>
           Cosine similarity and dot product produce identical rankings <em>if</em>{" "}both vectors are unit-length
-          (L2-normalized). Most production embedders return L2-normalized vectors out of the box — but not all,
+          (L2-normalized). Most production embedders return L2-normalized vectors out of the box, but not all,
           and the contract isn&apos;t always documented loudly.
         </p>
 
@@ -529,11 +529,11 @@ public class EmbeddingService {
         </p>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>OpenAI <code>text-embedding-3-*</code></strong> — returns L2-normalized vectors.</li>
-          <li><strong>Voyage</strong> — returns L2-normalized vectors.</li>
-          <li><strong>Cohere <code>embed-*-v3</code></strong> — returns L2-normalized vectors.</li>
-          <li><strong>Self-hosted (BGE, Nomic via Ollama)</strong> — sometimes yes, sometimes no. Check, or normalize defensively.</li>
-          <li><strong>After Matryoshka truncation</strong> — never normalized. <em>You</em>{" "}must re-normalize.</li>
+          <li><strong>OpenAI <code>text-embedding-3-*</code></strong>, returns L2-normalized vectors.</li>
+          <li><strong>Voyage</strong>, returns L2-normalized vectors.</li>
+          <li><strong>Cohere <code>embed-*-v3</code></strong>, returns L2-normalized vectors.</li>
+          <li><strong>Self-hosted (BGE, Nomic via Ollama)</strong>, sometimes yes, sometimes no. Check, or normalize defensively.</li>
+          <li><strong>After Matryoshka truncation</strong>, never normalized. <em>You</em>{" "}must re-normalize.</li>
         </ul>
 
         <Callout variant="warn" title="The bug you'll see at 2 a.m.">
@@ -545,7 +545,7 @@ public class EmbeddingService {
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Caching embeddings — yes, you should</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Caching embeddings, yes, you should</h3>
 
         <p>
           This is a <em>different</em>{" "}caching from Module 13&apos;s prompt caching. Embedding caching is purely
@@ -575,13 +575,13 @@ public class CachedEmbeddingService {
 }`}</CodeBlock>
 
         <p>
-          When does this pay off? Mostly on the <strong>query path</strong>. Users repeat queries — &quot;reset
+          When does this pay off? Mostly on the <strong>query path</strong>. Users repeat queries, &quot;reset
           password,&quot; &quot;refund,&quot; &quot;account locked&quot; show up thousands of times a day in any real
           support system. Caching the embedding for those costs you almost nothing and saves a real API call per hit.
         </p>
 
         <p>
-          On the indexing path, caching is less useful — you usually only embed each document once. But if you
+          On the indexing path, caching is less useful, you usually only embed each document once. But if you
           re-embed on every deploy by accident (it happens), the cache will save you from yourself.
         </p>
 
@@ -590,7 +590,7 @@ public class CachedEmbeddingService {
           question="You're indexing 50,000 docs and decide to use embeddingModel.embed(text) inside a parallel stream with 16 threads. The job finishes faster than batching, so you ship it. What's the catch?"
           options={[
             { label: "Parallel streams aren't allowed in Spring Boot", explanation: "They're allowed; this isn't the issue." },
-            { label: "You're hammering the embedding API with 50,000 individual requests, will likely hit rate limits, and you're paying full per-request overhead. Batched is still strictly better — just parallelize the batches if you need more throughput", correct: true, explanation: "Right. You traded amortized HTTP overhead for parallelism, but kept all the per-request cost. Batched + parallelized batches gives you both wins. Most providers also rate-limit by request count, so 50,000 individual calls trip the limiter even if each is small." },
+            { label: "You're hammering the embedding API with 50,000 individual requests, will likely hit rate limits, and you're paying full per-request overhead. Batched is still strictly better, just parallelize the batches if you need more throughput", correct: true, explanation: "Right. You traded amortized HTTP overhead for parallelism, but kept all the per-request cost. Batched + parallelized batches gives you both wins. Most providers also rate-limit by request count, so 50,000 individual calls trip the limiter even if each is small." },
             { label: "Float arrays aren't thread-safe", explanation: "Each call returns its own array; no shared state issue." },
             { label: "Spring AI doesn't support parallel calls", explanation: "It does. The issue is upstream cost/limits, not Spring." },
           ]}
@@ -602,7 +602,7 @@ public class CachedEmbeddingService {
           question="Your embeddings are returning cosine similarities like 0.31 between two documents you know are paraphrases of each other (you'd expect ~0.9). Where do you look first?"
           options={[
             { label: "Re-train the model", explanation: "You can't re-train a hosted model, and even if you could, this isn't a model issue." },
-            { label: "Check whether the vectors are L2-normalized — most likely something downstream truncated, averaged, or otherwise mutated them and never re-normalized", correct: true, explanation: "Right. The classic symptom of de-normalized vectors is dampened cosine scores across the board. Add a one-line assertion that ||v|| ≈ 1.0 at every storage boundary and the bug usually surfaces immediately." },
+            { label: "Check whether the vectors are L2-normalized, most likely something downstream truncated, averaged, or otherwise mutated them and never re-normalized", correct: true, explanation: "Right. The classic symptom of de-normalized vectors is dampened cosine scores across the board. Add a one-line assertion that ||v|| ≈ 1.0 at every storage boundary and the bug usually surfaces immediately." },
             { label: "Reduce dimensions", explanation: "Dimensions don't cause this kind of systematic dampening." },
             { label: "Switch providers", explanation: "Skipping straight to a vendor change without diagnosing is expensive." },
           ]}
@@ -615,7 +615,7 @@ public class CachedEmbeddingService {
           points={[
             { takeaway: "Always batch on the index path.", detail: "embed(List) is ~30× faster than embed(String) in a loop. Default to batches of 100." },
             { takeaway: "Cache the query path by content hash.", detail: "User queries repeat; embedding the same string twice is wasted money." },
-            { takeaway: "Re-normalize after any vector mutation.", detail: "Truncation, averaging, projection — all break L2 normalization. Cosine scores that look 'flat' are usually this." },
+            { takeaway: "Re-normalize after any vector mutation.", detail: "Truncation, averaging, projection, all break L2 normalization. Cosine scores that look 'flat' are usually this." },
           ]}
         />
 
@@ -632,7 +632,7 @@ public class CachedEmbeddingService {
       {/* PART 3: THE CURSE OF DIMENSIONALITY                                */}
       {/* ================================================================= */}
       <section id="curse">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — The curse of dimensionality (with numbers)</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, The curse of dimensionality (with numbers)</h2>
 
         <p>
           Module 6 mentioned the curse of dimensionality and promised we&apos;d come back to it. Here we are.
@@ -650,12 +650,12 @@ public class CachedEmbeddingService {
           way to feel the problem is to look at real numbers.
         </p>
 
-        <h3 className="mt-6 mb-3 text-xl font-semibold">Why distances concentrate — a tiny experiment</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Why distances concentrate, a tiny experiment</h3>
 
         <p>
           Generate N random points in a unit cube of dimension d. For each point, compute its distance to every
           other point. Look at the ratio of the <em>nearest</em>{" "}distance to the <em>farthest</em>{" "}distance. In
-          intuitive low-D space, this ratio is small — your nearest neighbor is much closer than your farthest. As
+          intuitive low-D space, this ratio is small, your nearest neighbor is much closer than your farthest. As
           d grows, the ratio creeps toward 1. Everything is the same distance away.
         </p>
 
@@ -664,7 +664,7 @@ public class CachedEmbeddingService {
           subtitle="Same experiment, three dimensionalities. Watch the ratio."
           steps={[
             {
-              title: "d = 2 — your everyday intuition holds",
+              title: "d = 2, your everyday intuition holds",
               body: (
                 <div>
                   <p className="text-sm">
@@ -676,7 +676,7 @@ public class CachedEmbeddingService {
               ),
             },
             {
-              title: "d = 100 — uh oh",
+              title: "d = 100, uh oh",
               body: (
                 <div>
                   <p className="text-sm">
@@ -688,7 +688,7 @@ public class CachedEmbeddingService {
               ),
             },
             {
-              title: "d = 1024 — pure random vectors are useless",
+              title: "d = 1024, pure random vectors are useless",
               body: (
                 <div>
                   <p className="text-sm">
@@ -706,7 +706,7 @@ public class CachedEmbeddingService {
                   <p className="text-sm">
                     Because real embeddings <em>aren&apos;t</em>{" "}uniformly random. Trained embedders cluster
                     semantically-related text in narrow regions of the unit hypersphere. The vectors live on a
-                    much lower-dimensional <em>manifold</em>{" "}inside the 1024-D space — local neighborhoods stay
+                    much lower-dimensional <em>manifold</em>{" "}inside the 1024-D space, local neighborhoods stay
                     informative. The curse explains why pure random search fails; the saving grace is that
                     semantic structure breaks the randomness assumption.
                   </p>
@@ -719,7 +719,7 @@ public class CachedEmbeddingService {
         <Callout variant="info" title="The takeaway, blunt version">
           <p>
             Embedding search works because trained models compress meaning into a thin slice of the available
-            space. It does NOT work because cosine similarity is magically robust in high dimensions — it isn&apos;t.
+            space. It does NOT work because cosine similarity is magically robust in high dimensions, it isn&apos;t.
             If your embeddings ever start looking uniform (e.g. you accidentally averaged too many vectors, or your
             domain is wildly out-of-distribution for the model), recall@k will collapse and you&apos;ll see exactly
             this concentration effect.
@@ -730,7 +730,7 @@ public class CachedEmbeddingService {
 
         <p>
           In Module 6&apos;s Java project, you brute-forced ~10 vectors. That&apos;s instant. Production corpora
-          are bigger. Here&apos;s the back-of-the-envelope math for how brute force scales — the dominant cost is
+          are bigger. Here&apos;s the back-of-the-envelope math for how brute force scales, the dominant cost is
           <code>N · d</code> floating-point multiply-adds per query.
         </p>
 
@@ -796,10 +796,10 @@ public class CachedEmbeddingService {
 
         <Quiz
           kind="Pulse check"
-          question="Your support knowledge base has 8,000 articles, embedded with text-embedding-3-small at 512 dims. A teammate wants to add an HNSW index 'because that's how you scale.' Push back — why?"
+          question="Your support knowledge base has 8,000 articles, embedded with text-embedding-3-small at 512 dims. A teammate wants to add an HNSW index 'because that's how you scale.' Push back, why?"
           options={[
             { label: "HNSW doesn't work at 512 dimensions", explanation: "HNSW works fine at 512 dims; not the issue." },
-            { label: "8k × 512 is ~4M FLOPs per query — under 10ms brute force. HNSW adds index complexity, build time, and approximate-recall risk for zero meaningful latency win at this size", correct: true, explanation: "Right. The whole point of an ANN index is to dodge linear scan when linear scan is too slow. 8,000 vectors at 512 dims isn't slow. Adding HNSW costs you operational complexity, build time on every re-index, and the small-but-real chance of missing the actual nearest neighbor — for nothing." },
+            { label: "8k × 512 is ~4M FLOPs per query, under 10ms brute force. HNSW adds index complexity, build time, and approximate-recall risk for zero meaningful latency win at this size", correct: true, explanation: "Right. The whole point of an ANN index is to dodge linear scan when linear scan is too slow. 8,000 vectors at 512 dims isn't slow. Adding HNSW costs you operational complexity, build time on every re-index, and the small-but-real chance of missing the actual nearest neighbor, for nothing." },
             { label: "HNSW is patent-encumbered", explanation: "It isn't." },
             { label: "Spring AI doesn't support HNSW", explanation: "Spring AI integrates with vector stores that do. Not the concern." },
           ]}
@@ -810,9 +810,9 @@ public class CachedEmbeddingService {
           kind="Pulse check"
           question="You generate 10,000 random unit vectors in 1024 dimensions and compute pairwise cosine similarities. What do you expect to see?"
           options={[
-            { label: "Most cosines are around 0 — random unit vectors in high dimensions are nearly orthogonal to each other", correct: true, explanation: "Right. This is the high-dimensional concentration phenomenon: in 1024-D, two random unit vectors have cosine ~ 0 with very high probability. It's why embedding search depends on the model placing related text in narrow clusters — the 'background' is essentially noise." },
+            { label: "Most cosines are around 0, random unit vectors in high dimensions are nearly orthogonal to each other", correct: true, explanation: "Right. This is the high-dimensional concentration phenomenon: in 1024-D, two random unit vectors have cosine ~ 0 with very high probability. It's why embedding search depends on the model placing related text in narrow clusters, the 'background' is essentially noise." },
             { label: "Cosines uniformly distributed over [-1, 1]", explanation: "Only true in d=1. As d grows, cosines concentrate around 0." },
-            { label: "Most cosines around 1 — unit vectors are 'similar' by construction", explanation: "Unit vectors aren't similar to each other; only being a unit vector means ||v||=1, which doesn't constrain direction." },
+            { label: "Most cosines around 1, unit vectors are 'similar' by construction", explanation: "Unit vectors aren't similar to each other; only being a unit vector means ||v||=1, which doesn't constrain direction." },
             { label: "Cosines bimodal at -1 and +1", explanation: "Not without structure forcing it." },
           ]}
           xp={15}
@@ -823,7 +823,7 @@ public class CachedEmbeddingService {
           gist="High-dimensional space is geometrically weird. Brute force is fine until it isn't. Embedding search works because real embeddings live on a low-D manifold inside the high-D space."
           points={[
             { takeaway: "Distances concentrate as d grows.", detail: "The ratio of nearest-to-farthest collapses toward 1 in pure random clouds. Trained embeddings dodge this by clustering semantically." },
-            { takeaway: "Brute force scales linearly in N·d.", detail: "Fine to ~50k vectors. At 1M+ at 1024 dims, you want an ANN index — which is Module 16." },
+            { takeaway: "Brute force scales linearly in N·d.", detail: "Fine to ~50k vectors. At 1M+ at 1024 dims, you want an ANN index, which is Module 16." },
             { takeaway: "Don't index prematurely.", detail: "If your corpus is small, exact brute-force search is faster, simpler, and more accurate than any approximate index." },
           ]}
         />
@@ -841,17 +841,17 @@ public class CachedEmbeddingService {
       {/* PART 4: PROJECT — SEMANTIC BOOKMARK SEARCH                         */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Project: semantic bookmark search</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Project: semantic bookmark search</h2>
 
         <p>
           Time to build. You&apos;re going to ship a Spring Boot app that takes a hard-coded list of 30 bookmarks
           (titles + descriptions), embeds them at startup, exposes a <code>/search?q=...</code> endpoint, and
           returns the top-k semantically-similar bookmarks with their cosine scores. We&apos;re using brute force
-          deliberately — the corpus is tiny, and the point of this project is to feel embeddings working before
+          deliberately, the corpus is tiny, and the point of this project is to feel embeddings working before
           Module 16 introduces an index.
         </p>
 
-        <h3 className="mt-6 mb-3 text-xl font-semibold">Step 1 — Spin up the project</h3>
+        <h3 className="mt-6 mb-3 text-xl font-semibold">Step 1, Spin up the project</h3>
 
         <p>
           Use the same <a className="text-indigo-600 hover:underline" href="https://start.spring.io" target="_blank" rel="noreferrer">Spring Initializr</a>{" "}
@@ -859,11 +859,11 @@ public class CachedEmbeddingService {
         </p>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>Spring Web</strong> — for the search endpoint and a tiny static UI.</li>
+          <li><strong>Spring Web</strong>, for the search endpoint and a tiny static UI.</li>
           <li><strong>Spring AI OpenAI</strong> (or Ollama, if you&apos;re self-hosting). This pulls in the <code>EmbeddingModel</code> bean.</li>
         </ul>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2 — Configuration</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 2, Configuration</h3>
 
         <CodeBlock lang="plain" caption="src/main/resources/application.yml">{`spring:
   ai:
@@ -877,9 +877,9 @@ public class CachedEmbeddingService {
 server:
   port: 8080`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3 — Bookmark and BookmarkStore</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 3, Bookmark and BookmarkStore</h3>
 
-        <CodeBlock lang="java" caption="Bookmark.java — a record with the fields we need">{`package com.example.bookmarks;
+        <CodeBlock lang="java" caption="Bookmark.java, a record with the fields we need">{`package com.example.bookmarks;
 
 public record Bookmark(
     String id,
@@ -894,7 +894,7 @@ public record Bookmark(
     }
 }`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="BookmarkStore.java — in-memory, brute-force search">{`package com.example.bookmarks;
+        <CodeBlock lang="java" caption="BookmarkStore.java, in-memory, brute-force search">{`package com.example.bookmarks;
 
 import org.springframework.stereotype.Component;
 import java.util.*;
@@ -929,14 +929,14 @@ public class BookmarkStore {
     public record Scored(Bookmark bookmark, double score) {}
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4 — Indexing at startup</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 4, Indexing at startup</h3>
 
         <p>
           We embed all 30 bookmarks once, in a single batched call, when the app starts. After that the store is
           read-only. Real systems re-index on writes, but for this project, startup-only is plenty.
         </p>
 
-        <CodeBlock lang="java" caption="BookmarkIndexer.java — runs once via CommandLineRunner">{`package com.example.bookmarks;
+        <CodeBlock lang="java" caption="BookmarkIndexer.java, runs once via CommandLineRunner">{`package com.example.bookmarks;
 
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.boot.CommandLineRunner;
@@ -978,15 +978,15 @@ public class BookmarkIndexer {
     record Seed(String url, String title, String description) {}
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5 — A reasonable seed corpus</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 5, A reasonable seed corpus</h3>
 
         <p>
           You want enough variety that semantic search has something to chew on. Here&apos;s a 30-bookmark starter
-          covering several distinct topics — programming, recipes, travel, science, finance. Drop it in a class
+          covering several distinct topics, programming, recipes, travel, science, finance. Drop it in a class
           called <code>SeedData</code>:
         </p>
 
-        <CodeBlock lang="java" caption="SeedData.java — abbreviated; full list in your project">{`package com.example.bookmarks;
+        <CodeBlock lang="java" caption="SeedData.java, abbreviated; full list in your project">{`package com.example.bookmarks;
 
 import java.util.List;
 
@@ -1041,7 +1041,7 @@ public class SeedData {
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6 — The search controller</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 6, The search controller</h3>
 
         <CodeBlock lang="java" caption="SearchController.java">{`package com.example.bookmarks;
 
@@ -1081,7 +1081,7 @@ public class SearchController {
     }
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7 — A tiny static UI (optional but fun)</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 7, A tiny static UI (optional but fun)</h3>
 
         <p>
           Drop this at <code>src/main/resources/static/index.html</code>. It&apos;s a single-file search box that
@@ -1131,7 +1131,7 @@ public class SearchController {
 </body>
 </html>`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 8 — Run it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Step 8, Run it</h3>
 
         <CodeBlock lang="plain">{`export OPENAI_API_KEY=sk-...
 ./mvnw spring-boot:run`}</CodeBlock>
@@ -1139,18 +1139,18 @@ public class SearchController {
         <p className="mt-3">
           Open <a className="text-indigo-600 hover:underline" href="http://localhost:8080" target="_blank" rel="noreferrer">http://localhost:8080</a>.
           Type queries. Watch &quot;cooking science&quot; pull Kenji and Food Lab to the top. Type &quot;jvm
-          language&quot; and Kotlin should win over Spring (close call — Spring is JVM-adjacent). Type something
-          totally off-topic like &quot;bicycle&quot; and see all scores stay low — that&apos;s your signal that
+          language&quot; and Kotlin should win over Spring (close call, Spring is JVM-adjacent). Type something
+          totally off-topic like &quot;bicycle&quot; and see all scores stay low, that&apos;s your signal that
           your corpus doesn&apos;t cover that domain.
         </p>
 
         <Callout variant="warn" title="Common errors & fixes">
           <ul className="mt-2 list-disc space-y-2 pl-6">
-            <li><strong>&quot;No qualifying bean of type EmbeddingModel&quot;</strong> — your <code>pom.xml</code> is missing the embedding starter. <code>spring-ai-starter-model-openai</code> is the one you want for OpenAI.</li>
-            <li><strong>&quot;OPENAI_API_KEY is not set&quot;</strong> — exported in the wrong shell, or your IDE&apos;s run config doesn&apos;t see your shell env. In IntelliJ, set the env var in Run/Debug Configurations.</li>
-            <li><strong>All scores hover around 0.2–0.3</strong> — your seed corpus is too narrow, or your queries are way out of distribution. Add diversity.</li>
-            <li><strong>All scores look identical to many decimal places</strong> — you&apos;re probably comparing the query against itself, or your embedder is returning a zero vector. Log <code>queryVec[0..5]</code> and confirm it&apos;s real numbers.</li>
-            <li><strong>Indexing call returns a 400</strong> — likely a single bookmark whose text is empty (null description). Filter or default it before embedding.</li>
+            <li><strong>&quot;No qualifying bean of type EmbeddingModel&quot;</strong>, your <code>pom.xml</code> is missing the embedding starter. <code>spring-ai-starter-model-openai</code> is the one you want for OpenAI.</li>
+            <li><strong>&quot;OPENAI_API_KEY is not set&quot;</strong>, exported in the wrong shell, or your IDE&apos;s run config doesn&apos;t see your shell env. In IntelliJ, set the env var in Run/Debug Configurations.</li>
+            <li><strong>All scores hover around 0.2–0.3</strong>, your seed corpus is too narrow, or your queries are way out of distribution. Add diversity.</li>
+            <li><strong>All scores look identical to many decimal places</strong>, you&apos;re probably comparing the query against itself, or your embedder is returning a zero vector. Log <code>queryVec[0..5]</code> and confirm it&apos;s real numbers.</li>
+            <li><strong>Indexing call returns a 400</strong>, likely a single bookmark whose text is empty (null description). Filter or default it before embedding.</li>
           </ul>
         </Callout>
 
@@ -1158,7 +1158,7 @@ public class SearchController {
           <p>
             Type three queries that aren&apos;t literal substrings of any bookmark title or description, and check
             that the right bookmark still wins. That&apos;s semantic search working. If you can do that, you&apos;ve
-            built the data plane that every retrieval system needs — Module 16 swaps the in-memory store for
+            built the data plane that every retrieval system needs, Module 16 swaps the in-memory store for
             pgvector with an HNSW index, and Module 18 wraps the whole thing in a chat UI.
           </p>
         </Checkpoint>
@@ -1168,15 +1168,15 @@ public class SearchController {
       {/* PART 5: FINAL QUIZ                                                 */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5 — Final quiz</h2>
+        <h2 className="mt-12 mb-4 text-2xl font-bold">Part 5, Final quiz</h2>
 
         <Quiz
           kind="Final quiz"
           question="Your team is choosing between text-embedding-3-large at full 3072 dims and text-embedding-3-small truncated to 512 dims. The corpus is 5M support-ticket descriptions. What's the right approach?"
           options={[
-            { label: "Pick large — it's the higher-quality model", explanation: "Quality matters, but at 5M docs the 6× indexing cost and 6× search cost of large@3072 is a real bill. You owe yourself a measurement, not a default." },
-            { label: "Pick small@512 — it's cheaper and good enough", explanation: "Possibly true, but 'good enough' isn't a measurement either. You don't know without an eval." },
-            { label: "Run a 50-pair eval on real support tickets, measure recall@5 for both, and pick by your own data — likely small@512 wins on cost-quality unless your tickets are unusually hard", correct: true, explanation: "Right. The model selection question only has a defensible answer with your own eval. Do the 50-pair check, look at recall@5, then look at the cost delta. Most teams find that mid-tier models at moderate dimensions hit recall plateau quickly." },
+            { label: "Pick large, it's the higher-quality model", explanation: "Quality matters, but at 5M docs the 6× indexing cost and 6× search cost of large@3072 is a real bill. You owe yourself a measurement, not a default." },
+            { label: "Pick small@512, it's cheaper and good enough", explanation: "Possibly true, but 'good enough' isn't a measurement either. You don't know without an eval." },
+            { label: "Run a 50-pair eval on real support tickets, measure recall@5 for both, and pick by your own data, likely small@512 wins on cost-quality unless your tickets are unusually hard", correct: true, explanation: "Right. The model selection question only has a defensible answer with your own eval. Do the 50-pair check, look at recall@5, then look at the cost delta. Most teams find that mid-tier models at moderate dimensions hit recall plateau quickly." },
             { label: "Use both and ensemble the scores", explanation: "Doubles the embedding cost on the index and query paths and rarely improves recall@k meaningfully. Reranking with a cross-encoder is a better investment." },
           ]}
           xp={20}
@@ -1186,8 +1186,8 @@ public class SearchController {
           kind="Final quiz"
           question="A teammate writes the indexing loop as: for (var doc : docs) store.save(doc.id(), embedder.embed(doc.text())). The job takes 12 minutes for 10,000 docs. What's the most impactful single change?"
           options={[
-            { label: "Switch to a cheaper embedding model", explanation: "Doesn't change the call structure — still N round-trips." },
-            { label: "Replace the loop with embedder.embed(List<String>) batched at ~100 — eliminates 9,900 of the 10,000 round-trips", correct: true, explanation: "Right. Per-call latency goes up modestly, but total wall-clock collapses ~30×. Same correctness, same provider, same cost — pure efficiency." },
+            { label: "Switch to a cheaper embedding model", explanation: "Doesn't change the call structure, still N round-trips." },
+            { label: "Replace the loop with embedder.embed(List<String>) batched at ~100, eliminates 9,900 of the 10,000 round-trips", correct: true, explanation: "Right. Per-call latency goes up modestly, but total wall-clock collapses ~30×. Same correctness, same provider, same cost, pure efficiency." },
             { label: "Add a Caffeine cache", explanation: "Indexing each doc once means cache hit rate is 0%. Caching is a query-path win, not an index-path win." },
             { label: "Run the loop in parallel with 16 threads", explanation: "Faster but still wasting per-request overhead. Combine batching + parallel for the right answer; batching alone is the bigger win." },
           ]}
@@ -1199,7 +1199,7 @@ public class SearchController {
           question="You ship your search service. Recall@5 looks great in dev. In prod, after a week, recall@5 has quietly dropped to ~60% of where it started. What's the most likely cause?"
           options={[
             { label: "The embedding model was deprecated", explanation: "Possible but rare; providers usually announce. Won't typically halve recall." },
-            { label: "Your prod corpus has drifted (new product launches, new ticket categories) but you haven't re-embedded — the live queries are out-of-distribution for the indexed corpus", correct: true, explanation: "Right. Embedding indexes age. If your domain has fresh content (new products, news, support categories), and you only embed once at deploy, your search quality decays as the gap between the index and the query distribution grows. Schedule re-embedding, or embed-on-write." },
+            { label: "Your prod corpus has drifted (new product launches, new ticket categories) but you haven't re-embedded, the live queries are out-of-distribution for the indexed corpus", correct: true, explanation: "Right. Embedding indexes age. If your domain has fresh content (new products, news, support categories), and you only embed once at deploy, your search quality decays as the gap between the index and the query distribution grows. Schedule re-embedding, or embed-on-write." },
             { label: "Cosmic rays flipped bits in your vectors", explanation: "Real phenomenon, vanishingly unlikely at this magnitude." },
             { label: "Postgres needs vacuuming", explanation: "Could affect latency, not recall." },
           ]}
@@ -1210,9 +1210,9 @@ public class SearchController {
           kind="Final quiz"
           question="True or false: if you store cosine similarities between random unit vectors in 1024 dimensions, the histogram looks like a tight bell around zero."
           options={[
-            { label: "True — high-dimensional random unit vectors are nearly orthogonal, so cosine concentrates near 0", correct: true, explanation: "Right. The standard deviation of cosine for random unit vectors in d dimensions shrinks like 1/√d. At d=1024 the bell is narrow and centered on 0 — which is why embedding search depends on real models clustering meaningfully, rather than on the geometry being friendly." },
-            { label: "False — cosines uniformly fill [-1, 1]", explanation: "Only at d=1." },
-            { label: "False — they cluster around 1", explanation: "No — that would mean random vectors are similar to each other, which is the opposite of what high-D does." },
+            { label: "True, high-dimensional random unit vectors are nearly orthogonal, so cosine concentrates near 0", correct: true, explanation: "Right. The standard deviation of cosine for random unit vectors in d dimensions shrinks like 1/√d. At d=1024 the bell is narrow and centered on 0, which is why embedding search depends on real models clustering meaningfully, rather than on the geometry being friendly." },
+            { label: "False, cosines uniformly fill [-1, 1]", explanation: "Only at d=1." },
+            { label: "False, they cluster around 1", explanation: "No, that would mean random vectors are similar to each other, which is the opposite of what high-D does." },
             { label: "True only when the vectors are sparse", explanation: "Sparsity isn't the cause; concentration of measure is." },
           ]}
           xp={20}
@@ -1222,8 +1222,8 @@ public class SearchController {
           kind="Final quiz"
           question="You're tempted to add an HNSW index to your 8,000-bookmark search. What's the mature engineering response?"
           options={[
-            { label: "Add it anyway — better safe than sorry", explanation: "Adding indexes you don't need is a real cost: build time, recall risk, operational complexity." },
-            { label: "8k vectors brute-force in <10ms — adding HNSW now buys you nothing and costs you complexity. Wait until brute-force latency is actually a problem, then add it with measurement", correct: true, explanation: "Right. Premature ANN indexing is a specific kind of over-engineering. The honest progression is: brute-force → measure → if and only if too slow, add an index → measure recall delta. Module 16 walks you through what 'too slow' looks like and what the index trade-offs actually are." },
+            { label: "Add it anyway, better safe than sorry", explanation: "Adding indexes you don't need is a real cost: build time, recall risk, operational complexity." },
+            { label: "8k vectors brute-force in <10ms, adding HNSW now buys you nothing and costs you complexity. Wait until brute-force latency is actually a problem, then add it with measurement", correct: true, explanation: "Right. Premature ANN indexing is a specific kind of over-engineering. The honest progression is: brute-force → measure → if and only if too slow, add an index → measure recall delta. Module 16 walks you through what 'too slow' looks like and what the index trade-offs actually are." },
             { label: "Add HNSW only if you also add IVFFlat", explanation: "These are alternatives, not complements." },
             { label: "Use a graph database instead", explanation: "Not relevant to this problem." },
           ]}
@@ -1235,7 +1235,7 @@ public class SearchController {
             That&apos;s Phase 3, Module 1 done. You can pick an embedding model defensibly, call it from Spring AI,
             handle batching and caching and L2 normalization correctly, and reason about when brute force is fine
             and when it isn&apos;t. Module 16 takes the &quot;when it isn&apos;t&quot; case and replaces the
-            in-memory store with pgvector — a real database with real ANN indexes.
+            in-memory store with pgvector, a real database with real ANN indexes.
           </p>
         </Checkpoint>
       </section>

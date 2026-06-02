@@ -68,7 +68,7 @@ flowchart TD
       </header>
 
       {/* PART 1: THE SETUP */}
-      <Checkpoint moduleSlug="tokenization" id="setup" title="The setup" xp={15} celebration="Setup complete — you get how tokens get counted. On to the 'why'.">
+      <Checkpoint moduleSlug="tokenization" id="setup" title="The setup" xp={15} celebration="Setup complete, you get how tokens get counted. On to the 'why'.">
       <section>
         <h2>Part 1: The setup</h2>
 
@@ -90,12 +90,12 @@ flowchart TD
 
         <Quiz
           kind="Gut check"
-          question="Before we go further — if you send a 1,000-word English essay to Claude, roughly how many tokens is that?"
+          question="Before we go further, if you send a 1,000-word English essay to Claude, roughly how many tokens is that?"
           options={[
-            { label: "About 500 tokens", explanation: "Nope, the other way around — tokens are usually MORE than words, not fewer." },
+            { label: "About 500 tokens", explanation: "Nope, the other way around, tokens are usually MORE than words, not fewer." },
             { label: "About 1,000 tokens (1 word = 1 token)", explanation: "Close in spirit, but words often split into multiple tokens. The real ratio is higher." },
             { label: "About 1,333 tokens (1 word ≈ 1.33 tokens)", correct: true, explanation: "This is the rule of thumb for English: 1 word ≈ 1.33 tokens. Rare words, punctuation, and whitespace all add to the count." },
-            { label: "About 2,500 tokens", explanation: "Too high for English — this kind of ratio shows up for non-English or code, not plain English." },
+            { label: "About 2,500 tokens", explanation: "Too high for English, this kind of ratio shows up for non-English or code, not plain English." },
           ]}
         />
       </section>
@@ -125,7 +125,7 @@ flowchart TD
 
         <p>
           LLMs picked Option B. Those chunks are <strong>tokens</strong>. The algorithm that learned the chunks is called{" "}
-          <strong>Byte-Pair Encoding (BPE)</strong> — it&apos;s worth knowing the name because you&apos;ll see it everywhere.
+          <strong>Byte-Pair Encoding (BPE)</strong>, it&apos;s worth knowing the name because you&apos;ll see it everywhere.
         </p>
 
         <Callout variant="insight" title="How BPE actually splits a word">
@@ -134,13 +134,13 @@ flowchart TD
 
         <Mermaid chart={bpeFlowchart} />
 
-        <Callout variant="warn" title="The tokenizer is welded to the model — you can't swap them">
+        <Callout variant="warn" title="The tokenizer is welded to the model, you can't swap them">
           <p className="m-0">
-            Each model ships with one specific tokenizer. The vocabulary it learned (which token IDs map to which chunks of text) is baked into <em>both</em>{" "}the embedding table at the model&apos;s input and the projection matrix at its output. Swap the tokenizer and every ID points to the wrong row — the model produces gibberish. This is why Anthropic&apos;s tokenizer ≠ OpenAI&apos;s tokenizer ≠ Llama&apos;s tokenizer, and why your token counts will differ between providers for the exact same prompt. When you switch models, you switch tokenizers — they come as a pair.
+            Each model ships with one specific tokenizer. The vocabulary it learned (which token IDs map to which chunks of text) is baked into <em>both</em>{" "}the embedding table at the model&apos;s input and the projection matrix at its output. Swap the tokenizer and every ID points to the wrong row, the model produces gibberish. This is why Anthropic&apos;s tokenizer ≠ OpenAI&apos;s tokenizer ≠ Llama&apos;s tokenizer, and why your token counts will differ between providers for the exact same prompt. When you switch models, you switch tokenizers, they come as a pair.
           </p>
         </Callout>
 
-        <Callout variant="info" title='"Tokenizer" vs "encoder" — two different things, often confused'>
+        <Callout variant="info" title='"Tokenizer" vs "encoder", two different things, often confused'>
           <p className="m-0">
             <strong>Tokenizer</strong> = text → integer IDs (BPE; what we&apos;re doing in this module). <strong>Encoder</strong> = integer IDs (or one-hot vectors) → dense float vectors (what the embedding layer + transformer stack do, starting in Module 6). The tokenizer is a fixed lookup; the encoder is a trained neural network. People say &quot;encode the text&quot; for both, which is where the confusion comes from. From here on we&apos;ll keep them straight: <em>tokenize</em>{" "}first, then <em>embed</em>, then <em>encode</em>{" "}through the transformer.
           </p>
@@ -149,10 +149,10 @@ flowchart TD
         <Quiz
           question="Why is the &apos;chunks&apos; approach (Option B) smarter than giving every word its own number?"
           options={[
-            { label: "It uses less memory on the GPU", explanation: "Memory isn't the main reason — even 170K words would fit easily. Think about what happens with words the model has never seen." },
-            { label: "It can handle words the model was never trained on, by splitting them into pieces it knows", correct: true, explanation: "Exactly. BPE lets the model handle 'ChatGPT-ification' even though that word never existed in training — it gets split into chunks the model already knows." },
+            { label: "It uses less memory on the GPU", explanation: "Memory isn't the main reason, even 170K words would fit easily. Think about what happens with words the model has never seen." },
+            { label: "It can handle words the model was never trained on, by splitting them into pieces it knows", correct: true, explanation: "Exactly. BPE lets the model handle 'ChatGPT-ification' even though that word never existed in training, it gets split into chunks the model already knows." },
             { label: "It makes the model faster to train", explanation: "Training speed is a minor factor. The big win is handling novel words gracefully." },
-            { label: "It lets the model understand meaning better", explanation: "Tokenization doesn't directly encode meaning — that's what embeddings do (coming in a later module!). Tokens are just identifiers." },
+            { label: "It lets the model understand meaning better", explanation: "Tokenization doesn't directly encode meaning, that's what embeddings do (coming in a later module!). Tokens are just identifiers." },
           ]}
         />
       </section>
@@ -202,16 +202,16 @@ flowchart TD
         </p>
 
         <Callout variant="warn" title="Real production impact">
-          <p className="m-0">If your app serves users in multiple languages, a Japanese or Hindi user costs you 2-3x what an English user costs — even for the same message. Plan your pricing accordingly.</p>
+          <p className="m-0">If your app serves users in multiple languages, a Japanese or Hindi user costs you 2-3x what an English user costs, even for the same message. Plan your pricing accordingly.</p>
         </Callout>
 
         <Quiz
           question="Which of these costs the MOST tokens?"
-          hint="Don't just count characters — think about what the tokenizer has probably seen during training."
+          hint="Don't just count characters, think about what the tokenizer has probably seen during training."
           options={[
-            { label: `"The cat sat on the mat"`, explanation: "Surprisingly cheap! About 6 tokens — all super-common words, each is 1 token." },
+            { label: `"The cat sat on the mat"`, explanation: "Surprisingly cheap! About 6 tokens, all super-common words, each is 1 token." },
             { label: `"Pneumonoultramicroscopicsilicovolcanoconiosis"`, explanation: "Chunked into ~11 tokens. Expensive, but not the winner." },
-            { label: `"Hello Hello Hello Hello Hello" (repeated 5 times)`, correct: true, explanation: "Gotcha! About 9 tokens — each ' Hello' (with leading space) is its own token, and repetition doesn't give you a discount. Tokens are counted, not compressed." },
+            { label: `"Hello Hello Hello Hello Hello" (repeated 5 times)`, correct: true, explanation: "Gotcha! About 9 tokens, each ' Hello' (with leading space) is its own token, and repetition doesn't give you a discount. Tokens are counted, not compressed." },
           ]}
         />
       </section>
@@ -363,16 +363,16 @@ public class SafeChatService {
     }
 }`}</CodeBlock>
           <p className="mt-3 text-xs">
-            <strong>Why <code>@Service</code> here?</strong>{" "}Standard Spring pattern — stateless, injected, testable. The <code>TokenCountEstimator</code> bean is auto-configured by <code>spring-ai-anthropic</code>, so you just autowire it.
+            <strong>Why <code>@Service</code> here?</strong>{" "}Standard Spring pattern, stateless, injected, testable. The <code>TokenCountEstimator</code> bean is auto-configured by <code>spring-ai-anthropic</code>, so you just autowire it.
           </p>
         </Callout>
 
         <Quiz
           question="Why count tokens server-side in Spring Boot instead of just letting the API reject oversized requests?"
           options={[
-            { label: "API rejections are free, you just retry", explanation: "They're not free — you still pay in latency and user experience. And they tell you nothing about HOW MUCH to trim." },
+            { label: "API rejections are free, you just retry", explanation: "They're not free, you still pay in latency and user experience. And they tell you nothing about HOW MUCH to trim." },
             { label: "To avoid latency, bad UX, and to know how much to trim", correct: true, explanation: "Exactly right. Counting server-side lets you truncate gracefully before wasting a round-trip, and you can pick WHICH parts to cut (e.g. drop older conversation turns first, keep the user's latest message)." },
-            { label: "Because Spring Boot can't retry requests", explanation: "Spring Boot can retry fine — but retrying a too-large payload just hits the same error. Counting first is the actual fix." },
+            { label: "Because Spring Boot can't retry requests", explanation: "Spring Boot can retry fine, but retrying a too-large payload just hits the same error. Counting first is the actual fix." },
             { label: "It's required by the API terms of service", explanation: "It's not required, it's just good engineering." },
           ]}
         />
@@ -400,8 +400,8 @@ public class SafeChatService {
           kind="Q2 of 5"
           question="True or false: A 10,000-character Chinese document costs about the same tokens as a 10,000-character English document."
           options={[
-            { label: "True", explanation: "Nope. The tokenizer was trained mostly on English. Chinese characters often become one-token-per-character or worse — 2-3x the cost for the same content." },
-            { label: "False — Chinese costs significantly more", correct: true, explanation: "Correct. This is a real-world concern for multilingual products: your non-English users cost more per request." },
+            { label: "True", explanation: "Nope. The tokenizer was trained mostly on English. Chinese characters often become one-token-per-character or worse, 2-3x the cost for the same content." },
+            { label: "False, Chinese costs significantly more", correct: true, explanation: "Correct. This is a real-world concern for multilingual products: your non-English users cost more per request." },
           ]}
         />
 
@@ -410,8 +410,8 @@ public class SafeChatService {
           question="Your user pastes a 500KB log file into your RAG chat app. The model's context window is 200K tokens. Should you be worried?"
           options={[
             { label: "No, 500KB is tiny", explanation: "500KB sounds small on disk but is huge in tokens. Do the math: 500KB ≈ 500K characters ≈ 125K tokens. That's 60%+ of your context window before you add anything else." },
-            { label: "Yes — that's likely ~125K tokens, eating most of your context", correct: true, explanation: "Exactly. Always think in tokens, not bytes. You'd need to summarize, chunk, or extract just the relevant sections before sending." },
-            { label: "Only worry if it takes more than 5 seconds", explanation: "Latency isn't the issue here — you'll blow past the context window or pay for way more tokens than you need." },
+            { label: "Yes, that's likely ~125K tokens, eating most of your context", correct: true, explanation: "Exactly. Always think in tokens, not bytes. You'd need to summarize, chunk, or extract just the relevant sections before sending." },
+            { label: "Only worry if it takes more than 5 seconds", explanation: "Latency isn't the issue here, you'll blow past the context window or pay for way more tokens than you need." },
           ]}
         />
 
@@ -421,7 +421,7 @@ public class SafeChatService {
           options={[
             { label: "It's more idiomatic Spring", explanation: "True, but that's not the real reason. There's a concrete correctness problem with '/4' estimation." },
             { label: "Because the real tokenizer gives exact counts that match what you're charged, while length/4 is wrong for code, non-English, and rare words", correct: true, explanation: "Right. The /4 rule is okay for rough English estimates, but falls apart for code, emoji, Chinese, etc. When accuracy matters (billing, cutting close to context limits), use the actual tokenizer." },
-            { label: "Spring requires all numeric operations to go through beans", explanation: "Spring doesn't require that — this is about correctness, not convention." },
+            { label: "Spring requires all numeric operations to go through beans", explanation: "Spring doesn't require that, this is about correctness, not convention." },
           ]}
         />
 
@@ -429,8 +429,8 @@ public class SafeChatService {
           kind="Q5 of 5"
           question="A teammate says 'let's cache the tokenizer per-request for efficiency.' What's the right Spring Boot pattern here?"
           options={[
-            { label: "Create a new TokenCountEstimator in each controller method", explanation: "Bad — tokenizer initialization is expensive (loading the vocab). Don't recreate per-request." },
-            { label: "Make the TokenCountEstimator a singleton @Bean and inject it everywhere", correct: true, explanation: "Yes! Tokenizers are thread-safe and stateless after initialization — classic singleton bean territory. Spring AI's auto-configuration does this for you automatically. Injecting it via constructor gives you testability for free." },
+            { label: "Create a new TokenCountEstimator in each controller method", explanation: "Bad, tokenizer initialization is expensive (loading the vocab). Don't recreate per-request." },
+            { label: "Make the TokenCountEstimator a singleton @Bean and inject it everywhere", correct: true, explanation: "Yes! Tokenizers are thread-safe and stateless after initialization, classic singleton bean territory. Spring AI's auto-configuration does this for you automatically. Injecting it via constructor gives you testability for free." },
             { label: "Put it in a ThreadLocal", explanation: "Overkill. ThreadLocals are for genuinely per-thread state; the tokenizer is thread-safe." },
           ]}
         />
@@ -442,7 +442,7 @@ public class SafeChatService {
         <h2>✅ What you now know</h2>
         <ul className="my-6 list-none space-y-2">
           {[
-            "Tokens are the actual unit LLMs process — not words, not characters",
+            "Tokens are the actual unit LLMs process, not words, not characters",
             "BPE tokenizers split text into ~50K reusable chunks",
             "Non-English text and rare words cost more tokens",
             "You must count tokens BEFORE hitting the API, not after",
@@ -461,7 +461,7 @@ public class SafeChatService {
           <div className="mb-2 text-xs font-semibold tracking-wider uppercase opacity-80">Up next</div>
           <h3 className="mb-2 text-xl font-bold">Module 2: Supervised learning foundations</h3>
           <p className="mb-4 text-sm opacity-90">
-            Now that you know what a token IS, we&apos;ll look at how the model learns what to DO with them. We&apos;ll cover regression, loss functions, and gradient descent — using intuition, not heavy math.
+            Now that you know what a token IS, we&apos;ll look at how the model learns what to DO with them. We&apos;ll cover regression, loss functions, and gradient descent, using intuition, not heavy math.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

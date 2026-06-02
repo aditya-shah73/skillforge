@@ -32,10 +32,10 @@ export default function SystemDesignFrontendModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Front-end system design — how to drive the whiteboard
+          Front-end system design, how to drive the whiteboard
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          A front-end design interview isn&apos;t a trivia round — it&apos;s a 45-minute audition for how you think.
+          A front-end design interview isn&apos;t a trivia round, it&apos;s a 45-minute audition for how you think.
           The candidates who pass don&apos;t know more APIs; they <em>drive a process</em>. Here&apos;s the framework that
           turns a blank whiteboard into a structured conversation you control.
         </p>
@@ -53,7 +53,7 @@ export default function SystemDesignFrontendModule() {
           problem. That gap is the whole interview.
         </p>
         <p className="mb-4">
-          The interviewer is grading four things, and almost none of them is &quot;did you get the right answer&quot; — there
+          The interviewer is grading four things, and almost none of them is &quot;did you get the right answer&quot;, there
           isn&apos;t one:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
@@ -76,7 +76,7 @@ export default function SystemDesignFrontendModule() {
         <h2 className="mb-4 text-2xl font-bold">The framework: five stages, in order</h2>
         <p className="mb-4">
           Memorize this spine. When the prompt lands and your mind goes blank, you fall back to the sequence and start
-          talking. It scales from a 30-minute screen to a 60-minute onsite — you just spend more time per stage.
+          talking. It scales from a 30-minute screen to a 60-minute onsite, you just spend more time per stage.
         </p>
         <pre><code>{`1. CLARIFY      requirements, scope, constraints, scale
 2. STRUCTURE    component architecture + data flow
@@ -90,8 +90,8 @@ export default function SystemDesignFrontendModule() {
         </p>
         <Callout variant="warn" title="The trap: jumping to stage 2">
           <p>
-            The single most common failure is sketching boxes in the first 60 seconds. It feels productive — you&apos;re
-            &quot;making progress&quot; — but you&apos;re designing for a problem you haven&apos;t defined. Slow down. The clarify stage is
+            The single most common failure is sketching boxes in the first 60 seconds. It feels productive, you&apos;re
+            &quot;making progress&quot;, but you&apos;re designing for a problem you haven&apos;t defined. Slow down. The clarify stage is
             where seniority shows; rushing it is the clearest junior tell there is.
           </p>
         </Callout>
@@ -99,16 +99,16 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 3. STAGE 1: CLARIFY ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Stage 1 — clarify (the stage that separates levels)</h2>
+        <h2 className="mb-4 text-2xl font-bold">Stage 1, clarify (the stage that separates levels)</h2>
         <p className="mb-4">
-          Spend a real three to five minutes here. Ask questions whose answers actually change your design — not
+          Spend a real three to five minutes here. Ask questions whose answers actually change your design, not
           ritual questions you ask and then ignore. A good clarifying question makes the interviewer think
           &quot;oh, good, they&apos;d catch that on a real project.&quot;
         </p>
         <p className="mb-4">For a typeahead search, the questions that move the design:</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li><strong>Functional scope.</strong> Just suggestions, or a full results page below? Keyboard nav required? Recent searches? Categories?</li>
-          <li><strong>Data shape &amp; size.</strong> How many results per query — 10 or 10,000? Is the result list virtualized?</li>
+          <li><strong>Data shape &amp; size.</strong> How many results per query, 10 or 10,000? Is the result list virtualized?</li>
           <li><strong>Freshness.</strong> Static catalog, or do results change second-to-second (e.g. live inventory)?</li>
           <li><strong>Scale &amp; latency.</strong> Mobile users on 3G? What&apos;s the p95 backend latency? That decides debounce timing and whether we need optimistic UI.</li>
           <li><strong>Accessibility &amp; platform.</strong> Screen-reader support assumed? Which browsers? Is this inside an existing design system?</li>
@@ -130,7 +130,7 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 4. STAGE 2: STRUCTURE ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Stage 2 — component architecture &amp; data flow</h2>
+        <h2 className="mb-4 text-2xl font-bold">Stage 2, component architecture &amp; data flow</h2>
         <p className="mb-4">
           Now you draw. Decompose the UI into a component tree, top-down, and draw arrows for how data flows. For the
           typeahead:
@@ -147,7 +147,7 @@ export default function SystemDesignFrontendModule() {
   </ResultsFeed>
 </SearchBox>`}</code></pre>
         <p className="mb-4">
-          As you draw, narrate the <em>why</em>: &quot;<code>SearchBox</code> is the orchestrator — it owns the query and
+          As you draw, narrate the <em>why</em>: &quot;<code>SearchBox</code> is the orchestrator, it owns the query and
           coordinates the request, so the input and the suggestions list can stay dumb and presentational.&quot; That single
           sentence tells the interviewer you understand container/presentational separation without you ever having to
           name the pattern.
@@ -156,7 +156,7 @@ export default function SystemDesignFrontendModule() {
           <p>
             Boxes alone are a wireframe. Arrows are a <em>design</em>. Show: query flows down from <code>SearchBox</code>,
             keystrokes flow up via <code>onChange</code>, the fetched results flow back down. The arrows are where you
-            demonstrate you understand React&apos;s one-way data flow — the thing Phase 3 was entirely about.
+            demonstrate you understand React&apos;s one-way data flow, the thing Phase 3 was entirely about.
           </p>
         </Callout>
       </section>
@@ -177,7 +177,7 @@ export default function SystemDesignFrontendModule() {
               label: "Immediately start drawing the component tree so you look productive",
               correct: false,
               explanation:
-                "This is the classic junior tell. Drawing boxes before defining the problem means you're designing for a spec you haven't pinned down — and it's the most common way to lose the interview.",
+                "This is the classic junior tell. Drawing boxes before defining the problem means you're designing for a spec you haven't pinned down, and it's the most common way to lose the interview.",
             },
             {
               label: "Pick a state management library and justify it",
@@ -201,13 +201,13 @@ export default function SystemDesignFrontendModule() {
               label: "Because interviewers don't want to see advanced features",
               correct: false,
               explanation:
-                "They do — but only after the core is solid. Scoping down then offering to scope up signals exactly the judgment they're grading for.",
+                "They do, but only after the core is solid. Scoping down then offering to scope up signals exactly the judgment they're grading for.",
             },
             {
               label: "Because a smaller design is always the correct production design",
               correct: false,
               explanation:
-                "Not the point — production scope depends on requirements. In the interview, scoping is about time management and demonstrating prioritization, not about the 'right' final size.",
+                "Not the point, production scope depends on requirements. In the interview, scoping is about time management and demonstrating prioritization, not about the 'right' final size.",
             },
           ]}
         />
@@ -215,25 +215,25 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 5. STAGE 3: STATE LOCATION ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Stage 3 — where does each piece of state live?</h2>
+        <h2 className="mb-4 text-2xl font-bold">Stage 3, where does each piece of state live?</h2>
         <p className="mb-4">
-          This is where Phase 5 pays off. Run every piece of state down the decision tree out loud — the interviewer
+          This is where Phase 5 pays off. Run every piece of state down the decision tree out loud, the interviewer
           is listening for exactly this reasoning:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>The query string</strong> — local to <code>SearchBox</code>, or in the URL? If results should be shareable/bookmarkable, the URL (<code>?q=...</code>) is the right home.</li>
-          <li><strong>The results</strong> — <em>not</em> client state. They&apos;re a cache of something the server owns, keyed by the query. This is a React Query / SWR job, not <code>useState</code>.</li>
-          <li><strong>Highlighted suggestion index</strong> — pure UI state, local to the dropdown.</li>
-          <li><strong>Recent searches</strong> — persisted, maybe <code>localStorage</code>; arguably its own small store.</li>
+          <li><strong>The query string</strong>, local to <code>SearchBox</code>, or in the URL? If results should be shareable/bookmarkable, the URL (<code>?q=...</code>) is the right home.</li>
+          <li><strong>The results</strong>, <em>not</em> client state. They&apos;re a cache of something the server owns, keyed by the query. This is a React Query / SWR job, not <code>useState</code>.</li>
+          <li><strong>Highlighted suggestion index</strong>, pure UI state, local to the dropdown.</li>
+          <li><strong>Recent searches</strong>, persisted, maybe <code>localStorage</code>; arguably its own small store.</li>
         </ul>
         <p className="mb-4">
           The senior move is to say <strong>&quot;most of what looks like state here is actually server cache or URL
-          state&quot;</strong> — then the genuinely-local slice shrinks to almost nothing. Naming the category correctly is the
+          state&quot;</strong>, then the genuinely-local slice shrinks to almost nothing. Naming the category correctly is the
           whole skill.
         </p>
         <Callout variant="info" title="Server cache vs client state, said in the room">
           <p>
-            &quot;The results aren&apos;t state I own — they&apos;re a stale copy of what the server owns, keyed by the query. So I&apos;d
+            &quot;The results aren&apos;t state I own, they&apos;re a stale copy of what the server owns, keyed by the query. So I&apos;d
             model them with a cache like React Query: the <code>queryKey</code> is the query, I get dedup and staleness for
             free, and I don&apos;t hand-roll the race condition.&quot; That sentence collapses three Phase 5 modules into one
             confident answer.
@@ -243,16 +243,16 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 6. STAGE 4: FETCHING ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Stage 4 — the fetching strategy</h2>
+        <h2 className="mb-4 text-2xl font-bold">Stage 4, the fetching strategy</h2>
         <p className="mb-4">
           For a typeahead, this is where the interviewer probes hardest, because it&apos;s a perfect storm of every
           data-fetching pitfall. Walk through it deliberately:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Debounce the input.</strong> Don&apos;t fire a request per keystroke — wait ~200–300ms after the user stops typing. Mention you&apos;d tune this against measured latency, not guess.</li>
+          <li><strong>Debounce the input.</strong> Don&apos;t fire a request per keystroke, wait ~200–300ms after the user stops typing. Mention you&apos;d tune this against measured latency, not guess.</li>
           <li><strong>Handle the race condition.</strong> Responses arrive out of order; an older query can resolve last and overwrite the newer one. Fix with an <code>AbortController</code> (cancel superseded requests) or a cache keyed by query.</li>
           <li><strong>Cache by query.</strong> Re-typing a recent query should hit the cache, not the network. <code>queryKey</code> handles this.</li>
-          <li><strong>Model four states.</strong> Loading, error, empty (&quot;no results for <em>x</em>&quot;), and data — each with distinct UI.</li>
+          <li><strong>Model four states.</strong> Loading, error, empty (&quot;no results for <em>x</em>&quot;), and data, each with distinct UI.</li>
         </ul>
         <p className="mb-4">
           If you say &quot;debounce, abort superseded requests, cache by query, and model loading/error/empty/data
@@ -262,7 +262,7 @@ export default function SystemDesignFrontendModule() {
         <Callout variant="warn" title="Don't say 'I'd just use useEffect and fetch'">
           <p>
             It&apos;s the wrong default and the interviewer knows the failure modes. If you must hand-roll it, immediately
-            name the race condition and the cleanup fix in the same breath — that turns a weak answer into a strong one
+            name the race condition and the cleanup fix in the same breath, that turns a weak answer into a strong one
             by proving you know <em>why</em> the naive version is dangerous.
           </p>
         </Callout>
@@ -275,7 +275,7 @@ export default function SystemDesignFrontendModule() {
           question="In a typeahead design, where should the fetched results live?"
           options={[
             {
-              label: "In a server-cache tool (React Query/SWR) keyed by the query — they're a cache of server-owned data, not client state",
+              label: "In a server-cache tool (React Query/SWR) keyed by the query, they're a cache of server-owned data, not client state",
               correct: true,
               explanation:
                 "Correct. Results are a stale copy of what the server owns. Modeling them as a cache keyed by query gives you dedup, staleness, and race handling for free, and stops you reinventing it badly.",
@@ -284,13 +284,13 @@ export default function SystemDesignFrontendModule() {
               label: "In a global Redux store so any component can read them",
               correct: false,
               explanation:
-                "Reaching for Redux here is a red flag — the results are server cache, not genuinely-global client state. Naming the category correctly usually removes the need for a global store entirely.",
+                "Reaching for Redux here is a red flag, the results are server cache, not genuinely-global client state. Naming the category correctly usually removes the need for a global store entirely.",
             },
             {
               label: "In useState inside SearchBox, fetched via useEffect",
               correct: false,
               explanation:
-                "This is the wrong default — it leaves you hand-rolling caching, dedup, and the race condition. If you go this route you must name the race and its fix immediately.",
+                "This is the wrong default, it leaves you hand-rolling caching, dedup, and the race condition. If you go this route you must name the race and its fix immediately.",
             },
           ]}
         />
@@ -299,7 +299,7 @@ export default function SystemDesignFrontendModule() {
           question="Why draw arrows for data flow, not just component boxes?"
           options={[
             {
-              label: "Arrows show you understand React's one-way data flow — query down, events up, results back down",
+              label: "Arrows show you understand React's one-way data flow, query down, events up, results back down",
               correct: true,
               explanation:
                 "Right. Boxes are a wireframe; arrows are a design. They're where you demonstrate the one-way data flow that the whole React mental model rests on.",
@@ -308,7 +308,7 @@ export default function SystemDesignFrontendModule() {
               label: "Arrows are required by the interview rubric",
               correct: false,
               explanation:
-                "There's no rubric demanding arrows. They matter because they communicate data flow — the substance, not a formality.",
+                "There's no rubric demanding arrows. They matter because they communicate data flow, the substance, not a formality.",
             },
             {
               label: "Because two-way binding is the React default and arrows show both directions",
@@ -322,21 +322,21 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 7. STAGE 5: TRADEOFFS ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Stage 5 — perf, accessibility &amp; tradeoffs out loud</h2>
+        <h2 className="mb-4 text-2xl font-bold">Stage 5, perf, accessibility &amp; tradeoffs out loud</h2>
         <p className="mb-4">
-          The last stretch is where you separate yourself. Don&apos;t wait to be asked — proactively raise the corners a
+          The last stretch is where you separate yourself. Don&apos;t wait to be asked, proactively raise the corners a
           senior would care about, name the tradeoff, and pick a side with a reason.
         </p>
         <p className="mb-4"><strong>Performance:</strong></p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Virtualize</strong> the results list if it can be large — render only the visible window, not 5,000 DOM nodes.</li>
+          <li><strong>Virtualize</strong> the results list if it can be large, render only the visible window, not 5,000 DOM nodes.</li>
           <li><strong>Debounce</strong> input to cut request volume; consider canceling in-flight requests on the next keystroke.</li>
-          <li>Be wary of <strong>premature memoization</strong> — measure first; <code>useMemo</code> everywhere is a smell, not a strategy.</li>
+          <li>Be wary of <strong>premature memoization</strong>, measure first; <code>useMemo</code> everywhere is a smell, not a strategy.</li>
         </ul>
         <p className="mb-4"><strong>Accessibility</strong> (a senior raises this unprompted):</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>The combobox pattern: <code>role=&quot;combobox&quot;</code>, <code>aria-expanded</code>, <code>aria-activedescendant</code> for the highlighted option.</li>
-          <li>Full keyboard operability — arrow keys move the highlight, Enter selects, Escape closes.</li>
+          <li>Full keyboard operability, arrow keys move the highlight, Enter selects, Escape closes.</li>
           <li><code>aria-live</code> to announce result counts (&quot;12 results&quot;) to screen-reader users.</li>
         </ul>
         <p className="mb-4">
@@ -348,7 +348,7 @@ export default function SystemDesignFrontendModule() {
           <p>
             &quot;There&apos;s a tradeoff here.&quot; Say it constantly. Debounce time trades latency for request volume. Virtualization
             trades implementation complexity for memory. Caching trades freshness for speed. Every time you name a
-            tradeoff and pick a side <em>with a reason</em>, you sound like someone who&apos;s shipped real software — because
+            tradeoff and pick a side <em>with a reason</em>, you sound like someone who&apos;s shipped real software, because
             you have.
           </p>
         </Callout>
@@ -359,9 +359,9 @@ export default function SystemDesignFrontendModule() {
         <h2 className="mb-4 text-2xl font-bold">The 60-second answer (memorize this)</h2>
         <Callout variant="insight" title="If someone asks 'how do you approach a front-end design interview?'">
           <ul className="list-disc space-y-2 pl-6">
-            <li><strong>Clarify first.</strong> Turn the vague prompt into a scoped problem — ask about functional scope, data size, freshness, scale, and a11y, then state my assumptions out loud.</li>
-            <li><strong>Structure.</strong> Draw a component tree and the data-flow arrows — props down, events up.</li>
-            <li><strong>State location.</strong> Run each piece down the tree: server data is a cache, shareable state goes in the URL, the rest is local — lifted no higher than the closest common ancestor.</li>
+            <li><strong>Clarify first.</strong> Turn the vague prompt into a scoped problem, ask about functional scope, data size, freshness, scale, and a11y, then state my assumptions out loud.</li>
+            <li><strong>Structure.</strong> Draw a component tree and the data-flow arrows, props down, events up.</li>
+            <li><strong>State location.</strong> Run each piece down the tree: server data is a cache, shareable state goes in the URL, the rest is local, lifted no higher than the closest common ancestor.</li>
             <li><strong>Fetching.</strong> Debounce, abort superseded requests, cache by key, and model loading/error/empty/data explicitly.</li>
             <li><strong>Tradeoffs.</strong> Virtualization, accessibility (combobox + keyboard + <code>aria-live</code>), and &quot;here&apos;s what I&apos;d measure before optimizing.&quot;</li>
           </ul>
@@ -370,10 +370,10 @@ export default function SystemDesignFrontendModule() {
 
       {/* ───────────────────────── 9. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — run a full mock end to end</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, run a full mock end to end</h2>
         <p className="mb-4">
           Design a <strong>typeahead-search-with-results-feed</strong> front end on paper, narrating the tradeoffs as you
-          go. The goal isn&apos;t a perfect diagram — it&apos;s rehearsing the <em>process</em> until it&apos;s automatic under pressure.
+          go. The goal isn&apos;t a perfect diagram, it&apos;s rehearsing the <em>process</em> until it&apos;s automatic under pressure.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
@@ -385,7 +385,7 @@ export default function SystemDesignFrontendModule() {
             then add the data-flow arrows. Say out loud which component owns the query and why.
           </li>
           <li>
-            <strong>Place every piece of state.</strong> Query, results, highlight index, recent searches — write where
+            <strong>Place every piece of state.</strong> Query, results, highlight index, recent searches, write where
             each lives and the one-line reason. Catch yourself if you call server cache &quot;state.&quot;
           </li>
           <li>
@@ -394,10 +394,10 @@ export default function SystemDesignFrontendModule() {
           </li>
           <li>
             <strong>Close on tradeoffs.</strong> Virtualization, the combobox a11y pattern, and one &quot;what I&apos;d measure
-            before optimizing&quot; line. Time yourself — the whole walkthrough should fit in 20–30 minutes.
+            before optimizing&quot; line. Time yourself, the whole walkthrough should fit in 20–30 minutes.
           </li>
           <li>
-            <strong>Stretch — change a requirement.</strong> Have a friend say &quot;now results update in real time.&quot; Redesign
+            <strong>Stretch, change a requirement.</strong> Have a friend say &quot;now results update in real time.&quot; Redesign
             the fetching layer (websocket/polling, cache invalidation) on the fly. Adapting gracefully to a thrown
             curveball is the most senior signal of all.
           </li>
@@ -421,7 +421,7 @@ export default function SystemDesignFrontendModule() {
               label: "Virtualize the list (render only the visible window); the trap is memoizing everything prematurely instead of measuring first",
               correct: true,
               explanation:
-                "Correct. Windowing keeps the DOM small regardless of list size. And the senior instinct is measure-before-optimize — sprinkling useMemo everywhere is a smell, not a strategy.",
+                "Correct. Windowing keeps the DOM small regardless of list size. And the senior instinct is measure-before-optimize, sprinkling useMemo everywhere is a smell, not a strategy.",
             },
             {
               label: "Memoize every component with React.memo to prevent all re-renders",
@@ -445,19 +445,19 @@ export default function SystemDesignFrontendModule() {
               label: "The combobox pattern: role=combobox, aria-expanded, aria-activedescendant for the highlight, full keyboard nav, and aria-live for result counts",
               correct: true,
               explanation:
-                "Yes — raising this unprompted is a strong seniority signal. The combobox roles plus keyboard operability and a live region for counts is what a screen-reader user actually needs.",
+                "Yes, raising this unprompted is a strong seniority signal. The combobox roles plus keyboard operability and a live region for counts is what a screen-reader user actually needs.",
             },
             {
               label: "Add tabindex to every suggestion so users can Tab through them",
               correct: false,
               explanation:
-                "Tabbing through every option is the wrong interaction model for a combobox — the input keeps focus and aria-activedescendant points at the highlighted option as arrow keys move it.",
+                "Tabbing through every option is the wrong interaction model for a combobox, the input keeps focus and aria-activedescendant points at the highlighted option as arrow keys move it.",
             },
             {
               label: "Accessibility isn't relevant to a design interview; skip it",
               correct: false,
               explanation:
-                "The opposite — proactively raising a11y is one of the clearest senior signals. Skipping it reads as not knowing it matters.",
+                "The opposite, proactively raising a11y is one of the clearest senior signals. Skipping it reads as not knowing it matters.",
             },
           ]}
         />

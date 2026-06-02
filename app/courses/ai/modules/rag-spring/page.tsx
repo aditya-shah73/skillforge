@@ -54,11 +54,11 @@ export default function RagSpringModule() {
           that ingests Markdown docs, indexes them in pgvector, and answers user questions with citations.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li>Spring AI&apos;s RAG primitives — <code>VectorStore</code>, <code>Document</code>, <code>DocumentReader</code>, <code>DocumentTransformer</code>, <code>DocumentWriter</code></li>
+          <li>Spring AI&apos;s RAG primitives, <code>VectorStore</code>, <code>Document</code>, <code>DocumentReader</code>, <code>DocumentTransformer</code>, <code>DocumentWriter</code></li>
           <li>A real ingestion pipeline you can extend: read → chunk → enrich → embed → store</li>
           <li>The two query patterns: hand-rolled retrieval + manual prompt, vs. <code>QuestionAnswerAdvisor</code></li>
           <li>How to wire citations through to the response so the UI can render them</li>
-          <li>A working &quot;chat with your docs&quot; service — and a sketch of how to deploy it</li>
+          <li>A working &quot;chat with your docs&quot; service, and a sketch of how to deploy it</li>
         </ul>
       </section>
 
@@ -66,13 +66,13 @@ export default function RagSpringModule() {
       {/* PART 1: SPRING AI'S RAG PRIMITIVES                                  */}
       {/* ================================================================= */}
       <section id="spring-ai-rag">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Spring AI&apos;s RAG primitives</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, Spring AI&apos;s RAG primitives</h2>
 
         <p>
           Spring AI ships a small set of RAG building blocks. The three that matter most:
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Document — the unit of currency</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Document, the unit of currency</h3>
 
         <p>
           Spring AI&apos;s <code>Document</code> is a record of <code>(id, text, metadata)</code>. Both
@@ -97,11 +97,11 @@ Document doc = new Document(
           your retriever returns chunks, the metadata is right there for citations.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">VectorStore — one interface, many backends</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">VectorStore, one interface, many backends</h3>
 
         <p>
           <code>VectorStore</code> abstracts away &quot;which vector DB&quot;. The same code works against
-          pgvector, Pinecone, Redis, Mongo Atlas, Weaviate, Chroma, Qdrant — change the starter, change a
+          pgvector, Pinecone, Redis, Mongo Atlas, Weaviate, Chroma, Qdrant, change the starter, change a
           config block, no application code changes.
         </p>
 
@@ -133,29 +133,29 @@ public class DocsService {
           <p className="m-0 text-sm">
             <code>VectorStore</code> is great for the 80% case. For hybrid (BM25 + vector) retrieval, custom
             SQL with joins, or anything that needs an exotic <code>EXPLAIN ANALYZE</code>-driven query plan,
-            you&apos;ll drop to <code>JdbcTemplate</code> like we did in Module 16. The two coexist fine — use
+            you&apos;ll drop to <code>JdbcTemplate</code> like we did in Module 16. The two coexist fine, use
             VectorStore by default, JDBC for the long tail.
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">DocumentReader / Transformer / Writer — the ingestion shape</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">DocumentReader / Transformer / Writer, the ingestion shape</h3>
 
         <p>Spring AI organizes ingestion into three roles:</p>
 
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong><code>DocumentReader</code></strong> — produces <code>List&lt;Document&gt;</code> from a
+            <strong><code>DocumentReader</code></strong>, produces <code>List&lt;Document&gt;</code> from a
             source. Built-ins: <code>TikaDocumentReader</code> (PDF, DOCX, etc.), <code>JsonReader</code>,
             <code> TextReader</code>. Roll your own for Confluence APIs, GitHub READMEs, S3 buckets.
           </li>
           <li>
-            <strong><code>DocumentTransformer</code></strong> — takes documents in, returns documents out.
+            <strong><code>DocumentTransformer</code></strong>, takes documents in, returns documents out.
             This is where chunking lives (<code>TokenTextSplitter</code>), and where you bolt on metadata
             enrichment (<code>KeywordMetadataEnricher</code>, <code>SummaryMetadataEnricher</code>) or your
             own contextual-prefix transformer.
           </li>
           <li>
-            <strong><code>DocumentWriter</code></strong> — sinks documents. <code>VectorStore</code>
+            <strong><code>DocumentWriter</code></strong>, sinks documents. <code>VectorStore</code>
             implements <code>DocumentWriter</code> directly. You can also chain a logging writer, a
             duplicate-detection writer, etc.
           </li>
@@ -169,10 +169,10 @@ public class DocsService {
     .map(enricher::transform)      // metadata added
     .forEach(store::add);          // embedded + persisted`}</CodeBlock>
 
-        <Callout variant="warn" title="Spring AI vs. roll-your-own — when to use which">
+        <Callout variant="warn" title="Spring AI vs. roll-your-own, when to use which">
           <p className="m-0 text-sm">
             Spring AI&apos;s <code>VectorStore</code> auto-creates a <code>vector_store</code> table with a
-            specific schema. For prototypes that&apos;s wonderful — three lines and you have RAG. For
+            specific schema. For prototypes that&apos;s wonderful, three lines and you have RAG. For
             production where you want to evolve the schema, join with business tables, or add hybrid
             retrieval, you should own the schema yourself (Flyway), use <code>VectorStore</code> for the
             common-case writes, and drop to JDBC for the queries that need it.
@@ -183,10 +183,10 @@ public class DocsService {
           kind="Pulse check"
           question="You have a Spring Boot app with pgvector working via VectorStore. The PM asks for hybrid retrieval (BM25 + vector). What's the most pragmatic path?"
           options={[
-            { label: "Switch to a different vector DB that supports hybrid natively", explanation: "Postgres already supports hybrid natively — ts_vector for BM25 + pgvector for cosine. No migration needed." },
-            { label: "Keep VectorStore for writes, drop to JdbcTemplate for the hybrid query: ts_vector @@ tsquery + embedding <=> ? in one SQL, fused with RRF in app code", correct: true, explanation: "VectorStore handles ingestion fine. The hybrid query is genuinely complex SQL — it's normal and right to write it directly. The two coexist; you don't have to pick one." },
+            { label: "Switch to a different vector DB that supports hybrid natively", explanation: "Postgres already supports hybrid natively, ts_vector for BM25 + pgvector for cosine. No migration needed." },
+            { label: "Keep VectorStore for writes, drop to JdbcTemplate for the hybrid query: ts_vector @@ tsquery + embedding <=> ? in one SQL, fused with RRF in app code", correct: true, explanation: "VectorStore handles ingestion fine. The hybrid query is genuinely complex SQL, it's normal and right to write it directly. The two coexist; you don't have to pick one." },
             { label: "Wait for Spring AI to add a HybridVectorStore interface", explanation: "Don't block on a framework feature when you can solve it in 30 lines today." },
-            { label: "Embed the BM25 results too and re-rank by cosine", explanation: "Doesn't make architectural sense — the whole point of BM25 is it doesn't depend on embeddings." },
+            { label: "Embed the BM25 results too and re-rank by cosine", explanation: "Doesn't make architectural sense, the whole point of BM25 is it doesn't depend on embeddings." },
           ]}
           xp={15}
         />
@@ -195,7 +195,7 @@ public class DocsService {
           title="Part 1 recap"
           gist="Spring AI's RAG primitives are small and composable: Document, VectorStore, and a Reader/Transformer/Writer triple for ingestion. Use them by default; drop to JDBC for the long tail."
           points={[
-            { takeaway: "Document = (id, text, metadata) — metadata travels with the chunk through every stage.", detail: "That's how you get from retrieval to citations: the source/section/page metadata is right there in the retrieved Documents." },
+            { takeaway: "Document = (id, text, metadata), metadata travels with the chunk through every stage.", detail: "That's how you get from retrieval to citations: the source/section/page metadata is right there in the retrieved Documents." },
             { takeaway: "VectorStore is a one-interface, many-backends abstraction.", detail: "Switching pgvector → Pinecone → Redis vector is a starter swap and a config change, not a rewrite. Pick pgvector for most Spring teams; the abstraction earns its keep when needs change." },
             { takeaway: "Ingestion = Reader → Transformer → Writer, freely composable.", detail: "The shape lets you slot in custom chunkers, metadata enrichers, and contextual-prefix steps without rewriting the pipeline." },
           ]}
@@ -214,7 +214,7 @@ public class DocsService {
       {/* PART 2: THE INGESTION PIPELINE                                      */}
       {/* ================================================================= */}
       <section id="ingestion">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The ingestion pipeline</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, The ingestion pipeline</h2>
 
         <p>
           Time to write code. We&apos;re going to build the indexing path: read a folder of Markdown files,
@@ -231,9 +231,9 @@ public class DocsService {
           <li>Spring Data JDBC</li>
           <li>PostgreSQL Driver</li>
           <li>Flyway Migration</li>
-          <li>OpenAI (Spring AI) — chat + embedding</li>
+          <li>OpenAI (Spring AI), chat + embedding</li>
           <li>PGvector Vector Database (Spring AI)</li>
-          <li>Tika Document Reader (Spring AI) — for the stretch goal of ingesting PDFs</li>
+          <li>Tika Document Reader (Spring AI), for the stretch goal of ingesting PDFs</li>
         </ul>
 
         <p>Spin up Postgres with the pgvector extension in Docker:</p>
@@ -426,7 +426,7 @@ public class ContextualPrefixEnricher implements DocumentTransformer {
         <Callout variant="info" title="Cheap model, big leverage">
           <p className="m-0 text-sm">
             Use the cheapest chat model your provider offers for the contextual-prefix call. Haiku-class on
-            Anthropic, gpt-4o-mini on OpenAI. The call quality matters less than the structure — &quot;name
+            Anthropic, gpt-4o-mini on OpenAI. The call quality matters less than the structure, &quot;name
             the section and topic&quot; is easy. Cost on a 1k-chunk corpus is single-digit dollars, paid once.
           </p>
         </Callout>
@@ -500,9 +500,9 @@ public class IngestionConfig {
           kind="Pulse check"
           question="Where in the ingestion pipeline does the contextual-prefix enricher belong?"
           options={[
-            { label: "Before chunking — so the whole doc gets the prefix", explanation: "Wrong granularity. The prefix is supposed to situate each *chunk* in the doc — applied to the whole doc, it's just a no-op summary." },
-            { label: "After chunking but before embedding (which happens inside store.add)", correct: true, explanation: "Right. You need chunks first (so each chunk's context is unique). You apply the prefix as a transformer between splitter and writer. The chunk text — including the prefix — is what the embedding model sees and what gets stored." },
-            { label: "After embedding, as a metadata enrichment", explanation: "Too late. The embedder already built a vector from the unprefixed text — the prefix wouldn't change retrieval at all." },
+            { label: "Before chunking, so the whole doc gets the prefix", explanation: "Wrong granularity. The prefix is supposed to situate each *chunk* in the doc, applied to the whole doc, it's just a no-op summary." },
+            { label: "After chunking but before embedding (which happens inside store.add)", correct: true, explanation: "Right. You need chunks first (so each chunk's context is unique). You apply the prefix as a transformer between splitter and writer. The chunk text, including the prefix, is what the embedding model sees and what gets stored." },
+            { label: "After embedding, as a metadata enrichment", explanation: "Too late. The embedder already built a vector from the unprefixed text, the prefix wouldn't change retrieval at all." },
             { label: "At query time, when retrieving", explanation: "Wrong stage entirely. Contextual prefixes are an indexing-time technique." },
           ]}
           xp={15}
@@ -512,7 +512,7 @@ public class IngestionConfig {
           title="Part 2 recap"
           gist="The ingestion pipeline is a Reader → Splitter → Enricher → VectorStore composition. Each stage is a small, testable Spring component."
           points={[
-            { takeaway: "Document metadata is the spine of the pipeline.", detail: "Source path, section, doc_id flow from the reader through every transformer to retrieval — that's how citations work later." },
+            { takeaway: "Document metadata is the spine of the pipeline.", detail: "Source path, section, doc_id flow from the reader through every transformer to retrieval, that's how citations work later." },
             { takeaway: "Contextual prefixes are a transformer between splitter and writer.", detail: "Cheap model, called once per chunk at indexing. The prefix becomes part of the embedded text, so it improves retrieval geometry without any query-time cost." },
             { takeaway: "Idempotency is your job, not Spring AI's.", detail: "store.add doesn't dedupe. For real use you need either a delete-before-add by filter expression, or a chunk-hash comparison. Build it before your second ingest runs." },
           ]}
@@ -530,11 +530,11 @@ public class IngestionConfig {
       {/* PART 3: QUERY PATH WITH CITATIONS                                   */}
       {/* ================================================================= */}
       <section id="query">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Query path with citations</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Query path with citations</h2>
 
         <p>
           You can index. Now you need to answer questions. We&apos;ll build the query path the explicit way
-          first — retrieve, format, prompt, parse — so you understand what&apos;s happening. Part 4 swaps
+          first, retrieve, format, prompt, parse, so you understand what&apos;s happening. Part 4 swaps
           the explicit version for Spring AI&apos;s <code>QuestionAnswerAdvisor</code>.
         </p>
 
@@ -707,7 +707,7 @@ public class QaController {
           <p className="m-0 text-sm">
             If you&apos;re calling Claude directly (not OpenAI), use the native <code>citations</code> feature
             instead of regex-parsing <code>[1]</code> markers. The model returns structured citation objects
-            tied to character ranges of input documents — no parsing, no false matches. Spring AI will route
+            tied to character ranges of input documents, no parsing, no false matches. Spring AI will route
             this through model-specific options once you&apos;re on the Anthropic starter.
           </p>
         </Callout>
@@ -716,8 +716,8 @@ public class QaController {
           kind="Pulse check"
           question="In the AnswerService, the retrieved chunks are formatted as [1], [2], [3] with source/section metadata. Why is this better than concatenating raw chunk text with a blank line between them?"
           options={[
-            { label: "It saves tokens", explanation: "It actually uses MORE tokens — but earns them back in answer quality and citation utility." },
-            { label: "Numbered + sourced chunks let the model cite, the user verify, and the UI render real links — and they reduce hallucination because the model knows exactly which slot each fact came from", correct: true, explanation: "Three things at once: citation produces auditable answers, source metadata becomes UI-ready provenance, and the structure itself nudges the model to ground its claims. Naked-text concatenation throws all of that away." },
+            { label: "It saves tokens", explanation: "It actually uses MORE tokens, but earns them back in answer quality and citation utility." },
+            { label: "Numbered + sourced chunks let the model cite, the user verify, and the UI render real links, and they reduce hallucination because the model knows exactly which slot each fact came from", correct: true, explanation: "Three things at once: citation produces auditable answers, source metadata becomes UI-ready provenance, and the structure itself nudges the model to ground its claims. Naked-text concatenation throws all of that away." },
             { label: "It avoids lost-in-the-middle", explanation: "Lost-in-the-middle is about position in the context, not about formatting." },
             { label: "It bypasses the prompt cache", explanation: "Doesn't relate to caching." },
           ]}
@@ -729,7 +729,7 @@ public class QaController {
           gist="The query path is retrieve → format-with-citations → call → return answer + sources. Doing it explicitly first builds intuition for what QuestionAnswerAdvisor will hide."
           points={[
             { takeaway: "Format chunks as numbered, sourced blocks before sending them to the model.", detail: "[1] (source: ..., section: ...) <chunk text>. Three benefits: model can cite, user can verify, UI can render real links to the source. Naked-text concatenation throws all of that away." },
-            { takeaway: "Return both the answer and a sources list to the caller.", detail: "The frontend needs the sources list to render a 'Sources' panel below the answer. Don't make the UI parse [N] markers out of text — return them structured." },
+            { takeaway: "Return both the answer and a sources list to the caller.", detail: "The frontend needs the sources list to render a 'Sources' panel below the answer. Don't make the UI parse [N] markers out of text, return them structured." },
             { takeaway: "Citation verification is cheap and catches a class of hallucinations.", detail: "Confirm cited indices exist; for paranoid use cases, confirm content overlap between cited chunk and the surrounding sentence in the answer. A 30-line post-check, free at query time." },
           ]}
         />
@@ -746,7 +746,7 @@ public class QaController {
       {/* PART 4: QUESTIONANSWERADVISOR IN PRACTICE                           */}
       {/* ================================================================= */}
       <section id="advisor">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — QuestionAnswerAdvisor in practice</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, QuestionAnswerAdvisor in practice</h2>
 
         <p>
           Spring AI ships a built-in advisor that hides most of Part 3&apos;s plumbing. The catch: by hiding
@@ -794,7 +794,7 @@ public class AdvisorAnswerService {
           The advisor is opinionated. The default prompt template is fine but generic. If you want to
           customize how chunks are formatted, you supply a custom <code>promptTemplate</code> when building
           the advisor. If you want structured sources back to the caller (not just text), you have to
-          extract them from the response&apos;s metadata — they&apos;re there but you have to dig.
+          extract them from the response&apos;s metadata, they&apos;re there but you have to dig.
         </p>
 
         <CodeBlock lang="java">{`// Advisor returns retrieved Documents in the response context — extract them
@@ -830,12 +830,12 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-2 font-semibold">Reranking, hybrid retrieval, MMR</td>
-                <td className="p-2">Not built in — wrap with a custom advisor or pre-retrieve</td>
+                <td className="p-2">Not built in, wrap with a custom advisor or pre-retrieve</td>
                 <td className="p-2">You add it where you want</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-2 font-semibold">Conversation memory + RAG combined</td>
-                <td className="p-2">Combine with MessageChatMemoryAdvisor — Spring AI handles ordering</td>
+                <td className="p-2">Combine with MessageChatMemoryAdvisor, Spring AI handles ordering</td>
                 <td className="p-2">You wire it yourself</td>
               </tr>
               <tr>
@@ -862,8 +862,8 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           options={[
             { label: "Replace QuestionAnswerAdvisor with a hand-rolled retriever + answer service", explanation: "Works but is more work than needed." },
             { label: "Pull the retrieved Documents out of response.getMetadata().get(QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS), shape them into a Sources DTO, return alongside the answer", correct: true, explanation: "The advisor exposes the retrieved Documents in response metadata for exactly this reason. Read them, shape them into a Sources record (source, section, docId, snippet), and return both answer and sources from your service. ~10 lines added." },
-            { label: "Parse [N] citation markers out of the answer text", explanation: "Brittle and incomplete — only catches what the model chose to cite, not what the retriever returned." },
-            { label: "Wait for QuestionAnswerAdvisor to add a sources API", explanation: "It already has one — through response metadata." },
+            { label: "Parse [N] citation markers out of the answer text", explanation: "Brittle and incomplete, only catches what the model chose to cite, not what the retriever returned." },
+            { label: "Wait for QuestionAnswerAdvisor to add a sources API", explanation: "It already has one, through response metadata." },
           ]}
           xp={15}
         />
@@ -872,7 +872,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           title="Part 4 recap"
           gist="QuestionAnswerAdvisor is the 10-line ChatClient-friendly version of Part 3's pipeline. Use it for the common case; drop to explicit code when defaults aren't enough."
           points={[
-            { takeaway: "Advisor: 10 lines, works, hides plumbing. Hand-rolled: 80 lines, full control.", detail: "Pick by what you actually need. Most teams should start with the advisor and swap out only the parts that hurt — not rebuild the whole pipeline." },
+            { takeaway: "Advisor: 10 lines, works, hides plumbing. Hand-rolled: 80 lines, full control.", detail: "Pick by what you actually need. Most teams should start with the advisor and swap out only the parts that hurt, not rebuild the whole pipeline." },
             { takeaway: "Retrieved Documents come back through response metadata.", detail: "QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS holds the chunks the retriever returned. That's how you wire a Sources panel without reverting to the explicit version." },
             { takeaway: "Combine with MessageChatMemoryAdvisor for chat-with-docs.", detail: "Register both on the same ChatClient builder. Spring AI orders them sensibly: memory shapes the prompt, the current turn drives retrieval. Don't roll your own composition." },
           ]}
@@ -891,7 +891,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
       {/* PART 5: PROJECT — CHAT WITH YOUR DOCS                               */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: chat with your docs</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: chat with your docs</h2>
 
         <p>
           Time to ship a real thing. You&apos;re going to combine everything from Modules 14–17 into a
@@ -907,7 +907,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1 — Pick your corpus</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1, Pick your corpus</h3>
 
         <p>
           Pick a real Markdown corpus you can host locally. Some good choices:
@@ -925,7 +925,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
           ingestion takes longer than you have patience for during this lab.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2 — Ingest with the pipeline from Part 2</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2, Ingest with the pipeline from Part 2</h3>
 
         <CodeBlock lang="plain">{`./mvnw spring-boot:run -Dspring-boot.run.arguments="--ingest,/path/to/your/docs"`}</CodeBlock>
 
@@ -938,7 +938,7 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
 
 # Expected: a few hundred to a few thousand rows; avg content length ~500–2000 chars`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3 — Decide: advisor vs hand-rolled</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3, Decide: advisor vs hand-rolled</h3>
 
         <p>For this project, use the <strong>hand-rolled service from Part 3</strong>. Reasons:</p>
 
@@ -951,11 +951,11 @@ List<Document> retrievedDocs = (List<Document>) response.getMetadata()
 
         <p>
           Add the citation-verification check from Part 3 to <code>AnswerService.answer</code>. If
-          citations don&apos;t look sane, log a warning (don&apos;t fail the request — the answer is still
+          citations don&apos;t look sane, log a warning (don&apos;t fail the request, the answer is still
           probably useful).
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4 — A minimal frontend</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4, A minimal frontend</h3>
 
         <p>
           Drop a single static <code>src/main/resources/static/index.html</code>. Plain HTML + a tiny JS
@@ -1016,7 +1016,7 @@ q.addEventListener('keydown', async (e) => {
 
         <p>Open <code>http://localhost:8080</code>, ask a question, watch the magic.</p>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5 — Make it good</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5, Make it good</h3>
 
         <p>This is where the lab earns its keep. Run through these checks:</p>
 
@@ -1044,7 +1044,7 @@ q.addEventListener('keydown', async (e) => {
 
         <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>Add streaming (Module 12) so answers appear token-by-token while the sources panel renders immediately on retrieval.</li>
-          <li>Add prompt caching (Module 13) on the system prompt — cuts per-turn cost noticeably.</li>
+          <li>Add prompt caching (Module 13) on the system prompt, cuts per-turn cost noticeably.</li>
           <li>Add idempotent re-ingestion: compute a chunk hash, skip already-stored chunks, delete stale ones from a previous version of the doc.</li>
           <li>Add hybrid retrieval: Postgres ts_vector for BM25, fused with vector via RRF (Module 17 Part 3).</li>
           <li>Add an &quot;ask follow-up&quot; flow that combines QuestionAnswerAdvisor + MessageChatMemoryAdvisor.</li>
@@ -1063,16 +1063,16 @@ q.addEventListener('keydown', async (e) => {
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Final quiz</h2>
 
         <Quiz
           kind="Final check"
           question="A teammate proposes putting the contextual-prefix step BEFORE chunking, so 'each chunk inherits the prefix'. What's wrong with that?"
           options={[
-            { label: "Nothing — it would work the same", explanation: "It would NOT work the same. The prefix's value is being chunk-specific." },
-            { label: "Prefixes need to situate each chunk individually — a single doc-level prefix doesn't differentiate chunks from each other, defeating the point", correct: true, explanation: "The whole reason contextual prefixes work is they tell the embedder where THIS specific chunk lives in the doc — section, topic, role. A doc-level prefix duplicated across all chunks adds noise without adding signal. Apply the prefix per chunk, after chunking." },
+            { label: "Nothing, it would work the same", explanation: "It would NOT work the same. The prefix's value is being chunk-specific." },
+            { label: "Prefixes need to situate each chunk individually, a single doc-level prefix doesn't differentiate chunks from each other, defeating the point", correct: true, explanation: "The whole reason contextual prefixes work is they tell the embedder where THIS specific chunk lives in the doc, section, topic, role. A doc-level prefix duplicated across all chunks adds noise without adding signal. Apply the prefix per chunk, after chunking." },
             { label: "It would be too expensive", explanation: "It would actually be cheaper (one LLM call instead of N), but cheaper-and-useless beats expensive-and-effective only when both work. Here, cheaper doesn't work." },
-            { label: "Spring AI's API doesn't allow it", explanation: "It does — DocumentTransformers can run in any order. The constraint is conceptual, not API." },
+            { label: "Spring AI's API doesn't allow it", explanation: "It does, DocumentTransformers can run in any order. The constraint is conceptual, not API." },
           ]}
           xp={15}
         />
@@ -1083,7 +1083,7 @@ q.addEventListener('keydown', async (e) => {
           options={[
             { label: "Hand-rolled retrieve + format + parse [N] markers from the answer text", explanation: "Works but more code than needed, and parsing markers is brittle." },
             { label: "QuestionAnswerAdvisor + read the retrieved Documents from response metadata at QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS", correct: true, explanation: "The advisor handles retrieval and prompt assembly; you read the structured Documents back from response metadata for the Sources DTO. Combined: ~15 lines, no marker parsing, full source metadata." },
-            { label: "QuestionAnswerAdvisor alone — it returns sources directly", explanation: "It returns answer text. Sources come through response metadata, not the response body." },
+            { label: "QuestionAnswerAdvisor alone, it returns sources directly", explanation: "It returns answer text. Sources come through response metadata, not the response body." },
             { label: "Build a custom Advisor from scratch", explanation: "Fine if you have specific needs, but overkill when the default advisor already exposes what you need." },
           ]}
           xp={15}
@@ -1093,8 +1093,8 @@ q.addEventListener('keydown', async (e) => {
           kind="Final check"
           question="Your RAG service answers correctly when you ask 'how do I configure X?' but fails on 'what does error E_4422 mean?' even though E_4422 is in the docs. What's the architectural fix?"
           options={[
-            { label: "Tune VectorStore search — increase topK and lower similarityThreshold", explanation: "Recall isn't the issue — the relevant chunk doesn't *rank* well by cosine similarity for an identifier query, so it won't make top-k regardless." },
-            { label: "Drop to JdbcTemplate, run BM25 (ts_vector) and vector search in parallel, fuse with Reciprocal Rank Fusion", correct: true, explanation: "Identifier-style queries (error codes, model numbers) are exactly where BM25 beats cosine similarity. VectorStore alone won't solve it; you have to add a lexical retrieval path. Postgres lets you do both in one DB — that's why pgvector beats Pinecone for this case." },
+            { label: "Tune VectorStore search, increase topK and lower similarityThreshold", explanation: "Recall isn't the issue, the relevant chunk doesn't *rank* well by cosine similarity for an identifier query, so it won't make top-k regardless." },
+            { label: "Drop to JdbcTemplate, run BM25 (ts_vector) and vector search in parallel, fuse with Reciprocal Rank Fusion", correct: true, explanation: "Identifier-style queries (error codes, model numbers) are exactly where BM25 beats cosine similarity. VectorStore alone won't solve it; you have to add a lexical retrieval path. Postgres lets you do both in one DB, that's why pgvector beats Pinecone for this case." },
             { label: "Switch embedding models to text-embedding-3-large", explanation: "Bigger embedders are still doing semantic similarity. They don't suddenly start preferring exact-token matches." },
             { label: "Add a reranker", explanation: "Rerankers reorder the top-k. If the relevant chunk isn't IN the top-k from vector search, the reranker never sees it." },
           ]}
@@ -1107,7 +1107,7 @@ q.addEventListener('keydown', async (e) => {
           options={[
             { label: "Drop the vector_store table before each ingest in dev", explanation: "Works in dev, but you can't do this in prod." },
             { label: "Compute a stable chunk_hash per chunk, store it as metadata, skip insert when the hash already exists; or version doc_id and store.delete(filterExpression) old versions before adding new ones", correct: true, explanation: "Two clean options. Hash-based dedupe avoids re-embedding unchanged chunks (saves API cost too). Versioned doc_id with delete-by-filter handles cleanup of stale chunks from edited docs. Most production pipelines do both: hash-based skip on insert, version+delete for full doc replacements." },
-            { label: "Restart the JVM to clear the cache", explanation: "There's no in-memory cache here — pgvector persists, and that's the source of the duplicates." },
+            { label: "Restart the JVM to clear the cache", explanation: "There's no in-memory cache here, pgvector persists, and that's the source of the duplicates." },
             { label: "Use store.update instead of store.add", explanation: "VectorStore.add does upsert by ID, but the Document IDs are auto-generated each ingestion run, so it can't dedupe by content unless you control the IDs yourself." },
           ]}
           xp={15}
@@ -1117,17 +1117,17 @@ q.addEventListener('keydown', async (e) => {
           kind="Final check"
           question="You're combining QuestionAnswerAdvisor with chat memory for a multi-turn UX. Which pairing is right?"
           options={[
-            { label: "QuestionAnswerAdvisor only — it handles memory automatically", explanation: "It doesn't. RAG and memory are orthogonal concerns — separate advisors for each." },
-            { label: "QuestionAnswerAdvisor + MessageChatMemoryAdvisor on the same ChatClient builder; Spring AI orders them so memory shapes the prompt and the current turn drives retrieval", correct: true, explanation: "The two advisors compose cleanly. Memory advisor adds prior turns to the prompt; QA advisor retrieves docs based on the latest user turn and stuffs them in as context. You don't have to wire the order yourself — Spring AI knows." },
-            { label: "Roll your own — combining advisors is too fragile", explanation: "Composition is exactly what advisors are designed for. Use them." },
-            { label: "Use a single advisor that does both", explanation: "There isn't one in stock Spring AI, and you wouldn't want one — orthogonal concerns deserve orthogonal advisors." },
+            { label: "QuestionAnswerAdvisor only, it handles memory automatically", explanation: "It doesn't. RAG and memory are orthogonal concerns, separate advisors for each." },
+            { label: "QuestionAnswerAdvisor + MessageChatMemoryAdvisor on the same ChatClient builder; Spring AI orders them so memory shapes the prompt and the current turn drives retrieval", correct: true, explanation: "The two advisors compose cleanly. Memory advisor adds prior turns to the prompt; QA advisor retrieves docs based on the latest user turn and stuffs them in as context. You don't have to wire the order yourself, Spring AI knows." },
+            { label: "Roll your own, combining advisors is too fragile", explanation: "Composition is exactly what advisors are designed for. Use them." },
+            { label: "Use a single advisor that does both", explanation: "There isn't one in stock Spring AI, and you wouldn't want one, orthogonal concerns deserve orthogonal advisors." },
           ]}
           xp={15}
         />
 
         <Checkpoint moduleSlug="rag-spring" id="final" title="Final quiz" xp={50} celebration="Phase 3 complete. You can build production-shaped RAG end to end. Phase 4 is where the frontend grows up.">
           <p>
-            With this module under your belt — and with the entire phase under your belt — you can scope,
+            With this module under your belt, and with the entire phase under your belt, you can scope,
             design, build, debug, and ship a Spring Boot RAG service. That puts you ahead of most teams
             shipping AI features today. Phase 4 turns to the frontend: streaming, chat UIs, multimodal
             inputs.

@@ -53,7 +53,7 @@ flowchart LR
           Phase 2 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Arrays, strings, linked lists, stacks, queues — every linear-structure pattern compressed to a reference card you can re-read in 15 minutes before an interview.
+          Arrays, strings, linked lists, stacks, queues, every linear-structure pattern compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-2-revision" />
         <ModuleProgress moduleSlug="phase-2-revision" checkpoints={CHECKPOINTS} />
@@ -62,7 +62,7 @@ flowchart LR
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 2</strong> — every Big-O row, every named pattern, every gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
+          This module is not new material. It&apos;s a <strong>map of Phase 2</strong>, every Big-O row, every named pattern, every gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating:{" "}
@@ -80,7 +80,7 @@ flowchart LR
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Per-structure Big-O table</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          The numbers you defend in an interview. Note the asterisks — they&apos;re where amortized analysis hides.
+          The numbers you defend in an interview. Note the asterisks, they&apos;re where amortized analysis hides.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -110,7 +110,7 @@ flowchart LR
                 <td className="px-4 py-3 text-amber-600">O(n·m) indexOf</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)* append (SB)</td>
                 <td className="px-4 py-3 text-amber-600">O(n) deleteCharAt (SB)</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">String is immutable — every &quot;modify&quot; is an O(n) copy. Use StringBuilder.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">String is immutable, every &quot;modify&quot; is an O(n) copy. Use StringBuilder.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">LinkedList</td>
@@ -134,7 +134,7 @@ flowchart LR
                 <td className="px-4 py-3 text-amber-600">O(n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)* offer</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) poll</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Ring buffer — power-of-two capacity, head / tail indices, no shifting.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Ring buffer, power-of-two capacity, head / tail indices, no shifting.</td>
               </tr>
             </tbody>
           </table>
@@ -195,7 +195,7 @@ flowchart LR
             </ul>
             <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>You need a queue — use ArrayDeque</li>
+              <li>You need a queue, use ArrayDeque</li>
               <li>You need random access</li>
               <li>Memory or cache locality matters</li>
             </ul>
@@ -212,8 +212,8 @@ flowchart LR
             </ul>
             <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>You need to scan the middle — that&apos;s not what a stack is for</li>
-              <li>Never reach for <code>java.util.Stack</code> — legacy, synchronized</li>
+              <li>You need to scan the middle, that&apos;s not what a stack is for</li>
+              <li>Never reach for <code>java.util.Stack</code>, legacy, synchronized</li>
             </ul>
           </div>
 
@@ -228,8 +228,8 @@ flowchart LR
             </ul>
             <div className="mb-1 text-xs font-semibold text-slate-500">Avoid when</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>You need thread safety — use <code>ConcurrentLinkedDeque</code> or <code>LinkedBlockingDeque</code></li>
-              <li>You need priority ordering — use <code>PriorityQueue</code></li>
+              <li>You need thread safety, use <code>ConcurrentLinkedDeque</code> or <code>LinkedBlockingDeque</code></li>
+              <li>You need priority ordering, use <code>PriorityQueue</code></li>
             </ul>
           </div>
         </div>
@@ -241,7 +241,7 @@ flowchart LR
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The 5 named patterns from this phase</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Five recognition cues. When you see the tell, you know the pattern — no further analysis needed.
+          Five recognition cues. When you see the tell, you know the pattern, no further analysis needed.
         </p>
 
         <div className="space-y-4">
@@ -249,7 +249,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 1 · Prefix sums</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              <strong>Tell:</strong>{" "}repeated range-sum queries on an immutable array — &quot;sum from i to j&quot;, &quot;average over window&quot;, &quot;subarray sum equals k&quot;. Precompute once in O(n), answer each query in O(1).
+              <strong>Tell:</strong>{" "}repeated range-sum queries on an immutable array, &quot;sum from i to j&quot;, &quot;average over window&quot;, &quot;subarray sum equals k&quot;. Precompute once in O(n), answer each query in O(1).
             </p>
             <CodeBlock lang="java" caption="Range sum in O(1) after O(n) precompute">{`int n = a.length;
 int[] prefix = new int[n + 1];          // prefix[0] = 0
@@ -283,9 +283,9 @@ int[] twoSumSorted(int[] a, int target) {
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 3 · Dummy-head sentinel</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              <strong>Tell:</strong>{" "}you&apos;re writing linked-list code where the answer might require <em>removing or replacing the head</em>. Add a fake first node — every real node is now <code>.next</code> of <em>some</em>{" "}node, so insert-at-front and insert-at-middle use the same code.
+              <strong>Tell:</strong>{" "}you&apos;re writing linked-list code where the answer might require <em>removing or replacing the head</em>. Add a fake first node, every real node is now <code>.next</code> of <em>some</em>{" "}node, so insert-at-front and insert-at-middle use the same code.
             </p>
-            <CodeBlock lang="java" caption="LC 203 — remove all nodes with value v">{`ListNode removeElements(ListNode head, int v) {
+            <CodeBlock lang="java" caption="LC 203, remove all nodes with value v">{`ListNode removeElements(ListNode head, int v) {
     ListNode dummy = new ListNode(0);
     dummy.next = head;
     ListNode prev = dummy;
@@ -303,7 +303,7 @@ int[] twoSumSorted(int[] a, int target) {
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               <strong>Tell:</strong>{" "}linked-list problem about <em>middle</em>, <em>cycle</em>, or <em>kᵗʰ-from-end</em>. Walk two pointers, slow steps 1, fast steps 2. When fast falls off, slow is at the middle. If they collide, there&apos;s a cycle.
             </p>
-            <CodeBlock lang="java" caption="LC 141 — cycle detection via Floyd's tortoise &amp; hare">{`boolean hasCycle(ListNode head) {
+            <CodeBlock lang="java" caption="LC 141, cycle detection via Floyd's tortoise &amp; hare">{`boolean hasCycle(ListNode head) {
     ListNode slow = head, fast = head;
     while (fast != null && fast.next != null) {
         slow = slow.next;
@@ -318,9 +318,9 @@ int[] twoSumSorted(int[] a, int target) {
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase">Pattern 5 · Monotonic stack</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              <strong>Tell:</strong> &quot;for each element, find the next/previous greater/smaller&quot; — daily temperatures, next greater element, largest rectangle, trapping rain water. Maintain a stack of <em>indices</em>{" "}in sorted order; each index pushes and pops at most once → O(n) total.
+              <strong>Tell:</strong> &quot;for each element, find the next/previous greater/smaller&quot;, daily temperatures, next greater element, largest rectangle, trapping rain water. Maintain a stack of <em>indices</em>{" "}in sorted order; each index pushes and pops at most once → O(n) total.
             </p>
-            <CodeBlock lang="java" caption="LC 739 — Daily Temperatures">{`int[] dailyTemperatures(int[] T) {
+            <CodeBlock lang="java" caption="LC 739, Daily Temperatures">{`int[] dailyTemperatures(int[] T) {
     int n = T.length;
     int[] answer = new int[n];
     Deque<Integer> st = new ArrayDeque<>();   // indices, decreasing temperature
@@ -341,7 +341,7 @@ int[] twoSumSorted(int[] a, int target) {
       {/* SECTION 4 — String immutability deep dive */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. String immutability — why <code>s += x</code> is O(n²)</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. String immutability, why <code>s += x</code> is O(n²)</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The single most common accidental quadratic. Worth memorizing the picture.
         </p>
@@ -351,28 +351,28 @@ int[] twoSumSorted(int[] a, int target) {
         </div>
 
         <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">
-          Each iteration <code>s += x</code> allocates a brand-new String of the running length and copies every prior character into it. Iteration k copies k−1 characters, so the total work across n iterations is 0 + 1 + 2 + … + (n−1) = n(n−1)/2 — that&apos;s <strong>O(n²)</strong>. <code>StringBuilder</code> uses a doubling internal <code>char[]</code> so append is amortized O(1), and the whole loop is O(n).
+          Each iteration <code>s += x</code> allocates a brand-new String of the running length and copies every prior character into it. Iteration k copies k−1 characters, so the total work across n iterations is 0 + 1 + 2 + … + (n−1) = n(n−1)/2, that&apos;s <strong>O(n²)</strong>. <code>StringBuilder</code> uses a doubling internal <code>char[]</code> so append is amortized O(1), and the whole loop is O(n).
         </p>
 
-        <CodeBlock lang="java" caption="BAD — accidental O(n²)">{`// Looks innocent. Is quadratic.
+        <CodeBlock lang="java" caption="BAD, accidental O(n²)">{`// Looks innocent. Is quadratic.
 String s = "";
 for (String w : words) {
     s += w;                  // each += allocates a new String and copies s
 }
 return s;`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="GOOD — O(n) via StringBuilder">{`StringBuilder sb = new StringBuilder();
+        <CodeBlock lang="java" caption="GOOD, O(n) via StringBuilder">{`StringBuilder sb = new StringBuilder();
 for (String w : words) {
     sb.append(w);            // amortized O(1) per append (internal char[] doubles)
 }
 return sb.toString();        // one final allocation`}</CodeBlock>
 
         <Callout variant="warn" title="The compiler does NOT save you here">
-          The Java compiler rewrites <code>a + b + c</code> into a single <code>StringBuilder</code> chain — but only within one expression. The moment you put <code>+=</code> inside a loop, each iteration is its own expression, so each gets its own throwaway StringBuilder. The quadratic is real.
+          The Java compiler rewrites <code>a + b + c</code> into a single <code>StringBuilder</code> chain, but only within one expression. The moment you put <code>+=</code> inside a loop, each iteration is its own expression, so each gets its own throwaway StringBuilder. The quadratic is real.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/strings" className="text-amber-600 hover:underline">Module 6 — Strings</Link>.
+          Source: <Link href="/courses/dsa/modules/strings" className="text-amber-600 hover:underline">Module 6, Strings</Link>.
         </p>
       </section>
 
@@ -382,19 +382,19 @@ return sb.toString();        // one final allocation`}</CodeBlock>
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Linked-list manipulation rules</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Three tricks that remove most of the pain from linked-list code. Memorize the snippets — they appear in dozens of derived problems.
+          Three tricks that remove most of the pain from linked-list code. Memorize the snippets, they appear in dozens of derived problems.
         </p>
 
         <h3 className="mt-4 mb-2 text-base font-semibold">Rule 1 · Add a dummy head whenever the head might change</h3>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          Without it, you write a special-case branch for &quot;is this the first node?&quot; in every insert and delete. With it, the head looks like any other node — and you return <code>dummy.next</code> at the end. See Pattern 3 above for the canonical example.
+          Without it, you write a special-case branch for &quot;is this the first node?&quot; in every insert and delete. With it, the head looks like any other node, and you return <code>dummy.next</code> at the end. See Pattern 3 above for the canonical example.
         </p>
 
         <h3 className="mt-4 mb-2 text-base font-semibold">Rule 2 · In-place reversal is a three-pointer dance</h3>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           Hold <code>prev</code>, <code>curr</code>, and <code>next</code>. At each step: remember where you were going, flip <code>curr.next</code> to point at <code>prev</code>, advance both. When <code>curr</code> is null, <code>prev</code> is the new head.
         </p>
-        <CodeBlock lang="java" caption="LC 206 — reverse a singly-linked list, iterative">{`ListNode reverse(ListNode head) {
+        <CodeBlock lang="java" caption="LC 206, reverse a singly-linked list, iterative">{`ListNode reverse(ListNode head) {
     ListNode prev = null, curr = head;
     while (curr != null) {
         ListNode next = curr.next;     // remember where we were going
@@ -411,11 +411,11 @@ return sb.toString();        // one final allocation`}</CodeBlock>
         </p>
 
         <Callout variant="insight" title="The recursion vs iteration tradeoff">
-          Recursive linked-list code (reverse, merge) is shorter and reads better — but every recursive call adds a stack frame. On a 10⁶-node list, the recursive version StackOverflows. The iterative versions above are the production answer.
+          Recursive linked-list code (reverse, merge) is shorter and reads better, but every recursive call adds a stack frame. On a 10⁶-node list, the recursive version StackOverflows. The iterative versions above are the production answer.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/linked-lists" className="text-amber-600 hover:underline">Module 7 — Linked lists</Link>.
+          Source: <Link href="/courses/dsa/modules/linked-lists" className="text-amber-600 hover:underline">Module 7, Linked lists</Link>.
         </p>
       </section>
 
@@ -423,7 +423,7 @@ return sb.toString();        // one final allocation`}</CodeBlock>
       {/* SECTION 6 — Stack vs queue, ArrayDeque wins */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Stack vs queue — and why ArrayDeque beats both alternatives</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Stack vs queue, and why ArrayDeque beats both alternatives</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The call-stack analogy, the API map, and the one container you should actually reach for.
         </p>
@@ -431,9 +431,9 @@ return sb.toString();        // one final allocation`}</CodeBlock>
         <div className="mb-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
           <div className="grid divide-y divide-slate-200 md:grid-cols-2 md:divide-x md:divide-y-0 dark:divide-slate-800">
             <div className="bg-emerald-50/40 p-5 dark:bg-emerald-950/20">
-              <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Stack — LIFO</div>
+              <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Stack, LIFO</div>
               <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-                Push at the top, pop from the top, peek at the top. Three operations, all O(1). The JVM&apos;s call stack is literally a stack — each method invocation pushes a frame, each return pops one. That&apos;s why recursive code naturally maps to iterative-with-explicit-stack.
+                Push at the top, pop from the top, peek at the top. Three operations, all O(1). The JVM&apos;s call stack is literally a stack, each method invocation pushes a frame, each return pops one. That&apos;s why recursive code naturally maps to iterative-with-explicit-stack.
               </p>
               <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>API on ArrayDeque: <code>push</code>, <code>pop</code>, <code>peek</code></li>
@@ -442,7 +442,7 @@ return sb.toString();        // one final allocation`}</CodeBlock>
             </div>
 
             <div className="bg-sky-50/40 p-5 dark:bg-sky-950/20">
-              <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Queue — FIFO</div>
+              <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Queue, FIFO</div>
               <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
                 Add at the back, remove from the front, peek at the front. Three operations, all O(1) (amortized for add when the ring buffer resizes). Used wherever order-of-arrival matters: BFS, scheduling, request handling.
               </p>
@@ -489,8 +489,8 @@ return sb.toString();        // one final allocation`}</CodeBlock>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Sources: <Link href="/courses/dsa/modules/stacks" className="text-amber-600 hover:underline">Module 8 — Stacks</Link>,{" "}
-          <Link href="/courses/dsa/modules/queues" className="text-amber-600 hover:underline">Module 9 — Queues &amp; deques</Link>.
+          Sources: <Link href="/courses/dsa/modules/stacks" className="text-amber-600 hover:underline">Module 8, Stacks</Link>,{" "}
+          <Link href="/courses/dsa/modules/queues" className="text-amber-600 hover:underline">Module 9, Queues &amp; deques</Link>.
         </p>
       </section>
 
@@ -510,9 +510,9 @@ return sb.toString();        // one final allocation`}</CodeBlock>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               See Section 4. The compiler doesn&apos;t save you across iterations. This is the most common accidental O(n²) in real Java code.
             </p>
-            <CodeBlock lang="java" caption="BAD — O(n²)">{`String s = "";
+            <CodeBlock lang="java" caption="BAD, O(n²)">{`String s = "";
 for (String w : words) s += w;`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — O(n)">{`StringBuilder sb = new StringBuilder();
+            <CodeBlock lang="java" caption="GOOD, O(n)">{`StringBuilder sb = new StringBuilder();
 for (String w : words) sb.append(w);
 String s = sb.toString();`}</CodeBlock>
           </div>
@@ -521,12 +521,12 @@ String s = sb.toString();`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · <code>new Stack&lt;&gt;()</code> instead of ArrayDeque</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              <code>java.util.Stack</code> extends <code>Vector</code> and synchronizes every method. Even single-threaded, it&apos;s measurably slower than <code>ArrayDeque</code> — and an interviewer who knows Java will silently dock you for using it.
+              <code>java.util.Stack</code> extends <code>Vector</code> and synchronizes every method. Even single-threaded, it&apos;s measurably slower than <code>ArrayDeque</code>, and an interviewer who knows Java will silently dock you for using it.
             </p>
-            <CodeBlock lang="java" caption="BAD — legacy and synchronized">{`Stack<Integer> st = new Stack<>();
+            <CodeBlock lang="java" caption="BAD, legacy and synchronized">{`Stack<Integer> st = new Stack<>();
 st.push(1);
 st.pop();`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — modern, unsynchronized, faster">{`Deque<Integer> st = new ArrayDeque<>();
+            <CodeBlock lang="java" caption="GOOD, modern, unsynchronized, faster">{`Deque<Integer> st = new ArrayDeque<>();
 st.push(1);
 st.pop();`}</CodeBlock>
           </div>
@@ -535,13 +535,13 @@ st.pop();`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · LinkedList for random access</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              <code>LinkedList.get(i)</code> is O(i). Calling it inside a <code>for</code> loop of size n is O(n²). The for-each loop hides it because it uses an iterator (O(1) per step) — but indexed access does not.
+              <code>LinkedList.get(i)</code> is O(i). Calling it inside a <code>for</code> loop of size n is O(n²). The for-each loop hides it because it uses an iterator (O(1) per step), but indexed access does not.
             </p>
-            <CodeBlock lang="java" caption="BAD — O(n²) hidden in a clean-looking loop">{`LinkedList<Integer> list = ...;
+            <CodeBlock lang="java" caption="BAD, O(n²) hidden in a clean-looking loop">{`LinkedList<Integer> list = ...;
 for (int i = 0; i < list.size(); i++) {
     System.out.println(list.get(i));     // O(i) per call → O(n²) total
 }`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — iterator is O(1) per step">{`for (int x : list) {                     // implicit iterator
+            <CodeBlock lang="java" caption="GOOD, iterator is O(1) per step">{`for (int x : list) {                     // implicit iterator
     System.out.println(x);
 }`}</CodeBlock>
           </div>
@@ -552,9 +552,9 @@ for (int i = 0; i < list.size(); i++) {
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Java picks the overload by <em>static type</em>. <code>list.remove(2)</code> removes the element <em>at index 2</em>. <code>list.remove(Integer.valueOf(2))</code> removes the first element <em>equal to 2</em>. Mixing them up silently corrupts data.
             </p>
-            <CodeBlock lang="java" caption="BAD — surprising overload resolution">{`List<Integer> list = new ArrayList<>(List.of(10, 20, 30, 40));
+            <CodeBlock lang="java" caption="BAD, surprising overload resolution">{`List<Integer> list = new ArrayList<>(List.of(10, 20, 30, 40));
 list.remove(2);          // removes index 2 → element 30. List is now [10, 20, 40].`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — be explicit about what you mean">{`list.remove(Integer.valueOf(2));   // removes the FIRST element equal to 2
+            <CodeBlock lang="java" caption="GOOD, be explicit about what you mean">{`list.remove(Integer.valueOf(2));   // removes the FIRST element equal to 2
 // or, for index-based removal, name your variable:
 int idx = 2;
 list.remove(idx);                   // primitive int → index overload, unambiguous`}</CodeBlock>
@@ -566,9 +566,9 @@ list.remove(idx);                   // primitive int → index overload, unambig
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Inserting at the front of an ArrayList shifts every existing element one slot to the right. In a loop, that&apos;s O(n²). If you need O(1) push-at-front, use an ArrayDeque.
             </p>
-            <CodeBlock lang="java" caption="BAD — O(n²) push-at-front loop">{`List<Integer> list = new ArrayList<>();
+            <CodeBlock lang="java" caption="BAD, O(n²) push-at-front loop">{`List<Integer> list = new ArrayList<>();
 for (int x : input) list.add(0, x);     // each insert shifts everything → O(n²)`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — O(n) with ArrayDeque (or append + reverse)">{`Deque<Integer> dq = new ArrayDeque<>();
+            <CodeBlock lang="java" caption="GOOD, O(n) with ArrayDeque (or append + reverse)">{`Deque<Integer> dq = new ArrayDeque<>();
 for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
 
 // Alternative: append then reverse, also O(n).`}</CodeBlock>
@@ -582,16 +582,16 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You need a container that supports O(1) push at the front and O(1) pop at the back. Which Java type do you reach for first?"
           options={[
-            { label: "ArrayList", explanation: "ArrayList.add(0, x) is O(n) — every element shifts. Wrong tool." },
+            { label: "ArrayList", explanation: "ArrayList.add(0, x) is O(n), every element shifts. Wrong tool." },
             { label: "java.util.Stack", explanation: "Stack only exposes one end (LIFO). And it's legacy and synchronized. Avoid." },
-            { label: "ArrayDeque", correct: true, explanation: "Right. ArrayDeque is a ring buffer with O(1) at both ends — addFirst, addLast, pollFirst, pollLast. It's the answer for both stacks AND queues AND general double-ended needs." },
+            { label: "ArrayDeque", correct: true, explanation: "Right. ArrayDeque is a ring buffer with O(1) at both ends, addFirst, addLast, pollFirst, pollLast. It's the answer for both stacks AND queues AND general double-ended needs." },
             { label: "LinkedList", explanation: "It works on paper (O(1) at both ends) but it's cache-hostile and allocates per node. ArrayDeque is several times faster in practice." },
           ]}
         />
@@ -600,10 +600,10 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
           kind="Recall check"
           question="What is the time complexity of `s += word` inside a for loop of n iterations, building a String?"
           options={[
-            { label: "O(n) — the compiler rewrites += into StringBuilder.append", explanation: "The compiler rewrites + within a single expression, not across loop iterations. Each iteration allocates a throwaway String." },
-            { label: "O(n²) — each iteration allocates a new String and copies all prior characters", correct: true, explanation: "Right. Iteration k copies k-1 chars, total is 0+1+2+...+(n-1) = n(n-1)/2 → O(n²). This is the most common accidental quadratic in real Java code." },
-            { label: "O(n log n) — amortized via StringBuilder's doubling", explanation: "That would be true if String were mutable like StringBuilder. It isn't. Each += creates a fresh String." },
-            { label: "O(1) — Strings are interned", explanation: "Interning is about deduplicating identical literals at compile time. It does nothing for runtime concatenation." },
+            { label: "O(n), the compiler rewrites += into StringBuilder.append", explanation: "The compiler rewrites + within a single expression, not across loop iterations. Each iteration allocates a throwaway String." },
+            { label: "O(n²), each iteration allocates a new String and copies all prior characters", correct: true, explanation: "Right. Iteration k copies k-1 chars, total is 0+1+2+...+(n-1) = n(n-1)/2 → O(n²). This is the most common accidental quadratic in real Java code." },
+            { label: "O(n log n), amortized via StringBuilder's doubling", explanation: "That would be true if String were mutable like StringBuilder. It isn't. Each += creates a fresh String." },
+            { label: "O(1), Strings are interned", explanation: "Interning is about deduplicating identical literals at compile time. It does nothing for runtime concatenation." },
           ]}
         />
 
@@ -611,10 +611,10 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
           kind="Recall check"
           question="On a singly-linked list, you need to detect whether there's a cycle. Which technique is canonical?"
           options={[
-            { label: "Use a HashSet to remember visited nodes — return true on second visit.", explanation: "It works (O(n) time, O(n) space), but fast/slow does the same in O(1) extra space. The interviewer will ask for the constant-space version." },
-            { label: "Walk one pointer through the list; if it reaches null, no cycle.", explanation: "If there's a cycle, a single pointer would loop forever — there's no terminating condition." },
-            { label: "Floyd's tortoise &amp; hare — two pointers, slow steps 1, fast steps 2. If they meet, there's a cycle.", correct: true, explanation: "Right. Fast escapes (hits null) iff the list is acyclic; inside a cycle, the gap between fast and slow shrinks by 1 each step, so they must collide. O(n) time, O(1) space." },
-            { label: "Reverse the list — if you get back to the head, there's a cycle.", explanation: "Reversing a cyclic list is undefined behavior — there's no end to start from." },
+            { label: "Use a HashSet to remember visited nodes, return true on second visit.", explanation: "It works (O(n) time, O(n) space), but fast/slow does the same in O(1) extra space. The interviewer will ask for the constant-space version." },
+            { label: "Walk one pointer through the list; if it reaches null, no cycle.", explanation: "If there's a cycle, a single pointer would loop forever, there's no terminating condition." },
+            { label: "Floyd's tortoise &amp; hare, two pointers, slow steps 1, fast steps 2. If they meet, there's a cycle.", correct: true, explanation: "Right. Fast escapes (hits null) iff the list is acyclic; inside a cycle, the gap between fast and slow shrinks by 1 each step, so they must collide. O(n) time, O(1) space." },
+            { label: "Reverse the list, if you get back to the head, there's a cycle.", explanation: "Reversing a cyclic list is undefined behavior, there's no end to start from." },
           ]}
         />
 
@@ -622,7 +622,7 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
           kind="Recall check"
           question="You see a problem: 'for each element in this array, find the next strictly greater element to the right'. What's your reflex?"
           options={[
-            { label: "Nested loops — O(n²).", explanation: "Works as a brute-force baseline. The interviewer wants the linear answer." },
+            { label: "Nested loops, O(n²).", explanation: "Works as a brute-force baseline. The interviewer wants the linear answer." },
             { label: "Sort the array first.", explanation: "Sorting destroys positions. You need 'next to the right' in the original order." },
             { label: "Monotonic decreasing stack of indices.", correct: true, explanation: "Right. Walk left-to-right, push indices, and whenever the new element is greater than the top of the stack, pop and record. Each index is pushed and popped at most once → O(n) total." },
             { label: "HashMap from value to next-greater value.", explanation: "Duplicates and positional 'next' make this approach fall apart. The question is about indices, not values." },
@@ -631,12 +631,12 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
 
         <Quiz
           kind="Recall check"
-          question="`list.remove(2)` on `List<Integer> list = new ArrayList<>(List.of(10, 20, 30, 40))` — what's the resulting list?"
+          question="`list.remove(2)` on `List<Integer> list = new ArrayList<>(List.of(10, 20, 30, 40))`, what's the resulting list?"
           options={[
-            { label: "[10, 20, 40] — index 2 (the element 30) was removed", correct: true, explanation: "Right. The literal `2` is an int primitive, which matches the remove(int index) overload. Java picks overloads by static type, so this is index-based removal." },
-            { label: "[10, 30, 40] — the first element equal to 2 was removed", explanation: "That would be remove(Integer.valueOf(2)). With a primitive int, Java picks the index overload." },
-            { label: "[10, 20, 30, 40] — no element equal to 2 was found", explanation: "Same confusion — `remove(2)` with a primitive is index-based, not value-based." },
-            { label: "ClassCastException at runtime", explanation: "No cast involved. Overload resolution is static — it's all decided at compile time." },
+            { label: "[10, 20, 40], index 2 (the element 30) was removed", correct: true, explanation: "Right. The literal `2` is an int primitive, which matches the remove(int index) overload. Java picks overloads by static type, so this is index-based removal." },
+            { label: "[10, 30, 40], the first element equal to 2 was removed", explanation: "That would be remove(Integer.valueOf(2)). With a primitive int, Java picks the index overload." },
+            { label: "[10, 20, 30, 40], no element equal to 2 was found", explanation: "Same confusion, `remove(2)` with a primitive is index-based, not value-based." },
+            { label: "ClassCastException at runtime", explanation: "No cast involved. Overload resolution is static, it's all decided at compile time." },
           ]}
         />
       </section>
@@ -646,14 +646,14 @@ for (int x : input) dq.addFirst(x);     // O(1) per insert → O(n) total
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
-          Phase 2 — locked in
+          Phase 2, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now defend every linear-structure choice on sight</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Five structures, one Big-O table, five named patterns, the immutability trap, the linked-list dance, and the ArrayDeque rule. That&apos;s the entire linear-structure toolkit — every problem from here on out will either compose these or move on to non-linear shapes.
+          Five structures, one Big-O table, five named patterns, the immutability trap, the linked-list dance, and the ArrayDeque rule. That&apos;s the entire linear-structure toolkit, every problem from here on out will either compose these or move on to non-linear shapes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Hashing &amp; Trees.</strong>{" "}HashMap from the ground up, hash collisions, then binary trees and BSTs. The structures where lookup becomes O(1) or O(log n) instead of O(n).
+          <strong>Up next: Phase 3, Hashing &amp; Trees.</strong>{" "}HashMap from the ground up, hash collisions, then binary trees and BSTs. The structures where lookup becomes O(1) or O(log n) instead of O(n).
         </p>
         <Link
           href="/courses/dsa/modules/hashmaps"

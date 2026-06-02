@@ -14,7 +14,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 const CHECKPOINTS = [
   { id: "setup", title: "What 'sliding window' really means" },
   { id: "fixed", title: "Fixed-size window (the easy half)" },
-  { id: "variable", title: "Variable-size window — expand and contract" },
+  { id: "variable", title: "Variable-size window, expand and contract" },
   { id: "freq-map", title: "Window + frequency map: the killer combo" },
   { id: "project", title: "Project: Minimum Window Substring" },
   { id: "final", title: "Final quiz" },
@@ -134,7 +134,7 @@ flowchart LR
           Sliding window is the technique you reach for when the question is about a{" "}
           <strong>contiguous subarray or substring</strong>{" "}and the brute force is &quot;try every
           subarray.&quot; The brute force is O(n²) because there are n² subarrays. The window is O(n)
-          because each element enters the window once and leaves once — a 2n bound on the total work, no
+          because each element enters the window once and leaves once, a 2n bound on the total work, no
           matter how the indices wiggle.
         </p>
 
@@ -162,7 +162,7 @@ flowchart LR
 
         <p>
           The word <em>contiguous</em>{" "}is the load-bearing one. If the problem allows non-contiguous
-          subsets (e.g., &quot;pick any K elements&quot;), this technique does not apply — you&apos;re
+          subsets (e.g., &quot;pick any K elements&quot;), this technique does not apply, you&apos;re
           probably looking at a heap, a sort, or DP. The window only works because the indices move
           monotonically: <code>l</code> never goes left, <code>r</code> never goes left.
         </p>
@@ -177,8 +177,8 @@ flowchart LR
         </p>
 
         <ul>
-          <li><strong>Expand</strong> — move <code>r</code> right, admit a new element. P may break.</li>
-          <li><strong>Contract</strong> — move <code>l</code> right, evict the leftmost element. Repeat until P holds again.</li>
+          <li><strong>Expand</strong>, move <code>r</code> right, admit a new element. P may break.</li>
+          <li><strong>Contract</strong>, move <code>l</code> right, evict the leftmost element. Repeat until P holds again.</li>
         </ul>
 
         <p>
@@ -189,33 +189,33 @@ flowchart LR
 
         <Callout variant="insight" title="Why the amortized cost is O(n), not O(n²)">
           <p>
-            The contract loop looks scary — &quot;while P is broken, advance l&quot; can run many times
+            The contract loop looks scary, &quot;while P is broken, advance l&quot; can run many times
             in a single iteration. So why isn&apos;t the total cost O(n²)?
           </p>
           <p>
             Because <code>l</code> only ever moves right. Across the entire run, <code>l</code> advances
-            at most n times total — not n times per step. Same for <code>r</code>. Two pointers, each
+            at most n times total, not n times per step. Same for <code>r</code>. Two pointers, each
             making at most n moves, regardless of how the inner loop interleaves. Total: 2n. The cost is
-            <em> amortized</em> — averaged across all iterations — and that&apos;s the magic.
+            <em> amortized</em>, averaged across all iterations, and that&apos;s the magic.
           </p>
         </Callout>
 
         <h3>What it&apos;s <em>not</em></h3>
 
         <ul>
-          <li><strong>Not for non-contiguous problems.</strong> &quot;Pick any K elements summing to X&quot; — no window. Subsets aren&apos;t contiguous.</li>
+          <li><strong>Not for non-contiguous problems.</strong> &quot;Pick any K elements summing to X&quot;, no window. Subsets aren&apos;t contiguous.</li>
           <li><strong>Not for problems where the answer involves arbitrary index pairs.</strong>{" "}Two Sum on an unsorted array is hash table, not window.</li>
-          <li><strong>Not always the right tool even for contiguous problems.</strong> &quot;Subarray with sum equal to K&quot; with <em>negative numbers</em>{" "}can&apos;t use a window — adding a number doesn&apos;t monotonically grow the sum, so you can&apos;t decide when to contract. Prefix sums + hash map is the move there.</li>
+          <li><strong>Not always the right tool even for contiguous problems.</strong> &quot;Subarray with sum equal to K&quot; with <em>negative numbers</em>{" "}can&apos;t use a window, adding a number doesn&apos;t monotonically grow the sum, so you can&apos;t decide when to contract. Prefix sums + hash map is the move there.</li>
         </ul>
 
         <Quiz
           kind="Quick check"
           question="Which problem is a textbook sliding-window candidate?"
           options={[
-            { label: "Find any two indices in an unsorted array whose values sum to a target.", explanation: "The pair isn't required to be contiguous. This is Two Sum — a hash-map problem, not a window problem." },
+            { label: "Find any two indices in an unsorted array whose values sum to a target.", explanation: "The pair isn't required to be contiguous. This is Two Sum, a hash-map problem, not a window problem." },
             { label: "Find the longest substring of s containing at most K distinct characters.", correct: true, explanation: "Right. 'Longest substring with property P' is the canonical variable-window setup. P here is 'window has at most K distinct chars.' Expand right; when distinct count exceeds K, contract left until it's back at K." },
-            { label: "Pick any K elements from an array to maximize their sum.", explanation: "Non-contiguous — pick any K. That's a sort or a heap problem, not a window." },
-            { label: "Subarray with sum exactly K, where the array can include negative numbers.", explanation: "Tempting! But negatives break monotonicity — adding an element can decrease the sum, so you can't decide when to contract. Use prefix sums + hash map instead." },
+            { label: "Pick any K elements from an array to maximize their sum.", explanation: "Non-contiguous, pick any K. That's a sort or a heap problem, not a window." },
+            { label: "Subarray with sum exactly K, where the array can include negative numbers.", explanation: "Tempting! But negatives break monotonicity, adding an element can decrease the sum, so you can't decide when to contract. Use prefix sums + hash map instead." },
           ]}
         />
 
@@ -223,7 +223,7 @@ flowchart LR
           kind="Quick check"
           question="Why is the total cost of a variable-size sliding window O(n) and not O(n²), even though the contract loop can run multiple times per outer iteration?"
           options={[
-            { label: "Because the contract loop is bounded by a constant.", explanation: "It isn't — in some iterations it runs zero times, in others it runs many. The bound is amortized." },
+            { label: "Because the contract loop is bounded by a constant.", explanation: "It isn't, in some iterations it runs zero times, in others it runs many. The bound is amortized." },
             { label: "Because both l and r only move right; across the entire run each makes at most n moves, totaling 2n.", correct: true, explanation: "Right. Amortized analysis: count moves of each pointer across the whole run, not per outer step. l moves right at most n times total. r moves right at most n times total. Inner loop iterations are 'paid for' by future l-advances we won't have to make. Sum: O(n)." },
             { label: "Because we cap the inner loop at log n.", explanation: "There's no log cap. The bound comes from monotonicity of the pointers, not from a hardcoded limit." },
             { label: "Because Java's HashMap is O(1).", explanation: "HashMap performance helps, but the O(n) bound is about pointer movement, not about per-op cost." },
@@ -239,7 +239,7 @@ flowchart LR
 
         <p>
           Fixed-size window problems hand you a number K up front: &quot;subarray of length exactly
-          K.&quot; The window never grows or shrinks — it just slides. The algorithm has two phases:
+          K.&quot; The window never grows or shrinks, it just slides. The algorithm has two phases:
           <em> prime</em>{" "}the first K elements to compute the initial value, then <em>slide</em>{" "}by
           repeatedly adding the new element on the right and subtracting the one falling off on the left.
         </p>
@@ -267,7 +267,7 @@ flowchart LR
 
         <Callout variant="info" title="Why long, not int">
           <p>
-            The problem says values can be up to ±10⁴ and k up to 10⁵. That&apos;s a sum up to 10⁹ — within
+            The problem says values can be up to ±10⁴ and k up to 10⁵. That&apos;s a sum up to 10⁹, within
             int range, but uncomfortably close.
           </p>
           <p>
@@ -279,7 +279,7 @@ flowchart LR
         <h3>The two-phase template</h3>
 
         <p>
-          Memorize this skeleton — every fixed-window problem fits it:
+          Memorize this skeleton, every fixed-window problem fits it:
         </p>
 
         <CodeBlock lang="java">{`// Phase 1: build the first window
@@ -298,7 +298,7 @@ for (int r = k; r < nums.length; r++) {
 }`}</CodeBlock>
 
         <p>
-          The <code>state</code> can be a sum, a count, a HashMap of frequencies, a multiset, anything —
+          The <code>state</code> can be a sum, a count, a HashMap of frequencies, a multiset, anything,
           as long as <em>add</em>{" "}and <em>remove</em>{" "}are O(1) (or amortized O(1)). That&apos;s what
           keeps the whole loop linear.
         </p>
@@ -308,16 +308,16 @@ for (int r = k; r < nums.length; r++) {
         <h3>Variations you&apos;ll see</h3>
 
         <ul>
-          <li><strong>Max sum subarray of size K</strong> — same code, return <code>best</code> instead of <code>best / k</code>.</li>
-          <li><strong>Average of all windows of size K</strong> — collect each <code>sum / k</code> as you go (LC 1343 in spirit).</li>
-          <li><strong>Number of vowels in size-K substrings</strong> — <code>state</code> is the vowel count; add 1 if new char is a vowel, subtract 1 if the falling-off char was. (LC 1456.)</li>
-          <li><strong>Permutation in string / Find all anagrams</strong> — fixed window of size <code>p.length()</code>; <code>state</code> is a 26-int frequency array; check equality after each slide. (LC 567, LC 438.)</li>
+          <li><strong>Max sum subarray of size K</strong>, same code, return <code>best</code> instead of <code>best / k</code>.</li>
+          <li><strong>Average of all windows of size K</strong>, collect each <code>sum / k</code> as you go (LC 1343 in spirit).</li>
+          <li><strong>Number of vowels in size-K substrings</strong>, <code>state</code> is the vowel count; add 1 if new char is a vowel, subtract 1 if the falling-off char was. (LC 1456.)</li>
+          <li><strong>Permutation in string / Find all anagrams</strong>, fixed window of size <code>p.length()</code>; <code>state</code> is a 26-int frequency array; check equality after each slide. (LC 567, LC 438.)</li>
         </ul>
 
         <Callout variant="warn" title="Don't recompute the answer inside the slide">
           <p>
             A common wrong-O bug: recomputing the sum from <code>nums[r-k+1..r]</code> on every step.
-            That&apos;s O(k) per slide — back to O(n·k).
+            That&apos;s O(k) per slide, back to O(n·k).
           </p>
           <p>
             The <em>whole point</em>{" "}of the window is that you maintain the state incrementally with one
@@ -330,10 +330,10 @@ for (int r = k; r < nums.length; r++) {
           kind="Fixed-window check"
           question="In the fixed-window slide loop, what's the canonical body when k = 3 and the loop variable r starts at 3?"
           options={[
-            { label: "sum += nums[r]; (no eviction)", explanation: "You'd grow the window forever. Need to evict the leftmost element — the one at index r-k." },
+            { label: "sum += nums[r]; (no eviction)", explanation: "You'd grow the window forever. Need to evict the leftmost element, the one at index r-k." },
             { label: "sum += nums[r]; sum -= nums[r - k];", correct: true, explanation: "Right. Admit the new right (nums[r]), evict the one falling off the left (nums[r-k]). Net change: window slid by one. Constant work per step." },
             { label: "sum -= nums[r - k]; sum += nums[r - 1];", explanation: "Off-by-one: nums[r-1] is already in the window from the previous step. The new arrival is nums[r]." },
-            { label: "for (int i = r-k+1; i <= r; i++) sum += nums[i];", explanation: "That recomputes the entire sum each iteration — O(k) per step, total O(n·k). The whole point of the window is to avoid this." },
+            { label: "for (int i = r-k+1; i <= r; i++) sum += nums[i];", explanation: "That recomputes the entire sum each iteration, O(k) per step, total O(n·k). The whole point of the window is to avoid this." },
           ]}
         />
       </section>
@@ -342,7 +342,7 @@ for (int r = k; r < nums.length; r++) {
       {/* ───────────────── Part 3 · Variable window ───────────────── */}
       <Checkpoint moduleSlug="sliding-window" id="variable" title="I can expand and contract a variable-size window correctly" xp={30}>
       <section>
-        <h2 id="variable">Variable-size window — expand and contract</h2>
+        <h2 id="variable">Variable-size window, expand and contract</h2>
 
         <p>
           The variable window is where the technique earns its reputation. The window grows and shrinks
@@ -470,7 +470,7 @@ for (int r = k; r < nums.length; r++) {
             when the window is at its largest valid extent for this <code>r</code>.
           </p>
           <p>
-            For <strong>shortest valid window</strong>: record the answer <em>during</em>{" "}contraction —
+            For <strong>shortest valid window</strong>: record the answer <em>during</em>{" "}contraction,
             each step where the window is still valid is a candidate for the new minimum. You stop
             contracting only when the invariant is about to break.
           </p>
@@ -485,9 +485,9 @@ for (int r = k; r < nums.length; r++) {
           kind="Variable-window check"
           question="For LC 209 (Minimum Size Subarray Sum: smallest window with sum ≥ target), when do you record best?"
           options={[
-            { label: "Once at the very end of the loop.", explanation: "The minimum can be a window from any iteration — you must check at every valid window, not just one." },
-            { label: "After admitting nums[r], every time the window sum is still ≥ target as you contract.", correct: true, explanation: "Right. 'Shortest' problems record DURING contraction — every valid (still ≥ target) window is a candidate for the minimum length. Stop contracting only when the next contraction would drop the sum below target." },
-            { label: "Only after expanding, never during contraction.", explanation: "That's the 'longest' pattern. For 'shortest valid,' you want the window AS SMALL AS POSSIBLE while still valid — so you record during contraction, not before it." },
+            { label: "Once at the very end of the loop.", explanation: "The minimum can be a window from any iteration, you must check at every valid window, not just one." },
+            { label: "After admitting nums[r], every time the window sum is still ≥ target as you contract.", correct: true, explanation: "Right. 'Shortest' problems record DURING contraction, every valid (still ≥ target) window is a candidate for the minimum length. Stop contracting only when the next contraction would drop the sum below target." },
+            { label: "Only after expanding, never during contraction.", explanation: "That's the 'longest' pattern. For 'shortest valid,' you want the window AS SMALL AS POSSIBLE while still valid, so you record during contraction, not before it." },
             { label: "Whenever the sum exactly equals target.", explanation: "Problem says ≥ target, not == target. And the minimum can occur at any valid window, not just an exact match." },
           ]}
         />
@@ -497,7 +497,7 @@ for (int r = k; r < nums.length; r++) {
           question="In the last-seen-index version of LC 3, why do we guard the jump with `lastSeen.get(c) >= l`?"
           options={[
             { label: "To handle the empty-string case.", explanation: "Empty string is handled by the loop never executing. The guard is about something else." },
-            { label: "Stale entries — a character seen BEFORE the current window's left boundary shouldn't pull l backward. The pointer must only move right.", correct: true, explanation: "Right. lastSeen could hold an index from much earlier in the string, before l moved past it. Without the guard, you'd set l to that stale index + 1, which could move l LEFT — breaking the monotonicity that gives us O(n)." },
+            { label: "Stale entries, a character seen BEFORE the current window's left boundary shouldn't pull l backward. The pointer must only move right.", correct: true, explanation: "Right. lastSeen could hold an index from much earlier in the string, before l moved past it. Without the guard, you'd set l to that stale index + 1, which could move l LEFT, breaking the monotonicity that gives us O(n)." },
             { label: "Java HashMaps return null for missing keys; this is a null check.", explanation: "containsKey handles the null case. The >= l guard is about staleness, not nulls." },
             { label: "It avoids an off-by-one.", explanation: "Off-by-one is handled by the +1. The >= l guard is specifically about not moving l backward." },
           ]}
@@ -511,10 +511,10 @@ for (int r = k; r < nums.length; r++) {
         <h2 id="freq-map">Window + frequency map: the killer combo</h2>
 
         <p>
-          Once your invariant involves counts of multiple distinct items — &quot;the window contains at
+          Once your invariant involves counts of multiple distinct items, &quot;the window contains at
           most K distinct characters,&quot; &quot;the window contains every character of t with at least
           the required multiplicity,&quot; &quot;the window has no character appearing more than
-          twice&quot; — you graduate to the window+frequency-map combo. It&apos;s the same expand/contract
+          twice&quot;, you graduate to the window+frequency-map combo. It&apos;s the same expand/contract
           skeleton, but the state is richer.
         </p>
 
@@ -561,7 +561,7 @@ for (int r = k; r < nums.length; r++) {
         <p>
           The Minimum Window Substring family uses a clever variation. You don&apos;t care about{" "}
           <code>have.size()</code>; you care about whether <em>each required character has at least its
-          required count</em>. Naïvely, that&apos;s an O(|t|) check on every iteration — expensive. The
+          required count</em>. Naïvely, that&apos;s an O(|t|) check on every iteration, expensive. The
           fix is a counter called <code>formed</code> that tracks <em>how many distinct keys have
           met or exceeded their requirement</em>. The window is valid iff{" "}
           <code>formed == need.size()</code>.
@@ -600,10 +600,10 @@ for (int r = 0; r < s.length(); r++) {
         <Callout variant="insight" title="The formed counter is what makes Minimum Window Substring O(n)">
           <p>
             Without <code>formed</code>, every window-validity check would walk the entire <code>need</code>{" "}
-            map — O(|t|) per check, O(n·|t|) total. With it, validity is O(1): just compare two ints.
+            map, O(|t|) per check, O(n·|t|) total. With it, validity is O(1): just compare two ints.
           </p>
           <p>
-            The trick: track only the <em>moments of crossing</em> — when a character&apos;s count
+            The trick: track only the <em>moments of crossing</em>, when a character&apos;s count
             crosses from &quot;below required&quot; to &quot;at required&quot; (formed++) or from
             &quot;at required&quot; to &quot;below required&quot; (formed--). Everything in between is
             irrelevant to the validity question. This is one of the cleanest amortizations in interview
@@ -648,9 +648,9 @@ for (int r = 0; r < s.length(); r++) {
           question="In the 'at most K distinct' pattern, why must you remove a key from the map when its count drops to zero?"
           options={[
             { label: "To save memory.", explanation: "Memory is a side benefit. The real reason is correctness." },
-            { label: "Because map.size() is the invariant check, and a zero-count key still counts as a distinct character — leaving it in lies about the window's true distinct count.", correct: true, explanation: "Right. map.size() doesn't know that 'count = 0' means 'not present.' A character with count 0 is logically gone from the window but still a key. Leaving it in inflates size() and breaks the > K check. Remove or your invariant is wrong." },
-            { label: "HashMap doesn't support zero values.", explanation: "It does — 0 is a perfectly valid Integer value. The bug is that 0 isn't semantically 'not present,' but map.size() treats it as present." },
-            { label: "Performance — zero entries slow down get().", explanation: "Get is O(1) regardless of value. The reason is correctness of the invariant check, not speed." },
+            { label: "Because map.size() is the invariant check, and a zero-count key still counts as a distinct character, leaving it in lies about the window's true distinct count.", correct: true, explanation: "Right. map.size() doesn't know that 'count = 0' means 'not present.' A character with count 0 is logically gone from the window but still a key. Leaving it in inflates size() and breaks the > K check. Remove or your invariant is wrong." },
+            { label: "HashMap doesn't support zero values.", explanation: "It does, 0 is a perfectly valid Integer value. The bug is that 0 isn't semantically 'not present,' but map.size() treats it as present." },
+            { label: "Performance, zero entries slow down get().", explanation: "Get is O(1) regardless of value. The reason is correctness of the invariant check, not speed." },
           ]}
         />
       </section>
@@ -747,7 +747,7 @@ for (int r = 0; r < s.length(); r++) {
           <p>
             The genius is the <code>formed</code> counter. Without it, you&apos;d need to walk{" "}
             <code>need</code>&apos;s entries on every iteration to check &quot;does the window cover all
-            of t?&quot; — that&apos;s an extra O(m) per iteration, killing the bound. With the counter,
+            of t?&quot;, that&apos;s an extra O(m) per iteration, killing the bound. With the counter,
             validity is a single int comparison.
           </p>
         </Callout>
@@ -756,7 +756,7 @@ for (int r = 0; r < s.length(); r++) {
           <p>
             <code>have.get(c) == need.get(c)</code> compares <em>Integer references</em>{" "}in Java, not
             int values. For boxed integers outside Java&apos;s small-Integer cache (-128 to 127), this
-            silently returns false when the values are equal — a brutal bug that passes test cases with
+            silently returns false when the values are equal, a brutal bug that passes test cases with
             small inputs and fails on real ones.
           </p>
           <p>
@@ -773,7 +773,7 @@ for (int r = 0; r < s.length(); r++) {
           <li><code>s = &quot;a&quot;, t = &quot;a&quot;</code> → <code>&quot;a&quot;</code> (window of size 1).</li>
           <li><code>s = &quot;a&quot;, t = &quot;aa&quot;</code> → <code>&quot;&quot;</code> (impossible).</li>
           <li><code>s = &quot;ab&quot;, t = &quot;b&quot;</code> → <code>&quot;b&quot;</code> (target somewhere in the middle).</li>
-          <li>Long s with t&apos;s characters scattered — to exercise the contraction loop hard.</li>
+          <li>Long s with t&apos;s characters scattered, to exercise the contraction loop hard.</li>
         </ul>
 
         <h3>Stretch goals</h3>
@@ -782,7 +782,7 @@ for (int r = 0; r < s.length(); r++) {
           <li><strong>LC 159 · Longest Substring with At Most Two Distinct Characters.</strong>{" "}The &quot;at most K distinct&quot; pattern with K=2. ~20 lines.</li>
           <li><strong>LC 340 · Longest Substring with At Most K Distinct.</strong>{" "}Same pattern, parameterized K.</li>
           <li><strong>LC 567 · Permutation in String.</strong>{" "}Fixed-window anagram check with a 26-int frequency array.</li>
-          <li><strong>LC 30 · Substring with Concatenation of All Words.</strong>{" "}A vicious one — sliding window, but the &quot;atom&quot; is a word, not a character. Worth attempting once you&apos;re comfortable.</li>
+          <li><strong>LC 30 · Substring with Concatenation of All Words.</strong>{" "}A vicious one, sliding window, but the &quot;atom&quot; is a word, not a character. Worth attempting once you&apos;re comfortable.</li>
         </ul>
       </section>
       </Checkpoint>
@@ -803,12 +803,12 @@ for (int r = 0; r < s.length(); r++) {
           items={[
             { id: "1", label: "Maximum sum of any contiguous subarray of length exactly 5.", answer: "fixed", explanation: "Fixed K=5. Prime the first 5, then slide: add right, subtract left, track max." },
             { id: "2", label: "Longest substring with at most 3 distinct characters.", answer: "variable", explanation: "Variable. Invariant: window has at most 3 distinct. Expand always; while map.size() > 3, contract." },
-            { id: "3", label: "Find any two indices i, j (not necessarily contiguous) such that nums[i] + nums[j] = target.", answer: "not", explanation: "Two Sum — non-contiguous pair. HashMap, not window." },
+            { id: "3", label: "Find any two indices i, j (not necessarily contiguous) such that nums[i] + nums[j] = target.", answer: "not", explanation: "Two Sum, non-contiguous pair. HashMap, not window." },
             { id: "4", label: "Smallest contiguous subarray whose sum is at least target (positive numbers only).", answer: "variable", explanation: "Variable. Invariant: window sum < target during expansion; once sum ≥ target, contract while still valid, recording the minimum length." },
-            { id: "5", label: "Number of subarrays summing exactly to K, where the array can contain negative numbers.", answer: "not", explanation: "Negatives break window monotonicity — adding doesn't always increase sum, so you can't decide when to contract. Use prefix sums + HashMap." },
+            { id: "5", label: "Number of subarrays summing exactly to K, where the array can contain negative numbers.", answer: "not", explanation: "Negatives break window monotonicity, adding doesn't always increase sum, so you can't decide when to contract. Use prefix sums + HashMap." },
             { id: "6", label: "Average of every contiguous subarray of length 4.", answer: "fixed", explanation: "Fixed K=4. Slide and emit average each step. The simplest fixed-window flavor." },
             { id: "7", label: "Longest substring with no repeating characters.", answer: "variable", explanation: "Variable. Invariant: all characters in the window are distinct. Expand; while there's a duplicate, contract." },
-            { id: "8", label: "Given a sorted array, find a pair summing to target.", answer: "not", explanation: "Two pointers (one from each end), but it's not a window — both pointers move toward each other and the 'window' isn't a contiguous range with a meaningful invariant. Different technique." },
+            { id: "8", label: "Given a sorted array, find a pair summing to target.", answer: "not", explanation: "Two pointers (one from each end), but it's not a window, both pointers move toward each other and the 'window' isn't a contiguous range with a meaningful invariant. Different technique." },
           ]}
         />
 
@@ -816,10 +816,10 @@ for (int r = 0; r < s.length(); r++) {
           kind="Final check"
           question="What's the time and space complexity of LC 76 (Minimum Window Substring) using the standard sliding-window + HashMap solution?"
           options={[
-            { label: "O(n * m) time, O(m) space.", explanation: "n*m would be naive without the formed counter — recomputing window validity each step. With formed, validity is O(1)." },
+            { label: "O(n * m) time, O(m) space.", explanation: "n*m would be naive without the formed counter, recomputing window validity each step. With formed, validity is O(1)." },
             { label: "O(n + m) time, O(m) space (where n = |s|, m = |t|).", correct: true, explanation: "Right. Building need is O(m). The main loop has both pointers moving right at most n times each, with O(1) amortized work per step thanks to the formed counter. Total: O(n + m). Space: O(m) for the maps, since they hold at most m distinct characters from t." },
             { label: "O(n log n) time, O(n) space.", explanation: "No sorting or heap involved. The bound is linear thanks to amortized analysis on the two pointers." },
-            { label: "O(n²) time, O(1) space.", explanation: "n² would be brute force (try every window). Sliding window beats that to O(n). Space is O(m), not O(1) — we need the maps." },
+            { label: "O(n²) time, O(1) space.", explanation: "n² would be brute force (try every window). Sliding window beats that to O(n). Space is O(m), not O(1), we need the maps." },
           ]}
         />
 
@@ -828,32 +828,32 @@ for (int r = 0; r < s.length(); r++) {
           question="In a variable-size sliding window, you're solving 'longest substring such that property P holds.' Where do you record the answer?"
           options={[
             { label: "Inside the contract loop, on every iteration.", explanation: "That's the 'shortest valid' pattern. For 'longest valid' you record AFTER contracting, when the window has been restored to a valid state." },
-            { label: "After the contract loop finishes — i.e., when the window [l..r] is the largest valid extent ending at r.", correct: true, explanation: "Right. For 'longest,' contracting moves the window AWAY from being too large back to valid. The widest valid window ending at r is what's left after contracting. Record then." },
+            { label: "After the contract loop finishes, i.e., when the window [l..r] is the largest valid extent ending at r.", correct: true, explanation: "Right. For 'longest,' contracting moves the window AWAY from being too large back to valid. The widest valid window ending at r is what's left after contracting. Record then." },
             { label: "Only when r reaches n - 1.", explanation: "The longest valid window may end far before r reaches the end. You must check at every r." },
-            { label: "Only when the contract loop runs zero times.", explanation: "The contract loop running zero times means the window was already valid when r expanded — but it doesn't mean the answer is special at that step. Record after every expand+contract pair." },
+            { label: "Only when the contract loop runs zero times.", explanation: "The contract loop running zero times means the window was already valid when r expanded, but it doesn't mean the answer is special at that step. Record after every expand+contract pair." },
           ]}
         />
 
         <Quiz
           kind="Final check"
-          question="You're computing 'longest subarray with sum ≤ target' using a sliding window — but the array contains negative numbers. What's the problem?"
+          question="You're computing 'longest subarray with sum ≤ target' using a sliding window, but the array contains negative numbers. What's the problem?"
           options={[
             { label: "Nothing; the algorithm works as-is.", explanation: "It does not. With negatives, the sum is not monotonic in the window, so the contract step's logic falls apart." },
-            { label: "Adding a negative number can DECREASE the sum, so you can't reliably decide when to contract — the invariant doesn't behave monotonically.", correct: true, explanation: "Right. Sliding window depends on a kind of monotonicity: 'adding makes the constraint harder, removing makes it easier.' Negatives break that — adding a -10 actually relaxes a 'sum ≤ target' constraint instead of tightening it. Use prefix sums + HashMap (or a TreeMap/sorted structure) instead." },
+            { label: "Adding a negative number can DECREASE the sum, so you can't reliably decide when to contract, the invariant doesn't behave monotonically.", correct: true, explanation: "Right. Sliding window depends on a kind of monotonicity: 'adding makes the constraint harder, removing makes it easier.' Negatives break that, adding a -10 actually relaxes a 'sum ≤ target' constraint instead of tightening it. Use prefix sums + HashMap (or a TreeMap/sorted structure) instead." },
             { label: "Java's int overflow.", explanation: "Overflow is a real concern but unrelated. The fundamental issue is monotonicity, not numeric range." },
-            { label: "It's still O(n) but the constant is worse.", explanation: "It's not just slower — it's wrong. The contract logic relies on monotonicity that doesn't hold with negatives." },
+            { label: "It's still O(n) but the constant is worse.", explanation: "It's not just slower, it's wrong. The contract logic relies on monotonicity that doesn't hold with negatives." },
           ]}
         />
 
         <PartRecap
           title="What you can now do that you couldn't an hour ago"
-          gist="See 'contiguous' — think window. Pick fixed if K is given, variable otherwise. Maintain an invariant by expanding then contracting. The whole pattern is one for-loop with two pointers."
+          gist="See 'contiguous', think window. Pick fixed if K is given, variable otherwise. Maintain an invariant by expanding then contracting. The whole pattern is one for-loop with two pointers."
           points={[
             { takeaway: "Recognize sliding-window problems by language: 'contiguous,' 'substring,' 'subarray of length K,' 'longest/shortest with property P.'", detail: "If the answer involves non-contiguous subsets, or if the metric isn't monotonic in window size (negatives in a sum problem), the technique doesn't apply." },
-            { takeaway: "Fixed-window template: prime the first K, then slide with one add and one subtract.", detail: "Constant work per step, total O(n). Don't recompute the answer inside the slide loop — that's the most common O-bug." },
+            { takeaway: "Fixed-window template: prime the first K, then slide with one add and one subtract.", detail: "Constant work per step, total O(n). Don't recompute the answer inside the slide loop, that's the most common O-bug." },
             { takeaway: "Variable-window template: expand always, while-invariant-broken contract.", detail: "Both pointers move only right. Across the whole run that's at most 2n moves. Amortized O(n)." },
             { takeaway: "For 'longest valid' record after contracting; for 'shortest valid' record during.", detail: "These are mirror-image patterns. Mixing them up is the most common correctness bug in window problems." },
-            { takeaway: "Window + frequency map + formed counter is the killer combo for 'contains all of t' problems.", detail: "Track distinct keys whose count meets requirement; window is valid iff that counter equals need.size(). Reduces validity check from O(|t|) to O(1) — that's how Minimum Window Substring stays linear." },
+            { takeaway: "Window + frequency map + formed counter is the killer combo for 'contains all of t' problems.", detail: "Track distinct keys whose count meets requirement; window is valid iff that counter equals need.size(). Reduces validity check from O(|t|) to O(1), that's how Minimum Window Substring stays linear." },
           ]}
         />
 
@@ -866,7 +866,7 @@ for (int r = 0; r < s.length(); r++) {
             Binary search &amp; answer-search pattern →
           </Link>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            From linear-time scans to logarithmic-time searches — and the surprising trick of binary-searching the answer itself.
+            From linear-time scans to logarithmic-time searches, and the surprising trick of binary-searching the answer itself.
           </p>
         </div>
       </section>

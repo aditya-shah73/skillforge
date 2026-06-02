@@ -83,7 +83,7 @@ export default function Page() {
           Every system you&apos;ll ever work on is mid-migration. You join a team and there are three database schemas in flight, a half-rewritten payment service that still proxies 30% of traffic to the legacy monolith, and a column called <code>status_v2</code> that nobody can explain. This is normal. Production systems are rivers, not statues.
         </p>
         <p>
-          The skill that distinguishes senior engineers isn&apos;t avoiding migrations — it&apos;s running them safely. Here&apos;s the thing: every migration pattern in this module is just a careful answer to one question — <em>how do I change a piece of a system that I cannot turn off?</em>
+          The skill that distinguishes senior engineers isn&apos;t avoiding migrations, it&apos;s running them safely. Here&apos;s the thing: every migration pattern in this module is just a careful answer to one question, <em>how do I change a piece of a system that I cannot turn off?</em>
         </p>
       </section>
 
@@ -104,7 +104,7 @@ export default function Page() {
           <li><strong>Old DB + new DB:</strong>{" "}you write to both during cutover. One write fails. Now the systems disagree on a single row, and you have no idea which one a user&apos;s next read will hit.</li>
         </ul>
         <p>
-          The naive answer — <em>&quot;I&apos;ll just write to both inside one method call&quot;</em> — is not a solution. It&apos;s a way to hide the problem until the worst possible moment. The right tools are <strong>outbox pattern</strong>, <strong>idempotent backfills</strong>, and <strong>change data capture (CDC)</strong>, which we&apos;ll get to in part 3.
+          The naive answer, <em>&quot;I&apos;ll just write to both inside one method call&quot;</em>, is not a solution. It&apos;s a way to hide the problem until the worst possible moment. The right tools are <strong>outbox pattern</strong>, <strong>idempotent backfills</strong>, and <strong>change data capture (CDC)</strong>, which we&apos;ll get to in part 3.
         </p>
 
         <Callout variant="warn" title="The 'I'll write to both' trap">
@@ -126,19 +126,19 @@ export default function Page() {
         <ul>
           <li><strong>The freeze window grows.</strong> &quot;Two hours&quot; becomes six. Becomes &quot;we&apos;re calling customers Sunday morning.&quot;</li>
           <li><strong>You can&apos;t roll back.</strong>{" "}Once the new system has accepted writes, the old system is behind. Going back means losing data.</li>
-          <li><strong>You discover bugs in production at 3am.</strong>{" "}Schema differences, encoding mismatches, edge cases nobody backfilled — they all surface at the moment your team is most tired and traffic is starting to come back.</li>
+          <li><strong>You discover bugs in production at 3am.</strong>{" "}Schema differences, encoding mismatches, edge cases nobody backfilled, they all surface at the moment your team is most tired and traffic is starting to come back.</li>
         </ul>
         <p>
           The only real defense is <em>not freezing</em>. Migrate while the system is live. Every pattern in this module is essentially a way to answer the question <em>&quot;how do I do this without freezing?&quot;</em>
         </p>
 
         <Callout variant="insight" title="Risk vs velocity">
-          <p className="m-0">Live migrations are slower in elapsed time — they take weeks, not a weekend — but they&apos;re lower risk because every step is reversible. Big-bang migrations look fast on the calendar and feel terrifying in the runbook. Senior teams trade calendar time for reversibility, every time.</p>
+          <p className="m-0">Live migrations are slower in elapsed time, they take weeks, not a weekend, but they&apos;re lower risk because every step is reversible. Big-bang migrations look fast on the calendar and feel terrifying in the runbook. Senior teams trade calendar time for reversibility, every time.</p>
         </Callout>
 
         <h3>The honest cost of a migration</h3>
         <p>
-          A well-run migration of a single non-trivial table — say, renaming a column on a 100M-row Postgres table — typically looks like:
+          A well-run migration of a single non-trivial table, say, renaming a column on a 100M-row Postgres table, typically looks like:
         </p>
         <ul>
           <li>Week 1: write the migration plan, get review, build the dual-write code path behind a feature flag.</li>
@@ -154,9 +154,9 @@ export default function Page() {
         <Quiz
           question="Your team writes a payment row to Postgres and then immediately publishes a 'payment_made' event to Kafka inside the same handler. The Postgres write commits, but the Kafka call times out. What's the actual failure mode?"
           options={[
-            { label: "Permanent inconsistency: the payment exists in Postgres but no downstream system will ever know about it. Retrying the handler call doesn't help — the row is already there. This is the dual-write problem in miniature.", correct: true, explanation: "Right. You wrote to two systems with no atomic boundary. The fix is to write the event to an outbox table inside the same Postgres transaction, then have a separate process publish it to Kafka with retries." },
-            { label: "No problem — Kafka has at-least-once delivery, the message will eventually arrive.", explanation: "At-least-once kicks in once Kafka has accepted the message. The failure here is before Kafka has it at all — the call timed out. Nothing in Kafka knows the event was supposed to exist." },
-            { label: "The Postgres transaction will roll back when Kafka fails.", explanation: "The Postgres transaction already committed before the Kafka call started — there's nothing to roll back. The two operations are not part of one transaction." },
+            { label: "Permanent inconsistency: the payment exists in Postgres but no downstream system will ever know about it. Retrying the handler call doesn't help, the row is already there. This is the dual-write problem in miniature.", correct: true, explanation: "Right. You wrote to two systems with no atomic boundary. The fix is to write the event to an outbox table inside the same Postgres transaction, then have a separate process publish it to Kafka with retries." },
+            { label: "No problem, Kafka has at-least-once delivery, the message will eventually arrive.", explanation: "At-least-once kicks in once Kafka has accepted the message. The failure here is before Kafka has it at all, the call timed out. Nothing in Kafka knows the event was supposed to exist." },
+            { label: "The Postgres transaction will roll back when Kafka fails.", explanation: "The Postgres transaction already committed before the Kafka call started, there's nothing to roll back. The two operations are not part of one transaction." },
             { label: "It's fine because Spring's @Transactional will handle it.", explanation: "@Transactional only covers JDBC. It can't roll back a Kafka publish that already returned a timeout. Cross-system atomicity has to be designed, not assumed." },
           ]}
           hint="Are the two writes part of one atomic operation? They look like they are, but..."
@@ -167,8 +167,8 @@ export default function Page() {
           question="A team plans to migrate from MySQL to Postgres by 'freezing writes for an hour, dumping/reloading, and switching the app config.' What's the strongest objection?"
           options={[
             { label: "Big-bang migrations have no rollback once the new system accepts writes, and the freeze window almost always grows in practice. Live migration with dual writes + backfill is slower but reversible at every step.", correct: true, explanation: "Exactly. The freeze plan looks tidy on a runbook and feels terrifying at 2am when something is wrong. Live migration trades calendar time for the ability to back out." },
-            { label: "MySQL and Postgres have different SQL dialects, so the schema can't migrate.", explanation: "Dialects are a real concern but secondary — they can be handled with adapters or schema translation. The structural risk is the freeze-and-flip approach itself." },
-            { label: "You can't migrate databases without downtime, ever.", explanation: "You absolutely can — this entire module is about how. The objection isn't 'don't migrate', it's 'don't do it as a single freeze window'." },
+            { label: "MySQL and Postgres have different SQL dialects, so the schema can't migrate.", explanation: "Dialects are a real concern but secondary, they can be handled with adapters or schema translation. The structural risk is the freeze-and-flip approach itself." },
+            { label: "You can't migrate databases without downtime, ever.", explanation: "You absolutely can, this entire module is about how. The objection isn't 'don't migrate', it's 'don't do it as a single freeze window'." },
             { label: "Postgres can't handle MySQL-scale traffic.", explanation: "Postgres can handle the same traffic shapes MySQL does. The objection here is procedural, not capacity." },
           ]}
           hint="What goes wrong when something goes wrong at 3am?"
@@ -190,7 +190,7 @@ export default function Page() {
       <Checkpoint moduleSlug="migration-patterns" id="strangler-expand" title="Part 2 · Strangler fig & expand-contract" xp={25}>
         <h2>Strangler fig: replace a monolith without rewriting it</h2>
         <p>
-          Martin Fowler named the pattern after the strangler fig — a tree that grows around an old tree, slowly replacing it. The shape is the same in software. You put a router in front of the legacy system. New endpoints get implemented in a new service. The router sends traffic for those endpoints to the new service; everything else still goes to the legacy. Over months or years, the router&apos;s &quot;new service&quot; column grows and the &quot;legacy&quot; column shrinks until eventually the legacy can be turned off.
+          Martin Fowler named the pattern after the strangler fig, a tree that grows around an old tree, slowly replacing it. The shape is the same in software. You put a router in front of the legacy system. New endpoints get implemented in a new service. The router sends traffic for those endpoints to the new service; everything else still goes to the legacy. Over months or years, the router&apos;s &quot;new service&quot; column grows and the &quot;legacy&quot; column shrinks until eventually the legacy can be turned off.
         </p>
         <Mermaid chart={stranglerDiagram} />
         <p>
@@ -202,11 +202,11 @@ export default function Page() {
           <li><strong>Bounded blast radius.</strong>{" "}A bug in the new service affects only the endpoints you&apos;ve moved. The legacy keeps serving the rest.</li>
         </ul>
         <p>
-          The classic mistake is treating strangler fig as &quot;rewrite the new service, then move all traffic at once.&quot; That&apos;s a big-bang migration with extra steps. The whole point is the gradual move — usually starting with read-only or low-risk endpoints, building confidence, then tackling the writes.
+          The classic mistake is treating strangler fig as &quot;rewrite the new service, then move all traffic at once.&quot; That&apos;s a big-bang migration with extra steps. The whole point is the gradual move, usually starting with read-only or low-risk endpoints, building confidence, then tackling the writes.
         </p>
 
         <Callout variant="info" title="What does the router actually look like?">
-          <p className="m-0">Often it&apos;s your existing API gateway (Spring Cloud Gateway, Kong, Envoy) with a routing rule per path. Sometimes it&apos;s a thin Nginx config. For trickier cases — say, splitting traffic by user ID — it&apos;s a small &quot;dispatch service&quot; that looks at the request and forwards to either the legacy or the new service. The router doesn&apos;t need to be fancy. It needs to be configurable and observable.</p>
+          <p className="m-0">Often it&apos;s your existing API gateway (Spring Cloud Gateway, Kong, Envoy) with a routing rule per path. Sometimes it&apos;s a thin Nginx config. For trickier cases, say, splitting traffic by user ID, it&apos;s a small &quot;dispatch service&quot; that looks at the request and forwards to either the legacy or the new service. The router doesn&apos;t need to be fancy. It needs to be configurable and observable.</p>
         </Callout>
 
         <h3>Picking the first endpoint to move</h3>
@@ -214,12 +214,12 @@ export default function Page() {
           You want the first endpoint you migrate to be:
         </p>
         <ul>
-          <li><strong>Read-heavy.</strong>{" "}Reads are easier to roll back than writes — the worst case is a stale response, not a corrupted database.</li>
+          <li><strong>Read-heavy.</strong>{" "}Reads are easier to roll back than writes, the worst case is a stale response, not a corrupted database.</li>
           <li><strong>Low-stakes.</strong>{" "}Nobody&apos;s wallet is on the line if it has a bug for an hour.</li>
           <li><strong>Self-contained.</strong>{" "}Doesn&apos;t require huge swaths of legacy logic to reimplement.</li>
         </ul>
         <p>
-          Common first moves: a <code>/health</code> or <code>/version</code> endpoint (almost trivial), a read-only product-catalog list, a search endpoint that&apos;s already partially proxied. Save the writes — orders, payments, user creation — for after you&apos;ve built confidence with the routing infrastructure.
+          Common first moves: a <code>/health</code> or <code>/version</code> endpoint (almost trivial), a read-only product-catalog list, a search endpoint that&apos;s already partially proxied. Save the writes, orders, payments, user creation, for after you&apos;ve built confidence with the routing infrastructure.
         </p>
 
         <h2>Expand-contract: schema changes on live tables</h2>
@@ -236,10 +236,10 @@ export default function Page() {
 
         <h3>The six steps, walked carefully</h3>
         <ol>
-          <li><strong>Add the new column, nullable, no reads.</strong>{" "}Pure ALTER TABLE — fast on Postgres if the column is nullable with no default. The application doesn&apos;t know about the column yet.</li>
+          <li><strong>Add the new column, nullable, no reads.</strong>{" "}Pure ALTER TABLE, fast on Postgres if the column is nullable with no default. The application doesn&apos;t know about the column yet.</li>
           <li><strong>Dual-write.</strong>{" "}Deploy code that writes both the old and the new column on every update. New rows get both populated. Old rows still have the old column populated and the new column NULL.</li>
           <li><strong>Backfill.</strong>{" "}A separate batch job copies the old column&apos;s value into the new column for every existing row, in idempotent batches of (say) 10k rows. Throttled to keep replication lag under your SLO. After it&apos;s done, every row has both columns matching.</li>
-          <li><strong>Switch reads.</strong>{" "}Behind a feature flag, flip the application&apos;s read path from <code>old_status</code> to <code>status</code>. Roll out gradually — 1%, 10%, 100%. Watch for errors.</li>
+          <li><strong>Switch reads.</strong>{" "}Behind a feature flag, flip the application&apos;s read path from <code>old_status</code> to <code>status</code>. Roll out gradually, 1%, 10%, 100%. Watch for errors.</li>
           <li><strong>Stop writing the old column.</strong>{" "}Once reads are 100% on the new column for a few days and nothing depends on the old, deploy code that only writes <code>status</code>. The old column is now frozen.</li>
           <li><strong>Drop the old column.</strong>{" "}Weeks later, when you&apos;re sure nothing reads it (verify with logs and slow-query analysis), <code>ALTER TABLE DROP COLUMN</code>. Done.</li>
         </ol>
@@ -294,12 +294,12 @@ public class OrderService {
 }`}</CodeBlock>
 
         <Callout variant="spring" title="Liquibase vs Flyway">
-          <p className="m-0">Both work. Flyway has a simpler model (numbered SQL files, no rollback support out of the box). Liquibase is more featureful (XML/YAML changeSets, built-in rollbacks, conditional logic). For expand-contract, either is fine — what matters is that every step is its own changeSet/migration so you can deploy them independently. Don&apos;t lump &quot;add column + dual-write code&quot; into a single change.</p>
+          <p className="m-0">Both work. Flyway has a simpler model (numbered SQL files, no rollback support out of the box). Liquibase is more featureful (XML/YAML changeSets, built-in rollbacks, conditional logic). For expand-contract, either is fine, what matters is that every step is its own changeSet/migration so you can deploy them independently. Don&apos;t lump &quot;add column + dual-write code&quot; into a single change.</p>
         </Callout>
 
         <h3>The backfill: idempotent, resumable, throttled</h3>
         <p>
-          Backfills sound simple — &quot;just copy the data&quot; — and then they take down production. The three properties that matter:
+          Backfills sound simple, &quot;just copy the data&quot;, and then they take down production. The three properties that matter:
         </p>
         <ul>
           <li><strong>Idempotent.</strong>{" "}Running the same batch twice produces the same result. Use <code>UPDATE ... WHERE status IS NULL</code>, not <code>UPDATE ... ; INSERT INTO migration_log</code>.</li>
@@ -370,9 +370,9 @@ public class StatusBackfillJob {
         <Quiz
           question="During an expand-contract migration of a 200M-row users table, you've added a new email_lower column and turned on dual-writes. The backfill script does this: UPDATE users SET email_lower = LOWER(email) WHERE email_lower IS NULL. You start it and database CPU pegs at 100%. What went wrong?"
           options={[
-            { label: "The query has no LIMIT and no batching — it tries to update all 200M rows in a single transaction. Postgres locks the rows, replication lag spikes, and CPU saturates. Backfills must run in throttled batches with explicit row bounds.", correct: true, explanation: "Right. A single UPDATE on 200M rows generates 200M WAL records in one transaction, replicas can't keep up, and the primary chokes on the lock contention. Batched (e.g. WHERE id BETWEEN ? AND ?) with sleep between batches is the correct shape." },
+            { label: "The query has no LIMIT and no batching, it tries to update all 200M rows in a single transaction. Postgres locks the rows, replication lag spikes, and CPU saturates. Backfills must run in throttled batches with explicit row bounds.", correct: true, explanation: "Right. A single UPDATE on 200M rows generates 200M WAL records in one transaction, replicas can't keep up, and the primary chokes on the lock contention. Batched (e.g. WHERE id BETWEEN ? AND ?) with sleep between batches is the correct shape." },
             { label: "LOWER() is not indexable, so Postgres has to scan the whole table.", explanation: "The scan is real but isn't the dominant problem. You can scan a 200M-row table in chunks fine. The killer is doing 200M updates in one transaction." },
-            { label: "Dual-writes shouldn't have been turned on yet.", explanation: "Turning on dual-writes before backfilling is correct ordering — it ensures new rows get both columns. The bug is the backfill query shape, not the sequence." },
+            { label: "Dual-writes shouldn't have been turned on yet.", explanation: "Turning on dual-writes before backfilling is correct ordering, it ensures new rows get both columns. The bug is the backfill query shape, not the sequence." },
             { label: "You should have used a stored procedure instead.", explanation: "Stored procedure vs application code doesn't matter; the issue is transaction size and throttling. Either approach has to batch." },
           ]}
           hint="What does a single UPDATE that touches 200M rows do to the WAL?"
@@ -382,10 +382,10 @@ public class StatusBackfillJob {
         <Quiz
           question="Your team is using strangler fig to move /orders off a legacy monolith. Which is the safest first endpoint to move?"
           options={[
-            { label: "GET /orders/{id} (read-only) — failures only return stale data, never corrupt it; rollback is a router config flip.", correct: true, explanation: "Right. Read-only endpoints have the smallest blast radius. The new service might return a wrong answer for an hour, but nothing in the database is destroyed. You build confidence in the routing infrastructure before tackling writes." },
-            { label: "POST /orders (create) — that's the highest traffic, so you'll learn fastest.", explanation: "You'll learn fastest by breaking real customer orders. Writes have permanent failure modes — duplicate orders, lost orders. Save those for after the read path is solid." },
-            { label: "DELETE /orders/{id} — small surface area, easy to migrate.", explanation: "Deletes are permanent. A bug in DELETE during cutover means you've lost data with no rollback. Worst possible first endpoint." },
-            { label: "All endpoints at once — strangler fig means gradual but you should still cut over the whole API together.", explanation: "That's a big-bang migration with strangler-fig branding. The whole point of the pattern is per-endpoint cutover with per-endpoint rollback." },
+            { label: "GET /orders/{id} (read-only), failures only return stale data, never corrupt it; rollback is a router config flip.", correct: true, explanation: "Right. Read-only endpoints have the smallest blast radius. The new service might return a wrong answer for an hour, but nothing in the database is destroyed. You build confidence in the routing infrastructure before tackling writes." },
+            { label: "POST /orders (create), that's the highest traffic, so you'll learn fastest.", explanation: "You'll learn fastest by breaking real customer orders. Writes have permanent failure modes, duplicate orders, lost orders. Save those for after the read path is solid." },
+            { label: "DELETE /orders/{id}, small surface area, easy to migrate.", explanation: "Deletes are permanent. A bug in DELETE during cutover means you've lost data with no rollback. Worst possible first endpoint." },
+            { label: "All endpoints at once, strangler fig means gradual but you should still cut over the whole API together.", explanation: "That's a big-bang migration with strangler-fig branding. The whole point of the pattern is per-endpoint cutover with per-endpoint rollback." },
           ]}
           hint="If the new service has a bug, which kind of failure is recoverable?"
           xp={6}
@@ -406,7 +406,7 @@ public class StatusBackfillJob {
       <Checkpoint moduleSlug="migration-patterns" id="dual-writes" title="Part 3 · Dual-writes done right" xp={25}>
         <h2>The outbox pattern (again, because it&apos;s essential)</h2>
         <p>
-          Phase 5 — the <Link href="/courses/system-design/modules/distributed-transactions">distributed transactions module</Link> — introduced the outbox pattern as a way to publish events alongside a database write atomically. It comes back here because <strong>almost every cross-system migration needs it</strong>.
+          Phase 5, the <Link href="/courses/system-design/modules/distributed-transactions">distributed transactions module</Link>, introduced the outbox pattern as a way to publish events alongside a database write atomically. It comes back here because <strong>almost every cross-system migration needs it</strong>.
         </p>
         <p>
           The shape: instead of writing to system A and then publishing to system B (which can fail between the two), write to system A <em>and</em>{" "}append to an <code>outbox</code> table inside the same transaction. A separate publisher reads the outbox and pushes to system B with retries. If the publisher crashes, the outbox row stays. Eventually it gets delivered exactly once-ish.
@@ -468,7 +468,7 @@ public class OutboxPublisher {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why outbox beats 'write to both'">
-          <p className="m-0">The two writes — payments table and outbox table — are in the <em>same</em>{" "}Postgres transaction. They commit together or roll back together. The publisher is the only thing talking to the second system, and it&apos;s designed to retry safely. You replaced an undesigned distributed transaction with a designed one that lives entirely inside Postgres.</p>
+          <p className="m-0">The two writes, payments table and outbox table, are in the <em>same</em>{" "}Postgres transaction. They commit together or roll back together. The publisher is the only thing talking to the second system, and it&apos;s designed to retry safely. You replaced an undesigned distributed transaction with a designed one that lives entirely inside Postgres.</p>
         </Callout>
 
         <h2>Cutover strategies</h2>
@@ -484,7 +484,7 @@ public class OutboxPublisher {
           It costs 2x reads for the duration of shadowing. That&apos;s usually a small price for finding 100% of the bugs in advance.
         </p>
 
-        <CodeBlock lang="java" caption="Read shadowing — return old, log diffs from new">{`@Service
+        <CodeBlock lang="java" caption="Read shadowing, return old, log diffs from new">{`@Service
 public class ShadowedOrderReader {
 
   private final LegacyOrderRepo legacy;
@@ -533,12 +533,12 @@ public class ShadowedOrderReader {
         </p>
 
         <Callout variant="warn" title="The rollback plan is part of the migration plan">
-          <p className="m-0">Before you flip any flag, write down — on paper or in the runbook — exactly what you&apos;ll do if something goes wrong. &quot;Toggle the flag back to 0%, watch error rate drop, page on-call if it doesn&apos;t.&quot; If your migration plan doesn&apos;t have a rollback section, it isn&apos;t a migration plan, it&apos;s an aspiration.</p>
+          <p className="m-0">Before you flip any flag, write down, on paper or in the runbook, exactly what you&apos;ll do if something goes wrong. &quot;Toggle the flag back to 0%, watch error rate drop, page on-call if it doesn&apos;t.&quot; If your migration plan doesn&apos;t have a rollback section, it isn&apos;t a migration plan, it&apos;s an aspiration.</p>
         </Callout>
 
         <h3>The drift detector</h3>
         <p>
-          Once you&apos;re dual-writing — to the old DB and the new DB, or DB and search index — you need a job that periodically samples rows from both sides and verifies they match. This is your insurance. If a write somewhere fails silently, the drift detector finds it.
+          Once you&apos;re dual-writing, to the old DB and the new DB, or DB and search index, you need a job that periodically samples rows from both sides and verifies they match. This is your insurance. If a write somewhere fails silently, the drift detector finds it.
         </p>
         <CodeBlock lang="plain" caption="Drift detector pseudocode">{`every 10 minutes:
   sample 1000 random ids from orders
@@ -568,16 +568,16 @@ if drift counter > 0 for >1 hour:
         </ol>
 
         <Callout variant="insight" title="The scariest step is step 6, not step 5">
-          <p className="m-0">Most teams celebrate when they hit 100% reads on the new system. The actual point of no return is when you stop writing to the old system — that&apos;s when you lose the ability to roll back. Hold that step longer than feels comfortable. Two weeks of running both systems in parallel costs almost nothing; the cost of being wrong is enormous.</p>
+          <p className="m-0">Most teams celebrate when they hit 100% reads on the new system. The actual point of no return is when you stop writing to the old system, that&apos;s when you lose the ability to roll back. Hold that step longer than feels comfortable. Two weeks of running both systems in parallel costs almost nothing; the cost of being wrong is enormous.</p>
         </Callout>
 
         <Quiz
           question="During shadow reads on a payments-service migration, you find that 0.3% of reads return slightly different results between old and new. The new system is missing a few cents on some orders. What do you do?"
           options={[
-            { label: "Stop the cutover. Investigate and fix the discrepancy in the new system. Shadow reads are exactly the gate to catch this — letting 0.3% bad reads into production at percentage cutover means real customer-visible bugs.", correct: true, explanation: "Right. 0.3% drift on a payments system is unacceptable, and shadow mode is doing exactly its job. The whole point is to catch this before users see it." },
-            { label: "Proceed with the cutover at 1% — most users will be fine and you'll get more signal.", explanation: "You already have signal: the new system is wrong 0.3% of the time. Pushing live and waiting for users to notice is exactly the failure mode shadow reads are designed to prevent." },
+            { label: "Stop the cutover. Investigate and fix the discrepancy in the new system. Shadow reads are exactly the gate to catch this, letting 0.3% bad reads into production at percentage cutover means real customer-visible bugs.", correct: true, explanation: "Right. 0.3% drift on a payments system is unacceptable, and shadow mode is doing exactly its job. The whole point is to catch this before users see it." },
+            { label: "Proceed with the cutover at 1%, most users will be fine and you'll get more signal.", explanation: "You already have signal: the new system is wrong 0.3% of the time. Pushing live and waiting for users to notice is exactly the failure mode shadow reads are designed to prevent." },
             { label: "Deploy with a banner saying 'amounts may be slightly off during migration.'", explanation: "Payments accuracy is non-negotiable. There's no UX banner that fixes 'we sometimes lose a few cents'." },
-            { label: "Re-run the backfill — it must have skipped rows.", explanation: "Maybe, but you don't actually know that yet. The first step is to investigate the discrepancy, not blindly re-backfill." },
+            { label: "Re-run the backfill, it must have skipped rows.", explanation: "Maybe, but you don't actually know that yet. The first step is to investigate the discrepancy, not blindly re-backfill." },
           ]}
           hint="What's shadow mode actually for?"
           xp={7}
@@ -586,9 +586,9 @@ if drift counter > 0 for >1 hour:
         <Quiz
           question="You're doing percentage cutover from old → new orders service. You bucket users by hashing on a random number per request rather than by user ID. What's the bug?"
           options={[
-            { label: "Per-request randomness means the same user gets old vs new on different reads. They'll see their order list change between refreshes ('why did my last order disappear?'). Bucket by user ID so each user is consistently on one system.", correct: true, explanation: "Exactly. Stable per-user assignment is essential. Random per-request gives users an inconsistent view of their own data, which manifests as the worst kind of bug — one that looks like data loss." },
+            { label: "Per-request randomness means the same user gets old vs new on different reads. They'll see their order list change between refreshes ('why did my last order disappear?'). Bucket by user ID so each user is consistently on one system.", correct: true, explanation: "Exactly. Stable per-user assignment is essential. Random per-request gives users an inconsistent view of their own data, which manifests as the worst kind of bug, one that looks like data loss." },
             { label: "Per-request hashing is fine; the systems should agree on the data anyway.", explanation: "If the systems agreed perfectly, you wouldn't need shadow reads or a cutover at all. The whole reason for percentage rollout is that the systems can disagree, and inconsistent bucketing exposes those disagreements to single users." },
-            { label: "Random bucketing is too cheap to compute — use a cryptographic hash.", explanation: "The bug is per-request vs per-user, not the hash function. SHA vs murmur doesn't matter; stability does." },
+            { label: "Random bucketing is too cheap to compute, use a cryptographic hash.", explanation: "The bug is per-request vs per-user, not the hash function. SHA vs murmur doesn't matter; stability does." },
             { label: "Bucket by IP address instead.", explanation: "IP-based bucketing breaks for users behind shared NATs (corporate networks, mobile carriers). User ID is the right key." },
           ]}
           hint="What does a single user see if their bucket changes per request?"

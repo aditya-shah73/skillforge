@@ -13,9 +13,9 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "setup", title: "What a heap is — and why it's an array" },
+  { id: "setup", title: "What a heap is, and why it's an array" },
   { id: "ops", title: "Sift-up, sift-down, build-heap" },
-  { id: "pq", title: "Java's PriorityQueue — when (and when not) to reach for it" },
+  { id: "pq", title: "Java's PriorityQueue, when (and when not) to reach for it" },
   { id: "topk", title: "The top-K pattern" },
   { id: "project", title: "Project: build a MinHeap from scratch" },
   { id: "final", title: "Final quiz" },
@@ -121,13 +121,13 @@ flowchart LR
       {/* ───────────────── Part 1 · Setup ───────────────── */}
       <Checkpoint moduleSlug="heaps" id="setup" title="I understand the heap shape and the array trick" xp={20}>
       <section>
-        <h2 id="setup">What a heap is — and why it&apos;s an array</h2>
+        <h2 id="setup">What a heap is, and why it&apos;s an array</h2>
 
         <p>
           A <strong>heap</strong>{" "}is a complete binary tree with one rule: every parent is{" "}
           <em>≤</em>{" "}its children (min-heap) or <em>≥</em>{" "}its children (max-heap). That&apos;s the entire definition.
           Note what&apos;s <em>not</em>{" "}required: siblings have no order with respect to each other, and the tree is
-          not sorted. The min-heap below is a perfectly valid heap — but it&apos;s not a BST, and reading its leaves
+          not sorted. The min-heap below is a perfectly valid heap, but it&apos;s not a BST, and reading its leaves
           left-to-right does not give you sorted order.
         </p>
 
@@ -152,7 +152,7 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         <p>For any index <code>i</code>:</p>
 
         <ul>
-          <li><code>parent(i) = (i - 1) / 2</code> &nbsp;— integer division</li>
+          <li><code>parent(i) = (i - 1) / 2</code>, integer division</li>
           <li><code>left(i)   = 2 * i + 1</code></li>
           <li><code>right(i)  = 2 * i + 2</code></li>
         </ul>
@@ -160,13 +160,13 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         <Callout variant="insight" title="Why this is a quietly genius data structure">
           A binary tree, but with no node objects, no left/right pointers, no allocations per node. Just an array and
           three arithmetic helpers. Cache-friendly. Heap memory overhead approaches zero. And the completeness rule
-          is what enables it — without it, the indices would have gaps and the math wouldn&apos;t work.
+          is what enables it, without it, the indices would have gaps and the math wouldn&apos;t work.
         </Callout>
 
         <p>
           (Some textbooks index from <code>1</code> instead of <code>0</code>, which gives the cleaner formulas{" "}
           <code>parent = i/2</code>, <code>left = 2i</code>, <code>right = 2i+1</code>. Java code typically uses
-          0-based — match whatever convention you&apos;re reading in.)
+          0-based, match whatever convention you&apos;re reading in.)
         </p>
 
         <h3>What heaps are good at</h3>
@@ -174,13 +174,13 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         <p>A heap supports two fast operations:</p>
 
         <ul>
-          <li><code>peek()</code> — return the min (or max) in <strong>O(1)</strong></li>
-          <li><code>poll()</code> — remove and return the min (or max) in <strong>O(log n)</strong></li>
-          <li><code>offer(x)</code> — insert in <strong>O(log n)</strong></li>
+          <li><code>peek()</code>, return the min (or max) in <strong>O(1)</strong></li>
+          <li><code>poll()</code>, remove and return the min (or max) in <strong>O(log n)</strong></li>
+          <li><code>offer(x)</code>, insert in <strong>O(log n)</strong></li>
         </ul>
 
         <p>
-          What it&apos;s <em>not</em>{" "}good at: finding an arbitrary element (O(n) — you have to scan), getting elements
+          What it&apos;s <em>not</em>{" "}good at: finding an arbitrary element (O(n), you have to scan), getting elements
           in sorted order without removing them, or finding the second-smallest fast (it&apos;s one of the root&apos;s
           children, but you don&apos;t know which without comparing). If you need any of those, you want a TreeMap
           or TreeSet from the previous module.
@@ -191,7 +191,7 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
           question="In a min-heap, what is the relationship between an element and its grandchild?"
           options={[
             { label: "The element is always less than its grandchild.", correct: true, explanation: "Right. Heap order is transitive: if parent ≤ child and child ≤ grandchild, then parent ≤ grandchild. So every node is ≤ all of its descendants." },
-            { label: "There's no defined relationship.", explanation: "There is — heap order is transitive down the tree." },
+            { label: "There's no defined relationship.", explanation: "There is, heap order is transitive down the tree." },
             { label: "The element is greater than its grandchild.", explanation: "Backwards. In a min-heap, parents are smaller than descendants." },
             { label: "Equal.", explanation: "They're not required to be equal; the order is ≤, and most interesting heaps have distinct values." },
           ]}
@@ -218,11 +218,11 @@ value:  1  3  2  7  5  4  9  8`}</CodeBlock>
         <p>
           All three core heap operations boil down to two primitives: <strong>sift-up</strong> (used by{" "}
           <code>offer</code>) and <strong>sift-down</strong> (used by <code>poll</code>). Each walks one path from a
-          leaf to the root or vice versa — and a complete binary tree of <em>n</em>{" "}nodes has height{" "}
+          leaf to the root or vice versa, and a complete binary tree of <em>n</em>{" "}nodes has height{" "}
           <code>⌊log₂ n⌋</code>, which is where the O(log n) cost comes from.
         </p>
 
-        <h3>Sift-up — the offer path</h3>
+        <h3>Sift-up, the offer path</h3>
 
         <p>
           To insert a new element: append it to the end of the array (preserving completeness), then walk it up toward
@@ -250,7 +250,7 @@ public void offer(int x) {
           <code>log₂ n</code>, so worst-case O(log n) compares and swaps.
         </p>
 
-        <h3>Sift-down — the poll path</h3>
+        <h3>Sift-down, the poll path</h3>
 
         <p>
           To remove the min: take it from index 0, move the last element into the root (still complete), then walk it
@@ -287,11 +287,11 @@ public int poll() {
           parent, left, and right.
         </Callout>
 
-        <h3>Build-heap — O(n), not O(n log n)</h3>
+        <h3>Build-heap, O(n), not O(n log n)</h3>
 
         <p>
           Suppose you have a raw, unsorted array and want to turn it into a heap. The naive approach is to call{" "}
-          <code>offer</code> n times — that&apos;s O(n log n). But there&apos;s a clever trick: <strong>sift-down
+          <code>offer</code> n times, that&apos;s O(n log n). But there&apos;s a clever trick: <strong>sift-down
           every internal node, starting from the last one and walking backwards to the root.</strong>
         </p>
 
@@ -315,13 +315,13 @@ public int poll() {
         <p>
           Once you have heapify, sorting is almost free: heapify the array (O(n)), then repeatedly poll the min into
           position. The standard trick to do this in-place is to use a <em>max-heap</em>{" "}and swap the root with the
-          last unsorted slot — that ends up giving you the array in ascending order with no extra allocation. Total:
+          last unsorted slot, that ends up giving you the array in ascending order with no extra allocation. Total:
           O(n log n) time, O(1) extra space, not stable.
         </p>
 
         <p>
           Java&apos;s <code>Arrays.sort</code> uses dual-pivot quicksort for primitives and Timsort for objects, not
-          heapsort — quicksort has better cache behavior in practice, and Timsort wins on partially-sorted data. But
+          heapsort, quicksort has better cache behavior in practice, and Timsort wins on partially-sorted data. But
           heapsort is the algorithm you reach for when you need a guaranteed O(n log n) worst case with O(1) space.
         </p>
 
@@ -329,8 +329,8 @@ public int poll() {
           kind="Operation check"
           question="Why does the for loop in heapify start at n/2 - 1 instead of n - 1?"
           options={[
-            { label: "Bug — it should start at n - 1.", explanation: "Then you'd call siftDown on leaves, which is wasted work. Leaves can't sift down — they have no children." },
-            { label: "Indices [n/2, n-1] are leaves; they're already valid one-element heaps and don't need sifting.", correct: true, explanation: "Right. In a complete binary tree of n nodes, exactly the bottom half are leaves. Sifting them down is a no-op. Starting at the last internal node skips that wasted work — and it's why the proof of O(n) goes through cleanly." },
+            { label: "Bug, it should start at n - 1.", explanation: "Then you'd call siftDown on leaves, which is wasted work. Leaves can't sift down, they have no children." },
+            { label: "Indices [n/2, n-1] are leaves; they're already valid one-element heaps and don't need sifting.", correct: true, explanation: "Right. In a complete binary tree of n nodes, exactly the bottom half are leaves. Sifting them down is a no-op. Starting at the last internal node skips that wasted work, and it's why the proof of O(n) goes through cleanly." },
             { label: "It's a Java optimization.", explanation: "It's an algorithmic optimization, language-independent." },
             { label: "To avoid out-of-bounds errors.", explanation: "Sift-down already bounds-checks via 'l < size'. The reason is that leaves don't need sifting." },
           ]}
@@ -341,11 +341,11 @@ public int poll() {
       {/* ───────────────── Part 3 · PriorityQueue ───────────────── */}
       <Checkpoint moduleSlug="heaps" id="pq" title="I know what java.util.PriorityQueue is and isn't" xp={20}>
       <section>
-        <h2 id="pq">Java&apos;s PriorityQueue — when (and when not) to reach for it</h2>
+        <h2 id="pq">Java&apos;s PriorityQueue, when (and when not) to reach for it</h2>
 
         <p>
           <code>java.util.PriorityQueue&lt;E&gt;</code> is the JDK&apos;s array-backed binary min-heap. It implements{" "}
-          <code>Queue&lt;E&gt;</code>, but <strong>it is not a FIFO queue</strong> — <code>poll()</code> returns the
+          <code>Queue&lt;E&gt;</code>, but <strong>it is not a FIFO queue</strong>, <code>poll()</code> returns the
           smallest element by natural order (or by your <code>Comparator</code>), not the first one inserted. This
           confuses people every year.
         </p>
@@ -387,14 +387,14 @@ PriorityQueue<String> p = new PriorityQueue<>(
         <ul>
           <li><code>offer(x)</code>, <code>poll()</code>, <code>remove()</code> at root: <strong>O(log n)</strong></li>
           <li><code>peek()</code>: <strong>O(1)</strong></li>
-          <li><code>contains(x)</code>, <code>remove(x)</code> for arbitrary x: <strong>O(n)</strong> — has to scan</li>
+          <li><code>contains(x)</code>, <code>remove(x)</code> for arbitrary x: <strong>O(n)</strong>, has to scan</li>
           <li>Construction from a collection of size n: <strong>O(n)</strong>{" "}via internal heapify</li>
-          <li>Iteration order: <strong>not sorted</strong> — it&apos;s array order, which is heap order, which is meaningless to humans</li>
+          <li>Iteration order: <strong>not sorted</strong>, it&apos;s array order, which is heap order, which is meaningless to humans</li>
         </ul>
 
         <Callout variant="insight" title="The construction shortcut">
           <code>new PriorityQueue&lt;&gt;(collection)</code> is O(n), not O(n log n). The constructor calls a private{" "}
-          <code>heapify()</code>. So when you have all elements up front, hand them to the constructor in bulk —
+          <code>heapify()</code>. So when you have all elements up front, hand them to the constructor in bulk,
           don&apos;t loop and offer them one at a time. Same algorithm, half the asymptotic cost.
         </Callout>
 
@@ -417,10 +417,10 @@ PriorityQueue<String> p = new PriorityQueue<>(
           items={[
             { id: "1", label: "Continuously merge K sorted streams into one sorted output.", answer: "heap", explanation: "Classic: heap of (value, streamIndex) pairs, size K. Poll smallest, push the next from that stream. O(N log K)." },
             { id: "2", label: "Find the median of a sliding window of size 1000 over a long stream.", answer: "heap", explanation: "Two-heap median: max-heap for the lower half, min-heap for the upper half. Insert and rebalance per element." },
-            { id: "3", label: "Dispatch the highest-priority task next, where priorities can change after enqueue.", answer: "other", explanation: "Standard PQ has no decrease-key. Use either an indexed heap (custom) or rely on lazy deletion — or for small task sets, a TreeMap keyed by priority." },
+            { id: "3", label: "Dispatch the highest-priority task next, where priorities can change after enqueue.", answer: "other", explanation: "Standard PQ has no decrease-key. Use either an indexed heap (custom) or rely on lazy deletion, or for small task sets, a TreeMap keyed by priority." },
             { id: "4", label: "Look up customer record by ID.", answer: "other", explanation: "HashMap. A heap doesn't support keyed lookup." },
             { id: "5", label: "Top 100 most frequent words in a large document.", answer: "heap", explanation: "Frequency count in a HashMap, then a min-heap of size 100 over (count, word). The bounded-size top-K pattern from the next section." },
-            { id: "6", label: "Get the elements in sorted order, repeatedly.", answer: "other", explanation: "TreeSet or TreeMap — they iterate in sorted order in O(n). A heap can't do this without destructively polling everything." },
+            { id: "6", label: "Get the elements in sorted order, repeatedly.", answer: "other", explanation: "TreeSet or TreeMap, they iterate in sorted order in O(n). A heap can't do this without destructively polling everything." },
             { id: "7", label: "Schedule events for the next earliest time, with new events arriving constantly.", answer: "heap", explanation: "Min-heap keyed by event time. peek to know what's next, poll to fire it, offer when new ones arrive. The pattern at the heart of every event loop." },
             { id: "8", label: "Check membership in a small set of allowed user roles.", answer: "other", explanation: "HashSet. Membership is O(1) hashing; you'd never reach for a heap." },
           ]}
@@ -435,7 +435,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
 
         <p>
           One pattern dominates the heap question family on LeetCode: <strong>top-K</strong>. The setup: you have a
-          stream or collection of N items, and you want the K largest (or smallest, or most frequent) — where K is
+          stream or collection of N items, and you want the K largest (or smallest, or most frequent), where K is
           small relative to N. The naive solution is to sort the whole collection in O(N log N). The heap solution is
           O(N log K), which is dramatically faster when K is small.
         </p>
@@ -446,7 +446,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
 
         <p>
           For top-K <em>largest</em>, use a <strong>min-heap of size K</strong>. Counterintuitive, but: the smallest
-          element in the heap is exactly the &quot;cutoff&quot; — anything smaller than it is not in the top K. So
+          element in the heap is exactly the &quot;cutoff&quot;, anything smaller than it is not in the top K. So
           for each new element, peek the heap; if the new element beats the cutoff, kick the cutoff out and admit
           the new one.
         </p>
@@ -463,7 +463,7 @@ PriorityQueue<String> p = new PriorityQueue<>(
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Why min-heap for top-K largest (and not max-heap)">
-          To maintain the top K largest seen so far, you need fast access to the <em>smallest</em>{" "}of the survivors —
+          To maintain the top K largest seen so far, you need fast access to the <em>smallest</em>{" "}of the survivors,
           that&apos;s the one to evict when something larger arrives. So min-heap. By symmetry: for top-K smallest,
           use a max-heap. This swap-the-comparator-orientation step trips people up; if you find yourself confused
           mid-interview, the rule is &quot;heap holds the K survivors; root is the one most likely to be evicted.&quot;
@@ -529,15 +529,15 @@ PriorityQueue<String> p = new PriorityQueue<>(
         <Callout variant="info" title="Bucket sort beats heap here">
           LC 347 has an O(n) solution: bucket-sort entries by frequency (since frequency is bounded by n), then walk
           buckets from highest to lowest until you collect K items. The heap version is O(n log k) and is what
-          interviewers usually expect — but if asked &quot;can you do better,&quot; bucket sort is the answer. Same
+          interviewers usually expect, but if asked &quot;can you do better,&quot; bucket sort is the answer. Same
           tradeoff every time: heaps are simple and general; bucket sort wins when the value range is bounded.
         </Callout>
 
-        <h3>Quickselect — the alternative for &quot;K-th element&quot;</h3>
+        <h3>Quickselect, the alternative for &quot;K-th element&quot;</h3>
 
         <p>
           For exactly the &quot;K-th largest/smallest&quot; flavor (not the full top-K list), <strong>quickselect</strong>{" "}
-          finishes in O(n) average time — better than a heap&apos;s O(n log k). It&apos;s a partial quicksort: pick a
+          finishes in O(n) average time, better than a heap&apos;s O(n log k). It&apos;s a partial quicksort: pick a
           pivot, partition, recurse only into the side that contains the answer. Worst-case O(n²) without
           median-of-medians, but with random pivots it&apos;s reliably linear in practice. Worth knowing exists; the
           heap solution is what you&apos;ll write 95% of the time because it&apos;s shorter and harder to get wrong.
@@ -676,14 +676,14 @@ public class HeapStress {
         <p>Solve all three using <code>java.util.PriorityQueue</code>:</p>
 
         <ul>
-          <li><strong>LC 215 · Kth Largest Element</strong> — top-K largest, return root. ~8 lines.</li>
-          <li><strong>LC 1046 · Last Stone Weight</strong> — max-heap, repeatedly poll two and push difference. ~10 lines.</li>
-          <li><strong>LC 347 · Top K Frequent Elements</strong> — HashMap to count, min-heap of size K over entries by count. ~15 lines.</li>
+          <li><strong>LC 215 · Kth Largest Element</strong>, top-K largest, return root. ~8 lines.</li>
+          <li><strong>LC 1046 · Last Stone Weight</strong>, max-heap, repeatedly poll two and push difference. ~10 lines.</li>
+          <li><strong>LC 347 · Top K Frequent Elements</strong>, HashMap to count, min-heap of size K over entries by count. ~15 lines.</li>
         </ul>
 
         <p>
-          All three implementations are sketched above. Type them out, submit, verify the green check. Then — and
-          this is the real exercise — for at least one of them, swap <code>PriorityQueue</code> for your{" "}
+          All three implementations are sketched above. Type them out, submit, verify the green check. Then, and
+          this is the real exercise, for at least one of them, swap <code>PriorityQueue</code> for your{" "}
           <code>MinHeap</code> and confirm it still passes.
         </p>
 
@@ -699,7 +699,7 @@ public class HeapStress {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 15 — and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4 — graphs (BFS, DFS, shortest path) — is next.">
+      <Checkpoint moduleSlug="heaps" id="final" title="I've completed Module 15, and Phase 3!" xp={40} celebration="Hash tables, sets, trees, BSTs, heaps. The structures that power most of modern software. Phase 4, graphs (BFS, DFS, shortest path), is next.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -708,7 +708,7 @@ public class HeapStress {
           question="A heap of 1,024 elements has roughly what tree height?"
           options={[
             { label: "About 32.", explanation: "32 is √1024. Heap height is the log, not the square root." },
-            { label: "About 10.", correct: true, explanation: "Right. ⌊log₂(1024)⌋ = 10 — that's the height of a complete binary tree with 1024 nodes (the first 1023 nodes fill levels 0–9 perfectly, and the 1024th sits on level 10). All sift-up and sift-down operations bound their work by this number — which is why 10⁶ heap ops complete in milliseconds." },
+            { label: "About 10.", correct: true, explanation: "Right. ⌊log₂(1024)⌋ = 10, that's the height of a complete binary tree with 1024 nodes (the first 1023 nodes fill levels 0–9 perfectly, and the 1024th sits on level 10). All sift-up and sift-down operations bound their work by this number, which is why 10⁶ heap ops complete in milliseconds." },
             { label: "About 1024.", explanation: "That would be a linked list. The heap completeness rule guarantees logarithmic height." },
             { label: "About 512.", explanation: "Half the nodes are leaves, but height is the path length to a leaf, not the leaf count." },
           ]}
@@ -718,10 +718,10 @@ public class HeapStress {
           kind="Final check"
           question="For 'top 5 most frequent items in a stream of 100 million events,' what's the right structure combo?"
           options={[
-            { label: "TreeMap keyed by frequency.", explanation: "TreeMap can't deduplicate by item, only by key — and frequency isn't unique. Plus you'd need the count first; TreeMap doesn't help with counting." },
-            { label: "HashMap to count, then a min-heap of size 5 over entries by count.", correct: true, explanation: "Right. HashMap.merge does the counting in O(N). Then bounded min-heap of size 5 finds the top 5 in O(N log 5) ≈ O(N). The composition pattern from the heap module — it shows up constantly." },
+            { label: "TreeMap keyed by frequency.", explanation: "TreeMap can't deduplicate by item, only by key, and frequency isn't unique. Plus you'd need the count first; TreeMap doesn't help with counting." },
+            { label: "HashMap to count, then a min-heap of size 5 over entries by count.", correct: true, explanation: "Right. HashMap.merge does the counting in O(N). Then bounded min-heap of size 5 finds the top 5 in O(N log 5) ≈ O(N). The composition pattern from the heap module, it shows up constantly." },
             { label: "Two heaps, one for frequencies and one for items.", explanation: "Overcomplicated. The single-heap-over-entries solution is cleaner and equally fast." },
-            { label: "Sort all 100M items.", explanation: "O(N log N) when O(N log K) suffices. With K=5, the heap is dramatically faster — and on a true stream you can't sort because you don't have everything in memory." },
+            { label: "Sort all 100M items.", explanation: "O(N log N) when O(N log K) suffices. With K=5, the heap is dramatically faster, and on a true stream you can't sort because you don't have everything in memory." },
           ]}
         />
 
@@ -729,8 +729,8 @@ public class HeapStress {
           kind="Final check"
           question="You see code that calls `new PriorityQueue<>((a, b) -> a - b)` on Integer values. When does this break?"
           options={[
-            { label: "Never — it's idiomatic Java.", explanation: "Idiomatic and dangerous. It silently produces wrong results when the integer subtraction overflows." },
-            { label: "When values can include both Integer.MAX_VALUE and a negative number — int subtraction overflows.", correct: true, explanation: "Right. MAX_VALUE - (-1) overflows to MIN_VALUE, so the comparator returns negative when it should return positive. The fix is `Integer.compare(a, b)` or just `Comparator.naturalOrder()`. This is the most common comparator bug in production Java." },
+            { label: "Never, it's idiomatic Java.", explanation: "Idiomatic and dangerous. It silently produces wrong results when the integer subtraction overflows." },
+            { label: "When values can include both Integer.MAX_VALUE and a negative number, int subtraction overflows.", correct: true, explanation: "Right. MAX_VALUE - (-1) overflows to MIN_VALUE, so the comparator returns negative when it should return positive. The fix is `Integer.compare(a, b)` or just `Comparator.naturalOrder()`. This is the most common comparator bug in production Java." },
             { label: "When the heap is full.", explanation: "Heaps don't have fixed capacity in PriorityQueue; they grow automatically. The bug is in the comparator, not the capacity." },
             { label: "When a == b.", explanation: "0 is a perfectly valid 'equal' return value. The bug is overflow, not equality." },
           ]}
@@ -738,11 +738,11 @@ public class HeapStress {
 
         <PartRecap
           title="What you can now do that you couldn't an hour ago"
-          gist="A heap is a complete binary tree drawn over an array. Two operations — sift-up and sift-down — solve every heap problem. The rest is recognizing when you need one."
+          gist="A heap is a complete binary tree drawn over an array. Two operations, sift-up and sift-down, solve every heap problem. The rest is recognizing when you need one."
           points={[
-            { takeaway: "Map a heap to an array via the i/2, 2i+1, 2i+2 formulas, by reflex.", detail: "No node objects, no pointers. Cache-friendly. The trick depends on the completeness rule — without it, the indices would have gaps." },
+            { takeaway: "Map a heap to an array via the i/2, 2i+1, 2i+2 formulas, by reflex.", detail: "No node objects, no pointers. Cache-friendly. The trick depends on the completeness rule, without it, the indices would have gaps." },
             { takeaway: "Implement sift-up and sift-down without notes.", detail: "Sift-up: while parent is bigger, swap up. Sift-down: while smaller of two children is smaller than self, swap down. Both walk one root-to-leaf path, both O(log n)." },
-            { takeaway: "Use heapify to build a heap in O(n), not O(n log n).", detail: "Walk internal nodes backwards from n/2 - 1 to 0, sift-down each. The bulk of the work is near the leaves, where the height is small — that's why it sums to linear, not n log n." },
+            { takeaway: "Use heapify to build a heap in O(n), not O(n log n).", detail: "Walk internal nodes backwards from n/2 - 1 to 0, sift-down each. The bulk of the work is near the leaves, where the height is small, that's why it sums to linear, not n log n." },
             { takeaway: "Reach for top-K = bounded heap of size K reflexively.", detail: "Top-K largest → min-heap of size K. Top-K smallest → max-heap of size K. The heap holds the K survivors; the root is the next one to evict. O(N log K)." },
             { takeaway: "Recognize PriorityQueue's gotchas: not FIFO, not stable, not thread-safe, no decrease-key.", detail: "It's a heap, not a Queue<E> in any FIFO sense. Use Comparator.reverseOrder() for max-heap, Integer.compare to avoid overflow bugs. For concurrent access, PriorityBlockingQueue. For decrease-key, lazy deletion." },
           ]}
@@ -753,7 +753,7 @@ public class HeapStress {
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             Five modules of the structures that power production code: hash tables (the O(1) lookup miracle), sets,
             trees, BSTs (and their balanced cousins), and heaps. You can now reach for the right container reflexively
-            for any lookup, ordered-iteration, or top-K problem. Phase 4 — graphs (BFS, DFS, shortest path) —
+            for any lookup, ordered-iteration, or top-K problem. Phase 4, graphs (BFS, DFS, shortest path),
             is where these structures start working together to model relationships.
           </p>
           <Link

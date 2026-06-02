@@ -14,7 +14,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "setup", title: "FIFO and the queue contract" },
-  { id: "ringbuffer", title: "Why a naive array fails — ring buffers" },
+  { id: "ringbuffer", title: "Why a naive array fails, ring buffers" },
   { id: "deque", title: "Deque: a queue that's also a stack" },
   { id: "patterns", title: "Patterns: BFS, sliding-window, scheduling" },
   { id: "project", title: "Project: build a ring buffer" },
@@ -96,7 +96,7 @@ flowchart LR
 
         <p>
           A <strong>queue</strong>{" "}is the stack's photographic negative. You add at one end (<em>back</em>) and
-          remove from the other end (<em>front</em>). The first element added is the first one removed —{" "}
+          remove from the other end (<em>front</em>). The first element added is the first one removed,{" "}
           <strong>FIFO</strong>, first in first out. It's how a real queue at a coffee shop works, and it's why we
           named the data structure after it.
         </p>
@@ -114,7 +114,7 @@ flowchart LR
           </li>
           <li>
             <strong>Task / job queues.</strong>{" "}Workers pull from the front; producers push to the back. The whole
-            world runs on this — Kafka, SQS, Celery, ExecutorService.
+            world runs on this, Kafka, SQS, Celery, ExecutorService.
           </li>
           <li>
             <strong>Sliding-window algorithms.</strong>{" "}A monotonic <em>deque</em> (the next thing we'll meet) gives
@@ -157,19 +157,19 @@ flowchart LR
       </Checkpoint>
 
       {/* ───────────────── Part 2 · Ring buffer ───────────────── */}
-      <Checkpoint moduleSlug="queues" id="ringbuffer" title="I can build a ring buffer" xp={20} celebration="Two indices and a modulo. That's the whole trick — and it's everywhere in real systems.">
+      <Checkpoint moduleSlug="queues" id="ringbuffer" title="I can build a ring buffer" xp={20} celebration="Two indices and a modulo. That's the whole trick, and it's everywhere in real systems.">
       <section>
-        <h2 id="ringbuffer">Why a naive array doesn't work — and how ring buffers fix it</h2>
+        <h2 id="ringbuffer">Why a naive array doesn't work, and how ring buffers fix it</h2>
 
         <p>
           Try the obvious thing: an array, with size as the count. Enqueue is <code>data[size++] = x</code>, easy.
           Dequeue: return <code>data[0]</code> and… now what? Shift every other element left by one slot? That's{" "}
-          <strong>O(n) per dequeue</strong> — disaster.
+          <strong>O(n) per dequeue</strong>, disaster.
         </p>
 
         <p>
           Alternative: keep a <code>head</code> index, and just bump it forward on dequeue. Now dequeue is O(1), but
-          the array is "leaking" — every dequeue wastes a slot at the front, and after enough operations the array
+          the array is "leaking", every dequeue wastes a slot at the front, and after enough operations the array
           fills up even though most of it is empty.
         </p>
 
@@ -206,7 +206,7 @@ flowchart LR
 
         <Callout variant="info" title="What ArrayDeque actually does">
           <p>
-            <code>java.util.ArrayDeque</code> uses option 2 internally — a power-of-two capacity, head and tail indices,
+            <code>java.util.ArrayDeque</code> uses option 2 internally, a power-of-two capacity, head and tail indices,
             and the &quot;leave one slot empty&quot; convention so it can use a fast bitwise AND instead of modulo.
           </p>
           <p>It's the textbook ring buffer with one performance trick.</p>
@@ -221,7 +221,7 @@ flowchart LR
             { title: "enqueue(8): write data[2] = 8, tail = 3, size = 3", body: "Array is [7, 3, 8, _]." },
             { title: "dequeue(): read data[0] = 7, head = 1, size = 2", body: "Array is [_, 3, 8, _]. The slot at index 0 is now reusable." },
             { title: "enqueue(1): write data[3] = 1, tail = (3+1) % 4 = 0, size = 3", body: "Array is [_, 3, 8, 1]. Tail wrapped. Next enqueue lands at index 0." },
-            { title: "enqueue(5): write data[0] = 5, tail = 1, size = 4", body: "Array is [5, 3, 8, 1]. Both head and tail are 1 — exactly the same indices as when the buffer was empty. Only the explicit size == capacity check distinguishes 'full' from 'empty' here. (Option 2 — the reserve-one-slot scheme — avoids this collision by making this state unreachable.)" },
+            { title: "enqueue(5): write data[0] = 5, tail = 1, size = 4", body: "Array is [5, 3, 8, 1]. Both head and tail are 1, exactly the same indices as when the buffer was empty. Only the explicit size == capacity check distinguishes 'full' from 'empty' here. (Option 2, the reserve-one-slot scheme, avoids this collision by making this state unreachable.)" },
           ]}
         />
 
@@ -230,7 +230,7 @@ flowchart LR
       </Checkpoint>
 
       {/* ───────────────── Part 3 · Deque ───────────────── */}
-      <Checkpoint moduleSlug="queues" id="deque" title="I know when to reach for a deque" xp={15} celebration="Deque is the Swiss-army linear container. Stack, queue, sliding-window — all the same ArrayDeque.">
+      <Checkpoint moduleSlug="queues" id="deque" title="I know when to reach for a deque" xp={15} celebration="Deque is the Swiss-army linear container. Stack, queue, sliding-window, all the same ArrayDeque.">
       <section>
         <h2 id="deque">Deque: the data structure that's everything at once</h2>
 
@@ -241,7 +241,7 @@ flowchart LR
         </p>
 
         <p>
-          That sounds excessive — and it is, in API surface — but the implementation cost is the same as a queue: a
+          That sounds excessive, and it is, in API surface, but the implementation cost is the same as a queue: a
           ring buffer (for <code>ArrayDeque</code>) or a doubly-linked list (for <code>LinkedList</code>). One data
           structure, three workloads:
         </p>
@@ -289,7 +289,7 @@ public int[] maxSlidingWindow(int[] nums, int k) {
     return out;
 }`}</CodeBlock>
 
-        <Callout variant="warn" title="Subtle invariant — front is the current max only because we maintain it">
+        <Callout variant="warn" title="Subtle invariant, front is the current max only because we maintain it">
           <p>Each index is added once and removed at most once, so total work is O(n).</p>
           <p>
             The deque is monotonically decreasing by value from front to back: nothing dominated by a
@@ -322,15 +322,15 @@ public int[] maxSlidingWindow(int[] nums, int k) {
       </Checkpoint>
 
       {/* ───────────────── Part 4 · Patterns ───────────────── */}
-      <Checkpoint moduleSlug="queues" id="patterns" title="I can pick the right queue-shaped pattern" xp={20} celebration="BFS, sliding-window, scheduling — three distinct flavours, all FIFO at heart.">
+      <Checkpoint moduleSlug="queues" id="patterns" title="I can pick the right queue-shaped pattern" xp={20} celebration="BFS, sliding-window, scheduling, three distinct flavours, all FIFO at heart.">
       <section>
         <h2 id="patterns">Three patterns where queues are the shape of the answer</h2>
 
-        <h3>Pattern 1 · BFS — level-order traversal &amp; shortest paths</h3>
+        <h3>Pattern 1 · BFS, level-order traversal &amp; shortest paths</h3>
 
         <p>
           The defining queue algorithm. Start with a single node, enqueue it, then loop: dequeue, process, enqueue
-          its neighbours. You visit nodes in order of distance from the start — which is exactly why BFS computes
+          its neighbours. You visit nodes in order of distance from the start, which is exactly why BFS computes
           shortest paths in unweighted graphs.
         </p>
 
@@ -356,7 +356,7 @@ public java.util.List<java.util.List<Integer>> levelOrder(TreeNode root) {
 
         <Callout variant="insight" title="The level-batch trick">
           <p>
-            Snapshot <code>q.size()</code> at the start of each outer iteration. That's the size of the current level —
+            Snapshot <code>q.size()</code> at the start of each outer iteration. That's the size of the current level,
             we drain exactly that many before any of the children we just enqueued get processed.
           </p>
           <p>This little move gives you per-level batches without needing a sentinel.</p>
@@ -482,16 +482,16 @@ class RecentCounter {
         <Callout variant="warn" title="The grow() function is where almost every ring-buffer bug lives">
           <p>
             Grow runs only when the buffer is full, so <code>head == tail</code>. If <code>head &gt; 0</code> the data
-            wraps around the end of the array — you need <em>two</em> <code>System.arraycopy</code> calls, one for the
+            wraps around the end of the array, you need <em>two</em> <code>System.arraycopy</code> calls, one for the
             <code>head</code>-to-end segment and one for the <code>0</code>-to-<code>tail</code> segment.
           </p>
           <p>If <code>head == 0</code> the data is contiguous and the second copy is a no-op. Trace it on paper before convincing yourself it's right.</p>
         </Callout>
 
-        <h3>Step 2 · LeetCode 232 — Implement Queue using Stacks</h3>
+        <h3>Step 2 · LeetCode 232, Implement Queue using Stacks</h3>
 
         <p>
-          The trick: use two stacks. Push always goes onto the &quot;in&quot; stack. Pop pulls from the &quot;out&quot; stack — and when
+          The trick: use two stacks. Push always goes onto the &quot;in&quot; stack. Pop pulls from the &quot;out&quot; stack, and when
           out is empty, we drain in into out, which reverses the order so the bottom of in becomes the top of out.
           Each element is moved at most twice → amortized O(1) per operation.
         </p>
@@ -532,12 +532,12 @@ class RecentCounter {
           </p>
         </Callout>
 
-        <h3>Step 3 · LeetCode 933 — Number of Recent Calls</h3>
+        <h3>Step 3 · LeetCode 933, Number of Recent Calls</h3>
         <p>The 8-line implementation is in the patterns section above. Submit it; verify on the canonical adversarial input where every ping lands inside the window (so the queue grows to maximum length).</p>
 
-        <h3>Stretch: LC 622 — Design Circular Queue</h3>
+        <h3>Stretch: LC 622, Design Circular Queue</h3>
         <p>
-          A direct application of the ring buffer you just wrote — the LC version asks for a fixed-capacity queue with
+          A direct application of the ring buffer you just wrote, the LC version asks for a fixed-capacity queue with
           a Boolean &quot;full&quot; signal. The implementation is essentially your <code>MyArrayQueue</code> with growth removed
           and an <code>isFull()</code> check.
         </p>
@@ -545,7 +545,7 @@ class RecentCounter {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="queues" id="final" title="I've completed Module 9 — and Phase 2!" xp={30} celebration="That's all five linear data structures. Phase 3 — hashing, trees, and the algorithms that go with them — is where things get interesting.">
+      <Checkpoint moduleSlug="queues" id="final" title="I've completed Module 9, and Phase 2!" xp={30} celebration="That's all five linear data structures. Phase 3, hashing, trees, and the algorithms that go with them, is where things get interesting.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -555,8 +555,8 @@ class RecentCounter {
           options={[
             { label: "Always empty.", explanation: "It depends. After enqueueing exactly capacity elements without dequeueing, head and tail also coincide." },
             { label: "Always full.", explanation: "It depends. When the structure is brand-new and nothing has been enqueued, head == tail == 0." },
-            { label: "Ambiguous — you must track size separately, or reserve one slot to disambiguate.", correct: true, explanation: "Right. The two standard fixes are: (1) carry an explicit size counter; (2) treat the buffer as full when (tail + 1) % capacity == head, leaving one slot permanently empty. ArrayDeque uses option 2." },
-            { label: "Empty if head was just initialized, full otherwise.", explanation: "There's no way to tell that just from the indices — that's the whole problem this question is highlighting." },
+            { label: "Ambiguous, you must track size separately, or reserve one slot to disambiguate.", correct: true, explanation: "Right. The two standard fixes are: (1) carry an explicit size counter; (2) treat the buffer as full when (tail + 1) % capacity == head, leaving one slot permanently empty. ArrayDeque uses option 2." },
+            { label: "Empty if head was just initialized, full otherwise.", explanation: "There's no way to tell that just from the indices, that's the whole problem this question is highlighting." },
           ]}
         />
 
@@ -565,8 +565,8 @@ class RecentCounter {
           question="Why does the two-stack queue (LC 232) achieve amortized O(1) per operation?"
           options={[
             { label: "It uses ArrayDeque, which is fast.", explanation: "Closer to the truth, but the right argument is about amortized accounting, not the underlying container speed." },
-            { label: "Each element is moved a constant number of times across its entire lifetime, even though one operation can do up to O(n) work.", correct: true, explanation: "Right. Each element is pushed onto in, transferred to out, and eventually popped — four constant-time ops over its lifetime. Sum across n operations: O(n). Average per operation: O(1)." },
-            { label: "Stacks are always O(1).", explanation: "Stack ops are O(1), but the queue's pop sometimes has to drain in into out — which is O(in.size()). The amortized argument is what makes the average constant." },
+            { label: "Each element is moved a constant number of times across its entire lifetime, even though one operation can do up to O(n) work.", correct: true, explanation: "Right. Each element is pushed onto in, transferred to out, and eventually popped, four constant-time ops over its lifetime. Sum across n operations: O(n). Average per operation: O(1)." },
+            { label: "Stacks are always O(1).", explanation: "Stack ops are O(1), but the queue's pop sometimes has to drain in into out, which is O(in.size()). The amortized argument is what makes the average constant." },
             { label: "Java's HotSpot JIT compiles it to constant time.", explanation: "Compiler magic doesn't change algorithmic complexity. The amortized accounting does." },
           ]}
         />
@@ -576,7 +576,7 @@ class RecentCounter {
           question="Which container should you reach for, in plain unsynchronized Java code, when you need a stack? When you need a queue?"
           options={[
             { label: "java.util.Stack for stacks; java.util.LinkedList for queues.", explanation: "Both are legacy. Stack inherits from synchronized Vector; LinkedList-as-queue does a heap allocation per offer. Don't reach for these in new code." },
-            { label: "ArrayDeque for both — it's the modern array-backed deque, and it can serve as either.", correct: true, explanation: "Right. Use push/pop/peek on it as a stack, offer/poll/peek as a queue. It's faster than Stack and LinkedList, and the JDK docs explicitly recommend it for both roles." },
+            { label: "ArrayDeque for both, it's the modern array-backed deque, and it can serve as either.", correct: true, explanation: "Right. Use push/pop/peek on it as a stack, offer/poll/peek as a queue. It's faster than Stack and LinkedList, and the JDK docs explicitly recommend it for both roles." },
             { label: "PriorityQueue for both.", explanation: "PriorityQueue is a heap, not a FIFO queue. Its poll returns the smallest element, not the first one inserted. Wrong tool." },
             { label: "ArrayList for stacks, LinkedList for queues.", explanation: "ArrayList works as a stack only awkwardly (no built-in push/pop semantics that aren't index-based). ArrayDeque is purpose-built for this." },
           ]}
@@ -590,14 +590,14 @@ class RecentCounter {
             { takeaway: "Build a ring buffer from two indices and modulo arithmetic.", detail: "head, tail, capacity. Enqueue writes at tail and advances tail mod cap; dequeue reads at head and advances head mod cap. The head==tail ambiguity needs an explicit size or a reserved slot." },
             { takeaway: "Use ArrayDeque for everything single-threaded.", detail: "It's a power-of-two-capacity ring buffer with bitwise AND instead of modulo. Faster than Stack and LinkedList for both stack and queue roles. The default choice." },
             { takeaway: "Recognise BFS, level-order, sliding-window, and rate-limiting as queue-shaped problems.", detail: "BFS = queue. Maximum of sliding window = monotonic deque. Pings within last T ms = queue with timestamp-based front-eviction. Pattern recognition shrinks the problem to one or two known templates." },
-            { takeaway: "Apply amortized accounting to two-stack queues, ArrayList growth, and monotonic stacks.", detail: "Same argument every time: each element is touched a constant number of times across its lifetime, so total work is O(n) and per-op average is O(1) — even though any single operation can be more expensive." },
+            { takeaway: "Apply amortized accounting to two-stack queues, ArrayList growth, and monotonic stacks.", detail: "Same argument every time: each element is touched a constant number of times across its lifetime, so total work is O(n) and per-op average is O(1), even though any single operation can be more expensive." },
           ]}
         />
 
         <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-800/40 dark:from-amber-950/30 dark:to-yellow-950/30">
           <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Phase 2 complete · Linear data structures</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
-            Arrays, strings, linked lists, stacks, queues — five modules of building blocks. Phase 3 cracks open the
+            Arrays, strings, linked lists, stacks, queues, five modules of building blocks. Phase 3 cracks open the
             structures that power most of modern software: hash tables (the <em>O(1) lookup</em>{" "}miracle) and trees
             (where binary search, BSTs, and heaps live).
           </p>

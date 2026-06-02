@@ -51,15 +51,15 @@ export default function RagArchitectureModule() {
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
           RAG is the most-deployed and most-misunderstood pattern in AI engineering. By the end of this module
-          you&apos;ll have a working <strong>mental model of every stage</strong> — chunking, retrieval,
-          reranking, assembly — and you&apos;ll be able to explain why each one exists and when each one
+          you&apos;ll have a working <strong>mental model of every stage</strong>, chunking, retrieval,
+          reranking, assembly, and you&apos;ll be able to explain why each one exists and when each one
           breaks.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>What RAG actually is, and the 3 problems it&apos;s designed to solve</li>
           <li>The four chunking strategies (fixed, recursive, semantic, structural) and how to pick</li>
           <li>How retrieval really works: top-k vs MMR, hybrid (BM25 + vector), reranking</li>
-          <li>Context assembly — how to format chunks so the LLM uses them, with citations</li>
+          <li>Context assembly, how to format chunks so the LLM uses them, with citations</li>
           <li>A doc-chunking lab: feed the same corpus through 4 strategies, compare retrieval quality</li>
         </ul>
       </section>
@@ -68,7 +68,7 @@ export default function RagArchitectureModule() {
       {/* PART 1: WHAT RAG ACTUALLY SOLVES                                    */}
       {/* ================================================================= */}
       <section id="what-rag">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — What RAG actually solves</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, What RAG actually solves</h2>
 
         <p>
           RAG (<strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration) is a pattern,
@@ -100,7 +100,7 @@ export default function RagArchitectureModule() {
             <h4 className="mb-1 font-semibold">Hallucination control</h4>
             <p className="m-0 text-sm text-slate-600 dark:text-slate-400">
               When the model has to ground its answer in cited passages, it&apos;s much harder for it to make
-              things up — and easier for you to catch when it does.
+              things up, and easier for you to catch when it does.
             </p>
           </div>
         </div>
@@ -121,7 +121,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
         <p>
           The <strong>indexing</strong>{" "}path runs once per doc (and on updates). The <strong>query time</strong>{" "}
           path runs every request. Most of the work in a RAG project is making one or both of these paths
-          better — usually by improving chunking, retrieval, or assembly.
+          better, usually by improving chunking, retrieval, or assembly.
         </p>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">When RAG is the wrong answer</h3>
@@ -184,7 +184,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
             { label: "Stand up RAG with pgvector and an embedding pipeline", explanation: "RAG is overkill here. 50 pages fit comfortably in modern context windows, and quarterly changes mean you don't need a real-time index." },
             { label: "Paste the manual into the system prompt and use prompt caching", correct: true, explanation: "50 pages is roughly 25–40k tokens. Modern models handle that easily. Cache the system prompt (Module 13), pay almost nothing per turn, and skip the retrieval failure mode entirely. Reach for RAG when the knowledge outgrows the context window." },
             { label: "Fine-tune a model on the manual", explanation: "Worst choice. Fine-tuning is for style/skills, not factual recall, and changes every quarter would mean re-training every quarter." },
-            { label: "Train an embedding model on the manual", explanation: "You don't train embedders for projects this small. You'd use a pretrained one — and you don't even need that here." },
+            { label: "Train an embedding model on the manual", explanation: "You don't train embedders for projects this small. You'd use a pretrained one, and you don't even need that here." },
           ]}
           xp={15}
         />
@@ -195,7 +195,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           options={[
             { label: "Fine-tuning is too expensive", explanation: "It's expensive, but that's not the core reason." },
             { label: "Fine-tuning teaches style/format/narrow skills well; it's a poor mechanism for factual recall, and you can't update the facts without re-training", correct: true, explanation: "Right on both counts. Fine-tuning shifts behavior, not memory. Even when facts do leak in, they're not citable, not updatable, and the model will still confidently make up nearby facts. RAG keeps facts in a place you can edit and verify." },
-            { label: "Fine-tuning isn't supported by Claude or OpenAI", explanation: "It is — both have fine-tuning APIs." },
+            { label: "Fine-tuning isn't supported by Claude or OpenAI", explanation: "It is, both have fine-tuning APIs." },
             { label: "Fine-tuning produces worse models", explanation: "Done well, fine-tuning improves models for the target task. The point is it's the wrong tool for facts." },
           ]}
           xp={15}
@@ -206,7 +206,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
           gist="RAG is a 5-stage pattern that solves knowledge-cutoff, private-data, and hallucination problems by retrieving relevant snippets and grounding the LLM's answer in them. It's not always the right tool."
           points={[
             { takeaway: "RAG is a pattern, not a product.", detail: "Five stages: chunk → embed → store, then query → retrieve → rerank → assemble → generate. The names vary; the shape doesn't." },
-            { takeaway: "Reach for RAG when knowledge is too big or too dynamic for the prompt.", detail: "Below those thresholds, prompt + cache is leaner — fewer moving parts, fewer failure modes, often cheaper." },
+            { takeaway: "Reach for RAG when knowledge is too big or too dynamic for the prompt.", detail: "Below those thresholds, prompt + cache is leaner, fewer moving parts, fewer failure modes, often cheaper." },
             { takeaway: "Fine-tuning is not a knowledge store.", detail: "It teaches behavior. Use RAG (or context) for facts you need to be right, citable, and updatable." },
           ]}
         />
@@ -223,18 +223,18 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
       {/* PART 2: CHUNKING STRATEGIES                                         */}
       {/* ================================================================= */}
       <section id="chunking">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Chunking strategies</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, Chunking strategies</h2>
 
         <p>
-          You have a 200-page PDF. You can&apos;t embed 200 pages as one vector — the embedding model has a
+          You have a 200-page PDF. You can&apos;t embed 200 pages as one vector, the embedding model has a
           token limit (typically 8k), and even if it didn&apos;t, a single vector for a whole book is too
-          fuzzy to retrieve usefully. So you split the doc into pieces — <strong>chunks</strong> — and embed
+          fuzzy to retrieve usefully. So you split the doc into pieces, <strong>chunks</strong>, and embed
           each one.
         </p>
 
         <p>
           Chunking is the most important variable in RAG quality. Get it wrong and the rest doesn&apos;t
-          matter — your retriever returns mush, and the LLM hallucinates around it.
+          matter, your retriever returns mush, and the LLM hallucinates around it.
         </p>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">The four chunking strategies</h3>
@@ -247,7 +247,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
             </p>
             <p className="m-0 text-xs text-slate-500">
               <strong>Good for:</strong>{" "}baseline, uniform corpora (transcripts, plain prose).{" "}
-              <strong>Bad for:</strong>{" "}structured docs — splits mid-paragraph, mid-sentence,
+              <strong>Bad for:</strong>{" "}structured docs, splits mid-paragraph, mid-sentence,
               mid-code-block.
             </p>
           </div>
@@ -317,7 +317,7 @@ docs ─→ chunk ─→ embed ─→ store        │  query ─→ embed ─�
               body: (
                 <>
                   <p className="text-sm">
-                    <strong>Pick:</strong>{" "}structural — split by H2 boundaries, fall back to recursive within
+                    <strong>Pick:</strong>{" "}structural, split by H2 boundaries, fall back to recursive within
                     each H2 if it&apos;s too big.
                   </p>
                   <p className="text-sm">
@@ -394,7 +394,7 @@ longer than that, the server closes it..."`}</CodeBlock>
         <Callout variant="info" title="Cost vs. quality">
           <p className="m-0 text-sm">
             Contextual chunking costs: one cheap LLM call per chunk at indexing. For a 100k-chunk corpus on
-            Haiku-class pricing, that&apos;s a few dollars total — paid once. Compared to running a worse
+            Haiku-class pricing, that&apos;s a few dollars total, paid once. Compared to running a worse
             retriever forever, it&apos;s the easiest win in RAG.
           </p>
         </Callout>
@@ -404,8 +404,8 @@ longer than that, the server closes it..."`}</CodeBlock>
           question="You're chunking a 50-doc Markdown wiki. Your team picks fixed-size 512-token chunks with no overlap. Retrieval feels okay-but-not-great. What's the most likely first improvement?"
           options={[
             { label: "Increase chunk size to 2048", explanation: "Bigger chunks make embeddings vaguer, not sharper. Usually makes retrieval worse, not better." },
-            { label: "Switch to structural chunking on H2 headings, with section-path metadata", correct: true, explanation: "Wiki content has meaningful structure. Fixed-size chunks split mid-section, mid-list, mid-code-block — exactly where context matters most. Structural chunking on heading boundaries (and storing the heading path as metadata) is a one-day change with a big quality bump." },
-            { label: "Embed twice and average the vectors", explanation: "Doesn't help — you'd just get the same vector twice." },
+            { label: "Switch to structural chunking on H2 headings, with section-path metadata", correct: true, explanation: "Wiki content has meaningful structure. Fixed-size chunks split mid-section, mid-list, mid-code-block, exactly where context matters most. Structural chunking on heading boundaries (and storing the heading path as metadata) is a one-day change with a big quality bump." },
+            { label: "Embed twice and average the vectors", explanation: "Doesn't help, you'd just get the same vector twice." },
             { label: "Switch to a bigger embedding model", explanation: "A bigger model on bad chunks is still bad chunks. Fix chunking first; only then is it worth retesting models." },
           ]}
           xp={15}
@@ -415,7 +415,7 @@ longer than that, the server closes it..."`}</CodeBlock>
           kind="Pulse check"
           question="True or false: contextual chunking (prepending a one-sentence document-context summary before embedding each chunk) costs zero at query time."
           options={[
-            { label: "True", correct: true, explanation: "The cost is at *indexing* time — one cheap LLM call per chunk, paid once. At query time, you just embed the user query and search the (already-contextualized) chunks. No per-query overhead. This asymmetry is what makes it the highest-leverage RAG improvement." },
+            { label: "True", correct: true, explanation: "The cost is at *indexing* time, one cheap LLM call per chunk, paid once. At query time, you just embed the user query and search the (already-contextualized) chunks. No per-query overhead. This asymmetry is what makes it the highest-leverage RAG improvement." },
             { label: "False", explanation: "Contextual chunks are generated and stored at indexing time. Once they're in the index, they cost the same to retrieve as any other chunk." },
           ]}
           xp={15}
@@ -426,7 +426,7 @@ longer than that, the server closes it..."`}</CodeBlock>
           gist="Chunking dominates RAG quality. Pick the strategy by your corpus's structure, not by what's easy. Contextual chunking is usually the biggest single win you can make."
           points={[
             { takeaway: "Four chunkers: fixed, recursive, semantic, structural.", detail: "Recursive is the safe default. Structural beats it when the doc has real hierarchy. Semantic when topics don't align with paragraphs. Fixed only as a baseline." },
-            { takeaway: "Three knobs: size, overlap, metadata.", detail: "256–1024 tokens with 10–20% overlap is the typical zone. Always carry source/section/page as metadata — it powers filtering and citations." },
+            { takeaway: "Three knobs: size, overlap, metadata.", detail: "256–1024 tokens with 10–20% overlap is the typical zone. Always carry source/section/page as metadata, it powers filtering and citations." },
             { takeaway: "Contextual chunking is the easiest big win.", detail: "Prepend a one-sentence document-context summary before embedding each chunk. Cheap one-time cost at index, no query-time overhead, ~35% lower retrieval-miss rate (Anthropic). If you do one thing this module: do this." },
           ]}
         />
@@ -443,7 +443,7 @@ longer than that, the server closes it..."`}</CodeBlock>
       {/* PART 3: RETRIEVAL & RERANKING                                       */}
       {/* ================================================================= */}
       <section id="retrieval">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Retrieval &amp; reranking</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Retrieval &amp; reranking</h2>
 
         <p>
           Indexing is done. The user asks a question. Now you need to find the right chunks. There&apos;s more
@@ -495,8 +495,8 @@ longer than that, the server closes it..."`}</CodeBlock>
         <h3 className="mt-8 mb-3 text-xl font-bold">Hybrid retrieval: BM25 + vector</h3>
 
         <p>
-          Hybrid retrieval fixes lexical misses. You run two retrievers in parallel — one vector, one keyword
-          (BM25, the classic full-text-search algorithm Lucene/Postgres ts_vector use) — and merge the
+          Hybrid retrieval fixes lexical misses. You run two retrievers in parallel, one vector, one keyword
+          (BM25, the classic full-text-search algorithm Lucene/Postgres ts_vector use), and merge the
           rankings. The vector path catches semantically similar chunks; the BM25 path catches exact-string
           matches.
         </p>
@@ -511,14 +511,14 @@ RRF(c) = Σ over rankings R: 1 / (k + rank_R(c))   # k = 60 is a common default
         <p>
           Postgres can do this all in one query: <code>tsvector @@ tsquery</code> for BM25-ish, plus
           <code> embedding &lt;=&gt; query_vec</code> for vector, fused in app code. This is one of pgvector&apos;s
-          unique strengths — you don&apos;t need a second search service for hybrid retrieval.
+          unique strengths, you don&apos;t need a second search service for hybrid retrieval.
         </p>
 
         <Callout variant="info" title="When you really need hybrid">
           <p className="m-0 text-sm">
             Domain with lots of identifiers, error codes, file paths, model numbers, SQL keywords? Hybrid is
             non-negotiable. Pure conversational corpus (think: customer-facing FAQs)? Vector alone is usually
-            fine. Don&apos;t add hybrid prophylactically — measure first.
+            fine. Don&apos;t add hybrid prophylactically, measure first.
           </p>
         </Callout>
 
@@ -526,7 +526,7 @@ RRF(c) = Σ over rankings R: 1 / (k + rank_R(c))   # k = 60 is a common default
 
         <p>
           Embedding-based retrieval is a <em>recall</em>{" "}tool. It pulls the top 20–50 candidates from a corpus
-          of millions in milliseconds. But the ranking inside that top-50 is rough — embeddings are trained for
+          of millions in milliseconds. But the ranking inside that top-50 is rough, embeddings are trained for
           general semantic similarity, not for the specific &quot;does this chunk answer this query?&quot;
           question.
         </p>
@@ -543,7 +543,7 @@ LLM:                top 3–5   → answer`}</CodeBlock>
 
         <p>
           Cohere&apos;s <code>rerank-3.5</code> and Voyage&apos;s <code>rerank-2.5</code> are the current
-          workhorses (versions roll forward — check each vendor&apos;s docs for the latest tag). Both are paid
+          workhorses (versions roll forward, check each vendor&apos;s docs for the latest tag). Both are paid
           APIs that take a query + list of candidates and return the candidates resorted with relevance scores.
           Cost is milliseconds per call, single digits of cents per thousand documents.
         </p>
@@ -584,10 +584,10 @@ Average across all 50 queries → that's your retrieval quality number.`}</CodeB
 
         <Quiz
           kind="Pulse check"
-          question="Your RAG system answers conversational questions well but fails on queries like 'what does error E_4422 mean?' — even though E_4422 is right there in the docs. What's the architectural fix?"
+          question="Your RAG system answers conversational questions well but fails on queries like 'what does error E_4422 mean?', even though E_4422 is right there in the docs. What's the architectural fix?"
           options={[
             { label: "Tune ef_search higher in HNSW", explanation: "Recall is fine; it's the *kind* of match that's wrong. The vector retriever is genuinely picking semantically similar chunks; they just don't contain the literal token." },
-            { label: "Add hybrid retrieval — BM25 alongside vector, fused with RRF", correct: true, explanation: "Identifier-style queries (error codes, model numbers, file paths) are exactly where exact-token matching beats semantic similarity. The vector path catches conversational queries; BM25 catches lexical ones. Hybrid retrieves both, fuses with RRF, and you get the best of both worlds." },
+            { label: "Add hybrid retrieval, BM25 alongside vector, fused with RRF", correct: true, explanation: "Identifier-style queries (error codes, model numbers, file paths) are exactly where exact-token matching beats semantic similarity. The vector path catches conversational queries; BM25 catches lexical ones. Hybrid retrieves both, fuses with RRF, and you get the best of both worlds." },
             { label: "Switch to a bigger embedding model", explanation: "Bigger embedders are still doing semantic similarity. They don't suddenly start preferring literal-string matches." },
             { label: "Increase chunk size", explanation: "Doesn't address the root cause (lexical vs. semantic match)." },
           ]}
@@ -598,17 +598,17 @@ Average across all 50 queries → that's your retrieval quality number.`}</CodeB
           kind="Pulse check"
           question="You measure retrieval recall@5 = 0.92 but answer quality is bad. Where should you look?"
           options={[
-            { label: "Switch chunkers", explanation: "Recall is high, so chunking is doing its job — the right context is making it through. The problem is downstream." },
-            { label: "Downstream: context assembly, prompt design, or the LLM itself", correct: true, explanation: "When recall@5 is high, the retriever isn't the problem — the right chunks ARE arriving. The bug is somewhere after retrieval: maybe assembly is munging the chunks, maybe the prompt isn't telling the model to use them, maybe the model is too small. Diagnose by reading what's actually in the prompt and what comes back." },
+            { label: "Switch chunkers", explanation: "Recall is high, so chunking is doing its job, the right context is making it through. The problem is downstream." },
+            { label: "Downstream: context assembly, prompt design, or the LLM itself", correct: true, explanation: "When recall@5 is high, the retriever isn't the problem, the right chunks ARE arriving. The bug is somewhere after retrieval: maybe assembly is munging the chunks, maybe the prompt isn't telling the model to use them, maybe the model is too small. Diagnose by reading what's actually in the prompt and what comes back." },
             { label: "Increase k to 20", explanation: "More noise won't help; recall is already good." },
-            { label: "Add a reranker", explanation: "Reranking helps when retrieval ordering is bad. Recall@5 = 0.92 says the right chunks are in the top 5 — order isn't the binding constraint." },
+            { label: "Add a reranker", explanation: "Reranking helps when retrieval ordering is bad. Recall@5 = 0.92 says the right chunks are in the top 5, order isn't the binding constraint." },
           ]}
           xp={15}
         />
 
         <PartRecap
           title="Part 3 recap"
-          gist="Top-k cosine is the baseline. Add MMR for diversity, BM25-fused-with-vector for lexical matches, and a reranker for last-mile precision — but only when measurement says so."
+          gist="Top-k cosine is the baseline. Add MMR for diversity, BM25-fused-with-vector for lexical matches, and a reranker for last-mile precision, but only when measurement says so."
           points={[
             { takeaway: "Pure top-k has two failure modes: redundancy and lexical misses.", detail: "MMR fixes redundancy by penalizing candidates similar to already-picked ones. Hybrid (BM25 + vector with RRF) fixes lexical misses by adding an exact-string-match path." },
             { takeaway: "Rerankers are recall→precision converters.", detail: "Cheap embedder fetches top 50 fast; expensive cross-encoder reranker resorts them precisely. Used together you get both speed and accuracy. Used alone, neither is enough." },
@@ -628,7 +628,7 @@ Average across all 50 queries → that's your retrieval quality number.`}</CodeB
       {/* PART 4: CONTEXT ASSEMBLY                                            */}
       {/* ================================================================= */}
       <section id="assembly">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Context assembly</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Context assembly</h2>
 
         <p>
           The retriever found 5 great chunks. Now you have to put them in a prompt. This is the most
@@ -719,7 +719,7 @@ Total per turn:       ~5250 tokens
 Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
 
         <p>
-          Notice the retrieved chunks are <em>not</em>{" "}cacheable — they vary by query. If you find yourself
+          Notice the retrieved chunks are <em>not</em>{" "}cacheable, they vary by query. If you find yourself
           jamming chunks into the cacheable system prompt &quot;just in case&quot;, you&apos;re defeating
           retrieval.
         </p>
@@ -748,8 +748,8 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
           options={[
             { label: "Switch to a bigger model", explanation: "May help marginally, but doesn't address the root cause: your prompt isn't telling the model what to do." },
             { label: "Tighten the prompt: 'Answer using ONLY the context. If the answer isn't there, say so.' Plus require citations.", correct: true, explanation: "Most hallucination-on-good-context comes from prompts that don't constrain the model. Explicit instructions + required citations + a graceful 'I don't know' path collectively cut hallucination dramatically. This is the cheapest, most effective fix." },
-            { label: "Lower the LLM temperature", explanation: "Helps a little — but the root cause is missing instructions, not sampling randomness." },
-            { label: "Add more context — pass top 20 chunks instead of 5", explanation: "Worse, not better. Lost-in-the-middle effects mean more chunks usually means worse use of any single chunk." },
+            { label: "Lower the LLM temperature", explanation: "Helps a little, but the root cause is missing instructions, not sampling randomness." },
+            { label: "Add more context, pass top 20 chunks instead of 5", explanation: "Worse, not better. Lost-in-the-middle effects mean more chunks usually means worse use of any single chunk." },
           ]}
           xp={15}
         />
@@ -758,9 +758,9 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
           kind="Pulse check"
           question="You're putting 8 chunks in the context. You sort them by relevance score, highest first. Why might this be the wrong order?"
           options={[
-            { label: "It's actually the right order — relevance-first is always best", explanation: "Not because of lost-in-the-middle. The most-relevant slot in the context window is often the END, right before the question." },
-            { label: "Lost-in-the-middle: the model attends most to the start and end of the context, so putting the best chunk first leaves it in a strong slot — but the slot just before the question is also strong, and many teams reverse to put the top hit last", correct: true, explanation: "Right. The middle is where attention falls off. Both ends are good. The slot immediately before the user's question is often the strongest. Whether you put your top hit first or last, KEEP IT OUT OF THE MIDDLE — and consider passing fewer chunks (3–5) so this matters less." },
-            { label: "Relevance-first wastes prompt cache", explanation: "Order doesn't affect cache hits — chunks vary per query and aren't cached anyway." },
+            { label: "It's actually the right order, relevance-first is always best", explanation: "Not because of lost-in-the-middle. The most-relevant slot in the context window is often the END, right before the question." },
+            { label: "Lost-in-the-middle: the model attends most to the start and end of the context, so putting the best chunk first leaves it in a strong slot, but the slot just before the question is also strong, and many teams reverse to put the top hit last", correct: true, explanation: "Right. The middle is where attention falls off. Both ends are good. The slot immediately before the user's question is often the strongest. Whether you put your top hit first or last, KEEP IT OUT OF THE MIDDLE, and consider passing fewer chunks (3–5) so this matters less." },
+            { label: "Relevance-first wastes prompt cache", explanation: "Order doesn't affect cache hits, chunks vary per query and aren't cached anyway." },
             { label: "Newer chunks should always come first", explanation: "Recency isn't inherently relevant. Sort by retrieval score, not timestamp, unless your domain demands it." },
           ]}
           xp={15}
@@ -789,12 +789,12 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
       {/* PART 5: PROJECT — DOC CHUNKING LAB                                  */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: doc chunking lab</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: doc chunking lab</h2>
 
         <p>
           The point of this project isn&apos;t to build production RAG (Module 18 will). It&apos;s to make
           you <em>feel</em>{" "}how chunking changes retrieval quality. You&apos;ll feed the same corpus through
-          four chunkers, run the same 20 queries, compare recall@5 numbers, and see — viscerally — why
+          four chunkers, run the same 20 queries, compare recall@5 numbers, and see, viscerally, why
           chunking is the most important variable.
         </p>
 
@@ -803,13 +803,13 @@ Of which ~700 is cacheable; ~4550 is paid every turn.`}</CodeBlock>
             • Java 21, Spring Boot 3.5+ (you can reuse the Module 16 project)<br />
             • The pgvector setup from Module 16<br />
             • OpenAI API key (or any embedding provider)<br />
-            • A 10–30 page Markdown corpus with real headings — your own README, a public open-source project&apos;s docs, or the Spring Framework reference guide ({" "}
+            • A 10–30 page Markdown corpus with real headings, your own README, a public open-source project&apos;s docs, or the Spring Framework reference guide ({" "}
             <a className="text-emerald-600 hover:underline" href="https://docs.spring.io/spring-framework/reference/">a chapter of this</a>{" "}
             is plenty)
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1 — A Chunker interface</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 1, A Chunker interface</h3>
 
         <CodeBlock lang="java">{`// Chunker.java
 package com.example.chunklab;
@@ -832,7 +832,7 @@ public record Chunk(
     String section   // the heading path, when known; null otherwise
 ) {}`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2 — Four implementations</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 2, Four implementations</h3>
 
         <CodeBlock lang="java">{`// 1. Fixed-size: split on token count, no overlap
 public class FixedSizeChunker implements Chunker {
@@ -957,7 +957,7 @@ public class ContextualChunker implements Chunker {
     }
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3 — A 20-query golden set</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 3, A 20-query golden set</h3>
 
         <p>
           Hand-pick 20 queries against your corpus. For each, hand-label which sections (by heading) contain
@@ -980,13 +980,13 @@ List<GoldenQuery> golden = List.of(
         <Callout variant="warn" title="Don't skip the labeling">
           <p className="m-0 text-sm">
             Twenty queries is the minimum to discriminate between chunkers. Picking them well is the actual
-            craft of this project — they should cover broad/narrow questions, identifier-heavy/conversational
+            craft of this project, they should cover broad/narrow questions, identifier-heavy/conversational
             queries, single-section/multi-section answers. Spend an hour on this; it&apos;s the part you&apos;ll
             apply forever.
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4 — The harness</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 4, The harness</h3>
 
         <CodeBlock lang="java">{`@Service
 public class ChunkingLab {
@@ -1028,7 +1028,7 @@ public class ChunkingLab {
     public record LabResult(String chunker, int chunkCount, double avgRecallAtK) {}
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5 — Run the comparison</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 5, Run the comparison</h3>
 
         <CodeBlock lang="java">{`@Bean
 CommandLineRunner runLab(ChunkingLab lab, ChatClient chat, EmbeddingModel embedder) {
@@ -1053,7 +1053,7 @@ CommandLineRunner runLab(ChunkingLab lab, ChatClient chat, EmbeddingModel embedd
     };
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Step 6 — What to expect</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Step 6, What to expect</h3>
 
         <p>If your golden set is well-built and your corpus has real structure, the typical pattern is:</p>
 
@@ -1079,7 +1079,7 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
         <Checkpoint moduleSlug="rag-architecture" id="project" title="Project: doc chunking lab" xp={50} manual manualLabel="I felt the chunkers" celebration="You can now feel chunking quality in your bones. That intuition is rare and valuable.">
           <p>
             Mark this done once: you&apos;ve run all four chunkers, written down the recall@5 numbers, and can
-            articulate <em>why</em>{" "}the structural and contextual chunkers won — in your own words, against
+            articulate <em>why</em>{" "}the structural and contextual chunkers won, in your own words, against
             your own corpus.
           </p>
         </Checkpoint>
@@ -1089,15 +1089,15 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Final quiz</h2>
 
         <Quiz
           kind="Final check"
           question="A teammate proposes RAG for a chatbot that answers from a 30-page PDF that changes once a quarter. What's the right pushback?"
           options={[
-            { label: "RAG is the standard answer — go with it", explanation: "It's standard, but it's not lean for this size." },
-            { label: "30 pages fits in a long-context prompt; cache the system prompt and skip the retrieval failure mode entirely", correct: true, explanation: "RAG is for when knowledge is too big or too dynamic for the prompt. 30 pages is roughly 15–25k tokens — well within modern context windows. Caching the system prompt (Module 13) makes per-turn cost trivial. You skip an entire piece of infra and an entire failure mode." },
-            { label: "Fine-tune a model on the PDF", explanation: "Worst answer — fine-tuning is for behavior, not facts, and quarterly changes mean quarterly re-training." },
+            { label: "RAG is the standard answer, go with it", explanation: "It's standard, but it's not lean for this size." },
+            { label: "30 pages fits in a long-context prompt; cache the system prompt and skip the retrieval failure mode entirely", correct: true, explanation: "RAG is for when knowledge is too big or too dynamic for the prompt. 30 pages is roughly 15–25k tokens, well within modern context windows. Caching the system prompt (Module 13) makes per-turn cost trivial. You skip an entire piece of infra and an entire failure mode." },
+            { label: "Fine-tune a model on the PDF", explanation: "Worst answer, fine-tuning is for behavior, not facts, and quarterly changes mean quarterly re-training." },
             { label: "Use semantic search without an LLM", explanation: "Doesn't answer questions, just finds passages. Different product." },
           ]}
           xp={15}
@@ -1108,7 +1108,7 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           question="You're building RAG over an internal Markdown wiki. Pick the chunking strategy and the highest-leverage upgrade."
           options={[
             { label: "Fixed-512 chunks, increase to 2048", explanation: "Wrong tool. Fixed-size ignores the wiki's structural cues." },
-            { label: "Markdown structural chunking on H2 boundaries, plus contextual prefixes", correct: true, explanation: "Wikis have meaningful section boundaries — structural chunking on H2 captures them. Contextual prefixes (one-sentence document-context summary per chunk) are the single highest-leverage upgrade per Anthropic's data, with the cost paid once at indexing." },
+            { label: "Markdown structural chunking on H2 boundaries, plus contextual prefixes", correct: true, explanation: "Wikis have meaningful section boundaries, structural chunking on H2 captures them. Contextual prefixes (one-sentence document-context summary per chunk) are the single highest-leverage upgrade per Anthropic's data, with the cost paid once at indexing." },
             { label: "Semantic chunking with a topic-drift detector", explanation: "Works but more expensive and unnecessary when the doc already has explicit headings." },
             { label: "Recursive chunking is enough", explanation: "It's the safe default, but for a structured corpus you can do better." },
           ]}
@@ -1120,8 +1120,8 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           question="Your RAG bot answers conversational queries well but fails on queries that include literal error codes. What architectural change is most likely to help?"
           options={[
             { label: "Switch to a bigger embedding model", explanation: "Bigger embedders still rank semantically, not lexically." },
-            { label: "Add hybrid retrieval — BM25 alongside vector, fused with RRF", correct: true, explanation: "Identifier-style queries (error codes, model numbers, file paths) are exactly where BM25-style exact matching beats vector similarity. Run both retrievers and fuse." },
-            { label: "Tune ef_search higher", explanation: "Recall is fine; the issue is that the relevant chunk doesn't rank well by cosine — even with high recall, it won't make the top 5." },
+            { label: "Add hybrid retrieval, BM25 alongside vector, fused with RRF", correct: true, explanation: "Identifier-style queries (error codes, model numbers, file paths) are exactly where BM25-style exact matching beats vector similarity. Run both retrievers and fuse." },
+            { label: "Tune ef_search higher", explanation: "Recall is fine; the issue is that the relevant chunk doesn't rank well by cosine, even with high recall, it won't make the top 5." },
             { label: "Add a reranker", explanation: "A reranker reorders the top-k candidates. If the relevant chunk isn't in the top-k from vector search, the reranker never sees it." },
           ]}
           xp={15}
@@ -1132,9 +1132,9 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           question="You measure recall@5 = 0.95 but answers are still bad. Where's the bug almost certainly NOT?"
           options={[
             { label: "The retriever / chunker", correct: true, explanation: "Recall@5 = 0.95 means the right chunks are arriving in the top 5 for 95% of queries. The retriever is doing its job. The bug must be downstream: assembly, prompt template, model. Read what's actually in the prompt and what comes back to find it." },
-            { label: "Context assembly", explanation: "Could very well be — if you're truncating, reordering badly, or losing structure." },
+            { label: "Context assembly", explanation: "Could very well be, if you're truncating, reordering badly, or losing structure." },
             { label: "The prompt template", explanation: "Common culprit at high recall. Bad templates leave the model un-anchored." },
-            { label: "The LLM itself", explanation: "Possible — undersized models still struggle even with perfect context." },
+            { label: "The LLM itself", explanation: "Possible, undersized models still struggle even with perfect context." },
           ]}
           xp={15}
         />
@@ -1143,10 +1143,10 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           kind="Final check"
           question="You're stuffing 8 chunks into context. Order them best-relevance-first, sorted by retrieval score. What's the issue?"
           options={[
-            { label: "No issue — relevance-first is always optimal", explanation: "Lost-in-the-middle says otherwise." },
-            { label: "8 is too many: lost-in-the-middle hurts attention on chunks 3–6, regardless of order. Pass 3–5 and consider putting the top hit last (right before the question)", correct: true, explanation: "Two compounding fixes: (1) cut chunk count — more isn't better, lost-in-the-middle is well-documented; (2) the slot just before the question gets high attention, so reversing the order so the top chunk is last often beats first. The combined fix is bigger than either alone." },
+            { label: "No issue, relevance-first is always optimal", explanation: "Lost-in-the-middle says otherwise." },
+            { label: "8 is too many: lost-in-the-middle hurts attention on chunks 3–6, regardless of order. Pass 3–5 and consider putting the top hit last (right before the question)", correct: true, explanation: "Two compounding fixes: (1) cut chunk count, more isn't better, lost-in-the-middle is well-documented; (2) the slot just before the question gets high attention, so reversing the order so the top chunk is last often beats first. The combined fix is bigger than either alone." },
             { label: "Sort by recency instead", explanation: "Recency isn't relevance. Wrong dial." },
-            { label: "Add more chunks — 16 would be safer", explanation: "Worse. More chunks = more middle = worse attention on the relevant ones." },
+            { label: "Add more chunks, 16 would be safer", explanation: "Worse. More chunks = more middle = worse attention on the relevant ones." },
           ]}
           xp={15}
         />
@@ -1155,7 +1155,7 @@ contextual-markdown-h2            18 chunks  recall@5 = 0.91`}</CodeBlock>
           <p>
             With this module under your belt you can name every stage of a RAG pipeline, defend each one,
             spot the most common failure modes, and design a measurement loop. Module 18 turns the design into
-            running Spring Boot code — Spring AI&apos;s <code>VectorStore</code> + pgvector, end to end.
+            running Spring Boot code, Spring AI&apos;s <code>VectorStore</code> + pgvector, end to end.
           </p>
         </Checkpoint>
       </section>

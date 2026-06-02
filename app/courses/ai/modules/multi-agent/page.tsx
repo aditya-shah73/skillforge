@@ -49,21 +49,21 @@ export default function MultiAgentModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          A working catalog of multi-agent patterns — when each helps, when each backfires, and
+          A working catalog of multi-agent patterns, when each helps, when each backfires, and
           how to wire them in Spring without inventing a fragile distributed system. Plus a PR
           review panel that runs three specialized reviewers in parallel against the same diff.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The four patterns: prompt chaining, routing, parallelization, orchestrator/subagent</li>
           <li>Where evaluator-optimizer fits and when it&apos;s worth the cost</li>
-          <li>Parallelization in Spring — virtual threads, structured concurrency, error budgets</li>
+          <li>Parallelization in Spring, virtual threads, structured concurrency, error budgets</li>
           <li>The anti-patterns: chatty multi-agents, role bloat, infinite delegation</li>
           <li>The PR review panel project: security + performance + style reviewers, run in parallel, merged into one report</li>
         </ul>
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Modules 21 and 22 — multi-agent is just &quot;more of those, coordinated&quot;. You also
+        Modules 21 and 22, multi-agent is just &quot;more of those, coordinated&quot;. You also
         want Module 12 (streaming) for the parallelization patterns, and Module 11 (tool use)
         because the orchestrator pattern is fundamentally tool use with subagents-as-tools.
       </Callout>
@@ -72,12 +72,12 @@ export default function MultiAgentModule() {
       {/* PART 1: WHY MULTIPLE                                                */}
       {/* ================================================================= */}
       <section id="why-multiple">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Why ever use more than one agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, Why ever use more than one agent</h2>
 
         <p>
           Default position: one agent is plenty. Modern frontier models with 200k context
           windows and 100+ tool slots can handle most jobs solo. So the question isn&apos;t
-          &quot;should I use multi-agent?&quot; — it&apos;s &quot;what specifically is broken
+          &quot;should I use multi-agent?&quot;, it&apos;s &quot;what specifically is broken
           about my single agent that more agents would fix?&quot;
         </p>
 
@@ -92,7 +92,7 @@ export default function MultiAgentModule() {
           <li>
             <strong>Independent work that can run in parallel.</strong>{" "}If three reviewers
             don&apos;t need to see each other&apos;s output, running them concurrently cuts
-            wall-clock time 3x — for free.
+            wall-clock time 3x, for free.
           </li>
           <li>
             <strong>Context isolation.</strong>{" "}If subagent A reads 100k tokens of code, you
@@ -128,7 +128,7 @@ export default function MultiAgentModule() {
           Be honest about the bill before you decide. Each subagent has its own context, its
           own model calls, its own tool turns. A two-agent orchestrator/subagent typically
           costs <strong>2.5x to 4x</strong>{" "}more tokens than the single-agent version of the
-          same task — because the orchestrator&apos;s context grows with every subagent
+          same task, because the orchestrator&apos;s context grows with every subagent
           summary it consumes, on top of the subagents&apos; own contexts.
         </p>
 
@@ -151,7 +151,7 @@ export default function MultiAgentModule() {
               {
                 label: "Three independent analyses (security, performance, style) need to run on the same code; they don't depend on each other and could be parallel.",
                 correct: true,
-                explanation: "Yes — independent work parallelized cuts wall-clock and gives each subagent a sharp specialty prompt. Both legitimate wins.",
+                explanation: "Yes, independent work parallelized cuts wall-clock and gives each subagent a sharp specialty prompt. Both legitimate wins.",
               },
               {
                 label: "We want to use LangChain's multi-agent feature.",
@@ -170,8 +170,8 @@ export default function MultiAgentModule() {
         title="Part 1 recap"
         gist="One agent is the default. Add agents only for parallelism, context isolation, or genuinely different specialties."
         points={[
-          { takeaway: "Multi-agent is a 2-4x cost multiplier — it has to earn that.", detail: "Each subagent has its own context and tool turns. Orchestrators consume subagent summaries on top of their own work. The math gets bad fast." },
-          { takeaway: "Three legit drivers: parallelism, context isolation, specialty prompts.", detail: "If the work is sequential, the contexts can mix safely, and one prompt covers it — keep it as one agent." },
+          { takeaway: "Multi-agent is a 2-4x cost multiplier, it has to earn that.", detail: "Each subagent has its own context and tool turns. Orchestrators consume subagent summaries on top of their own work. The math gets bad fast." },
+          { takeaway: "Three legit drivers: parallelism, context isolation, specialty prompts.", detail: "If the work is sequential, the contexts can mix safely, and one prompt covers it, keep it as one agent." },
           { takeaway: "Resume-driven multi-agent is rampant. Push back on it.", detail: "Most 'multi-agent' systems in production are actually two agents tucked inside a workflow. Pure n-agent free-form coordination is rare and hard." },
         ]}
       />
@@ -180,11 +180,11 @@ export default function MultiAgentModule() {
       {/* PART 2: THE FOUR PATTERNS                                           */}
       {/* ================================================================= */}
       <section id="patterns">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The four patterns that cover 90%</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, The four patterns that cover 90%</h2>
 
         <p>
           Anthropic&apos;s &quot;Building Effective Agents&quot; post named these and the names
-          have largely stuck. Memorize this taxonomy — almost every multi-agent design you&apos;ll
+          have largely stuck. Memorize this taxonomy, almost every multi-agent design you&apos;ll
           see in the wild is one of these four (or a combination).
         </p>
 
@@ -193,7 +193,7 @@ export default function MultiAgentModule() {
         <p>
           Step A&apos;s output is Step B&apos;s input. Each step is a different LLM call (often
           with a different system prompt). Not strictly &quot;multi-agent&quot; in the loop
-          sense — it&apos;s a workflow with multiple LLM personas.
+          sense, it&apos;s a workflow with multiple LLM personas.
         </p>
 
         <CodeBlock lang="plain">{`question
@@ -225,14 +225,14 @@ Each box is one LLM call. No loops. No tools (or one tool per box).`}</CodeBlock
 
         <p>
           When to use: the request types are clearly distinguishable AND the specialists need
-          materially different prompts/tools. Don&apos;t route just to feel modular — if every
+          materially different prompts/tools. Don&apos;t route just to feel modular, if every
           downstream agent ends up with the same tools, collapse them.
         </p>
 
         <Callout variant="info" title="Cheap routers, smart specialists">
           A common, cost-effective shape: route with Haiku (or even a fine-tuned BERT
           classifier), specialize with Sonnet/Opus. The routing decision rarely needs the
-          biggest model — but committing to the right specialist does.
+          biggest model, but committing to the right specialist does.
         </Callout>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">3. Parallelization</h3>
@@ -243,11 +243,11 @@ Each box is one LLM call. No loops. No tools (or one tool per box).`}</CodeBlock
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>Sectioning</strong> — each agent handles a different aspect of the same
+            <strong>Sectioning</strong>, each agent handles a different aspect of the same
             input. (Security review, performance review, style review of the same diff.)
           </li>
           <li>
-            <strong>Voting</strong> — multiple agents do the same task; you take a majority
+            <strong>Voting</strong>, multiple agents do the same task; you take a majority
             vote or a consensus. Great for high-stakes classification (&quot;is this prompt
             injection?&quot;) where false negatives are bad.
           </li>
@@ -302,7 +302,7 @@ Voting:
           orchestrator. The orchestrator then calls it like any other tool. From the
           orchestrator&apos;s perspective, &quot;research_subagent(question)&quot; is just one
           tool that happens to take 10 seconds and return a paragraph. This makes the
-          orchestrator a normal single-agent loop — much simpler than &quot;real&quot; agent
+          orchestrator a normal single-agent loop, much simpler than &quot;real&quot; agent
           coordination.
         </Callout>
 
@@ -329,7 +329,7 @@ Voting:
 
         <WorkedExample
           title="Pick the pattern"
-          subtitle="Read each scenario before peeking — this is the most useful muscle to build."
+          subtitle="Read each scenario before peeking, this is the most useful muscle to build."
           steps={[
             {
               title: "Scenario 1: classify support tickets into 8 categories, then route to a department-specific assistant",
@@ -337,7 +337,7 @@ Voting:
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Routing.</strong>{" "}A small classifier picks a category; each of the 8
-                    department assistants is a specialized agent. Don&apos;t use orchestrator —
+                    department assistants is a specialized agent. Don&apos;t use orchestrator,
                     there&apos;s no planning, just dispatch.
                   </p>
                 </>
@@ -374,7 +374,7 @@ Voting:
                 <>
                   <p className="border-l-2 border-emerald-500 pl-3 text-sm">
                     <strong>Prompt chaining (a workflow).</strong>{" "}Three sequential structured
-                    LLM calls — that&apos;s a pipeline, not multi-agent. Don&apos;t over-build.
+                    LLM calls, that&apos;s a pipeline, not multi-agent. Don&apos;t over-build.
                   </p>
                 </>
               ),
@@ -401,7 +401,7 @@ Voting:
             options={[
               {
                 label: "A genuine orchestrator/subagent system.",
-                explanation: "There's no orchestrator deciding the plan — the order is hardcoded.",
+                explanation: "There's no orchestrator deciding the plan, the order is hardcoded.",
               },
               {
                 label: "A prompt-chaining workflow dressed up with the word 'agents'.",
@@ -429,7 +429,7 @@ Voting:
               {
                 label: "Expose each subagent as a @Tool method on the orchestrator. The orchestrator's loop calls subagents like any other tool.",
                 correct: true,
-                explanation: "Yes — this collapses the multi-agent problem into the single-agent loop you already know. The subagent runs internally, returns a string, and the orchestrator continues. Much simpler to debug and reason about.",
+                explanation: "Yes, this collapses the multi-agent problem into the single-agent loop you already know. The subagent runs internally, returns a string, and the orchestrator continues. Much simpler to debug and reason about.",
               },
               {
                 label: "Use separate Spring Boot services and HTTP between them.",
@@ -448,9 +448,9 @@ Voting:
         title="Part 2 recap"
         gist="Four patterns cover 90% of real systems: chaining (workflow), routing, parallelization, orchestrator/subagent. Plus evaluator-optimizer for quality loops."
         points={[
-          { takeaway: "Most 'multi-agent' systems are prompt chaining — i.e. a workflow with multiple LLM personas.", detail: "If the order is fixed and each step's output feeds the next, it's a workflow. The 'agent' label is marketing. Reframe and simplify." },
+          { takeaway: "Most 'multi-agent' systems are prompt chaining, i.e. a workflow with multiple LLM personas.", detail: "If the order is fixed and each step's output feeds the next, it's a workflow. The 'agent' label is marketing. Reframe and simplify." },
           { takeaway: "Routing = cheap classifier + specialist agents.", detail: "Use a small model (Haiku, or even a non-LLM classifier) to pick; specialize each downstream agent's prompt and tools." },
-          { takeaway: "Parallelization is the highest-ROI pattern — sectioning for breadth, voting for safety.", detail: "Sectioning gives you sharp specialty prompts at no wall-clock cost. Voting is for high-stakes classification where false negatives are expensive." },
+          { takeaway: "Parallelization is the highest-ROI pattern, sectioning for breadth, voting for safety.", detail: "Sectioning gives you sharp specialty prompts at no wall-clock cost. Voting is for high-stakes classification where false negatives are expensive." },
           { takeaway: "Orchestrator/subagent collapses to a normal single-agent loop if you expose subagents as @Tool.", detail: "The cleanest implementation: orchestrator runs the standard loop; each subagent is just a tool that takes longer than usual. No new coordination layer needed." },
         ]}
       />
@@ -459,7 +459,7 @@ Voting:
       {/* PART 3: PARALLELIZATION DONE RIGHT                                  */}
       {/* ================================================================= */}
       <section id="parallelization">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Parallelization done right</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Parallelization done right</h2>
 
         <p>
           Parallelization sounds easy: run three model calls at once, wait for all, merge. The
@@ -487,7 +487,7 @@ public class ParallelReviewer {
 
         <p>
           Three submits, three gets. With virtual threads (Java 21+), you don&apos;t even need
-          to think about pool sizing — each submit gets its own virtual thread and they all
+          to think about pool sizing, each submit gets its own virtual thread and they all
           block waiting on HTTP without consuming OS threads.
         </p>
 
@@ -495,7 +495,7 @@ public class ParallelReviewer {
 
         <p>
           Java 21–24 incubated <code>StructuredTaskScope</code> as a preview; JDK 25 finalized
-          it with a static factory and a <code>Joiner</code> strategy. Same idea — proper
+          it with a static factory and a <code>Joiner</code> strategy. Same idea, proper
           fan-out semantics, cancel siblings on failure, gather all on success, with a clean
           try-with-resources lifecycle. If you&apos;re on a recent JDK, prefer this.
         </p>
@@ -521,7 +521,7 @@ public class ParallelReviewer {
 
         <Callout variant="spring" title="Don't over-think the threading">
           Spring AI&apos;s ChatClient calls are blocking HTTP. They don&apos;t care about
-          which executor or scope they&apos;re on. Use whatever your team is comfortable with —
+          which executor or scope they&apos;re on. Use whatever your team is comfortable with,
           virtual threads + futures, or structured concurrency, or even Reactor if your stack
           is already reactive. The API call shape is the same.
         </Callout>
@@ -587,16 +587,16 @@ private String safeCall(ChatClient client, String diff, String role) {
 
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>Plain majority</strong> — N classifiers, take the mode. Cheapest. Works
+            <strong>Plain majority</strong>, N classifiers, take the mode. Cheapest. Works
             well for binary or small-cardinality outputs.
           </li>
           <li>
-            <strong>Weighted vote</strong> — each classifier returns a confidence; aggregate
+            <strong>Weighted vote</strong>, each classifier returns a confidence; aggregate
             with the confidences. Better calibration but the model has to be honest about
             confidence (they often aren&apos;t).
           </li>
           <li>
-            <strong>LLM judge</strong> — feed the N answers to a separate LLM that picks the
+            <strong>LLM judge</strong>, feed the N answers to a separate LLM that picks the
             best. Most flexible, most expensive. Useful when answers are free-text rather than
             categorical.
           </li>
@@ -615,10 +615,10 @@ private String safeCall(ChatClient client, String diff, String role) {
             options={[
               {
                 label: "Add try/catch around each call.",
-                explanation: "That handles failures gracefully but doesn't cancel siblings — the still-running ones still bill you.",
+                explanation: "That handles failures gracefully but doesn't cancel siblings, the still-running ones still bill you.",
               },
               {
-                label: "Wrap the fan-out in StructuredTaskScope with the allSuccessfulOrThrow Joiner — when one fails, the scope auto-cancels the others.",
+                label: "Wrap the fan-out in StructuredTaskScope with the allSuccessfulOrThrow Joiner, when one fails, the scope auto-cancels the others.",
                 correct: true,
                 explanation: "Right. Structured concurrency exists for exactly this. Sibling cancellation kills the in-flight calls when one fails (in 'fail fast' mode), so you stop paying for work you'll throw away.",
               },
@@ -634,23 +634,23 @@ private String safeCall(ChatClient client, String diff, String role) {
           />
           <Quiz
             kind="Quick check"
-            question="You're using voting (N=5) for prompt-injection detection. All 5 voters use the same model with the same prompt — just N parallel calls of the same thing. The vote is unanimous on every input you've tested. Is this a good system?"
+            question="You're using voting (N=5) for prompt-injection detection. All 5 voters use the same model with the same prompt, just N parallel calls of the same thing. The vote is unanimous on every input you've tested. Is this a good system?"
             options={[
               {
-                label: "Yes — the high agreement means the model is confident.",
+                label: "Yes, the high agreement means the model is confident.",
                 explanation: "It means the calls are correlated, not that the answer is right. Same prompt, same model, similar tokens → near-identical outputs. The 'voting' is theater.",
               },
               {
-                label: "No — N voters with the same prompt and same model produce highly correlated results. You're paying 5x for one decision. Diversify (different prompts, or different models) or drop the redundancy.",
+                label: "No, N voters with the same prompt and same model produce highly correlated results. You're paying 5x for one decision. Diversify (different prompts, or different models) or drop the redundancy.",
                 correct: true,
                 explanation: "Right. Voting only helps if the voters can fail independently. Same prompt + same model + same input ≈ same output every time. Diversity is what makes ensembles work.",
               },
               {
-                label: "Yes — redundancy is good for safety.",
+                label: "Yes, redundancy is good for safety.",
                 explanation: "Redundant correlated calls aren't safer than one call. They're just five times more expensive.",
               },
               {
-                label: "No — voting only works with at least 7 voters.",
+                label: "No, voting only works with at least 7 voters.",
                 explanation: "There's no magic number; the real issue is correlation, not count.",
               },
             ]}
@@ -662,9 +662,9 @@ private String safeCall(ChatClient client, String diff, String role) {
         title="Part 3 recap"
         gist="Parallelization is the highest-ROI multi-agent pattern. Get the failure semantics and the aggregation right and you're done."
         points={[
-          { takeaway: "Use virtual threads or StructuredTaskScope — don't agonize over thread pools.", detail: "Java 21+ makes blocking HTTP calls cheap to fan out. Structured concurrency adds clean sibling-cancellation on the failure path." },
+          { takeaway: "Use virtual threads or StructuredTaskScope, don't agonize over thread pools.", detail: "Java 21+ makes blocking HTTP calls cheap to fan out. Structured concurrency adds clean sibling-cancellation on the failure path." },
           { takeaway: "Decide partial-failure semantics up front: all-or-nothing, best-effort, or retry-then-degrade.", detail: "Each makes sense in different contexts. Sectioning usually wants best-effort; voting usually wants all-or-nothing." },
-          { takeaway: "Voting only helps if voters fail independently.", detail: "Same model + same prompt + same input = correlated outputs. Diversify prompts, models, or both — otherwise you're paying for redundancy that gives you nothing." },
+          { takeaway: "Voting only helps if voters fail independently.", detail: "Same model + same prompt + same input = correlated outputs. Diversify prompts, models, or both, otherwise you're paying for redundancy that gives you nothing." },
         ]}
       />
 
@@ -672,7 +672,7 @@ private String safeCall(ChatClient client, String diff, String role) {
       {/* PART 4: ANTI-PATTERNS                                               */}
       {/* ================================================================= */}
       <section id="antipatterns">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Multi-agent anti-patterns</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Multi-agent anti-patterns</h2>
 
         <p>
           Most public multi-agent demos are anti-pattern showcases. Here&apos;s what to avoid,
@@ -780,7 +780,7 @@ Agent A: "While you're at it, Z?"
               },
               {
                 label: "Remove Agent B and have Agent A do everything.",
-                explanation: "Sometimes right, sometimes not — depends on whether B's specialty is real. Structured delegation is the more general fix.",
+                explanation: "Sometimes right, sometimes not, depends on whether B's specialty is real. Structured delegation is the more general fix.",
               },
             ]}
           />
@@ -795,11 +795,11 @@ Agent A: "While you're at it, Z?"
               {
                 label: "Each subagent is itself an orchestrator that delegates to its own subagents, three layers deep.",
                 correct: true,
-                explanation: "Yes — infinite delegation. Cost ramps geometrically, debugging is impossible, and the decomposition is almost certainly wrong. Cap delegation at 1 layer.",
+                explanation: "Yes, infinite delegation. Cost ramps geometrically, debugging is impossible, and the decomposition is almost certainly wrong. Cap delegation at 1 layer.",
               },
               {
                 label: "You use structured JSON between agents instead of free-form text.",
-                explanation: "That's correct engineering — opposite of an anti-pattern.",
+                explanation: "That's correct engineering, opposite of an anti-pattern.",
               },
               {
                 label: "You parallelize three reviewers on the same input.",
@@ -817,7 +817,7 @@ Agent A: "While you're at it, Z?"
           { takeaway: "Free-form natural-language coordination between agents is the worst pattern.", detail: "Replace agent-to-agent chat with structured tool calls. Schemas, not prose." },
           { takeaway: "Cap delegation depth at 1.", detail: "Orchestrator → subagent. Period. If a subagent 'needs' to delegate further, your decomposition is wrong; promote that work back into the orchestrator's plan." },
           { takeaway: "Treat inter-agent contracts like APIs.", detail: "Use structured output, golden tests, versioning. Spec drift between agents is the multi-agent equivalent of breaking an API consumer." },
-          { takeaway: "Default reframe: 'what if this were one agent with N tools?' — 80% of the time, simpler wins.", detail: "Multi-agent framework demos are seductive. Production survivors usually look more like one well-tooled agent than a 'crew'." },
+          { takeaway: "Default reframe: 'what if this were one agent with N tools?', 80% of the time, simpler wins.", detail: "Multi-agent framework demos are seductive. Production survivors usually look more like one well-tooled agent than a 'crew'." },
         ]}
       />
 
@@ -825,7 +825,7 @@ Agent A: "While you're at it, Z?"
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: PR review panel</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: PR review panel</h2>
 
         <p>
           Time to ship a parallelized multi-agent system that earns its keep. We&apos;re
@@ -847,7 +847,7 @@ Agent A: "While you're at it, Z?"
           <li>Input: a unified diff string (hunks for one or more files).</li>
           <li>Three reviewers, each with its own ChatClient + system prompt + structured output.</li>
           <li>Run in parallel using <code>StructuredTaskScope</code>.</li>
-          <li>Best-effort failure semantics — if one reviewer fails, the others still produce a partial report.</li>
+          <li>Best-effort failure semantics, if one reviewer fails, the others still produce a partial report.</li>
           <li>Output: <code>ReviewReport</code> record with <code>{`List<Finding>`}</code> per category, plus an overall verdict.</li>
           <li>Endpoint: <code>POST /api/review</code> with the diff in the body.</li>
         </ul>
@@ -855,7 +855,7 @@ Agent A: "While you're at it, Z?"
         <h3 className="mt-8 mb-3 text-xl font-bold">The output schema</h3>
 
         <p>
-          Structured output is the contract. Define it once, share it across reviewers — that
+          Structured output is the contract. Define it once, share it across reviewers, that
           way the merger doesn&apos;t have to parse three flavors of prose.
         </p>
 
@@ -950,7 +950,7 @@ public class ReviewerConfig {
         <Callout variant="warn" title="Keep their lanes separate">
           The boundaries (&quot;out of scope&quot;) are doing real work. Without them, all
           three reviewers will comment on naming. With them, you get focused, non-overlapping
-          findings — which is the whole point of sectioning.
+          findings, which is the whole point of sectioning.
         </Callout>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">The fan-out service</h3>
@@ -1021,10 +1021,10 @@ public class PrReviewService {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Why a separate merger model call">
-          The merger is doing real work — picking the verdict and writing the TL;DR. We could
+          The merger is doing real work, picking the verdict and writing the TL;DR. We could
           do this with deterministic Java code (highest severity wins, concatenate all
           findings). For pure verdict logic, that&apos;s probably better. The LLM merger earns
-          its keep on the TL;DR — which has to read smoothly and call out the most important
+          its keep on the TL;DR, which has to read smoothly and call out the most important
           one or two findings, not just list them.
         </Callout>
 
@@ -1050,7 +1050,7 @@ public class PrReviewService {
           </li>
           <li>
             <strong>Reviewer failure:</strong>{" "}stub one of the ChatClients to throw. Confirm
-            best-effort path works — report comes back with two sections + one
+            best-effort path works, report comes back with two sections + one
             &quot;unavailable&quot; section.
           </li>
           <li>
@@ -1071,11 +1071,11 @@ public class PrReviewService {
           <p>
             Build the PR review panel end to end. Run all six test cases, including the
             lane-discipline one (that&apos;s the test that proves your specialty prompts are
-            actually working — it&apos;s the most useful debugging signal you&apos;ll have).
+            actually working, it&apos;s the most useful debugging signal you&apos;ll have).
           </p>
           <p className="mt-3">
-            <strong>Stretch goal:</strong>{" "}add a fourth reviewer — &quot;test
-            coverage&quot; — that flags new logic added without corresponding tests.
+            <strong>Stretch goal:</strong>{" "}add a fourth reviewer, &quot;test
+            coverage&quot;, that flags new logic added without corresponding tests.
             Importantly, run with <em>four</em>{" "}in parallel and confirm the structured
             concurrency scope still gives you 4x speedup vs sequential.
           </p>
@@ -1091,14 +1091,14 @@ public class PrReviewService {
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it all together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Putting it all together</h2>
 
         <p>That&apos;s Phase 5. You&apos;ve gone from:</p>
 
         <ul className="mb-4 list-disc space-y-1 pl-6">
-          <li><strong>Module 24:</strong>{" "}what an agent is, by hand — a loop with tools and stop conditions</li>
+          <li><strong>Module 24:</strong>{" "}what an agent is, by hand, a loop with tools and stop conditions</li>
           <li><strong>Module 25:</strong>{" "}agents in Spring AI, with auto-loop, manual loop, memory layers, and production stopping</li>
-          <li><strong>Module 26:</strong>{" "}when one agent isn&apos;t enough — the four patterns, parallelization, and the anti-patterns to avoid</li>
+          <li><strong>Module 26:</strong>{" "}when one agent isn&apos;t enough, the four patterns, parallelization, and the anti-patterns to avoid</li>
         </ul>
 
         <p>
@@ -1114,7 +1114,7 @@ public class PrReviewService {
             options={[
               {
                 label: "Orchestrator/subagent.",
-                explanation: "There's no orchestrator picking the plan — the order is hardcoded.",
+                explanation: "There's no orchestrator picking the plan, the order is hardcoded.",
               },
               {
                 label: "Parallelization (sectioning).",
@@ -1123,7 +1123,7 @@ public class PrReviewService {
               {
                 label: "Prompt chaining (a workflow).",
                 correct: true,
-                explanation: "Right. Sequential, fixed-order LLM calls = workflow. Calling each step an 'agent' is marketing — the architecture is a pipeline.",
+                explanation: "Right. Sequential, fixed-order LLM calls = workflow. Calling each step an 'agent' is marketing, the architecture is a pipeline.",
               },
               {
                 label: "Routing.",
@@ -1137,7 +1137,7 @@ public class PrReviewService {
             options={[
               {
                 label: "The model is exceptionally well-calibrated.",
-                explanation: "Calibration is about whether confidence matches accuracy. Unanimous-because-deterministic-on-same-prompt isn't calibration — it's correlation.",
+                explanation: "Calibration is about whether confidence matches accuracy. Unanimous-because-deterministic-on-same-prompt isn't calibration, it's correlation.",
               },
               {
                 label: "The voters are too correlated to add real safety. Diversify (different prompts, different models) or drop the voting.",
@@ -1160,12 +1160,12 @@ public class PrReviewService {
             options={[
               {
                 label: "Switch to a cheaper model at the leaf level.",
-                explanation: "Helps a bit but doesn't address the architectural problem — you'd still pay 12x base, just a smaller multiplier.",
+                explanation: "Helps a bit but doesn't address the architectural problem, you'd still pay 12x base, just a smaller multiplier.",
               },
               {
                 label: "Cap delegation depth at 1 layer. Promote sub-subagent work into the subagent or the orchestrator's plan.",
                 correct: true,
-                explanation: "Yes — infinite delegation is the actual bug. After one level the orchestrator can't reason about what's happening, and costs ramp geometrically. Flattening usually exposes that the deep nesting wasn't actually buying anything.",
+                explanation: "Yes, infinite delegation is the actual bug. After one level the orchestrator can't reason about what's happening, and costs ramp geometrically. Flattening usually exposes that the deep nesting wasn't actually buying anything.",
               },
               {
                 label: "Add caching across subagents.",
@@ -1186,7 +1186,7 @@ public class PrReviewService {
                 explanation: "Same architecture, just costlier. Doesn't fix the structural issue.",
               },
               {
-                label: "Replace the chat with a tool-call interface — A invokes B as a tool with a typed payload, B returns a typed response.",
+                label: "Replace the chat with a tool-call interface, A invokes B as a tool with a typed payload, B returns a typed response.",
                 correct: true,
                 explanation: "Right. Free-form coordination is the bug. Structured delegation (schema in, schema out) is faster, debuggable, contract-able, and cheaper.",
               },
@@ -1211,7 +1211,7 @@ public class PrReviewService {
               {
                 label: "The siblings are cancelled and the whole call fails.",
                 correct: true,
-                explanation: "Yes — that's the behavior of allSuccessfulOrThrow. Sibling cancellation is the cost-saving feature, but it also means partial-success isn't the default; you have to opt into it with a different Joiner (e.g. awaitAll) or per-task try/catch.",
+                explanation: "Yes, that's the behavior of allSuccessfulOrThrow. Sibling cancellation is the cost-saving feature, but it also means partial-success isn't the default; you have to opt into it with a different Joiner (e.g. awaitAll) or per-task try/catch.",
               },
               {
                 label: "The remaining reviewers get a bonus 30 seconds to finish.",
@@ -1226,12 +1226,12 @@ public class PrReviewService {
         </Checkpoint>
 
         <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
-          <p className="mb-2 font-semibold">Coming up next — Phase 6: Production &amp; Capstone</p>
+          <p className="mb-2 font-semibold">Coming up next, Phase 6: Production &amp; Capstone</p>
           <p className="text-sm">
             <strong>Module 28 (Evals)</strong>: how do you actually know your LLM feature is
             getting better, not worse? Golden sets, LLM-as-judge, regression testing.
             <br />
-            <strong>Module 29 (Security)</strong>: prompt injection, PII, output filtering — the
+            <strong>Module 29 (Security)</strong>: prompt injection, PII, output filtering, the
             things you wish you&apos;d done before launch.
             <br />
             <strong>Module 30 (Fine-tuning)</strong>: when to bother. (Spoiler: rarely.)

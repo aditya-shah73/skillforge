@@ -30,18 +30,18 @@ export default function FrontendHome() {
         <div className="border-l-2 border-cyan-500 pl-5 dark:border-cyan-400">
           <h2 className="mb-3 text-lg font-bold tracking-tight">Prerequisites</h2>
           <ul className="m-0 list-none space-y-2 p-0 text-sm text-slate-700 dark:text-slate-300">
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You&apos;ve shipped <strong>some React</strong> — function components, <code>useState</code>, props, the basics</span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You can read modern <strong>JavaScript</strong>{" "}— arrow functions, destructuring, spread, <code>async/await</code></span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You&apos;ve shipped <strong>some React</strong>, function components, <code>useState</code>, props, the basics</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You can read modern <strong>JavaScript</strong>,{" "}arrow functions, destructuring, spread, <code>async/await</code></span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfort in a <strong>terminal</strong>{" "}+ Node 20+ installed</span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>predict before running</strong>{" "}every snippet — that&apos;s where the learning happens</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>predict before running</strong>{" "}every snippet, that&apos;s where the learning happens</span></li>
           </ul>
         </div>
         <div className="border-l-2 border-sky-500 pl-5 dark:border-sky-400">
           <h2 className="mb-3 text-lg font-bold tracking-tight">What you&apos;ll get</h2>
           <ul className="m-0 list-none space-y-2 p-0 text-sm text-slate-700 dark:text-slate-300">
             <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>JS internals (closures, <code>this</code>, prototypes, event loop) you can <em>defend</em>, not just recite</span></li>
-            <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>TypeScript that actually catches bugs — generics, narrowing, the patterns React forces</span></li>
-            <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>React internals — reconciliation, hooks-as-closures, the rules nobody tells you</span></li>
+            <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>TypeScript that actually catches bugs, generics, narrowing, the patterns React forces</span></li>
+            <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>React internals, reconciliation, hooks-as-closures, the rules nobody tells you</span></li>
             <li className="flex gap-2"><span className="font-bold text-cyan-500 select-none dark:text-cyan-400">✓</span><span>A Next.js App Router intuition that lets you reason about server vs client at a glance</span></li>
           </ul>
         </div>
@@ -101,18 +101,15 @@ export default function FrontendHome() {
 function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
   return (
     <>
-      <div className="mb-2 flex items-start justify-between">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
-            {m.number}
-          </span>
-          {m.status === "available" ? (
-            <span className="text-[10px] font-semibold tracking-wider text-cyan-600 uppercase dark:text-cyan-400">Ready</span>
-          ) : (
-            <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
-          )}
-        </div>
-        <span className="text-xs text-slate-400">{m.duration}</span>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
+          {m.number}
+        </span>
+        {m.status === "available" ? (
+          <span className="text-[10px] font-semibold tracking-wider text-cyan-600 uppercase dark:text-cyan-400">Ready</span>
+        ) : (
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
+        )}
       </div>
       <h3 className="mb-1 text-base font-semibold">{m.title}</h3>
       <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">{m.subtitle}</p>

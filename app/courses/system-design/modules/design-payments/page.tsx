@@ -60,7 +60,7 @@ export default function Page() {
         <h2>What you&apos;ll walk out with</h2>
         <ul>
           <li>An immutable double-entry ledger that&apos;s safe to audit five years from now.</li>
-          <li>Idempotency keys done the way Stripe does them — once, correctly.</li>
+          <li>Idempotency keys done the way Stripe does them, once, correctly.</li>
           <li>A webhook handler that survives the gateway retrying you eight times.</li>
           <li>A reconciliation job that catches the discrepancies you didn&apos;t know you had.</li>
           <li>A working understanding of PCI scope: what to never touch, and what tokens to keep.</li>
@@ -95,7 +95,7 @@ export default function Page() {
         </ul>
         <h3>What we&apos;ll defer</h3>
         <ul>
-          <li>Multi-currency FX (real, but a separate module — focus today is on a single currency).</li>
+          <li>Multi-currency FX (real, but a separate module, focus today is on a single currency).</li>
           <li>Card issuing (very different domain).</li>
           <li>Fraud scoring as a deep system (we&apos;ll mention the integration point).</li>
         </ul>
@@ -111,7 +111,7 @@ export default function Page() {
         <p>
           Mid-size marketplace: 50 transactions/sec average, 500/sec peak. Ledger entries are ~200 bytes each, two per transaction
           (debit + credit, minimum). 500 tx/sec × 2 × 200 bytes = ~200 KB/sec writes. That&apos;s tiny. The hard part isn&apos;t
-          throughput — it&apos;s correctness under retries.
+          throughput, it&apos;s correctness under retries.
         </p>
         <Callout variant="warn" title="Money is integers">
           Never represent currency as a float. <code>0.1 + 0.2 != 0.3</code>. Use integer minor units (cents, paise, satoshi) and a
@@ -124,7 +124,7 @@ export default function Page() {
             { label: "Append-only writes are faster than updates on most databases", correct: false, explanation: "True for some workloads, but not the reason. Throughput is a happy side effect, not the goal." },
             { label: "Auditors and regulators require an immutable record of every financial event, and corrections must themselves be visible as events (reversing entries)", correct: true, explanation: "Mutating a ledger row destroys the audit trail. Errors are corrected by appending a reversing entry, never by editing history." },
             { label: "It avoids row-level locking under contention", correct: false, explanation: "Concurrency is a real concern, but the primary reason is auditability and immutability of financial truth." },
-            { label: "It makes replication easier across regions", correct: false, explanation: "Replication is easier with an event log, but again — the driving requirement is audit, not replication." },
+            { label: "It makes replication easier across regions", correct: false, explanation: "Replication is easier with an event log, but again, the driving requirement is audit, not replication." },
           ]}
         />
       </Checkpoint>
@@ -135,7 +135,7 @@ export default function Page() {
           Every financial event becomes <strong>two or more</strong>{" "}ledger entries that sum to zero. A charge to a rider for $20
           looks like:
         </p>
-        <CodeBlock lang="plain" caption="ledger.sql — entries for a charge + payout">{`-- Charge $20 from rider to platform
+        <CodeBlock lang="plain" caption="ledger.sql, entries for a charge + payout">{`-- Charge $20 from rider to platform
 INSERT INTO ledger (txn_id, account, amount_cents, currency, type, ts)
 VALUES
   ('txn_abc', 'rider:42:cash',          -2000, 'USD', 'CHARGE',  now()),
@@ -165,7 +165,7 @@ VALUES
           <li>New key → process normally, store the result before responding.</li>
         </ul>
 
-        <CodeBlock lang="java" caption="ChargeController.java — idempotent charge endpoint">{`@PostMapping("/v1/charges")
+        <CodeBlock lang="java" caption="ChargeController.java, idempotent charge endpoint">{`@PostMapping("/v1/charges")
 public ResponseEntity<Charge> createCharge(
         @RequestHeader("Idempotency-Key") String idemKey,
         @RequestBody ChargeRequest req) {
@@ -197,7 +197,7 @@ public ResponseEntity<Charge> createCharge(
 
         <Callout variant="spring" title="Stripe's rule of thumb">
           The client owns the idempotency key. The server owns the response. If a network blip drops the response on the floor, the
-          client retries with the same key and gets the original response back — never a duplicate charge.
+          client retries with the same key and gets the original response back, never a duplicate charge.
         </Callout>
 
         <h3>The end-to-end flow</h3>
@@ -205,12 +205,12 @@ public ResponseEntity<Charge> createCharge(
         <p>
           Three things to notice. <strong>One:</strong>{" "}the card number never touches your servers. The client tokenizes via
           Stripe&apos;s SDK; you only see <code>pm_xxx</code> tokens. <strong>Two:</strong>{" "}the gateway is the source of truth for
-          &quot;did the charge succeed?&quot; — the webhook is what finalizes your ledger. <strong>Three:</strong>{" "}reconciliation is
+          &quot;did the charge succeed?&quot;, the webhook is what finalizes your ledger. <strong>Three:</strong>{" "}reconciliation is
           a real job, not a belief that the gateway and your books always match.
         </p>
 
         <h3>API surface</h3>
-        <CodeBlock lang="plain" caption="HTTP API — charges, refunds, payouts, webhooks">{`POST /v1/charges
+        <CodeBlock lang="plain" caption="HTTP API, charges, refunds, payouts, webhooks">{`POST /v1/charges
   Headers: Idempotency-Key: uuid
   Body: { amount_cents, currency, payment_method, customer_id, description, metadata }
   -> 200 { charge_id, status: "succeeded" | "pending" | "failed" }
@@ -242,14 +242,14 @@ POST /v1/webhooks/stripe   # gateway -> us, signed
       </Checkpoint>
 
       <Checkpoint moduleSlug="design-payments" id="deep" title="Part 3 · Webhooks, sagas & PCI scope" xp={30}>
-        <h3>Webhook handling — the part everyone gets wrong</h3>
+        <h3>Webhook handling, the part everyone gets wrong</h3>
         <p>
           Stripe will retry webhooks for up to 3 days on non-2xx responses. Your handler must be idempotent (events have IDs;
           dedupe), signature-verified (HMAC over the raw body with a shared secret), and replay-protected (reject events older than
           5 minutes by their <code>Stripe-Signature</code> timestamp). Get any of these wrong and you&apos;ll either double-credit a
           ledger entry or accept a forged event from a malicious caller.
         </p>
-        <CodeBlock lang="java" caption="StripeWebhookController.java — verify, dedupe, dispatch">{`@PostMapping(value = "/v1/webhooks/stripe", consumes = "application/json")
+        <CodeBlock lang="java" caption="StripeWebhookController.java, verify, dedupe, dispatch">{`@PostMapping(value = "/v1/webhooks/stripe", consumes = "application/json")
 public ResponseEntity<Void> stripeWebhook(
         HttpServletRequest request,
         @RequestHeader("Stripe-Signature") String signature) throws IOException {
@@ -285,8 +285,8 @@ public ResponseEntity<Void> stripeWebhook(
     return ResponseEntity.ok().build();
 }`}</CodeBlock>
         <Callout variant="warn" title="Always 200 once you've persisted">
-          If you do work and then crash before responding 200, Stripe retries — and your dedupe by event ID handles that. If you
-          respond 500 because the database was momentarily slow, Stripe retries — fine. But if you persist the ledger entry and
+          If you do work and then crash before responding 200, Stripe retries, and your dedupe by event ID handles that. If you
+          respond 500 because the database was momentarily slow, Stripe retries, fine. But if you persist the ledger entry and
           then return 500 because of a downstream notification failure, you&apos;ve guaranteed a duplicate next attempt.
           Persist atomically, then 200, then notify.
         </Callout>
@@ -309,7 +309,7 @@ public ResponseEntity<Void> stripeWebhook(
           Reconciliation is not optional. Without it, small drift compounds into &quot;why are we $400 off this quarter?&quot;
         </p>
 
-        <h3>PCI scope — what to keep, what to never see</h3>
+        <h3>PCI scope, what to keep, what to never see</h3>
         <ClassifyChallenge
           title="Sort each item by where it can live in your system"
           prompt="PCI scope is decided by what data you touch. Tokenize aggressively, store nothing dangerous, and most of the audit becomes a paperwork exercise."
@@ -320,25 +320,25 @@ public ResponseEntity<Void> stripeWebhook(
           ]}
           items={[
             { id: "pan", label: "Customer's full card number (PAN)", answer: "never", explanation: "PAN exposure puts you in PCI-DSS Level 1 scope. Tokenize via the gateway SDK on the client and never let it land on your servers." },
-            { id: "cvv", label: "Card CVV / CVC", answer: "never", explanation: "Storing the CVV is explicitly forbidden by PCI-DSS — even momentarily, even encrypted. The gateway uses it once for the auth and discards it." },
-            { id: "pm", label: "Stripe payment_method_id (pm_1Nxxx)", answer: "tokenized", explanation: "Opaque to your servers — useless without Stripe's auth. Safe to store and reuse for the same customer." },
+            { id: "cvv", label: "Card CVV / CVC", answer: "never", explanation: "Storing the CVV is explicitly forbidden by PCI-DSS, even momentarily, even encrypted. The gateway uses it once for the auth and discards it." },
+            { id: "pm", label: "Stripe payment_method_id (pm_1Nxxx)", answer: "tokenized", explanation: "Opaque to your servers, useless without Stripe's auth. Safe to store and reuse for the same customer." },
             { id: "last4", label: "Last 4 digits of the card", answer: "ours", explanation: "Display metadata, not a chargeable secret. Used for the 'Visa ending in 4242' UI." },
             { id: "brand", label: "Card brand (Visa, Mastercard)", answer: "ours", explanation: "Display metadata, not sensitive. Often returned by the gateway alongside the token." },
             { id: "exp", label: "Card expiration month/year", answer: "tokenized", explanation: "PCI-DSS classifies exp date as cardholder data when stored alongside the PAN. Easiest path: keep it inside the gateway and reference via the token." },
-            { id: "email", label: "Customer's billing email", answer: "ours", explanation: "PII (governed by GDPR/CCPA), but not PCI scope. Standard handling applies — encrypt at rest and limit access." },
+            { id: "email", label: "Customer's billing email", answer: "ours", explanation: "PII (governed by GDPR/CCPA), but not PCI scope. Standard handling applies, encrypt at rest and limit access." },
             { id: "amount", label: "Charge amount and currency", answer: "ours", explanation: "Not sensitive. You need it on the ledger and in your analytics." },
-            { id: "track", label: "Magnetic stripe / chip data", answer: "never", explanation: "Track data is the most sensitive bucket — storing it is a PCI fast-track to fines. Card-present terminals talk directly to the gateway." },
+            { id: "track", label: "Magnetic stripe / chip data", answer: "never", explanation: "Track data is the most sensitive bucket, storing it is a PCI fast-track to fines. Card-present terminals talk directly to the gateway." },
           ]}
         />
         <p>
           The principle: anything that could be used to charge the card on its own is &quot;never.&quot; Anything that&apos;s an
-          opaque pointer the gateway resolves is &quot;tokenized.&quot; Display metadata (last 4, brand) is yours to keep — it&apos;s
+          opaque pointer the gateway resolves is &quot;tokenized.&quot; Display metadata (last 4, brand) is yours to keep, it&apos;s
           how you build the &quot;Visa ending in 4242&quot; UI without ever seeing the rest of the card.
         </p>
 
         <PartRecap
           title="Part 3 recap"
-          gist="Webhooks are the gateway's voice — verify signatures, dedupe by event ID, persist atomically before responding 200. Sagas + compensating entries handle multi-step flows. Reconciliation is a nightly job, not a hope."
+          gist="Webhooks are the gateway's voice, verify signatures, dedupe by event ID, persist atomically before responding 200. Sagas + compensating entries handle multi-step flows. Reconciliation is a nightly job, not a hope."
           points={[
             { takeaway: "Verify signatures over raw bytes", detail: "Reparsing JSON before verifying breaks the signature. Read the body once as bytes, hash it, then parse." },
             { takeaway: "Compensating entries, not deletes", detail: "If a payout fails after the deduction, append a reversing entry. The original entry stays as historical truth." },
@@ -360,7 +360,7 @@ public ResponseEntity<Void> stripeWebhook(
         <p>
           Before calling the gateway, send the charge to a fraud service. It returns a score in low milliseconds. Below a threshold,
           proceed. In a &quot;review&quot; band, hold the charge in a PENDING state and notify ops. Above a threshold, reject. The
-          fraud service is a black box from your perspective — feature engineering is its team&apos;s problem; you just integrate
+          fraud service is a black box from your perspective, feature engineering is its team&apos;s problem; you just integrate
           its score into the state machine.
         </p>
 
@@ -384,7 +384,7 @@ public ResponseEntity<Void> stripeWebhook(
           options={[
             { label: "Skip the dedupe check this time so you can re-send the notification", correct: false, explanation: "Skipping dedupe means a duplicate ledger entry. Worse than a missed notification." },
             { label: "Dedupe on the Stripe event ID, return 200, and let a separate notification retry job handle the missed email", correct: true, explanation: "The ledger is the source of truth. The notification is a side-effect that owns its own retry policy. Don't entangle them." },
-            { label: "Roll back the ledger entry so you can replay everything cleanly", correct: false, explanation: "The ledger is append-only. Rollbacks are reversing entries, and you don't need one — the original entry is correct." },
+            { label: "Roll back the ledger entry so you can replay everything cleanly", correct: false, explanation: "The ledger is append-only. Rollbacks are reversing entries, and you don't need one, the original entry is correct." },
             { label: "Return 500 to Stripe so it retries until the notification works", correct: false, explanation: "You'd flood the gateway with retries and accumulate event-store noise. The notification has its own retry path." },
           ]}
         />
@@ -393,7 +393,7 @@ public ResponseEntity<Void> stripeWebhook(
           title="Closing posture"
           gist="In an interview: the ledger and idempotency are your headline. Tokenization, webhook verification, and reconciliation are the supporting pillars. Everything else is named and deferred."
           points={[
-            { takeaway: "Boring is the goal", detail: "Cleverness in payments is a code smell. Append, balance, idempotent — say these words often." },
+            { takeaway: "Boring is the goal", detail: "Cleverness in payments is a code smell. Append, balance, idempotent, say these words often." },
             { takeaway: "Treat the gateway as authoritative", detail: "Your books mirror their books. Webhooks finalize. Reconciliation catches the rest." },
             { takeaway: "Compliance is architecture", detail: "PCI scope shapes the system. Tokenize early, store nothing dangerous, and the audit becomes a paperwork exercise instead of a rebuild." },
           ]}
@@ -405,7 +405,7 @@ public ResponseEntity<Void> stripeWebhook(
         <p>
           That&apos;s the case-study arc. From URL shorteners to payments, the pattern repeats: identify the dominant pressure, pick
           the data layer that absorbs it, and own the failure modes. The remaining modules in the System Design course go beyond
-          interview frame into production realities — observability, capacity planning, and the capstone that ties it all together.
+          interview frame into production realities, observability, capacity planning, and the capstone that ties it all together.
         </p>
         <p>
           Browse the full track on the <Link href="/courses/system-design" className="text-cyan-600 hover:underline">System Design course page</Link>.

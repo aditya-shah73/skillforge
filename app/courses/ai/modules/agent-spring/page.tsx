@@ -36,7 +36,7 @@ export default function AgentSpringModule() {
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Agents in Spring Boot</h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Spring AI runs the loop for you. That&apos;s convenient — until you need it not to.
+          Spring AI runs the loop for you. That&apos;s convenient, until you need it not to.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="agent-spring" />
         <ModuleProgress moduleSlug="agent-spring" checkpoints={CHECKPOINTS} />
@@ -48,7 +48,7 @@ export default function AgentSpringModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          The Module 24 research agent rebuilt the Spring AI way — same loop, same stopping
+          The Module 24 research agent rebuilt the Spring AI way, same loop, same stopping
           conditions, but with the framework doing the boring parts. Plus the trick that
           matters most in production: knowing exactly when to <em>turn off</em>{" "}the framework
           and run the loop yourself.
@@ -59,12 +59,12 @@ export default function AgentSpringModule() {
           <li>When to flip <code>internalToolExecutionEnabled = false</code> and own the loop</li>
           <li>Conversation memory and per-session state (keeping it small)</li>
           <li>Production stopping: timeouts, cancellation, observability with Micrometer</li>
-          <li>A code migration agent project — reads files, proposes patches, applies them iteratively</li>
+          <li>A code migration agent project, reads files, proposes patches, applies them iteratively</li>
         </ul>
       </section>
 
       <Callout variant="info" title="Prerequisites">
-        Module 24 — you must understand the manual loop before letting a framework run it for
+        Module 24, you must understand the manual loop before letting a framework run it for
         you. Module 10 (Spring AI basics) and Module 11 (tool use) for the API surface.
         Module 13 (prompt caching) is useful when we get to cost control.
       </Callout>
@@ -73,7 +73,7 @@ export default function AgentSpringModule() {
       {/* PART 1: TOOLS THE SPRING AI WAY                                     */}
       {/* ================================================================= */}
       <section id="spring-tools">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Tools the Spring AI way</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, Tools the Spring AI way</h2>
 
         <p>
           In Module 11 you wired tool definitions by hand: JSON schemas, name strings,
@@ -118,12 +118,12 @@ public class ResearchTools {
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             The <code>@Tool</code> description becomes the tool description sent to the model.
-            Treat it like a tiny piece of prompt — the model reads it to decide whether to
+            Treat it like a tiny piece of prompt, the model reads it to decide whether to
             call.
           </li>
           <li>
             Method parameter types become the JSON schema. <code>String</code>,
-            <code>Integer</code>, records, <code>List&lt;...&gt;</code> — Spring AI generates
+            <code>Integer</code>, records, <code>List&lt;...&gt;</code>, Spring AI generates
             the schema at registration time.
           </li>
           <li>
@@ -132,14 +132,14 @@ public class ResearchTools {
           </li>
           <li>
             Spring beans, not static methods. The tool can inject anything else in your
-            container — repositories, clients, even other Spring AI beans.
+            container, repositories, clients, even other Spring AI beans.
           </li>
         </ul>
 
         <Callout variant="warn" title="Tool descriptions are prompts">
           A vague description like <em>&quot;Search the web&quot;</em>{" "}will get called for
-          every question. A precise one — <em>&quot;Search the web for current news; do NOT use
-          for math, code, or programming docs&quot;</em> — gates the model&apos;s behavior. Spend
+          every question. A precise one, <em>&quot;Search the web for current news; do NOT use
+          for math, code, or programming docs&quot;</em>, gates the model&apos;s behavior. Spend
           time on these strings. They&apos;re where most agent tuning happens.
         </Callout>
 
@@ -196,7 +196,7 @@ public class ResearchController {
         title="Part 1 recap"
         gist="Tools become annotated methods on Spring beans. Schema generation is automatic; tool descriptions are prompt surface."
         points={[
-          { takeaway: "@Tool turns any Spring bean method into a callable tool — no manual schemas.", detail: "Method parameters become input schema, return type becomes the observation. Records and lists serialize automatically." },
+          { takeaway: "@Tool turns any Spring bean method into a callable tool, no manual schemas.", detail: "Method parameters become input schema, return type becomes the observation. Records and lists serialize automatically." },
           { takeaway: "The @Tool description IS prompt engineering.", detail: "It's the only thing the model reads when deciding whether to call. Vague descriptions = over-calling; sharp descriptions = correct gating." },
           { takeaway: "Tools attach per-call via .tools(bean), .toolNames(...), or .toolCallbacks(...).", detail: "You can mix and match: a default toolset on the ChatClient builder, plus per-request additions or restrictions at the call site." },
         ]}
@@ -206,13 +206,13 @@ public class ResearchController {
       {/* PART 2: THE AUTO-LOOP                                               */}
       {/* ================================================================= */}
       <section id="auto-loop">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — The auto-loop and why to opt out</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, The auto-loop and why to opt out</h2>
 
         <p>
           Here&apos;s the surprise: the previous example is already a working agent. When you
           call <code>.call().content()</code>, Spring AI runs the entire ReAct loop for you
           internally. The model emits a tool call, Spring intercepts it, looks up the bean
-          method, invokes it, appends the result, calls the model again — until the model
+          method, invokes it, appends the result, calls the model again, until the model
           stops asking for tools or it hits an internal cap.
         </p>
 
@@ -240,7 +240,7 @@ public class ResearchController {
 
         <p>
           The escape hatch is a single config flag. Set it and Spring AI returns control to you
-          after every model turn — you handle tool execution and decide whether to continue.
+          after every model turn, you handle tool execution and decide whether to continue.
         </p>
 
         <CodeBlock lang="java">{`import org.springframework.ai.chat.prompt.ChatOptions;
@@ -263,7 +263,7 @@ ChatResponse response = chat.prompt()
         <p>
           With the auto-execution off, you get the raw <code>ChatResponse</code> back after
           each model turn. You inspect it for tool calls, run them yourself, append results,
-          and call again. This is the manual loop from Module 24 — but with Spring&apos;s
+          and call again. This is the manual loop from Module 24, but with Spring&apos;s
           chat-client, message types, and observability still in play.
         </p>
 
@@ -312,14 +312,14 @@ ChatResponse response = chat.prompt()
           Spring AI&apos;s tool API has been moving fast across releases. The flag
           <code>internalToolExecutionEnabled</code>, the <code>ToolCallback</code> resolver,
           and the message types in this snippet match Spring AI 1.0.x. If you&apos;re on a
-          different minor version, the names may shift. The <em>concept</em>{" "}doesn&apos;t —
+          different minor version, the names may shift. The <em>concept</em>{" "}doesn&apos;t,
           there&apos;s always a way to disable auto-execution.
         </Callout>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">When to use which mode</h3>
 
         <WorkedExample
-          title="Auto-loop vs manual loop — pick one"
+          title="Auto-loop vs manual loop, pick one"
           subtitle="Walk through real scenarios before peeking at the answer."
           steps={[
             {
@@ -362,7 +362,7 @@ ChatResponse response = chat.prompt()
                     article 1&quot;, &quot;cross-checking&quot;. The agent might run 6 turns.
                   </p>
                   <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Manual loop.</strong>{" "}You need to emit SSE events between turns —
+                    <strong>Manual loop.</strong>{" "}You need to emit SSE events between turns,
                     impossible to do cleanly when the loop is hidden inside Spring.
                   </p>
                 </>
@@ -373,11 +373,11 @@ ChatResponse response = chat.prompt()
               body: (
                 <>
                   <p>
-                    Three fixed steps. Reread Module 24 Part 4 if you forgot — this is a
+                    Three fixed steps. Reread Module 24 Part 4 if you forgot, this is a
                     workflow, not an agent.
                   </p>
                   <p className="mt-2 border-l-2 border-emerald-500 pl-3 text-sm">
-                    <strong>Neither — write a workflow.</strong>{" "}Two structured-output LLM
+                    <strong>Neither, write a workflow.</strong>{" "}Two structured-output LLM
                     calls and direct service-method invocations. No loop needed.
                   </p>
                 </>
@@ -392,7 +392,7 @@ ChatResponse response = chat.prompt()
             question="What does internalToolExecutionEnabled = true (the default) actually do?"
             options={[
               {
-                label: "Spring AI runs the entire ReAct loop inside .call() — executing tools and re-prompting until the model stops asking for tools.",
+                label: "Spring AI runs the entire ReAct loop inside .call(), executing tools and re-prompting until the model stops asking for tools.",
                 correct: true,
                 explanation: "Yes. With this on, .call().content() returns just the final answer. Every tool turn happened inside the framework.",
               },
@@ -405,7 +405,7 @@ ChatResponse response = chat.prompt()
                 explanation: "That validation happens regardless. This flag is about the auto-loop.",
               },
               {
-                label: "It enables tool calling at all — without it, no tools are sent to the model.",
+                label: "It enables tool calling at all, without it, no tools are sent to the model.",
                 explanation: "Tools are still sent and described to the model when the flag is off; the difference is who executes them when the model asks.",
               },
             ]}
@@ -415,7 +415,7 @@ ChatResponse response = chat.prompt()
             question="Your agent has a delete_record(id) tool. The auto-loop is on. What's the strongest reason to flip it off?"
             options={[
               {
-                label: "Performance — manual loops are faster.",
+                label: "Performance, manual loops are faster.",
                 explanation: "They aren't faster; the same number of model calls happen either way.",
               },
               {
@@ -425,7 +425,7 @@ ChatResponse response = chat.prompt()
               },
               {
                 label: "Spring AI won't generate the schema for delete operations.",
-                explanation: "Spring AI doesn't care what your tool does — schema generation is purely about types.",
+                explanation: "Spring AI doesn't care what your tool does, schema generation is purely about types.",
               },
               {
                 label: "You want to use prompt caching.",
@@ -441,7 +441,7 @@ ChatResponse response = chat.prompt()
         gist="Spring AI runs the loop for you by default. Turn it off when you need control over each turn."
         points={[
           { takeaway: "internalToolExecutionEnabled = true is fine for simple Q&A agents.", detail: "The framework handles tool dispatch, message bookkeeping, and termination. .call().content() returns the final answer." },
-          { takeaway: "Flip it off when you need streaming intermediate steps, audit logging, or approval gates.", detail: "You then drive the loop yourself with chatModel.call(prompt) — same pattern as Module 24, but with Spring's message types." },
+          { takeaway: "Flip it off when you need streaming intermediate steps, audit logging, or approval gates.", detail: "You then drive the loop yourself with chatModel.call(prompt), same pattern as Module 24, but with Spring's message types." },
           { takeaway: "Workflow problems still need workflows.", detail: "Don't reach for a manual loop just because you can. If the steps are fixed, write a service that calls them in order." },
         ]}
       />
@@ -450,7 +450,7 @@ ChatResponse response = chat.prompt()
       {/* PART 3: MEMORY AND STATE                                            */}
       {/* ================================================================= */}
       <section id="memory-state">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Memory and state across turns</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Memory and state across turns</h2>
 
         <p>
           Module 24 covered memory <em>conceptually</em>. Now let&apos;s wire each kind in
@@ -463,7 +463,7 @@ ChatResponse response = chat.prompt()
           Spring AI ships a <code>MessageWindowChatMemory</code> bean (and a JDBC-backed
           repository) that attaches to a <code>ChatClient</code> as an advisor. It keeps the
           message history per conversation ID and replays it on each call. (Older 1.0
-          milestones called this <code>InMemoryChatMemory</code> — same idea, renamed at GA.)
+          milestones called this <code>InMemoryChatMemory</code>, same idea, renamed at GA.)
         </p>
 
         <CodeBlock lang="java">{`import org.springframework.ai.chat.memory.ChatMemory;
@@ -554,7 +554,7 @@ public class UserMemoryService {
         <p>
           Inject the retrieved context into the system prompt at the start of each session.
           You&apos;ve now got long-term memory built on the same vector store you used for
-          docs — different namespace, same machinery.
+          docs, different namespace, same machinery.
         </p>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Scratchpad as a tool</h3>
@@ -589,7 +589,7 @@ public class Scratchpad {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="Patterns over types">
-          Notice how all three memory mechanisms — chat memory, vector store, scratchpad — are
+          Notice how all three memory mechanisms, chat memory, vector store, scratchpad, are
           just different applications of &quot;persist some bytes, retrieve some bytes&quot;.
           The mental separation is about <em>lifetime</em>{" "}and <em>scope</em>, not about
           fundamentally different technology. Pick the right one for the lifetime you need.
@@ -601,13 +601,13 @@ public class Scratchpad {
             question="You're using Spring AI's MessageChatMemoryAdvisor with MessageWindowChatMemory. Two requests come in for sessionId='alice'. What does Spring do on the second request?"
             options={[
               {
-                label: "Spawns a fresh conversation — the in-memory store doesn't persist between calls.",
+                label: "Spawns a fresh conversation, the in-memory store doesn't persist between calls.",
                 explanation: "It does persist within the JVM lifetime; that's exactly the point.",
               },
               {
                 label: "Loads alice's prior messages from the memory bean and prepends them to the new user message before calling the model.",
                 correct: true,
-                explanation: "Right — that's how the advisor works. Retrieves history by conversation id, replays it, model gets the full context.",
+                explanation: "Right, that's how the advisor works. Retrieves history by conversation id, replays it, model gets the full context.",
               },
               {
                 label: "Sends only the new message; the model has internal session state.",
@@ -615,7 +615,7 @@ public class Scratchpad {
               },
               {
                 label: "Throws because in-memory stores can't be shared across requests.",
-                explanation: "It's a singleton bean — perfectly fine to share, just not durable across restarts.",
+                explanation: "It's a singleton bean, perfectly fine to share, just not durable across restarts.",
               },
             ]}
           />
@@ -625,16 +625,16 @@ public class Scratchpad {
             options={[
               {
                 label: "Tool descriptions get longer over time.",
-                explanation: "Tool descriptions are static — defined once at registration.",
+                explanation: "Tool descriptions are static, defined once at registration.",
               },
               {
-                label: "Chat memory is unbounded — every prior turn (including bulky tool observations) is being replayed on every new request.",
+                label: "Chat memory is unbounded, every prior turn (including bulky tool observations) is being replayed on every new request.",
                 correct: true,
                 explanation: "Yes. Even with scratchpad offloading new fetches, prior turns' messages are still in the conversation history. Add a window cap or compact summary periodically.",
               },
               {
                 label: "Spring AI throttles long sessions.",
-                explanation: "It doesn't — Spring AI is mostly transparent on that front.",
+                explanation: "It doesn't, Spring AI is mostly transparent on that front.",
               },
               {
                 label: "The model is taking longer because of fatigue.",
@@ -647,11 +647,11 @@ public class Scratchpad {
 
       <PartRecap
         title="Part 3 recap"
-        gist="Three memory layers, three Spring AI mechanisms — and one gotcha: chat memory grows unbounded by default."
+        gist="Three memory layers, three Spring AI mechanisms, and one gotcha: chat memory grows unbounded by default."
         points={[
-          { takeaway: "MessageWindowChatMemory + MessageChatMemoryAdvisor handle short-term per-session memory.", detail: "Pass a conversationId on each request and Spring replays the right history. The window cap (`maxMessages`) keeps it bounded — pick a value that fits your model's context budget." },
+          { takeaway: "MessageWindowChatMemory + MessageChatMemoryAdvisor handle short-term per-session memory.", detail: "Pass a conversationId on each request and Spring replays the right history. The window cap (`maxMessages`) keeps it bounded, pick a value that fits your model's context budget." },
           { takeaway: "Long-term memory = a per-user vector store, populated at end-of-session, queried at start-of-session.", detail: "Same VectorStore API as your doc RAG, just a different namespace. The hard call is what to save (an LLM-distilled summary works well)." },
-          { takeaway: "Scratchpad is two @Tool methods on a service.", detail: "Let the agent decide when to use them — your description is the prompt. Big tool results go in, summaries come out, full text on demand." },
+          { takeaway: "Scratchpad is two @Tool methods on a service.", detail: "Let the agent decide when to use them, your description is the prompt. Big tool results go in, summaries come out, full text on demand." },
         ]}
       />
 
@@ -659,7 +659,7 @@ public class Scratchpad {
       {/* PART 4: STOPPING IN PRODUCTION                                      */}
       {/* ================================================================= */}
       <section id="stopping">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Stopping conditions in production</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Stopping conditions in production</h2>
 
         <p>
           Module 24 covered the stopping conditions conceptually. Now the production cuts:
@@ -671,7 +671,7 @@ public class Scratchpad {
         <p>
           With auto-loop, Spring AI has an internal cap (typically configurable via the chat
           options, default in the tens). When you own the loop, the cap is your <code>for</code>
-          counter. Make it explicit, log when you hit it, and surface the partial state — never
+          counter. Make it explicit, log when you hit it, and surface the partial state, never
           silently truncate.
         </p>
 
@@ -747,7 +747,7 @@ public DeferredResult<String> runAgent(@RequestBody String question) {
 
         <p>
           Same pattern as Module 24. In Spring you have full access to the
-          <code>AssistantMessage.ToolCall</code> objects — keep a running set of
+          <code>AssistantMessage.ToolCall</code> objects, keep a running set of
           <code>(name, hashOfArgs)</code> tuples and trip when you see one twice in a row
           without progress.
         </p>
@@ -765,7 +765,7 @@ if (!seen.add(fingerprint)) {
     continue;
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-3 text-xl font-bold">Observability — Micrometer</h3>
+        <h3 className="mt-8 mb-3 text-xl font-bold">Observability, Micrometer</h3>
 
         <p>
           Spring AI integrates with Micrometer out of the box. Every model call is timed and
@@ -808,7 +808,7 @@ public class AgentMetrics {
               {
                 label: "Add explicit iteration and wall-clock caps inside the agent loop, with logged partial answers when hit.",
                 correct: true,
-                explanation: "Right — caps belong inside your code, not at the load balancer. The LB is a last-resort safety net, not a stopping condition.",
+                explanation: "Right, caps belong inside your code, not at the load balancer. The LB is a last-resort safety net, not a stopping condition.",
               },
               {
                 label: "Switch to streaming responses.",
@@ -831,7 +831,7 @@ public class AgentMetrics {
               {
                 label: "The timeout returns to the user but the agent thread keeps running and burning tokens until it hits its iteration cap. You need to signal cancellation into the loop.",
                 correct: true,
-                explanation: "Yes — HTTP timeout is independent of the work happening in your background thread. The loop needs a cancellation flag it checks each iteration to actually stop.",
+                explanation: "Yes, HTTP timeout is independent of the work happening in your background thread. The loop needs a cancellation flag it checks each iteration to actually stop.",
               },
               {
                 label: "The model retries every prompt 3 times by default.",
@@ -839,7 +839,7 @@ public class AgentMetrics {
               },
               {
                 label: "Tool calls are billed separately.",
-                explanation: "Tool calls aren't billed by Anthropic — only model input/output tokens are.",
+                explanation: "Tool calls aren't billed by Anthropic, only model input/output tokens are.",
               },
             ]}
           />
@@ -848,7 +848,7 @@ public class AgentMetrics {
 
       <PartRecap
         title="Part 4 recap"
-        gist="Iteration cap + token budget + wall-clock timeout + cancellation + observability — five layers, all needed."
+        gist="Iteration cap + token budget + wall-clock timeout + cancellation + observability, five layers, all needed."
         points={[
           { takeaway: "Iteration cap and token budget belong in your loop, not at the load balancer.", detail: "The LB protects the platform; your loop protects your bill. Log partial answers when caps hit so users get useful feedback." },
           { takeaway: "HTTP timeouts are not cancellation.", detail: "DeferredResult.onTimeout fires for the user, but unless your loop checks a cancellation flag it keeps running and spending tokens in the background." },
@@ -860,7 +860,7 @@ public class AgentMetrics {
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: code migration agent</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: code migration agent</h2>
 
         <p>
           Time for an agent that does something visibly real. We&apos;re building a small
@@ -871,7 +871,7 @@ public class AgentMetrics {
         </p>
 
         <Callout variant="warn" title="This agent edits files">
-          We&apos;re building a destructive agent — it modifies your code. Run it inside a
+          We&apos;re building a destructive agent, it modifies your code. Run it inside a
           throwaway worktree or a fresh git branch. Never against your only copy of anything.
           Treat the kill switch as required equipment, not optional.
         </Callout>
@@ -881,7 +881,7 @@ public class AgentMetrics {
         <ul className="mb-4 list-disc space-y-1 pl-6">
           <li>Inputs: repo path, migration brief (free text), max-files cap.</li>
           <li>Tools: <code>list_files</code>, <code>read_file</code>, <code>write_file</code>, <code>run_tests</code>, <code>git_diff</code>.</li>
-          <li>Manual loop with <code>internalToolExecutionEnabled = false</code> — we want every step visible.</li>
+          <li>Manual loop with <code>internalToolExecutionEnabled = false</code>, we want every step visible.</li>
           <li>Iteration cap: 30. Token cap: 200k input. Wall-clock: 5 minutes.</li>
           <li>Every <code>write_file</code> call must echo a unified diff to stdout before applying.</li>
           <li>If <code>run_tests</code> fails twice in a row on the same file, abort that file and move on.</li>
@@ -1078,11 +1078,11 @@ Never:
           xp={60}
           manual
           manualLabel="I built the migration agent and ran every test case"
-          celebration="A real, file-editing, build-running agent — and you kept it on a leash."
+          celebration="A real, file-editing, build-running agent, and you kept it on a leash."
         >
           <p>
             Build the migration agent, wire it to a real Maven project, and run every test case
-            in the list. Pay particular attention to the cancellation test — that&apos;s the one
+            in the list. Pay particular attention to the cancellation test, that&apos;s the one
             that proves you actually own the loop, not the framework.
           </p>
           <p className="mt-3">
@@ -1098,13 +1098,13 @@ Never:
       {/* PART 6: FINAL                                                       */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Putting it together</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Putting it together</h2>
 
         <p>You&apos;ve now got the full Spring AI agent toolkit:</p>
 
         <ul className="mb-4 list-disc space-y-1 pl-6">
           <li><code>@Tool</code> annotations turn beans into agent-callable tools.</li>
-          <li>Auto-loop is the default — flip it off when you need control.</li>
+          <li>Auto-loop is the default, flip it off when you need control.</li>
           <li>Three memory layers each have a Spring AI mechanism: <code>ChatMemory</code>, <code>VectorStore</code>, <code>@Tool</code>-backed scratchpad.</li>
           <li>Five stopping conditions, all wirable in a normal Spring app.</li>
           <li>Observability is Micrometer + a few custom metrics.</li>
@@ -1112,7 +1112,7 @@ Never:
 
         <p>
           <strong>Module 26</strong>{" "}goes wider: when one agent isn&apos;t enough.
-          Orchestrator/subagent patterns, parallel fanout, and the part nobody mentions —
+          Orchestrator/subagent patterns, parallel fanout, and the part nobody mentions,
           how to keep multi-agent systems from devolving into distributed-systems debugging.
         </p>
 
@@ -1123,12 +1123,12 @@ Never:
             options={[
               {
                 label: "JSON schema generation from method signatures.",
-                explanation: "It does — that's the core convenience.",
+                explanation: "It does, that's the core convenience.",
               },
               {
                 label: "Automatic retry of failed tool calls with exponential backoff.",
                 correct: true,
-                explanation: "Right. @Tool registers and dispatches; retry policy is yours to add (and you may not want it — sometimes the model recovering is better than blindly retrying).",
+                explanation: "Right. @Tool registers and dispatches; retry policy is yours to add (and you may not want it, sometimes the model recovering is better than blindly retrying).",
               },
               {
                 label: "Dispatch from the model's tool-call request to the right Java method.",
@@ -1145,20 +1145,20 @@ Never:
             question="You want to stream agent progress to the UI: 'searching... reading article 1... cross-checking...'. internalToolExecutionEnabled is currently true. What do you change?"
             options={[
               {
-                label: "Nothing — just enable .stream() on the call.",
+                label: "Nothing, just enable .stream() on the call.",
                 explanation: ".stream() streams the model's text output, but the auto-loop hides intermediate tool turns from your code, so you can't emit per-step UI events.",
               },
               {
                 label: "Flip internalToolExecutionEnabled to false and run the loop yourself, emitting an SSE event between each turn.",
                 correct: true,
-                explanation: "Right — manual loop is the only way to expose intermediate turns. With auto-loop on, only the final answer is visible.",
+                explanation: "Right, manual loop is the only way to expose intermediate turns. With auto-loop on, only the final answer is visible.",
               },
               {
                 label: "Add an advisor that intercepts the auto-loop.",
-                explanation: "There's no clean advisor for that — the auto-loop runs inside framework code. Manual loop is the supported path.",
+                explanation: "There's no clean advisor for that, the auto-loop runs inside framework code. Manual loop is the supported path.",
               },
               {
-                label: "Switch models — only certain models support streaming with tools.",
+                label: "Switch models, only certain models support streaming with tools.",
                 explanation: "Most modern Claude/OpenAI models support streaming with tools fine. The loop visibility, not the model, is the issue here.",
               },
             ]}
@@ -1174,14 +1174,14 @@ Never:
               {
                 label: "Sliding window with the system prompt and original user message pinned, plus periodic LLM-summarization of older middle turns.",
                 correct: true,
-                explanation: "Yes — this is the standard pattern. Keep what matters most (system + goal), summarize the middle, retain recent turns verbatim. Best of all worlds.",
+                explanation: "Yes, this is the standard pattern. Keep what matters most (system + goal), summarize the middle, retain recent turns verbatim. Best of all worlds.",
               },
               {
                 label: "Give every session a 1M-token model.",
                 explanation: "That's the budget answer, not the engineering answer. You'd still want compaction for cost control even with infinite context.",
               },
               {
-                label: "Don't use chat memory at all — restart the conversation each turn.",
+                label: "Don't use chat memory at all, restart the conversation each turn.",
                 explanation: "Then the agent forgets what tools it called and what it learned. Loop becomes useless.",
               },
             ]}
@@ -1193,7 +1193,7 @@ Never:
               {
                 label: "An agent with a 60-second HTTP timeout but no cancellation flag passed into the loop, running on a background thread.",
                 correct: true,
-                explanation: "Right — HTTP timeout returns to the user but the background loop keeps going, eating tokens, until it hits the iteration cap. Pass a cancellation flag and check it each iteration.",
+                explanation: "Right, HTTP timeout returns to the user but the background loop keeps going, eating tokens, until it hits the iteration cap. Pass a cancellation flag and check it each iteration.",
               },
               {
                 label: "Using internalToolExecutionEnabled = true on a simple Q&A agent.",
@@ -1220,7 +1220,7 @@ Never:
               {
                 label: "Sharpen the description with usage rules: when to use, when NOT to use, and what to confirm first.",
                 correct: true,
-                explanation: "Yes — tool descriptions are the prompt the model reads to decide. 'Permanently deletes a user. Only call after explicit user confirmation; never call to deactivate (use deactivate_user for that).' The model will obey this.",
+                explanation: "Yes, tool descriptions are the prompt the model reads to decide. 'Permanently deletes a user. Only call after explicit user confirmation; never call to deactivate (use deactivate_user for that).' The model will obey this.",
               },
               {
                 label: "Rename the tool to deleteUserPermanently.",
@@ -1237,7 +1237,7 @@ Never:
         <div className="mt-12 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30">
           <p className="mb-2 font-semibold">Coming up next:</p>
           <p className="text-sm">
-            <strong>Module 26 — Multi-agent patterns</strong>: when one agent isn&apos;t
+            <strong>Module 26, Multi-agent patterns</strong>: when one agent isn&apos;t
             enough. Orchestrator/subagent, parallel fanout, evaluator-optimizer loops, and
             the trap of multi-agent for the sake of multi-agent. We&apos;ll build a PR review
             panel that runs three specialized reviewers in parallel.

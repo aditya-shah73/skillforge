@@ -166,7 +166,7 @@ export default function Home() {
           <ValueProp
             icon="🧪"
             title="Gating checkpoints"
-            desc="You don't progress by clicking next — you progress by answering correctly."
+            desc="You don't progress by clicking next, you progress by answering correctly."
             accent="from-emerald-500 to-teal-500"
           />
         </div>
@@ -230,7 +230,7 @@ export default function Home() {
       {/* Footer */}
       <section className="border-t border-slate-200 pt-8 pb-4 text-sm leading-relaxed text-slate-500 dark:border-slate-800">
         <p>
-          Progress, XP, streaks, and quiz state live in your browser&apos;s localStorage. No login, no backend — clearing site data resets everything.
+          Progress, XP, streaks, and quiz state live in your browser&apos;s localStorage. No login, no backend, clearing site data resets everything.
         </p>
       </section>
     </div>

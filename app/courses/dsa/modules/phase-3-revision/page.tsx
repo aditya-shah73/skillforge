@@ -91,7 +91,7 @@ flowchart TB
           Phase 3 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Hashing, sets, trees, BSTs, heaps — the whole &quot;keyed lookup and tree-shaped data&quot; chapter compressed to a card you can re-read in 15 minutes before an interview.
+          Hashing, sets, trees, BSTs, heaps, the whole &quot;keyed lookup and tree-shaped data&quot; chapter compressed to a card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-3-revision" />
         <ModuleProgress moduleSlug="phase-3-revision" checkpoints={CHECKPOINTS} />
@@ -100,7 +100,7 @@ flowchart TB
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 3</strong> — every invariant, every Big-O row, every &quot;wait, why did that break in production&quot; gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 3</strong>, every invariant, every Big-O row, every &quot;wait, why did that break in production&quot; gotcha from the five previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/dsa/modules/hashmaps" className="text-emerald-600 hover:underline">HashMaps</Link>, <Link href="/courses/dsa/modules/sets" className="text-emerald-600 hover:underline">Sets &amp; frequency counting</Link>, <Link href="/courses/dsa/modules/trees" className="text-emerald-600 hover:underline">Trees &amp; traversals</Link>, <Link href="/courses/dsa/modules/bst" className="text-emerald-600 hover:underline">Binary search trees</Link>, and <Link href="/courses/dsa/modules/heaps" className="text-emerald-600 hover:underline">Heaps &amp; PriorityQueue</Link>.
@@ -143,7 +143,7 @@ flowchart TB
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1) avg</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1) avg</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Have I seen this?&quot; — dedup, visited tracking.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Have I seen this?&quot;, dedup, visited tracking.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">TreeMap</td>
@@ -174,7 +174,7 @@ flowchart TB
         </div>
 
         <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          *amortized — rare rehash is O(n). Java 8+ <code>HashMap</code> uses tree-bins, so a single bucket with collisions degrades to O(log n) per op, not O(n).
+          *amortized, rare rehash is O(n). Java 8+ <code>HashMap</code> uses tree-bins, so a single bucket with collisions degrades to O(log n) per op, not O(n).
         </p>
 
         <Callout variant="insight">
@@ -197,10 +197,10 @@ flowchart TB
 
         <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
-            <strong>Hash spread:</strong> <code>h = key.hashCode(); h ^= (h &gt;&gt;&gt; 16);</code> — mixes the high bits into the low bits so the masking step doesn&apos;t throw away entropy.
+            <strong>Hash spread:</strong> <code>h = key.hashCode(); h ^= (h &gt;&gt;&gt; 16);</code>, mixes the high bits into the low bits so the masking step doesn&apos;t throw away entropy.
           </li>
           <li>
-            <strong>Index formula:</strong> <code>index = h &amp; (capacity - 1)</code>. Works because capacity is always a power of two — that AND is equivalent to <code>h % capacity</code> but much faster.
+            <strong>Index formula:</strong> <code>index = h &amp; (capacity - 1)</code>. Works because capacity is always a power of two, that AND is equivalent to <code>h % capacity</code> but much faster.
           </li>
           <li>
             <strong>Chaining:</strong>{" "}each bucket holds a linked list of entries. New entries appended at the tail. Lookup walks the list comparing with <code>equals</code>.
@@ -217,7 +217,7 @@ flowchart TB
         <ol className="mb-4 list-decimal space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>If <code>a.equals(b)</code> is <code>true</code>, then <code>a.hashCode() == b.hashCode()</code> <strong>must</strong>{" "}hold. Break this and your keys will be silently lost in HashMap.</li>
           <li>If <code>a.hashCode() == b.hashCode()</code>, <code>equals</code> may or may not be true (collisions are legal).</li>
-          <li>Both methods must use <em>only</em>{" "}immutable fields. Mutate a field that&apos;s in <code>hashCode</code> and the key is now in the wrong bucket — invisible to <code>get</code>.</li>
+          <li>Both methods must use <em>only</em>{" "}immutable fields. Mutate a field that&apos;s in <code>hashCode</code> and the key is now in the wrong bucket, invisible to <code>get</code>.</li>
         </ol>
 
         <CodeBlock lang="java" caption="Canonical equals/hashCode pair">{`@Override
@@ -234,7 +234,7 @@ public int hashCode() {
 }`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/hashmaps" className="text-emerald-600 hover:underline">Module 11 — HashMaps</Link>.
+          Source: <Link href="/courses/dsa/modules/hashmaps" className="text-emerald-600 hover:underline">Module 11, HashMaps</Link>.
         </p>
       </section>
 
@@ -242,9 +242,9 @@ public int hashCode() {
       {/* SECTION 3 — Tree traversals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Tree traversals — four walks, one tree</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Tree traversals, four walks, one tree</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          The work position relative to the recursive calls is the only difference between pre/in/post-order. BFS is the odd one out — it needs a queue, not recursion.
+          The work position relative to the recursive calls is the only difference between pre/in/post-order. BFS is the odd one out, it needs a queue, not recursion.
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -274,7 +274,7 @@ public int hashCode() {
           </div>
         </div>
 
-        <CodeBlock lang="java" caption="Recursive DFS — three flavors, one shape">{`void preorder(TreeNode n, List<Integer> out) {
+        <CodeBlock lang="java" caption="Recursive DFS, three flavors, one shape">{`void preorder(TreeNode n, List<Integer> out) {
     if (n == null) return;
     out.add(n.val);              // work BEFORE recursing
     preorder(n.left, out);
@@ -295,7 +295,7 @@ void postorder(TreeNode n, List<Integer> out) {
     out.add(n.val);              // work AFTER recursing
 }`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="BFS — explicit queue, level-size freeze trick">{`List<List<Integer>> levelOrder(TreeNode root) {
+        <CodeBlock lang="java" caption="BFS, explicit queue, level-size freeze trick">{`List<List<Integer>> levelOrder(TreeNode root) {
     List<List<Integer>> levels = new ArrayList<>();
     if (root == null) return levels;
     Deque<TreeNode> queue = new ArrayDeque<>();
@@ -314,7 +314,7 @@ void postorder(TreeNode n, List<Integer> out) {
     return levels;
 }`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="Iterative preorder — explicit stack on the heap (safe for skewed trees)">{`List<Integer> preorderIter(TreeNode root) {
+        <CodeBlock lang="java" caption="Iterative preorder, explicit stack on the heap (safe for skewed trees)">{`List<Integer> preorderIter(TreeNode root) {
     List<Integer> out = new ArrayList<>();
     if (root == null) return out;
     Deque<TreeNode> stack = new ArrayDeque<>();
@@ -330,11 +330,11 @@ void postorder(TreeNode n, List<Integer> out) {
 }`}</CodeBlock>
 
         <Callout variant="insight">
-          <strong>Complexity for all four:</strong>{" "}O(n) time (every node touched once). Space is O(h) for DFS (recursion or explicit stack — proportional to tree height) and O(w) for BFS (queue holds the widest level, up to ~n/2 for a perfect tree).
+          <strong>Complexity for all four:</strong>{" "}O(n) time (every node touched once). Space is O(h) for DFS (recursion or explicit stack, proportional to tree height) and O(w) for BFS (queue holds the widest level, up to ~n/2 for a perfect tree).
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/trees" className="text-emerald-600 hover:underline">Module 13 — Trees &amp; traversals</Link>.
+          Source: <Link href="/courses/dsa/modules/trees" className="text-emerald-600 hover:underline">Module 13, Trees &amp; traversals</Link>.
         </p>
       </section>
 
@@ -344,14 +344,14 @@ void postorder(TreeNode n, List<Integer> out) {
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">4. BST invariant &amp; when it falls apart</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          The invariant is global, not local. Skewed inputs turn O(log n) into O(n) — which is exactly why Java&apos;s <code>TreeMap</code> isn&apos;t a plain BST.
+          The invariant is global, not local. Skewed inputs turn O(log n) into O(n), which is exactly why Java&apos;s <code>TreeMap</code> isn&apos;t a plain BST.
         </p>
 
         <div className="mb-6 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">The invariant — global, not local</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">The invariant, global, not local</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-              For every node <code>n</code>: <em>every</em>{" "}key in <code>n.left</code> &lt; <code>n.key</code> &lt; <em>every</em>{" "}key in <code>n.right</code>. Not just the immediate children — the whole subtree.
+              For every node <code>n</code>: <em>every</em>{" "}key in <code>n.left</code> &lt; <code>n.key</code> &lt; <em>every</em>{" "}key in <code>n.right</code>. Not just the immediate children, the whole subtree.
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Verifier: an inorder traversal produces a strictly increasing sequence. If it doesn&apos;t, it&apos;s not a BST.
@@ -359,17 +359,17 @@ void postorder(TreeNode n, List<Integer> out) {
           </div>
 
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">The degradation — skewed trees</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">The degradation, skewed trees</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Insert <code>1, 2, 3, 4, 5</code> into a plain BST: it becomes a linked list to the right. Height = n. Search/insert/delete all O(n).
             </p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              That&apos;s why production code uses <strong>self-balancing</strong>{" "}variants — AVL and red-black trees — that rotate on insert to keep height O(log n).
+              That&apos;s why production code uses <strong>self-balancing</strong>{" "}variants, AVL and red-black trees, that rotate on insert to keep height O(log n).
             </p>
           </div>
         </div>
 
-        <h3 className="mt-2 mb-2 text-base font-semibold">AVL vs Red-Black — the tradeoff Java picked</h3>
+        <h3 className="mt-2 mb-2 text-base font-semibold">AVL vs Red-Black, the tradeoff Java picked</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -419,7 +419,7 @@ tm.firstKey();        // 10
 tm.lastKey();         // 30
 tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
 
-        <h3 className="mt-4 mb-2 text-base font-semibold">TreeMap vs HashMap — the picker</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">TreeMap vs HashMap, the picker</h3>
         <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Just key → value lookup?</strong>{" "}HashMap. It&apos;s ~5× faster on average.</li>
           <li><strong>Need sorted iteration?</strong>{" "}TreeMap. HashMap&apos;s iteration order is unspecified.</li>
@@ -428,7 +428,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/bst" className="text-emerald-600 hover:underline">Module 14 — Binary search trees</Link>.
+          Source: <Link href="/courses/dsa/modules/bst" className="text-emerald-600 hover:underline">Module 14, Binary search trees</Link>.
         </p>
       </section>
 
@@ -436,7 +436,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
       {/* SECTION 5 — Heap mechanics */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Heap mechanics — the array trick</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Heap mechanics, the array trick</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A binary heap is a complete binary tree, but you never allocate nodes. You allocate an array and the parent/child relationships are pure arithmetic.
         </p>
@@ -454,7 +454,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
               <li><code>rightChild(i) = 2*i + 2</code></li>
             </ul>
             <p className="mt-3 font-sans text-xs text-slate-500">
-              No pointers, no node objects — just integer math. This is why heap-sort is in-place.
+              No pointers, no node objects, just integer math. This is why heap-sort is in-place.
             </p>
           </div>
 
@@ -463,12 +463,12 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
             <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Complete:</strong>{" "}every level full except possibly the last, which fills left-to-right.</li>
               <li><strong>Heap order:</strong>{" "}every parent ≤ both children (min-heap), or ≥ both (max-heap).</li>
-              <li>No ordering between siblings. The root is the min/max — nothing else is guaranteed.</li>
+              <li>No ordering between siblings. The root is the min/max, nothing else is guaranteed.</li>
             </ul>
           </div>
         </div>
 
-        <CodeBlock lang="java" caption="Sift-up — called by offer() after appending at the end">{`void siftUp(int[] heap, int i) {
+        <CodeBlock lang="java" caption="Sift-up, called by offer() after appending at the end">{`void siftUp(int[] heap, int i) {
     while (i > 0) {
         int parent = (i - 1) / 2;
         if (heap[i] >= heap[parent]) break;  // min-heap order satisfied
@@ -478,7 +478,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
 }
 // O(log n) — worst case bubbles all the way to root.`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="Sift-down — called by poll() after swapping root with last">{`void siftDown(int[] heap, int n, int i) {
+        <CodeBlock lang="java" caption="Sift-down, called by poll() after swapping root with last">{`void siftDown(int[] heap, int n, int i) {
     while (true) {
         int left = 2*i + 1, right = 2*i + 2, smallest = i;
         if (left  < n && heap[left]  < heap[smallest]) smallest = left;
@@ -495,7 +495,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/heaps" className="text-emerald-600 hover:underline">Module 15 — Heaps &amp; PriorityQueue</Link>.
+          Source: <Link href="/courses/dsa/modules/heaps" className="text-emerald-600 hover:underline">Module 15, Heaps &amp; PriorityQueue</Link>.
         </p>
       </section>
 
@@ -512,7 +512,7 @@ tm.subMap(15, 25);    // {20=b} — half-open range [15, 25)`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Pattern 1 · Top-K with a bounded heap</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              For top-K <em>largest</em>, keep a <strong>min-heap of size K</strong>. After every element, evict the heap&apos;s min if the heap grew past K. At the end, the heap contains exactly the K largest. Time O(n log K), space O(K) — much better than sorting which is O(n log n).
+              For top-K <em>largest</em>, keep a <strong>min-heap of size K</strong>. After every element, evict the heap&apos;s min if the heap grew past K. At the end, the heap contains exactly the K largest. Time O(n log K), space O(K), much better than sorting which is O(n log n).
             </p>
             <CodeBlock lang="java">{`int kthLargest(int[] nums, int k) {
     PriorityQueue<Integer> pq = new PriorityQueue<>();  // min-heap
@@ -573,7 +573,7 @@ for (char c : s.toCharArray()) {
     return left != null ? left : right;              // bubble up
 }`}</CodeBlock>
             <p className="mt-3 text-xs text-slate-500">
-              On a BST you can do better: walk down comparing keys — O(h) without exploring both sides.
+              On a BST you can do better: walk down comparing keys, O(h) without exploring both sides.
             </p>
           </div>
         </div>
@@ -592,7 +592,7 @@ for (char c : s.toCharArray()) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Overriding <code>equals</code> without <code>hashCode</code></div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              Two objects compare equal but land in different buckets. <code>map.get(equalKey)</code> returns <code>null</code> even though the key &quot;exists.&quot; The compiler won&apos;t catch this — your tests will if you remember to write them.
+              Two objects compare equal but land in different buckets. <code>map.get(equalKey)</code> returns <code>null</code> even though the key &quot;exists.&quot; The compiler won&apos;t catch this, your tests will if you remember to write them.
             </p>
             <CodeBlock lang="java">{`// BAD — equals overridden, hashCode inherited from Object (identity)
 class User {
@@ -626,7 +626,7 @@ map.get(u);            // null — even though the same object reference!
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · <code>a - b</code> in a Comparator (int overflow)</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              The classic &quot;works in tests, breaks in prod with extreme values.&quot; If <code>a = Integer.MAX_VALUE</code> and <code>b = -1</code>, <code>a - b</code> overflows to a negative number — the comparator lies and the heap order is wrong.
+              The classic &quot;works in tests, breaks in prod with extreme values.&quot; If <code>a = Integer.MAX_VALUE</code> and <code>b = -1</code>, <code>a - b</code> overflows to a negative number, the comparator lies and the heap order is wrong.
             </p>
             <CodeBlock lang="java">{`// BAD — silent overflow on extreme inputs
 PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> a - b);
@@ -640,7 +640,7 @@ PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.naturalOrder());`}</C
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Treating PriorityQueue as FIFO</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              It implements <code>Queue</code> but it&apos;s not first-in-first-out. <code>poll()</code> returns the minimum, not the oldest. Iteration order is unspecified — only <code>peek()</code> sees the min.
+              It implements <code>Queue</code> but it&apos;s not first-in-first-out. <code>poll()</code> returns the minimum, not the oldest. Iteration order is unspecified, only <code>peek()</code> sees the min.
             </p>
             <CodeBlock lang="java">{`// BAD — expecting FIFO from a PriorityQueue
 PriorityQueue<Integer> pq = new PriorityQueue<>();
@@ -682,7 +682,7 @@ boolean isBST(TreeNode n, Long min, Long max) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
@@ -691,8 +691,8 @@ boolean isBST(TreeNode n, Long min, Long max) {
           options={[
             { label: "Sort the whole stream descending and take the first K.", explanation: "O(n log n) and requires holding all n items. Heap-based solution is O(n log K) with only O(K) memory." },
             { label: "A min-heap of size K. After each new item, evict the smallest if size > K.", correct: true, explanation: "Right. Counterintuitive name but correct shape: the min-heap's root is the Kth-largest-so-far, and any new item smaller than it is irrelevant. O(n log K) time, O(K) space." },
-            { label: "A max-heap of size K — you want the largest, so max-heap.", explanation: "A max-heap can't tell you the Kth largest in O(1) — the root is the largest. With a min-heap of size K, the root IS the Kth largest. Counterintuitive but correct." },
-            { label: "A TreeMap keyed by value.", explanation: "TreeMap works (O(n log K) if you size-cap it) but it's overkill — you don't need range queries, just max-of-min behavior. PriorityQueue is the idiomatic answer." },
+            { label: "A max-heap of size K, you want the largest, so max-heap.", explanation: "A max-heap can't tell you the Kth largest in O(1), the root is the largest. With a min-heap of size K, the root IS the Kth largest. Counterintuitive but correct." },
+            { label: "A TreeMap keyed by value.", explanation: "TreeMap works (O(n log K) if you size-cap it) but it's overkill, you don't need range queries, just max-of-min behavior. PriorityQueue is the idiomatic answer." },
           ]}
         />
 
@@ -700,8 +700,8 @@ boolean isBST(TreeNode n, Long min, Long max) {
           kind="Recall check"
           question="You override equals() on a User class but forget to override hashCode(). What goes wrong when you use User as a HashMap key?"
           options={[
-            { label: "Compile error — Java enforces the equals/hashCode pair.", explanation: "Java does NOT enforce this at compile time. It's a runtime contract that produces silent bugs." },
-            { label: "Two objects that are .equals() will land in different buckets, so map.get(equalKey) returns null even though 'the key exists.'", correct: true, explanation: "Right. hashCode (inherited from Object) returns identity-based hashes, so two equal objects hash to different buckets. The map silently 'loses' the key — one of the worst kinds of bug to debug." },
+            { label: "Compile error, Java enforces the equals/hashCode pair.", explanation: "Java does NOT enforce this at compile time. It's a runtime contract that produces silent bugs." },
+            { label: "Two objects that are .equals() will land in different buckets, so map.get(equalKey) returns null even though 'the key exists.'", correct: true, explanation: "Right. hashCode (inherited from Object) returns identity-based hashes, so two equal objects hash to different buckets. The map silently 'loses' the key, one of the worst kinds of bug to debug." },
             { label: "The map throws IllegalStateException on the second put().", explanation: "No runtime check. The bug is silent corruption." },
             { label: "Performance degrades to O(n) but lookups still return the right value.", explanation: "Lookups return wrong values (null when they shouldn't), not just slow values." },
           ]}
@@ -711,10 +711,10 @@ boolean isBST(TreeNode n, Long min, Long max) {
           kind="Recall check"
           question="In a Java HashMap, a single bucket has 12 entries due to many keys hashing to the same bucket. The table capacity is 128. What's the lookup cost for that bucket?"
           options={[
-            { label: "O(12) — walks the linked list.", explanation: "Before Java 8 this would be right. Since Java 8 (with capacity ≥ 64 and bucket size ≥ 8), the bucket converts to a red-black tree." },
-            { label: "O(log 12) — Java 8+ converts the bucket to a red-black tree once it has 8+ entries on a table of capacity ≥ 64.", correct: true, explanation: "Right. The treeify threshold (8) plus MIN_TREEIFY_CAPACITY (64) trigger the conversion. This is Java's defense against hash-collision attacks — worst-case bucket cost is O(log n) rather than O(n)." },
-            { label: "O(1) — HashMap is always O(1).", explanation: "O(1) is the AVERAGE case. Worst case with collisions is O(n) pre-Java-8, O(log n) post-Java-8." },
-            { label: "O(128) — has to scan the table.", explanation: "HashMap never scans the table for a get — it goes directly to the bucket index." },
+            { label: "O(12), walks the linked list.", explanation: "Before Java 8 this would be right. Since Java 8 (with capacity ≥ 64 and bucket size ≥ 8), the bucket converts to a red-black tree." },
+            { label: "O(log 12), Java 8+ converts the bucket to a red-black tree once it has 8+ entries on a table of capacity ≥ 64.", correct: true, explanation: "Right. The treeify threshold (8) plus MIN_TREEIFY_CAPACITY (64) trigger the conversion. This is Java's defense against hash-collision attacks, worst-case bucket cost is O(log n) rather than O(n)." },
+            { label: "O(1), HashMap is always O(1).", explanation: "O(1) is the AVERAGE case. Worst case with collisions is O(n) pre-Java-8, O(log n) post-Java-8." },
+            { label: "O(128), has to scan the table.", explanation: "HashMap never scans the table for a get, it goes directly to the bucket index." },
           ]}
         />
 
@@ -723,8 +723,8 @@ boolean isBST(TreeNode n, Long min, Long max) {
           question="What's the difference between inorder traversal of a BST and inorder traversal of a general binary tree?"
           options={[
             { label: "Inorder doesn't work on a general tree, only on a BST.", explanation: "Inorder works on any binary tree. It just produces different outputs." },
-            { label: "On a BST, inorder yields keys in sorted order. On a general tree, the order is whatever the tree happens to produce — not necessarily sorted.", correct: true, explanation: "Right. This is the defining property of BST: inorder = sorted. It's also the standard BST-validation strategy (do an inorder walk and check that each key is greater than the previous)." },
-            { label: "Inorder is O(n log n) on a BST and O(n) on a general tree.", explanation: "Inorder is O(n) for any tree — you visit each node exactly once. The data structure doesn't affect the traversal time." },
+            { label: "On a BST, inorder yields keys in sorted order. On a general tree, the order is whatever the tree happens to produce, not necessarily sorted.", correct: true, explanation: "Right. This is the defining property of BST: inorder = sorted. It's also the standard BST-validation strategy (do an inorder walk and check that each key is greater than the previous)." },
+            { label: "Inorder is O(n log n) on a BST and O(n) on a general tree.", explanation: "Inorder is O(n) for any tree, you visit each node exactly once. The data structure doesn't affect the traversal time." },
             { label: "There's no difference; the algorithm is identical and produces the same output ordering on both.", explanation: "The algorithm is identical (left, root, right) but the OUTPUT differs because BST nodes are arranged by key, so left-root-right yields sorted order." },
           ]}
         />
@@ -733,7 +733,7 @@ boolean isBST(TreeNode n, Long min, Long max) {
           kind="Recall check"
           question="You implement a Comparator with (a, b) -> a - b for an int PriorityQueue. The QA team reports the priority order is occasionally wrong but they can't reproduce it. What's likely happening?"
           options={[
-            { label: "Integer overflow: when a = Integer.MAX_VALUE and b is negative, a - b wraps to a negative result, flipping the comparison.", correct: true, explanation: "Right. This is the classic 'works in tests, breaks in prod' bug. The fix is Integer::compare or Comparator.naturalOrder() — both are overflow-safe." },
+            { label: "Integer overflow: when a = Integer.MAX_VALUE and b is negative, a - b wraps to a negative result, flipping the comparison.", correct: true, explanation: "Right. This is the classic 'works in tests, breaks in prod' bug. The fix is Integer::compare or Comparator.naturalOrder(), both are overflow-safe." },
             { label: "PriorityQueue doesn't accept lambda comparators.", explanation: "It does, since Java 8. The bug is in the math, not the syntax." },
             { label: "Comparators must be Serializable in Java; lambdas aren't by default.", explanation: "That's only an issue for distributed/persisted comparators. Not relevant to a runtime ordering bug." },
             { label: "The heap is being mutated concurrently.", explanation: "Concurrent modification would cause exceptions or corruption, not 'occasionally wrong order.' The pattern (rare failures with extreme values) screams overflow." },
@@ -746,14 +746,14 @@ boolean isBST(TreeNode n, Long min, Long max) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
-          Phase 3 — locked in
+          Phase 3, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now reach for the right keyed structure on sight</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          HashMap mechanics, the equals/hashCode contract, four tree walks, the BST invariant and its self-balancing rescue, the heap array trick, and the four patterns — top-K, frequency, anagram grouping, LCA. That&apos;s the entire &quot;keyed lookup and tree-shaped data&quot; chapter compressed.
+          HashMap mechanics, the equals/hashCode contract, four tree walks, the BST invariant and its self-balancing rescue, the heap array trick, and the four patterns, top-K, frequency, anagram grouping, LCA. That&apos;s the entire &quot;keyed lookup and tree-shaped data&quot; chapter compressed.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Graphs.</strong>{" "}Nodes and edges, BFS/DFS on graphs, shortest paths, union-find, advanced graph algorithms. The structures you just learned (queue, stack, heap, HashMap for visited) are the building blocks.
+          <strong>Up next: Phase 4, Graphs.</strong>{" "}Nodes and edges, BFS/DFS on graphs, shortest paths, union-find, advanced graph algorithms. The structures you just learned (queue, stack, heap, HashMap for visited) are the building blocks.
         </p>
         <Link
           href="/courses/dsa/modules/graphs-intro"

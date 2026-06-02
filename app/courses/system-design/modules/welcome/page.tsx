@@ -39,7 +39,7 @@ export default function Page() {
           This course treats all three as the same skill. Because they are. The interview problem is just the production problem with the deadline compressed and the stakes simulated. If you can defend a real design at work, you can defend one in an interview. If you can defend one in an interview but every system you ship melts under load, something has gone wrong and we&apos;re going to fix it.
         </p>
         <p>
-          So we&apos;ll teach the patterns the way senior engineers actually use them — as a vocabulary for tradeoffs, not as a checklist of correct answers.
+          So we&apos;ll teach the patterns the way senior engineers actually use them, as a vocabulary for tradeoffs, not as a checklist of correct answers.
         </p>
       </section>
 
@@ -60,22 +60,22 @@ export default function Page() {
       <section>
         <h2>Why &quot;layered&quot;</h2>
         <p>
-          Most system-design content drops you straight into &quot;design Twitter&quot; on day one. That&apos;s like teaching DSA by opening with hard graph problems — you spend the whole hour pattern-matching to fragments you half-remember, you never build real intuition, and you forget it all by next month.
+          Most system-design content drops you straight into &quot;design Twitter&quot; on day one. That&apos;s like teaching DSA by opening with hard graph problems, you spend the whole hour pattern-matching to fragments you half-remember, you never build real intuition, and you forget it all by next month.
         </p>
         <p>
-          This course is structured the opposite way. Phase 1 is fundamentals — the math and concepts every later module will lean on. Phase 2 is storage. Phase 3 is communication. Phase 4 is reliability. Phase 5 is the hard distributed-systems primitives. Phase 6 — the case studies, the &quot;design Twitter&quot; stuff — pulls all of that together. Phase 7 is the production discipline (migrations, security) and the capstone. Phase 8 closes with frontend system design — the same patterns applied to the browser. By the time you get there, every word in the case studies is something you&apos;ve already built up.
+          This course is structured the opposite way. Phase 1 is fundamentals, the math and concepts every later module will lean on. Phase 2 is storage. Phase 3 is communication. Phase 4 is reliability. Phase 5 is the hard distributed-systems primitives. Phase 6, the case studies, the &quot;design Twitter&quot; stuff, pulls all of that together. Phase 7 is the production discipline (migrations, security) and the capstone. Phase 8 closes with frontend system design, the same patterns applied to the browser. By the time you get there, every word in the case studies is something you&apos;ve already built up.
         </p>
         <p>The nine phases:</p>
         <ul>
-          <li><strong>Phase 0 · Orientation</strong> — this module.</li>
-          <li><strong>Phase 1 · Foundations (5 modules)</strong> — back-of-envelope math, the scaling ladder, CAP/PACELC, consistency models, plus a phase-revision card. The vocabulary.</li>
-          <li><strong>Phase 2 · Storage Layer (8 modules)</strong> — SQL vs NoSQL, indexing, sharding, replication, caching, distributed cache, search, plus a phase-revision card.</li>
-          <li><strong>Phase 3 · Communication (6 modules)</strong> — APIs, gateways, queues, Kafka, event-driven/CQRS, plus a phase-revision card.</li>
-          <li><strong>Phase 4 · Reliability &amp; Operations (7 modules)</strong> — load balancing, rate limiting, Resilience4j, idempotency, observability, on-call, plus a phase-revision card.</li>
-          <li><strong>Phase 5 · Distributed Systems Deep (6 modules)</strong> — consensus, distributed transactions, clocks, geo, capacity, plus a phase-revision card.</li>
-          <li><strong>Phase 6 · Case Studies (9 modules)</strong> — interview framework, TinyURL, news feed, Twitter, chat, rate limiter, rideshare, payments, plus a phase-revision card. The famous interview problems, but with the foundations to actually defend each move.</li>
-          <li><strong>Phase 7 · Production &amp; Capstone (4 modules)</strong> — migration, security, recap, capstone.</li>
-          <li><strong>Phase 8 · Frontend System Design (4 modules)</strong> — rendering strategies and Core Web Vitals, feed UI, real-time UI, plus a phase-revision card.</li>
+          <li><strong>Phase 0 · Orientation</strong>, this module.</li>
+          <li><strong>Phase 1 · Foundations (5 modules)</strong>, back-of-envelope math, the scaling ladder, CAP/PACELC, consistency models, plus a phase-revision card. The vocabulary.</li>
+          <li><strong>Phase 2 · Storage Layer (8 modules)</strong>, SQL vs NoSQL, indexing, sharding, replication, caching, distributed cache, search, plus a phase-revision card.</li>
+          <li><strong>Phase 3 · Communication (6 modules)</strong>, APIs, gateways, queues, Kafka, event-driven/CQRS, plus a phase-revision card.</li>
+          <li><strong>Phase 4 · Reliability &amp; Operations (7 modules)</strong>, load balancing, rate limiting, Resilience4j, idempotency, observability, on-call, plus a phase-revision card.</li>
+          <li><strong>Phase 5 · Distributed Systems Deep (6 modules)</strong>, consensus, distributed transactions, clocks, geo, capacity, plus a phase-revision card.</li>
+          <li><strong>Phase 6 · Case Studies (9 modules)</strong>, interview framework, TinyURL, news feed, Twitter, chat, rate limiter, rideshare, payments, plus a phase-revision card. The famous interview problems, but with the foundations to actually defend each move.</li>
+          <li><strong>Phase 7 · Production &amp; Capstone (4 modules)</strong>, migration, security, recap, capstone.</li>
+          <li><strong>Phase 8 · Frontend System Design (4 modules)</strong>, rendering strategies and Core Web Vitals, feed UI, real-time UI, plus a phase-revision card.</li>
         </ul>
       </section>
 
@@ -85,14 +85,14 @@ export default function Page() {
           Every module after this one follows the same shape:
         </p>
         <ol>
-          <li><strong>Concept first.</strong>{" "}The intuition, the analogy, the &quot;why does this exist&quot; — before any code or names.</li>
+          <li><strong>Concept first.</strong>{" "}The intuition, the analogy, the &quot;why does this exist&quot;, before any code or names.</li>
           <li><strong>Names of the patterns.</strong>{" "}CAP. Saga. Outbox. Quorum. Token bucket. The names matter because they&apos;re how senior engineers communicate. When you say &quot;we&apos;ll do read-your-writes via sticky session,&quot; the room knows the shape of your fix in five words.</li>
-          <li><strong>Java where it matters.</strong>{" "}If a pattern has a clean Spring expression — <code>@Async</code>, Resilience4j, Spring Kafka, Caffeine — we&apos;ll show it. We won&apos;t pad with toy code that doesn&apos;t earn its place.</li>
+          <li><strong>Java where it matters.</strong>{" "}If a pattern has a clean Spring expression, <code>@Async</code>, Resilience4j, Spring Kafka, Caffeine, we&apos;ll show it. We won&apos;t pad with toy code that doesn&apos;t earn its place.</li>
           <li><strong>Tradeoffs, named.</strong>{" "}Every &quot;best practice&quot; depends on context. Every module ends with the conditions under which the pattern is wrong.</li>
           <li><strong>Quizzes and recaps.</strong>{" "}Active recall, not passive reading. The course progresses when you answer correctly, not when you scroll.</li>
         </ol>
         <Callout variant="info" title="Concept-first, not Java-first">
-          <p className="m-0">Phase 1 is conceptual on purpose. CAP isn&apos;t a Java thing — it&apos;s a property of distributed systems. We don&apos;t force-feed it through a code example. Once we hit Phase 2, the Java tilt picks up sharply. By Phase 4 most modules ship with a small Spring lab.</p>
+          <p className="m-0">Phase 1 is conceptual on purpose. CAP isn&apos;t a Java thing, it&apos;s a property of distributed systems. We don&apos;t force-feed it through a code example. Once we hit Phase 2, the Java tilt picks up sharply. By Phase 4 most modules ship with a small Spring lab.</p>
         </Callout>
       </section>
 
@@ -114,9 +114,9 @@ export default function Page() {
         <h2>What you&apos;ll be able to do by the end</h2>
         <ul>
           <li><strong>Walk into a senior system-design interview</strong>{" "}and run the room: clarify, estimate, propose, defend, deepen. With confidence, not memorization.</li>
-          <li><strong>Read a real design doc</strong>{" "}and immediately see the tradeoffs nobody wrote down — what happens during a partition, where the consistency boundaries are, what the queue depth is on a bad day.</li>
-          <li><strong>Make the call</strong>{" "}at work between &quot;cache it,&quot; &quot;shard it,&quot; &quot;queue it,&quot; or &quot;leave it alone&quot; — and have a one-paragraph defense for each.</li>
-          <li><strong>Talk to senior engineers</strong>{" "}in their own vocabulary — CAP, sagas, outbox, quorum reads, fanout-on-write — without faking it.</li>
+          <li><strong>Read a real design doc</strong>{" "}and immediately see the tradeoffs nobody wrote down, what happens during a partition, where the consistency boundaries are, what the queue depth is on a bad day.</li>
+          <li><strong>Make the call</strong>{" "}at work between &quot;cache it,&quot; &quot;shard it,&quot; &quot;queue it,&quot; or &quot;leave it alone&quot;, and have a one-paragraph defense for each.</li>
+          <li><strong>Talk to senior engineers</strong>{" "}in their own vocabulary, CAP, sagas, outbox, quorum reads, fanout-on-write, without faking it.</li>
         </ul>
       </section>
 
@@ -137,7 +137,7 @@ export default function Page() {
         <h2>What you&apos;ll need</h2>
         <ul>
           <li><strong>Java 17+</strong>{" "}and IntelliJ (or your IDE of choice). We&apos;ll touch Spring Boot 3.x in the labs.</li>
-          <li><strong>Comfort with HTTP, threads, and SQL basics.</strong>{" "}No deep prior distributed-systems knowledge required — we build it.</li>
+          <li><strong>Comfort with HTTP, threads, and SQL basics.</strong>{" "}No deep prior distributed-systems knowledge required, we build it.</li>
           <li><strong>Paper and a pen.</strong>{" "}Every back-of-envelope and every architecture sketch is faster on paper than in your editor. Yes, really.</li>
           <li><strong>An hour a day, ish.</strong>{" "}Modules average 1.5–2.5 hours. Phase 1 is ~7 hours total. The full course is roughly <strong>80–100 hours</strong>{" "}of engaged work.</li>
         </ul>
@@ -146,7 +146,7 @@ export default function Page() {
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Ready?</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Module 1 is back-of-envelope estimation — the math you&apos;ll do out loud in every interview and every design review for the rest of your career.
+          Module 1 is back-of-envelope estimation, the math you&apos;ll do out loud in every interview and every design review for the rest of your career.
         </p>
         <Link
           href="/courses/system-design/modules/back-of-envelope"

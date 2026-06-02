@@ -13,7 +13,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 const CHECKPOINTS = [
   { id: "btree", title: "B-tree mechanics: how the read-optimized index works" },
   { id: "lsm", title: "LSM trees: write-optimized, with a cost" },
-  { id: "indexes-hurt", title: "When indexes hurt — and which Postgres index type to pick" },
+  { id: "indexes-hurt", title: "When indexes hurt, and which Postgres index type to pick" },
 ];
 
 const btreeDiagram = `flowchart TB
@@ -78,7 +78,7 @@ export default function Page() {
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>What a B+ tree actually is and why its height stays tiny even on huge tables</li>
-          <li>How LSM trees flip the trade — write-optimized at the cost of read amplification</li>
+          <li>How LSM trees flip the trade, write-optimized at the cost of read amplification</li>
           <li>Covering indexes, composite index column order, and index-only scans</li>
           <li>The hidden cost every index adds: write amplification</li>
           <li>When to reach for GIN, GiST, or BRIN instead of a default B-tree</li>
@@ -109,12 +109,12 @@ export default function Page() {
 
         <h3>Why it stays shallow</h3>
         <p>
-          A node is a <em>page</em>{" "}on disk — typically 4 KB or 8 KB in Postgres. That page can hold hundreds of routing entries. The technical term is <strong>fan-out</strong>: how many children one node points at. With a fan-out of around 200, the tree height grows logarithmically with absurd slowness.
+          A node is a <em>page</em>{" "}on disk, typically 4 KB or 8 KB in Postgres. That page can hold hundreds of routing entries. The technical term is <strong>fan-out</strong>: how many children one node points at. With a fan-out of around 200, the tree height grows logarithmically with absurd slowness.
         </p>
         <p>Concrete numbers (Postgres, 8 KB pages, integer keys, fan-out ~250):</p>
         <ul>
-          <li><strong>1 million rows</strong> — height 3. Three page reads per lookup.</li>
-          <li><strong>1 billion rows</strong> — height 4–5. Still four or five page reads per lookup.</li>
+          <li><strong>1 million rows</strong>, height 3. Three page reads per lookup.</li>
+          <li><strong>1 billion rows</strong>, height 4–5. Still four or five page reads per lookup.</li>
           <li>The top levels of the tree live in the buffer cache permanently. Real I/O happens at the leaves.</li>
         </ul>
         <p>
@@ -127,7 +127,7 @@ export default function Page() {
 
         <h3>How writes happen</h3>
         <p>
-          A B-tree write finds the right leaf (same path as a read), inserts the new entry, and may need to <strong>split the page</strong>{" "}if it&apos;s full — half the entries go to a new sibling, the parent gets a new boundary. Splits cascade upward in the worst case, but rarely past the second level.
+          A B-tree write finds the right leaf (same path as a read), inserts the new entry, and may need to <strong>split the page</strong>{" "}if it&apos;s full, half the entries go to a new sibling, the parent gets a new boundary. Splits cascade upward in the worst case, but rarely past the second level.
         </p>
         <p>
           The cost: every write does an in-place page modification, which means random I/O. SSDs make this much cheaper than it was on spinning disks, but it&apos;s still &quot;modify a page that&apos;s probably not the page you wrote a millisecond ago.&quot; That random write pattern is the trade-off LSM trees attack head-on.
@@ -140,9 +140,9 @@ export default function Page() {
 
         <h3>Covering indexes and index-only scans</h3>
         <p>
-          A normal index points at row locations. After finding the matching index entries, the database has to fetch the full row from the table heap — one extra I/O per row. A <strong>covering index</strong>{" "}includes additional columns in the index itself, so the query can be answered without touching the heap at all.
+          A normal index points at row locations. After finding the matching index entries, the database has to fetch the full row from the table heap, one extra I/O per row. A <strong>covering index</strong>{" "}includes additional columns in the index itself, so the query can be answered without touching the heap at all.
         </p>
-        <CodeBlock lang="plain" caption="Postgres covering index — INCLUDE clause">{`-- Plain index — finds rows by user_id, but heap fetch needed for status, total
+        <CodeBlock lang="plain" caption="Postgres covering index, INCLUDE clause">{`-- Plain index — finds rows by user_id, but heap fetch needed for status, total
 CREATE INDEX idx_orders_user ON orders(user_id);
 
 -- Covering index — status & total are stored in the leaf, so the query is index-only
@@ -155,11 +155,11 @@ SELECT user_id, status, total FROM orders WHERE user_id = 12345;`}</CodeBlock>
         </p>
 
         <Callout variant="warn" title="Index-only scans need fresh visibility maps">
-          <p className="m-0">Postgres can only do an index-only scan if the visibility map confirms that all rows on the page are visible to all transactions. After a heavy write workload, run <code>VACUUM</code> or rely on autovacuum — otherwise the planner will fall back to heap fetches and your covering index won&apos;t help. This is a real production gotcha.</p>
+          <p className="m-0">Postgres can only do an index-only scan if the visibility map confirms that all rows on the page are visible to all transactions. After a heavy write workload, run <code>VACUUM</code> or rely on autovacuum, otherwise the planner will fall back to heap fetches and your covering index won&apos;t help. This is a real production gotcha.</p>
         </Callout>
 
         <h3>Reading EXPLAIN: a worked example</h3>
-        <CodeBlock lang="plain" caption="Postgres EXPLAIN — before and after adding an index">{`-- Before: 50ms, sequential scan over 5M rows
+        <CodeBlock lang="plain" caption="Postgres EXPLAIN, before and after adding an index">{`-- Before: 50ms, sequential scan over 5M rows
 EXPLAIN ANALYZE
 SELECT * FROM orders WHERE user_id = 12345;
 
@@ -178,7 +178,7 @@ SELECT * FROM orders WHERE user_id = 12345;
     (actual time=0.08..0.41 rows=37 loops=1)
     Index Cond: (user_id = 12345)`}</CodeBlock>
         <p>
-          Two numbers tell the story: <strong>Rows Removed by Filter: 4,999,963</strong>{" "}in the seq scan (that&apos;s the work the index lets you skip), and <strong>actual time</strong>{" "}dropping from 52ms to 0.4ms. 100x improvement from one index. This is the easy case — the index transforms a full scan into a 4-page tree walk.
+          Two numbers tell the story: <strong>Rows Removed by Filter: 4,999,963</strong>{" "}in the seq scan (that&apos;s the work the index lets you skip), and <strong>actual time</strong>{" "}dropping from 52ms to 0.4ms. 100x improvement from one index. This is the easy case, the index transforms a full scan into a 4-page tree walk.
         </p>
 
         <h3>Composite indexes and column order</h3>
@@ -188,7 +188,7 @@ SELECT * FROM orders WHERE user_id = 12345;
         <ul>
           <li>It can serve <code>WHERE a = ?</code>, <code>WHERE a = ? AND b = ?</code>, and <code>WHERE a = ? AND b = ? AND c = ?</code>.</li>
           <li>It can serve <code>WHERE a = ? ORDER BY b</code> without a sort.</li>
-          <li>It <strong>cannot</strong>{" "}efficiently serve <code>WHERE b = ?</code> alone — there&apos;s no entry point in the tree.</li>
+          <li>It <strong>cannot</strong>{" "}efficiently serve <code>WHERE b = ?</code> alone, there&apos;s no entry point in the tree.</li>
         </ul>
         <p>
           Rule of thumb for column order: <strong>most selective equality columns first, then range columns last.</strong>{" "}An index on <code>(status, created_at)</code> is great for <code>WHERE status = &apos;open&apos; AND created_at &gt; ?</code>; flipping it to <code>(created_at, status)</code> would make the same query much slower.
@@ -197,22 +197,22 @@ SELECT * FROM orders WHERE user_id = 12345;
         <Quiz
           question="A query is SELECT * FROM events WHERE tenant_id = ? AND created_at > now() - interval '1 hour' ORDER BY created_at DESC LIMIT 100. Which index serves it best?"
           options={[
-            { label: "(tenant_id, created_at DESC) — equality on tenant_id first, range/order on created_at second. The index can satisfy the WHERE, the ORDER BY, and the LIMIT in one walk.", correct: true, explanation: "Right. With this composite index, Postgres descends the tree to (tenant_id = ?), walks the leaf chain backward (created_at DESC) for 100 entries, and stops. No sort node, no extra heap fetch beyond the rows actually returned." },
-            { label: "(created_at DESC, tenant_id) — order by the range column first.", explanation: "Wrong direction. With created_at as the leading column, the index isn't selective for a single tenant — you'd scan all events in the time range, then filter by tenant. Bad plan." },
+            { label: "(tenant_id, created_at DESC), equality on tenant_id first, range/order on created_at second. The index can satisfy the WHERE, the ORDER BY, and the LIMIT in one walk.", correct: true, explanation: "Right. With this composite index, Postgres descends the tree to (tenant_id = ?), walks the leaf chain backward (created_at DESC) for 100 entries, and stops. No sort node, no extra heap fetch beyond the rows actually returned." },
+            { label: "(created_at DESC, tenant_id), order by the range column first.", explanation: "Wrong direction. With created_at as the leading column, the index isn't selective for a single tenant, you'd scan all events in the time range, then filter by tenant. Bad plan." },
             { label: "Two separate indexes: one on tenant_id, one on created_at.", explanation: "Postgres can sometimes BitmapAnd two indexes, but it's strictly worse than a composite for this query: more I/O, no order benefit, can't terminate at LIMIT." },
-            { label: "An index on (id) — primary key is always fastest.", explanation: "The primary key isn't relevant to the WHERE or ORDER BY here. Always-fastest-by-PK is a myth." },
+            { label: "An index on (id), primary key is always fastest.", explanation: "The primary key isn't relevant to the WHERE or ORDER BY here. Always-fastest-by-PK is a myth." },
           ]}
           hint="What column should the tree be sorted by FIRST?"
           xp={7}
         />
 
         <Quiz
-          question="A B-tree index on a 1-billion-row table has fan-out ~250 and B+ tree height of about 5. A point lookup for a missing key — i.e., the key isn't there at all — does roughly how many page reads?"
+          question="A B-tree index on a 1-billion-row table has fan-out ~250 and B+ tree height of about 5. A point lookup for a missing key, i.e., the key isn't there at all, does roughly how many page reads?"
           options={[
-            { label: "About 5 — it walks the tree top to leaf, then sees the key isn't in the leaf. The 'absent' lookup costs the same as a 'present' one.", correct: true, explanation: "Right. The tree doesn't know the key isn't there until it reaches the appropriate leaf. Negative lookups cost the same as positive ones — which is why some workloads add a Bloom filter in front to reject misses cheaply (especially LSM systems, more on that next part)." },
-            { label: "1 — Postgres caches absent keys.", explanation: "Postgres doesn't keep a cache of absent keys. The lookup has to descend to know." },
-            { label: "Millions — every page on disk.", explanation: "That's a sequential scan, which is what you avoid by having an index. The B-tree walks O(log_fanout(n)) pages whether the key exists or not." },
-            { label: "1 billion — once per row.", explanation: "Same misconception. The whole point of the tree is that you skip the rows that don't match." },
+            { label: "About 5, it walks the tree top to leaf, then sees the key isn't in the leaf. The 'absent' lookup costs the same as a 'present' one.", correct: true, explanation: "Right. The tree doesn't know the key isn't there until it reaches the appropriate leaf. Negative lookups cost the same as positive ones, which is why some workloads add a Bloom filter in front to reject misses cheaply (especially LSM systems, more on that next part)." },
+            { label: "1, Postgres caches absent keys.", explanation: "Postgres doesn't keep a cache of absent keys. The lookup has to descend to know." },
+            { label: "Millions, every page on disk.", explanation: "That's a sequential scan, which is what you avoid by having an index. The B-tree walks O(log_fanout(n)) pages whether the key exists or not." },
+            { label: "1 billion, once per row.", explanation: "Same misconception. The whole point of the tree is that you skip the rows that don't match." },
           ]}
           hint="The tree doesn't know the key is absent until it's looked at the leaf."
           xp={6}
@@ -247,7 +247,7 @@ SELECT * FROM orders WHERE user_id = 12345;
 
         <h3>Why writes are fast</h3>
         <p>
-          A write to an LSM is: append to WAL (sequential), insert into memtable (memory). That&apos;s it. No disk seek to find the right page, no in-place page modification, no split cascade. SSTable flushes are sequential writes too — the entire memtable is dumped to disk in one go.
+          A write to an LSM is: append to WAL (sequential), insert into memtable (memory). That&apos;s it. No disk seek to find the right page, no in-place page modification, no split cascade. SSTable flushes are sequential writes too, the entire memtable is dumped to disk in one go.
         </p>
         <p>
           Concrete numbers (RocksDB-class systems, modern SSDs): tens of thousands of writes per second per core, sustained. An order of magnitude or more above what a single B-tree primary will deliver. This is why Cassandra, ScyllaDB, RocksDB-backed systems, and BigTable dominate write-heavy workloads.
@@ -259,13 +259,13 @@ SELECT * FROM orders WHERE user_id = 12345;
         </p>
         <p>Several mitigations make reads usable:</p>
         <ul>
-          <li><strong>Bloom filters.</strong>{" "}Each SSTable has a Bloom filter — a small probabilistic structure that says &quot;this key is definitely not here&quot; (or &quot;maybe here&quot;). A miss-by-Bloom skips the SSTable entirely. Crucial for negative lookups.</li>
+          <li><strong>Bloom filters.</strong>{" "}Each SSTable has a Bloom filter, a small probabilistic structure that says &quot;this key is definitely not here&quot; (or &quot;maybe here&quot;). A miss-by-Bloom skips the SSTable entirely. Crucial for negative lookups.</li>
           <li><strong>Block indexes inside SSTables.</strong>{" "}Each SSTable has its own sparse index pointing at sorted blocks; you only read the relevant block.</li>
           <li><strong>Caching.</strong>{" "}Recent / hot SSTable blocks live in a block cache, similar to a buffer pool.</li>
         </ul>
 
-        <Callout variant="info" title="Read, write, space — pick a side">
-          <p className="m-0">LSMs introduce three amplifications you have to reason about. <strong>Write amplification:</strong>{" "}data gets written multiple times as it&apos;s compacted up through levels — typical LSM has 10–30x write amplification. <strong>Read amplification:</strong>{" "}a read may probe several SSTables — typical 2–5x. <strong>Space amplification:</strong>{" "}tombstones (deletes) and old versions hang around until compaction. B-trees have lower amplifications across all three but cap your write throughput. There&apos;s no free lunch.</p>
+        <Callout variant="info" title="Read, write, space, pick a side">
+          <p className="m-0">LSMs introduce three amplifications you have to reason about. <strong>Write amplification:</strong>{" "}data gets written multiple times as it&apos;s compacted up through levels, typical LSM has 10–30x write amplification. <strong>Read amplification:</strong>{" "}a read may probe several SSTables, typical 2–5x. <strong>Space amplification:</strong>{" "}tombstones (deletes) and old versions hang around until compaction. B-trees have lower amplifications across all three but cap your write throughput. There&apos;s no free lunch.</p>
         </Callout>
 
         <h3>Compaction strategies</h3>
@@ -280,7 +280,7 @@ SELECT * FROM orders WHERE user_id = 12345;
           LSMs don&apos;t do in-place updates, including deletes. A delete is a special record called a <strong>tombstone</strong>{" "}that says &quot;this key is gone.&quot; Reads have to honor tombstones (return &quot;not found&quot; even if older SSTables still hold the key). Tombstones only physically disappear when compaction has merged through every level that contained the key.
         </p>
         <p>
-          Real production gotcha: if you delete millions of rows but compaction is slow, reads have to scan past all those tombstones until they&apos;re cleaned up. Cassandra has had outages caused by tombstone storms — &quot;range query returned 1M tombstones and 5 actual rows.&quot; The fix is operational: faster compaction, smaller TTLs, or schema redesign to avoid mass deletes in the first place.
+          Real production gotcha: if you delete millions of rows but compaction is slow, reads have to scan past all those tombstones until they&apos;re cleaned up. Cassandra has had outages caused by tombstone storms, &quot;range query returned 1M tombstones and 5 actual rows.&quot; The fix is operational: faster compaction, smaller TTLs, or schema redesign to avoid mass deletes in the first place.
         </p>
 
         <h3>Real systems</h3>
@@ -298,9 +298,9 @@ SELECT * FROM orders WHERE user_id = 12345;
         <Quiz
           question="A team is running a workload with 200k writes/sec sustained, mostly inserts of new event records, low read volume. They're currently on Postgres and the primary's WAL is bottlenecking. Which storage choice would help most?"
           options={[
-            { label: "Move event ingestion to an LSM-backed system (Cassandra, ScyllaDB, RocksDB-based store). LSM's sequential-write design handles 200k/s writes per node much better than B-tree's random in-place updates.", correct: true, explanation: "Right. The workload is squarely write-heavy, low-read, append-mostly — exactly what LSM was designed for. Cassandra commonly handles 50–100k writes/sec/node, scaling linearly with cluster size. The trade (slower point lookups, higher space amplification) is fine for this workload." },
-            { label: "Add more indexes on Postgres so writes go faster.", explanation: "Indexes make writes slower, not faster — every index is another B-tree to maintain on every write. Wrong direction." },
-            { label: "Switch to MongoDB — it's document-shaped, will write faster.", explanation: "MongoDB's default WiredTiger storage engine is also B-tree-based; you wouldn't see the order-of-magnitude write throughput jump LSM offers. Document shape isn't the bottleneck — index maintenance is." },
+            { label: "Move event ingestion to an LSM-backed system (Cassandra, ScyllaDB, RocksDB-based store). LSM's sequential-write design handles 200k/s writes per node much better than B-tree's random in-place updates.", correct: true, explanation: "Right. The workload is squarely write-heavy, low-read, append-mostly, exactly what LSM was designed for. Cassandra commonly handles 50–100k writes/sec/node, scaling linearly with cluster size. The trade (slower point lookups, higher space amplification) is fine for this workload." },
+            { label: "Add more indexes on Postgres so writes go faster.", explanation: "Indexes make writes slower, not faster, every index is another B-tree to maintain on every write. Wrong direction." },
+            { label: "Switch to MongoDB, it's document-shaped, will write faster.", explanation: "MongoDB's default WiredTiger storage engine is also B-tree-based; you wouldn't see the order-of-magnitude write throughput jump LSM offers. Document shape isn't the bottleneck, index maintenance is." },
             { label: "Add read replicas to Postgres.", explanation: "Read replicas help reads, not writes. The bottleneck described is on the write path." },
           ]}
           hint="What's the index family designed for write throughput?"
@@ -331,7 +331,7 @@ SELECT * FROM orders WHERE user_id = 12345;
         />
       </Checkpoint>
 
-      <Checkpoint moduleSlug="indexing-deep" id="indexes-hurt" title="Part 3 · When indexes hurt — and which index type to pick" xp={25}>
+      <Checkpoint moduleSlug="indexing-deep" id="indexes-hurt" title="Part 3 · When indexes hurt, and which index type to pick" xp={25}>
         <h2>Every index makes writes slower</h2>
         <p>
           The first thing senior engineers internalize about indexing: <strong>indexes are not free.</strong>{" "}Every secondary index is another tree the database has to update on every insert, update, and delete. A table with 8 indexes turns each <code>INSERT</code> into 1 row write + 8 index writes. That&apos;s a real cost, and it&apos;s the hidden tax behind the &quot;we&apos;ll just add an index for that&quot; anti-pattern.
@@ -351,16 +351,16 @@ INSERT INTO orders (...) VALUES (...);
 -- column types, page fill factor, WAL settings.`}</CodeBlock>
 
         <p>
-          The fix isn&apos;t &quot;don&apos;t use indexes&quot; — it&apos;s &quot;earn each one.&quot; Each index should serve real query patterns; index audits (drop unused indexes) are a normal hygiene activity in any older Postgres database.
+          The fix isn&apos;t &quot;don&apos;t use indexes&quot;, it&apos;s &quot;earn each one.&quot; Each index should serve real query patterns; index audits (drop unused indexes) are a normal hygiene activity in any older Postgres database.
         </p>
 
         <Callout variant="warn" title="Find unused indexes">
-          <p className="m-0">Postgres tracks index usage in <code>pg_stat_user_indexes</code>. <code>idx_scan = 0</code> means the planner has never picked that index since stats were last reset. Indexes with no scans after weeks of production traffic are usually safe to drop. Always check first, then drop one at a time, and watch query plans afterward — sometimes an index has zero scans because the planner is using a different one that&apos;s slightly slower.</p>
+          <p className="m-0">Postgres tracks index usage in <code>pg_stat_user_indexes</code>. <code>idx_scan = 0</code> means the planner has never picked that index since stats were last reset. Indexes with no scans after weeks of production traffic are usually safe to drop. Always check first, then drop one at a time, and watch query plans afterward, sometimes an index has zero scans because the planner is using a different one that&apos;s slightly slower.</p>
         </Callout>
 
         <h3>The selectivity rule</h3>
         <p>
-          An index helps when the query returns a small fraction of the table. If a query returns more than ~5–10% of rows, a sequential scan is often faster than an index scan + heap fetch — fewer random I/Os, better prefetching. The Postgres planner knows this and switches strategies, which is why you sometimes see &quot;I added an index and it&apos;s not being used&quot; — the planner decided your query wasn&apos;t selective enough.
+          An index helps when the query returns a small fraction of the table. If a query returns more than ~5–10% of rows, a sequential scan is often faster than an index scan + heap fetch, fewer random I/Os, better prefetching. The Postgres planner knows this and switches strategies, which is why you sometimes see &quot;I added an index and it&apos;s not being used&quot;, the planner decided your query wasn&apos;t selective enough.
         </p>
         <p>
           A column with two distinct values (boolean <code>is_deleted</code>, for example) is rarely worth a plain B-tree. A <em>partial</em>{" "}index on the rare value (<code>WHERE is_deleted = false</code> when only 1% are deleted) can be tiny and great. Same data, very different index design.
@@ -373,7 +373,7 @@ INSERT INTO orders (...) VALUES (...);
         <ul>
           <li><strong>GIN (Generalized Inverted Index).</strong>{" "}For columns where each row has many values: full-text (<code>tsvector</code>), JSONB, arrays. The index maps each value to the list of rows containing it. Slow to build, slow to update, fast to query for &quot;contains&quot; semantics.</li>
           <li><strong>GiST (Generalized Search Tree).</strong>{" "}A framework for tree indexes over types where ordering is non-trivial: geometry (PostGIS), ranges, full-text with rank ordering. Use when you&apos;re doing nearest-neighbor or geometric containment queries.</li>
-          <li><strong>BRIN (Block Range Index).</strong>{" "}Stores summaries of value ranges per block of pages. Tiny on disk (megabytes for a billion-row table). Useful when data is naturally clustered in insertion order — typical for time-series. Trade: less precise than B-tree, but the size advantage is enormous.</li>
+          <li><strong>BRIN (Block Range Index).</strong>{" "}Stores summaries of value ranges per block of pages. Tiny on disk (megabytes for a billion-row table). Useful when data is naturally clustered in insertion order, typical for time-series. Trade: less precise than B-tree, but the size advantage is enormous.</li>
           <li><strong>Hash.</strong>{" "}Equality only, no range. Rarely worth it over B-tree in modern Postgres.</li>
         </ul>
 
@@ -396,7 +396,7 @@ CREATE INDEX idx_products_attrs
 
         <h3>Spring Data + JPA: indexes from the application side</h3>
         <p>
-          With Spring Data JPA, you&apos;ll most often define indexes via <code>@Index</code> annotations or in Flyway/Liquibase migrations. The annotation generates a CREATE INDEX in your schema export but doesn&apos;t change runtime behavior — the planner uses whatever indexes exist on the live database.
+          With Spring Data JPA, you&apos;ll most often define indexes via <code>@Index</code> annotations or in Flyway/Liquibase migrations. The annotation generates a CREATE INDEX in your schema export but doesn&apos;t change runtime behavior, the planner uses whatever indexes exist on the live database.
         </p>
         <CodeBlock lang="java" caption="Order entity with composite index">{`@Entity
 @Table(
@@ -427,7 +427,7 @@ public class Order {
         </p>
 
         <Callout variant="spring" title="Don't fight Hibernate's query plan">
-          <p className="m-0">A common Spring gotcha: a query that runs fine in psql is slow through Hibernate. The fix is usually one of: (1) <code>@Query(nativeQuery = true)</code> for the cases where JPQL generates pathological SQL, (2) make sure the query hits a real index — JPQL <code>findByXxxIn(...)</code> with a 10k-element list will not use indexes the way you hope, and (3) check that connection pool settings don&apos;t mask the actual query timing in your monitoring.</p>
+          <p className="m-0">A common Spring gotcha: a query that runs fine in psql is slow through Hibernate. The fix is usually one of: (1) <code>@Query(nativeQuery = true)</code> for the cases where JPQL generates pathological SQL, (2) make sure the query hits a real index, JPQL <code>findByXxxIn(...)</code> with a 10k-element list will not use indexes the way you hope, and (3) check that connection pool settings don&apos;t mask the actual query timing in your monitoring.</p>
         </Callout>
 
         <h3>Anti-patterns to memorize</h3>
@@ -443,10 +443,10 @@ public class Order {
         <Quiz
           question="A 500M-row events table is queried mostly as WHERE created_at BETWEEN ? AND ?. Data is inserted in (roughly) time order. Which index type is the best fit and why?"
           options={[
-            { label: "BRIN on created_at — data is clustered in insertion order, BRIN's per-block summaries are accurate, and the index is tiny (megabytes vs gigabytes for a B-tree on 500M rows). Range queries can quickly skip blocks that don't contain the time range.", correct: true, explanation: "Right. BRIN exploits exactly this property: physical ordering aligned with the indexed column. The index is roughly 1000x smaller than the equivalent B-tree, and range queries are nearly as fast because the planner skips entire blocks. Time-series tables are the canonical BRIN use case." },
-            { label: "GIN on created_at.", explanation: "GIN is for multi-valued columns (arrays, JSONB, full-text). created_at is a single scalar — GIN would work but be enormous and pointless." },
-            { label: "B-tree on created_at — always the default.", explanation: "Defensible, but on 500M rows a B-tree is gigabytes vs. BRIN's megabytes, with similar performance for range queries on time-clustered data. BRIN is the better choice when ordering holds." },
-            { label: "Hash on created_at.", explanation: "Hash indexes don't support range queries — they only do equality. Useless for BETWEEN." },
+            { label: "BRIN on created_at, data is clustered in insertion order, BRIN's per-block summaries are accurate, and the index is tiny (megabytes vs gigabytes for a B-tree on 500M rows). Range queries can quickly skip blocks that don't contain the time range.", correct: true, explanation: "Right. BRIN exploits exactly this property: physical ordering aligned with the indexed column. The index is roughly 1000x smaller than the equivalent B-tree, and range queries are nearly as fast because the planner skips entire blocks. Time-series tables are the canonical BRIN use case." },
+            { label: "GIN on created_at.", explanation: "GIN is for multi-valued columns (arrays, JSONB, full-text). created_at is a single scalar, GIN would work but be enormous and pointless." },
+            { label: "B-tree on created_at, always the default.", explanation: "Defensible, but on 500M rows a B-tree is gigabytes vs. BRIN's megabytes, with similar performance for range queries on time-clustered data. BRIN is the better choice when ordering holds." },
+            { label: "Hash on created_at.", explanation: "Hash indexes don't support range queries, they only do equality. Useless for BETWEEN." },
           ]}
           hint="What's special about how time-series data is physically laid out?"
           xp={7}
@@ -455,10 +455,10 @@ public class Order {
         <Quiz
           question="A table has columns (id, status, region, created_at). Hot query is WHERE status = 'pending' AND region = 'us-west' ORDER BY created_at LIMIT 50. Which composite index is best?"
           options={[
-            { label: "(status, region, created_at) — equality columns first (status, region), range/sort column last. The index serves the WHERE, the ORDER BY, and the LIMIT in one walk.", correct: true, explanation: "Right. Composite indexes serve queries left-to-right: equality on the leading columns lets you descend to the right subtree, and the trailing column gives you the order for free. ORDER BY + LIMIT terminates after 50 leaf entries — no sort node, no table scan." },
-            { label: "(created_at, status, region) — sort column first.", explanation: "Wrong direction. With created_at leading, the index is sorted by time across all statuses and regions, so you can't descend to (status='pending', region='us-west') quickly." },
-            { label: "Three single-column indexes — let the planner BitmapAnd them.", explanation: "BitmapAnd works but is strictly worse: more I/O, no order benefit, can't terminate at LIMIT. The composite wins." },
-            { label: "(status, created_at, region) — put the sort column in the middle.", explanation: "Putting the range/sort column in the middle breaks the contiguous-scan property. The trailing column has to be the one you order by; equality columns first." },
+            { label: "(status, region, created_at), equality columns first (status, region), range/sort column last. The index serves the WHERE, the ORDER BY, and the LIMIT in one walk.", correct: true, explanation: "Right. Composite indexes serve queries left-to-right: equality on the leading columns lets you descend to the right subtree, and the trailing column gives you the order for free. ORDER BY + LIMIT terminates after 50 leaf entries, no sort node, no table scan." },
+            { label: "(created_at, status, region), sort column first.", explanation: "Wrong direction. With created_at leading, the index is sorted by time across all statuses and regions, so you can't descend to (status='pending', region='us-west') quickly." },
+            { label: "Three single-column indexes, let the planner BitmapAnd them.", explanation: "BitmapAnd works but is strictly worse: more I/O, no order benefit, can't terminate at LIMIT. The composite wins." },
+            { label: "(status, created_at, region), put the sort column in the middle.", explanation: "Putting the range/sort column in the middle breaks the contiguous-scan property. The trailing column has to be the one you order by; equality columns first." },
           ]}
           hint="Equality columns first, range/order column last."
           xp={6}
@@ -479,7 +479,7 @@ public class Order {
       <section>
         <h2>Beyond a single node</h2>
         <p>
-          Indexing is what makes a query fast on one machine. The next question is how to keep it fast when one machine isn&apos;t enough — when the data outgrows a single node, or the write rate outgrows what one primary can absorb. That&apos;s partitioning and sharding, the next module. After that, replication, caching, and search round out Phase 2.
+          Indexing is what makes a query fast on one machine. The next question is how to keep it fast when one machine isn&apos;t enough, when the data outgrows a single node, or the write rate outgrows what one primary can absorb. That&apos;s partitioning and sharding, the next module. After that, replication, caching, and search round out Phase 2.
         </p>
       </section>
 

@@ -145,7 +145,7 @@ flowchart TB
 
         <p>
           Linked lists from Module 7 had nodes with a single <code>next</code> pointer. Replace <code>next</code>{" "}
-          with two pointers — <code>left</code> and <code>right</code> — and you have a <strong>binary tree</strong>.
+          with two pointers, <code>left</code> and <code>right</code>, and you have a <strong>binary tree</strong>.
           Generalize to any number of children and you have a tree. That&apos;s it. The data structure isn&apos;t
           new; the <em>shape</em>{" "}is.
         </p>
@@ -171,21 +171,21 @@ flowchart TB
 
         <Callout variant="info" title="Binary tree, complete tree, full tree, perfect tree">
           These four words get muddled. <strong>Binary</strong>: at most 2 children per node.{" "}
-          <strong>Full</strong>: every internal node has exactly 0 or 2 children — never just one.{" "}
+          <strong>Full</strong>: every internal node has exactly 0 or 2 children, never just one.{" "}
           <strong>Complete</strong>: every level is full <em>except possibly the last</em>, which is filled
           left-to-right (this is the heap shape, Module 15). <strong>Perfect</strong>: full and all leaves at the
-          same depth — that&apos;s the diagram above. Most interview problems just say &quot;binary tree&quot; and
+          same depth, that&apos;s the diagram above. Most interview problems just say &quot;binary tree&quot; and
           mean &quot;arbitrary, possibly unbalanced.&quot;
         </Callout>
 
         <h3>Why trees show up everywhere</h3>
 
         <ul>
-          <li><strong>File systems</strong> — directories contain files and other directories.</li>
-          <li><strong>The DOM</strong> — every web page is a tree of HTML elements.</li>
-          <li><strong>Expression parsers</strong> — <code>(2 + 3) * 4</code> is naturally an AST: a tree of operators with operands as leaves.</li>
-          <li><strong>Decision processes</strong> — game trees, classification trees, dependency resolution.</li>
-          <li><strong>Search structures</strong> — BSTs (Module 14), heaps (Module 15), tries (Module 37) are all trees underneath.</li>
+          <li><strong>File systems</strong>, directories contain files and other directories.</li>
+          <li><strong>The DOM</strong>, every web page is a tree of HTML elements.</li>
+          <li><strong>Expression parsers</strong>, <code>(2 + 3) * 4</code> is naturally an AST: a tree of operators with operands as leaves.</li>
+          <li><strong>Decision processes</strong>, game trees, classification trees, dependency resolution.</li>
+          <li><strong>Search structures</strong>, BSTs (Module 14), heaps (Module 15), tries (Module 37) are all trees underneath.</li>
         </ul>
 
         <p>
@@ -214,7 +214,7 @@ flowchart TB
           options={[
             { label: "15.", explanation: "That's the node count, not the height." },
             { label: "4.", explanation: "Height 4 would mean up to 2^5 - 1 = 31 nodes, more than 15." },
-            { label: "3.", correct: true, explanation: "Right. A perfect binary tree of height h has exactly 2^(h+1) - 1 nodes. 2^4 - 1 = 15, so h = 3. Levels at depths 0, 1, 2, 3 — the root and three more levels." },
+            { label: "3.", correct: true, explanation: "Right. A perfect binary tree of height h has exactly 2^(h+1) - 1 nodes. 2^4 - 1 = 15, so h = 3. Levels at depths 0, 1, 2, 3, the root and three more levels." },
             { label: "log₂(15) ≈ 3.9.", explanation: "Close in spirit, but height is an integer. The exact answer is floor(log₂(15)) = 3." },
           ]}
         />
@@ -247,7 +247,7 @@ flowchart TB
         <p>
           The recursive shape is encoded in the type: <code>TreeNode</code> contains two more <code>TreeNode</code>{" "}
           references. <code>null</code> represents the empty subtree. There&apos;s no explicit &quot;tree&quot;
-          object — the whole tree is just whatever&apos;s reachable from the root pointer.
+          object, the whole tree is just whatever&apos;s reachable from the root pointer.
         </p>
 
         <h3>Building a tree by hand</h3>
@@ -262,14 +262,14 @@ TreeNode root = new TreeNode(1,
         new TreeNode(7)));`}</CodeBlock>
 
         <p>
-          Verbose, but explicit. In real code you&apos;d build trees from data — a level-order array, parsed
-          input, etc. — but for understanding, hand-wiring is clearest.
+          Verbose, but explicit. In real code you&apos;d build trees from data, a level-order array, parsed
+          input, etc., but for understanding, hand-wiring is clearest.
         </p>
 
         <h3>Where trees actually live in memory</h3>
 
         <p>
-          Each <code>TreeNode</code> is a separate heap allocation. The tree isn&apos;t a contiguous block — it&apos;s
+          Each <code>TreeNode</code> is a separate heap allocation. The tree isn&apos;t a contiguous block, it&apos;s
           a graph of pointer-linked objects. Two consequences:
         </p>
 
@@ -281,13 +281,13 @@ TreeNode root = new TreeNode(1,
           <li>
             <strong>Recursion costs stack space.</strong>{" "}A tree of height h takes O(h) stack frames during a
             recursive traversal. For a balanced tree of n nodes, that&apos;s O(log n). For a degenerate
-            &quot;list-tree&quot; (every node has one child), it&apos;s O(n) — and a 10,000-node skewed tree
+            &quot;list-tree&quot; (every node has one child), it&apos;s O(n), and a 10,000-node skewed tree
             blows the JVM stack.
           </li>
         </ul>
 
         <Callout variant="warn" title="The skewed-tree stack overflow">
-          On LeetCode, the canonical recursion solution to most tree problems passes — until a stress test hands
+          On LeetCode, the canonical recursion solution to most tree problems passes, until a stress test hands
           you a tree that&apos;s really a long chain. Inserts into a BST without balancing (Module 14) produce
           this if input is sorted. The fix: either guarantee balance, or use an iterative traversal with an
           explicit <code>Deque</code>. We&apos;ll show both.
@@ -330,8 +330,8 @@ private int checkBalanced(TreeNode n) {
         <Quiz
           question="What's `height(null)` in the code above, and why does it return -1 instead of 0?"
           options={[
-            { label: "Returns 0 — an empty tree has height 0.", explanation: "Definitional choice. We picked -1 so the recursive formula 1 + max(left, right) gives 0 for a single node, matching the 'leaves at depth 0' convention." },
-            { label: "Returns -1, so that a single-node tree (null children) computes to height 0 via 1 + max(-1, -1) = 0.", correct: true, explanation: "Right. The -1 sentinel is exactly so the recursion arithmetic works out for the leaf case. Some textbooks flip the convention to 'leaves have height 1, null is height 0' — same algorithm, off-by-one different. The convention matters less than picking one and being consistent." },
+            { label: "Returns 0, an empty tree has height 0.", explanation: "Definitional choice. We picked -1 so the recursive formula 1 + max(left, right) gives 0 for a single node, matching the 'leaves at depth 0' convention." },
+            { label: "Returns -1, so that a single-node tree (null children) computes to height 0 via 1 + max(-1, -1) = 0.", correct: true, explanation: "Right. The -1 sentinel is exactly so the recursion arithmetic works out for the leaf case. Some textbooks flip the convention to 'leaves have height 1, null is height 0', same algorithm, off-by-one different. The convention matters less than picking one and being consistent." },
             { label: "Throws NullPointerException.", explanation: "We explicitly handle null at the top of the function." },
             { label: "Returns Integer.MIN_VALUE as a sentinel.", explanation: "Just -1. Sentinels work for the balance check (where -2 means 'unbalanced'), but for plain height we just need the base case to compose correctly." },
           ]}
@@ -346,7 +346,7 @@ private int checkBalanced(TreeNode n) {
 
         <p>
           A <strong>traversal</strong>{" "}visits every node in some order. Depth-first traversals dive deep before
-          backtracking. There are three standard orderings — preorder, inorder, postorder — and they differ only
+          backtracking. There are three standard orderings, preorder, inorder, postorder, and they differ only
           in <em>where you do the work</em>{" "}relative to the recursive calls.
         </p>
 
@@ -380,15 +380,15 @@ void postorder(TreeNode n) {
 
         <ul>
           <li>
-            <strong>Preorder</strong> — process the node before its subtrees. Use when you need parent context
+            <strong>Preorder</strong>, process the node before its subtrees. Use when you need parent context
             before children: <em>cloning a tree</em>, <em>serializing</em>, computing depth-aware values.
           </li>
           <li>
-            <strong>Inorder</strong> — left, node, right. <strong>This is the magic one for BSTs:</strong>{" "}
+            <strong>Inorder</strong>, left, node, right. <strong>This is the magic one for BSTs:</strong>{" "}
             inorder traversal of a BST yields nodes in sorted order. We&apos;ll lean on this hard in Module 14.
           </li>
           <li>
-            <strong>Postorder</strong> — process the node after its subtrees. Use when you need to combine child
+            <strong>Postorder</strong>, process the node after its subtrees. Use when you need to combine child
             results: <em>computing height</em>, <em>summing subtree values</em>, <em>deleting a tree safely</em>{" "}
             (children freed before parent).
           </li>
@@ -398,7 +398,7 @@ void postorder(TreeNode n) {
 
         <p>
           Recursion is elegant but consumes the JVM call stack. For deep or adversarial trees, you may want an
-          iterative version. The trick is to maintain a <code>Deque&lt;TreeNode&gt;</code> as your own stack — same
+          iterative version. The trick is to maintain a <code>Deque&lt;TreeNode&gt;</code> as your own stack, same
           structure as the call stack, just on the heap where it&apos;s allowed to grow:
         </p>
 
@@ -427,7 +427,7 @@ void postorder(TreeNode n) {
         <h3>The complexity, once and for all</h3>
 
         <ul>
-          <li><strong>Time:</strong>{" "}O(n) for any traversal — every node visited exactly once.</li>
+          <li><strong>Time:</strong>{" "}O(n) for any traversal, every node visited exactly once.</li>
           <li><strong>Space:</strong>{" "}O(h) for recursion stack (or explicit stack), where h is tree height. O(log n) for balanced, O(n) worst case.</li>
         </ul>
 
@@ -444,11 +444,11 @@ void postorder(TreeNode n) {
             { id: "clone", label: "Clone a binary tree, allocating each new node before its children.", answer: "pre", explanation: "Need the parent created before its subtrees so you can attach. Preorder allocates the new node, then recurses." },
             { id: "bstSorted", label: "Print a BST's keys in sorted order.", answer: "in", explanation: "The BST invariant is L < root < R. Inorder visits in exactly that order, yielding sorted output." },
             { id: "treeHeight", label: "Compute the tree's height.", answer: "post", explanation: "You need both children's heights before you can decide your own. Postorder combines child results into the parent's." },
-            { id: "deleteAll", label: "Free every node in a manual tree (no GC).", answer: "post", explanation: "Free children before parent — otherwise you'd be reading freed pointers. Postorder is the canonical safe-delete order." },
+            { id: "deleteAll", label: "Free every node in a manual tree (no GC).", answer: "post", explanation: "Free children before parent, otherwise you'd be reading freed pointers. Postorder is the canonical safe-delete order." },
             { id: "levelLabels", label: "Print each level on its own line.", answer: "level", explanation: "DFS doesn't naturally group by level. BFS visits level 0, then level 1, etc. Use a queue and track level boundaries." },
             { id: "expressionEval", label: "Evaluate an expression tree where leaves are numbers and internal nodes are operators.", answer: "post", explanation: "Compute the children's values first, then apply the operator. Postorder by definition." },
             { id: "rightView", label: "Find the rightmost node visible at each level.", answer: "level", explanation: "Visible-at-each-level is a level-order question. BFS, take the last node at each level." },
-            { id: "serialize", label: "Serialize a tree to a string and deserialize back, including null markers.", answer: "pre", explanation: "Preorder with explicit null markers is the standard. Reading the stream back, the first token is always the root, then its left subtree, then right — perfectly recursive." },
+            { id: "serialize", label: "Serialize a tree to a string and deserialize back, including null markers.", answer: "pre", explanation: "Preorder with explicit null markers is the standard. Reading the stream back, the first token is always the root, then its left subtree, then right, perfectly recursive." },
           ]}
         />
       </section>
@@ -460,7 +460,7 @@ void postorder(TreeNode n) {
         <h2 id="bfs">Breadth-first: level by level</h2>
 
         <p>
-          Sometimes the question is &quot;what&apos;s at each level?&quot; — leftmost, rightmost, average value,
+          Sometimes the question is &quot;what&apos;s at each level?&quot;, leftmost, rightmost, average value,
           maximum. DFS doesn&apos;t naturally answer that; BFS does. <strong>Breadth-first traversal</strong>{" "}
           visits all nodes at depth 0, then all at depth 1, then all at depth 2, and so on.
         </p>
@@ -472,7 +472,7 @@ void postorder(TreeNode n) {
 
         <p>
           The data structure for BFS is a <strong>queue</strong> (Module 9). Enqueue the root; while the queue is
-          non-empty, dequeue, visit, enqueue children. The queue holds &quot;the frontier&quot; — nodes seen but
+          non-empty, dequeue, visit, enqueue children. The queue holds &quot;the frontier&quot;, nodes seen but
           not yet processed.
         </p>
 
@@ -500,7 +500,7 @@ void postorder(TreeNode n) {
         <Callout variant="info" title="The 'freeze level size' trick">
           The line <code>int levelSize = queue.size()</code> at the top of the outer loop is the only thing that
           separates &quot;BFS&quot; from &quot;BFS that knows about levels.&quot; You snapshot the queue size, then
-          process exactly that many nodes — those are this level. Anything you enqueue inside the inner loop is
+          process exactly that many nodes, those are this level. Anything you enqueue inside the inner loop is
           on the next level and won&apos;t be touched until the next outer iteration. This template carries straight
           into Phase 4&apos;s graph BFS.
         </Callout>
@@ -516,8 +516,8 @@ void postorder(TreeNode n) {
         <h3>Complexity</h3>
 
         <ul>
-          <li><strong>Time:</strong>{" "}O(n) — each node enqueued and dequeued exactly once.</li>
-          <li><strong>Space:</strong>{" "}O(w) where w is the maximum width of the tree — the queue can hold a whole level. For a perfect binary tree of n nodes, the bottom level has ~n/2 nodes, so worst-case BFS space is O(n).</li>
+          <li><strong>Time:</strong>{" "}O(n), each node enqueued and dequeued exactly once.</li>
+          <li><strong>Space:</strong>{" "}O(w) where w is the maximum width of the tree, the queue can hold a whole level. For a perfect binary tree of n nodes, the bottom level has ~n/2 nodes, so worst-case BFS space is O(n).</li>
         </ul>
 
         <p>
@@ -530,7 +530,7 @@ void postorder(TreeNode n) {
           title="Part 4 recap"
           gist="DFS uses the call stack (or your own); BFS uses a queue. Each picks the right shape of question."
           points={[
-            { takeaway: "DFS is recursion's natural shape; BFS needs an explicit queue.", detail: "DFS recursion threads through the call stack. BFS isn't naturally recursive — you'd need a queue regardless, so write the iterative loop." },
+            { takeaway: "DFS is recursion's natural shape; BFS needs an explicit queue.", detail: "DFS recursion threads through the call stack. BFS isn't naturally recursive, you'd need a queue regardless, so write the iterative loop." },
             { takeaway: "The 'freeze queue.size()' trick is what gives BFS access to levels.", detail: "Without it, BFS just gives you a flat order. With it, you can answer per-level questions: rightmost node, level averages, deepest left leaf." },
             { takeaway: "Time is O(n) for both; space differs by tree shape.", detail: "DFS space is O(height). BFS space is O(max width). Balanced: both O(log n). Skewed: DFS O(n), BFS O(1). Wide/shallow: BFS up to O(n)." },
             { takeaway: "BFS is your ticket to graphs.", detail: "Phase 4's graph BFS is exactly this template plus a 'visited' set. You'll see this loop again." },
@@ -544,7 +544,7 @@ void postorder(TreeNode n) {
       <section>
         <h2 id="project">Project: tree builder + traversal visualizer + LeetCode warm-ups</h2>
 
-        <h3>Part A — Build a tree from a level-order array</h3>
+        <h3>Part A, Build a tree from a level-order array</h3>
 
         <p>
           LeetCode serializes trees as level-order arrays with <code>null</code> for missing nodes. Implement the
@@ -593,7 +593,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
           match what the diagrams predicted.
         </p>
 
-        <h3>Part B — LeetCode warm-ups</h3>
+        <h3>Part B, LeetCode warm-ups</h3>
 
         <ol>
           <li>
@@ -607,7 +607,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
           </li>
           <li>
             <strong>LC 226 · Invert Binary Tree</strong> (Easy). For each node, swap left and right pointers, then
-            recurse into both. The 4-line solution that famously crashed an interview at a big tech company —
+            recurse into both. The 4-line solution that famously crashed an interview at a big tech company,
             now go write it without crashing.
           </li>
           <li>
@@ -618,7 +618,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
 
         <Callout variant="insight" title="The reflex to build">
           Almost every binary-tree problem follows: (1) base case for null, (2) recurse on left and right, (3)
-          combine. You&apos;ll write this skeleton dozens of times. Don&apos;t fight it — that&apos;s the shape
+          combine. You&apos;ll write this skeleton dozens of times. Don&apos;t fight it, that&apos;s the shape
           of the data.
         </Callout>
       </section>
@@ -630,10 +630,10 @@ public static TreeNode fromLevelOrder(Integer[] data) {
         <h2 id="final">Final check</h2>
 
         <Quiz
-          question="A binary tree of n nodes is degenerate (every node has only one child — a 'list-tree'). What's the time and space cost of a recursive in-order traversal?"
+          question="A binary tree of n nodes is degenerate (every node has only one child, a 'list-tree'). What's the time and space cost of a recursive in-order traversal?"
           options={[
             { label: "O(n) time, O(log n) space.", explanation: "O(log n) recursion depth assumes balance. A degenerate tree's height is n, not log n." },
-            { label: "O(n) time, O(n) space — the recursion stack reaches depth n and may blow up.", correct: true, explanation: "Right. Time is still O(n) — every node is visited once. But recursion depth equals tree height, which is n in a list-tree. That O(n) call-stack space is what blows up the JVM on a 10,000-node skewed tree. The fix is balancing (Module 14) or iterative traversal." },
+            { label: "O(n) time, O(n) space, the recursion stack reaches depth n and may blow up.", correct: true, explanation: "Right. Time is still O(n), every node is visited once. But recursion depth equals tree height, which is n in a list-tree. That O(n) call-stack space is what blows up the JVM on a 10,000-node skewed tree. The fix is balancing (Module 14) or iterative traversal." },
             { label: "O(n²) time, O(n) space.", explanation: "Each node is visited exactly once; no work is repeated." },
             { label: "O(n log n) time, O(n) space.", explanation: "Same: each node is one constant-work visit." },
           ]}
@@ -642,7 +642,7 @@ public static TreeNode fromLevelOrder(Integer[] data) {
         <Quiz
           question="You want to print a binary tree's nodes such that the value at each node appears AFTER the values of all its descendants. Which traversal?"
           options={[
-            { label: "Preorder.", explanation: "Preorder prints the root before its subtrees — the opposite." },
+            { label: "Preorder.", explanation: "Preorder prints the root before its subtrees, the opposite." },
             { label: "Inorder.", explanation: "Inorder interleaves the root between left and right subtrees, not after both." },
             { label: "Postorder.", correct: true, explanation: "Right. Postorder is L → R → root, which is exactly 'process the node after all descendants.' Standard use cases: tree height, subtree-sum, safe-delete." },
             { label: "Level-order.", explanation: "Level-order prints by depth, not by 'after descendants.' Root comes first, descendants come after." },
@@ -650,19 +650,19 @@ public static TreeNode fromLevelOrder(Integer[] data) {
         />
 
         <Quiz
-          question="In the BFS template `int levelSize = queue.size(); for (int i = 0; i < levelSize; i++) { ... queue.offer(child) ... }` — why is the levelSize variable necessary?"
+          question="In the BFS template `int levelSize = queue.size(); for (int i = 0; i < levelSize; i++) { ... queue.offer(child) ... }`, why is the levelSize variable necessary?"
           options={[
-            { label: "Performance — caching the size avoids recomputing it.", explanation: "queue.size() is O(1) on ArrayDeque; perf isn't the issue." },
-            { label: "Correctness — without it, the inner loop would also process children we just enqueued, blurring the level boundary.", correct: true, explanation: "Right. queue.size() at the top of the outer loop is the count of THIS level's nodes. Inside the inner loop we enqueue NEXT level's nodes. If we used queue.size() inside the loop condition, we'd consume both levels in one iteration, losing the level structure." },
-            { label: "Thread safety — snapshotting protects against concurrent modification.", explanation: "Plain BFS is single-threaded. Concurrency doesn't enter into it." },
-            { label: "Readability — the variable name documents the loop intent.", explanation: "True bonus, but the primary reason is correctness, not style." },
+            { label: "Performance, caching the size avoids recomputing it.", explanation: "queue.size() is O(1) on ArrayDeque; perf isn't the issue." },
+            { label: "Correctness, without it, the inner loop would also process children we just enqueued, blurring the level boundary.", correct: true, explanation: "Right. queue.size() at the top of the outer loop is the count of THIS level's nodes. Inside the inner loop we enqueue NEXT level's nodes. If we used queue.size() inside the loop condition, we'd consume both levels in one iteration, losing the level structure." },
+            { label: "Thread safety, snapshotting protects against concurrent modification.", explanation: "Plain BFS is single-threaded. Concurrency doesn't enter into it." },
+            { label: "Readability, the variable name documents the loop intent.", explanation: "True bonus, but the primary reason is correctness, not style." },
           ]}
         />
 
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
           <h3 className="mt-0 mb-2 text-2xl font-bold text-white">Module 13 complete</h3>
           <p className="mb-4 text-emerald-50">
-            Trees and traversals are the foundation for the rest of Phase 3 — and most of Phase 4. Next module:
+            Trees and traversals are the foundation for the rest of Phase 3, and most of Phase 4. Next module:
             BSTs, where we layer an ordering invariant on top of this structure and unlock O(log n) search.
           </p>
           <Link

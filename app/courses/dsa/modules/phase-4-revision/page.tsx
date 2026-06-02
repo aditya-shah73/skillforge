@@ -51,7 +51,7 @@ flowchart LR
           Phase 4 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          The whole graph chapter — representations, BFS/DFS, shortest paths, topological sort — compressed to a reference card you can re-read in 15 minutes before an interview.
+          The whole graph chapter, representations, BFS/DFS, shortest paths, topological sort, compressed to a reference card you can re-read in 15 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-4-revision" />
         <ModuleProgress moduleSlug="phase-4-revision" checkpoints={CHECKPOINTS} />
@@ -60,7 +60,7 @@ flowchart LR
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 4</strong> — every representation, every traversal, every shortest-path algorithm, every named pattern from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
+          This module is not new material. It&apos;s a <strong>map of Phase 4</strong>, every representation, every traversal, every shortest-path algorithm, every named pattern from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/dsa/modules/graphs-intro" className="text-sky-600 hover:underline">Graphs intro &amp; representations</Link>, <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">BFS &amp; DFS</Link>, and <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Shortest path &amp; topological sort</Link>.
@@ -107,18 +107,18 @@ flowchart LR
                 <td className="px-4 py-3 font-mono text-emerald-600">O(R·C)</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1) via deltas</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(4) or O(8)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">2D grid problems (Number of Islands, Flood Fill). The grid IS the adjacency — never build a separate one.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">2D grid problems (Number of Islands, Flood Fill). The grid IS the adjacency, never build a separate one.</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <Callout variant="insight" title="The V and E heuristic">
-          When you see <code>O(V + E)</code>, that&apos;s &quot;linear in the graph size&quot; — BFS and DFS hit it. <code>O((V + E) log V)</code> is Dijkstra with a binary heap. <code>O(V·E)</code> is Bellman-Ford. <code>O(V³)</code> is Floyd-Warshall. Memorize these four; every Phase 4 algorithm lands on one of them.
+          When you see <code>O(V + E)</code>, that&apos;s &quot;linear in the graph size&quot;, BFS and DFS hit it. <code>O((V + E) log V)</code> is Dijkstra with a binary heap. <code>O(V·E)</code> is Bellman-Ford. <code>O(V³)</code> is Floyd-Warshall. Memorize these four; every Phase 4 algorithm lands on one of them.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/graphs-intro" className="text-sky-600 hover:underline">Module 17 — Graphs intro</Link>.
+          Source: <Link href="/courses/dsa/modules/graphs-intro" className="text-sky-600 hover:underline">Module 17, Graphs intro</Link>.
         </p>
       </section>
 
@@ -126,7 +126,7 @@ flowchart LR
       {/* SECTION 3 — BFS vs DFS decision */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. BFS vs DFS — when each one is right</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. BFS vs DFS, when each one is right</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Same template, different data structure. Queue → BFS (nearest first). Stack → DFS (deepest first). The choice is dictated by what the problem actually asks.
         </p>
@@ -183,11 +183,11 @@ while (!queue.isEmpty()) {
         </div>
 
         <Callout variant="insight" title="The one-sentence test">
-          If the question contains the word <strong>shortest</strong>, <strong>minimum</strong>, or <strong>fewest</strong> — BFS. Otherwise — connectivity, &quot;is there a path&quot;, &quot;count components&quot;, &quot;detect a cycle&quot; — DFS is usually simpler. Both are <code>O(V + E)</code> time.
+          If the question contains the word <strong>shortest</strong>, <strong>minimum</strong>, or <strong>fewest</strong>, BFS. Otherwise, connectivity, &quot;is there a path&quot;, &quot;count components&quot;, &quot;detect a cycle&quot;, DFS is usually simpler. Both are <code>O(V + E)</code> time.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18 — BFS &amp; DFS</Link>.
+          Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18, BFS &amp; DFS</Link>.
         </p>
       </section>
 
@@ -201,7 +201,7 @@ while (!queue.isEmpty()) {
         </p>
 
         <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
-          <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">BAD — recursive DFS on a skewed/long graph</div>
+          <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">BAD, recursive DFS on a skewed/long graph</div>
           <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
             On a chain of 10⁶ nodes (linked-list-shaped graph, or a path graph), recursive DFS will <code>StackOverflowError</code> long before it finishes. The JVM thread stack is ~512KB–1MB; each frame is ~50–100 bytes; you blow it around depth 5,000–10,000.
           </p>
@@ -215,7 +215,7 @@ void dfs(int u) {
         </div>
 
         <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
-          <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">GOOD — explicit Deque on the heap</div>
+          <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">GOOD, explicit Deque on the heap</div>
           <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
             The heap is gigabytes, not kilobytes. An explicit <code>ArrayDeque</code> handles graphs that would crash a recursive version. Same visit set, same complexity, different memory region.
           </p>
@@ -234,11 +234,11 @@ void dfs(int u) {
         </div>
 
         <Callout variant="warn" title="Visit order isn't identical">
-          Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS visits them in <em>reverse</em>{" "}order (last-pushed comes off first). If the problem expects a specific output order, push children in reverse to match recursion. Not a correctness issue for connectivity / cycle / topo — only for problems that grade by exact sequence.
+          Recursive DFS visits children in the order they appear in <code>adj.get(u)</code>. Iterative DFS visits them in <em>reverse</em>{" "}order (last-pushed comes off first). If the problem expects a specific output order, push children in reverse to match recursion. Not a correctness issue for connectivity / cycle / topo, only for problems that grade by exact sequence.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18 — BFS &amp; DFS</Link>.
+          Source: <Link href="/courses/dsa/modules/bfs-dfs" className="text-sky-600 hover:underline">Module 18, BFS &amp; DFS</Link>.
         </p>
       </section>
 
@@ -268,7 +268,7 @@ void dfs(int u) {
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Unweighted (or all equal)</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(V + E)</td>
                 <td className="px-4 py-3 font-mono">O(V)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Grid mazes, word ladder, knight moves — any &quot;fewest edges&quot; question.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Grid mazes, word ladder, knight moves, any &quot;fewest edges&quot; question.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Dijkstra</td>
@@ -295,7 +295,7 @@ void dfs(int u) {
           </table>
         </div>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Dijkstra in one block — the version you should be able to type from memory</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Dijkstra in one block, the version you should be able to type from memory</h3>
         <CodeBlock lang="java" caption="Dijkstra with lazy deletion via the staleness check">{`public int[] dijkstra(int n, List<List<int[]>> adj, int source) {
     int[] dist = new int[n];
     Arrays.fill(dist, Integer.MAX_VALUE);
@@ -321,11 +321,11 @@ void dfs(int u) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Negative weights silently break Dijkstra">
-          No crash, no exception — just incorrect distances. Once a node is finalized, Dijkstra never reconsiders it; a negative edge from a later node could have lowered its true distance but Dijkstra refuses to look back. Use Bellman-Ford when weights can be negative.
+          No crash, no exception, just incorrect distances. Once a node is finalized, Dijkstra never reconsiders it; a negative edge from a later node could have lowered its true distance but Dijkstra refuses to look back. Use Bellman-Ford when weights can be negative.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19 — Shortest path</Link>.
+          Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19, Shortest path</Link>.
         </p>
       </section>
 
@@ -333,15 +333,15 @@ void dfs(int u) {
       {/* SECTION 6 — Topological sort */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Topological sort — Kahn&apos;s vs DFS post-order</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Topological sort, Kahn&apos;s vs DFS post-order</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Two ways to linearize a DAG so every edge u→v has u before v. Cycle detection comes free with either one — if topo sort fails, you have a cycle.
+          Two ways to linearize a DAG so every edge u→v has u before v. Cycle detection comes free with either one, if topo sort fails, you have a cycle.
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
           <Mermaid chart={dagChart} />
           <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
-            Valid topological orderings of this DAG: <code>[A, B, C, D, E]</code> and <code>[A, C, B, D, E]</code> — B and C are independent siblings, either may come first.
+            Valid topological orderings of this DAG: <code>[A, B, C, D, E]</code> and <code>[A, C, B, D, E]</code>, B and C are independent siblings, either may come first.
           </p>
         </div>
 
@@ -392,11 +392,11 @@ Collections.reverse(order);`}</CodeBlock>
         </div>
 
         <Callout variant="insight" title="Kahn&apos;s detects cycles for free">
-          A node never has its in-degree reach 0 if it&apos;s part of a cycle (the cycle&apos;s edges keep contributing). So the &quot;processed fewer than V&quot; check is a perfect cycle detector — no extra bookkeeping, no recursion stack. This is why Kahn&apos;s is the more popular choice in practice for &quot;Course Schedule&quot;-style problems.
+          A node never has its in-degree reach 0 if it&apos;s part of a cycle (the cycle&apos;s edges keep contributing). So the &quot;processed fewer than V&quot; check is a perfect cycle detector, no extra bookkeeping, no recursion stack. This is why Kahn&apos;s is the more popular choice in practice for &quot;Course Schedule&quot;-style problems.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19 — Topological sort</Link>.
+          Source: <Link href="/courses/dsa/modules/shortest-path" className="text-sky-600 hover:underline">Module 19, Topological sort</Link>.
         </p>
       </section>
 
@@ -406,7 +406,7 @@ Collections.reverse(order);`}</CodeBlock>
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">6. The 5 named patterns from Phase 4</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Each card has the <strong>tell</strong> — the phrase in the problem statement that should make the pattern fire in your head.
+          Each card has the <strong>tell</strong>, the phrase in the problem statement that should make the pattern fire in your head.
         </p>
 
         <div className="space-y-3">
@@ -445,7 +445,7 @@ Collections.reverse(order);`}</CodeBlock>
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">Pattern 5 · Course schedule (topological sort)</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-              <strong>The tell:</strong> &quot;can you finish?&quot;, &quot;in what order?&quot;, &quot;build before&quot;, &quot;prereqs&quot;. Kahn&apos;s BFS over in-degrees — boolean version returns <code>processed == n</code>; ordering version returns the array.
+              <strong>The tell:</strong> &quot;can you finish?&quot;, &quot;in what order?&quot;, &quot;build before&quot;, &quot;prereqs&quot;. Kahn&apos;s BFS over in-degrees, boolean version returns <code>processed == n</code>; ordering version returns the array.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">Canonical: <strong>LC 207 · Course Schedule</strong>, <strong>LC 210 · Course Schedule II</strong>, <strong>LC 269 · Alien Dictionary</strong>.</p>
           </div>
@@ -458,14 +458,14 @@ Collections.reverse(order);`}</CodeBlock>
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Five gotchas that bite people</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Each of these has cost real engineers real hours — and silently passes some test cases while failing others. The most painful kind of bug.
+          Each of these has cost real engineers real hours, and silently passes some test cases while failing others. The most painful kind of bug.
         </p>
 
         <div className="space-y-4">
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Forgetting <code>visited[]</code> on a graph with cycles</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              Trees have no cycles, so a missing <code>visited[]</code> still terminates. Graphs do — and BFS/DFS on a cyclic graph without a visited set loops forever (or until the queue/stack exhausts memory).
+              Trees have no cycles, so a missing <code>visited[]</code> still terminates. Graphs do, and BFS/DFS on a cyclic graph without a visited set loops forever (or until the queue/stack exhausts memory).
             </p>
             <CodeBlock lang="java">{`// BAD — infinite loop on any cycle
 void dfs(int u) {
@@ -484,7 +484,7 @@ void dfs(int u) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Using DFS for shortest path on an unweighted graph</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              DFS finds <em>a</em>{" "}path. It doesn&apos;t find the <em>shortest</em>{" "}one — it can dive deep into the wrong branch and return a 50-edge path when a 3-edge path exists. For unweighted shortest path, always BFS.
+              DFS finds <em>a</em>{" "}path. It doesn&apos;t find the <em>shortest</em>{" "}one, it can dive deep into the wrong branch and return a 50-edge path when a 3-edge path exists. For unweighted shortest path, always BFS.
             </p>
             <CodeBlock lang="java">{`// BAD — DFS reports "first path found", not shortest
 int dfsShortest(int u, int target) {
@@ -536,7 +536,7 @@ for (int i = 0; i < n - 1; i++) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Not handling disconnected components</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              A single BFS/DFS from node 0 only covers node 0&apos;s component. If the graph has islands, the other components never get visited — your &quot;count cycles&quot; or &quot;detect bipartite&quot; check silently misses half the graph.
+              A single BFS/DFS from node 0 only covers node 0&apos;s component. If the graph has islands, the other components never get visited, your &quot;count cycles&quot; or &quot;detect bipartite&quot; check silently misses half the graph.
             </p>
             <CodeBlock lang="java">{`// BAD — only checks one component
 boolean isBipartite(List<List<Integer>> adj) {
@@ -557,7 +557,7 @@ boolean isBipartite(List<List<Integer>> adj) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Forgetting the undirected double-add</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              &quot;The graph is undirected&quot; means each edge goes both ways. If you add the edge only once, you&apos;ve built a directed graph by accident — BFS from u finds v, but BFS from v doesn&apos;t find u. No NullPointer, no compile error, just silently wrong answers.
+              &quot;The graph is undirected&quot; means each edge goes both ways. If you add the edge only once, you&apos;ve built a directed graph by accident, BFS from u finds v, but BFS from v doesn&apos;t find u. No NullPointer, no compile error, just silently wrong answers.
             </p>
             <CodeBlock lang="java">{`// BAD — built a directed graph from an undirected input
 for (int[] e : edges) {
@@ -579,16 +579,16 @@ for (int[] e : edges) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You need to find the shortest path from A to B in an unweighted directed graph. Which traversal, and why?"
           options={[
-            { label: "DFS — it explores deeper faster.", explanation: "DFS finds a path but not the shortest one — it can dive into the wrong branch and return arbitrarily long paths. Wrong tool for shortest." },
-            { label: "BFS — it visits nodes in order of edge-distance from the source, so the first time you reach B you&apos;ve used the fewest possible edges.", correct: true, explanation: "Right. BFS&apos;s level-order property is exactly the shortest-path guarantee on unweighted graphs. The moment B is dequeued (or first encountered, depending on how you check), you have the minimum edge count." },
-            { label: "Dijkstra — it&apos;s the general shortest-path algorithm.", explanation: "Dijkstra works but is overkill on unweighted graphs. BFS is simpler (no heap), runs in O(V + E) instead of O((V + E) log V), and gives the same answer." },
+            { label: "DFS, it explores deeper faster.", explanation: "DFS finds a path but not the shortest one, it can dive into the wrong branch and return arbitrarily long paths. Wrong tool for shortest." },
+            { label: "BFS, it visits nodes in order of edge-distance from the source, so the first time you reach B you&apos;ve used the fewest possible edges.", correct: true, explanation: "Right. BFS&apos;s level-order property is exactly the shortest-path guarantee on unweighted graphs. The moment B is dequeued (or first encountered, depending on how you check), you have the minimum edge count." },
+            { label: "Dijkstra, it&apos;s the general shortest-path algorithm.", explanation: "Dijkstra works but is overkill on unweighted graphs. BFS is simpler (no heap), runs in O(V + E) instead of O((V + E) log V), and gives the same answer." },
             { label: "Either, they give the same answer.", explanation: "DFS does NOT give shortest path. It gives some path. Different question, different answer." },
           ]}
         />
@@ -597,9 +597,9 @@ for (int[] e : edges) {
           kind="Recall check"
           question="Dijkstra&apos;s `if (d > dist[u]) continue;` line: what is it doing?"
           options={[
-            { label: "Detecting negative cycles.", explanation: "Dijkstra doesn&apos;t detect or handle negative cycles — that&apos;s Bellman-Ford. The check serves a different purpose." },
-            { label: "Skipping stale heap entries — copies of u with a worse distance than the current best, left over from before u&apos;s distance was lowered.", correct: true, explanation: "Right. Java&apos;s PriorityQueue has no decrease-key, so when we find a shorter path to u we just offer a new entry. The old entry stays in the heap and gets filtered at poll time by this check. Lazy deletion." },
-            { label: "Guarding against negative weights.", explanation: "It doesn&apos;t — negative weights break Dijkstra regardless. The check is unrelated to weight signs." },
+            { label: "Detecting negative cycles.", explanation: "Dijkstra doesn&apos;t detect or handle negative cycles, that&apos;s Bellman-Ford. The check serves a different purpose." },
+            { label: "Skipping stale heap entries, copies of u with a worse distance than the current best, left over from before u&apos;s distance was lowered.", correct: true, explanation: "Right. Java&apos;s PriorityQueue has no decrease-key, so when we find a shorter path to u we just offer a new entry. The old entry stays in the heap and gets filtered at poll time by this check. Lazy deletion." },
+            { label: "Guarding against negative weights.", explanation: "It doesn&apos;t, negative weights break Dijkstra regardless. The check is unrelated to weight signs." },
             { label: "Ensuring the algorithm terminates.", explanation: "Termination is guaranteed because each node finalizes at most once. The check is about correctness and efficiency on stale duplicates." },
           ]}
         />
@@ -608,10 +608,10 @@ for (int[] e : edges) {
           kind="Recall check"
           question="Kahn&apos;s algorithm finishes with `processed = 6` on a graph with 9 nodes. What does that mean?"
           options={[
-            { label: "The graph is disconnected.", explanation: "Disconnected acyclic components are processed normally — each has its own in-degree-0 starts. The shortfall means cycle, not disconnection." },
+            { label: "The graph is disconnected.", explanation: "Disconnected acyclic components are processed normally, each has its own in-degree-0 starts. The shortfall means cycle, not disconnection." },
             { label: "Three nodes are part of a cycle (or only reachable through one), so their in-degree never reached 0.", correct: true, explanation: "Right. A cycle&apos;s nodes contribute in-edges to each other that prevent any of them from reaching in-degree 0. None of them are ever enqueued, so they never get processed. The `processed < V` check is Kahn&apos;s built-in cycle detector." },
             { label: "There are 3 strongly connected components.", explanation: "Kahn&apos;s doesn&apos;t count SCCs; it counts how many nodes had their in-degree drop to 0 in topological order." },
-            { label: "Three nodes are unreachable from any source.", explanation: "Kahn&apos;s processes the whole graph, not from a single source. Unreachable isn&apos;t the right framing — cyclic involvement is." },
+            { label: "Three nodes are unreachable from any source.", explanation: "Kahn&apos;s processes the whole graph, not from a single source. Unreachable isn&apos;t the right framing, cyclic involvement is." },
           ]}
         />
 
@@ -619,7 +619,7 @@ for (int[] e : edges) {
           kind="Recall check"
           question="In a directed graph, why does a single boolean[] visited fail to detect cycles correctly?"
           options={[
-            { label: "It doesn&apos;t fail — visited[] is sufficient for any cycle detection.", explanation: "It is not. In a directed graph, you can re-encounter an already-visited node via a different DFS branch when there is NO cycle (diamond DAGs do this). visited[] can&apos;t distinguish &apos;on the current path&apos; from &apos;finished long ago.&apos;" },
+            { label: "It doesn&apos;t fail, visited[] is sufficient for any cycle detection.", explanation: "It is not. In a directed graph, you can re-encounter an already-visited node via a different DFS branch when there is NO cycle (diamond DAGs do this). visited[] can&apos;t distinguish &apos;on the current path&apos; from &apos;finished long ago.&apos;" },
             { label: "Because visited[] conflates &apos;currently on the recursion stack&apos; with &apos;already finished&apos;. The 3-color WHITE/GRAY/BLACK scheme captures the on-the-stack state needed to identify a back edge.", correct: true, explanation: "Right. A directed cycle is exactly an edge back to a node on the current root-to-leaf path. GRAY marks &apos;on the current path&apos;, BLACK marks &apos;fully done&apos;. visited[] alone can&apos;t tell them apart, so it reports false positives on diamond shapes." },
             { label: "It only works for connected graphs.", explanation: "Connectivity isn&apos;t the issue. The issue is distinguishing currently-being-explored from already-finished." },
             { label: "Java&apos;s boolean[] doesn&apos;t support three states.", explanation: "You&apos;d use int[] with 0/1/2 for the three colors. The issue is conceptual, not language-level." },
@@ -632,8 +632,8 @@ for (int[] e : edges) {
           options={[
             { label: "It throws an exception when it sees a negative weight.", explanation: "It does not. Java&apos;s PriorityQueue accepts any int. The bug is silent." },
             { label: "It runs forever on the negative edges.", explanation: "Dijkstra terminates because each node is finalized at most once. It just gives wrong answers." },
-            { label: "It silently returns wrong distances — once a node is finalized at its current tentative distance, Dijkstra never reconsiders it, but a later negative edge could have lowered its true distance.", correct: true, explanation: "Right. This is the failure mode that bites people in production: no crash, no warning, just incorrect numbers. The fix is Bellman-Ford (O(V·E), handles negatives, detects negative cycles via a V-th pass)." },
-            { label: "It works correctly — Dijkstra handles negatives fine.", explanation: "It does not. The non-negative-weights precondition is hard. Use Bellman-Ford when weights can be negative." },
+            { label: "It silently returns wrong distances, once a node is finalized at its current tentative distance, Dijkstra never reconsiders it, but a later negative edge could have lowered its true distance.", correct: true, explanation: "Right. This is the failure mode that bites people in production: no crash, no warning, just incorrect numbers. The fix is Bellman-Ford (O(V·E), handles negatives, detects negative cycles via a V-th pass)." },
+            { label: "It works correctly, Dijkstra handles negatives fine.", explanation: "It does not. The non-negative-weights precondition is hard. Use Bellman-Ford when weights can be negative." },
           ]}
         />
       </section>
@@ -643,14 +643,14 @@ for (int[] e : edges) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 via-white to-sky-50 p-6 dark:border-cyan-900 dark:from-cyan-950/30 dark:via-slate-900 dark:to-sky-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">
-          Phase 4 — locked in
+          Phase 4, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now read a graph problem and pick the algorithm in seconds</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Adjacency list by default, matrix in the three specific cases. BFS for shortest/level/fewest, DFS for connectivity/cycle/topo. Dijkstra for non-negative weighted; Bellman-Ford when negatives appear; Kahn&apos;s for dependencies. The five named patterns — flood fill, level BFS, bidirectional BFS, Dijkstra with PriorityQueue, topo-sort schedule — cover most of the LeetCode graph surface.
+          Adjacency list by default, matrix in the three specific cases. BFS for shortest/level/fewest, DFS for connectivity/cycle/topo. Dijkstra for non-negative weighted; Bellman-Ford when negatives appear; Kahn&apos;s for dependencies. The five named patterns, flood fill, level BFS, bidirectional BFS, Dijkstra with PriorityQueue, topo-sort schedule, cover most of the LeetCode graph surface.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Java Collections in depth.</strong>{" "}Every container you&apos;ve been using — ArrayList, HashMap, TreeMap, ArrayDeque, PriorityQueue — gets the deep treatment. When to pick which, what the JDK is actually doing under the hood, and the decision framework that ties Phases 2-4 together.
+          <strong>Up next: Phase 5, Java Collections in depth.</strong>{" "}Every container you&apos;ve been using, ArrayList, HashMap, TreeMap, ArrayDeque, PriorityQueue, gets the deep treatment. When to pick which, what the JDK is actually doing under the hood, and the decision framework that ties Phases 2-4 together.
         </p>
         <Link
           href="/courses/dsa/modules/java-collections"

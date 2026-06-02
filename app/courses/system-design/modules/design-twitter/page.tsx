@@ -73,17 +73,17 @@ export default function Page() {
           <span className="text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="m-0 text-base leading-relaxed">
-          The interviewer says: <em>&quot;Design Twitter.&quot;</em>{" "}Twitter is news feed plus search plus trending plus the follower graph plus a thousand other things. The interview move here is to <strong>scope ruthlessly</strong>: pick the 4 things that matter most, do them well, mention the rest at wrap. Underneath, Twitter is the same hybrid fanout you just built — but now it has to coexist with full-text search and real-time trending, and the data flowing through the system has multiple consumers.
+          The interviewer says: <em>&quot;Design Twitter.&quot;</em>{" "}Twitter is news feed plus search plus trending plus the follower graph plus a thousand other things. The interview move here is to <strong>scope ruthlessly</strong>: pick the 4 things that matter most, do them well, mention the rest at wrap. Underneath, Twitter is the same hybrid fanout you just built, but now it has to coexist with full-text search and real-time trending, and the data flowing through the system has multiple consumers.
         </p>
         <p className="mt-3 mb-0 text-sm text-slate-600 dark:text-slate-400">
-          Same framework: clarify, estimate, API + data, high-level, deep-dive on what&apos;s hardest. The hard part this time isn&apos;t a single algorithm — it&apos;s the <strong>data pipeline shape</strong>{" "}that lets one tweet feed timelines, search, and trending without each system pulling from the others.
+          Same framework: clarify, estimate, API + data, high-level, deep-dive on what&apos;s hardest. The hard part this time isn&apos;t a single algorithm, it&apos;s the <strong>data pipeline shape</strong>{" "}that lets one tweet feed timelines, search, and trending without each system pulling from the others.
         </p>
       </section>
 
       <Checkpoint moduleSlug={mod.slug} id="scope-and-estimation" title="Part 1 · Scope and estimate" xp={10}>
         <h2>What we&apos;re building</h2>
         <p>
-          Twitter is a giant product. I&apos;m going to scope tight — four core features — and explicitly punt the rest. The interviewer will redirect if I&apos;ve picked wrong, and that&apos;s fine.
+          Twitter is a giant product. I&apos;m going to scope tight, four core features, and explicitly punt the rest. The interviewer will redirect if I&apos;ve picked wrong, and that&apos;s fine.
         </p>
         <ul>
           <li><strong>Tweet.</strong>{" "}User posts a tweet (text, &lt;280 chars, optional media URL).</li>
@@ -100,7 +100,7 @@ export default function Page() {
           <li><strong>Read-heavy across the board.</strong>{" "}Roughly 100:1 reads to writes for timelines and search.</li>
           <li><strong>Latency budget:</strong> &lt;200ms p99 on home timeline, &lt;300ms on search, &lt;100ms on trending.</li>
           <li><strong>Eventual consistency on timelines and trending is fine.</strong> 5-30 second staleness is acceptable.</li>
-          <li><strong>Search needs near-real-time indexing</strong> — a posted tweet should be findable in &lt;30 seconds.</li>
+          <li><strong>Search needs near-real-time indexing</strong>, a posted tweet should be findable in &lt;30 seconds.</li>
           <li><strong>High availability on read path.</strong>{" "}If timelines break, the product is dead.</li>
         </ul>
 
@@ -109,7 +109,7 @@ export default function Page() {
             <li>Should retweets/quotes be in scope, or can I treat them as a fanout variation in the wrap?</li>
             <li>Trending: global only, or per-region/per-language?</li>
             <li>Search ranking: pure recency, or relevance-tuned?</li>
-            <li>Are direct DMs in scope? (Usually no — different design.)</li>
+            <li>Are direct DMs in scope? (Usually no, different design.)</li>
           </ul>
         </Callout>
 
@@ -141,28 +141,28 @@ Storage:
   Search index: similar to tweets table size, replicated 2x for HA = ~720 TB ES`}</CodeBlock>
 
         <p>
-          The order of magnitude says: tweet writes are small (single sharded DB), timeline reads are big (cache layer required, hybrid fanout required), search needs its own index pipeline (Elasticsearch or similar), and the data scale is in the hundreds of TB. Multi-tenancy and HA are forced — you don&apos;t run this on one box.
+          The order of magnitude says: tweet writes are small (single sharded DB), timeline reads are big (cache layer required, hybrid fanout required), search needs its own index pipeline (Elasticsearch or similar), and the data scale is in the hundreds of TB. Multi-tenancy and HA are forced, you don&apos;t run this on one box.
         </p>
 
         <Quiz
           question="Look at the math: 720k timeline writes/sec peak, 140k timeline reads/sec peak. Which is the harder ops problem?"
           options={[
-            { label: "The 720k writes/sec — but only because of the hybrid fanout amplification, not the raw 7k tweets/sec. The amplification is what forces sharded Redis and bounded ZSETs. Reads at 140k/sec are smaller and a single Redis cluster handles them comfortably.", correct: true, explanation: "Yes. The senior framing names amplification as the source of the load, not just the absolute numbers. That tells the interviewer you read what's actually expensive in your design." },
-            { label: "Reads — 140k/sec is harder than 720k writes because reads have lower latency budgets.", explanation: "Reads do have tighter latency, but Redis ZREVRANGE is sub-ms. 720k writes is structurally harder." },
-            { label: "They're equal because they hit the same Redis cluster.", explanation: "They hit the cluster differently — writes are scattered across 200M timelines, reads concentrate on the active users. The shapes differ even when the cluster is shared." },
-            { label: "Neither — the real bottleneck is the Posts DB.", explanation: "Posts DB at 7k writes/sec is fine. The amplified fanout is the dominant cost." },
+            { label: "The 720k writes/sec, but only because of the hybrid fanout amplification, not the raw 7k tweets/sec. The amplification is what forces sharded Redis and bounded ZSETs. Reads at 140k/sec are smaller and a single Redis cluster handles them comfortably.", correct: true, explanation: "Yes. The senior framing names amplification as the source of the load, not just the absolute numbers. That tells the interviewer you read what's actually expensive in your design." },
+            { label: "Reads, 140k/sec is harder than 720k writes because reads have lower latency budgets.", explanation: "Reads do have tighter latency, but Redis ZREVRANGE is sub-ms. 720k writes is structurally harder." },
+            { label: "They're equal because they hit the same Redis cluster.", explanation: "They hit the cluster differently, writes are scattered across 200M timelines, reads concentrate on the active users. The shapes differ even when the cluster is shared." },
+            { label: "Neither, the real bottleneck is the Posts DB.", explanation: "Posts DB at 7k writes/sec is fine. The amplified fanout is the dominant cost." },
           ]}
-          hint="The hard number isn't 7k tweets/sec — it's what happens to those tweets downstream."
+          hint="The hard number isn't 7k tweets/sec, it's what happens to those tweets downstream."
           xp={8}
         />
 
         <Quiz
           question="The interviewer asks: 'Should search and timeline use the same store?' What's the right answer?"
           options={[
-            { label: "No. Timelines are reverse-chronological per-user views — Redis ZSETs are perfect. Search needs full-text indexing across the entire tweet corpus — Elasticsearch (inverted indexes, scoring) is the right tool. They have different access patterns and serving them from one store either gives bad search performance or bad timeline performance.", correct: true, explanation: "Right. The senior move is to argue from access pattern → store choice, not store choice → access pattern. Two stores, one canonical tweet table, both populated from the same write event." },
-            { label: "Yes — one store is simpler.", explanation: "Simplicity is good but not when it forces a poor fit on both sides. Search and timelines have fundamentally different access patterns." },
-            { label: "Yes — Elasticsearch supports both.", explanation: "ES can do range queries but is overkill for per-user reverse-chrono and slower than Redis ZSETs for that pattern. Use ES for what it's good at." },
-            { label: "No — Postgres for both.", explanation: "Postgres for timelines won't keep up with 720k writes/sec without heavy sharding, and Postgres full-text search underperforms ES at scale." },
+            { label: "No. Timelines are reverse-chronological per-user views, Redis ZSETs are perfect. Search needs full-text indexing across the entire tweet corpus, Elasticsearch (inverted indexes, scoring) is the right tool. They have different access patterns and serving them from one store either gives bad search performance or bad timeline performance.", correct: true, explanation: "Right. The senior move is to argue from access pattern → store choice, not store choice → access pattern. Two stores, one canonical tweet table, both populated from the same write event." },
+            { label: "Yes, one store is simpler.", explanation: "Simplicity is good but not when it forces a poor fit on both sides. Search and timelines have fundamentally different access patterns." },
+            { label: "Yes, Elasticsearch supports both.", explanation: "ES can do range queries but is overkill for per-user reverse-chrono and slower than Redis ZSETs for that pattern. Use ES for what it's good at." },
+            { label: "No, Postgres for both.", explanation: "Postgres for timelines won't keep up with 720k writes/sec without heavy sharding, and Postgres full-text search underperforms ES at scale." },
           ]}
           hint="Different access patterns suggest different stores."
           xp={7}
@@ -294,7 +294,7 @@ Trending (Redis sorted sets, time-windowed):
         <Mermaid chart={twitterDiagram} />
 
         <p>
-          The shape: tweet write goes into one canonical store and publishes to one event stream. Three independent consumers — fanout, indexer, trending — read that stream and update their own systems. Reads route directly to the system that serves them: home timeline → Redis ZSETs, search → Elasticsearch, trending → Redis sorted sets. Each downstream system can be scaled, deployed, and failed independently.
+          The shape: tweet write goes into one canonical store and publishes to one event stream. Three independent consumers, fanout, indexer, trending, read that stream and update their own systems. Reads route directly to the system that serves them: home timeline → Redis ZSETs, search → Elasticsearch, trending → Redis sorted sets. Each downstream system can be scaled, deployed, and failed independently.
         </p>
 
         <h2>Classify each tweet&apos;s downstream consumer responsibilities</h2>
@@ -313,10 +313,10 @@ Trending (Redis sorted sets, time-windowed):
           ]}
           items={[
             { id: "snowflake", label: "Generate a unique time-sortable tweet_id", answer: "tweet", explanation: "Tweet service mints the snowflake ID at write time. Downstream consumers receive the already-assigned ID." },
-            { id: "zadd-followers", label: "ZADD a tweet_id into 200 follower timelines", answer: "fanout", explanation: "Pure fanout work — happens after the tweet is durably persisted, executed by fanout workers." },
+            { id: "zadd-followers", label: "ZADD a tweet_id into 200 follower timelines", answer: "fanout", explanation: "Pure fanout work, happens after the tweet is durably persisted, executed by fanout workers." },
             { id: "extract-hashtags", label: "Extract #hashtags from tweet text and increment counters", answer: "trending", explanation: "Trending service watches the event stream, parses hashtags/phrases, increments time-windowed counters with decay." },
-            { id: "tokenize-and-index", label: "Tokenize tweet text and write to inverted index", answer: "indexer", explanation: "The indexer subscribes to tweet events and writes documents into Elasticsearch — this is what makes tweets searchable in <30s." },
-            { id: "celebrity-skip", label: "Skip fanout for an author with >100k followers", answer: "fanout", explanation: "Hybrid fanout decision lives in the fanout worker — celebrities skip the push, readers will pull at read time." },
+            { id: "tokenize-and-index", label: "Tokenize tweet text and write to inverted index", answer: "indexer", explanation: "The indexer subscribes to tweet events and writes documents into Elasticsearch, this is what makes tweets searchable in <30s." },
+            { id: "celebrity-skip", label: "Skip fanout for an author with >100k followers", answer: "fanout", explanation: "Hybrid fanout decision lives in the fanout worker, celebrities skip the push, readers will pull at read time." },
             { id: "validate-280", label: "Reject tweets longer than 280 characters", answer: "tweet", explanation: "Validation happens at write time, before persistence. Downstream consumers should never see invalid tweets." },
             { id: "decay-counters", label: "Apply time decay to trending counters", answer: "trending", explanation: "Time-windowed trending requires decay (or rolling windows). That math lives in the trending service, not the indexer." },
             { id: "query-recent-celeb", label: "Pull recent tweets from a celebrity at feed-read time", answer: "fanout", explanation: "The hybrid read path lives in the timeline service (part of the fanout/timeline domain). It queries the tweets DB and merges with the precomputed timeline." },
@@ -326,9 +326,9 @@ Trending (Redis sorted sets, time-windowed):
         <Quiz
           question="Why publish a TweetCreatedEvent on a stream instead of having the tweet API call the timeline, search, and trending services synchronously?"
           options={[
-            { label: "Decoupling: each consumer can be scaled, deployed, and fail independently. If search indexing is briefly down, tweets still get fanned out and tweets still post — search just falls behind by a few seconds. With synchronous calls, the slowest consumer would set the post latency and any single consumer's outage would block writes.", correct: true, explanation: "Yes. The whole reason for the stream is independence — both for throughput and for failure isolation. Senior candidates name failure isolation explicitly." },
+            { label: "Decoupling: each consumer can be scaled, deployed, and fail independently. If search indexing is briefly down, tweets still get fanned out and tweets still post, search just falls behind by a few seconds. With synchronous calls, the slowest consumer would set the post latency and any single consumer's outage would block writes.", correct: true, explanation: "Yes. The whole reason for the stream is independence, both for throughput and for failure isolation. Senior candidates name failure isolation explicitly." },
             { label: "Streams are faster than RPC.", explanation: "Per-call latency for a stream publish is similar to an RPC. The benefit is decoupling, not raw speed." },
-            { label: "It's required for ordering.", explanation: "Many streams give per-partition ordering, but you don't need a stream for ordering — RPC can be ordered too." },
+            { label: "It's required for ordering.", explanation: "Many streams give per-partition ordering, but you don't need a stream for ordering, RPC can be ordered too." },
             { label: "It uses fewer servers.", explanation: "It actually adds servers (the broker). The reason is decoupling, not resource count." },
           ]}
           hint="What happens to tweet-create latency if search indexing is slow?"
@@ -339,7 +339,7 @@ Trending (Redis sorted sets, time-windowed):
           question="The interviewer asks: 'Why monthly Elasticsearch indices?'"
           options={[
             { label: "Most search queries are recent (last 1-2 months). Monthly indices let us keep the hot index small (faster queries, smaller cache footprint), drop or move old indices to cheap storage at the retention horizon, and reindex one month at a time without touching the rest. It also caps the impact of an ES failure: only the affected month's index is degraded.", correct: true, explanation: "Right. Hot/cold separation, retention discipline, and blast radius all live in the index strategy. That's a senior-level answer." },
-            { label: "Elasticsearch can't handle indices larger than 1TB.", explanation: "It can — that's not the constraint. The constraint is query performance and ops blast radius." },
+            { label: "Elasticsearch can't handle indices larger than 1TB.", explanation: "It can, that's not the constraint. The constraint is query performance and ops blast radius." },
             { label: "Daily indices would be too many files.", explanation: "Daily would work but is overkill for monthly retention math; monthly is a balance between operational simplicity and granularity." },
             { label: "It avoids the noisy neighbor problem.", explanation: "Index granularity isn't the right primitive for noisy-neighbor isolation; tenant-aware sharding or separate clusters would be." },
           ]}
@@ -352,22 +352,22 @@ Trending (Redis sorted sets, time-windowed):
           gist="One tweet write, one event stream, three independent consumers. Each downstream system uses the store that fits its access pattern: Redis ZSETs for timelines, Elasticsearch for search, Redis sorted sets for trending. The decoupling is the architecture."
           points={[
             { takeaway: "Tweet API publishes an event; consumers subscribe", detail: "Synchronous calls to all consumers would tie post latency to the slowest one. Async pub/sub gives independent scaling and failure isolation." },
-            { takeaway: "Snowflake IDs for tweets", detail: "Unique without coordination, time-sortable, shard-friendly. Recent tweets cluster on recent shards — good for hot working sets and cost-tiering older data." },
+            { takeaway: "Snowflake IDs for tweets", detail: "Unique without coordination, time-sortable, shard-friendly. Recent tweets cluster on recent shards, good for hot working sets and cost-tiering older data." },
             { takeaway: "Two follow tables", detail: "follows sharded by follower_id, followers sharded by followee_id. Two tables for two access patterns; the cost is double-write at follow time, paid once." },
             { takeaway: "Monthly ES indices for search", detail: "Hot index stays small, retention is a drop-old-index, blast radius bounded to one month. Most queries hit recent indices anyway." },
           ]}
         />
       </Checkpoint>
 
-      <Checkpoint moduleSlug={mod.slug} id="deep-dives" title="Part 3 · Deep-dives — timeline, trending, hot keys" xp={14}>
-        <h2>Three hard subproblems — name them, pick one to lead</h2>
+      <Checkpoint moduleSlug={mod.slug} id="deep-dives" title="Part 3 · Deep-dives, timeline, trending, hot keys" xp={14}>
+        <h2>Three hard subproblems, name them, pick one to lead</h2>
         <p>
           At Phase 5 you call out the hard parts and let the interviewer pick what to dig into. For Twitter:
         </p>
         <ol>
-          <li><strong>Hybrid fanout for timelines</strong> — same as Module 35. I&apos;d skim it here unless they want a refresher.</li>
-          <li><strong>Trending pipeline</strong> — how to compute &quot;top hashtags in the last hour&quot; at 7k tweets/sec without recomputing from scratch.</li>
-          <li><strong>Celebrity hot-key on read path</strong> — when a single celebrity tweet gets viral, every timeline-builder is reading that tweet. The tweets DB shard becomes the hot key.</li>
+          <li><strong>Hybrid fanout for timelines</strong>, same as Module 35. I&apos;d skim it here unless they want a refresher.</li>
+          <li><strong>Trending pipeline</strong>, how to compute &quot;top hashtags in the last hour&quot; at 7k tweets/sec without recomputing from scratch.</li>
+          <li><strong>Celebrity hot-key on read path</strong>, when a single celebrity tweet gets viral, every timeline-builder is reading that tweet. The tweets DB shard becomes the hot key.</li>
         </ol>
         <p>I&apos;ll lead with trending and hot keys; fanout I covered last module.</p>
 
@@ -431,13 +431,13 @@ public class TrendingIndexer {
 
         <Callout variant="warn" title="The trending memory cap is real">
           <p className="m-0">
-            A 1-hour window with 25M tweets and avg 1.5 hashtags per tweet creates ~37M increments. Most are repeats — the actual distinct hashtag count is maybe 1-5M. At ~50 bytes per ZSET entry that&apos;s 50-250MB per region per window. Manageable for a few regions; ugly for hundreds. The fix is either to cap the ZSET size (ZREMRANGEBYRANK keeping top 10k) so we lose only the long tail of irrelevant terms, or switch to count-min sketch where memory is fixed regardless of distinct count.
+            A 1-hour window with 25M tweets and avg 1.5 hashtags per tweet creates ~37M increments. Most are repeats, the actual distinct hashtag count is maybe 1-5M. At ~50 bytes per ZSET entry that&apos;s 50-250MB per region per window. Manageable for a few regions; ugly for hundreds. The fix is either to cap the ZSET size (ZREMRANGEBYRANK keeping top 10k) so we lose only the long tail of irrelevant terms, or switch to count-min sketch where memory is fixed regardless of distinct count.
           </p>
         </Callout>
 
         <h2>Deep-dive: celebrity hot-key on the read path</h2>
         <p>
-          Module 35 solved the celebrity write-path with hybrid fanout. But there&apos;s a symmetric read-path problem: when 10M followers all build their feeds in the same minute, each one&apos;s timeline service pulls the celebrity&apos;s recent tweets from the tweets DB. That&apos;s 10M concurrent reads concentrated on whatever shard holds the celebrity&apos;s recent tweets — a single hot shard.
+          Module 35 solved the celebrity write-path with hybrid fanout. But there&apos;s a symmetric read-path problem: when 10M followers all build their feeds in the same minute, each one&apos;s timeline service pulls the celebrity&apos;s recent tweets from the tweets DB. That&apos;s 10M concurrent reads concentrated on whatever shard holds the celebrity&apos;s recent tweets, a single hot shard.
         </p>
 
         <p>The fixes, in order of cost:</p>
@@ -448,14 +448,14 @@ public class TrendingIndexer {
         </ol>
 
         <p>
-          The right combination is (1) + (2) for &quot;default celebrities&quot; and (3) reserved for the very few mega-celebs whose load justifies dedicated replicas. The cache TTL is the senior knob — dial it to balance staleness vs DB pressure.
+          The right combination is (1) + (2) for &quot;default celebrities&quot; and (3) reserved for the very few mega-celebs whose load justifies dedicated replicas. The cache TTL is the senior knob, dial it to balance staleness vs DB pressure.
         </p>
 
         <Quiz
           question="Why is a 30-second cache TTL on celebrity tweet lists OK, given users complain when feeds feel stale?"
           options={[
-            { label: "The home timeline SLO already accepts 5-30s staleness on the fanout side. Adding 30s on the celebrity pull side is consistent with the user expectation. The win — collapsing 10M DB reads into a few cache misses per 30s — vastly outweighs the rare user noticing a 30s lag on a celebrity post.", correct: true, explanation: "Yes. Anchor on the existing SLO and quantify the win. The senior framing is 'we already accepted X seconds of lag elsewhere; this is consistent and the throughput win is huge.'" },
-            { label: "Users don't notice 30 seconds.", explanation: "They do — but the staleness budget was already accepted at design time, which is the right framing." },
+            { label: "The home timeline SLO already accepts 5-30s staleness on the fanout side. Adding 30s on the celebrity pull side is consistent with the user expectation. The win, collapsing 10M DB reads into a few cache misses per 30s, vastly outweighs the rare user noticing a 30s lag on a celebrity post.", correct: true, explanation: "Yes. Anchor on the existing SLO and quantify the win. The senior framing is 'we already accepted X seconds of lag elsewhere; this is consistent and the throughput win is huge.'" },
+            { label: "Users don't notice 30 seconds.", explanation: "They do, but the staleness budget was already accepted at design time, which is the right framing." },
             { label: "Celebrities post infrequently so the cache is rarely stale.", explanation: "Some celebs post often; the freshness argument doesn't hold uniformly. The accepting-SLO argument does." },
             { label: "Caches always have TTLs.", explanation: "True but doesn't justify 30s specifically. Pick the TTL based on the staleness budget." },
           ]}
@@ -466,10 +466,10 @@ public class TrendingIndexer {
         <Quiz
           question="A new feature requires push notifications for replies. Where in the architecture does that live?"
           options={[
-            { label: "It's a new consumer of the tweet event stream — a notification service that subscribes to tweet-created events, filters to replies, looks up the parent author, and triggers a push. It does not live inside the tweet API or the fanout workers, because adding it shouldn't slow down post-create or coupling fanout with notification logic.", correct: true, explanation: "Right. The whole point of the event stream architecture is that adding a new consumer is non-invasive. Notification service is just another subscriber, scaled and deployed independently." },
-            { label: "Inside the fanout worker — alongside the timeline writes.", explanation: "Bad coupling. A notification bug would cascade into fanout. Separate consumer." },
-            { label: "Inside the tweet API — synchronously before responding.", explanation: "Synchronous notification on the write path adds latency and a failure mode. Subscriber, not synchronous." },
-            { label: "Inside the timeline service — as it builds feeds.", explanation: "That's a read-path service; notification is a write-time event. Wrong scope." },
+            { label: "It's a new consumer of the tweet event stream, a notification service that subscribes to tweet-created events, filters to replies, looks up the parent author, and triggers a push. It does not live inside the tweet API or the fanout workers, because adding it shouldn't slow down post-create or coupling fanout with notification logic.", correct: true, explanation: "Right. The whole point of the event stream architecture is that adding a new consumer is non-invasive. Notification service is just another subscriber, scaled and deployed independently." },
+            { label: "Inside the fanout worker, alongside the timeline writes.", explanation: "Bad coupling. A notification bug would cascade into fanout. Separate consumer." },
+            { label: "Inside the tweet API, synchronously before responding.", explanation: "Synchronous notification on the write path adds latency and a failure mode. Subscriber, not synchronous." },
+            { label: "Inside the timeline service, as it builds feeds.", explanation: "That's a read-path service; notification is a write-time event. Wrong scope." },
           ]}
           hint="The architecture's whole shape is built to make this question easy."
           xp={6}
@@ -482,7 +482,7 @@ public class TrendingIndexer {
             { takeaway: "Streaming counters > batch jobs", detail: "ZINCRBY on every event with periodic decay gives sub-second freshness, O(1) per event, and a manageable memory cap if you trim the long tail." },
             { takeaway: "Count-min sketch is the upgrade path", detail: "When distinct terms blow past 10M, switch to a fixed-memory probabilistic counter with heavy-hitter tracking. Same shape, bounded memory." },
             { takeaway: "Celebrity hot-keys hurt on read too, not just write", detail: "10M concurrent feed-builders pulling the same celeb's recent tweets is one hot shard. Cache the pull-query result for 30s; CDN the public profile reads." },
-            { takeaway: "Adding new features = adding stream consumers", detail: "Notifications, analytics, ML features — each is a new subscriber to tweet-created. The architecture stays the same; new consumers scale independently." },
+            { takeaway: "Adding new features = adding stream consumers", detail: "Notifications, analytics, ML features, each is a new subscriber to tweet-created. The architecture stays the same; new consumers scale independently." },
           ]}
         />
       </Checkpoint>
@@ -515,18 +515,18 @@ public class TrendingIndexer {
         </ul>
 
         <Callout variant="spring" title="The senior 'I would also' moves for Twitter">
-          <em>&quot;I&apos;d use Kafka for the tweet event stream; I would also consider Pulsar for the geo-replication built-in if we go multi-region heavy.&quot;</em>{" "}Or: <em>&quot;I&apos;d use Cassandra for tweets; I would also consider sharded Postgres if the team has stronger SQL ops experience — Cassandra wins on write throughput, Postgres wins on operational familiarity, and at our scale either works if tuned well.&quot;</em>{" "}The pattern: name the choice, name the alternative, name the axis on which you picked.
+          <em>&quot;I&apos;d use Kafka for the tweet event stream; I would also consider Pulsar for the geo-replication built-in if we go multi-region heavy.&quot;</em>{" "}Or: <em>&quot;I&apos;d use Cassandra for tweets; I would also consider sharded Postgres if the team has stronger SQL ops experience, Cassandra wins on write throughput, Postgres wins on operational familiarity, and at our scale either works if tuned well.&quot;</em>{" "}The pattern: name the choice, name the alternative, name the axis on which you picked.
         </Callout>
 
         <p>
-          That&apos;s Twitter — not the whole product, but the architectural skeleton. Notice that we used the framework from Module 33 unchanged: clarify, estimate, API + data, high-level, deep-dive, wrap. The system is bigger than TinyURL or news feed but the framework absorbs it. That&apos;s the point of the framework — it doesn&apos;t care how big the problem is, only that you walk it deliberately.
+          That&apos;s Twitter, not the whole product, but the architectural skeleton. Notice that we used the framework from Module 33 unchanged: clarify, estimate, API + data, high-level, deep-dive, wrap. The system is bigger than TinyURL or news feed but the framework absorbs it. That&apos;s the point of the framework, it doesn&apos;t care how big the problem is, only that you walk it deliberately.
         </p>
       </Checkpoint>
 
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="mb-2 text-sm font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Up next</p>
         <p className="m-0 text-base">
-          Module 37: Design a chat system. WebSockets, presence, message ordering, group chat, push notifications. The architecture shifts from request/response to stateful connections — and that changes everything about how you scale.
+          Module 37: Design a chat system. WebSockets, presence, message ordering, group chat, push notifications. The architecture shifts from request/response to stateful connections, and that changes everything about how you scale.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="design-twitter" />

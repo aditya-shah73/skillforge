@@ -47,7 +47,7 @@ stateDiagram-v2
           Phase 5 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Consensus, sagas, clocks, geo-indexing, cost — the deep-systems reference card you can re-read in 20 minutes before an interview.
+          Consensus, sagas, clocks, geo-indexing, cost, the deep-systems reference card you can re-read in 20 minutes before an interview.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
@@ -56,7 +56,7 @@ stateDiagram-v2
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This is not new material. It&apos;s a <strong>map of Phase 5</strong> — the deep distributed-systems primitives compressed into tables and cards. If something looks unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before a senior systems interview, not as a tutorial.
+          This is not new material. It&apos;s a <strong>map of Phase 5</strong>, the deep distributed-systems primitives compressed into tables and cards. If something looks unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before a senior systems interview, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/system-design/modules/consensus" className="text-indigo-600 hover:underline">Consensus</Link>, <Link href="/courses/system-design/modules/distributed-transactions" className="text-indigo-600 hover:underline">Distributed transactions &amp; sagas</Link>, <Link href="/courses/system-design/modules/clock-time" className="text-indigo-600 hover:underline">Clocks &amp; time</Link>, <Link href="/courses/system-design/modules/geo-systems" className="text-indigo-600 hover:underline">Geo-distributed systems</Link>, and <Link href="/courses/system-design/modules/cost-capacity" className="text-indigo-600 hover:underline">Cost &amp; capacity planning</Link>.
@@ -67,7 +67,7 @@ stateDiagram-v2
       {/* SECTION 1 — Consensus */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Consensus — Raft in one card</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Consensus, Raft in one card</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Raft has three sub-problems. Most interview answers fit on the back of an index card.
         </p>
@@ -104,7 +104,7 @@ stateDiagram-v2
           </div>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Quorum math — the odd-number rule</h3>
+        <h3 className="mb-2 text-base font-semibold">Quorum math, the odd-number rule</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -138,7 +138,7 @@ stateDiagram-v2
                 <td className="px-4 py-3 font-mono font-semibold text-rose-600">4 / 6 (even)</td>
                 <td className="px-4 py-3 font-mono">3 / 4</td>
                 <td className="px-4 py-3 font-mono">1 / 2</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Never. Even sizes buy you nothing — same F as N-1, more write cost, split-vote risk.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Never. Even sizes buy you nothing, same F as N-1, more write cost, split-vote risk.</td>
               </tr>
             </tbody>
           </table>
@@ -161,7 +161,7 @@ stateDiagram-v2
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Do NOT use consensus for</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>The data plane (user requests, app writes — too slow, single-leader bottleneck)</li>
+              <li>The data plane (user requests, app writes, too slow, single-leader bottleneck)</li>
               <li>High-volume per-key state (use sharded primary/replica or a CRDT instead)</li>
               <li>Anything you can solve with idempotency + eventual consistency</li>
               <li>Anything you&apos;d rather an existing system (DB, queue) handle for you</li>
@@ -170,7 +170,7 @@ stateDiagram-v2
         </div>
 
         <Callout variant="insight">
-          <strong>The senior-engineer move:</strong>{" "}consensus is a control-plane tool. If you find yourself reaching for Raft to coordinate every user write, you&apos;re on the wrong path — push the consensus into a small metadata layer (shard assignments, leader leases) and let the data plane be eventually consistent or sharded with single-writer per shard.
+          <strong>The senior-engineer move:</strong>{" "}consensus is a control-plane tool. If you find yourself reaching for Raft to coordinate every user write, you&apos;re on the wrong path, push the consensus into a small metadata layer (shard assignments, leader leases) and let the data plane be eventually consistent or sharded with single-writer per shard.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
@@ -189,12 +189,12 @@ stateDiagram-v2
 
         <div className="mb-6 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">2PC — why we avoid it</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">2PC, why we avoid it</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>Blocking:</strong>{" "}a participant that voted YES is locked until the coordinator decides — could be forever if the coordinator crashes.</li>
+              <li><strong>Blocking:</strong>{" "}a participant that voted YES is locked until the coordinator decides, could be forever if the coordinator crashes.</li>
               <li><strong>Coordinator SPOF:</strong>{" "}coordinator failure between phase 1 and 2 leaves participants in limbo.</li>
-              <li><strong>Locks span network round-trips</strong> — kills throughput. Lock duration = max(participant latency).</li>
-              <li><strong>Heterogeneous resource managers</strong>{" "}need XA support — most modern services don&apos;t.</li>
+              <li><strong>Locks span network round-trips</strong>, kills throughput. Lock duration = max(participant latency).</li>
+              <li><strong>Heterogeneous resource managers</strong>{" "}need XA support, most modern services don&apos;t.</li>
             </ul>
             <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
               Acceptable inside a single DB cluster. Across services? Almost never.
@@ -202,12 +202,12 @@ stateDiagram-v2
           </div>
 
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Saga — what we actually do</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Saga, what we actually do</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>A sequence of local transactions</strong>, each with a compensating action.</li>
               <li>If step k fails, run compensations for steps k−1, k−2, … 1 in reverse.</li>
               <li><strong>No global lock.</strong>{" "}Each local transaction commits independently.</li>
-              <li><strong>You give up atomicity</strong>{" "}for availability — the system passes through inconsistent intermediate states.</li>
+              <li><strong>You give up atomicity</strong>{" "}for availability, the system passes through inconsistent intermediate states.</li>
               <li>Pairs with the <strong>outbox pattern</strong>{" "}to emit events reliably from each local transaction.</li>
             </ul>
             <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
@@ -230,7 +230,7 @@ stateDiagram-v2
               <tr>
                 <td className="px-4 py-3 font-semibold">Coordination</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Central orchestrator (state machine) calls services in order.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Services react to events from each other — no central brain.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Services react to events from each other, no central brain.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Visibility</td>
@@ -256,9 +256,9 @@ stateDiagram-v2
           </table>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Outbox pattern — reliable event emission</h3>
+        <h3 className="mb-2 text-base font-semibold">Outbox pattern, reliable event emission</h3>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          The classic bug: you commit a DB transaction, then publish an event to Kafka. The DB commit succeeds, the publish fails — and downstream services never hear about it. The fix:
+          The classic bug: you commit a DB transaction, then publish an event to Kafka. The DB commit succeeds, the publish fails, and downstream services never hear about it. The fix:
         </p>
         <CodeBlock lang="plain">{`-- In one local transaction, write business data AND the outbox row
 BEGIN;
@@ -297,18 +297,18 @@ COMMIT;
             <strong>Follower</strong>{" "}is the default. It accepts AppendEntries from the leader and resets its election timer on every valid heartbeat.
           </li>
           <li>
-            <strong>Candidate</strong>{" "}happens when the election timer fires — &quot;I haven&apos;t heard from the leader, maybe it&apos;s gone.&quot; The candidate bumps the term, votes for itself, and requests votes from peers.
+            <strong>Candidate</strong>{" "}happens when the election timer fires, &quot;I haven&apos;t heard from the leader, maybe it&apos;s gone.&quot; The candidate bumps the term, votes for itself, and requests votes from peers.
           </li>
           <li>
             <strong>Leader</strong>{" "}is whoever won majority votes in some term. Only one leader per term. Sends heartbeats; replicates the log; falls back to follower the moment it sees a higher term.
           </li>
           <li>
-            <strong>Split vote</strong>{" "}resolves because election timeouts are randomized — one candidate&apos;s next timeout fires first, so it starts a new term and tries again before the others.
+            <strong>Split vote</strong>{" "}resolves because election timeouts are randomized, one candidate&apos;s next timeout fires first, so it starts a new term and tries again before the others.
           </li>
         </ul>
 
         <Callout variant="warn">
-          <strong>The term is the source of truth.</strong>{" "}If any RPC sees a term higher than its own, it steps down immediately. This is the entire safety mechanism for &quot;two leaders at once&quot; — the older one finds out and resigns the next time it talks to anyone.
+          <strong>The term is the source of truth.</strong>{" "}If any RPC sees a term higher than its own, it steps down immediately. This is the entire safety mechanism for &quot;two leaders at once&quot;, the older one finds out and resigns the next time it talks to anyone.
         </Callout>
       </section>
 
@@ -316,7 +316,7 @@ COMMIT;
       {/* SECTION 4 — Clocks & time */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Clocks &amp; time — the lies your wall clock tells</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Clocks &amp; time, the lies your wall clock tells</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Time in a distributed system is not a number. It&apos;s a model. Pick the right model for the question.
         </p>
@@ -327,7 +327,7 @@ COMMIT;
             <li><strong>NTP skew:</strong> ~10–100ms across well-synced hosts; seconds across regions; minutes on a misconfigured box.</li>
             <li><strong>Leap seconds:</strong>{" "}wall clock can jump backwards. Linux can repeat a second. Both have broken production code.</li>
             <li><strong>VM pauses / GC stalls:</strong>{" "}the process can be frozen for hundreds of ms; the wall clock keeps ticking around it.</li>
-            <li><strong>Clock drift</strong>{" "}on cheap hardware — a watch crystal can drift by seconds per day if NTP fails.</li>
+            <li><strong>Clock drift</strong>{" "}on cheap hardware, a watch crystal can drift by seconds per day if NTP fails.</li>
           </ul>
           <p className="mt-3 mb-0 text-xs text-slate-500 dark:text-slate-400">
             Rule: never use a wall-clock timestamp as the source of truth for ordering, conflict resolution, or distributed correctness.
@@ -350,7 +350,7 @@ COMMIT;
                 <td className="px-4 py-3 font-semibold">Wall clock</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Human-readable timestamp</td>
                 <td className="px-4 py-3 text-rose-700 dark:text-rose-300">Lies (skew, leap, pause)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Display, logs, TTLs, analytics — never ordering</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Display, logs, TTLs, analytics, never ordering</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Lamport clock</td>
@@ -361,7 +361,7 @@ COMMIT;
               <tr>
                 <td className="px-4 py-3 font-semibold">Vector clock</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Detect concurrency: if neither V(A) ≤ V(B) nor vice versa, they&apos;re concurrent</td>
-                <td className="px-4 py-3 text-rose-700 dark:text-rose-300">O(N) size — grows with nodes</td>
+                <td className="px-4 py-3 text-rose-700 dark:text-rose-300">O(N) size, grows with nodes</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Conflict detection (Dynamo, Riak)</td>
               </tr>
               <tr>
@@ -393,7 +393,7 @@ COMMIT;
       {/* SECTION 5 — Geospatial */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Geospatial indexing — pick the right shape</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Geospatial indexing, pick the right shape</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           &quot;Find nearby&quot; is a 2D problem; B-tree indexes are 1D. You need a spatial index.
         </p>
@@ -406,7 +406,7 @@ COMMIT;
             </p>
             <ul className="m-0 list-disc space-y-1 pl-4 text-xs text-slate-500 dark:text-slate-400">
               <li>Pros: stores as a string, indexes in any DB, easy prefix queries.</li>
-              <li>Cons: edge effect — nearby points across a cell boundary have very different prefixes.</li>
+              <li>Cons: edge effect, nearby points across a cell boundary have very different prefixes.</li>
               <li>Use for: Redis geo, simple proximity, hashtag-style sharding.</li>
             </ul>
           </div>
@@ -437,10 +437,10 @@ COMMIT;
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
-          <h3 className="mt-0 mb-2 text-base font-semibold">k-Nearest Neighbors — two approaches</h3>
+          <h3 className="mt-0 mb-2 text-base font-semibold">k-Nearest Neighbors, two approaches</h3>
           <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>
-              <strong>Geohash + 8-neighbor scan:</strong>{" "}compute the geohash cell of the query point, fetch points in that cell AND its 8 neighbors, then sort by exact distance. The neighbor scan is the part everyone forgets — without it, you miss points just across a cell boundary.
+              <strong>Geohash + 8-neighbor scan:</strong>{" "}compute the geohash cell of the query point, fetch points in that cell AND its 8 neighbors, then sort by exact distance. The neighbor scan is the part everyone forgets, without it, you miss points just across a cell boundary.
             </li>
             <li>
               <strong>Quadtree bucket scan:</strong>{" "}walk the tree to the leaf containing the query point, scan that bucket, expand to siblings until you have k candidates, then refine by exact distance.
@@ -460,12 +460,12 @@ COMMIT;
       {/* SECTION 6 — Cost & capacity */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; capacity — $/QPS as the unit</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; capacity, $/QPS as the unit</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Senior engineers think in dollars per QPS, dollars per GB-month, dollars per million requests. Get fluent in the ratios.
         </p>
 
-        <h3 className="mb-2 text-base font-semibold">Storage tiers — pick the right one</h3>
+        <h3 className="mb-2 text-base font-semibold">Storage tiers, pick the right one</h3>
         <div className="mb-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -536,7 +536,7 @@ COMMIT;
           </div>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Pricing plans — when each one wins</h3>
+        <h3 className="mb-2 text-base font-semibold">Pricing plans, when each one wins</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -587,7 +587,7 @@ COMMIT;
       {/* SECTION 7 — Common gotchas */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Common gotchas — BAD vs GOOD</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Common gotchas, BAD vs GOOD</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Each of these has bitten real teams. If you only remember five things from this card, make it these.
         </p>
@@ -610,7 +610,7 @@ client -> router (reads shard map from etcd/Raft, ~0 QPS on Raft)
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Saga without compensations</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              You wrote the happy path and called it a saga. When step 3 fails, steps 1 and 2 are left committed and nobody undoes them. That&apos;s not a saga — that&apos;s a bug.
+              You wrote the happy path and called it a saga. When step 3 fails, steps 1 and 2 are left committed and nobody undoes them. That&apos;s not a saga, that&apos;s a bug.
             </p>
             <CodeBlock lang="plain">{`# BAD — no compensation. Step 3 fails → inventory reserved, payment charged, no order.
 reserveInventory(orderId)
@@ -662,7 +662,7 @@ results = sortByHaversine(candidates, query)[:k]`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 5 · Autoscaling on CPU instead of queue depth</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              For an async worker reading from a queue, CPU is a lagging indicator — by the time it spikes you&apos;re already minutes behind. Scale on queue depth (or message age) so capacity grows <em>before</em>{" "}the backlog hurts.
+              For an async worker reading from a queue, CPU is a lagging indicator, by the time it spikes you&apos;re already minutes behind. Scale on queue depth (or message age) so capacity grows <em>before</em>{" "}the backlog hurts.
             </p>
             <CodeBlock lang="plain">{`# BAD — CPU-based autoscale on a queue worker
 metric: cpu_utilization > 70%
@@ -682,16 +682,16 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="Your team wants strong consistency for which keys live on which shards. The data plane (the actual user records) is sharded across 100 nodes. Where should consensus live?"
           options={[
-            { label: "Run every user write through a Raft cluster of 5 nodes.", explanation: "That makes a single-leader Raft cluster the throughput ceiling for your entire system. Consensus latency = RTT to majority — fine for metadata, ruinous for every user write." },
+            { label: "Run every user write through a Raft cluster of 5 nodes.", explanation: "That makes a single-leader Raft cluster the throughput ceiling for your entire system. Consensus latency = RTT to majority, fine for metadata, ruinous for every user write." },
             { label: "Put the shard map in a small Raft-backed store (etcd/Consul); each shard runs an independent primary for its data.", correct: true, explanation: "Right. Consensus belongs in the control plane (shard maps, leader leases, schema). The data plane scales horizontally by sharding, with a single writer per shard. Classic etcd / Consul / KRaft pattern." },
-            { label: "Skip consensus — use timestamps for everything.", explanation: "Timestamps don't give you correctness for the shard map. You need agreement on which shard owns which keys, especially during rebalancing." },
+            { label: "Skip consensus, use timestamps for everything.", explanation: "Timestamps don't give you correctness for the shard map. You need agreement on which shard owns which keys, especially during rebalancing." },
             { label: "Use 2PC across all 100 shards for every write.", explanation: "Worse than Raft on every write. 2PC blocks on the slowest participant, has a coordinator SPOF, and doesn't scale to 100 participants." },
           ]}
         />
@@ -700,10 +700,10 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           kind="Recall check"
           question="You're designing a workflow: reserve inventory, charge card, create order, send email. Network failures can happen at any step. Sagas or 2PC?"
           options={[
-            { label: "2PC — atomicity is what we want.", explanation: "2PC needs every step to support a prepare/commit protocol (XA). Payment gateways and email providers don't. And 2PC's blocking semantics under coordinator failure is unacceptable for a customer-facing flow." },
+            { label: "2PC, atomicity is what we want.", explanation: "2PC needs every step to support a prepare/commit protocol (XA). Payment gateways and email providers don't. And 2PC's blocking semantics under coordinator failure is unacceptable for a customer-facing flow." },
             { label: "Saga with compensations: releaseInventory, refundPayment, cancelOrder, sendCancellationEmail.", correct: true, explanation: "Right. Sagas are the practical pattern for multi-service workflows. Each step is a local transaction; failure of any step triggers compensating actions for the prior steps. Pair with the outbox pattern so step events are durable." },
             { label: "Just retry until it succeeds.", explanation: "Retries don't help when a downstream is permanently rejecting (card declined, sold out). You need explicit failure handling, which is what the saga's compensations give you." },
-            { label: "Run all four steps in one DB transaction.", explanation: "They span different services — payment gateway, inventory service, order DB, email provider. There is no single transaction that covers all of them." },
+            { label: "Run all four steps in one DB transaction.", explanation: "They span different services, payment gateway, inventory service, order DB, email provider. There is no single transaction that covers all of them." },
           ]}
         />
 
@@ -711,10 +711,10 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           kind="Recall check"
           question="You need to detect concurrent writes from two replicas so you can resolve a conflict. Which clock model?"
           options={[
-            { label: "Wall clock — whichever has the larger timestamp wins.", explanation: "Clock skew can make a causally-later write look earlier. You'll silently lose data. Never resolve conflicts on wall clocks." },
-            { label: "Lamport clock — gives a total order.", explanation: "Lamport gives total order but cannot tell concurrent writes apart from sequential ones. If L(A) < L(B), you can't tell if A happened-before B or they were concurrent." },
-            { label: "Vector clock — if neither V(A) ≤ V(B) nor V(B) ≤ V(A), the writes were concurrent.", correct: true, explanation: "Right. Vector clocks are the canonical answer for detecting concurrency. Dynamo and Riak use them for exactly this conflict-detection job. The cost is O(N) size, which is why HLC is preferred when you only need ordering, not concurrency detection." },
-            { label: "TrueTime — bounded uncertainty.", explanation: "TrueTime gives bounded global ordering (great for external consistency) but it requires GPS + atomic clocks. Vector clocks solve the concurrency-detection problem without that hardware." },
+            { label: "Wall clock, whichever has the larger timestamp wins.", explanation: "Clock skew can make a causally-later write look earlier. You'll silently lose data. Never resolve conflicts on wall clocks." },
+            { label: "Lamport clock, gives a total order.", explanation: "Lamport gives total order but cannot tell concurrent writes apart from sequential ones. If L(A) < L(B), you can't tell if A happened-before B or they were concurrent." },
+            { label: "Vector clock, if neither V(A) ≤ V(B) nor V(B) ≤ V(A), the writes were concurrent.", correct: true, explanation: "Right. Vector clocks are the canonical answer for detecting concurrency. Dynamo and Riak use them for exactly this conflict-detection job. The cost is O(N) size, which is why HLC is preferred when you only need ordering, not concurrency detection." },
+            { label: "TrueTime, bounded uncertainty.", explanation: "TrueTime gives bounded global ordering (great for external consistency) but it requires GPS + atomic clocks. Vector clocks solve the concurrency-detection problem without that hardware." },
           ]}
         />
 
@@ -722,9 +722,9 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           kind="Recall check"
           question="A ride-sharing app needs to find the 10 nearest drivers to a rider, anywhere in the world, with sub-100ms latency. Which spatial index is the best fit for the dispatch service's in-memory data structure?"
           options={[
-            { label: "B-tree on latitude.", explanation: "A 1D index can't do 2D nearest-neighbor efficiently. You'd have to scan a wide latitude band and filter by longitude — that's a linear scan in disguise." },
+            { label: "B-tree on latitude.", explanation: "A 1D index can't do 2D nearest-neighbor efficiently. You'd have to scan a wide latitude band and filter by longitude, that's a linear scan in disguise." },
             { label: "Geohash stored as a string in a SQL B-tree.", explanation: "Geohash works for prefix queries but has the edge-effect problem and is awkward in memory for a hot dispatch path. Fine for a Redis or DB-backed proximity feature, not great for a service that needs μs-level lookups." },
-            { label: "Quadtree, recursively split by density.", correct: true, explanation: "Right. Quadtrees adapt to driver density — Manhattan splits more than the ocean. In-memory traversal to find candidates near a query point is fast. Uber's dispatch system uses this shape. For a Redis or DB-backed feature, geohash with the 8-neighbor scan is a fine alternative." },
+            { label: "Quadtree, recursively split by density.", correct: true, explanation: "Right. Quadtrees adapt to driver density, Manhattan splits more than the ocean. In-memory traversal to find candidates near a query point is fast. Uber's dispatch system uses this shape. For a Redis or DB-backed feature, geohash with the 8-neighbor scan is a fine alternative." },
             { label: "Hash table keyed on driver ID.", explanation: "Great for 'where is driver X' but useless for 'who is near point P'. Hash tables don't preserve any spatial structure." },
           ]}
         />
@@ -733,8 +733,8 @@ metric: sqs_approximate_age_of_oldest_message > 30s
           kind="Recall check"
           question="You have a queue-backed async worker. Traffic is bursty: 100 RPS most of the time, 10,000 RPS during spikes. What's the right autoscaling and capacity plan?"
           options={[
-            { label: "Autoscale on CPU > 70%, all on-demand instances.", explanation: "CPU is a lagging indicator on a queue worker — by the time CPU rises, your backlog is already minutes deep. Pure on-demand also leaves savings on the table for the steady baseline." },
-            { label: "Autoscale on queue depth / message age; reserved capacity for baseline, spot for spikes.", correct: true, explanation: "Right. Queue depth (or message age) is the leading indicator — capacity scales before the backlog hurts. Reserved covers the baseline at a deep discount; spot fills the spikes cheaply since async workers tolerate preemption. The portfolio approach to pricing." },
+            { label: "Autoscale on CPU > 70%, all on-demand instances.", explanation: "CPU is a lagging indicator on a queue worker, by the time CPU rises, your backlog is already minutes deep. Pure on-demand also leaves savings on the table for the steady baseline." },
+            { label: "Autoscale on queue depth / message age; reserved capacity for baseline, spot for spikes.", correct: true, explanation: "Right. Queue depth (or message age) is the leading indicator, capacity scales before the backlog hurts. Reserved covers the baseline at a deep discount; spot fills the spikes cheaply since async workers tolerate preemption. The portfolio approach to pricing." },
             { label: "Pre-provision for the 10,000 RPS peak with reserved capacity.", explanation: "Massive overspend during the 99% of the time you're at 100 RPS. Reserved makes sense for the baseline, not for the peak." },
             { label: "Skip autoscaling; let the queue back up and customers wait.", explanation: "Cheap, but customer-visible. For an async pipeline where SLA covers age-of-oldest-message, you need to scale before that SLA breaks." },
           ]}
@@ -746,7 +746,7 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       {/* ============================================================ */}
       <Callout variant="spring" title="You're ready for Phase 6 when…">
         <ul className="m-0 list-disc space-y-1 pl-5">
-          <li>You can explain Raft on a whiteboard in 5 minutes — three sub-problems, quorum math, when it&apos;s the wrong tool.</li>
+          <li>You can explain Raft on a whiteboard in 5 minutes, three sub-problems, quorum math, when it&apos;s the wrong tool.</li>
           <li>You can pick saga vs 2PC without thinking, and you instinctively reach for the outbox pattern to emit events.</li>
           <li>You never propose a design that orders events by wall-clock timestamp. You know when Lamport is enough and when you need vector clocks.</li>
           <li>You can describe geohash, quadtree, and S2 in one sentence each and pick the right one for a proximity feature.</li>
@@ -759,14 +759,14 @@ metric: sqs_approximate_age_of_oldest_message > 30s
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 p-6 dark:border-fuchsia-900 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">
-          Phase 5 — locked in
+          Phase 5, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now reason about the deep distributed-systems primitives</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Consensus and its limits, sagas and the outbox, the clock models and when each one matters, spatial indexing, and the cost/capacity portfolio. That&apos;s the senior-systems toolkit. Every case study from here lands on combinations of these primitives.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Case Studies.</strong>{" "}Start with the interview framework that puts everything you&apos;ve learned into a 45-minute structure: requirements → estimation → API → data model → high-level design → deep dives → trade-offs.
+          <strong>Up next: Phase 6, Case Studies.</strong>{" "}Start with the interview framework that puts everything you&apos;ve learned into a 45-minute structure: requirements → estimation → API → data model → high-level design → deep dives → trade-offs.
         </p>
         <Link
           href="/courses/system-design/modules/interview-framework"

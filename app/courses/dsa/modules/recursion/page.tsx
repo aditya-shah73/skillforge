@@ -167,7 +167,7 @@ flowchart TB
         <h2 id="setup">The recursion contract: trust the recursive call</h2>
 
         <p>
-          Most people&apos;s first reaction to recursion is to try to <em>simulate it in their head</em> — trace the
+          Most people&apos;s first reaction to recursion is to try to <em>simulate it in their head</em>, trace the
           calls down, watch them return, keep the whole call stack in working memory at once. That works for{" "}
           <code>n = 3</code>. It collapses for <code>n = 30</code>. The technique that actually scales is the
           opposite: stop simulating, and start <em>contracting</em>.
@@ -176,7 +176,7 @@ flowchart TB
         <Callout variant="insight" title="The leap of faith">
           <p>
             When you write a recursive function, your job is to <strong>assume the recursive call works</strong>{" "}for
-            any smaller input — and then build the answer for <code>n</code> from the answer for <code>n-1</code>.
+            any smaller input, and then build the answer for <code>n</code> from the answer for <code>n-1</code>.
           </p>
           <p>
             You are not allowed to peek inside the recursive call. Not allowed to think about how it works. Just trust
@@ -185,7 +185,7 @@ flowchart TB
           </p>
         </Callout>
 
-        <h3>Sum from 1 to n — the canonical example</h3>
+        <h3>Sum from 1 to n, the canonical example</h3>
 
         <p>
           Suppose we want to compute <code>1 + 2 + 3 + ... + n</code>. There&apos;s a closed form, of course, but
@@ -205,8 +205,8 @@ flowchart TB
 
         <p>
           That&apos;s the entire function. Two lines of logic. Notice what we did <em>not</em>{" "}do: simulate
-          <code>sum(4) → sum(3) → sum(2) → ...</code> in our heads. We picked a single &quot;layer&quot; — &quot;given
-          the answer for n-1, build the answer for n&quot; — and trusted recursion to handle the rest.
+          <code>sum(4) → sum(3) → sum(2) → ...</code> in our heads. We picked a single &quot;layer&quot;, &quot;given
+          the answer for n-1, build the answer for n&quot;, and trusted recursion to handle the rest.
         </p>
 
         <Mermaid chart={sumLeap} />
@@ -227,7 +227,7 @@ flowchart TB
           <li><strong>How do I make &quot;smaller&quot;?</strong>{" "}n-1 in the linear cases, n/2 in divide-and-conquer, &quot;a child node&quot; in trees. The choice of how-to-shrink is what shapes the algorithm&apos;s cost.</li>
         </ol>
 
-        <h3>Reverse a string — same recipe</h3>
+        <h3>Reverse a string, same recipe</h3>
 
         <p>
           To reverse a string, assume someone has already reversed everything except the first character. Append the
@@ -247,8 +247,8 @@ flowchart TB
         <Callout variant="info" title="Why this mental shift is the entire skill">
           <p>
             Once you stop trying to simulate the stack, recursion stops feeling magical and starts feeling mechanical.
-            The hard part of every recursion problem is figuring out the contract — &quot;given the answer to some
-            smaller version, what would I do?&quot; — not the syntax. After that, the code writes itself in two or
+            The hard part of every recursion problem is figuring out the contract, &quot;given the answer to some
+            smaller version, what would I do?&quot;, not the syntax. After that, the code writes itself in two or
             three lines.
           </p>
         </Callout>
@@ -257,10 +257,10 @@ flowchart TB
           kind="Quick check"
           question="You're writing a recursive function to compute the length of a linked list. By the leap of faith, what do you assume the recursive call returns?"
           options={[
-            { label: "The length of the entire list, including the current node.", explanation: "If the recursive call already gave you the total length, you wouldn't need to do anything — the function would be useless. Recursion only helps if the recursive call solves a strictly smaller problem." },
+            { label: "The length of the entire list, including the current node.", explanation: "If the recursive call already gave you the total length, you wouldn't need to do anything, the function would be useless. Recursion only helps if the recursive call solves a strictly smaller problem." },
             { label: "The length of the rest of the list (everything after the current node). You then add 1 for the current node.", correct: true, explanation: "Right. That's the contract: the recursive call handles the tail; you add one for the head. length(node) = 1 + length(node.next), with length(null) = 0 as the base." },
-            { label: "Just the next node.", explanation: "The recursive call should return a useful value — the answer to the subproblem — not a node. You'd be conflating 'walking the structure' with 'computing the answer.'" },
-            { label: "Nothing useful — recursion can't compute lengths.", explanation: "Recursion is a perfect fit for linked-list traversal. The 'rest of the list' is a smaller list, and that's exactly the kind of self-similar structure recursion thrives on." },
+            { label: "Just the next node.", explanation: "The recursive call should return a useful value, the answer to the subproblem, not a node. You'd be conflating 'walking the structure' with 'computing the answer.'" },
+            { label: "Nothing useful, recursion can't compute lengths.", explanation: "Recursion is a perfect fit for linked-list traversal. The 'rest of the list' is a smaller list, and that's exactly the kind of self-similar structure recursion thrives on." },
           ]}
         />
 
@@ -268,10 +268,10 @@ flowchart TB
           kind="Quick check"
           question="Which statement best captures the 'leap of faith' technique?"
           options={[
-            { label: "Trace every recursive call in your head until you see the pattern.", explanation: "That's the simulation approach — the one that collapses for any non-trivial input. The leap of faith is the opposite: stop tracing, start trusting." },
-            { label: "Assume the recursive call returns the correct answer for the smaller input, and build the answer for the current input from that.", correct: true, explanation: "Right. You write one layer's worth of logic — 'given the smaller answer, build the bigger answer' — and trust the recursion to do that for every level. This is what makes recursive thinking actually scale." },
+            { label: "Trace every recursive call in your head until you see the pattern.", explanation: "That's the simulation approach, the one that collapses for any non-trivial input. The leap of faith is the opposite: stop tracing, start trusting." },
+            { label: "Assume the recursive call returns the correct answer for the smaller input, and build the answer for the current input from that.", correct: true, explanation: "Right. You write one layer's worth of logic, 'given the smaller answer, build the bigger answer', and trust the recursion to do that for every level. This is what makes recursive thinking actually scale." },
             { label: "Recursion is just a loop, so always rewrite it as one.", explanation: "Many recursions can be unrolled into loops, but that misses the point. The leap of faith is about how you reason about the code, not how you eventually execute it." },
-            { label: "Always start with the base case and work upward.", explanation: "The base case is part of every recursion, but the leap of faith is about the recursive step. You don't 'work upward' — you write one layer and trust the rest." },
+            { label: "Always start with the base case and work upward.", explanation: "The base case is part of every recursion, but the leap of faith is about the recursive step. You don't 'work upward', you write one layer and trust the rest." },
           ]}
         />
       </section>
@@ -283,7 +283,7 @@ flowchart TB
         <h2 id="base-case">Base-case discipline (and why infinite recursion is ALWAYS a base-case bug)</h2>
 
         <p>
-          Every recursion needs a base case — a value of the input where the function answers directly, without
+          Every recursion needs a base case, a value of the input where the function answers directly, without
           calling itself again. Without a base case, the recursion never terminates. <em>Every</em>{" "}infinite recursion
           you ever debug will turn out to be one of two bugs: the base case is missing, or the recursive call
           doesn&apos;t move toward it.
@@ -357,7 +357,7 @@ int badFactorial(int n) {
         <h3>Stack overflow vs. heap overflow</h3>
 
         <p>
-          Recursion lives on the <strong>call stack</strong> — a thread-local memory region the JVM allocates per
+          Recursion lives on the <strong>call stack</strong>, a thread-local memory region the JVM allocates per
           thread for storing call frames (return addresses, local variables, parameters). It&apos;s separate from the
           heap, where objects allocated with <code>new</code> live.
         </p>
@@ -379,7 +379,7 @@ int badFactorial(int n) {
             10,000 levels sounds like a lot, but it&apos;s closer than you think. A linked list of length 1,000,000 is
             a single &quot;data structure&quot; that will blow the stack on a recursive traversal. A skewed binary
             tree (one that&apos;s effectively a list) does the same. A perfectly balanced tree with <em>2³⁰ = 1
-            billion</em>{" "}nodes only has depth 30 — completely safe — but the moment your tree is unbalanced, depth
+            billion</em>{" "}nodes only has depth 30, completely safe, but the moment your tree is unbalanced, depth
             grows linearly and you&apos;re at risk.
           </p>
           <p>
@@ -393,7 +393,7 @@ int badFactorial(int n) {
         <h3>Tail recursion (and why Java doesn&apos;t care)</h3>
 
         <p>
-          A <strong>tail-recursive</strong>{" "}function has the recursive call as its very last action — nothing happens
+          A <strong>tail-recursive</strong>{" "}function has the recursive call as its very last action, nothing happens
           after it returns. Some languages (Scala, Scheme, Kotlin with <code>tailrec</code>) optimize tail calls into
           loops, eliminating the per-call stack frame. <strong>Java does not.</strong>{" "}A tail-recursive function in
           Java still consumes stack just like a non-tail-recursive one, so don&apos;t reach for tail recursion as a
@@ -404,8 +404,8 @@ int badFactorial(int n) {
           kind="Base-case check"
           question="A function `void walk(Node n) { walk(n); }` runs and immediately throws StackOverflowError. Which bug shape is this?"
           options={[
-            { label: "The base case is missing.", explanation: "There's no base case AND the recursive call doesn't shrink. Both bugs are present, but the call-doesn't-shrink one is what makes the StackOverflowError immediate — even with a base case, walk(n) → walk(n) → walk(n) would never reach it." },
-            { label: "The recursive call doesn't shrink the input — it passes the same `n` instead of `n.next`.", correct: true, explanation: "Right. Every recursive call must move strictly closer to the base case. Here the input is identical at every level, so even a perfect base case would never fire. The fix is `walk(n.next)` plus a `if (n == null) return;` base." },
+            { label: "The base case is missing.", explanation: "There's no base case AND the recursive call doesn't shrink. Both bugs are present, but the call-doesn't-shrink one is what makes the StackOverflowError immediate, even with a base case, walk(n) → walk(n) → walk(n) would never reach it." },
+            { label: "The recursive call doesn't shrink the input, it passes the same `n` instead of `n.next`.", correct: true, explanation: "Right. Every recursive call must move strictly closer to the base case. Here the input is identical at every level, so even a perfect base case would never fire. The fix is `walk(n.next)` plus a `if (n == null) return;` base." },
             { label: "Java's call stack is too small.", explanation: "Java's stack is fine for any sensibly-written recursion. The bug is in the function, not the JVM." },
             { label: "It's a heap-overflow, not a stack-overflow.", explanation: "Heap overflow is `OutOfMemoryError`. This was specifically `StackOverflowError`, which is exhaustion of the per-thread call-frame budget." },
           ]}
@@ -431,17 +431,17 @@ int badFactorial(int n) {
 
         <p>
           Once you have a recursive function, the question is: <em>how expensive is it?</em>{" "}The answer comes from
-          drawing the <strong>recursion tree</strong> — every node is one call, every edge is &quot;this call invoked
+          drawing the <strong>recursion tree</strong>, every node is one call, every edge is &quot;this call invoked
           that one.&quot; The total work is the sum of work-per-node across the whole tree.
         </p>
 
         <p>
-          For linear recursion like <code>sum(n)</code>, the tree is a thin chain of <code>n</code> nodes — each does
-          O(1) work — and the total cost is O(n), same as the iterative loop. Boring; correct. The interesting cases
+          For linear recursion like <code>sum(n)</code>, the tree is a thin chain of <code>n</code> nodes, each does
+          O(1) work, and the total cost is O(n), same as the iterative loop. Boring; correct. The interesting cases
           are where the tree branches.
         </p>
 
-        <h3>Naive Fibonacci — the cautionary tale</h3>
+        <h3>Naive Fibonacci, the cautionary tale</h3>
 
         <p>
           The textbook recursion. Two recursive calls per level, exponentially-many leaves.
@@ -455,21 +455,21 @@ int badFactorial(int n) {
         <Mermaid chart={fibTree} />
 
         <p>
-          Look at how many <code>fib(2)</code> nodes are in the tree above — three of them, all computing the same
+          Look at how many <code>fib(2)</code> nodes are in the tree above, three of them, all computing the same
           value. <code>fib(3)</code> appears twice. The redundancy explodes with <code>n</code>: the number of nodes
           in the tree for <code>fib(n)</code> is roughly <code>φⁿ ≈ 1.618ⁿ</code>, which is O(2ⁿ) for our purposes.
           For <code>fib(40)</code>, that&apos;s on the order of a billion calls, and your laptop will sit and think
           about it for a while.
         </p>
 
-        <Callout variant="insight" title="The overlap is the inefficiency — and the cure is memoization (Phase 7&apos;s next big idea)">
+        <Callout variant="insight" title="The overlap is the inefficiency, and the cure is memoization (Phase 7&apos;s next big idea)">
           <p>
             Naive recursive Fibonacci isn&apos;t slow because of recursion. It&apos;s slow because the tree
             recomputes the same subproblems many times. <code>fib(2)</code> is computed three times here; in{" "}
             <code>fib(40)</code> it&apos;s computed tens of millions of times.
           </p>
           <p>
-            <strong>Memoize</strong> — cache the answer for each <code>n</code> the first time you compute it — and
+            <strong>Memoize</strong>, cache the answer for each <code>n</code> the first time you compute it, and
             the tree collapses into a chain of unique subproblems. <code>fib</code> goes from O(2ⁿ) to O(n). This is
             the conceptual jump from recursion to dynamic programming, the topic of Module 32.
           </p>
@@ -485,7 +485,7 @@ int badFactorial(int n) {
 
         <p>
           For <code>fib(n)</code>, naive recursive is O(2ⁿ) time, O(n) stack. Iterative is O(n) time, O(1) space.
-          Two-variable iterative Fibonacci wins on every axis — the recursion is a teaching example, not a real
+          Two-variable iterative Fibonacci wins on every axis, the recursion is a teaching example, not a real
           implementation.
         </p>
 
@@ -526,8 +526,8 @@ int fibIter(int n) {
           kind="Tree check"
           question="In the recursion tree for naive `fib(n)`, why is the runtime O(2ⁿ) rather than O(n)?"
           options={[
-            { label: "Recursion has overhead, so it's always slower than iteration.", explanation: "Per-call overhead is a constant factor, not an exponential one. The overhead can't turn O(n) into O(2ⁿ) — only structural redundancy can." },
-            { label: "Each call makes TWO recursive calls, and the same subproblems are recomputed many times. The tree is a binary tree of height n with no sharing — exponentially many nodes.", correct: true, explanation: "Right. With two recursive branches per node and no sharing, the node count grows as roughly φⁿ ≈ 1.618ⁿ — exponential. fib(2) appears Θ(φⁿ⁻¹) times in the tree, fib(3) appears Θ(φⁿ⁻²) times, etc. Memoization is the fix — it turns the tree into a DAG of n unique subproblems, recovering O(n)." },
+            { label: "Recursion has overhead, so it's always slower than iteration.", explanation: "Per-call overhead is a constant factor, not an exponential one. The overhead can't turn O(n) into O(2ⁿ), only structural redundancy can." },
+            { label: "Each call makes TWO recursive calls, and the same subproblems are recomputed many times. The tree is a binary tree of height n with no sharing, exponentially many nodes.", correct: true, explanation: "Right. With two recursive branches per node and no sharing, the node count grows as roughly φⁿ ≈ 1.618ⁿ, exponential. fib(2) appears Θ(φⁿ⁻¹) times in the tree, fib(3) appears Θ(φⁿ⁻²) times, etc. Memoization is the fix, it turns the tree into a DAG of n unique subproblems, recovering O(n)." },
             { label: "Java's recursion is slow.", explanation: "JVM recursion has roughly the same per-call cost as a function call in any compiled language. The blowup is structural, not language-level." },
             { label: "Stack frames are big.", explanation: "Frame size affects space, not asymptotic time. Even with 1-byte frames, 2ⁿ of them takes 2ⁿ time to set up." },
           ]}
@@ -538,9 +538,9 @@ int fibIter(int n) {
           question="Recursive `sum(n)` and iterative `sum(n)` both run in O(n) time. What's actually different between them?"
           options={[
             { label: "Recursive is always slower because of function-call overhead.", explanation: "The constant factor is bigger for the recursive version, but Big-O is identical. Per-call overhead is bounded; it can't change the asymptotic class." },
-            { label: "The recursive version uses O(n) stack space; the iterative version uses O(1).", correct: true, explanation: "Right. Time is identical — both touch each value once. Space differs: the recursive call chain holds n frames live at peak (one per outstanding call), while the iterative loop holds a single accumulator. For sum/factorial that doesn't matter; for n in the millions on the JVM, the recursive version blows the stack and the iterative one runs fine." },
+            { label: "The recursive version uses O(n) stack space; the iterative version uses O(1).", correct: true, explanation: "Right. Time is identical, both touch each value once. Space differs: the recursive call chain holds n frames live at peak (one per outstanding call), while the iterative loop holds a single accumulator. For sum/factorial that doesn't matter; for n in the millions on the JVM, the recursive version blows the stack and the iterative one runs fine." },
             { label: "They produce different answers.", explanation: "Both compute the same mathematical sum. Recursion isn't a different algorithm here, just a different implementation strategy." },
-            { label: "Iterative version uses more memory because the loop variables are on the heap.", explanation: "Loop variables are on the stack too — but only a constant number of them, regardless of n. That's the whole point: iterative is O(1) space, recursive is O(n) space." },
+            { label: "Iterative version uses more memory because the loop variables are on the heap.", explanation: "Loop variables are on the stack too, but only a constant number of them, regardless of n. That's the whole point: iterative is O(1) space, recursive is O(n) space." },
           ]}
         />
       </section>
@@ -553,7 +553,7 @@ int fibIter(int n) {
 
         <p>
           <strong>Divide-and-conquer</strong>{" "}is recursion where the recursive call shrinks the input by a constant
-          factor — typically half — instead of by one. The contract is the same (&quot;trust the recursive call&quot;),
+          factor, typically half, instead of by one. The contract is the same (&quot;trust the recursive call&quot;),
           but because each level halves the input, the depth is <code>log n</code> instead of <code>n</code>. That
           one change is the difference between O(n) and O(log n), or between O(n²) and O(n log n).
         </p>
@@ -575,11 +575,11 @@ int fibIter(int n) {
         <ul>
           <li><strong>Binary search</strong>: divide by checking the middle, conquer the relevant half, no combine. T(n) = T(n/2) + O(1) → O(log n).</li>
           <li><strong>Merge sort</strong>: divide into two halves, conquer recursively, combine via merge. T(n) = 2T(n/2) + O(n) → O(n log n).</li>
-          <li><strong>Quick sort</strong>: divide via partition (around a pivot), conquer each side recursively, no combine — partition does the work up front. T(n) = 2T(n/2) + O(n) on average → O(n log n).</li>
+          <li><strong>Quick sort</strong>: divide via partition (around a pivot), conquer each side recursively, no combine, partition does the work up front. T(n) = 2T(n/2) + O(n) on average → O(n log n).</li>
           <li><strong>Karatsuba multiplication, Strassen&apos;s matrix multiply, FFT</strong>: clever divides that shave the exponent in the recurrence.</li>
         </ul>
 
-        <h3>Pow(x, n) — the canonical &quot;halve the exponent&quot; trick</h3>
+        <h3>Pow(x, n), the canonical &quot;halve the exponent&quot; trick</h3>
 
         <p>
           Computing <code>x^n</code> the obvious way (multiply <code>x</code> by itself <code>n</code> times) is O(n).
@@ -606,7 +606,7 @@ x^n  =  x · (x^((n-1)/2))² for odd n`}</CodeBlock>
         <Callout variant="insight" title="Why the halving recursion is so much cheaper">
           <p>
             The slow version computes <code>x^10</code> as <code>x · x · x · ... · x</code> (10 multiplications). The
-            fast version computes <code>x^5</code> once, squares it, and is done — the squaring re-uses the same
+            fast version computes <code>x^5</code> once, squares it, and is done, the squaring re-uses the same
             result. The recursion tree is a chain (not a branching tree), and that chain has length{" "}
             <code>log₂ n</code>.
           </p>
@@ -617,7 +617,7 @@ x^n  =  x · (x^((n-1)/2))² for odd n`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>Merge sort — D&amp;C on arrays</h3>
+        <h3>Merge sort, D&amp;C on arrays</h3>
 
         <p>
           Merge sort is the cleanest D&amp;C algorithm in existence. Split into halves, sort each, merge.
@@ -643,14 +643,14 @@ void merge(int[] a, int lo, int mid, int hi) {
 }`}</CodeBlock>
 
         <p>
-          The recurrence is <code>T(n) = 2T(n/2) + O(n)</code> — two halves, plus O(n) for the merge. By the master
+          The recurrence is <code>T(n) = 2T(n/2) + O(n)</code>, two halves, plus O(n) for the merge. By the master
           theorem (next section), that&apos;s O(n log n).
         </p>
 
-        <h3>Binary search — D&amp;C with a single child</h3>
+        <h3>Binary search, D&amp;C with a single child</h3>
 
         <p>
-          Binary search divides but only conquers <em>one</em>{" "}half. There&apos;s no combine — the answer is in the
+          Binary search divides but only conquers <em>one</em>{" "}half. There&apos;s no combine, the answer is in the
           chosen half by construction.
         </p>
 
@@ -669,7 +669,7 @@ void merge(int[] a, int lo, int mid, int hi) {
         <Callout variant="warn" title="When D&amp;C doesn&apos;t help">
           <p>
             D&amp;C only wins when (a) the divide is roughly balanced, and (b) the combine is cheap relative to the
-            problem size. Quicksort with a worst-case pivot picks the smallest element as the pivot every time — the
+            problem size. Quicksort with a worst-case pivot picks the smallest element as the pivot every time, the
             divide is 1 vs n-1, depth is n, and you&apos;re back to O(n²). Always use random or median-of-three
             pivots in practice; the JDK&apos;s dual-pivot quicksort goes even further.
           </p>
@@ -683,9 +683,9 @@ void merge(int[] a, int lo, int mid, int hi) {
           kind="D&C check"
           question="Why is `pow(x, n)` written as `double half = pow(x, n/2); return half * half;` instead of `return pow(x, n/2) * pow(x, n/2);`?"
           options={[
-            { label: "It's a stylistic preference; both have the same performance.", explanation: "They have very different performance. The two-call version makes the algorithm O(n), not O(log n) — the same asymptotic class as the naive 'multiply n times' approach, just with extra branching." },
-            { label: "Calling pow(x, n/2) twice would branch the recursion tree, recomputing the same value at every level — total cost O(n) instead of O(log n).", correct: true, explanation: "Right. Storing the result in a single variable means each level does one halving recursive call. Tree depth is log n, total nodes is log n, total work is O(log n). With two calls you'd have a binary tree of height log n with 2^(log n) = n leaves, and you'd be back to linear." },
-            { label: "Java doesn't allow recursive calls in expressions.", explanation: "It does. You could write `pow(x, n/2) * pow(x, n/2)` and it would compile and run — just slowly." },
+            { label: "It's a stylistic preference; both have the same performance.", explanation: "They have very different performance. The two-call version makes the algorithm O(n), not O(log n), the same asymptotic class as the naive 'multiply n times' approach, just with extra branching." },
+            { label: "Calling pow(x, n/2) twice would branch the recursion tree, recomputing the same value at every level, total cost O(n) instead of O(log n).", correct: true, explanation: "Right. Storing the result in a single variable means each level does one halving recursive call. Tree depth is log n, total nodes is log n, total work is O(log n). With two calls you'd have a binary tree of height log n with 2^(log n) = n leaves, and you'd be back to linear." },
+            { label: "Java doesn't allow recursive calls in expressions.", explanation: "It does. You could write `pow(x, n/2) * pow(x, n/2)` and it would compile and run, just slowly." },
             { label: "Stack overflow.", explanation: "Both versions have the same recursion depth (log n). The difference is the *width* of the tree, which is what determines time, not stack depth." },
           ]}
         />
@@ -698,8 +698,8 @@ void merge(int[] a, int lo, int mid, int hi) {
         <h2 id="master">Recurrence relations: the Master Theorem cheat sheet</h2>
 
         <p>
-          Once you can write a recurrence for an algorithm — &quot;the cost on input n is some sub-cost on smaller
-          inputs plus some local work&quot; — there&apos;s a mechanical way to extract the Big-O. It&apos;s called
+          Once you can write a recurrence for an algorithm, &quot;the cost on input n is some sub-cost on smaller
+          inputs plus some local work&quot;, there&apos;s a mechanical way to extract the Big-O. It&apos;s called
           the <strong>master theorem</strong>, and 90% of recurrences you&apos;ll see in interviews fall into one of
           its three cases.
         </p>
@@ -713,12 +713,12 @@ where:
   b  = factor by which n shrinks per call
   f(n) = work outside the recursive calls (the "combine" step)`}</CodeBlock>
 
-        <p>The three cases compare <code>f(n)</code> against <code>n^(log_b a)</code> — the &quot;leaf cost&quot;:</p>
+        <p>The three cases compare <code>f(n)</code> against <code>n^(log_b a)</code>, the &quot;leaf cost&quot;:</p>
 
         <ul>
-          <li><strong>Case 1 — leaves dominate.</strong>{" "}If <code>f(n)</code> grows slower than <code>n^(log_b a)</code>, the work piles up at the bottom of the tree. T(n) = Θ(n^(log_b a)).</li>
-          <li><strong>Case 2 — balanced.</strong>{" "}If <code>f(n) = Θ(n^(log_b a))</code>, every level does the same total work. T(n) = Θ(n^(log_b a) · log n).</li>
-          <li><strong>Case 3 — root dominates.</strong>{" "}If <code>f(n)</code> grows faster than <code>n^(log_b a)</code>, the top level&apos;s work overwhelms everything below. T(n) = Θ(f(n)).</li>
+          <li><strong>Case 1, leaves dominate.</strong>{" "}If <code>f(n)</code> grows slower than <code>n^(log_b a)</code>, the work piles up at the bottom of the tree. T(n) = Θ(n^(log_b a)).</li>
+          <li><strong>Case 2, balanced.</strong>{" "}If <code>f(n) = Θ(n^(log_b a))</code>, every level does the same total work. T(n) = Θ(n^(log_b a) · log n).</li>
+          <li><strong>Case 3, root dominates.</strong>{" "}If <code>f(n)</code> grows faster than <code>n^(log_b a)</code>, the top level&apos;s work overwhelms everything below. T(n) = Θ(f(n)).</li>
         </ul>
 
         <Mermaid chart={masterDiagram} />
@@ -726,9 +726,9 @@ where:
         <Callout variant="insight" title="The intuition without the algebra">
           <p>
             Picture the recursion tree as a stack of levels. Each level has some total amount of work. Three things
-            can happen as you walk from the root to the leaves: (a) work shrinks geometrically — leaves dominate,
-            (b) work stays the same per level — balanced, every level pays once and there are log n levels, or (c)
-            work grows geometrically — root dominates. Master theorem is just naming those three patterns.
+            can happen as you walk from the root to the leaves: (a) work shrinks geometrically, leaves dominate,
+            (b) work stays the same per level, balanced, every level pays once and there are log n levels, or (c)
+            work grows geometrically, root dominates. Master theorem is just naming those three patterns.
           </p>
           <p>
             You don&apos;t need to memorize the inequality. Just sketch the tree, sum a few levels, and see which
@@ -736,7 +736,7 @@ where:
           </p>
         </Callout>
 
-        <h3>The cheat sheet — the recurrences you&apos;ll see again and again</h3>
+        <h3>The cheat sheet, the recurrences you&apos;ll see again and again</h3>
 
         <div className="overflow-x-auto">
         <table className="text-sm">
@@ -805,7 +805,7 @@ Level log n · n problems of size 1 · O(1) each    = n
                                                   n · log n`}</CodeBlock>
 
         <p>
-          That&apos;s the master theorem in action — case 2, balanced. The same analysis explains why quicksort is
+          That&apos;s the master theorem in action, case 2, balanced. The same analysis explains why quicksort is
           O(n log n) on average and why a divide-and-conquer merge K sorted lists implementation runs in O(N log K).
         </p>
 
@@ -814,7 +814,7 @@ Level log n · n problems of size 1 · O(1) each    = n
         <p>
           The master theorem requires the subproblems to be the same size (<code>n/b</code> for some <code>b</code>).
           Recurrences like <code>T(n) = T(n-1) + T(n-2) + O(1)</code> (Fibonacci) or <code>T(n) = T(n/3) + T(2n/3)
-          + O(n)</code> (median-of-medians) need different tools — the <strong>recursion tree method</strong>{" "}
+          + O(n)</code> (median-of-medians) need different tools, the <strong>recursion tree method</strong>{" "}
           (sketch the tree, sum directly) or the <strong>Akra-Bazzi theorem</strong> (master&apos;s sophisticated
           cousin). For interviews, the cheat sheet above covers the vast majority of what you&apos;ll see.
         </p>
@@ -823,9 +823,9 @@ Level log n · n problems of size 1 · O(1) each    = n
           kind="Master theorem check"
           question="An algorithm has the recurrence T(n) = 4T(n/2) + O(n). What's its Big-O?"
           options={[
-            { label: "O(n log n).", explanation: "That's the merge-sort recurrence (a=2, b=2). Here a=4, b=2 — leaves grow as n^log_2 4 = n², which beats the O(n) combine. Leaves dominate." },
-            { label: "O(n²).", correct: true, explanation: "Right. n^(log_b a) = n^(log_2 4) = n². The combine work is O(n), which is smaller than n². Case 1 — leaves dominate. Total: O(n²). (This shape shows up in algorithms whose leaf cost is the bottleneck — e.g. counting all pairs in a divide-and-conquer over n/2-sized halves.)" },
-            { label: "O(n).", explanation: "O(n) is the combine cost per level, but there are 4 subproblems halving — the leaf count grows as n², which drowns out the combine." },
+            { label: "O(n log n).", explanation: "That's the merge-sort recurrence (a=2, b=2). Here a=4, b=2, leaves grow as n^log_2 4 = n², which beats the O(n) combine. Leaves dominate." },
+            { label: "O(n²).", correct: true, explanation: "Right. n^(log_b a) = n^(log_2 4) = n². The combine work is O(n), which is smaller than n². Case 1, leaves dominate. Total: O(n²). (This shape shows up in algorithms whose leaf cost is the bottleneck, e.g. counting all pairs in a divide-and-conquer over n/2-sized halves.)" },
+            { label: "O(n).", explanation: "O(n) is the combine cost per level, but there are 4 subproblems halving, the leaf count grows as n², which drowns out the combine." },
             { label: "O(2ⁿ).", explanation: "Exponential would require either (a) decrementing recursion with branching, like 2T(n-1), or (b) explosive growth in the combine. 4T(n/2) shrinks fast enough to keep things polynomial." },
           ]}
         />
@@ -847,7 +847,7 @@ Level log n · n problems of size 1 · O(1) each    = n
         <p>
           The textbook solution computes <code>x^(n/2)</code> once and squares it. The trap: <code>n</code> can be
           negative, and you&apos;d like to handle that by computing <code>1 / pow(x, -n)</code>. <strong>Don&apos;t
-          do that naively</strong> — when <code>n == Integer.MIN_VALUE</code>, <code>-n</code> overflows back to
+          do that naively</strong>, when <code>n == Integer.MIN_VALUE</code>, <code>-n</code> overflows back to
           itself (because <code>-Integer.MIN_VALUE</code> doesn&apos;t fit in an int), and you get infinite recursion
           or wrong answers.
         </p>
@@ -855,7 +855,7 @@ Level log n · n problems of size 1 · O(1) each    = n
         <Callout variant="warn" title="The Integer.MIN_VALUE overflow trap">
           <p>
             <code>Integer.MIN_VALUE</code> is <code>-2,147,483,648</code>. Its negation would be{" "}
-            <code>+2,147,483,648</code> — but that doesn&apos;t fit in a 32-bit signed int, so Java silently wraps
+            <code>+2,147,483,648</code>, but that doesn&apos;t fit in a 32-bit signed int, so Java silently wraps
             it back to <code>-2,147,483,648</code>. Any code that does <code>-n</code> on a possibly-MIN_VALUE int
             is buggy in this exact way.
           </p>
@@ -882,7 +882,7 @@ private double powLong(double x, long n) {
 }`}</CodeBlock>
 
         <p>
-          Recurrence: T(n) = T(n/2) + O(1) → O(log n) time, O(log n) stack space. The halving is what saves us — for{" "}
+          Recurrence: T(n) = T(n/2) + O(1) → O(log n) time, O(log n) stack space. The halving is what saves us, for{" "}
           <code>n = 2³¹ - 1</code>, we do about 31 multiplications.
         </p>
 
@@ -901,7 +901,7 @@ private double powLong(double x, long n) {
 
         <p>
           Each round halves the number of lists. After <code>log₂ k</code> rounds we&apos;re done. Each round merges
-          a total of N nodes (every node is touched once per round). Total: <code>O(N log k)</code> — same as the
+          a total of N nodes (every node is touched once per round). Total: <code>O(N log k)</code>, same as the
           heap solution, no heap required.
         </p>
 
@@ -939,7 +939,7 @@ private ListNode mergeTwo(ListNode a, ListNode b) {
             third 4N/k, ..., summing to roughly Nk/2.
           </p>
           <p>
-            With pairing, each node is touched exactly <code>log₂ k</code> times — once per round, across
+            With pairing, each node is touched exactly <code>log₂ k</code> times, once per round, across
             <code>log₂ k</code> rounds. That&apos;s O(N log k). For k = 1024, log k = 10, and we go from k = 1024
             cost-units-per-node to 10. Hundredfold speedup, no fancy data structure.
           </p>
@@ -950,7 +950,7 @@ private ListNode mergeTwo(ListNode a, ListNode b) {
         <p>
           Look at <code>mergeRange</code> again. Split, recurse on halves, merge. That&apos;s merge sort, with the
           base case being &quot;an already-sorted list&quot; instead of &quot;a single element.&quot; Once you see
-          this, the third LeetCode problem in the original spec — <strong>LC 912 · Sort an Array</strong> — is just
+          this, the third LeetCode problem in the original spec, <strong>LC 912 · Sort an Array</strong>, is just
           merge sort applied to an int array, with <code>mergeRange</code> swapped for the array-based version we
           wrote in Part 4. It&apos;s the same template.
         </p>
@@ -967,14 +967,14 @@ private ListNode mergeTwo(ListNode a, ListNode b) {
             { id: "exp", label: "O(2^n)", color: "rose" },
           ]}
           items={[
-            { id: "1", label: "T(n) = T(n/2) + O(1) — binary search; pow(x, n).", answer: "log", explanation: "One recursive call, halving. log n levels, O(1) per level. Total O(log n)." },
-            { id: "2", label: "T(n) = 2T(n/2) + O(n) — merge sort; merge K sorted lists by pairing.", answer: "nlogn", explanation: "Master theorem case 2. Every level does Θ(n) total work; log n levels. Total O(n log n)." },
-            { id: "3", label: "T(n) = T(n-1) + O(1) — sum(n), factorial(n), linked-list length.", answer: "lin", explanation: "Linear recursion. n calls, each O(1). Total O(n) — same as the iterative loop, just with O(n) stack." },
-            { id: "4", label: "T(n) = 2T(n-1) + O(1) — naive Fibonacci; subsets generation.", answer: "exp", explanation: "Two branches per level, depth n. The tree has roughly 2ⁿ nodes. Memoization collapses this to O(n) — that's the bridge to dynamic programming." },
-            { id: "5", label: "T(n) = 2T(n/2) + O(1) — touch every node in a balanced binary tree once.", answer: "lin", explanation: "Master theorem case 1: leaves dominate. n^(log_2 2) = n leaves, O(1) each. Total O(n)." },
-            { id: "6", label: "T(n) = T(n/2) + O(n) — quickselect average case, find-K-th.", answer: "lin", explanation: "Master theorem case 3: the root's work dominates because f(n) = n grows faster than n^(log_2 1) = O(1). The geometric series n + n/2 + n/4 + ... sums to 2n = O(n)." },
-            { id: "7", label: "T(n) = 2T(n/2) + O(log n) — divide-and-conquer with a sub-linear merge.", answer: "lin", explanation: "n^(log_2 2) = n leaves dominate the O(log n) combine. Master theorem case 1 — total O(n)." },
-            { id: "8", label: "T(n) = T(n-1) + T(n-2) + O(1) — the literal recurrence Fibonacci satisfies.", answer: "exp", explanation: "Two branches per level (sizes n-1 and n-2), depth n. The node count grows as Θ(φⁿ) ≈ 1.618ⁿ, which is O(2ⁿ) for our purposes. Master theorem doesn't apply here because the subproblems are different sizes — the recursion-tree method gives the answer." },
+            { id: "1", label: "T(n) = T(n/2) + O(1), binary search; pow(x, n).", answer: "log", explanation: "One recursive call, halving. log n levels, O(1) per level. Total O(log n)." },
+            { id: "2", label: "T(n) = 2T(n/2) + O(n), merge sort; merge K sorted lists by pairing.", answer: "nlogn", explanation: "Master theorem case 2. Every level does Θ(n) total work; log n levels. Total O(n log n)." },
+            { id: "3", label: "T(n) = T(n-1) + O(1), sum(n), factorial(n), linked-list length.", answer: "lin", explanation: "Linear recursion. n calls, each O(1). Total O(n), same as the iterative loop, just with O(n) stack." },
+            { id: "4", label: "T(n) = 2T(n-1) + O(1), naive Fibonacci; subsets generation.", answer: "exp", explanation: "Two branches per level, depth n. The tree has roughly 2ⁿ nodes. Memoization collapses this to O(n), that's the bridge to dynamic programming." },
+            { id: "5", label: "T(n) = 2T(n/2) + O(1), touch every node in a balanced binary tree once.", answer: "lin", explanation: "Master theorem case 1: leaves dominate. n^(log_2 2) = n leaves, O(1) each. Total O(n)." },
+            { id: "6", label: "T(n) = T(n/2) + O(n), quickselect average case, find-K-th.", answer: "lin", explanation: "Master theorem case 3: the root's work dominates because f(n) = n grows faster than n^(log_2 1) = O(1). The geometric series n + n/2 + n/4 + ... sums to 2n = O(n)." },
+            { id: "7", label: "T(n) = 2T(n/2) + O(log n), divide-and-conquer with a sub-linear merge.", answer: "lin", explanation: "n^(log_2 2) = n leaves dominate the O(log n) combine. Master theorem case 1, total O(n)." },
+            { id: "8", label: "T(n) = T(n-1) + T(n-2) + O(1), the literal recurrence Fibonacci satisfies.", answer: "exp", explanation: "Two branches per level (sizes n-1 and n-2), depth n. The node count grows as Θ(φⁿ) ≈ 1.618ⁿ, which is O(2ⁿ) for our purposes. Master theorem doesn't apply here because the subproblems are different sizes, the recursion-tree method gives the answer." },
           ]}
         />
 
@@ -993,14 +993,14 @@ private ListNode mergeTwo(ListNode a, ListNode b) {
 
         <PartRecap
           title="Recursion in your bones"
-          gist="Trust the recursive call. Pin a base case. Sketch the tree. Read the recurrence. That's the whole module — three minutes of mental ritual that turns 'I can't think recursively' into a one-time trick you'll never have to relearn."
+          gist="Trust the recursive call. Pin a base case. Sketch the tree. Read the recurrence. That's the whole module, three minutes of mental ritual that turns 'I can't think recursively' into a one-time trick you'll never have to relearn."
           points={[
-            { takeaway: "The leap of faith: assume the recursive call works on smaller input, then build the answer for the current input from that.", detail: "You write one layer; the runtime executes all of them. Stop simulating the call stack — start contracting." },
+            { takeaway: "The leap of faith: assume the recursive call works on smaller input, then build the answer for the current input from that.", detail: "You write one layer; the runtime executes all of them. Stop simulating the call stack, start contracting." },
             { takeaway: "Every infinite recursion is a base-case bug.", detail: "Either the base case is missing or the recursive call doesn't move strictly closer to it. Both surface as StackOverflowError; both are fixed by checking the input transformation against the base condition." },
-            { takeaway: "JVM stack is bounded — ~10K-20K depth on default settings.", detail: "Plenty for balanced trees and most LeetCode. Watch out for: skewed trees, deep linked lists, recursive walks of user-supplied data structures of unknown depth. For those, prefer iterative + explicit stack." },
+            { takeaway: "JVM stack is bounded, ~10K-20K depth on default settings.", detail: "Plenty for balanced trees and most LeetCode. Watch out for: skewed trees, deep linked lists, recursive walks of user-supplied data structures of unknown depth. For those, prefer iterative + explicit stack." },
             { takeaway: "Divide-and-conquer = recursion with halves instead of decrements.", detail: "T(n) = T(n/2) + O(1) → O(log n). T(n) = 2T(n/2) + O(n) → O(n log n). Two patterns power binary search, merge sort, quicksort, pow(x, n), and merge-K-lists." },
             { takeaway: "Master theorem = three patterns of where work lives in the tree.", detail: "Leaves dominate, balanced, root dominates. Sketch the tree, sum a few levels, see which way the geometric series goes. Memorize the cheat-sheet recurrences and you'll cover most of what you ever see." },
-            { takeaway: "Naive recursion + overlapping subproblems = exponential blowup.", detail: "fib(n) is the canonical case. The fix isn't 'don't use recursion' — it's memoization, the bridge from recursion to dynamic programming. That's the next module." },
+            { takeaway: "Naive recursion + overlapping subproblems = exponential blowup.", detail: "fib(n) is the canonical case. The fix isn't 'don't use recursion', it's memoization, the bridge from recursion to dynamic programming. That's the next module." },
           ]}
         />
       </section>

@@ -64,7 +64,7 @@ export default function Page() {
           <li>Why OLTP vs OLAP is the question to ask <em>before</em>{" "}SQL vs NoSQL</li>
           <li>The four NoSQL families and the genuine workload shape that picks each</li>
           <li>Why Postgres + JSONB + partial indexes covers most &quot;we need NoSQL&quot; cases</li>
-          <li>The narrow cliff where Postgres actually breaks — and what to reach for</li>
+          <li>The narrow cliff where Postgres actually breaks, and what to reach for</li>
         </ul>
       </section>
 
@@ -94,20 +94,20 @@ export default function Page() {
 
         <Mermaid chart={oltpOlapDiagram} />
 
-        <h3>OLTP — Online Transactional Processing</h3>
+        <h3>OLTP, Online Transactional Processing</h3>
         <p>
-          Lots of small, point operations. A user clicks &quot;Buy,&quot; you <code>INSERT</code> an order row, <code>UPDATE</code> stock, <code>INSERT</code> a payment record. Each transaction touches a handful of rows. The system is doing thousands of these per second. The latency budget is small (single-digit to tens of milliseconds). You need ACID — partial writes are catastrophic.
+          Lots of small, point operations. A user clicks &quot;Buy,&quot; you <code>INSERT</code> an order row, <code>UPDATE</code> stock, <code>INSERT</code> a payment record. Each transaction touches a handful of rows. The system is doing thousands of these per second. The latency budget is small (single-digit to tens of milliseconds). You need ACID, partial writes are catastrophic.
         </p>
         <p>
           Storage shape: <strong>row-oriented</strong>. Rows for one entity live next to each other on disk so a single SELECT-by-id is one I/O. Indexed by primary key + a handful of high-traffic secondary indexes. B-tree underneath. Examples: Postgres, MySQL, Oracle, SQL Server, CockroachDB.
         </p>
 
-        <h3>OLAP — Online Analytical Processing</h3>
+        <h3>OLAP, Online Analytical Processing</h3>
         <p>
-          Few queries, but each one scans a lot. &quot;Total revenue by region by week for the last 9 months.&quot; The query touches millions or billions of rows but only reads two or three columns. Latency budget is seconds-to-minutes. Concurrency is low — analysts and dashboards, not end-user requests. Writes are batchy: bulk-load nightly or stream from a CDC pipeline.
+          Few queries, but each one scans a lot. &quot;Total revenue by region by week for the last 9 months.&quot; The query touches millions or billions of rows but only reads two or three columns. Latency budget is seconds-to-minutes. Concurrency is low, analysts and dashboards, not end-user requests. Writes are batchy: bulk-load nightly or stream from a CDC pipeline.
         </p>
         <p>
-          Storage shape: <strong>column-oriented</strong>. All values for one column live together so you can scan just the columns you need and skip the rest. Compressed heavily (one column = one type = great compression). No row-level updates — you append batches and use partition pruning. Examples: Snowflake, BigQuery, Redshift, ClickHouse, DuckDB.
+          Storage shape: <strong>column-oriented</strong>. All values for one column live together so you can scan just the columns you need and skip the rest. Compressed heavily (one column = one type = great compression). No row-level updates, you append batches and use partition pruning. Examples: Snowflake, BigQuery, Redshift, ClickHouse, DuckDB.
         </p>
 
         <Callout variant="insight" title="The 100x reason columnar wins for OLAP">
@@ -116,7 +116,7 @@ export default function Page() {
 
         <h3>The mistake that started the &quot;NoSQL&quot; hype</h3>
         <p>
-          A lot of the early NoSQL pitch — &quot;your relational database can&apos;t scan 100M rows fast enough!&quot; — was actually about OLAP workloads being run on OLTP databases. Of course Postgres struggles at full-table aggregations on a billion rows; that&apos;s not what its physical layout is for. The right answer was &quot;use a columnar warehouse,&quot; not &quot;use Cassandra.&quot;
+          A lot of the early NoSQL pitch, &quot;your relational database can&apos;t scan 100M rows fast enough!&quot;, was actually about OLAP workloads being run on OLTP databases. Of course Postgres struggles at full-table aggregations on a billion rows; that&apos;s not what its physical layout is for. The right answer was &quot;use a columnar warehouse,&quot; not &quot;use Cassandra.&quot;
         </p>
         <p>
           Today the lines are clean: OLTP keeps your live application data; an analytics warehouse (Snowflake, BigQuery, ClickHouse) is loaded periodically from it via CDC or batch ETL. Two different stores for two different jobs.
@@ -124,16 +124,16 @@ export default function Page() {
 
         <h3>The hybrid: HTAP</h3>
         <p>
-          Some systems try to do both — TiDB, SingleStore, Spanner with column store, Postgres with Citus column extensions. They&apos;re called HTAP (Hybrid Transactional/Analytical Processing). They generally trade off some peak performance on each axis for the convenience of one system. Useful in some places, but the conventional pattern (OLTP + warehouse + a pipe between them) is still the default.
+          Some systems try to do both, TiDB, SingleStore, Spanner with column store, Postgres with Citus column extensions. They&apos;re called HTAP (Hybrid Transactional/Analytical Processing). They generally trade off some peak performance on each axis for the convenience of one system. Useful in some places, but the conventional pattern (OLTP + warehouse + a pipe between them) is still the default.
         </p>
 
         <Quiz
-          question="A team complains that Postgres is 'too slow' because their nightly report query — full table scan over a 200M row orders table — takes 18 minutes. Which is the right diagnosis?"
+          question="A team complains that Postgres is 'too slow' because their nightly report query, full table scan over a 200M row orders table, takes 18 minutes. Which is the right diagnosis?"
           options={[
-            { label: "It's an OLAP query running on an OLTP database. Move the report to a columnar warehouse loaded from Postgres via CDC; keep Postgres for the transactional workload.", correct: true, explanation: "Right. Row-stores read all columns of every matching row even if you SELECT only 3. A columnar warehouse will do that report in seconds. This isn't a Postgres problem — it's a wrong-tool problem." },
+            { label: "It's an OLAP query running on an OLTP database. Move the report to a columnar warehouse loaded from Postgres via CDC; keep Postgres for the transactional workload.", correct: true, explanation: "Right. Row-stores read all columns of every matching row even if you SELECT only 3. A columnar warehouse will do that report in seconds. This isn't a Postgres problem, it's a wrong-tool problem." },
             { label: "Postgres can't handle 200M rows. They should switch to MongoDB.", explanation: "Postgres handles 200M rows fine for OLTP. MongoDB is also row/document-shaped and would be no better for big aggregation scans." },
             { label: "Add an index on every column in the WHERE clause.", explanation: "An index helps point lookups and small range scans. Full-table aggregations need to read the whole table; an index doesn't speed that up." },
-            { label: "Shard Postgres across 16 nodes.", explanation: "Sharding helps when you can route most queries to one shard. A full-table aggregation just becomes a 16-way scatter-gather — same total work, more coordination overhead." },
+            { label: "Shard Postgres across 16 nodes.", explanation: "Sharding helps when you can route most queries to one shard. A full-table aggregation just becomes a 16-way scatter-gather, same total work, more coordination overhead." },
           ]}
           hint="What's the physical layout difference between row-stores and column-stores?"
           xp={7}
@@ -143,9 +143,9 @@ export default function Page() {
           question="Which of these is squarely OLAP?"
           options={[
             { label: "An analyst running 'SELECT region, SUM(amount) FROM orders WHERE created_at > now() - interval ''9 months'' GROUP BY region' once an hour.", correct: true, explanation: "Few queries, each one scans a huge slice of history, reads few columns, low concurrency. Textbook OLAP. Belongs in a warehouse, not your live OLTP DB." },
-            { label: "A REST endpoint that returns a single user's profile by id, called 5,000 times per second.", explanation: "Tiny point lookups at high concurrency — that's pure OLTP." },
+            { label: "A REST endpoint that returns a single user's profile by id, called 5,000 times per second.", explanation: "Tiny point lookups at high concurrency, that's pure OLTP." },
             { label: "A 'Buy now' button that writes a payment row, an order row, and decrements stock atomically.", explanation: "Multi-row ACID transaction with strict latency. Classic OLTP." },
-            { label: "A WebSocket pushing 1,000 chat messages per second to active users.", explanation: "Streaming/messaging workload — neither OLTP nor OLAP. Different storage shape entirely (more on this in the messaging modules)." },
+            { label: "A WebSocket pushing 1,000 chat messages per second to active users.", explanation: "Streaming/messaging workload, neither OLTP nor OLAP. Different storage shape entirely (more on this in the messaging modules)." },
           ]}
           hint="Look at how many rows the query reads vs how many it returns."
           xp={6}
@@ -181,11 +181,11 @@ export default function Page() {
         </p>
         <ul>
           <li>Your data is genuinely nested and the access pattern is &quot;fetch the whole thing.&quot; Product catalog with variants, configurations, images. CMS pages. Game player state.</li>
-          <li>The schema is variable across instances and that variability is a product requirement, not just laziness — different vendors&apos; products have different attributes, for instance.</li>
+          <li>The schema is variable across instances and that variability is a product requirement, not just laziness, different vendors&apos; products have different attributes, for instance.</li>
           <li>You don&apos;t need to do many cross-document joins. Document stores are bad at joins. If your access pattern is &quot;get user, get their orders, get the items in those orders, get reviews,&quot; you&apos;ll fight the database.</li>
         </ul>
         <p>
-          <strong>When teams pick it for the wrong reasons:</strong> &quot;We don&apos;t want to write migrations.&quot; You will. The schema lives somewhere — either in your database or in your application code, and now it&apos;s the latter, with no enforcement and silently broken old documents lurking forever.
+          <strong>When teams pick it for the wrong reasons:</strong> &quot;We don&apos;t want to write migrations.&quot; You will. The schema lives somewhere, either in your database or in your application code, and now it&apos;s the latter, with no enforcement and silently broken old documents lurking forever.
         </p>
 
         <h3>Family 2: Wide-column stores</h3>
@@ -193,7 +193,7 @@ export default function Page() {
           <strong>Examples:</strong>{" "}Cassandra, ScyllaDB, HBase, BigTable.
         </p>
         <p>
-          Confusingly named — these are not the same as columnar OLAP databases. The data model is a sparse 2D map: row key → column family → column name → value. They&apos;re built around <strong>massive write throughput</strong>{" "}and <strong>linear horizontal scalability</strong>{" "}with tunable consistency. The trade is that queries must be designed around the partition key — cross-partition queries are scatter-gather and slow.
+          Confusingly named, these are not the same as columnar OLAP databases. The data model is a sparse 2D map: row key → column family → column name → value. They&apos;re built around <strong>massive write throughput</strong>{" "}and <strong>linear horizontal scalability</strong>{" "}with tunable consistency. The trade is that queries must be designed around the partition key, cross-partition queries are scatter-gather and slow.
         </p>
         <p>
           <strong>When it wins:</strong>
@@ -212,7 +212,7 @@ export default function Page() {
           <strong>Examples:</strong>{" "}Neo4j, Amazon Neptune, JanusGraph, Memgraph.
         </p>
         <p>
-          Nodes and edges as first-class citizens. Indexed for fast traversal — &quot;walk from this user, follow knows edges 3 hops out, filter by node property&quot; runs in time proportional to the result, not the graph size.
+          Nodes and edges as first-class citizens. Indexed for fast traversal, &quot;walk from this user, follow knows edges 3 hops out, filter by node property&quot; runs in time proportional to the result, not the graph size.
         </p>
         <p>
           <strong>When it wins:</strong>
@@ -238,14 +238,14 @@ export default function Page() {
         <ul>
           <li>Caches in front of a slower system of record (the most common usage by far).</li>
           <li>Sessions, ephemeral state, rate-limiter counters, leaderboards (Redis sorted sets), pub-sub fanout.</li>
-          <li>Anywhere the access pattern is genuinely &quot;by key&quot; — a coordinator&apos;s lock table, a feature flag store, a job queue.</li>
+          <li>Anywhere the access pattern is genuinely &quot;by key&quot;, a coordinator&apos;s lock table, a feature flag store, a job queue.</li>
         </ul>
         <p>
-          <strong>When teams pick it for the wrong reasons:</strong>{" "}Treating Redis as a primary database. We&apos;ll devote a whole module to that one — the short version is that Redis is excellent at being a cache and dangerous as a system of record. Distributed cache deep dive coming up.
+          <strong>When teams pick it for the wrong reasons:</strong>{" "}Treating Redis as a primary database. We&apos;ll devote a whole module to that one, the short version is that Redis is excellent at being a cache and dangerous as a system of record. Distributed cache deep dive coming up.
         </p>
 
         <Callout variant="warn" title="The wrong-reasons pattern">
-          <p className="m-0">Notice the recurring theme. Each NoSQL family has a real reason to exist — a workload shape SQL serves badly. And each family also has a popular wrong reason teams adopt it: &quot;flexible schema&quot; (you still need a schema), &quot;it scales&quot; (you don&apos;t need that scale yet), &quot;our data has relationships&quot; (so does everyone&apos;s). When you pick NoSQL for a wrong reason, you trade SQL&apos;s strengths — joins, transactions, mature tooling, query planner — for nothing.</p>
+          <p className="m-0">Notice the recurring theme. Each NoSQL family has a real reason to exist, a workload shape SQL serves badly. And each family also has a popular wrong reason teams adopt it: &quot;flexible schema&quot; (you still need a schema), &quot;it scales&quot; (you don&apos;t need that scale yet), &quot;our data has relationships&quot; (so does everyone&apos;s). When you pick NoSQL for a wrong reason, you trade SQL&apos;s strengths, joins, transactions, mature tooling, query planner, for nothing.</p>
         </Callout>
 
         <h3>The decision matrix</h3>
@@ -277,8 +277,8 @@ export default function Page() {
           options={[
             { label: "Graph (Neo4j or similar). Multi-hop traversals at depth 4 across millions of accounts is exactly what graph databases are indexed for; the same query in SQL becomes a chain of self-joins that explodes combinatorially.", correct: true, explanation: "Right. The relationship traversal is the query, not metadata. SQL handles 1-2 hop joins fine, but each hop multiplies cost; at 4 hops over millions of nodes, the planner can't help you. Graph databases store edges as direct pointers, so traversal cost scales with the result, not the data size." },
             { label: "Wide-column (Cassandra). Built for scale and high throughput.", explanation: "Cassandra is great for partition-shaped writes, terrible for cross-partition relationship traversal. Nothing about the query is partition-friendly." },
-            { label: "Document (MongoDB) — store each account with embedded relationships.", explanation: "Embedding a graph in documents means duplicating data on every edge update and still doing application-side traversal. It works for shallow queries; 4-hop traversal is the wrong shape." },
-            { label: "Key-value (Redis). Cache the connections.", explanation: "KV is for known keys. The query is 'discover the cluster' — you don't know the keys you'll visit ahead of time." },
+            { label: "Document (MongoDB), store each account with embedded relationships.", explanation: "Embedding a graph in documents means duplicating data on every edge update and still doing application-side traversal. It works for shallow queries; 4-hop traversal is the wrong shape." },
+            { label: "Key-value (Redis). Cache the connections.", explanation: "KV is for known keys. The query is 'discover the cluster', you don't know the keys you'll visit ahead of time." },
           ]}
           hint="Count the hops and ask which family stores edges as first-class citizens."
           xp={7}
@@ -287,7 +287,7 @@ export default function Page() {
         <Quiz
           question="Which is a 'wrong reason' to pick MongoDB?"
           options={[
-            { label: "'Our schema changes weekly and we don't want to write migrations.'", correct: true, explanation: "Your schema still exists — it's just no longer enforced by the database. Now broken old documents from three releases ago silently coexist with new ones, and your application code accumulates ' if doc.has(field_v3) ' guards forever. You don't escape the schema; you just hide it." },
+            { label: "'Our schema changes weekly and we don't want to write migrations.'", correct: true, explanation: "Your schema still exists, it's just no longer enforced by the database. Now broken old documents from three releases ago silently coexist with new ones, and your application code accumulates ' if doc.has(field_v3) ' guards forever. You don't escape the schema; you just hide it." },
             { label: "'Our product entities have variable, deeply nested attributes per vendor and we always fetch the whole product blob at once.'", explanation: "This is a legitimately good fit. Variable shape across instances and the 'fetch the whole thing' access pattern is what document stores are for." },
             { label: "'We need to support hierarchical CMS content where each page can embed nested blocks of arbitrary depth.'", explanation: "Genuinely nested, denormalized, fetch-by-id. Document store fits well." },
             { label: "'Our players' game state is a JSON blob keyed by player_id and we read/write the whole blob each tick.'", explanation: "Pure document access pattern. MongoDB or DynamoDB as document store both fit." },
@@ -318,7 +318,7 @@ export default function Page() {
         <p>
           Postgres&apos;s <code>jsonb</code> column type is a binary-encoded JSON document, with GIN indexes that let you query path expressions efficiently. You get document flexibility on the columns that need it, plus relational integrity on the columns that don&apos;t.
         </p>
-        <CodeBlock lang="plain" caption="Postgres JSONB — the 'we need MongoDB' case, mostly solved">{`-- Hybrid table: relational columns + a JSONB blob for variable attributes
+        <CodeBlock lang="plain" caption="Postgres JSONB, the 'we need MongoDB' case, mostly solved">{`-- Hybrid table: relational columns + a JSONB blob for variable attributes
 CREATE TABLE products (
   id           BIGSERIAL PRIMARY KEY,
   vendor_id    BIGINT NOT NULL REFERENCES vendors(id),
@@ -343,7 +343,7 @@ WHERE p.attrs ->> 'category' = 'apparel';`}</CodeBlock>
         <p>
           Postgres lets you index a <em>subset</em>{" "}of rows. If 99% of queries hit a tiny slice of the data (active orders, current sessions, undeleted records), a partial index is faster, smaller, and cheaper to maintain than a full one.
         </p>
-        <CodeBlock lang="plain" caption="Partial index — only rows that matter to this query">{`-- 200M total orders, but only ~50k 'open' at any moment
+        <CodeBlock lang="plain" caption="Partial index, only rows that matter to this query">{`-- 200M total orders, but only ~50k 'open' at any moment
 CREATE INDEX idx_orders_open ON orders (user_id, created_at)
 WHERE status = 'open';
 
@@ -356,7 +356,7 @@ ORDER BY created_at DESC LIMIT 20;`}</CodeBlock>
         <p>
           Spring Data JPA gives you ORM ergonomics; <code>JdbcTemplate</code> stays right next to it for the queries where you need control. Postgres-specific features (JSONB, arrays, full-text) are accessible through both.
         </p>
-        <CodeBlock lang="java" caption="ProductRepository.java — Spring Data + JSONB query">{`@Repository
+        <CodeBlock lang="java" caption="ProductRepository.java, Spring Data + JSONB query">{`@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
   // JPQL with native fragment for JSONB containment
@@ -379,7 +379,7 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
     42L, "{\\"color\\":\\"blue\\",\\"size\\":\\"L\\"}", 50);`}</CodeBlock>
 
         <Callout variant="spring" title="The 'just use Postgres' philosophy">
-          <p className="m-0">A common senior pattern: start every new service with Postgres. If you genuinely outgrow it on a specific axis (write throughput, query type, scale), introduce a specialized store next to Postgres for that axis. You&apos;ll usually find Postgres handles more than you&apos;d expect — single instances comfortably do tens of thousands of QPS with proper indexing, and a primary + read replicas takes you another 10x.</p>
+          <p className="m-0">A common senior pattern: start every new service with Postgres. If you genuinely outgrow it on a specific axis (write throughput, query type, scale), introduce a specialized store next to Postgres for that axis. You&apos;ll usually find Postgres handles more than you&apos;d expect, single instances comfortably do tens of thousands of QPS with proper indexing, and a primary + read replicas takes you another 10x.</p>
         </Callout>
 
         <h3>The cliffs where Postgres actually breaks</h3>
@@ -411,12 +411,12 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
             { id: "kv", label: "Key-value (Redis / DynamoDB-as-KV)", color: "sky" },
           ]}
           items={[
-            { id: "orders", label: "E-commerce orders, payments, inventory — multi-row transactions, ~5k QPS, strict ACID, classic web app.", answer: "postgres", explanation: "Textbook OLTP. Postgres handles this comfortably with read replicas. Sharding only enters if you grow another 10x." },
-            { id: "metrics", label: "Per-second metrics ingestion across 200k servers — 800k writes/sec sustained, queried as 'last 24h for host X'.", answer: "wide-col", explanation: "Massive write throughput, partition-shaped reads (by host_id + time range), tunable consistency. Cassandra was built for exactly this." },
-            { id: "exec-dash", label: "Daily executive dashboard — 'revenue by region by product line for the last 18 months,' loaded from a 4B-row orders archive.", answer: "warehouse", explanation: "Few queries, huge scans, low concurrency, columnar compression wins. Snowflake/BigQuery/ClickHouse with CDC from the OLTP store." },
-            { id: "session", label: "User sessions for a web app — read on every request, written on login/logout, must survive a pod restart, ~50k QPS reads.", answer: "kv", explanation: "Pure get-by-key with sub-ms latency requirements. Redis is the standard answer; persistence enabled so a restart doesn't dump every session." },
-            { id: "linkedin", label: "'You’re connected to X through Y who knows Z' — find paths up to 4 hops in a 500M-node professional network.", answer: "graph", explanation: "4-hop traversal at scale is what graph databases are indexed for. SQL falls off a cliff past 2-3 hops here." },
-            { id: "cms-pages", label: "CMS for marketing pages — each page is a deeply-nested tree of content blocks (text, image, embed, custom), schema varies across page types, accessed by URL slug.", answer: "document", explanation: "Variable nested shape, fetch-the-whole-page access pattern, low join needs. Document store is a clean fit; Postgres + JSONB is also defensible if you want one DB." },
+            { id: "orders", label: "E-commerce orders, payments, inventory, multi-row transactions, ~5k QPS, strict ACID, classic web app.", answer: "postgres", explanation: "Textbook OLTP. Postgres handles this comfortably with read replicas. Sharding only enters if you grow another 10x." },
+            { id: "metrics", label: "Per-second metrics ingestion across 200k servers, 800k writes/sec sustained, queried as 'last 24h for host X'.", answer: "wide-col", explanation: "Massive write throughput, partition-shaped reads (by host_id + time range), tunable consistency. Cassandra was built for exactly this." },
+            { id: "exec-dash", label: "Daily executive dashboard, 'revenue by region by product line for the last 18 months,' loaded from a 4B-row orders archive.", answer: "warehouse", explanation: "Few queries, huge scans, low concurrency, columnar compression wins. Snowflake/BigQuery/ClickHouse with CDC from the OLTP store." },
+            { id: "session", label: "User sessions for a web app, read on every request, written on login/logout, must survive a pod restart, ~50k QPS reads.", answer: "kv", explanation: "Pure get-by-key with sub-ms latency requirements. Redis is the standard answer; persistence enabled so a restart doesn't dump every session." },
+            { id: "linkedin", label: "'You’re connected to X through Y who knows Z', find paths up to 4 hops in a 500M-node professional network.", answer: "graph", explanation: "4-hop traversal at scale is what graph databases are indexed for. SQL falls off a cliff past 2-3 hops here." },
+            { id: "cms-pages", label: "CMS for marketing pages, each page is a deeply-nested tree of content blocks (text, image, embed, custom), schema varies across page types, accessed by URL slug.", answer: "document", explanation: "Variable nested shape, fetch-the-whole-page access pattern, low join needs. Document store is a clean fit; Postgres + JSONB is also defensible if you want one DB." },
           ]}
         />
 
@@ -433,9 +433,9 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
         <Quiz
           question="A team says 'we picked DynamoDB because we need to scale to a billion users.' They have 50,000 active users and a roadmap that puts them at 5M in three years. What's the senior critique?"
           options={[
-            { label: "They're optimizing for a scale they're nowhere near, paying the design cost (no joins, key-shape constrains all queries, no transactions across keys) for a feature they won't need for years — if ever.", correct: true, explanation: "Right. DynamoDB is excellent at the workload it's designed for — but its constraints cost real engineering time on day one. 5M users is a comfortable Postgres workload. If they hit 100M they can migrate or shard then. Building for hypothetical scale you don't have is one of the most reliable ways to slow yourself down." },
+            { label: "They're optimizing for a scale they're nowhere near, paying the design cost (no joins, key-shape constrains all queries, no transactions across keys) for a feature they won't need for years, if ever.", correct: true, explanation: "Right. DynamoDB is excellent at the workload it's designed for, but its constraints cost real engineering time on day one. 5M users is a comfortable Postgres workload. If they hit 100M they can migrate or shard then. Building for hypothetical scale you don't have is one of the most reliable ways to slow yourself down." },
             { label: "DynamoDB doesn't actually scale to a billion users.", explanation: "DynamoDB does scale that far. The critique isn't that it doesn't work; it's that they don't need the trade-offs yet." },
-            { label: "They should use MongoDB instead — it's better at scale.", explanation: "Same critique would apply. The issue isn't 'wrong NoSQL,' it's 'NoSQL for a workload that fits Postgres easily.'" },
+            { label: "They should use MongoDB instead, it's better at scale.", explanation: "Same critique would apply. The issue isn't 'wrong NoSQL,' it's 'NoSQL for a workload that fits Postgres easily.'" },
             { label: "Postgres can't actually handle 5M users.", explanation: "5M users with reasonable per-user activity is well within single-primary Postgres + read replicas. Most apps you've used at that scale run on something boring." },
           ]}
           hint="What's the cost of buying a guarantee you don't need yet?"
@@ -446,9 +446,9 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
           question="You're starting a new service. Order data, ~10k writes/sec at peak, multi-row transactions required, the team is 4 Java engineers with Spring experience and zero NoSQL ops experience. What's the right default and why?"
           options={[
             { label: "Postgres. It handles 10k writes/sec on a properly-sized primary, gives you ACID transactions for free, and your team can hit the ground running. Re-evaluate the storage choice when you have a concrete reason Postgres isn't enough.", correct: true, explanation: "Right. The workload fits Postgres comfortably, ACID is a hard requirement (multi-row transactions), and team experience matters: a misconfigured Cassandra cluster will cost you more than a slightly over-provisioned Postgres instance. Default to boring." },
-            { label: "Cassandra — it'll scale better when they grow.", explanation: "10k writes/sec is comfortably within Postgres. And Cassandra doesn't do multi-row transactions across partitions — you'd be giving up a hard requirement to avoid a problem you don't have." },
-            { label: "MongoDB — JSON is more flexible.", explanation: "Order data is highly structured (line items, payments, addresses). Flexibility you don't need is friction, and you'd lose multi-document transactions in older versions or pay perf cost in newer ones." },
-            { label: "DynamoDB — managed and infinitely scalable.", explanation: "DynamoDB constrains every query to the partition-key shape. Order systems usually need queries by user, by date range, by status — many shapes. Forcing all of them into DynamoDB GSIs is more cost and complexity than this team needs." },
+            { label: "Cassandra, it'll scale better when they grow.", explanation: "10k writes/sec is comfortably within Postgres. And Cassandra doesn't do multi-row transactions across partitions, you'd be giving up a hard requirement to avoid a problem you don't have." },
+            { label: "MongoDB, JSON is more flexible.", explanation: "Order data is highly structured (line items, payments, addresses). Flexibility you don't need is friction, and you'd lose multi-document transactions in older versions or pay perf cost in newer ones." },
+            { label: "DynamoDB, managed and infinitely scalable.", explanation: "DynamoDB constrains every query to the partition-key shape. Order systems usually need queries by user, by date range, by status, many shapes. Forcing all of them into DynamoDB GSIs is more cost and complexity than this team needs." },
           ]}
           hint="Match the workload, the requirement (ACID), and the team's expertise."
           xp={6}
@@ -469,7 +469,7 @@ List<Product> blueShirts = repo.findByVendorAndAttrs(
       <section>
         <h2>What this module didn&apos;t cover</h2>
         <p>
-          We classified storage by workload shape. We didn&apos;t go deep on what indexes actually do, why some queries are fast and others aren&apos;t, or how a B-tree differs from an LSM tree under the hood — that&apos;s the next module. After indexing, we&apos;ll get to partitioning, replication, caching, and search systems, which together make up Phase 2&apos;s storage layer.
+          We classified storage by workload shape. We didn&apos;t go deep on what indexes actually do, why some queries are fast and others aren&apos;t, or how a B-tree differs from an LSM tree under the hood, that&apos;s the next module. After indexing, we&apos;ll get to partitioning, replication, caching, and search systems, which together make up Phase 2&apos;s storage layer.
         </p>
       </section>
 

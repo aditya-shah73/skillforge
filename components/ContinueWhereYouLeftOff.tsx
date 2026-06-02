@@ -59,7 +59,7 @@ export default function ContinueWhereYouLeftOff() {
               </span>
             </div>
             <h3 className="truncate text-base font-bold tracking-tight sm:text-lg">
-              Module {target.module.number} — {target.module.title}
+              Module {target.module.number}, {target.module.title}
             </h3>
             <p className="mt-1 line-clamp-1 text-xs text-slate-600 dark:text-slate-400">
               {target.module.subtitle}

@@ -54,7 +54,7 @@ flowchart TB
           Phase 2 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          SQL vs NoSQL, indexing, partitioning, replication, caching, search — the storage decision toolkit on one card.
+          SQL vs NoSQL, indexing, partitioning, replication, caching, search, the storage decision toolkit on one card.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-2-revision" />
         <ModuleProgress moduleSlug="phase-2-revision" checkpoints={CHECKPOINTS} />
@@ -63,7 +63,7 @@ flowchart TB
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 2</strong> — every datastore decision, every index trade, every replication mode, every cache pattern from the seven previous modules, compressed into tables and decision cards. Use it as the page you re-read on the train before a system-design round, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 2</strong>, every datastore decision, every index trade, every replication mode, every cache pattern from the seven previous modules, compressed into tables and decision cards. Use it as the page you re-read on the train before a system-design round, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The modules you&apos;re consolidating: <Link href="/courses/system-design/modules/sql-vs-nosql" className="text-amber-600 hover:underline">SQL vs NoSQL</Link>, <Link href="/courses/system-design/modules/indexing-deep" className="text-amber-600 hover:underline">Indexing deep dive</Link>, <Link href="/courses/system-design/modules/partitioning-sharding" className="text-amber-600 hover:underline">Partitioning &amp; sharding</Link>, <Link href="/courses/system-design/modules/replication" className="text-amber-600 hover:underline">Replication</Link>, <Link href="/courses/system-design/modules/caching-patterns" className="text-amber-600 hover:underline">Caching patterns</Link>, <Link href="/courses/system-design/modules/distributed-cache-deep" className="text-amber-600 hover:underline">Distributed cache deep dive</Link>, and <Link href="/courses/system-design/modules/search-systems" className="text-amber-600 hover:underline">Search systems</Link>.
@@ -83,7 +83,7 @@ flowchart TB
           The first question on any storage whiteboard. Default to Postgres; deviate only when one of the right-hand columns lights up.
         </p>
 
-        <CodeBlock lang="plain" caption="The six families — when each one actually wins">{`Family            | Wins when…                                        | Example systems          | Skip if…
+        <CodeBlock lang="plain" caption="The six families, when each one actually wins">{`Family            | Wins when…                                        | Example systems          | Skip if…
 ------------------|---------------------------------------------------|--------------------------|---------------------------------
 Relational (SQL)  | Multi-row transactions, joins, strong            | Postgres, MySQL,         | Single-key access at extreme
                   | consistency, ad-hoc queries, schema you'll       | CockroachDB, Spanner     | scale (>>100k QPS per shard);
@@ -104,16 +104,16 @@ Search            | Full-text, fuzzy, faceted, ranked. Inverted-     | Elasticse
                   |                                                  |                          | aggregations (use OLAP).`}</CodeBlock>
 
         <Callout variant="insight" title="The 80% rule">
-          Most production services are well-served by <strong>Postgres + a cache</strong>. JSONB covers the document-store case, partial indexes cover most performance cliffs, and the JOIN you&apos;ll wish you had later is free. Reach for NoSQL when the access pattern is genuinely single-key, write-firehose, or graph-shaped — not because someone said &quot;web scale.&quot;
+          Most production services are well-served by <strong>Postgres + a cache</strong>. JSONB covers the document-store case, partial indexes cover most performance cliffs, and the JOIN you&apos;ll wish you had later is free. Reach for NoSQL when the access pattern is genuinely single-key, write-firehose, or graph-shaped, not because someone said &quot;web scale.&quot;
         </Callout>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-4 dark:border-slate-800 dark:bg-emerald-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">OLTP — transactional</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">OLTP, transactional</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Row-oriented. Short writes, point reads. Postgres, MySQL. P99 in single-digit ms.</p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-violet-50/40 p-4 dark:border-slate-800 dark:bg-violet-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-violet-700 uppercase dark:text-violet-300">OLAP — analytical</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-violet-700 uppercase dark:text-violet-300">OLAP, analytical</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">Column-oriented. Wide scans, aggregations over TB. Snowflake, BigQuery, ClickHouse. P99 in seconds is fine.</p>
           </div>
         </div>
@@ -153,17 +153,17 @@ Search            | Full-text, fuzzy, faceted, ranked. Inverted-     | Elasticse
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">LSM tree</td>
-                <td className="px-4 py-3 font-mono text-amber-600">O(log n) × levels — read amp</td>
+                <td className="px-4 py-3 font-mono text-amber-600">O(log n) × levels, read amp</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1) sequential append</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Write-heavy: time-series, event logs, Cassandra/RocksDB workloads.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Read-mostly with strict P99 — read amplification &amp; compaction stalls hurt.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Read-mostly with strict P99, read amplification &amp; compaction stalls hurt.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Hash index</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1) exact match</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">O(1)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Equality-only lookups (KV stores, Postgres HASH index).</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Range scans, sorts, prefix matches — hash gives you none.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Range scans, sorts, prefix matches, hash gives you none.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Inverted index</td>
@@ -177,24 +177,24 @@ Search            | Full-text, fuzzy, faceted, ranked. Inverted-     | Elasticse
                 <td className="px-4 py-3 font-mono text-emerald-600">B-tree over a filtered subset</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">Only on matching rows</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Tiny hot subset of a huge table (e.g. <code>WHERE status=&apos;open&apos;</code> on 200M orders).</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Predicate isn&apos;t selective — degrades to a normal index with extra rules.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Predicate isn&apos;t selective, degrades to a normal index with extra rules.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Covering index</td>
                 <td className="px-4 py-3 font-mono text-emerald-600">Index-only scan, no table touch</td>
                 <td className="px-4 py-3 font-mono text-amber-600">Wider index, more I/O on write</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Hot read paths returning a few columns. Stick payload in <code>INCLUDE</code>.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Wide rows — the index becomes a half-copy of the table.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Wide rows, the index becomes a half-copy of the table.</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Composite index column order — the rule that bites everyone</h3>
+        <h3 className="mb-2 text-base font-semibold">Composite index column order, the rule that bites everyone</h3>
         <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
           Order columns by <strong>equality predicates first, then range, then sort</strong>. The leftmost prefix is the only one the index can seek on; anything after the first range column is just a tiebreaker.
         </p>
-        <CodeBlock lang="plain" caption="Composite index — column order decides whether it&apos;s used">{`-- Query: WHERE user_id = ? AND created_at > ? ORDER BY created_at DESC
+        <CodeBlock lang="plain" caption="Composite index, column order decides whether it&apos;s used">{`-- Query: WHERE user_id = ? AND created_at > ? ORDER BY created_at DESC
 
 -- GOOD — equality first, then range
 CREATE INDEX idx_orders_user_created ON orders(user_id, created_at DESC);
@@ -205,7 +205,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 -- Can only range-scan by date, then filter by user_id row by row. Useless prefix.`}</CodeBlock>
 
         <Callout variant="warn" title="When an index hurts">
-          Every secondary index multiplies the work of an <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>. Indexes on low-cardinality columns (booleans, status enums with three values) almost never help — the planner does a sequential scan anyway. Drop them. EXPLAIN before you assume.
+          Every secondary index multiplies the work of an <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>. Indexes on low-cardinality columns (booleans, status enums with three values) almost never help, the planner does a sequential scan anyway. Drop them. EXPLAIN before you assume.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
@@ -235,7 +235,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
       {/* SECTION 4 — Partitioning decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Partitioning &amp; sharding — pick one</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Partitioning &amp; sharding, pick one</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The choice depends on your access pattern, not your data shape.
         </p>
@@ -257,7 +257,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong>How:</strong>{" "}contiguous key ranges per shard.</p>
             <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
               <li>Range scans / time-series queries are cheap</li>
-              <li>Hotspots on monotonic keys (timestamps, autoincrement) — all writes hit one shard</li>
+              <li>Hotspots on monotonic keys (timestamps, autoincrement), all writes hit one shard</li>
               <li>Mitigate with composite keys: <code>(region, ts)</code></li>
               <li>Default for HBase, Bigtable, CockroachDB</li>
             </ul>
@@ -267,16 +267,16 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <div className="mb-2 text-xs font-bold tracking-wider text-blue-700 uppercase dark:text-blue-300">Directory / lookup</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300"><strong>How:</strong>{" "}a service maps key → shard.</p>
             <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
-              <li>Most flexible — rebalance one tenant at a time</li>
+              <li>Most flexible, rebalance one tenant at a time</li>
               <li>Extra hop on every read (cache the directory aggressively)</li>
-              <li>Directory becomes a SPOF — must be HA</li>
+              <li>Directory becomes a SPOF, must be HA</li>
               <li>Used in Vitess (YouTube/Slack) and many multi-tenant SaaS systems</li>
             </ul>
           </div>
         </div>
 
         <Callout variant="insight" title="Consistent hashing in one paragraph">
-          Plain <code>hash(k) % N</code> means changing N reshuffles almost everything. Consistent hashing puts both nodes and keys on a ring; a key goes to the next node clockwise. Adding a node only steals keys from <em>one</em>{" "}neighbour. Always pair with <strong>virtual nodes</strong> (100–500 vnodes per physical node) — without them, the ring is uneven and you get hot shards. Skew falls as ~1/√(V·N).
+          Plain <code>hash(k) % N</code> means changing N reshuffles almost everything. Consistent hashing puts both nodes and keys on a ring; a key goes to the next node clockwise. Adding a node only steals keys from <em>one</em>{" "}neighbour. Always pair with <strong>virtual nodes</strong> (100–500 vnodes per physical node), without them, the ring is uneven and you get hot shards. Skew falls as ~1/√(V·N).
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
@@ -288,7 +288,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
       {/* SECTION 5 — Replication */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Replication — three topologies, two sync modes</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Replication, three topologies, two sync modes</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Pick the topology first (where do writes go?), then the sync mode (when does the client see them?).
         </p>
@@ -308,7 +308,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
               <tr>
                 <td className="px-4 py-3 font-semibold">Leader-follower</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">One leader. Followers replicate.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">None — single write path.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">None, single write path.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">99% of systems. Postgres, MySQL, MongoDB replica sets.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Multi-region with low write latency required.</td>
               </tr>
@@ -356,10 +356,10 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
 
         <h3 className="mb-2 text-base font-semibold">The R + W &gt; N quorum rule (leaderless)</h3>
         <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
-          With N replicas, if writes require W acks and reads require R acks, then <strong>R + W &gt; N</strong>{" "}guarantees at least one overlapping node — i.e. you read the latest write. <code>N=3, W=2, R=2</code> is the canonical setting; tune W up for write durability, R up for read freshness, both down for availability.
+          With N replicas, if writes require W acks and reads require R acks, then <strong>R + W &gt; N</strong>{" "}guarantees at least one overlapping node, i.e. you read the latest write. <code>N=3, W=2, R=2</code> is the canonical setting; tune W up for write durability, R up for read freshness, both down for availability.
         </p>
 
-        <h3 className="mb-2 text-base font-semibold">Read-your-writes — three strategies</h3>
+        <h3 className="mb-2 text-base font-semibold">Read-your-writes, three strategies</h3>
         <ol className="mb-3 list-decimal space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-400">
           <li><strong>Sticky session:</strong>{" "}route a user&apos;s reads to the same replica for N seconds after a write. Cheapest fix.</li>
           <li><strong>Read from leader after write:</strong>{" "}for X seconds post-write, send that user&apos;s reads to the leader.</li>
@@ -379,7 +379,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
       {/* SECTION 6 — Caching patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Caching patterns — four, in plain English</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Caching patterns, four, in plain English</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The pattern decides who owns reads, who owns writes, and where the staleness window lives.
         </p>
@@ -389,7 +389,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Cache-aside (the default)</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">App reads cache; on miss, app reads DB and writes to cache. Writes go to DB and invalidate cache.</p>
             <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
-              <li>Lazy population — only hot data gets cached</li>
+              <li>Lazy population, only hot data gets cached</li>
               <li>Cache failure → degrade to slow, not down</li>
               <li>Bug surface: missed invalidations, races</li>
               <li>Pick this 80% of the time</li>
@@ -400,7 +400,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <div className="mb-2 text-xs font-bold tracking-wider text-blue-700 uppercase dark:text-blue-300">Write-through</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Writes hit cache and DB synchronously. Reads always hit cache.</p>
             <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
-              <li>Cache and DB stay in lockstep — no invalidation bugs</li>
+              <li>Cache and DB stay in lockstep, no invalidation bugs</li>
               <li>Write latency = max(cache, DB)</li>
               <li>Cache fills with cold data nobody reads</li>
               <li>Use for read-heavy workloads where consistency matters</li>
@@ -411,7 +411,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
             <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Write-back / write-behind</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">Writes hit cache only; cache flushes to DB asynchronously.</p>
             <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
-              <li>Very fast writes — cache absorbs a firehose</li>
+              <li>Very fast writes, cache absorbs a firehose</li>
               <li>Crash = lose un-flushed writes</li>
               <li>Perfect for counters, view tallies, telemetry</li>
               <li>Never for money or anything legally durable</li>
@@ -435,7 +435,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
           <li><strong>TTL is the laziest correct invalidation.</strong>{" "}If staleness for N seconds is acceptable, TTL alone is enough. Most data is.</li>
           <li><strong>Always add ±10% jitter</strong>{" "}to TTLs. Without jitter, every key cached at deploy time expires at the same millisecond → simultaneous miss storm → DB falls over.</li>
           <li><strong>Single-flight kills thundering herd.</strong>{" "}Per-key lock so only one request refills on miss; everyone else waits and gets the populated value. Memcache calls this &quot;dogpile prevention&quot;; Caffeine has <code>loadingCache</code>.</li>
-          <li><strong>Negative caching</strong>{" "}for misses (cache &quot;not found&quot; with a short TTL) prevents repeated DB hits for a known-missing key — the classic &quot;keys that don&apos;t exist&quot; attack.</li>
+          <li><strong>Negative caching</strong>{" "}for misses (cache &quot;not found&quot; with a short TTL) prevents repeated DB hits for a known-missing key, the classic &quot;keys that don&apos;t exist&quot; attack.</li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
@@ -447,7 +447,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
       {/* SECTION 7 — Search systems */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Search — bolted on, never the source of truth</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Search, bolted on, never the source of truth</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Elasticsearch/OpenSearch is an <em>index</em>, not a database. It lives downstream of your primary store, fed by CDC or events.
         </p>
@@ -461,7 +461,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
         </ul>
 
         <Callout variant="warn" title="The two recurring search outages">
-          <strong>(1) Mapping explosion</strong> — letting users send arbitrary JSON keys into a dynamic mapping until the cluster OOMs on field metadata. Lock the mapping. <strong>(2) Hot shard from a bad routing key</strong> — same shape as the partitioning hotspot. Search shards are still shards.
+          <strong>(1) Mapping explosion</strong>, letting users send arbitrary JSON keys into a dynamic mapping until the cluster OOMs on field metadata. Lock the mapping. <strong>(2) Hot shard from a bad routing key</strong>, same shape as the partitioning hotspot. Search shards are still shards.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
@@ -482,7 +482,7 @@ CREATE INDEX idx_orders_created_user ON orders(created_at, user_id);
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Composite index column order</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              The index can only seek on its <em>leftmost prefix</em>. Range columns come <strong>after</strong>{" "}equality columns — putting them first turns the index into a glorified sequential scan.
+              The index can only seek on its <em>leftmost prefix</em>. Range columns come <strong>after</strong>{" "}equality columns, putting them first turns the index into a glorified sequential scan.
             </p>
             <CodeBlock lang="plain">{`-- Query: WHERE user_id = ? AND created_at > ? ORDER BY created_at DESC
 
@@ -575,7 +575,7 @@ public List<Order> recentOrders(long userId) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">9. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
@@ -584,7 +584,7 @@ public List<Order> recentOrders(long userId) {
           options={[
             { label: "MongoDB, because the variable preferences are document-shaped.", explanation: "Plausible, but you're picking complexity (a second datastore, a new ops surface) to solve a problem Postgres already handles with JSONB. The volumes here don't justify it." },
             { label: "Postgres with a JSONB column for preferences, plus a read replica or cache.", correct: true, explanation: "Right. 50k QPS is comfortable for Postgres + a read replica or cache. JSONB covers the document case. You keep transactions, joins, and migrations. The boring answer is right surprisingly often." },
-            { label: "DynamoDB — key-value will scale infinitely.", explanation: "DynamoDB scales but loses joins and ad-hoc queries. At 50k QPS you don't need infinite scale, you need flexibility. Reach for DynamoDB when you genuinely have a single-key access pattern at a scale Postgres can't handle." },
+            { label: "DynamoDB, key-value will scale infinitely.", explanation: "DynamoDB scales but loses joins and ad-hoc queries. At 50k QPS you don't need infinite scale, you need flexibility. Reach for DynamoDB when you genuinely have a single-key access pattern at a scale Postgres can't handle." },
             { label: "Cassandra, because writes will eventually grow.", explanation: "Cassandra is for write-firehose workloads (millions of writes/sec) with predictable access patterns. 200 writes/s with ad-hoc queries is the worst possible fit." },
           ]}
         />
@@ -593,10 +593,10 @@ public List<Order> recentOrders(long userId) {
           kind="Recall check"
           question="Your query is WHERE tenant_id = ? AND created_at > ? ORDER BY created_at DESC LIMIT 50. Which composite index is correct?"
           options={[
-            { label: "(created_at, tenant_id) — date first for the range", explanation: "Backwards. The index can only seek on the leftmost prefix. Putting created_at first means the planner range-scans every date across every tenant, then filters tenant_id per row. Useless." },
-            { label: "(tenant_id, created_at DESC) — equality first, then range matching the sort", correct: true, explanation: "Right. Seeks to the tenant, then walks the leaf chain in descending date order. Index-only sort, no extra filter step. The classic equality-then-range rule." },
-            { label: "(tenant_id) and a separate (created_at) — let the planner combine them", explanation: "Bitmap index combination exists but is much slower than a single composite. And you still don't get the index-only sort." },
-            { label: "(created_at DESC, tenant_id) — sort order first", explanation: "Same problem as option A — putting the range column first means you can't seek by tenant. Sort order matters, but only after the seek key." },
+            { label: "(created_at, tenant_id), date first for the range", explanation: "Backwards. The index can only seek on the leftmost prefix. Putting created_at first means the planner range-scans every date across every tenant, then filters tenant_id per row. Useless." },
+            { label: "(tenant_id, created_at DESC), equality first, then range matching the sort", correct: true, explanation: "Right. Seeks to the tenant, then walks the leaf chain in descending date order. Index-only sort, no extra filter step. The classic equality-then-range rule." },
+            { label: "(tenant_id) and a separate (created_at), let the planner combine them", explanation: "Bitmap index combination exists but is much slower than a single composite. And you still don't get the index-only sort." },
+            { label: "(created_at DESC, tenant_id), sort order first", explanation: "Same problem as option A, putting the range column first means you can't seek by tenant. Sort order matters, but only after the seek key." },
           ]}
         />
 
@@ -604,21 +604,21 @@ public List<Order> recentOrders(long userId) {
           kind="Recall check"
           question="You're sharding a time-series workload: IoT devices write a row every second, keyed by timestamp. Which sharding strategy works without hotspots?"
           options={[
-            { label: "Range-shard by timestamp — natural for time-series", explanation: "Wrong. Range-by-timestamp means every write at any given second hits exactly one shard. Classic hot-shard pattern — the 'current' shard is always overloaded while older shards idle." },
+            { label: "Range-shard by timestamp, natural for time-series", explanation: "Wrong. Range-by-timestamp means every write at any given second hits exactly one shard. Classic hot-shard pattern, the 'current' shard is always overloaded while older shards idle." },
             { label: "Hash-shard by (device_id) so each device's writes spread to one shard, but writes spread across devices.", correct: true, explanation: "Right. Hashing on device_id distributes the firehose evenly while keeping per-device queries single-shard. The composite key (device_id, timestamp) gives you cheap per-device time ranges too." },
-            { label: "Directory-shard by region — one shard per region", explanation: "Works for region-scoped queries but doesn't help with time-series hotspots if one region dominates traffic. And you've introduced the directory hop without solving the actual problem." },
-            { label: "Hash-shard by timestamp", explanation: "Spreads writes evenly but kills every time-range query — adjacent seconds end up on different shards. You'd have to scatter-gather every range scan." },
+            { label: "Directory-shard by region, one shard per region", explanation: "Works for region-scoped queries but doesn't help with time-series hotspots if one region dominates traffic. And you've introduced the directory hop without solving the actual problem." },
+            { label: "Hash-shard by timestamp", explanation: "Spreads writes evenly but kills every time-range query, adjacent seconds end up on different shards. You'd have to scatter-gather every range scan." },
           ]}
         />
 
         <Quiz
           kind="Recall check"
-          question="A team runs Postgres with one async read replica. Users report 'I post a comment, refresh, and it's gone — then it reappears a few seconds later.' What's the simplest fix?"
+          question="A team runs Postgres with one async read replica. Users report 'I post a comment, refresh, and it's gone, then it reappears a few seconds later.' What's the simplest fix?"
           options={[
-            { label: "Switch to synchronous replication.", explanation: "Solves the symptom but trades write latency and availability — any replica blip stalls writes. Overkill for a UX problem." },
+            { label: "Switch to synchronous replication.", explanation: "Solves the symptom but trades write latency and availability, any replica blip stalls writes. Overkill for a UX problem." },
             { label: "Route that user's reads to the leader for ~5 seconds after each write (read-your-writes via sticky session or recency token).", correct: true, explanation: "Right. Classic read-your-writes pattern. You scope the leader hit to the small window where lag matters, and the read replica still handles the bulk of traffic. Cheapest correct fix." },
-            { label: "Increase the replica's hardware so lag disappears.", explanation: "Lag will still spike occasionally (vacuum, network blip, big writes). Treating lag as zero is the wrong mental model — you design for the spike." },
-            { label: "Drop the read replica and read everything from the leader.", explanation: "Now your leader handles 100% of read traffic — exactly the problem the replica was added to solve. Solves the bug by reintroducing the load problem." },
+            { label: "Increase the replica's hardware so lag disappears.", explanation: "Lag will still spike occasionally (vacuum, network blip, big writes). Treating lag as zero is the wrong mental model, you design for the spike." },
+            { label: "Drop the read replica and read everything from the leader.", explanation: "Now your leader handles 100% of read traffic, exactly the problem the replica was added to solve. Solves the bug by reintroducing the load problem." },
           ]}
         />
 
@@ -626,10 +626,10 @@ public List<Order> recentOrders(long userId) {
           kind="Recall check"
           question="A view-counter service receives 50k increment writes/sec but reads only happen when the dashboard refreshes. Some loss during a crash is tolerable. Which caching pattern fits?"
           options={[
-            { label: "Cache-aside — populate on first read", explanation: "Cache-aside is read-shaped. This workload is write-shaped, and the writes are what's expensive (50k/sec to Postgres would melt it)." },
-            { label: "Write-through — keep cache and DB in lockstep", explanation: "Cache and DB both take every write — you've added a hop without reducing DB load. Doesn't solve the firehose." },
-            { label: "Write-back — cache absorbs writes, flushes to DB asynchronously", correct: true, explanation: "Right. Counter increments are exactly the write-back use case: tolerant of some loss, dominated by writes, eventually consistent. Cache absorbs 50k/sec, flushes batched aggregates to DB every few seconds. Never use this pattern for money or anything legally durable." },
-            { label: "Refresh-ahead — keep popular counters always warm", explanation: "Refresh-ahead optimizes reads, not writes. The bottleneck here is write volume." },
+            { label: "Cache-aside, populate on first read", explanation: "Cache-aside is read-shaped. This workload is write-shaped, and the writes are what's expensive (50k/sec to Postgres would melt it)." },
+            { label: "Write-through, keep cache and DB in lockstep", explanation: "Cache and DB both take every write, you've added a hop without reducing DB load. Doesn't solve the firehose." },
+            { label: "Write-back, cache absorbs writes, flushes to DB asynchronously", correct: true, explanation: "Right. Counter increments are exactly the write-back use case: tolerant of some loss, dominated by writes, eventually consistent. Cache absorbs 50k/sec, flushes batched aggregates to DB every few seconds. Never use this pattern for money or anything legally durable." },
+            { label: "Refresh-ahead, keep popular counters always warm", explanation: "Refresh-ahead optimizes reads, not writes. The bottleneck here is write volume." },
           ]}
         />
       </section>
@@ -655,14 +655,14 @@ public List<Order> recentOrders(long userId) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
-          Phase 2 — locked in
+          Phase 2, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now defend a storage stack on a whiteboard</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Six families, six index types, three partitioning strategies, three replication topologies, four caching patterns, and an inverted-index search tier. That&apos;s the entire storage decision toolkit — and you can now reason about latency, throughput, and consistency for any of them on the spot.
+          Six families, six index types, three partitioning strategies, three replication topologies, four caching patterns, and an inverted-index search tier. That&apos;s the entire storage decision toolkit, and you can now reason about latency, throughput, and consistency for any of them on the spot.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Communication.</strong>{" "}APIs, gateways, message queues, Kafka, event-driven &amp; CQRS. The wire between services.
+          <strong>Up next: Phase 3, Communication.</strong>{" "}APIs, gateways, message queues, Kafka, event-driven &amp; CQRS. The wire between services.
         </p>
         <Link
           href="/courses/system-design/modules/api-design"

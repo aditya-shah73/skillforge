@@ -87,7 +87,7 @@ export default function ModuleProgress({
           return (
             <li
               key={c.id}
-              title={`${c.title} — ${isDone ? "complete" : "incomplete"}`}
+              title={`${c.title}: ${isDone ? "complete" : "incomplete"}`}
               aria-label={`${c.title}: ${isDone ? "complete" : "incomplete"}`}
               className={`h-1.5 flex-1 rounded-full transition-colors ${isDone ? "bg-emerald-500" : "bg-slate-200 dark:bg-slate-800"}`}
             />

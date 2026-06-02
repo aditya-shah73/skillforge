@@ -55,7 +55,7 @@ flowchart TD
           Phase 7 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          The whole DP story — decision framework, six state shapes, memo vs tab, the space tricks — compressed to a reference card you can re-read in 20 minutes before an interview.
+          The whole DP story, decision framework, six state shapes, memo vs tab, the space tricks, compressed to a reference card you can re-read in 20 minutes before an interview.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-7-revision" />
         <ModuleProgress moduleSlug="phase-7-revision" checkpoints={CHECKPOINTS} />
@@ -64,10 +64,10 @@ flowchart TD
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 7</strong> — every recurrence, every template, every gotcha from the four DP modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 7</strong>, every recurrence, every template, every gotcha from the four DP modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
-          The four modules you&apos;re consolidating: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">DP intuition — memoization &amp; overlapping subproblems</Link>, <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">1D DP patterns</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">2D DP &amp; grid DP</Link>, and <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Advanced DP — intervals, trees, bitmask</Link>.
+          The four modules you&apos;re consolidating: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">DP intuition, memoization &amp; overlapping subproblems</Link>, <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">1D DP patterns</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">2D DP &amp; grid DP</Link>, and <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Advanced DP, intervals, trees, bitmask</Link>.
         </p>
       </section>
 
@@ -75,7 +75,7 @@ flowchart TD
       {/* SECTION 1 — The DP decision framework */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. &quot;Is this a DP problem?&quot; — the decision framework</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. &quot;Is this a DP problem?&quot;, the decision framework</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Three signals to check before you touch a single line of code. If all three light up, the rest of the work is just choosing top-down or bottom-up.
         </p>
@@ -101,7 +101,7 @@ flowchart TD
             <div className="flex gap-3">
               <div className="font-mono font-bold text-fuchsia-600 dark:text-fuchsia-400">(c)</div>
               <div className="text-sm text-slate-700 dark:text-slate-300">
-                <strong>The &quot;I keep recomputing the same thing&quot; tell.</strong>{" "}If your gut reaction to the brute-force recursion is &quot;wait, didn&apos;t I just solve this exact subproblem two frames up?&quot; — that&apos;s DP. Cache the result, transform exponential to polynomial.
+                <strong>The &quot;I keep recomputing the same thing&quot; tell.</strong>{" "}If your gut reaction to the brute-force recursion is &quot;wait, didn&apos;t I just solve this exact subproblem two frames up?&quot;, that&apos;s DP. Cache the result, transform exponential to polynomial.
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@ flowchart TD
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32 — DP intuition</Link>.
+          Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32, DP intuition</Link>.
         </p>
       </section>
 
@@ -124,7 +124,7 @@ flowchart TD
       {/* SECTION 2 — Top-down vs bottom-up */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Top-down (memo) vs bottom-up (tab) — when each one wins</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Top-down (memo) vs bottom-up (tab), when each one wins</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Same time complexity, same answer. The trade-offs are in stack depth, constant factor, ease of derivation, and whether you can space-optimize.
         </p>
@@ -146,33 +146,33 @@ flowchart TD
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Stack depth</td>
-                <td className="px-4 py-3 text-rose-600">O(depth) — can StackOverflow for n ≈ 10⁵ in Java</td>
-                <td className="px-4 py-3 text-emerald-600">O(1) — no recursion at all</td>
+                <td className="px-4 py-3 text-rose-600">O(depth), can StackOverflow for n ≈ 10⁵ in Java</td>
+                <td className="px-4 py-3 text-emerald-600">O(1), no recursion at all</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Constant factor</td>
-                <td className="px-4 py-3 text-amber-600">Slower — function-call overhead, HashMap hashing if used</td>
-                <td className="px-4 py-3 text-emerald-600">Faster — tight loops, array indexing</td>
+                <td className="px-4 py-3 text-amber-600">Slower, function-call overhead, HashMap hashing if used</td>
+                <td className="px-4 py-3 text-emerald-600">Faster, tight loops, array indexing</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Intuition cost</td>
-                <td className="px-4 py-3 text-emerald-600">Low — write the recursion, slap on @cache</td>
-                <td className="px-4 py-3 text-amber-600">Higher — must order subproblems correctly (which dim first?)</td>
+                <td className="px-4 py-3 text-emerald-600">Low, write the recursion, slap on @cache</td>
+                <td className="px-4 py-3 text-amber-600">Higher, must order subproblems correctly (which dim first?)</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Visits all states?</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Only reachable ones — wins on sparse state space</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Every cell — wins when state is dense</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Only reachable ones, wins on sparse state space</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Every cell, wins when state is dense</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Space optimization</td>
-                <td className="px-4 py-3 text-rose-600">Hard — full cache lives during recursion</td>
-                <td className="px-4 py-3 text-emerald-600">Easy — drop old rows once you&apos;re done with them</td>
+                <td className="px-4 py-3 text-rose-600">Hard, full cache lives during recursion</td>
+                <td className="px-4 py-3 text-emerald-600">Easy, drop old rows once you&apos;re done with them</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Order of computation</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lazy — driven by the recursion</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Explicit — you choose the loop order</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lazy, driven by the recursion</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Explicit, you choose the loop order</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Best for</td>
@@ -188,7 +188,7 @@ flowchart TD
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32 — DP intuition</Link>.
+          Source: <Link href="/courses/dsa/modules/dp-intro" className="text-fuchsia-600 hover:underline">Module 32, DP intuition</Link>.
         </p>
       </section>
 
@@ -256,7 +256,7 @@ flowchart TD
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Sources: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33 — 1D DP</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34 — 2D DP</Link>, <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35 — Advanced DP</Link>.
+          Sources: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33, 1D DP</Link>, <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34, 2D DP</Link>, <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35, Advanced DP</Link>.
         </p>
       </section>
 
@@ -264,7 +264,7 @@ flowchart TD
       {/* SECTION 4 — 1D DP detail: fib → climb → rob progression */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. 1D DP — Fibonacci → Climbing Stairs → House Robber</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. 1D DP, Fibonacci → Climbing Stairs → House Robber</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The same recurrence shape three times, with progressively more interesting transitions. All three space-optimize to O(1) with two rolling variables.
         </p>
@@ -291,7 +291,7 @@ flowchart TD
         </div>
 
         <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-          Each only looks back two cells, so the whole <code>dp[]</code> array is wasteful. Two <code>int</code>s suffice — that&apos;s the O(n) → O(1) space win:
+          Each only looks back two cells, so the whole <code>dp[]</code> array is wasteful. Two <code>int</code>s suffice, that&apos;s the O(n) → O(1) space win:
         </p>
 
         <CodeBlock lang="java" caption="House Robber, space-optimized to O(1)">{`// dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])
@@ -308,11 +308,11 @@ public int rob(int[] nums) {
 }`}</CodeBlock>
 
         <Callout variant="spring" title="The collapse trick">
-          Any 1D DP whose transition uses a <em>constant</em>{" "}number of recent values (dp[i-1], dp[i-2], ...) collapses to O(1) space using that many rolling vars. <strong>LIS does NOT collapse</strong> — it reads every previous dp[j]. <strong>Coin Change does NOT collapse</strong> — it reads dp[a-c] for arbitrary coin sizes.
+          Any 1D DP whose transition uses a <em>constant</em>{" "}number of recent values (dp[i-1], dp[i-2], ...) collapses to O(1) space using that many rolling vars. <strong>LIS does NOT collapse</strong>, it reads every previous dp[j]. <strong>Coin Change does NOT collapse</strong>, it reads dp[a-c] for arbitrary coin sizes.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33 — 1D DP patterns</Link>.
+          Source: <Link href="/courses/dsa/modules/dp-1d" className="text-fuchsia-600 hover:underline">Module 33, 1D DP patterns</Link>.
         </p>
       </section>
 
@@ -320,7 +320,7 @@ public int rob(int[] nums) {
       {/* SECTION 5 — 2D DP detail: Edit Distance */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. 2D DP — Edit Distance as the canonical example</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. 2D DP, Edit Distance as the canonical example</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           <strong>LC 72 · Edit Distance (Levenshtein).</strong>{" "}Minimum number of insert / delete / replace ops to turn string A into string B. The recurrence has three cases; the table makes it obvious.
         </p>
@@ -328,14 +328,14 @@ public int rob(int[] nums) {
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
           <div className="mb-3 text-xs font-bold tracking-wider text-slate-500 uppercase">The transition</div>
           <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
-            <li><strong>If a[i-1] == b[j-1]:</strong> <code>dp[i][j] = dp[i-1][j-1]</code> — free, characters already match.</li>
-            <li><strong>Else:</strong> <code>dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])</code> — pick the cheapest of replace, delete, insert.</li>
+            <li><strong>If a[i-1] == b[j-1]:</strong> <code>dp[i][j] = dp[i-1][j-1]</code>, free, characters already match.</li>
+            <li><strong>Else:</strong> <code>dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])</code>, pick the cheapest of replace, delete, insert.</li>
             <li><strong>Base row/col:</strong> <code>dp[i][0] = i</code> (delete all of A), <code>dp[0][j] = j</code> (insert all of B).</li>
           </ul>
         </div>
 
         <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-          The dp table for <code>&quot;horse&quot; → &quot;ros&quot;</code> looks like this. Every cell is filled from its top, left, and top-left neighbor — that&apos;s why it&apos;s O(m·n) time and (naively) O(m·n) space:
+          The dp table for <code>&quot;horse&quot; → &quot;ros&quot;</code> looks like this. Every cell is filled from its top, left, and top-left neighbor, that&apos;s why it&apos;s O(m·n) time and (naively) O(m·n) space:
         </p>
 
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -364,7 +364,7 @@ public int rob(int[] nums) {
           Bottom-right is the answer: 3 edits. (replace h→r, delete r, delete e.)
         </p>
 
-        <CodeBlock lang="java" caption="Edit Distance — clean 2D, O(m·n) time and space">{`public int minDistance(String a, String b) {
+        <CodeBlock lang="java" caption="Edit Distance, clean 2D, O(m·n) time and space">{`public int minDistance(String a, String b) {
     int m = a.length(), n = b.length();
     int[][] dp = new int[m + 1][n + 1];
     for (int i = 0; i <= m; i++) dp[i][0] = i;     // delete all of A
@@ -384,11 +384,11 @@ public int rob(int[] nums) {
     return dp[m][n];
 }`}</CodeBlock>
 
-        <Callout variant="spring" title="Rolling-array trick — O(m·n) space → O(min(m, n))">
+        <Callout variant="spring" title="Rolling-array trick, O(m·n) space → O(min(m, n))">
           Each row of the dp table only depends on the row immediately above. So you only need <strong>two rows</strong> (current and previous), not the whole table. Make the shorter string the column dimension so the row length is min(m, n). The time stays O(m·n); the space drops to O(min(m, n)).
         </Callout>
 
-        <CodeBlock lang="java" caption="Edit Distance — rolling rows, O(min(m,n)) space">{`public int minDistance(String a, String b) {
+        <CodeBlock lang="java" caption="Edit Distance, rolling rows, O(min(m,n)) space">{`public int minDistance(String a, String b) {
     // Make b the shorter one so the row is min(m, n) long.
     if (a.length() < b.length()) { String t = a; a = b; b = t; }
     int m = a.length(), n = b.length();
@@ -410,7 +410,7 @@ public int rob(int[] nums) {
 }`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34 — 2D DP &amp; grid DP</Link>.
+          Source: <Link href="/courses/dsa/modules/dp-2d" className="text-fuchsia-600 hover:underline">Module 34, 2D DP &amp; grid DP</Link>.
         </p>
       </section>
 
@@ -418,19 +418,19 @@ public int rob(int[] nums) {
       {/* SECTION 6 — Bitmask DP teaser */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Bitmask DP — when state is a subset</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Bitmask DP, when state is a subset</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          When your subproblem is &quot;over which subset of these n items have I made a decision?&quot;, the subset itself is the state. Encode the membership as bits of an <code>int</code> — bit k set = item k is in the set. Works while n ≤ ~20 (2²⁰ ≈ 1M states).
+          When your subproblem is &quot;over which subset of these n items have I made a decision?&quot;, the subset itself is the state. Encode the membership as bits of an <code>int</code>, bit k set = item k is in the set. Works while n ≤ ~20 (2²⁰ ≈ 1M states).
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
           <div className="mb-2 text-xs font-bold tracking-wider text-rose-600 uppercase">The bit operations you&apos;ll use</div>
           <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-            <li><code>mask | (1 &lt;&lt; k)</code> — add item k to the set</li>
-            <li><code>mask &amp; ~(1 &lt;&lt; k)</code> — remove item k</li>
-            <li><code>(mask &gt;&gt; k) &amp; 1</code> — is item k in the set?</li>
-            <li><code>Integer.bitCount(mask)</code> — how many items are in the set</li>
-            <li><code>(1 &lt;&lt; n) - 1</code> — the full set of n items</li>
+            <li><code>mask | (1 &lt;&lt; k)</code>, add item k to the set</li>
+            <li><code>mask &amp; ~(1 &lt;&lt; k)</code>, remove item k</li>
+            <li><code>(mask &gt;&gt; k) &amp; 1</code>, is item k in the set?</li>
+            <li><code>Integer.bitCount(mask)</code>, how many items are in the set</li>
+            <li><code>(1 &lt;&lt; n) - 1</code>, the full set of n items</li>
           </ul>
         </div>
 
@@ -460,11 +460,11 @@ public int tsp(int[][] dist) {
 }`}</CodeBlock>
 
         <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          Time: O(2ⁿ · n²). Space: O(2ⁿ · n). At n = 20 that&apos;s ~400M ops — borderline, but tractable.
+          Time: O(2ⁿ · n²). Space: O(2ⁿ · n). At n = 20 that&apos;s ~400M ops, borderline, but tractable.
         </p>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35 — Advanced DP</Link>.
+          Source: <Link href="/courses/dsa/modules/dp-advanced" className="text-fuchsia-600 hover:underline">Module 35, Advanced DP</Link>.
         </p>
       </section>
 
@@ -529,7 +529,7 @@ int f(int n, int[] memo) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · Forgetting to <em>store</em>{" "}the result after computing it</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              You added a cache lookup at the top but forgot to write the result back. The function still recomputes every subproblem — still O(2ⁿ). Easy to miss when refactoring.
+              You added a cache lookup at the top but forgot to write the result back. The function still recomputes every subproblem, still O(2ⁿ). Easy to miss when refactoring.
             </p>
             <CodeBlock lang="java">{`// BAD — lookup but no store. Still O(2^n).
 int fib(int n, Integer[] memo) {
@@ -549,7 +549,7 @@ int fib(int n, Integer[] memo) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Off-by-one in tabulation indices</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              The dp table has size <code>n + 1</code> with a phantom &quot;empty prefix&quot; row, so <code>dp[i]</code> answers for the first <code>i</code> items — but <code>nums[i-1]</code> is the i-th item. Mixing the two indexing schemes is the most common DP bug.
+              The dp table has size <code>n + 1</code> with a phantom &quot;empty prefix&quot; row, so <code>dp[i]</code> answers for the first <code>i</code> items, but <code>nums[i-1]</code> is the i-th item. Mixing the two indexing schemes is the most common DP bug.
             </p>
             <CodeBlock lang="java">{`// BAD — reads nums[i] inside a loop that runs i = 1..n. ArrayIndexOutOfBounds at i = n.
 for (int i = 1; i <= n; i++) {
@@ -588,14 +588,14 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="Which two properties together tell you a problem is a DP problem?"
           options={[
-            { label: "Optimal substructure and overlapping subproblems.", correct: true, explanation: "Right. Optimal substructure says the answer can be built from sub-answers. Overlapping subproblems says the naive recursion repeats work — that's what makes caching worth it. Without overlap, you have plain divide-and-conquer (like merge sort)." },
+            { label: "Optimal substructure and overlapping subproblems.", correct: true, explanation: "Right. Optimal substructure says the answer can be built from sub-answers. Overlapping subproblems says the naive recursion repeats work, that's what makes caching worth it. Without overlap, you have plain divide-and-conquer (like merge sort)." },
             { label: "Recursion and a base case.", explanation: "Every recursion has those. DP needs more: the subproblems must overlap, otherwise caching gains you nothing." },
             { label: "A graph structure and shortest paths.", explanation: "Shortest paths happen to be a famous DP, but DP applies to far more than graphs." },
             { label: "Sorted input and binary search.", explanation: "That's the binary-search pattern, not DP." },
@@ -606,8 +606,8 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           kind="Recall check"
           question="When does bottom-up tabulation win clearly over top-down memoization?"
           options={[
-            { label: "When the state space is sparse and most subproblems aren't reachable.", explanation: "That's when top-down wins — you only compute reachable states. Tabulation fills every cell." },
-            { label: "When the recursion is obvious but you don't know the loop order.", explanation: "Backwards. Top-down lets you skip thinking about order — the recursion drives it. Bottom-up forces you to derive an explicit order." },
+            { label: "When the state space is sparse and most subproblems aren't reachable.", explanation: "That's when top-down wins, you only compute reachable states. Tabulation fills every cell." },
+            { label: "When the recursion is obvious but you don't know the loop order.", explanation: "Backwards. Top-down lets you skip thinking about order, the recursion drives it. Bottom-up forces you to derive an explicit order." },
             { label: "When you need O(1) extra space or want to avoid StackOverflow on large n.", correct: true, explanation: "Right. Bottom-up runs iteratively (no stack), and you can drop old rows of the dp table once you're done with them. Top-down keeps the whole cache plus the call stack alive." },
             { label: "When the answer changes based on the input.", explanation: "Both styles produce the same answer; they're equivalent." },
           ]}
@@ -618,8 +618,8 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           question="House Robber's recurrence is dp[i] = max(dp[i-1], dp[i-2] + nums[i-1]). Why does it space-optimize to O(1) but Longest Increasing Subsequence does NOT?"
           options={[
             { label: "House Robber has fewer states.", explanation: "Both have n states. That's not the reason." },
-            { label: "House Robber only looks back at a constant number of recent cells (i-1 and i-2); LIS reads every previous dp[j].", correct: true, explanation: "Right. Two rolling vars cover House Robber. LIS's transition is dp[i] = 1 + max(dp[j]) over all j < i where nums[j] < nums[i] — you genuinely need the whole array of previous values. Constant-distance lookback collapses; arbitrary lookback does not." },
-            { label: "LIS uses 2D state.", explanation: "Standard LIS is 1D — dp[i] indexed only by i. The space cost is from needing every previous value, not from extra dimensions." },
+            { label: "House Robber only looks back at a constant number of recent cells (i-1 and i-2); LIS reads every previous dp[j].", correct: true, explanation: "Right. Two rolling vars cover House Robber. LIS's transition is dp[i] = 1 + max(dp[j]) over all j < i where nums[j] < nums[i], you genuinely need the whole array of previous values. Constant-distance lookback collapses; arbitrary lookback does not." },
+            { label: "LIS uses 2D state.", explanation: "Standard LIS is 1D, dp[i] indexed only by i. The space cost is from needing every previous value, not from extra dimensions." },
             { label: "House Robber's answer is smaller.", explanation: "Answer magnitude isn't related to space optimization. The shape of the transition is." },
           ]}
         />
@@ -629,9 +629,9 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           question="For Edit Distance with strings of length m and n, what does the rolling-array space optimization buy you?"
           options={[
             { label: "Drops time from O(m·n) to O(m + n).", explanation: "Rolling arrays don't change time complexity. The optimization is purely a space win." },
-            { label: "Drops space from O(m·n) to O(min(m, n)) — keep two rows, swap them each iteration.", correct: true, explanation: "Right. Each row only depends on the row above, so you keep two rows (current and previous). Putting the shorter string as the column dim makes each row length min(m, n)." },
-            { label: "Drops space to O(1) — same as House Robber.", explanation: "Edit Distance reads three neighbors of dp[i][j], including dp[i][j-1] from the same row. You need at least one full row alive, so O(min(m, n)) is the floor, not O(1)." },
-            { label: "Lets you skip filling the table entirely.", explanation: "You still fill every cell — you just don't store the whole table at once." },
+            { label: "Drops space from O(m·n) to O(min(m, n)), keep two rows, swap them each iteration.", correct: true, explanation: "Right. Each row only depends on the row above, so you keep two rows (current and previous). Putting the shorter string as the column dim makes each row length min(m, n)." },
+            { label: "Drops space to O(1), same as House Robber.", explanation: "Edit Distance reads three neighbors of dp[i][j], including dp[i][j-1] from the same row. You need at least one full row alive, so O(min(m, n)) is the floor, not O(1)." },
+            { label: "Lets you skip filling the table entirely.", explanation: "You still fill every cell, you just don't store the whole table at once." },
           ]}
         />
 
@@ -639,10 +639,10 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
           kind="Recall check"
           question="You're writing a top-down memo for Fibonacci. You add the cache lookup at the top of the function but forget to write the result back before returning. What time complexity do you get?"
           options={[
-            { label: "O(n) — the cache lookup is enough to make it linear.", explanation: "A lookup that always misses is useless. Without storing, every call recomputes both branches from scratch." },
-            { label: "O(2ⁿ) — same as no memo at all.", correct: true, explanation: "Right. The cache is consulted but never populated, so every lookup misses and the function recurses on both branches. Bug check for top-down DP: every code path that computes a value must store it. Easy to miss when refactoring." },
-            { label: "O(n log n) — the cache adds log overhead.", explanation: "There's no log factor here. Either the cache works (O(n)) or it doesn't (O(2ⁿ))." },
-            { label: "The function will throw a NullPointerException.", explanation: "It won't — it just keeps recomputing. The bug is silent: correct answer, exponential time." },
+            { label: "O(n), the cache lookup is enough to make it linear.", explanation: "A lookup that always misses is useless. Without storing, every call recomputes both branches from scratch." },
+            { label: "O(2ⁿ), same as no memo at all.", correct: true, explanation: "Right. The cache is consulted but never populated, so every lookup misses and the function recurses on both branches. Bug check for top-down DP: every code path that computes a value must store it. Easy to miss when refactoring." },
+            { label: "O(n log n), the cache adds log overhead.", explanation: "There's no log factor here. Either the cache works (O(n)) or it doesn't (O(2ⁿ))." },
+            { label: "The function will throw a NullPointerException.", explanation: "It won't, it just keeps recomputing. The bug is silent: correct answer, exponential time." },
           ]}
         />
       </section>
@@ -652,14 +652,14 @@ dp[i][j] = (int)(((long) dp[i-1][j] + dp[i][j-1]) % MOD);`}</CodeBlock>
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
-          Phase 7 — locked in
+          Phase 7, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can derive a DP recurrence from a problem statement</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          The decision framework, the six state shapes, top-down vs bottom-up, the 1D collapse trick, the 2D rolling-array trick, bitmask state for subsets, and the five common bugs. That&apos;s the entire DP playbook — every &quot;hard&quot; LeetCode tag you see in this category bottoms out in one of these six shapes.
+          The decision framework, the six state shapes, top-down vs bottom-up, the 1D collapse trick, the 2D rolling-array trick, bitmask state for subsets, and the five common bugs. That&apos;s the entire DP playbook, every &quot;hard&quot; LeetCode tag you see in this category bottoms out in one of these six shapes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 8 — Advanced &amp; Interview Prep.</strong>{" "}Tries (the prefix-tree structure for autocomplete and word search), then the heavier patterns you&apos;ll meet at the senior-interview tier — followed by the systematic interview framework that ties everything together.
+          <strong>Up next: Phase 8, Advanced &amp; Interview Prep.</strong>{" "}Tries (the prefix-tree structure for autocomplete and word search), then the heavier patterns you&apos;ll meet at the senior-interview tier, followed by the systematic interview framework that ties everything together.
         </p>
         <Link
           href="/courses/dsa/modules/tries"

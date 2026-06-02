@@ -32,11 +32,11 @@ export default function DataFetchingModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Data fetching in React — the <code>useEffect</code> trap and the race condition
+          Data fetching in React, the <code>useEffect</code> trap and the race condition
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           You wired up <code>useEffect</code> + <code>fetch</code> in thirty seconds and it worked. Then a user typed fast,
-          and your search box started showing answers to the <em>wrong question</em>. Let&apos;s understand why — and fix it the way an interviewer wants to hear.
+          and your search box started showing answers to the <em>wrong question</em>. Let&apos;s understand why, and fix it the way an interviewer wants to hear.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
         <ModuleProgress moduleSlug={MODULE_SLUG} checkpoints={CHECKPOINTS} />
@@ -46,20 +46,20 @@ export default function DataFetchingModule() {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">The mailroom that ignores postmarks</h2>
         <p className="mb-4">
-          Imagine you mail a letter asking a question, then — before the reply comes back — you change your mind and mail
+          Imagine you mail a letter asking a question, then, before the reply comes back, you change your mind and mail
           a second letter with a <em>different</em> question. Two replies are now in transit. You&apos;ve decided on a rule:
           <strong> act on whichever reply lands in my mailbox last.</strong>
         </p>
         <p className="mb-4">
           That rule only works if replies arrive in the order you sent them. They don&apos;t. The post office makes no such
-          promise — the second letter might get a fast courier and the first might sit in a depot for a week. When the
+          promise, the second letter might get a fast courier and the first might sit in a depot for a week. When the
           slow first reply finally lands, your &quot;last one wins&quot; rule cheerfully acts on it, answering a question you
           already abandoned.
         </p>
         <p className="mb-4">
           That is <em>exactly</em> what a naive <code>useEffect</code> fetch does. Each render fires off a request (mails a
           letter). Each response calls <code>setState</code> (acts on whatever reply just landed). The network gives no
-          ordering guarantee. The state you end up with is the state of <em>whichever response resolved last</em> — not
+          ordering guarantee. The state you end up with is the state of <em>whichever response resolved last</em>, not
           the one you actually asked for. That mismatch is the <strong>race condition</strong>, and it is the single most
           common bug in hand-rolled data fetching.
         </p>
@@ -95,7 +95,7 @@ export default function DataFetchingModule() {
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>No cleanup.</strong> When <code>userId</code> changes, the effect re-runs and fires a second request —
+            <strong>No cleanup.</strong> When <code>userId</code> changes, the effect re-runs and fires a second request,
             but the first one is still in flight. Two responses, no rule for which wins. (The race condition.)
           </li>
           <li>
@@ -108,11 +108,11 @@ export default function DataFetchingModule() {
           </li>
           <li>
             <strong>HTTP errors look like success.</strong> <code>fetch</code> only rejects on <em>network</em> failure. A
-            404 or 500 resolves normally — you have to check <code>res.ok</code> yourself, and this code doesn&apos;t.
+            404 or 500 resolves normally, you have to check <code>res.ok</code> yourself, and this code doesn&apos;t.
           </li>
           <li>
             <strong>setState after unmount.</strong> If the component unmounts before the response lands, you call
-            <code>setUser</code> on a dead component — wasted work, and historically a warning.
+            <code>setUser</code> on a dead component, wasted work, and historically a warning.
           </li>
           <li>
             <strong>No caching, no dedupe.</strong> Mount the same component twice and you fetch the same data twice.
@@ -146,7 +146,7 @@ export default function DataFetchingModule() {
 }`}</code></pre>
         <p className="mb-4">
           Now the user types <strong>fast</strong>. Watch the timeline. Say the server happens to be slower for short
-          queries (less to narrow on, bigger result set — totally plausible):
+          queries (less to narrow on, bigger result set, totally plausible):
         </p>
         <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li>User types <code>&quot;a&quot;</code>. Effect runs → fires <strong>Request A</strong> for <code>q=a</code>.</li>
@@ -156,7 +156,7 @@ export default function DataFetchingModule() {
             results for <code>&quot;ab&quot;</code>. Looks perfect.
           </li>
           <li>
-            <strong>Request A resolves second</strong> — the slow, stale one. <code>setResults(resultsForA)</code>
+            <strong>Request A resolves second</strong>, the slow, stale one. <code>setResults(resultsForA)</code>
             overwrites the screen.
           </li>
           <li>
@@ -168,12 +168,12 @@ export default function DataFetchingModule() {
           <p>
             &quot;Effects start async requests but don&apos;t order their responses. When a dependency changes faster than
             requests resolve, an older request can resolve <em>after</em> a newer one and overwrite the correct state with
-            stale data. The fix is to ignore (or abort) the response of any request whose effect has been superseded — you
+            stale data. The fix is to ignore (or abort) the response of any request whose effect has been superseded, you
             do that in the effect&apos;s cleanup function.&quot;
           </p>
         </Callout>
         <p className="mb-4">
-          The crucial mental model: <strong>the bug is not in <code>fetch</code> — it&apos;s in trusting response order.</strong>
+          The crucial mental model: <strong>the bug is not in <code>fetch</code>, it&apos;s in trusting response order.</strong>
           The fix is never &quot;make requests faster.&quot; The fix is making the component <em>ignore answers to questions it no
           longer cares about.</em> React hands us the perfect hook for that: cleanup.
         </p>
@@ -194,7 +194,7 @@ export default function DataFetchingModule() {
             {
               label: "The list shows results for 'ab', because React tracks the latest dependency",
               explanation:
-                "No — React re-runs the effect for 'ab' but it does not cancel or order the in-flight 'a' request. Whichever response calls setState last wins, regardless of which query is current.",
+                "No, React re-runs the effect for 'ab' but it does not cancel or order the in-flight 'a' request. Whichever response calls setState last wins, regardless of which query is current.",
             },
             {
               label: "React throws an error because two requests are in flight at once",
@@ -221,7 +221,7 @@ export default function DataFetchingModule() {
             {
               label: "fetch is too slow and needs to be replaced with axios",
               explanation:
-                "The library is irrelevant — axios has the identical race. Speed is not the issue; response ordering is.",
+                "The library is irrelevant, axios has the identical race. Speed is not the issue; response ordering is.",
             },
             {
               label: "useState batches updates incorrectly",
@@ -234,7 +234,7 @@ export default function DataFetchingModule() {
 
       {/* ───────────────────────── 4. FIX 1: IGNORE FLAG ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Fix #1 — the <code>ignore</code> flag in cleanup</h2>
+        <h2 className="mb-4 text-2xl font-bold">Fix #1, the <code>ignore</code> flag in cleanup</h2>
         <p className="mb-4">
           React calls an effect&apos;s <strong>cleanup function before re-running the effect</strong> (and on unmount). That
           gives us a hook to mark the previous request as obsolete. The classic, minimal fix is a boolean captured in the
@@ -277,10 +277,10 @@ export default function DataFetchingModule() {
           flips the previous run&apos;s flag, so a late response can check &quot;am I still the live request?&quot; and quietly bow out
           if not. This also fixes the setState-after-unmount problem for free: unmount runs cleanup too.
         </p>
-        <Callout variant="info" title="It drops the result — it doesn't stop the request">
+        <Callout variant="info" title="It drops the result, it doesn't stop the request">
           <p>
             The <code>ignore</code> flag is a <em>guard at the finish line</em>. Request A still travels the network, the
-            server still does the work, the bytes still come back — you just refuse to act on them. That&apos;s enough to fix
+            server still does the work, the bytes still come back, you just refuse to act on them. That&apos;s enough to fix
             the UI bug. To stop wasting the network itself, we need to actually cancel the request.
           </p>
         </Callout>
@@ -288,7 +288,7 @@ export default function DataFetchingModule() {
 
       {/* ───────────────────────── 5. FIX 2: ABORTCONTROLLER ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Fix #2 — <code>AbortController</code> (cancel the work, not just the result)</h2>
+        <h2 className="mb-4 text-2xl font-bold">Fix #2, <code>AbortController</code> (cancel the work, not just the result)</h2>
         <p className="mb-4">
           <code>AbortController</code> gives you a <code>signal</code> you hand to <code>fetch</code>, plus an
           <code>abort()</code> method. Call <code>abort()</code> in cleanup and the browser <strong>cancels the in-flight
@@ -318,7 +318,7 @@ export default function DataFetchingModule() {
 }`}</code></pre>
         <p className="mb-4">
           The timeline is now even cleaner: typing <code>&quot;ab&quot;</code> aborts Request A <em>mid-flight</em>. It never
-          resolves with data — it rejects with <code>AbortError</code>, which we recognize and swallow. The server may stop
+          resolves with data, it rejects with <code>AbortError</code>, which we recognize and swallow. The server may stop
           processing it; the bytes never come back to overwrite anything.
         </p>
         <Callout variant="warn" title="You must handle AbortError">
@@ -329,20 +329,20 @@ export default function DataFetchingModule() {
             failure.
           </p>
         </Callout>
-        <p className="mb-4">Two valid fixes — which do you reach for?</p>
+        <p className="mb-4">Two valid fixes, which do you reach for?</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>Ignore flag</strong> — simpler, no API to learn, fixes the UI bug. The request still completes; you
+            <strong>Ignore flag</strong>, simpler, no API to learn, fixes the UI bug. The request still completes; you
             just discard the result. Great default for small components.
           </li>
           <li>
-            <strong>AbortController</strong> — also stops the network work and frees the connection. Strictly better when
+            <strong>AbortController</strong>, also stops the network work and frees the connection. Strictly better when
             requests are expensive, frequent (typeahead!), or you&apos;re on a metered/slow connection. Slightly more
             ceremony because you must handle <code>AbortError</code>.
           </li>
         </ul>
         <p className="mb-4">
-          They&apos;re not mutually exclusive — but in practice <code>AbortController</code> alone covers the race <em>and</em>
+          They&apos;re not mutually exclusive, but in practice <code>AbortController</code> alone covers the race <em>and</em>
           the wasted work, so it&apos;s the stronger answer when an interviewer asks for &quot;the production fix.&quot;
         </p>
       </section>
@@ -362,12 +362,12 @@ export default function DataFetchingModule() {
             {
               label: "React automatically cancels the old fetch when dependencies change",
               explanation:
-                "React never cancels fetches for you. The ignore flag doesn't cancel anything either — it just guards the setState. (AbortController is what cancels.)",
+                "React never cancels fetches for you. The ignore flag doesn't cancel anything either, it just guards the setState. (AbortController is what cancels.)",
             },
             {
               label: "The two effect runs share one ignore variable, so the second run overwrites it",
               explanation:
-                "They don't share it — each run has its own closure-scoped `ignore`. That separation is exactly what makes the fix work.",
+                "They don't share it, each run has its own closure-scoped `ignore`. That separation is exactly what makes the fix work.",
             },
           ]}
         />
@@ -376,7 +376,7 @@ export default function DataFetchingModule() {
           question="What does AbortController do that the ignore flag does NOT?"
           options={[
             {
-              label: "It cancels the in-flight network request, so the server work and the bytes coming back are also stopped — not just the setState",
+              label: "It cancels the in-flight network request, so the server work and the bytes coming back are also stopped, not just the setState",
               correct: true,
               explanation:
                 "Correct. The ignore flag is a finish-line guard (request still completes, result discarded). AbortController cancels the request itself, saving network and server work. You must swallow the resulting AbortError.",
@@ -384,7 +384,7 @@ export default function DataFetchingModule() {
             {
               label: "It guarantees responses arrive in the order they were sent",
               explanation:
-                "Nothing guarantees response ordering — that's the whole problem. AbortController cancels superseded requests rather than ordering them.",
+                "Nothing guarantees response ordering, that's the whole problem. AbortController cancels superseded requests rather than ordering them.",
             },
             {
               label: "It debounces keystrokes so fewer requests fire",
@@ -397,7 +397,7 @@ export default function DataFetchingModule() {
 
       {/* ───────────────────────── 6. FOUR STATES ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Loading / error / empty / success — four first-class states</h2>
+        <h2 className="mb-4 text-2xl font-bold">Loading / error / empty / success, four first-class states</h2>
         <p className="mb-4">
           The naive pattern models data as &quot;the data, or null.&quot; That collapses three completely different situations
           into one ambiguous <code>null</code>: <em>we haven&apos;t loaded yet</em>, <em>it failed</em>, and <em>it succeeded
@@ -405,10 +405,10 @@ export default function DataFetchingModule() {
           explicitly:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>loading</strong> — request in flight. Show a spinner/skeleton, not an empty shell.</li>
-          <li><strong>error</strong> — the request (or <code>res.ok</code> check) failed. Show a message and ideally a retry.</li>
-          <li><strong>empty</strong> — success, but zero results. &quot;No matches for <em>xyz</em>&quot; — not a blank screen that looks broken.</li>
-          <li><strong>success-with-data</strong> — the happy path.</li>
+          <li><strong>loading</strong>, request in flight. Show a spinner/skeleton, not an empty shell.</li>
+          <li><strong>error</strong>, the request (or <code>res.ok</code> check) failed. Show a message and ideally a retry.</li>
+          <li><strong>empty</strong>, success, but zero results. &quot;No matches for <em>xyz</em>&quot;, not a blank screen that looks broken.</li>
+          <li><strong>success-with-data</strong>, the happy path.</li>
         </ul>
         <p className="mb-4">A compact, honest version of the search component models all four:</p>
         <pre><code>{`function Search({ query }) {
@@ -472,14 +472,14 @@ const [user, posts, friends] = await Promise.all([
   fetchFriends(id),
 ]);`}</code></pre>
         <p className="mb-4">
-          Use the waterfall <em>only</em> when there&apos;s a real dependency — e.g. you need the user&apos;s <code>teamId</code>
+          Use the waterfall <em>only</em> when there&apos;s a real dependency, e.g. you need the user&apos;s <code>teamId</code>
           before you can fetch the team. For anything independent, fire them together with <code>Promise.all</code> and
           wait once. (If one failing shouldn&apos;t doom the rest, <code>Promise.allSettled</code> lets each resolve or reject
           on its own.)
         </p>
         <Callout variant="warn" title="Waterfalls hide inside component trees too">
           <p>
-            A parent fetches, renders a child, the child fetches — that&apos;s a waterfall spread across components, and it&apos;s
+            A parent fetches, renders a child, the child fetches, that&apos;s a waterfall spread across components, and it&apos;s
             harder to spot than three <code>await</code>s in a row. It&apos;s one of the big reasons frameworks push data
             loading up to routes/Server Components, where independent loads can be kicked off together.
           </p>
@@ -493,19 +493,19 @@ const [user, posts, friends] = await Promise.all([
           Look back at everything we had to hand-write for one search box: a cleanup guard or abort, four explicit states,
           an <code>res.ok</code> check, <code>AbortError</code> handling, and we <em>still</em> haven&apos;t added caching,
           deduping, retries, refetch-on-focus, or pagination. Do that for every endpoint in your app and you&apos;ve
-          accidentally rebuilt a data-fetching library — badly.
+          accidentally rebuilt a data-fetching library, badly.
         </p>
         <p className="mb-4">
           That is precisely why these tools exist. The next module covers <strong>server-cache state</strong> with libraries
-          like React Query / SWR, which give you the cache, dedupe, retries, and the four states out of the box — you
+          like React Query / SWR, which give you the cache, dedupe, retries, and the four states out of the box, you
           describe <em>what</em> to fetch, they own the lifecycle. Beyond that, <strong>Server Components and framework data
           loading</strong> (the App Router, loaders) move the fetch to the server entirely, sidestepping the client
           race condition class altogether.
         </p>
         <Callout variant="info" title="The nuanced take">
           <p>
-            <code>useEffect</code> + <code>fetch</code> is not <em>banned</em>. For a genuine one-off — a single
-            non-cached call, a tiny widget, a prototype — the cleanup-guarded version is perfectly fine. The lesson is that
+            <code>useEffect</code> + <code>fetch</code> is not <em>banned</em>. For a genuine one-off, a single
+            non-cached call, a tiny widget, a prototype, the cleanup-guarded version is perfectly fine. The lesson is that
             it&apos;s the wrong <strong>default</strong>. The moment you have more than one or two fetches, reach for a tool
             built for the job rather than re-deriving its hard parts in each component.
           </p>
@@ -520,10 +520,10 @@ const [user, posts, friends] = await Promise.all([
             <li>
               <strong>Race condition.</strong> Responses have no guaranteed order; a stale request can resolve last and
               overwrite correct state. Fix it in cleanup: an <code>ignore</code> flag (drop the result) or an
-              <code>AbortController</code> (cancel the request — handle <code>AbortError</code>).
+              <code>AbortController</code> (cancel the request, handle <code>AbortError</code>).
             </li>
             <li>
-              <strong>Four states.</strong> Model loading, error, empty, and success-with-data explicitly — don&apos;t infer
+              <strong>Four states.</strong> Model loading, error, empty, and success-with-data explicitly, don&apos;t infer
               them from <code>data === null</code>.
             </li>
             <li>
@@ -544,7 +544,7 @@ const [user, posts, friends] = await Promise.all([
 
       {/* ───────────────────────── 10. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — break it, then fix it twice</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, break it, then fix it twice</h2>
         <p className="mb-4">
           You&apos;ll build a search box that <em>visibly</em> races, then apply both fixes and watch the bug disappear. Seeing
           the race with your own eyes is what makes this stick.
@@ -552,7 +552,7 @@ const [user, posts, friends] = await Promise.all([
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
             <strong>Build a fake search API with variable latency.</strong> Write a function that resolves search results
-            after a delay — and make <em>short queries slower</em> (e.g. <code>delay = 800 - query.length * 150</code> ms).
+            after a delay, and make <em>short queries slower</em> (e.g. <code>delay = 800 - query.length * 150</code> ms).
             That artificial latency is what makes the race reproduce on every fast keystroke instead of only under bad
             network conditions.
           </li>
@@ -565,7 +565,7 @@ const [user, posts, friends] = await Promise.all([
           <li>
             <strong>Fix it with the ignore flag.</strong> Add <code>let ignore = false</code>, guard the
             <code>setResults</code> with <code>if (!ignore)</code>, and return a cleanup that sets <code>ignore = true</code>.
-            Type fast again — keep your logs and watch the stale responses get dropped instead of committed.
+            Type fast again, keep your logs and watch the stale responses get dropped instead of committed.
           </li>
           <li>
             <strong>Fix it with AbortController instead.</strong> Swap the ignore flag for a <code>controller</code>, pass
@@ -575,11 +575,11 @@ const [user, posts, friends] = await Promise.all([
           </li>
           <li>
             <strong>Add the four states.</strong> Introduce a <code>status</code> variable (loading / error / empty /
-            success), an <code>res.ok</code> check that throws on HTTP errors, and render a distinct UI for each state —
+            success), an <code>res.ok</code> check that throws on HTTP errors, and render a distinct UI for each state,
             including a real &quot;No results for <em>x</em>&quot; empty state.
           </li>
           <li>
-            <strong>Stretch — kill a waterfall.</strong> Have each result load a detail blob and an author in parallel with
+            <strong>Stretch, kill a waterfall.</strong> Have each result load a detail blob and an author in parallel with
             <code>Promise.all</code> instead of two sequential <code>await</code>s, and compare the total time.
           </li>
         </ol>
@@ -600,7 +600,7 @@ const [user, posts, friends] = await Promise.all([
           question="Why is modeling fetch state as just 'data or null' a problem?"
           options={[
             {
-              label: "null collapses three distinct situations — not-yet-loaded, errored, and successful-but-empty — into one ambiguous value",
+              label: "null collapses three distinct situations, not-yet-loaded, errored, and successful-but-empty, into one ambiguous value",
               correct: true,
               explanation:
                 "Exactly. An explicit status (loading/error/empty/success) disambiguates them, preventing spinners that never end and empty states that flash before data lands.",
@@ -608,7 +608,7 @@ const [user, posts, friends] = await Promise.all([
             {
               label: "null isn't allowed as a useState initial value in React",
               explanation:
-                "null is a perfectly valid state value. The issue isn't legality — it's that one null can't represent three different meanings.",
+                "null is a perfectly valid state value. The issue isn't legality, it's that one null can't represent three different meanings.",
             },
             {
               label: "It's actually fine; you can always check results.length === 0",
@@ -630,12 +630,12 @@ const [user, posts, friends] = await Promise.all([
             {
               label: "await each one in sequence so they don't overload the server",
               explanation:
-                "Three independent sequential awaits is a waterfall — each waits for the prior with no dependency reason. That's the slow anti-pattern you want to avoid.",
+                "Three independent sequential awaits is a waterfall, each waits for the prior with no dependency reason. That's the slow anti-pattern you want to avoid.",
             },
             {
               label: "Only fetch the user; derive posts and friends from it on the client",
               explanation:
-                "You can't derive separately-stored posts and friends from the user object — they're independent fetches. Parallelize them.",
+                "You can't derive separately-stored posts and friends from the user object, they're independent fetches. Parallelize them.",
             },
           ]}
         />

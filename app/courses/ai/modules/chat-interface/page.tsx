@@ -50,12 +50,12 @@ export default function ChatInterfaceModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          A real chat product. Not a demo, not a mock — the full stack with sessions, history, tool
+          A real chat product. Not a demo, not a mock, the full stack with sessions, history, tool
           calls, and the operational concerns you hit in production.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>Module 20&apos;s components, now wired to a real Spring Boot SSE endpoint</li>
-          <li>Session and message persistence — refreshes don&apos;t lose conversations</li>
+          <li>Session and message persistence, refreshes don&apos;t lose conversations</li>
           <li>Streaming tool calls (Module 11) all the way through to a structured UI</li>
           <li>The team standup bot: ask &quot;what did the team ship yesterday?&quot;, get a digest with citations</li>
           <li>Production concerns: CORS, retries, dropped streams, rate limits, what to log</li>
@@ -74,7 +74,7 @@ export default function ChatInterfaceModule() {
       {/* PART 1: FRONTEND ↔ BACKEND WIRING                                  */}
       {/* ================================================================= */}
       <section id="frontend-backend">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Frontend ↔ backend wiring</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, Frontend ↔ backend wiring</h2>
 
         <p>
           We have a Next.js frontend (Module 20) and a Spring Boot backend (Modules 11 + 12). Now
@@ -83,16 +83,16 @@ export default function ChatInterfaceModule() {
         </p>
 
         <ol className="list-decimal space-y-1 pl-6">
-          <li>CORS — the backend has to allow the frontend&apos;s origin</li>
-          <li>Reverse proxy / dev rewrite — so you don&apos;t hard-code <code>localhost:8080</code> in fetch calls</li>
-          <li>The shape of the request — multi-turn means sending the whole history, not just the latest message</li>
+          <li>CORS, the backend has to allow the frontend&apos;s origin</li>
+          <li>Reverse proxy / dev rewrite, so you don&apos;t hard-code <code>localhost:8080</code> in fetch calls</li>
+          <li>The shape of the request, multi-turn means sending the whole history, not just the latest message</li>
         </ol>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">CORS, the way that won&apos;t bite you later</h3>
 
         <p>
           Spring Boot defaults to denying cross-origin requests, which is correct. For local dev your
-          frontend is on <code>localhost:3000</code> and your backend on <code>localhost:8080</code> —
+          frontend is on <code>localhost:3000</code> and your backend on <code>localhost:8080</code>,
           different origins. Two options:
         </p>
 
@@ -119,7 +119,7 @@ public class CorsConfig implements WebMvcConfigurer {
 }`}</CodeBlock>
 
         <p>
-          <strong>Option 2: Next.js rewrites — the dev path.</strong>{" "}Next.js can proxy
+          <strong>Option 2: Next.js rewrites, the dev path.</strong>{" "}Next.js can proxy
           <code>/api/*</code> requests to your Spring backend. From the browser&apos;s perspective the
           request is same-origin, so CORS never fires. This is what most teams settle on for dev:
         </p>
@@ -237,17 +237,17 @@ public class ChatController {
 
         <ul className="list-disc space-y-1 pl-6">
           <li>
-            <strong>Returns <code>Flux&lt;String&gt;</code></strong> — Spring will frame each emission as
+            <strong>Returns <code>Flux&lt;String&gt;</code></strong>. Spring will frame each emission as
             its own SSE chunk when the produces type is <code>text/event-stream</code>. We hand-format
             the SSE frames ourselves so the JSON shape matches what our frontend parser expects.
           </li>
           <li>
-            <strong>Tools are wired with <code>.tools(toolService)</code></strong> — the same pattern
+            <strong>Tools are wired with <code>.tools(toolService)</code></strong>, the same pattern
             from Module 11. The streaming path handles tool-use loops internally; you just see the
             text tokens.
           </li>
           <li>
-            <strong>Hand-rolled JSON escaping</strong> — for production, use Jackson; this is a
+            <strong>Hand-rolled JSON escaping</strong>. For production, use Jackson; this is a
             simplified version for clarity. We&apos;ll switch to a proper serializer in Part 3 when
             we add tool-call events.
           </li>
@@ -259,7 +259,7 @@ public class ChatController {
           options={[
             { label: "Disable CORS in Chrome with --disable-web-security", explanation: "Now you're testing in a different browser than your users will use, and the bug returns the moment anyone else opens the app." },
             { label: "Add a Next.js rewrite that proxies /api/* to localhost:8080. From the browser's view it's same-origin and CORS never fires", correct: true, explanation: "The cleanest dev workflow. The frontend code stays origin-agnostic (just calls /api/...), and the rewrite handles the localhost:3000 → localhost:8080 hop. Production typically has both behind one domain anyway." },
-            { label: "Hardcode http://localhost:8080 in fetch and accept the CORS errors", explanation: "Errors aren't optional — the request just won't complete." },
+            { label: "Hardcode http://localhost:8080 in fetch and accept the CORS errors", explanation: "Errors aren't optional. The request just won't complete." },
             { label: "Switch the frontend to also run on port 8080", explanation: "Two services on one port doesn't work. And even if it did, you've created a deploy-time conflict with prod." },
           ]}
           xp={10}
@@ -270,7 +270,7 @@ public class ChatController {
           question="Your chat works for the first message, but on the second turn the model has no idea what was discussed before. What's the bug?"
           options={[
             { label: "The model needs to be pinned to a specific session id on the API side", explanation: "Most chat models don't have server-side session memory by default. You provide context per turn." },
-            { label: "The frontend is sending only the latest user message instead of the full history", correct: true, explanation: "LLMs are stateless — you have to send the whole conversation on every turn so the model has context. The frontend's `messages` array IS the memory; ship the whole array, not just the last entry." },
+            { label: "The frontend is sending only the latest user message instead of the full history", correct: true, explanation: "LLMs are stateless. You have to send the whole conversation on every turn so the model has context. The frontend's `messages` array IS the memory; ship the whole array, not just the last entry." },
             { label: "The chat model needs to be configured with `enableMemory: true`", explanation: "There's no such flag in Spring AI by default. Memory is provided either by sending history or by an advisor (MessageChatMemoryAdvisor)." },
             { label: "You forgot to set a User-Agent header", explanation: "Headers don't drive memory." },
           ]}
@@ -279,11 +279,11 @@ public class ChatController {
 
         <PartRecap
           title="Part 1 recap"
-          gist="Frontend talks to backend through a Next.js rewrite (dev) or a real reverse proxy (prod). Send the whole conversation history on every turn — the model is stateless. Spring controller returns a Flux of SSE-framed strings."
+          gist="Frontend talks to backend through a Next.js rewrite (dev) or a real reverse proxy (prod). Send the whole conversation history on every turn. The model is stateless. Spring controller returns a Flux of SSE-framed strings."
           points={[
             { takeaway: "Use Next.js rewrites for local dev.", detail: "Rewrites give you same-origin requests in the browser, no CORS dance, and your fetch URLs stay clean. CORS config is for production cross-origin traffic, not for getting localhost working." },
             { takeaway: "Send the full message history every turn.", detail: "The model has no memory between calls. The frontend's messages[] is the conversation; ship all of it. Trim old turns yourself when context gets tight." },
-            { takeaway: "Spring AI's streaming + tools just composes.", detail: "chatClient.prompt().messages(...).tools(toolService).stream() is one chain. The tool loop runs server-side and you only see the final tokens — until Part 3 where we surface the tool steps to the UI." },
+            { takeaway: "Spring AI's streaming + tools just composes.", detail: "chatClient.prompt().messages(...).tools(toolService).stream() is one chain. The tool loop runs server-side and you only see the final tokens, until Part 3 where we surface the tool steps to the UI." },
           ]}
         />
 
@@ -300,11 +300,11 @@ public class ChatController {
       {/* PART 2: SESSIONS                                                    */}
       {/* ================================================================= */}
       <section id="sessions">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — Sessions and conversation memory</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, Sessions and conversation memory</h2>
 
         <p>
           The frontend holds the conversation in <code>messages</code> state. That works until the
-          user refreshes the page or opens a second tab. Now you need a session — a server-side ID
+          user refreshes the page or opens a second tab. Now you need a session, a server-side ID
           you can resume from.
         </p>
 
@@ -313,7 +313,7 @@ public class ChatController {
         <p>Three different things people call a &quot;session,&quot; clearly separated:</p>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>Auth session:</strong> &quot;who is this user.&quot; Cookies, JWT, OAuth — whatever your stack already does. Out of scope for this module.</li>
+          <li><strong>Auth session:</strong> &quot;who is this user.&quot; Cookies, JWT, OAuth, whatever your stack already does. Out of scope for this module.</li>
           <li><strong>Conversation session:</strong> &quot;which thread is this turn part of.&quot; A UUID per conversation. Multiple per user.</li>
           <li><strong>Model session:</strong> &quot;memory the model retains across turns.&quot; You build this by replaying the conversation history on every call.</li>
         </ul>
@@ -438,7 +438,7 @@ public Flux<String> stream(@RequestBody ChatRequest req) {
           <p className="m-0">
             The <code>concatWith</code> only fires on a clean completion. If the client aborts mid-stream
             you&apos;ll lose the partial assistant message. Use <code>doOnCancel</code> /
-            <code>doFinally</code> to persist <code>assistantBuf</code> on any terminal signal — clean
+            <code>doFinally</code> to persist <code>assistantBuf</code> on any terminal signal, clean
             completion, error, or cancel. Otherwise refreshes after a cancelled stream show only the
             user&apos;s side.
           </p>
@@ -495,7 +495,7 @@ export function useChatSession(userId: string) {
 }`}</CodeBlock>
 
         <p>
-          The router.replace call gives users a shareable URL — anyone with the link can resume the
+          The router.replace call gives users a shareable URL, anyone with the link can resume the
           conversation. (Add auth checks on the backend before exposing this in production.)
         </p>
 
@@ -503,7 +503,7 @@ export function useChatSession(userId: string) {
 
         <p>
           Conversations grow. After 50 turns you&apos;re sending 50,000+ tokens of history on every
-          request — slow, expensive, and eventually you blow the context window. Three trimming
+          request, slow, expensive, and eventually you blow the context window. Three trimming
           strategies, in order of sophistication:
         </p>
 
@@ -533,8 +533,8 @@ export function useChatSession(userId: string) {
           kind="Quick check"
           question="Your chat is working in dev. A user reports: 'I had a 30-message conversation, refreshed, and only the last few messages are showing.' What's the most likely cause?"
           options={[
-            { label: "The model has a context window limit and dropped earlier turns", explanation: "The model would never silently drop UI history — that's a UI / persistence issue, not a model issue." },
-            { label: "The frontend persists messages only in component state, not the server-side session — refresh wipes the in-memory list and only shows what's reloaded", correct: true, explanation: "Likely culprit: the frontend held messages in useState only, never wrote to the server, so refresh started from scratch. Or it loaded from server but the server never received/persisted the messages. Either way: persistence path is broken." },
+            { label: "The model has a context window limit and dropped earlier turns", explanation: "The model would never silently drop UI history, that's a UI / persistence issue, not a model issue." },
+            { label: "The frontend persists messages only in component state, not the server-side session, refresh wipes the in-memory list and only shows what's reloaded", correct: true, explanation: "Likely culprit: the frontend held messages in useState only, never wrote to the server, so refresh started from scratch. Or it loaded from server but the server never received/persisted the messages. Either way: persistence path is broken." },
             { label: "The browser's localStorage cleared", explanation: "If you're using localStorage as your only persistence, the user clearing cookies wipes everything. Server-side persistence is the answer." },
             { label: "The session UUID changed on refresh", explanation: "If the session id isn't preserved (URL query param, localStorage, server-side derived from auth), refreshes lose the link to history. Closely related to the right answer." },
           ]}
@@ -543,12 +543,12 @@ export function useChatSession(userId: string) {
 
         <Quiz
           kind="Quick check"
-          question="A teammate proposes saving the assistant's full reply only in the SSE [DONE] handler — it's where you have the complete text. What's the bug?"
+          question="A teammate proposes saving the assistant's full reply only in the SSE [DONE] handler, it's where you have the complete text. What's the bug?"
           options={[
             { label: "[DONE] handlers can fail silently", explanation: "Possible but not the main issue." },
-            { label: "If the client aborts (or the network drops) mid-stream, [DONE] never fires and the partial reply is lost — even though the model produced text and the user saw it", correct: true, explanation: "Right. Persist on any terminal signal — completion, cancel, or error — using doFinally/doOnCancel. Otherwise refreshes after a cancelled stream show only the user's side, not the partial reply that was on screen seconds ago." },
-            { label: "[DONE] is sent before all tokens have been processed", explanation: "It's sent after — that's the protocol. The issue is what happens when [DONE] never gets sent." },
-            { label: "Spring AI doesn't support [DONE] handlers", explanation: "It does — concatWith is a Reactor pattern." },
+            { label: "If the client aborts (or the network drops) mid-stream, [DONE] never fires and the partial reply is lost, even though the model produced text and the user saw it", correct: true, explanation: "Right. Persist on any terminal signal, completion, cancel, or error, using doFinally/doOnCancel. Otherwise refreshes after a cancelled stream show only the user's side, not the partial reply that was on screen seconds ago." },
+            { label: "[DONE] is sent before all tokens have been processed", explanation: "It's sent after, that's the protocol. The issue is what happens when [DONE] never gets sent." },
+            { label: "Spring AI doesn't support [DONE] handlers", explanation: "It does, concatWith is a Reactor pattern." },
           ]}
           xp={10}
         />
@@ -557,7 +557,7 @@ export function useChatSession(userId: string) {
           title="Part 2 recap"
           gist="Sessions are conversation IDs persisted server-side. Save user turns before streaming, persist assistant turns on any terminal signal. Use ?session=... URLs for resumability and trim history once it grows past your token budget."
           points={[
-            { takeaway: "Three things people call 'session' — keep them separate.", detail: "Auth session (user identity), conversation session (which thread), model session (history replayed each turn). This module is about the second one." },
+            { takeaway: "Three things people call 'session', keep them separate.", detail: "Auth session (user identity), conversation session (which thread), model session (history replayed each turn). This module is about the second one." },
             { takeaway: "Persist on every terminal signal, not just clean completion.", detail: "doFinally/doOnCancel/doOnError. If you only persist on [DONE], aborts and crashes lose the partial reply the user already saw." },
             { takeaway: "Last-N trimming buys you 6 months.", detail: "Don't over-engineer summarization on day one. Last-10-turns is a fine default; switch to last-N + summary when users start asking 'remember what I said earlier?' Token-budget trimming is for agent systems where message sizes vary wildly." },
           ]}
@@ -575,7 +575,7 @@ export function useChatSession(userId: string) {
       {/* PART 3: STREAMING TOOL RESULTS                                     */}
       {/* ================================================================= */}
       <section id="tool-results">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — Streaming tool results to the UI</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, Streaming tool results to the UI</h2>
 
         <p>
           Module 20 modeled tool calls as message parts on the frontend. We never wired up the backend
@@ -666,7 +666,7 @@ private Flux<String> toSseFrames(ChatResponse chatResponse) {
             The exact method names on <code>ChatResponse</code> / <code>Generation</code> /
             <code>AssistantMessage</code> have shifted between Spring AI milestones. The shape above
             reflects the 1.0 GA contract. If you&apos;re on a different version, the concepts are the
-            same — find the equivalent of &quot;get tool calls from the streamed assistant message&quot;
+            same, find the equivalent of &quot;get tool calls from the streamed assistant message&quot;
             in your version&apos;s docs.
           </p>
         </Callout>
@@ -676,7 +676,7 @@ private Flux<String> toSseFrames(ChatResponse chatResponse) {
         <p>
           Spring AI&apos;s default tool-loop runs the tool, feeds the result back into the model, and
           continues. By default the tool <em>result</em>{" "}doesn&apos;t surface as its own streaming
-          event — only the next assistant turn (which references the result implicitly) does. To
+          event, only the next assistant turn (which references the result implicitly) does. To
           surface results explicitly, intercept the tool execution.
         </p>
 
@@ -728,7 +728,7 @@ public class ToolService {
             a first version, many teams skip it: just emit the tool_call event and let the next
             assistant text turn imply &quot;the tool returned something useful.&quot; The UX is still
             better than no tool visibility, and it&apos;s 90% less code. Add explicit tool_result
-            events when the product needs them — for example, when results are large enough to deserve
+            events when the product needs them, for example, when results are large enough to deserve
             their own UI affordance.
           </p>
         </Callout>
@@ -744,7 +744,7 @@ public class ToolService {
 
         <WorkedExample
           title="The full request lifecycle, end to end"
-          subtitle="User asks 'what shipped on the platform team yesterday?' — trace it through every layer."
+          subtitle="User asks 'what shipped on the platform team yesterday?', trace it through every layer."
           steps={[
             {
               title: "Frontend: build request",
@@ -813,9 +813,9 @@ public class ToolService {
           kind="Quick check"
           question="Why does the frontend need a tool_call event before the tool actually runs, instead of just showing the tool's output once it's available?"
           options={[
-            { label: "It doesn't — only the output matters", explanation: "Then users stare at a spinner during slow tool calls (5+ seconds for a DB query is common). The interim 'running' state is the whole UX win." },
-            { label: "It gives users immediate feedback that something is happening, especially during slow tools (DB queries, web searches), and it lets the UI render input parameters for transparency", correct: true, explanation: "Right. The 'running' indicator is the moral equivalent of streaming text — it converts dead air into watchable progress. And surfacing the tool's input ('searching for: ...') tells the user what the model interpreted, which is often where misunderstandings happen." },
-            { label: "Spring AI requires it for the tool loop to work", explanation: "Spring AI's tool loop runs fine without surfacing events — that's just for the UI." },
+            { label: "It doesn't, only the output matters", explanation: "Then users stare at a spinner during slow tool calls (5+ seconds for a DB query is common). The interim 'running' state is the whole UX win." },
+            { label: "It gives users immediate feedback that something is happening, especially during slow tools (DB queries, web searches), and it lets the UI render input parameters for transparency", correct: true, explanation: "Right. The 'running' indicator is the moral equivalent of streaming text, it converts dead air into watchable progress. And surfacing the tool's input ('searching for: ...') tells the user what the model interpreted, which is often where misunderstandings happen." },
+            { label: "Spring AI requires it for the tool loop to work", explanation: "Spring AI's tool loop runs fine without surfacing events, that's just for the UI." },
             { label: "It speeds up the tool execution", explanation: "Emitting an event has zero effect on tool latency." },
           ]}
           xp={10}
@@ -823,11 +823,11 @@ public class ToolService {
 
         <Quiz
           kind="Quick check"
-          question="A teammate suggests skipping tool_result events on day one — just emit tool_call and let the next text turn imply success. What's the right reaction?"
+          question="A teammate suggests skipping tool_result events on day one, just emit tool_call and let the next text turn imply success. What's the right reaction?"
           options={[
-            { label: "Reject — without explicit results, the UI is incomplete", explanation: "It's not incomplete; it's leaner. The 'running' indicator is the high-value part. Result events are useful when results need their own UI, not when text already conveys them." },
-            { label: "Accept — the running indicator is 90% of the UX value, and threading tool-result events through Spring AI's loop is significant code. Add tool_result later when the product needs structured result rendering (e.g. a sources panel)", correct: true, explanation: "Right. Ship the high-leverage part now. Skip the tricky plumbing until there's a concrete UX reason to need it. Premature complexity is the most expensive kind." },
-            { label: "Accept, but only if there's no plan to add tool_result later", explanation: "You can always add it later — the protocol is extensible. Skipping doesn't paint you into a corner." },
+            { label: "Reject, without explicit results, the UI is incomplete", explanation: "It's not incomplete; it's leaner. The 'running' indicator is the high-value part. Result events are useful when results need their own UI, not when text already conveys them." },
+            { label: "Accept, the running indicator is 90% of the UX value, and threading tool-result events through Spring AI's loop is significant code. Add tool_result later when the product needs structured result rendering (e.g. a sources panel)", correct: true, explanation: "Right. Ship the high-leverage part now. Skip the tricky plumbing until there's a concrete UX reason to need it. Premature complexity is the most expensive kind." },
+            { label: "Accept, but only if there's no plan to add tool_result later", explanation: "You can always add it later, the protocol is extensible. Skipping doesn't paint you into a corner." },
             { label: "Build a custom tool framework instead of using Spring AI's", explanation: "Massively over-engineered response to a small UX gap." },
           ]}
           xp={10}
@@ -837,9 +837,9 @@ public class ToolService {
           title="Part 3 recap"
           gist="Drop to chatResponse() to surface tool calls. Emit a tool_call frame per call; the frontend already handles it via the parts model from Module 20. Skip explicit tool_result on v1 unless the UX needs it."
           points={[
-            { takeaway: "content() vs chatResponse() is the lever.", detail: "content() gives you text only — clean for chat. chatResponse() gives you full structured responses including tool calls. Use the right one for what you're rendering." },
+            { takeaway: "content() vs chatResponse() is the lever.", detail: "content() gives you text only, clean for chat. chatResponse() gives you full structured responses including tool calls. Use the right one for what you're rendering." },
             { takeaway: "Surface tool calls; defer tool results.", detail: "tool_call events are cheap to emit and the highest-leverage UX. tool_result threading is fiddly and only worth it when the result deserves its own UI (sources panel, structured output)." },
-            { takeaway: "The frontend protocol from Module 20 already supports this.", detail: "Designing the protocol with tool events on day one means adding backend support is a one-sided change — no frontend rewrites." },
+            { takeaway: "The frontend protocol from Module 20 already supports this.", detail: "Designing the protocol with tool events on day one means adding backend support is a one-sided change, no frontend rewrites." },
           ]}
         />
 
@@ -855,7 +855,7 @@ public class ToolService {
       {/* PART 4: PRODUCTION POLISH                                          */}
       {/* ================================================================= */}
       <section id="production">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Production polish</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Production polish</h2>
 
         <p>
           A working chat is not a shippable chat. Five concerns separate &quot;works on my
@@ -912,7 +912,7 @@ if (totalTokens > 50_000) {
 
         <p>
           Log enough to debug, never enough to leak. The temptation is to log every prompt and
-          response — and then someone&apos;s SSN ends up in your aggregated logs.
+          response, and then someone&apos;s SSN ends up in your aggregated logs.
         </p>
 
         <p>The minimum useful set of fields:</p>
@@ -927,7 +927,7 @@ if (totalTokens > 50_000) {
           <p className="m-0">
             Heuristic redaction (regex for emails, phone numbers, etc.) misses a lot. The safer pattern
             is to log a content hash and structural metadata, then store the actual content (if you need
-            it) in a separate, access-controlled audit store — not your normal observability stack.
+            it) in a separate, access-controlled audit store, not your normal observability stack.
           </p>
         </Callout>
 
@@ -940,9 +940,9 @@ if (totalTokens > 50_000) {
 
         <ul className="list-disc space-y-1 pl-6">
           <li><strong>5xx from the model:</strong>{" "}retry once with a small jitter, then surface a clear error to the user with a retry button.</li>
-          <li><strong>API rate limit (429):</strong>{" "}queue with a polite delay; if it persists past 30s, fail with &quot;experiencing high load — try again in a moment.&quot;</li>
+          <li><strong>API rate limit (429):</strong>{" "}queue with a polite delay; if it persists past 30s, fail with &quot;experiencing high load, try again in a moment.&quot;</li>
           <li><strong>Slow tokens (no token in 30s):</strong>{" "}abort with &quot;the model is being slow; here&apos;s what we have so far.&quot;</li>
-          <li><strong>Tool failures:</strong>{" "}let Spring AI&apos;s loop see the error; many models will gracefully recover (&quot;I tried to look that up but the search service was down — let me try a different approach&quot;).</li>
+          <li><strong>Tool failures:</strong>{" "}let Spring AI&apos;s loop see the error; many models will gracefully recover (&quot;I tried to look that up but the search service was down, let me try a different approach&quot;).</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">5. The first-token timeout</h3>
@@ -974,18 +974,18 @@ return chatClient.prompt()
           options={[
             { label: "Stop logging prompts entirely", explanation: "You lose debuggability. There's a middle ground." },
             { label: "Log a hash of the prompt for grouping/aggregation, plus structural metadata (length, token count, language); store the raw content in a separate, access-controlled audit store accessible only on-call", correct: true, explanation: "Right balance. The hash and structure live in normal logs and are enough for 'how many users hit this kind of prompt'. The raw content is available for incident response, but behind audit logs and stricter access. Routine debugging stays easy; PII exposure surface drops dramatically." },
-            { label: "Add a regex to redact emails/phone numbers", explanation: "Heuristic redaction misses 90% of the cases. Customer addresses, internal IDs, free-form notes — none of those match a regex." },
-            { label: "Encrypt the logs", explanation: "Doesn't help — anyone with log access still reads them. Encryption protects logs in transit and at rest, not from authorized log readers." },
+            { label: "Add a regex to redact emails/phone numbers", explanation: "Heuristic redaction misses 90% of the cases. Customer addresses, internal IDs, free-form notes, none of those match a regex." },
+            { label: "Encrypt the logs", explanation: "Doesn't help, anyone with log access still reads them. Encryption protects logs in transit and at rest, not from authorized log readers." },
           ]}
           xp={10}
         />
 
         <Quiz
           kind="Quick check"
-          question="A user reports chat 'feels broken' — they wait 8 seconds before any response. The model ultimately answers correctly. What's the production-grade fix?"
+          question="A user reports chat 'feels broken', they wait 8 seconds before any response. The model ultimately answers correctly. What's the production-grade fix?"
           options={[
-            { label: "Switch models — the current one is too slow", explanation: "Maybe, but premature. First make sure your wiring isn't adding the 8 seconds." },
-            { label: "Check time-to-first-token in your logs. If the model is producing tokens in <1s but the user sees 8s, your stack (proxy, CDN, controller) is buffering. Disable buffering on the SSE path. If TTFT really is 8s, switch models or add a cheaper acknowledgement model that responds first while the main model thinks", correct: true, explanation: "The right diagnostic flow. TTFT is your single most important latency metric. If your logs say 'first token at 800ms' but the user reports 8 seconds, something between Spring and the browser is buffering — proxies, CDNs, the wrong runtime. If TTFT really is 8s on the model side, you need an architectural answer (faster model, or two-stage)." },
+            { label: "Switch models, the current one is too slow", explanation: "Maybe, but premature. First make sure your wiring isn't adding the 8 seconds." },
+            { label: "Check time-to-first-token in your logs. If the model is producing tokens in <1s but the user sees 8s, your stack (proxy, CDN, controller) is buffering. Disable buffering on the SSE path. If TTFT really is 8s, switch models or add a cheaper acknowledgement model that responds first while the main model thinks", correct: true, explanation: "The right diagnostic flow. TTFT is your single most important latency metric. If your logs say 'first token at 800ms' but the user reports 8 seconds, something between Spring and the browser is buffering, proxies, CDNs, the wrong runtime. If TTFT really is 8s on the model side, you need an architectural answer (faster model, or two-stage)." },
             { label: "Add a loading spinner so users know it's working", explanation: "Hides the symptom; doesn't fix the cause. The 8-second wait is a real problem, not a perception problem." },
             { label: "Increase the model's output speed parameter", explanation: "Most APIs don't expose token-output-speed as a knob. The way to go faster is a smaller model." },
           ]}
@@ -998,14 +998,14 @@ return chatClient.prompt()
           points={[
             { takeaway: "Time-to-first-token is the most important latency metric.", detail: "Above 2-3s, users think the app is broken. Measure it; alert on it; if it spikes, your stack is buffering somewhere it shouldn't." },
             { takeaway: "Log structure, hash content, store raw separately.", detail: "Normal observability gets enough info to debug aggregations and alerts. Raw content lives in an audit store with tighter access. PII never enters the main log stream." },
-            { takeaway: "Tool failures should bubble back into the model.", detail: "Models are good at saying 'that didn't work, let me try X instead.' Don't catch the tool error and silently retry — let the model decide what to do, and surface that decision to the user." },
+            { takeaway: "Tool failures should bubble back into the model.", detail: "Models are good at saying 'that didn't work, let me try X instead.' Don't catch the tool error and silently retry, let the model decide what to do, and surface that decision to the user." },
           ]}
         />
 
         <Checkpoint moduleSlug="chat-interface" id="production" title="Production polish" xp={25} celebration="Your chat handles real users, not just demos.">
           <p>
             You should be able to: identify the five operational concerns (rate limits, token budgets,
-            logging, degradation, TTFT) and explain the right approach to each — without quoting any
+            logging, degradation, TTFT) and explain the right approach to each, without quoting any
             specific library&apos;s API.
           </p>
         </Checkpoint>
@@ -1015,7 +1015,7 @@ return chatClient.prompt()
       {/* PART 5: PROJECT                                                    */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: team standup bot</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: team standup bot</h2>
 
         <p>
           Build a chat product your team would actually use: ask it &quot;what shipped yesterday?&quot;
@@ -1050,13 +1050,13 @@ return chatClient.prompt()
 
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <code>searchShipped(team, since, until)</code> — returns tickets marked &quot;shipped&quot; in the date range.
+            <code>searchShipped(team, since, until)</code>, returns tickets marked &quot;shipped&quot; in the date range.
           </li>
           <li>
-            <code>searchBlocked(team)</code> — returns tickets currently in &quot;blocked&quot; status with their blocker description.
+            <code>searchBlocked(team)</code>, returns tickets currently in &quot;blocked&quot; status with their blocker description.
           </li>
           <li>
-            <code>searchByPerson(personId)</code> — returns recent tickets assigned to or completed by a person.
+            <code>searchByPerson(personId)</code>, returns recent tickets assigned to or completed by a person.
           </li>
         </ul>
 
@@ -1130,16 +1130,16 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
               persisted.</li>
           <li>Hammering the endpoint past 20 requests/minute returns a clean rate-limit error event,
               not a stack trace.</li>
-          <li>Logs contain session/user/timing/tool data — but no raw prompts or model outputs.</li>
+          <li>Logs contain session/user/timing/tool data, but no raw prompts or model outputs.</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>Markdown rendering</strong> — the bot is going to emit bullet lists and bold text. Render them.</li>
-          <li><strong>Slack-style mentions</strong> — let users <code>@mention</code> teammates and have the bot prefer those people in tool results.</li>
-          <li><strong>Daily digest job</strong> — a Spring scheduled task that runs the same prompt every morning and posts the result somewhere (file, email, Slack webhook).</li>
-          <li><strong>Tool result events</strong> — go back and add explicit <code>tool_result</code> events with a sources panel UI.</li>
+          <li><strong>Markdown rendering</strong>, the bot is going to emit bullet lists and bold text. Render them.</li>
+          <li><strong>Slack-style mentions</strong>, let users <code>@mention</code> teammates and have the bot prefer those people in tool results.</li>
+          <li><strong>Daily digest job</strong>, a Spring scheduled task that runs the same prompt every morning and posts the result somewhere (file, email, Slack webhook).</li>
+          <li><strong>Tool result events</strong>, go back and add explicit <code>tool_result</code> events with a sources panel UI.</li>
         </ul>
 
         <Checkpoint moduleSlug="chat-interface" id="project" title="Project: team standup bot" xp={75} manual manualLabel="My standup bot answers correctly" celebration="You shipped a real chat product end-to-end. This is where the course's pieces start clicking together.">
@@ -1156,15 +1156,15 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Final quiz</h2>
 
         <Quiz
           kind="Final check"
-          question="Your standup bot works in dev with the Next.js rewrite. You deploy to staging where the frontend runs at app.example.com and the backend at api.example.com. The chat hangs forever — fetch never completes. Diagnose."
+          question="Your standup bot works in dev with the Next.js rewrite. You deploy to staging where the frontend runs at app.example.com and the backend at api.example.com. The chat hangs forever, fetch never completes. Diagnose."
           options={[
             { label: "The model is broken", explanation: "Unrelated. The fetch never completes because the request never gets through, not because the model is slow." },
             { label: "Different origins → CORS preflight is failing on the SSE endpoint. Either configure CORS to allow app.example.com, or put both behind the same domain via a reverse proxy", correct: true, explanation: "Right. Rewrites only exist in dev; production is real cross-origin. Either set up CORS on the Spring side (with allowedOrigins for app.example.com), or put both services behind one domain via nginx / ALB / Vercel rewrites in production. The latter is usually cleaner." },
-            { label: "Spring Boot doesn't support cross-origin SSE", explanation: "It does — same as any HTTP. The issue is browser CORS policy, not Spring." },
+            { label: "Spring Boot doesn't support cross-origin SSE", explanation: "It does, same as any HTTP. The issue is browser CORS policy, not Spring." },
             { label: "Switch to WebSockets", explanation: "Doesn't fix CORS, and adds complexity. The fix is to allow the cross-origin request, not change protocols." },
           ]}
           xp={15}
@@ -1172,12 +1172,12 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
 
         <Quiz
           kind="Final check"
-          question="Your team's chat product saves the assistant message on the [DONE] handler. Users complain that after they hit 'stop' to abort a long answer, refreshing the page shows only their question — the partial answer they saw on screen is gone. What's the architectural fix?"
+          question="Your team's chat product saves the assistant message on the [DONE] handler. Users complain that after they hit 'stop' to abort a long answer, refreshing the page shows only their question, the partial answer they saw on screen is gone. What's the architectural fix?"
           options={[
             { label: "Tell users not to hit stop", explanation: "Hostile. Stop is a feature." },
-            { label: "Persist the assistant message on any terminal signal — completion, abort, or error — using doFinally / doOnCancel; the partial buffer is the source of truth", correct: true, explanation: "Right. [DONE] only fires on clean completion. doFinally fires on EVERY terminal signal (success, cancel, error), so you persist whatever the buffer accumulated, even partial. Users see exactly what they saw on screen before refresh." },
+            { label: "Persist the assistant message on any terminal signal, completion, abort, or error, using doFinally / doOnCancel; the partial buffer is the source of truth", correct: true, explanation: "Right. [DONE] only fires on clean completion. doFinally fires on EVERY terminal signal (success, cancel, error), so you persist whatever the buffer accumulated, even partial. Users see exactly what they saw on screen before refresh." },
             { label: "Auto-resume the stream on refresh", explanation: "Costs another API call and may produce a different answer. Just persist the partial." },
-            { label: "Disable the stop button", explanation: "Not actually a fix — you've removed a feature instead of fixing the bug." },
+            { label: "Disable the stop button", explanation: "Not actually a fix, you've removed a feature instead of fixing the bug." },
           ]}
           xp={15}
         />
@@ -1196,11 +1196,11 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
 
         <Quiz
           kind="Final check"
-          question="A teammate proposes: 'For tool calls, let's just await each tool execution server-side and emit a single combined event with tool_call + tool_result together — simpler than two events.' What's wrong with this plan?"
+          question="A teammate proposes: 'For tool calls, let's just await each tool execution server-side and emit a single combined event with tool_call + tool_result together, simpler than two events.' What's wrong with this plan?"
           options={[
-            { label: "Nothing — that's a fine simplification", explanation: "It is simpler, but it loses the most important UX win — the 'running' state during slow tool calls." },
-            { label: "Tools can take seconds (DB queries, web searches). Combining tool_call+result into one event means the UI can't show 'running' progress during the wait — the user sees a long pause then a finished result. Two events keep the UX smooth", correct: true, explanation: "Right. The two-event model isn't there for the data — it's there for the UX. The 'running' indicator is the moral equivalent of streaming text: it converts dead air into watchable progress. Combining the events kills that." },
-            { label: "Spring AI doesn't support combined events", explanation: "Spring AI doesn't care — you control the SSE protocol. The constraint is UX, not framework." },
+            { label: "Nothing, that's a fine simplification", explanation: "It is simpler, but it loses the most important UX win, the 'running' state during slow tool calls." },
+            { label: "Tools can take seconds (DB queries, web searches). Combining tool_call+result into one event means the UI can't show 'running' progress during the wait, the user sees a long pause then a finished result. Two events keep the UX smooth", correct: true, explanation: "Right. The two-event model isn't there for the data, it's there for the UX. The 'running' indicator is the moral equivalent of streaming text: it converts dead air into watchable progress. Combining the events kills that." },
+            { label: "Spring AI doesn't support combined events", explanation: "Spring AI doesn't care, you control the SSE protocol. The constraint is UX, not framework." },
             { label: "It's against the SSE spec", explanation: "SSE allows arbitrary event payloads. The spec has nothing to say about how to model tool calls." },
           ]}
           xp={15}
@@ -1210,8 +1210,8 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           kind="Final check"
           question="You're on call. Your chat product's TTFT (time to first token) p50 jumps from 800ms to 6 seconds overnight. The model itself, measured at the API, is still 800ms. Where do you look first?"
           options={[
-            { label: "The model — there's clearly a regression somewhere", explanation: "The model is fine — you said so yourself." },
-            { label: "The path between your Spring Boot service and the browser. Something is buffering the SSE stream — most likely a new proxy/CDN config, a runtime change (e.g. accidentally moving to a serverless platform that buffers), or a middleware that's reading the body before forwarding", correct: true, explanation: "Right. If the model is producing in 800ms but the user sees 6s, the bytes are being held somewhere on the way out. Common culprits: CDNs that don't pass through text/event-stream correctly, serverless runtimes with default buffering, middleware that reads response.body for logging. Check what changed in your infra in the last 24h." },
+            { label: "The model, there's clearly a regression somewhere", explanation: "The model is fine, you said so yourself." },
+            { label: "The path between your Spring Boot service and the browser. Something is buffering the SSE stream, most likely a new proxy/CDN config, a runtime change (e.g. accidentally moving to a serverless platform that buffers), or a middleware that's reading the body before forwarding", correct: true, explanation: "Right. If the model is producing in 800ms but the user sees 6s, the bytes are being held somewhere on the way out. Common culprits: CDNs that don't pass through text/event-stream correctly, serverless runtimes with default buffering, middleware that reads response.body for logging. Check what changed in your infra in the last 24h." },
             { label: "Add more replicas of the Spring Boot service", explanation: "Doesn't fix buffering. More replicas means more buffered streams." },
             { label: "Switch to a faster model", explanation: "The model isn't the bottleneck. Find the bottleneck before throwing money at it." },
           ]}
@@ -1222,7 +1222,7 @@ INSERT INTO tickets (code, title, team, assignee, status, shipped_at) VALUES
           <p>
             With this module complete, you have an end-to-end AI feature: React frontend, Spring Boot
             backend, sessions, tools, streaming, and the operational layer to keep it running. Module 22
-            takes the same stack and adds multimodal — images and files going into the model.
+            takes the same stack and adds multimodal, images and files going into the model.
           </p>
         </Checkpoint>
       </section>

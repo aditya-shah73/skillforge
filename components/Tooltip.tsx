@@ -22,13 +22,15 @@ export default function Tooltip({
   children,
   side = "bottom",
   align = "center",
-  maxWidth = 260,
+  maxWidth = 280,
+  minWidth = 200,
 }: {
   label: ReactNode;
   children: ReactNode;
   side?: "top" | "bottom";
   align?: "start" | "center" | "end";
   maxWidth?: number;
+  minWidth?: number;
 }) {
   const [open, setOpen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -82,19 +84,19 @@ export default function Tooltip({
         <span
           id={id}
           role="tooltip"
-          className={`pointer-events-none absolute z-50 ${sideClasses} ${alignClasses}`}
-          style={{ maxWidth }}
+          className={`pointer-events-none absolute z-50 w-max ${sideClasses} ${alignClasses}`}
+          style={{ maxWidth, minWidth }}
         >
           {/* Inner wrapper carries the enter animation so it doesn't fight
               the outer element's -translate-x-1/2 centering transform. */}
           <span
-            className="relative block rounded-xl border border-slate-200 bg-white/95 px-3 py-2 text-xs leading-snug text-slate-700 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-200 dark:shadow-black/40"
+            className="relative block rounded-2xl border border-slate-200/80 bg-white px-3.5 py-2.5 text-[13px] leading-relaxed font-normal tracking-normal text-slate-600 shadow-xl ring-1 shadow-slate-900/10 ring-black/[0.02] dark:border-white/10 dark:bg-slate-800 dark:text-slate-300 dark:shadow-black/50 dark:ring-white/5"
             style={{ animation: "skillforge-tooltip-in 140ms ease-out both" }}
           >
             {label}
             <span
               aria-hidden
-              className={`absolute ${caretSide} ${caretAlign} h-2 w-2 rotate-45 border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 ${
+              className={`absolute ${caretSide} ${caretAlign} h-2 w-2 rotate-45 border-slate-200/80 bg-white dark:border-white/10 dark:bg-slate-800 ${
                 side === "bottom"
                   ? "border-t border-l"
                   : "border-r border-b"

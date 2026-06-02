@@ -12,10 +12,10 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "setup", title: "Why sorting matters — and the cost landscape" },
+  { id: "setup", title: "Why sorting matters, and the cost landscape" },
   { id: "intuition", title: "The O(n²) trio: bubble, selection, insertion" },
-  { id: "merge", title: "Merge sort — divide and conquer, stable, O(n log n)" },
-  { id: "quick", title: "Quicksort — partition, average vs worst case" },
+  { id: "merge", title: "Merge sort, divide and conquer, stable, O(n log n)" },
+  { id: "quick", title: "Quicksort, partition, average vs worst case" },
   { id: "java-sort", title: "Arrays.sort and Collections.sort: what Java actually uses" },
   { id: "project", title: "Project: Quickselect + Merge Intervals" },
 ];
@@ -96,7 +96,7 @@ flowchart TB
       {/* ───────────────── Part 1 · Setup ───────────────── */}
       <Checkpoint moduleSlug="sorting" id="setup" title="I know the cost landscape and why O(n log n) is the floor" xp={20}>
       <section>
-        <h2 id="setup">Why sorting matters — and the cost landscape</h2>
+        <h2 id="setup">Why sorting matters, and the cost landscape</h2>
 
         <p>
           Sorting is the single most-studied problem in computer science, and for good reason: a sorted array unlocks
@@ -107,8 +107,8 @@ flowchart TB
         </p>
 
         <p>
-          So even if you never implement a sort yourself in production — and you probably shouldn&apos;t,{" "}
-          <code>Arrays.sort</code> is excellent — knowing the seven canonical sorts and their tradeoffs is the price
+          So even if you never implement a sort yourself in production, and you probably shouldn&apos;t,{" "}
+          <code>Arrays.sort</code> is excellent, knowing the seven canonical sorts and their tradeoffs is the price
           of admission. They&apos;re also the cleanest possible introduction to recursion, divide-and-conquer, and
           partitioning, which is why we cover them at the start of Phase 6.
         </p>
@@ -137,8 +137,8 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         <ul>
           <li><strong>Selection sort has no best case.</strong>{" "}It always scans the entire unsorted suffix to find the minimum, even if the array is already sorted. Worst, average, and best are all O(n²).</li>
           <li><strong>Bubble and insertion sort are O(n) on already-sorted input.</strong>{" "}One pass with no swaps confirms order. This is rare in practice but it&apos;s why insertion sort is a building block of Timsort.</li>
-          <li><strong>Quicksort&apos;s O(n²) worst case</strong>{" "}only happens with terrible pivot choices — usually a sorted-or-reverse-sorted array combined with a fixed-position pivot. Random pivot or median-of-three reduces the chance to negligible.</li>
-          <li><strong>Heapsort is O(1) space</strong>{" "}in-place, but its constant factors are worse than quicksort because of poor cache behavior — the heap operations jump around the array.</li>
+          <li><strong>Quicksort&apos;s O(n²) worst case</strong>{" "}only happens with terrible pivot choices, usually a sorted-or-reverse-sorted array combined with a fixed-position pivot. Random pivot or median-of-three reduces the chance to negligible.</li>
+          <li><strong>Heapsort is O(1) space</strong>{" "}in-place, but its constant factors are worse than quicksort because of poor cache behavior, the heap operations jump around the array.</li>
           <li><strong>Timsort gets O(n) on sorted (or reverse-sorted) input</strong>{" "}because it detects existing &quot;runs&quot; and merges them. This is the property that makes it the right default for real-world data, which is rarely random.</li>
         </ul>
 
@@ -158,7 +158,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
           <p>
             That worst-case path is the worst-case number of comparisons. So no comparison-based algorithm can do
             better than O(n log n) in the worst case. Merge sort, heapsort, and Timsort hit this bound. Quicksort
-            hits it on average. Anything claiming to beat O(n log n) — counting sort, radix sort, bucket sort — is
+            hits it on average. Anything claiming to beat O(n log n), counting sort, radix sort, bucket sort, is
             not a comparison sort; it exploits structural information about the keys (bounded range, fixed digit
             count) that general comparisons can&apos;t see.
           </p>
@@ -167,7 +167,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         <h3>What sorting unlocks</h3>
 
         <p>
-          The reason to invest in sorting fluency isn&apos;t the sort itself — it&apos;s everything that becomes easy
+          The reason to invest in sorting fluency isn&apos;t the sort itself, it&apos;s everything that becomes easy
           afterward:
         </p>
 
@@ -183,9 +183,9 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
           kind="Quick check"
           question="Why can't comparison-based sorting ever beat O(n log n) in the worst case?"
           options={[
-            { label: "It can — radix sort is O(n).", explanation: "Radix sort isn't comparison-based — it uses the digits of the keys directly. The O(n log n) floor only applies to algorithms that learn about the data exclusively through pairwise comparisons." },
+            { label: "It can, radix sort is O(n).", explanation: "Radix sort isn't comparison-based, it uses the digits of the keys directly. The O(n log n) floor only applies to algorithms that learn about the data exclusively through pairwise comparisons." },
             { label: "Because the decision tree distinguishing n! permutations must have height at least log₂(n!) ≈ n log n.", correct: true, explanation: "Right. Each comparison gives you one bit of information; you need log₂(n!) bits to identify the right permutation, which is Θ(n log n) by Stirling. Merge sort hits this bound exactly; quicksort hits it on average." },
-            { label: "Because every sort needs to swap n elements at least n times.", explanation: "That would be O(n²). The lower bound is on comparisons, not swaps, and it's tighter — n log n." },
+            { label: "Because every sort needs to swap n elements at least n times.", explanation: "That would be O(n²). The lower bound is on comparisons, not swaps, and it's tighter, n log n." },
             { label: "Java's Arrays.sort enforces it.", explanation: "Arrays.sort respects the bound; it doesn't enforce it on the universe. The bound is mathematical, language-independent." },
           ]}
         />
@@ -196,7 +196,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
           options={[
             { label: "Bubble sort is O(n) on already-sorted input if you track whether any swap happened in a pass.", explanation: "True. If a full pass does no swaps, the array is sorted; you can break early. This gives bubble sort an O(n) best case." },
             { label: "Heapsort is in-place but typically slower than quicksort due to cache behavior.", explanation: "True. Heap operations jump between parents and children at distant indices, defeating the cache. Quicksort scans contiguously." },
-            { label: "Selection sort has an O(n) best case on already-sorted input.", correct: true, explanation: "False — and the trap. Selection sort always finds the minimum of the entire unsorted suffix, regardless of input order. It's O(n²) in best, average, and worst case. This makes it the only major sort with no best-case improvement on sorted data." },
+            { label: "Selection sort has an O(n) best case on already-sorted input.", correct: true, explanation: "False, and the trap. Selection sort always finds the minimum of the entire unsorted suffix, regardless of input order. It's O(n²) in best, average, and worst case. This makes it the only major sort with no best-case improvement on sorted data." },
             { label: "Merge sort guarantees O(n log n) at the cost of O(n) extra space.", explanation: "True. The divide-and-conquer structure forces O(n log n) regardless of input, and the merge step needs scratch space. The space cost is the price of the worst-case guarantee." },
           ]}
         />
@@ -211,11 +211,11 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         <p>
           Three quadratic sorts. Nobody uses them as a default in production, but each illustrates a useful idea, and
           insertion sort in particular shows up inside Timsort. Implement them once, internalize their rhythm, then
-          forget the details — you&apos;ll never write them again outside of an interview warm-up or a 16-element
+          forget the details, you&apos;ll never write them again outside of an interview warm-up or a 16-element
           subarray inside a faster algorithm.
         </p>
 
-        <h3>Bubble sort — repeatedly swap adjacent out-of-order pairs</h3>
+        <h3>Bubble sort, repeatedly swap adjacent out-of-order pairs</h3>
 
         <p>
           Walk the array; whenever a pair is out of order, swap it. After one full pass, the largest element has
@@ -237,11 +237,11 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
     }
 }`}</CodeBlock>
 
-        <h3>Selection sort — find the minimum, place it, repeat</h3>
+        <h3>Selection sort, find the minimum, place it, repeat</h3>
 
         <p>
           For each position <code>i</code>, scan the unsorted suffix <code>[i..n-1]</code> for the smallest element
-          and swap it into place. Always O(n²), even on sorted input — it doesn&apos;t know it&apos;s already sorted.
+          and swap it into place. Always O(n²), even on sorted input, it doesn&apos;t know it&apos;s already sorted.
           The one virtue: minimum number of <em>swaps</em> (exactly n-1), which matters when swap is expensive (e.g.,
           large records, or external storage).
         </p>
@@ -262,7 +262,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
         <Callout variant="warn" title="Selection sort isn't stable">
           <p>
             The swap can move an element past an equal-valued one. Example: <code>[5a, 3, 5b, 1]</code>. First pass
-            swaps the 5a (at index 0) with the 1 (at index 3), giving <code>[1, 3, 5b, 5a]</code> — the relative
+            swaps the 5a (at index 0) with the 1 (at index 3), giving <code>[1, 3, 5b, 5a]</code>, the relative
             order of 5a and 5b is now reversed.
           </p>
           <p>
@@ -271,7 +271,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
           </p>
         </Callout>
 
-        <h3>Insertion sort — grow a sorted prefix, one element at a time</h3>
+        <h3>Insertion sort, grow a sorted prefix, one element at a time</h3>
 
         <p>
           For each element <code>a[i]</code>, walk it leftward through the already-sorted prefix until it finds its
@@ -293,13 +293,13 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
 
         <Callout variant="insight" title="Insertion sort's secret weapon: O(n) on nearly-sorted arrays">
           <p>
-            On already-sorted input, the inner <code>while</code> never executes — the key is already &gt; everything
+            On already-sorted input, the inner <code>while</code> never executes, the key is already &gt; everything
             to its left. One outer pass, no inner work. That&apos;s O(n).
           </p>
           <p>
             On <em>nearly</em>{" "}sorted input (each element at most k positions out of place), insertion sort runs in
-            O(nk), which is linear when k is a small constant. Real-world data — log files, append-mostly databases,
-            partially-sorted user input — often has this structure. This is why Timsort uses insertion sort as its
+            O(nk), which is linear when k is a small constant. Real-world data, log files, append-mostly databases,
+            partially-sorted user input, often has this structure. This is why Timsort uses insertion sort as its
             base case for small subarrays (typically size ≤ 32 or 64): on tiny arrays the lower constant factors of
             insertion sort beat the more sophisticated merging logic, and on slightly-disordered chunks it&apos;s
             blistering fast. The same trick appears in dual-pivot quicksort (used by <code>Arrays.sort(int[])</code>),
@@ -312,7 +312,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
           question="Why does Timsort use insertion sort for its base-case small subarrays?"
           options={[
             { label: "Because it's the simplest sort to write.", explanation: "Simplicity is a side benefit, not the reason. Bubble sort is also simple but has worse constants and isn't used here." },
-            { label: "Because insertion sort has the lowest constant factors on small inputs and runs in O(n) on already-sorted or nearly-sorted runs — which is exactly what Timsort feeds it.", correct: true, explanation: "Right. Asymptotic complexity is meaningless at n=32. What matters is the constant factor, and insertion sort wins there. Timsort detects existing 'runs' (already-sorted subsequences) and uses insertion sort to extend them — a regime where insertion sort is O(n)." },
+            { label: "Because insertion sort has the lowest constant factors on small inputs and runs in O(n) on already-sorted or nearly-sorted runs, which is exactly what Timsort feeds it.", correct: true, explanation: "Right. Asymptotic complexity is meaningless at n=32. What matters is the constant factor, and insertion sort wins there. Timsort detects existing 'runs' (already-sorted subsequences) and uses insertion sort to extend them, a regime where insertion sort is O(n)." },
             { label: "Because it's stable, and Timsort needs a stable base case.", explanation: "Stability is necessary, but merge sort is also stable. The deciding factor is performance on small inputs, where insertion sort wins." },
             { label: "Because it's the only in-place sort.", explanation: "Heapsort and selection sort are also in-place. The reason is constant-factor performance and adaptivity to nearly-sorted data." },
           ]}
@@ -323,7 +323,7 @@ Timsort          O(n log n)   O(n log n)   O(n)         O(n)      yes`}</CodeBlo
       {/* ───────────────── Part 3 · Merge sort ───────────────── */}
       <Checkpoint moduleSlug="sorting" id="merge" title="I can implement merge sort and explain why it's stable" xp={25}>
       <section>
-        <h2 id="merge">Merge sort — divide and conquer, stable, O(n log n)</h2>
+        <h2 id="merge">Merge sort, divide and conquer, stable, O(n log n)</h2>
 
         <p>
           Merge sort is the canonical divide-and-conquer algorithm and the foundation of Timsort. The recipe:
@@ -374,13 +374,13 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
 
         <Callout variant="insight" title="The single line that makes merge sort stable">
           <p>
-            Look at the last two branches of the merge loop. When the left and right fronts are equal — say both are
-            5 — the code takes from the left first (<code>aux[i]</code>). Since the left half came from earlier in
+            Look at the last two branches of the merge loop. When the left and right fronts are equal, say both are
+            5, the code takes from the left first (<code>aux[i]</code>). Since the left half came from earlier in
             the original array, this preserves the relative order of equal elements. That&apos;s the entire stability
             property in one comparison.
           </p>
           <p>
-            If you accidentally write <code>aux[j] &lt;= aux[i]</code>, you&apos;d break stability — equal elements
+            If you accidentally write <code>aux[j] &lt;= aux[i]</code>, you&apos;d break stability, equal elements
             from the right would jump ahead of those from the left. This is the kind of bug that passes 99% of test
             cases and only shows up when stability matters (sorting by one field while preserving order on another).
           </p>
@@ -390,7 +390,7 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
 
         <ul>
           <li><strong>Stable:</strong>{" "}by the merge tie-breaker shown above. Equal elements never cross.</li>
-          <li><strong>O(n log n) guaranteed:</strong>{" "}the recursion always halves; no input pattern can degrade it. Worst, average, and best are all the same. This is the property that makes it the right choice when you cannot tolerate occasional slowness — external sorting, real-time systems, sorted-output guarantees in databases.</li>
+          <li><strong>O(n log n) guaranteed:</strong>{" "}the recursion always halves; no input pattern can degrade it. Worst, average, and best are all the same. This is the property that makes it the right choice when you cannot tolerate occasional slowness, external sorting, real-time systems, sorted-output guarantees in databases.</li>
           <li><strong>O(n) extra space:</strong>{" "}the merge step needs scratch room equal to the size of the range being merged. There are in-place merge variants but they&apos;re complicated and slower in practice. Allocating a single scratch buffer up front (the <code>aux</code> array) and reusing it is the standard idiom.</li>
         </ul>
 
@@ -407,7 +407,7 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
           </p>
         </Callout>
 
-        <h3>The merge function in isolation — &quot;merge two sorted arrays&quot;</h3>
+        <h3>The merge function in isolation, &quot;merge two sorted arrays&quot;</h3>
 
         <p>
           The merge step is a useful subroutine on its own. LeetCode&apos;s <em>Merge Two Sorted Arrays</em>{" "}
@@ -420,8 +420,8 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
           kind="Merge sort check"
           question="If you change `if (aux[j] < aux[i])` to `if (aux[j] <= aux[i])` in the merge function, what breaks?"
           options={[
-            { label: "Nothing — both produce sorted output.", explanation: "Both produce sorted output by value. But one preserves the relative order of equal elements (stable) and the other doesn't (unstable). The output array's values are correct either way; the input-order property is what changes." },
-            { label: "The sort becomes unstable: equal elements from the right half jump ahead of those from the left.", correct: true, explanation: "Right. With `<=`, when fronts are equal, you take from the right first — meaning later-original-index elements end up ahead of earlier ones. The values are still sorted, but the relative order of equals is reversed. Subtle, important, and a common interview curveball." },
+            { label: "Nothing, both produce sorted output.", explanation: "Both produce sorted output by value. But one preserves the relative order of equal elements (stable) and the other doesn't (unstable). The output array's values are correct either way; the input-order property is what changes." },
+            { label: "The sort becomes unstable: equal elements from the right half jump ahead of those from the left.", correct: true, explanation: "Right. With `<=`, when fronts are equal, you take from the right first, meaning later-original-index elements end up ahead of earlier ones. The values are still sorted, but the relative order of equals is reversed. Subtle, important, and a common interview curveball." },
             { label: "The complexity becomes O(n²).", explanation: "Complexity is unaffected by the comparison choice. Both versions still merge two arrays in O(n)." },
             { label: "The sort becomes in-place.", explanation: "It does not. The merge function still needs the aux buffer regardless of the equality comparison." },
           ]}
@@ -432,9 +432,9 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
           question="What's the total memory cost of merge sort, including recursion?"
           options={[
             { label: "O(1).", explanation: "The merge step alone needs O(n) for the aux buffer; this is not in-place." },
-            { label: "O(log n) — only the recursion stack.", explanation: "The recursion stack is O(log n), but the aux buffer is O(n) — and that dominates." },
-            { label: "O(n) — the aux buffer dominates the O(log n) recursion stack.", correct: true, explanation: "Right. One reusable aux buffer of size n is the standard idiom (allocated once at the top, reused at every merge). Plus an O(log n) recursion stack from the divide-and-conquer. Total O(n)." },
-            { label: "O(n log n) — one aux buffer per recursive level.", explanation: "If you allocated a fresh aux buffer per call, yes. But the standard implementation allocates one buffer of size n at the top and reuses it. So total auxiliary space is O(n), not O(n log n)." },
+            { label: "O(log n), only the recursion stack.", explanation: "The recursion stack is O(log n), but the aux buffer is O(n), and that dominates." },
+            { label: "O(n), the aux buffer dominates the O(log n) recursion stack.", correct: true, explanation: "Right. One reusable aux buffer of size n is the standard idiom (allocated once at the top, reused at every merge). Plus an O(log n) recursion stack from the divide-and-conquer. Total O(n)." },
+            { label: "O(n log n), one aux buffer per recursive level.", explanation: "If you allocated a fresh aux buffer per call, yes. But the standard implementation allocates one buffer of size n at the top and reuses it. So total auxiliary space is O(n), not O(n log n)." },
           ]}
         />
       </section>
@@ -443,7 +443,7 @@ private static void merge(int[] a, int[] aux, int lo, int mid, int hi) {
       {/* ───────────────── Part 4 · Quicksort ───────────────── */}
       <Checkpoint moduleSlug="sorting" id="quick" title="I understand partition, pivot strategy, and quicksort's worst case" xp={25}>
       <section>
-        <h2 id="quick">Quicksort — partition, average vs worst case</h2>
+        <h2 id="quick">Quicksort, partition, average vs worst case</h2>
 
         <p>
           Quicksort flips merge sort&apos;s strategy. Instead of dividing carelessly and merging carefully, it
@@ -492,7 +492,7 @@ private static void swap(int[] a, int i, int j) {
     int t = a[i]; a[i] = a[j]; a[j] = t;
 }`}</CodeBlock>
 
-        <h3>The worst case — and how to avoid it</h3>
+        <h3>The worst case, and how to avoid it</h3>
 
         <p>
           Lomuto with <code>a[hi]</code> as pivot has a known catastrophic input: <strong>already-sorted or
@@ -514,7 +514,7 @@ private static int partition(int[] a, int lo, int hi) {
     return lomutoPartition(a, lo, hi);
 }`}</CodeBlock>
 
-        <h3>Hoare partition — slightly faster, slightly trickier</h3>
+        <h3>Hoare partition, slightly faster, slightly trickier</h3>
 
         <p>
           Hoare&apos;s scheme uses two pointers walking inward from each end, swapping out-of-place pairs. It does
@@ -529,7 +529,7 @@ private static int partition(int[] a, int lo, int hi) {
         <Callout variant="warn" title="Quicksort is not stable, even with care">
           <p>
             The partition step swaps non-adjacent elements, which can reorder equal-valued items. There is no easy
-            fix — making quicksort stable requires extra memory, defeating its in-place advantage.
+            fix, making quicksort stable requires extra memory, defeating its in-place advantage.
           </p>
           <p>
             If you need stability, use merge sort or Timsort. This is the main reason Java uses Timsort (not
@@ -554,10 +554,10 @@ private static int partition(int[] a, int lo, int hi) {
           kind="Quicksort check"
           question="Lomuto-partition quicksort with `a[hi]` as the fixed pivot. On an already-sorted input of size n, what's the running time and recursion depth?"
           options={[
-            { label: "O(n log n) and log n depth — sorting doesn't change quicksort's behavior.", explanation: "It changes it dramatically. The pivot is always the maximum, so partition splits into [n-1, 0]. The recursion is one-sided and as deep as the array is long." },
-            { label: "O(n²) time and O(n) recursion depth — every partition produces a split of size n-1 and 0.", correct: true, explanation: "Right. The pivot is the largest element, so the entire range becomes the 'less than pivot' part. Then you recurse on size n-1 with the same problem. n levels deep, n work per level → O(n²) and a stack-blowing recursion. The standard fix is a random pivot or median-of-three." },
-            { label: "O(n) — sorted input is the best case for quicksort.", explanation: "Backwards. Sorted is the WORST case for fixed-pivot quicksort. Best case is balanced splits, which random data approximates." },
-            { label: "It throws StackOverflowError before producing any output.", explanation: "On a small enough input it sorts correctly, just slowly. On a large input you do hit StackOverflow — but the asymptotic answer is O(n²) regardless." },
+            { label: "O(n log n) and log n depth, sorting doesn't change quicksort's behavior.", explanation: "It changes it dramatically. The pivot is always the maximum, so partition splits into [n-1, 0]. The recursion is one-sided and as deep as the array is long." },
+            { label: "O(n²) time and O(n) recursion depth, every partition produces a split of size n-1 and 0.", correct: true, explanation: "Right. The pivot is the largest element, so the entire range becomes the 'less than pivot' part. Then you recurse on size n-1 with the same problem. n levels deep, n work per level → O(n²) and a stack-blowing recursion. The standard fix is a random pivot or median-of-three." },
+            { label: "O(n), sorted input is the best case for quicksort.", explanation: "Backwards. Sorted is the WORST case for fixed-pivot quicksort. Best case is balanced splits, which random data approximates." },
+            { label: "It throws StackOverflowError before producing any output.", explanation: "On a small enough input it sorts correctly, just slowly. On a large input you do hit StackOverflow, but the asymptotic answer is O(n²) regardless." },
           ]}
         />
       </section>
@@ -586,7 +586,7 @@ List.sort(Comparator)             Timsort                yes        same as abov
 
         <Callout variant="insight" title="Why Java splits primitives from objects">
           <p>
-            For primitives (<code>int</code>, <code>long</code>, etc.), there&apos;s no concept of stability —
+            For primitives (<code>int</code>, <code>long</code>, etc.), there&apos;s no concept of stability,
             <code>5 == 5</code> doesn&apos;t carry hidden state, so &quot;preserving the relative order of equal
             elements&quot; is meaningless. Quicksort wins outright: in-place, cache-friendly, fastest in practice.
             Java picks <strong>dual-pivot quicksort</strong>, a Vladimir Yaroslavskiy variant that uses two pivots to
@@ -594,7 +594,7 @@ List.sort(Comparator)             Timsort                yes        same as abov
           </p>
           <p>
             For objects, stability matters. Sorting employees by department, then by name within each department,
-            requires a stable sort — the second sort must preserve the order from the first. So Java picks{" "}
+            requires a stable sort, the second sort must preserve the order from the first. So Java picks{" "}
             <strong>Timsort</strong>, a hybrid of merge sort and insertion sort designed by Tim Peters for Python,
             ported to Java in 2009. Timsort is stable, O(n log n) worst case, and shockingly fast on real-world
             partially-sorted data (O(n) on already-sorted, O(n) on reverse-sorted with one reversal pass). The cost:
@@ -603,7 +603,7 @@ List.sort(Comparator)             Timsort                yes        same as abov
           </p>
         </Callout>
 
-        <h3>Comparators — the right way</h3>
+        <h3>Comparators, the right way</h3>
 
         <p>
           You&apos;ll write more comparators than you&apos;ll write sorts. The <code>Comparator</code> interface has
@@ -637,12 +637,12 @@ list.sort(Comparator.nullsFirst(Comparator.naturalOrder()));`}</CodeBlock>
           <code>comparingDouble</code> whenever the key is the corresponding primitive.
         </p>
 
-        <Callout variant="warn" title="Don't sort with subtraction — the overflow bug">
+        <Callout variant="warn" title="Don't sort with subtraction, the overflow bug">
           <p>
             The most common comparator bug in production Java is writing{" "}
             <code>(a, b) -&gt; a - b</code> for an <code>Integer</code> comparator. It works for most inputs and
             silently produces wrong results when subtraction overflows. <code>Integer.MAX_VALUE - (-1)</code> is
-            <code>Integer.MIN_VALUE</code>, which is negative — meaning your comparator returns &quot;a is less than
+            <code>Integer.MIN_VALUE</code>, which is negative, meaning your comparator returns &quot;a is less than
             b&quot; when in fact a is much greater. The sort produces a wrong-order array with no error.
           </p>
           <p>
@@ -669,7 +669,7 @@ list.sort(Comparator.nullsFirst(Comparator.naturalOrder()));`}</CodeBlock>
           question="Which sort does `Arrays.sort(String[])` use under the hood?"
           options={[
             { label: "Dual-pivot quicksort.", explanation: "Dual-pivot quicksort is for primitive arrays (int[], long[], etc.) where stability isn't a concern. String[] is an Object[]." },
-            { label: "Timsort.", correct: true, explanation: "Right. Arrays.sort(Object[]) uses Timsort — a stable, hybrid merge-sort/insertion-sort algorithm. String[] dispatches to the Object[] overload, so it's Timsort. The reason: objects may need stability (sort by length, then by alphabetic order, etc.), and Timsort is the stable-sort default in modern Java." },
+            { label: "Timsort.", correct: true, explanation: "Right. Arrays.sort(Object[]) uses Timsort, a stable, hybrid merge-sort/insertion-sort algorithm. String[] dispatches to the Object[] overload, so it's Timsort. The reason: objects may need stability (sort by length, then by alphabetic order, etc.), and Timsort is the stable-sort default in modern Java." },
             { label: "Heapsort.", explanation: "Heapsort isn't Java's default for any sort entry point. It's used internally by some hybrid algorithms as a fallback for pathological cases, but never as the top-level sort." },
             { label: "Insertion sort.", explanation: "Insertion sort is used as a sub-routine inside Timsort for small subarrays (size ≤ 32 or 64), but the top-level algorithm for Arrays.sort(Object[]) is Timsort." },
           ]}
@@ -679,8 +679,8 @@ list.sort(Comparator.nullsFirst(Comparator.naturalOrder()));`}</CodeBlock>
           kind="Java sort check"
           question="`list.sort((a, b) -> a - b)` where list is `List<Integer>`. When does this break?"
           options={[
-            { label: "Never — Java's sort is robust against bad comparators.", explanation: "It is not. A buggy comparator silently produces wrong-order output." },
-            { label: "When the list contains Integer.MAX_VALUE and a negative number — the subtraction overflows and the comparator returns a negative number when it should return positive.", correct: true, explanation: "Right. MAX_VALUE - (-1) overflows to MIN_VALUE (a very negative number). The comparator now claims MAX_VALUE < -1, which is the opposite of the truth. Sort produces a wrong-order array with no error. Fix: Integer.compare(a, b) or Comparator.naturalOrder()." },
+            { label: "Never, Java's sort is robust against bad comparators.", explanation: "It is not. A buggy comparator silently produces wrong-order output." },
+            { label: "When the list contains Integer.MAX_VALUE and a negative number, the subtraction overflows and the comparator returns a negative number when it should return positive.", correct: true, explanation: "Right. MAX_VALUE - (-1) overflows to MIN_VALUE (a very negative number). The comparator now claims MAX_VALUE < -1, which is the opposite of the truth. Sort produces a wrong-order array with no error. Fix: Integer.compare(a, b) or Comparator.naturalOrder()." },
             { label: "When the list is empty.", explanation: "Empty lists sort fine; the comparator never runs." },
             { label: "Only on the JVM with -XX:+UnsignedComparisons.", explanation: "There's no such flag. The bug is in plain int arithmetic, language-level." },
           ]}
@@ -690,7 +690,7 @@ list.sort(Comparator.nullsFirst(Comparator.naturalOrder()));`}</CodeBlock>
           title="The seven sorts, in one mental model"
           gist="Comparison-sort floor is O(n log n). Bubble/selection/insertion are O(n²) and only show up as components inside faster algorithms. Merge sort guarantees O(n log n) at the cost of O(n) space. Quicksort is faster in practice but has an O(n²) worst case unless you randomize pivots. Java uses dual-pivot quicksort for primitives (no stability needed) and Timsort for objects (stable, hybrid)."
           points={[
-            { takeaway: "Insertion sort isn't useless — it's the building block of Timsort.", detail: "O(n) on nearly-sorted data, low constant factors on small inputs. Timsort hands chunks of size ≤ 32 to insertion sort because it's faster than merging at that scale." },
+            { takeaway: "Insertion sort isn't useless, it's the building block of Timsort.", detail: "O(n) on nearly-sorted data, low constant factors on small inputs. Timsort hands chunks of size ≤ 32 to insertion sort because it's faster than merging at that scale." },
             { takeaway: "Merge sort is the algorithm you reach for when you need a guarantee.", detail: "External sorting (data too big for RAM), real-time systems, anything where O(n²) is unacceptable. The cost is O(n) extra space and a slightly worse constant than quicksort on average." },
             { takeaway: "Quicksort wins in practice, but only with random or median-of-three pivots.", detail: "In-place, cache-friendly, fastest expected runtime. Lomuto with a fixed pivot is the textbook intro but trips on sorted input. Always randomize the pivot in production." },
             { takeaway: "Stability matters more than you'd guess.", detail: "Sorting by multiple keys via successive sorts requires stability. So does any 'sort and preserve insertion order on ties.' This is why Java uses Timsort for objects." },
@@ -715,7 +715,7 @@ list.sort(Comparator.nullsFirst(Comparator.naturalOrder()));`}</CodeBlock>
         <p>
           Quickselect is partial quicksort: instead of recursing into both halves of the partition, you only recurse
           into the side that contains the answer. If the pivot lands at index k, you&apos;re done. If it lands left
-          of k, the answer is in the right half; if right of k, recurse left. Average O(n), worst O(n²) — same
+          of k, the answer is in the right half; if right of k, recurse left. Average O(n), worst O(n²), same
           tradeoff as quicksort, with the same fix (random pivot).
         </p>
 
@@ -790,7 +790,7 @@ private void swap(int[] a, int i, int j) {
         <Callout variant="warn" title="Why the 2-branch doesn't increment mid">
           <p>
             When you swap with <code>hi</code>, you&apos;re pulling in an element that hasn&apos;t been examined
-            yet — it could be a 0, 1, or 2. If you advance <code>mid</code>, you skip examining it.
+            yet, it could be a 0, 1, or 2. If you advance <code>mid</code>, you skip examining it.
           </p>
           <p>
             The 0-branch is safe to advance because the element coming from <code>lo</code> has already been
@@ -803,7 +803,7 @@ private void swap(int[] a, int i, int j) {
 
         <p>
           Given a list of intervals, merge all overlapping ones. The trick is the first line: <strong>sort by start
-          time.</strong>{" "}Once sorted, you only need to compare each interval to the last merged one — overlaps are
+          time.</strong>{" "}Once sorted, you only need to compare each interval to the last merged one, overlaps are
           adjacent.
         </p>
 
@@ -838,13 +838,13 @@ private void swap(int[] a, int i, int j) {
           </p>
           <ul>
             <li><strong>Meeting Rooms II:</strong>{" "}sort starts and ends separately, sweep both with two pointers, count overlapping meetings.</li>
-            <li><strong>Insert Interval:</strong>{" "}sort is unnecessary — already sorted — but the sweep is the same pattern.</li>
+            <li><strong>Insert Interval:</strong>{" "}sort is unnecessary, already sorted, but the sweep is the same pattern.</li>
             <li><strong>Non-overlapping Intervals:</strong>{" "}sort by end time (not start), greedy-pick the earliest-ending one each time.</li>
             <li><strong>Skyline problem:</strong>{" "}sort events (start and end as separate events), sweep with a max-heap of active heights.</li>
           </ul>
           <p>
             Recognizing &quot;this is sort + sweep&quot; on first read is half the battle. The other half is picking
-            the right sort key — start time, end time, or something cleverer.
+            the right sort key, start time, end time, or something cleverer.
           </p>
         </Callout>
 
@@ -883,15 +883,15 @@ public class SortStress {
           buckets={[
             { id: "merge", label: "mergesort wins (need stable)", color: "indigo" },
             { id: "quick", label: "quicksort wins (in-place, primitives)", color: "violet" },
-            { id: "either", label: "doesn't matter — both fine", color: "emerald" },
+            { id: "either", label: "doesn't matter, both fine", color: "emerald" },
           ]}
           items={[
-            { id: "1", label: "Sort 10 million int[] values where memory is tight and order of equal values doesn't matter.", answer: "quick", explanation: "Primitives, no stability needed, memory is tight — quicksort (specifically dual-pivot) wins. This is exactly the reason Arrays.sort(int[]) uses dual-pivot quicksort: in-place, cache-friendly, fastest in practice." },
-            { id: "2", label: "Sort a list of Employee objects by department, then by salary, in two successive sorts.", answer: "merge", explanation: "Multi-key sort via successive sorts requires stability — the second sort must preserve the order from the first. Mergesort (or Timsort) is stable; quicksort is not." },
+            { id: "1", label: "Sort 10 million int[] values where memory is tight and order of equal values doesn't matter.", answer: "quick", explanation: "Primitives, no stability needed, memory is tight, quicksort (specifically dual-pivot) wins. This is exactly the reason Arrays.sort(int[]) uses dual-pivot quicksort: in-place, cache-friendly, fastest in practice." },
+            { id: "2", label: "Sort a list of Employee objects by department, then by salary, in two successive sorts.", answer: "merge", explanation: "Multi-key sort via successive sorts requires stability, the second sort must preserve the order from the first. Mergesort (or Timsort) is stable; quicksort is not." },
             { id: "3", label: "Sort a randomly-permuted int[] of 1000 elements with no constraints.", answer: "either", explanation: "At n=1000 with no stability or memory constraint, both run in milliseconds. Quicksort has slightly better constants in practice, but the difference is invisible at this scale. Either is fine." },
-            { id: "4", label: "Sort a list of log entries by timestamp, preserving insertion order on ties (same-millisecond entries).", answer: "merge", explanation: "Stability is the requirement — same-millisecond entries must keep their original relative order. Mergesort/Timsort is stable. Quicksort would scramble equal-timestamp entries." },
+            { id: "4", label: "Sort a list of log entries by timestamp, preserving insertion order on ties (same-millisecond entries).", answer: "merge", explanation: "Stability is the requirement, same-millisecond entries must keep their original relative order. Mergesort/Timsort is stable. Quicksort would scramble equal-timestamp entries." },
             { id: "5", label: "Sort a 100GB file of integers that doesn't fit in RAM.", answer: "merge", explanation: "External sorting is the merge-sort use case par excellence. Sort chunks that fit in memory, then merge them in streaming passes. Quicksort doesn't generalize to streaming; mergesort's merge step is naturally streaming." },
-            { id: "6", label: "Sort an int[] where the worst case absolutely cannot be O(n²) — real-time system, hard deadline.", answer: "merge", explanation: "Mergesort is O(n log n) GUARANTEED. Quicksort is O(n log n) ON AVERAGE — its worst case is O(n²) and an adversarial input can hit it. For hard-deadline systems, mergesort or heapsort wins." },
+            { id: "6", label: "Sort an int[] where the worst case absolutely cannot be O(n²), real-time system, hard deadline.", answer: "merge", explanation: "Mergesort is O(n log n) GUARANTEED. Quicksort is O(n log n) ON AVERAGE, its worst case is O(n²) and an adversarial input can hit it. For hard-deadline systems, mergesort or heapsort wins." },
           ]}
         />
 
@@ -900,7 +900,7 @@ public class SortStress {
           question="A junior engineer writes `Arrays.sort(strings)` where `strings` is a `String[]`. What sort does Java run, and is the result stable?"
           options={[
             { label: "Dual-pivot quicksort, unstable.", explanation: "Dual-pivot quicksort is for primitive arrays only. String[] dispatches to Arrays.sort(Object[])." },
-            { label: "Timsort, stable.", correct: true, explanation: "Right. String[] is an Object[], so Arrays.sort dispatches to the Object[] overload, which uses Timsort. Timsort is stable, O(n log n) worst case, and adaptive — O(n) on already-sorted runs. This is why object sorts in Java preserve insertion order on equal elements without you needing to ask for it." },
+            { label: "Timsort, stable.", correct: true, explanation: "Right. String[] is an Object[], so Arrays.sort dispatches to the Object[] overload, which uses Timsort. Timsort is stable, O(n log n) worst case, and adaptive, O(n) on already-sorted runs. This is why object sorts in Java preserve insertion order on equal elements without you needing to ask for it." },
             { label: "Heapsort, unstable.", explanation: "Java doesn't use heapsort as the default for any sort entry point." },
             { label: "Insertion sort, stable.", explanation: "Insertion sort is used as a sub-routine inside Timsort for small subarrays, but the top-level algorithm for Arrays.sort(Object[]) is Timsort." },
           ]}

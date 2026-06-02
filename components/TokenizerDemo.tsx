@@ -72,7 +72,7 @@ export default function TokenizerDemo() {
           <h4 className="flex items-center gap-2 text-sm font-semibold">
             <span className="text-lg">🔬</span> Live Tokenizer
           </h4>
-          <span className="text-xs text-slate-500">using GPT tokenizer (BPE) — similar behavior to Claude&apos;s</span>
+          <span className="text-xs text-slate-500">using GPT tokenizer (BPE), similar behavior to Claude&apos;s</span>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export default function TokenizerDemo() {
             onChange={(e) => setText(e.target.value)}
             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950"
             rows={3}
-            placeholder="Type anything... (psst — try secret words 😉)"
+            placeholder="Type anything... (psst, try secret words 😉)"
           />
         </div>
 

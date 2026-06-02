@@ -80,7 +80,7 @@ flowchart TB
         <h2>Part 1: Why space matters</h2>
 
         <p>
-          Module 1 was about <em>time</em>. Two algorithms with the same input — which one finishes faster as n grows?
+          Module 1 was about <em>time</em>. Two algorithms with the same input, which one finishes faster as n grows?
         </p>
         <p>
           But time isn&apos;t the only thing that runs out. Memory does too. And in modern systems, you&apos;ll hit the memory wall before the time wall surprisingly often.
@@ -90,9 +90,9 @@ flowchart TB
           kind="Gut check"
           question="Two algorithms both compute the sum of an int[] of length n. Algorithm A uses a single accumulator variable. Algorithm B builds a new int[] of running sums and returns the last element. Both are O(n) in time. Are they equivalent?"
           options={[
-            { label: "Yes — same time complexity, same algorithm.", explanation: "Time is identical, but B allocates a whole new array of size n. That's n extra ints of memory. At n = 10⁹ that's ~4 GB. They are absolutely not equivalent." },
-            { label: "No — B uses extra memory proportional to n.", correct: true, explanation: "Right. A is O(1) auxiliary space, B is O(n). Time-equal, space-different. This is the gap Big-O time alone misses." },
-            { label: "No — A is faster because it has fewer lines.", explanation: "Lines of code don't matter for Big-O. The difference is memory: A keeps one int, B allocates n of them." },
+            { label: "Yes, same time complexity, same algorithm.", explanation: "Time is identical, but B allocates a whole new array of size n. That's n extra ints of memory. At n = 10⁹ that's ~4 GB. They are absolutely not equivalent." },
+            { label: "No, B uses extra memory proportional to n.", correct: true, explanation: "Right. A is O(1) auxiliary space, B is O(n). Time-equal, space-different. This is the gap Big-O time alone misses." },
+            { label: "No, A is faster because it has fewer lines.", explanation: "Lines of code don't matter for Big-O. The difference is memory: A keeps one int, B allocates n of them." },
             { label: "It depends on the JVM.", explanation: "The JVM affects constants, but the asymptotic gap (constant vs n) is real on every implementation." },
           ]}
         />
@@ -104,7 +104,7 @@ flowchart TB
         <ul>
           <li><strong>Big inputs.</strong>{" "}A 1 MB array is invisible. A 10 GB array is a question of whether your service stays up.</li>
           <li><strong>Many concurrent users.</strong>{" "}One request that allocates 100 MB is fine. A thousand of them at once is an OOM.</li>
-          <li><strong>Recursion.</strong>{" "}Each recursive call adds a frame to the call stack. Recurse a million times and the JVM kills your thread with <code>StackOverflowError</code> — even though your <em>logical</em>{" "}work was modest.</li>
+          <li><strong>Recursion.</strong>{" "}Each recursive call adds a frame to the call stack. Recurse a million times and the JVM kills your thread with <code>StackOverflowError</code>, even though your <em>logical</em>{" "}work was modest.</li>
         </ul>
 
         <Callout variant="insight" title="Time and space trade off, constantly">
@@ -118,12 +118,12 @@ flowchart TB
           Imagine you&apos;re processing paperwork. You have a small desk (your CPU + cache + stack) and a large warehouse out back (the heap).
         </p>
         <ul>
-          <li>Items on your <strong>desk</strong>{" "}are instant to access — but the desk is tiny. You can fit a few documents.</li>
-          <li>Items in the <strong>warehouse</strong>{" "}are slower to retrieve — but it&apos;s effectively unlimited.</li>
+          <li>Items on your <strong>desk</strong>{" "}are instant to access, but the desk is tiny. You can fit a few documents.</li>
+          <li>Items in the <strong>warehouse</strong>{" "}are slower to retrieve, but it&apos;s effectively unlimited.</li>
           <li>Every time you call a function, you put a fresh sticky note on your desk: <em>"working on this now, come back to it after."</em>{" "}When the function returns, you peel the sticky note off.</li>
         </ul>
         <p>
-          Recursion is what happens when you keep stacking sticky notes without ever peeling one off. Eventually the desk is buried — that&apos;s a stack overflow.
+          Recursion is what happens when you keep stacking sticky notes without ever peeling one off. Eventually the desk is buried, that&apos;s a stack overflow.
         </p>
         <p>
           Space complexity asks: <strong>how much desk and warehouse does this algorithm need, as a function of n?</strong>
@@ -131,7 +131,7 @@ flowchart TB
 
         <PartRecap
           title="Part 1 recap"
-          gist="Time isn't the only resource. Memory grows with n too — and in different ways than time."
+          gist="Time isn't the only resource. Memory grows with n too, and in different ways than time."
           points={[
             { takeaway: "Two algorithms with identical time complexity can have wildly different memory use.", detail: "Sum-with-accumulator (O(1) space) vs sum-with-running-sums-array (O(n) space). Both O(n) time. The space gap is the real difference." },
             { takeaway: "Memory matters most under three conditions: big inputs, many concurrent users, deep recursion.", detail: "These three turn 'a little extra memory per call' into outages. The interview question 'optimize space' is almost always about one of these." },
@@ -147,7 +147,7 @@ flowchart TB
         <h2>Part 2: Auxiliary vs total space</h2>
 
         <p>
-          When someone asks "what&apos;s the space complexity of this algorithm?" they almost always mean <em>auxiliary</em>{" "}space — the extra memory the algorithm allocates beyond its input.
+          When someone asks "what&apos;s the space complexity of this algorithm?" they almost always mean <em>auxiliary</em>{" "}space, the extra memory the algorithm allocates beyond its input.
         </p>
         <p>
           But there are actually two numbers, and you should know which one you&apos;re reporting.
@@ -163,11 +163,11 @@ flowchart TB
           </li>
         </ul>
 
-        <p>So when we say "this is an O(1) space algorithm," we mean <em>auxiliary</em>. The input still takes O(n), obviously — but we&apos;re not allocating any more on top.</p>
+        <p>So when we say "this is an O(1) space algorithm," we mean <em>auxiliary</em>. The input still takes O(n), obviously, but we&apos;re not allocating any more on top.</p>
 
         <Callout variant="info" title="Convention: 'space complexity' means auxiliary space">
           <p className="m-0">
-            Unless someone explicitly says "total space," assume the question is about <strong>auxiliary</strong>{" "}space. Some textbooks are pedantic about it. Interviewers almost never are — they want to know what you allocate.
+            Unless someone explicitly says "total space," assume the question is about <strong>auxiliary</strong>{" "}space. Some textbooks are pedantic about it. Interviewers almost never are, they want to know what you allocate.
           </p>
         </Callout>
 
@@ -203,7 +203,7 @@ flowchart TB
     return running[arr.length - 1];
 }`}</CodeBlock>
                   <p>Time: O(n). Auxiliary space: <strong>O(n)</strong>. We allocate a whole new array of size n. At n = 10⁸ that&apos;s ~400 MB you didn&apos;t need.</p>
-                  <p>This isn&apos;t a strawman — people write this when they&apos;re debugging or want to print intermediate state. Then they ship it.</p>
+                  <p>This isn&apos;t a strawman, people write this when they&apos;re debugging or want to print intermediate state. Then they ship it.</p>
                 </>
               ),
             },
@@ -216,7 +216,7 @@ int sumC(int[] arr, int i) {
     if (i == arr.length) return 0;
     return arr[i] + sumC(arr, i + 1);   // recurses n times
 }`}</CodeBlock>
-                  <p>Time: O(n). Auxiliary space: <strong>O(n)</strong> — but on the <em>stack</em>, not the heap. Each recursive call adds a frame. n calls = n frames = O(n) stack space.</p>
+                  <p>Time: O(n). Auxiliary space: <strong>O(n)</strong>, but on the <em>stack</em>, not the heap. Each recursive call adds a frame. n calls = n frames = O(n) stack space.</p>
                   <p>For n = 10⁵, this throws <code>StackOverflowError</code> on a default JVM. Same algorithm, same time complexity, completely different failure mode.</p>
                 </>
               ),
@@ -239,8 +239,8 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary space of this method?\n\nint maxA(int[] arr) {\n    int best = Integer.MIN_VALUE;\n    for (int x : arr) {\n        if (x > best) best = x;\n    }\n    return best;\n}"}
           options={[
-            { label: "O(n) — we walk the array.", explanation: "We walk the array (that's O(n) time), but the only extra memory is one int. Walking ≠ allocating." },
-            { label: "O(1)", correct: true, explanation: "Right. One int (best) and one loop variable. The input array doesn't count toward auxiliary space — it was already there." },
+            { label: "O(n), we walk the array.", explanation: "We walk the array (that's O(n) time), but the only extra memory is one int. Walking ≠ allocating." },
+            { label: "O(1)", correct: true, explanation: "Right. One int (best) and one loop variable. The input array doesn't count toward auxiliary space, it was already there." },
             { label: "O(log n)", explanation: "There's no halving here. log n shows up when we recurse with halved input or use a balanced tree." },
             { label: "O(n²)", explanation: "There's only one loop and one variable. n² would require a nested allocation pattern we don't see here." },
           ]}
@@ -250,9 +250,9 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary space?\n\nList<Integer> doubles(int[] arr) {\n    List<Integer> out = new ArrayList<>();\n    for (int x : arr) out.add(x * 2);\n    return out;\n}"}
           options={[
-            { label: "O(1) — we just have one list.", explanation: "It's 'one list' but the list contains n elements. The list's memory grows with n." },
+            { label: "O(1), we just have one list.", explanation: "It's 'one list' but the list contains n elements. The list's memory grows with n." },
             { label: "O(n)", correct: true, explanation: "Right. The output list grows to n elements. Even though we only declared one variable, that variable holds O(n) data." },
-            { label: "O(2n) → O(n)", explanation: "The answer is O(n), but not because of doubling. We don't double-count — there's only one list, with n entries." },
+            { label: "O(2n) → O(n)", explanation: "The answer is O(n), but not because of doubling. We don't double-count, there's only one list, with n entries." },
             { label: "O(n²)", explanation: "The list has n elements, not n². No nested growth here." },
           ]}
         />
@@ -261,7 +261,7 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary space?\n\nboolean[][] grid(int n) {\n    boolean[][] g = new boolean[n][n];\n    for (int i = 0; i < n; i++) g[i][i] = true;\n    return g;\n}"}
           options={[
-            { label: "O(n) — we set n values.", explanation: "We set n cells, but we ALLOCATED n×n cells (the whole grid). Allocation matters, not how many you wrote to." },
+            { label: "O(n), we set n values.", explanation: "We set n cells, but we ALLOCATED n×n cells (the whole grid). Allocation matters, not how many you wrote to." },
             { label: "O(n²)", correct: true, explanation: "Right. The 2D array is n×n booleans = n² total cells. Auxiliary is the size of what we allocate, not what we touch." },
             { label: "O(1)", explanation: "We're allocating an n×n grid. That's very much not constant." },
             { label: "O(log n)", explanation: "Nothing halves here. We allocate the full grid up front." },
@@ -283,7 +283,7 @@ int sumC(int[] arr, int i) {
       {/* PART 3: THE CALL STACK */}
       <Checkpoint moduleSlug="space-complexity" id="call-stack" title="The call stack" xp={20} celebration="You now know why deep recursion crashes. The JVM's two memories make sense.">
       <section>
-        <h2>Part 3: The call stack — where recursion costs memory</h2>
+        <h2>Part 3: The call stack, where recursion costs memory</h2>
 
         <p>
           Recursion looks free. You write <code>return f(n - 1) + f(n - 2)</code> and it just... works. But every one of those calls has a real cost: a <strong>stack frame</strong>.
@@ -299,7 +299,7 @@ int sumC(int[] arr, int i) {
 
         <ul>
           <li>
-            <strong>The stack.</strong>{" "}Per-thread, small (default ~512 KB to 1 MB). Holds <strong>stack frames</strong> — one per active method call. A frame contains the method&apos;s local variables, parameters, and the return address. When the method returns, its frame is popped.
+            <strong>The stack.</strong>{" "}Per-thread, small (default ~512 KB to 1 MB). Holds <strong>stack frames</strong>, one per active method call. A frame contains the method&apos;s local variables, parameters, and the return address. When the method returns, its frame is popped.
           </li>
           <li>
             <strong>The heap.</strong>{" "}Shared across all threads, large (gigabytes). Holds every object you create with <code>new</code>: arrays, ArrayLists, every <code>Integer</code>, every <code>String</code>. Garbage-collected when nothing references it.
@@ -308,7 +308,7 @@ int sumC(int[] arr, int i) {
 
         <Callout variant="insight" title="The thing that's small is the thing recursion fills">
           <p className="m-0">
-            The stack is the small one. Recursion piles up frames on the stack. That&apos;s why recursing too deep doesn&apos;t just slow down — it crashes with <code>StackOverflowError</code>. You ran out of the small memory, not the big one.
+            The stack is the small one. Recursion piles up frames on the stack. That&apos;s why recursing too deep doesn&apos;t just slow down, it crashes with <code>StackOverflowError</code>. You ran out of the small memory, not the big one.
           </p>
         </Callout>
 
@@ -328,7 +328,7 @@ int sumC(int[] arr, int i) {
         <Mermaid chart={recursionStack} />
 
         <p>
-          <code>factorial(4)</code> can&apos;t finish until <code>factorial(3)</code> returns. <code>factorial(3)</code> can&apos;t finish until <code>factorial(2)</code> does. And so on. All four frames are alive at the same time. <strong>That&apos;s O(n) auxiliary space</strong> — even though the only "data" we&apos;re tracking is a single int.
+          <code>factorial(4)</code> can&apos;t finish until <code>factorial(3)</code> returns. <code>factorial(3)</code> can&apos;t finish until <code>factorial(2)</code> does. And so on. All four frames are alive at the same time. <strong>That&apos;s O(n) auxiliary space</strong>, even though the only "data" we&apos;re tracking is a single int.
         </p>
 
         <p>
@@ -342,7 +342,7 @@ int sumC(int[] arr, int i) {
           subtitle="Identical output. O(1) vs O(n) auxiliary space. The recursive one will crash."
           steps={[
             {
-              title: "Recursive — O(n) auxiliary (stack)",
+              title: "Recursive, O(n) auxiliary (stack)",
               body: (
                 <>
                   <CodeBlock lang="java">{`long factorialRec(int n) {
@@ -354,7 +354,7 @@ int sumC(int[] arr, int i) {
               ),
             },
             {
-              title: "Iterative — O(1) auxiliary",
+              title: "Iterative, O(1) auxiliary",
               body: (
                 <>
                   <CodeBlock lang="java">{`long factorialIter(int n) {
@@ -372,7 +372,7 @@ int sumC(int[] arr, int i) {
               title: "The lesson",
               body: (
                 <>
-                  <p>Anywhere recursion descends linearly with n, you can usually replace it with a loop and save O(n) stack space. The exception is "natural" recursion (trees, divide-and-conquer) where the recursion depth is O(log n) — that&apos;s the price of admission.</p>
+                  <p>Anywhere recursion descends linearly with n, you can usually replace it with a loop and save O(n) stack space. The exception is "natural" recursion (trees, divide-and-conquer) where the recursion depth is O(log n), that&apos;s the price of admission.</p>
                   <p>Java doesn&apos;t do tail-call optimization. Some languages (Scala, Scheme) turn tail-recursive calls into loops automatically. The JVM does not. So in Java, deep linear recursion is always a real space cost.</p>
                 </>
               ),
@@ -380,9 +380,9 @@ int sumC(int[] arr, int i) {
           ]}
         />
 
-        <Callout variant="warn" title="Java has no TCO — this trips up Scala/Scheme refugees">
+        <Callout variant="warn" title="Java has no TCO, this trips up Scala/Scheme refugees">
           <p className="m-0">
-            In some languages, a tail-recursive call (the recursive call is the last thing the method does) gets optimized into a loop, using O(1) stack. The JVM does <em>not</em>{" "}do this. Every recursive call costs a frame, period. If you&apos;re used to relying on TCO, retrain — in Java, deep linear recursion is a bug.
+            In some languages, a tail-recursive call (the recursive call is the last thing the method does) gets optimized into a loop, using O(1) stack. The JVM does <em>not</em>{" "}do this. Every recursive call costs a frame, period. If you&apos;re used to relying on TCO, retrain, in Java, deep linear recursion is a bug.
           </p>
         </Callout>
 
@@ -392,9 +392,9 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary stack space of this method, called as binarySearch(arr, 0, arr.length - 1, target)?\n\nint binarySearch(int[] arr, int lo, int hi, int target) {\n    if (lo > hi) return -1;\n    int mid = (lo + hi) >>> 1;\n    if (arr[mid] == target) return mid;\n    if (arr[mid] < target) return binarySearch(arr, mid + 1, hi, target);\n    return binarySearch(arr, lo, mid - 1, target);\n}"}
           options={[
-            { label: "O(1) — it returns from each call.", explanation: "It does return — but only AFTER the recursive call returns. Frames pile up while the recursion descends." },
+            { label: "O(1), it returns from each call.", explanation: "It does return, but only AFTER the recursive call returns. Frames pile up while the recursion descends." },
             { label: "O(log n)", correct: true, explanation: "Right. Each call halves the search range, so the recursion is log n deep. log n frames on the stack." },
-            { label: "O(n)", explanation: "If we recursed by 1 each time it'd be O(n). But binary search halves the range — log n depth." },
+            { label: "O(n)", explanation: "If we recursed by 1 each time it'd be O(n). But binary search halves the range, log n depth." },
             { label: "O(n log n)", explanation: "n log n is a TIME shape, not a space shape here. Stack depth is just the number of nested calls = log n." },
           ]}
         />
@@ -403,10 +403,10 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary stack space of fib(n)?\n\nint fib(int n) {\n    if (n <= 1) return n;\n    return fib(n - 1) + fib(n - 2);\n}"}
           options={[
-            { label: "O(2ⁿ) — the time complexity.", explanation: "The TIME is exponential. But the stack space is the maximum DEPTH, not the total number of calls." },
+            { label: "O(2ⁿ), the time complexity.", explanation: "The TIME is exponential. But the stack space is the maximum DEPTH, not the total number of calls." },
             { label: "O(n)", correct: true, explanation: "Right. The deepest path is fib(n) → fib(n-1) → fib(n-2) → … → fib(0), which is n levels deep. Only one path is alive on the stack at a time. So O(n) space, even though TIME is O(2ⁿ)." },
-            { label: "O(log n)", explanation: "There's no halving — each call decreases n by 1, not by half." },
-            { label: "O(1)", explanation: "fib(n) does recurse — at minimum n levels deep before any return." },
+            { label: "O(log n)", explanation: "There's no halving, each call decreases n by 1, not by half." },
+            { label: "O(1)", explanation: "fib(n) does recurse, at minimum n levels deep before any return." },
           ]}
         />
 
@@ -415,9 +415,9 @@ int sumC(int[] arr, int i) {
           gist="The call stack is the small memory. Recursion fills it. Depth = stack space."
           points={[
             { takeaway: "JVM memory has two regions: per-thread stack (small) and shared heap (large).", detail: "Stack frames hold local variables and parameters for one active method call. The heap holds every object you 'new'." },
-            { takeaway: "Recursion's auxiliary space = MAX recursion depth, not total calls.", detail: "fib(n) makes O(2ⁿ) calls but only n are alive at once. Time and space have different shapes — don't confuse them." },
+            { takeaway: "Recursion's auxiliary space = MAX recursion depth, not total calls.", detail: "fib(n) makes O(2ⁿ) calls but only n are alive at once. Time and space have different shapes, don't confuse them." },
             { takeaway: "Java has no tail-call optimization. Deep linear recursion is always a space cost.", detail: "If your recursive method's last action is the recursive call (tail call), the JVM still pushes a frame. Replace with a loop if depth grows with n." },
-            { takeaway: "Linear recursion (depth-n) is usually replaceable with a loop. Tree recursion (depth-log-n) usually isn't worth replacing.", detail: "Depth O(log n) — a million-element binary search recurses 20 times. That's fine. Depth O(n) — a million-element linear recursion is a stack overflow." },
+            { takeaway: "Linear recursion (depth-n) is usually replaceable with a loop. Tree recursion (depth-log-n) usually isn't worth replacing.", detail: "Depth O(log n), a million-element binary search recurses 20 times. That's fine. Depth O(n), a million-element linear recursion is a stack overflow." },
           ]}
         />
       </section>
@@ -466,14 +466,14 @@ int sumC(int[] arr, int i) {
           items={[
             { id: "swap", label: "Swap two elements of an array in place using a temp variable", answer: "constant", explanation: "One temp variable. No matter how big the array is, that's constant." },
             { id: "sum-acc", label: "Sum an int[] using one accumulator", answer: "constant", explanation: "One int (the running sum) plus a loop variable. Constant." },
-            { id: "twoptrs", label: "Two-pointer reverse of an array (in place)", answer: "constant", explanation: "Two pointers and a temp. The input array is reused — no new allocation." },
+            { id: "twoptrs", label: "Two-pointer reverse of an array (in place)", answer: "constant", explanation: "Two pointers and a temp. The input array is reused, no new allocation." },
             { id: "binsearch-it", label: "Iterative binary search", answer: "constant", explanation: "Three indices (lo, hi, mid). No recursion, no extra allocation." },
-            { id: "binsearch-rec", label: "Recursive binary search", answer: "log", explanation: "Each call halves the range, so the recursion is log n deep — log n stack frames." },
+            { id: "binsearch-rec", label: "Recursive binary search", answer: "log", explanation: "Each call halves the range, so the recursion is log n deep, log n stack frames." },
             { id: "merge-sort-aux", label: "Merge sort's auxiliary buffer for the merge step", answer: "linear", explanation: "Merge sort allocates an O(n) buffer for merging. That's the dominant auxiliary cost." },
-            { id: "linear-rec", label: "Recursive sum that recurses by index (i, i+1, …, n)", answer: "linear", explanation: "Decrement-by-1 recursion piles up n stack frames — O(n) auxiliary space." },
-            { id: "hash-set-pass", label: "Walk an array, add every element to a HashSet", answer: "linear", explanation: "The HashSet can grow to n entries — that's O(n) auxiliary." },
-            { id: "adj-matrix", label: "Build adjacency matrix for a graph of n nodes", answer: "quadratic", explanation: "An n×n boolean matrix is n² cells. Quadratic space — one of the reasons adjacency lists are usually preferred for sparse graphs." },
-            { id: "pair-list", label: "Build a list of every (i, j) pair from an n-array", answer: "quadratic", explanation: "n² pairs means n² list entries — quadratic auxiliary space." },
+            { id: "linear-rec", label: "Recursive sum that recurses by index (i, i+1, …, n)", answer: "linear", explanation: "Decrement-by-1 recursion piles up n stack frames, O(n) auxiliary space." },
+            { id: "hash-set-pass", label: "Walk an array, add every element to a HashSet", answer: "linear", explanation: "The HashSet can grow to n entries, that's O(n) auxiliary." },
+            { id: "adj-matrix", label: "Build adjacency matrix for a graph of n nodes", answer: "quadratic", explanation: "An n×n boolean matrix is n² cells. Quadratic space, one of the reasons adjacency lists are usually preferred for sparse graphs." },
+            { id: "pair-list", label: "Build a list of every (i, j) pair from an n-array", answer: "quadratic", explanation: "n² pairs means n² list entries, quadratic auxiliary space." },
           ]}
         />
 
@@ -502,7 +502,7 @@ int sumC(int[] arr, int i) {
 
         <Callout variant="warn" title="Iteration is cheap; allocation is not">
           <p className="m-0">
-            A loop, no matter how nested, is O(1) auxiliary space — unless something inside the loop allocates. <code>new int[n]</code> inside an outer n-loop? <em>That</em>{" "}is O(n²) space.
+            A loop, no matter how nested, is O(1) auxiliary space, unless something inside the loop allocates. <code>new int[n]</code> inside an outer n-loop? <em>That</em>{" "}is O(n²) space.
           </p>
         </Callout>
 
@@ -513,7 +513,7 @@ int sumC(int[] arr, int i) {
           question={"What's the time AND auxiliary space?\n\nint[][] table(int n) {\n    int[][] t = new int[n][n];\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < n; j++)\n            t[i][j] = i * j;\n    return t;\n}"}
           options={[
             { label: "Time O(n²), space O(1).", explanation: "Time is right, but we ALLOCATED an n×n table. That's n² space." },
-            { label: "Time O(n²), space O(n²).", correct: true, explanation: "Right. Both n² — but for different reasons. n² time from the nested loop. n² space from the n×n allocation." },
+            { label: "Time O(n²), space O(n²).", correct: true, explanation: "Right. Both n², but for different reasons. n² time from the nested loop. n² space from the n×n allocation." },
             { label: "Time O(n), space O(n²).", explanation: "Two nested loops up to n means n² steps, not n. The space is right but the time is undercounted." },
             { label: "Time O(n²), space O(n).", explanation: "We allocated an n×n grid, not an n-array. The grid has n² cells, so space is n²." },
           ]}
@@ -523,8 +523,8 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary space?\n\nList<List<Integer>> partition(int[] arr) {\n    List<List<Integer>> all = new ArrayList<>();\n    for (int x : arr) {\n        List<Integer> single = new ArrayList<>();\n        single.add(x);\n        all.add(single);\n    }\n    return all;\n}"}
           options={[
-            { label: "O(n) — one list with n elements.", correct: true, explanation: "Right. We allocate n inner lists, each holding 1 element. Total: n+1 list objects, n int boxes. That's O(n) overall — n constant-size things." },
-            { label: "O(n²) — nested lists.", explanation: "Nested in code doesn't mean n×n in memory. Each inner list holds 1 element, not n." },
+            { label: "O(n), one list with n elements.", correct: true, explanation: "Right. We allocate n inner lists, each holding 1 element. Total: n+1 list objects, n int boxes. That's O(n) overall, n constant-size things." },
+            { label: "O(n²), nested lists.", explanation: "Nested in code doesn't mean n×n in memory. Each inner list holds 1 element, not n." },
             { label: "O(1)", explanation: "We're creating n+1 list objects. That's very much not constant." },
             { label: "O(log n)", explanation: "No halving anywhere. Each iteration adds one list." },
           ]}
@@ -534,8 +534,8 @@ int sumC(int[] arr, int i) {
           kind="Quick check"
           question={"What's the auxiliary space?\n\nint mystery(int n) {\n    if (n <= 1) return 1;\n    return mystery(n / 2) + mystery(n / 2);\n}"}
           options={[
-            { label: "O(2ⁿ) — there are 2ⁿ calls.", explanation: "There are MANY calls, but stack space is the max DEPTH at any moment, not the total." },
-            { label: "O(log n)", correct: true, explanation: "Right. Each call halves n. The deepest the stack gets is log₂ n. Only one branch is live at a time on the stack — the others have already returned or haven't started." },
+            { label: "O(2ⁿ), there are 2ⁿ calls.", explanation: "There are MANY calls, but stack space is the max DEPTH at any moment, not the total." },
+            { label: "O(log n)", correct: true, explanation: "Right. Each call halves n. The deepest the stack gets is log₂ n. Only one branch is live at a time on the stack, the others have already returned or haven't started." },
             { label: "O(n)", explanation: "If we decreased by 1 each call it'd be n. But we halve, so depth = log n." },
             { label: "O(n²)", explanation: "n² doesn't show up in pure recursion depth. Watch for halving (log) vs decrement (linear)." },
           ]}
@@ -545,8 +545,8 @@ int sumC(int[] arr, int i) {
           title="Part 4 recap"
           gist="Three rules: count allocations, count recursion depth, don't count loop variables."
           points={[
-            { takeaway: "Auxiliary space is the SUM of allocations and the MAX recursion depth.", detail: "Two independent contributors. A method that allocates a list of n AND recurses n deep is O(n) — the bigger of the two dominates, and they're both n here." },
-            { takeaway: "A loop alone is O(1) space — it's the body that decides.", detail: "for (int i = 0; i < n; i++) {} is O(1). for (...) { new int[n]; } is O(n²)." },
+            { takeaway: "Auxiliary space is the SUM of allocations and the MAX recursion depth.", detail: "Two independent contributors. A method that allocates a list of n AND recurses n deep is O(n), the bigger of the two dominates, and they're both n here." },
+            { takeaway: "A loop alone is O(1) space, it's the body that decides.", detail: "for (int i = 0; i < n; i++) {} is O(1). for (...) { new int[n]; } is O(n²)." },
             { takeaway: "Halving recursion → O(log n) depth. Decrement recursion → O(n) depth.", detail: "This is the same shape rule from Module 1, applied to space. The pattern transfers cleanly: log n appears wherever you halve." },
           ]}
         />
@@ -556,7 +556,7 @@ int sumC(int[] arr, int i) {
       {/* PART 5: PROJECT */}
       <Checkpoint moduleSlug="space-complexity" id="project" title="Project: stack visualizer" xp={25} manual manualLabel="I built it and watched the stack grow" celebration="You watched recursion eat memory in real time. The mental model is now muscle memory.">
       <section>
-        <h2>Part 5: Project — see the stack grow</h2>
+        <h2>Part 5: Project, see the stack grow</h2>
 
         <p>
           Time to make this concrete. You&apos;re going to write a small Java program that:
@@ -564,14 +564,14 @@ int sumC(int[] arr, int i) {
         <ol>
           <li>Computes factorial three ways: iterative, recursive, and recursive-with-tracing.</li>
           <li>Reports peak stack depth as the recursion runs.</li>
-          <li>Pushes the recursive version until it crashes — and prints the depth at which it died.</li>
+          <li>Pushes the recursive version until it crashes, and prints the depth at which it died.</li>
         </ol>
 
         <h3>The setup</h3>
 
-        <p>Same setup as Module 1&apos;s benchmark — Maven project, Java 17+. If you still have the project from last module, you can drop this in alongside it.</p>
+        <p>Same setup as Module 1&apos;s benchmark, Maven project, Java 17+. If you still have the project from last module, you can drop this in alongside it.</p>
 
-        <CodeBlock lang="plain" caption="pom.xml — minimal">{`<project>
+        <CodeBlock lang="plain" caption="pom.xml, minimal">{`<project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.skillforge</groupId>
     <artifactId>space-lab</artifactId>
@@ -632,7 +632,7 @@ public class StackVisualizer {
   trace: 3628800
   peak stack depth: 12   (10 factorial frames + 2 framework frames)`}</CodeBlock>
 
-        <p>The three answers match. The peak depth is roughly n + 2 — as expected, the recursion is exactly n deep.</p>
+        <p>The three answers match. The peak depth is roughly n + 2, as expected, the recursion is exactly n deep.</p>
 
         <h3>Step 2: push until it crashes</h3>
 
@@ -670,7 +670,7 @@ public static void main(String[] args) {
   target 1,000,000 → 💥 StackOverflowError`}</CodeBlock>
 
         <p>
-          The exact crash threshold varies by JVM version, OS, and stack-size flags — somewhere between 10k and 100k for most setups. The point isn&apos;t the number. The point is: <strong>there is a number</strong>, and an O(n) recursion will hit it.
+          The exact crash threshold varies by JVM version, OS, and stack-size flags, somewhere between 10k and 100k for most setups. The point isn&apos;t the number. The point is: <strong>there is a number</strong>, and an O(n) recursion will hit it.
         </p>
 
         <Callout variant="insight" title="The default stack size is small on purpose">
@@ -681,7 +681,7 @@ public static void main(String[] args) {
 
         <h3>Step 3: rescue with iteration</h3>
 
-        <p>To prove the algorithm itself is fine — it&apos;s the recursion that broke — run the iterative version on the same input that crashed:</p>
+        <p>To prove the algorithm itself is fine, it&apos;s the recursion that broke, run the iterative version on the same input that crashed:</p>
 
         <CodeBlock lang="java">{`// In main, after the crash test:
 System.out.println("\\n─── Iterative survives anything ───");
@@ -689,21 +689,21 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
                    + factorialIter(1_000_000));`}</CodeBlock>
 
         <p>
-          It runs. (The <code>long</code> overflows quickly — that&apos;s a different problem — but the program doesn&apos;t crash.) Same algorithm, no recursion, no stack pressure.
+          It runs. (The <code>long</code> overflows quickly, that&apos;s a different problem, but the program doesn&apos;t crash.) Same algorithm, no recursion, no stack pressure.
         </p>
 
         <h3>Stretch goals (optional)</h3>
         <ul>
           <li><strong>Raise the stack size.</strong>{" "}Run with <code>java -Xss8m com.skillforge.StackVisualizer</code> and see how much deeper you can recurse. (Then think about how many threads × that size your service can afford.)</li>
-          <li><strong>Add fib.</strong>{" "}Implement recursive fib(n) and print peak stack depth. Confirm it&apos;s O(n), not O(2ⁿ) — even though TIME is exponential.</li>
-          <li><strong>Memoize fib.</strong>{" "}Add a <code>Map&lt;Integer, Long&gt;</code> cache. Watch the time complexity drop from O(2ⁿ) to O(n) — but space goes from O(n) (just stack) to O(n) heap + O(n) stack. You traded one kind of space for time.</li>
+          <li><strong>Add fib.</strong>{" "}Implement recursive fib(n) and print peak stack depth. Confirm it&apos;s O(n), not O(2ⁿ), even though TIME is exponential.</li>
+          <li><strong>Memoize fib.</strong>{" "}Add a <code>Map&lt;Integer, Long&gt;</code> cache. Watch the time complexity drop from O(2ⁿ) to O(n), but space goes from O(n) (just stack) to O(n) heap + O(n) stack. You traded one kind of space for time.</li>
           <li><strong>Memory profile.</strong>{" "}Run with <code>-Xlog:gc</code> to see heap allocations. The recursive version barely allocates on the heap (it&apos;s all stack). The memoized version fills the heap proportionally.</li>
         </ul>
       </section>
       </Checkpoint>
 
       {/* PART 6: FINAL */}
-      <Checkpoint moduleSlug="space-complexity" id="final" title="Final quiz" xp={20} celebration="Module 2 done. Time and space — the two halves of Big-O are loaded.">
+      <Checkpoint moduleSlug="space-complexity" id="final" title="Final quiz" xp={20} celebration="Module 2 done. Time and space, the two halves of Big-O are loaded.">
       <section>
         <h2>Part 6: Final quiz</h2>
         <p>One more set, mixing everything from the module.</p>
@@ -712,7 +712,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           kind="Final"
           question={"What's the auxiliary space of this method?\n\nint[] reverse(int[] arr) {\n    int n = arr.length;\n    int[] out = new int[n];\n    for (int i = 0; i < n; i++) out[i] = arr[n - 1 - i];\n    return out;\n}"}
           options={[
-            { label: "O(1) — we just reverse it.", explanation: "We allocate a NEW array of size n. That's O(n). The in-place reverse would be O(1) — but this isn't in place." },
+            { label: "O(1), we just reverse it.", explanation: "We allocate a NEW array of size n. That's O(n). The in-place reverse would be O(1), but this isn't in place." },
             { label: "O(n)", correct: true, explanation: "Right. The allocated output array is n ints. Auxiliary space is O(n)." },
             { label: "O(log n)", explanation: "No halving. We allocate a full-size new array up front." },
             { label: "O(n²)", explanation: "One array of size n, not n². Don't double-count the loop." },
@@ -723,10 +723,10 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           kind="Final"
           question={"Same problem, different code. What's the auxiliary space NOW?\n\nvoid reverseInPlace(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n / 2; i++) {\n        int tmp = arr[i];\n        arr[i] = arr[n - 1 - i];\n        arr[n - 1 - i] = tmp;\n    }\n}"}
           options={[
-            { label: "O(n) — we still touch every element.", explanation: "Touching ≠ allocating. The only memory we add is one int (tmp) plus a loop variable." },
+            { label: "O(n), we still touch every element.", explanation: "Touching ≠ allocating. The only memory we add is one int (tmp) plus a loop variable." },
             { label: "O(1)", correct: true, explanation: "Right. tmp + loop variable = constant. The input array isn't auxiliary. This is the classic 'in-place' optimization that drops space from O(n) to O(1)." },
-            { label: "O(log n)", explanation: "There's no halving structure here — it's a single loop with a fixed amount of memory inside." },
-            { label: "O(n / 2) → O(n)", explanation: "We don't allocate n / 2 things — only one tmp slot, reused each iteration." },
+            { label: "O(log n)", explanation: "There's no halving structure here, it's a single loop with a fixed amount of memory inside." },
+            { label: "O(n / 2) → O(n)", explanation: "We don't allocate n / 2 things, only one tmp slot, reused each iteration." },
           ]}
         />
 
@@ -737,7 +737,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
             { label: "Time O(n), space O(1).", explanation: "Time is right, but we build a HashMap that can hold up to n distinct keys. That's O(n) space." },
             { label: "Time O(n), space O(n).", correct: true, explanation: "Right. One pass = O(n) time. Map can grow to n entries (if every element is unique) = O(n) space. The 'frequency map' pattern is one of the most common O(n) space trades." },
             { label: "Time O(n²), space O(n).", explanation: "We make one pass with O(1) average HashMap operations. That's O(n) total time, not n²." },
-            { label: "Time O(n log n), space O(n).", explanation: "Sorting would be n log n, but we're hashing — average O(1) per insert, O(n) total." },
+            { label: "Time O(n log n), space O(n).", explanation: "Sorting would be n log n, but we're hashing, average O(1) per insert, O(n) total." },
           ]}
         />
 
@@ -748,7 +748,7 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
             { label: "O(1)", explanation: "Each call adds a frame. n calls = n frames alive at once = O(n) stack space." },
             { label: "O(log n)", explanation: "log n shows up when you halve. Decrementing by 1 means n levels deep, not log n." },
             { label: "O(n)", correct: true, explanation: "Right. Decrementing recursion depth = n. n stack frames pile up before the first one returns. That's O(n) auxiliary stack space." },
-            { label: "O(n²)", explanation: "The depth is n, not n². n² would require something like recursing twice, then twice from each — and even then we're looking at the deepest path, not the count." },
+            { label: "O(n²)", explanation: "The depth is n, not n². n² would require something like recursing twice, then twice from each, and even then we're looking at the deepest path, not the count." },
           ]}
         />
 
@@ -756,8 +756,8 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           kind="Final"
           question="Which statement is FALSE?"
           options={[
-            { label: "An algorithm with O(1) time can have O(n) space.", explanation: "True — imagine a method that just does `int[] a = new int[n]; return a[0];`. Constant time, O(n) space." },
-            { label: "An algorithm with O(n²) time always has O(n²) space.", correct: true, explanation: "FALSE — this is the one. Counting pairs in a nested loop is O(n²) time but O(1) space. Time and space are independent dimensions of complexity." },
+            { label: "An algorithm with O(1) time can have O(n) space.", explanation: "True, imagine a method that just does `int[] a = new int[n]; return a[0];`. Constant time, O(n) space." },
+            { label: "An algorithm with O(n²) time always has O(n²) space.", correct: true, explanation: "FALSE, this is the one. Counting pairs in a nested loop is O(n²) time but O(1) space. Time and space are independent dimensions of complexity." },
             { label: "Recursion depth is the dominant contributor to stack space.", explanation: "True. Each level of depth = one frame. Total auxiliary stack ≈ max depth × frame size." },
             { label: "Java has no automatic tail-call optimization.", explanation: "True. Even tail-recursive methods push a new stack frame per call in the JVM." },
           ]}
@@ -767,10 +767,10 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
           kind="Final"
           question="You're given a sorted int[] of length n and a target. You need to return whether the target exists. Best space complexity?"
           options={[
-            { label: "Recursive binary search — O(log n) auxiliary.", explanation: "Recursive binary search is O(log n) STACK space. Iterative is O(1). When both work, prefer the smaller one." },
-            { label: "Iterative binary search — O(1) auxiliary.", correct: true, explanation: "Right. Same time complexity as the recursive version (O(log n)) but O(1) space — no recursion frames piled up. This is the 'when in doubt, iterate' lesson." },
-            { label: "HashSet contains — O(n) auxiliary.", explanation: "Building a HashSet from a sorted array is wasteful — you'd throw away the sortedness AND pay O(n) space. Iterative binary search wins here." },
-            { label: "Linear scan — O(1) auxiliary, O(n) time.", explanation: "O(1) space is correct, but the array is sorted — we should use binary search to get O(log n) time too." },
+            { label: "Recursive binary search, O(log n) auxiliary.", explanation: "Recursive binary search is O(log n) STACK space. Iterative is O(1). When both work, prefer the smaller one." },
+            { label: "Iterative binary search, O(1) auxiliary.", correct: true, explanation: "Right. Same time complexity as the recursive version (O(log n)) but O(1) space, no recursion frames piled up. This is the 'when in doubt, iterate' lesson." },
+            { label: "HashSet contains, O(n) auxiliary.", explanation: "Building a HashSet from a sorted array is wasteful, you'd throw away the sortedness AND pay O(n) space. Iterative binary search wins here." },
+            { label: "Linear scan, O(1) auxiliary, O(n) time.", explanation: "O(1) space is correct, but the array is sorted, we should use binary search to get O(log n) time too." },
           ]}
         />
 
@@ -781,10 +781,10 @@ System.out.println("  factorialIter(1_000_000) (modulo overflow) = "
       <section className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
         <h3 className="mt-0 mb-2">What you&apos;ll have when this module clears</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          You can read a Java method and call out its time AND space complexity at sight. You know why deep linear recursion crashes the JVM, and you&apos;ve watched it happen with your own debugger. You can articulate the time-vs-space trade-off — the move that turns most "can you optimize this?" interview questions into a clean conversation.
+          You can read a Java method and call out its time AND space complexity at sight. You know why deep linear recursion crashes the JVM, and you&apos;ve watched it happen with your own debugger. You can articulate the time-vs-space trade-off, the move that turns most "can you optimize this?" interview questions into a clean conversation.
         </p>
         <p className="mb-0 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Module 3 — Best, average, worst & amortized analysis.</strong>{" "}Why <code>ArrayList.add</code> is O(1) "on average" even though some calls trigger an O(n) resize. The doubling trick. The accounting and aggregate methods. The last piece of the complexity foundation before we start meeting actual data structures in Phase 2.
+          <strong>Up next: Module 3, Best, average, worst & amortized analysis.</strong>{" "}Why <code>ArrayList.add</code> is O(1) "on average" even though some calls trigger an O(n) resize. The doubling trick. The accounting and aggregate methods. The last piece of the complexity foundation before we start meeting actual data structures in Phase 2.
         </p>
         <div className="mt-5">
           <Link

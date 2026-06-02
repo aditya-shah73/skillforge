@@ -72,7 +72,7 @@ export default function Page() {
       <section className="my-10">
         <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
-          <li>A clear sense of when Postgres&apos;s built-in search is enough — and when it categorically isn&apos;t.</li>
+          <li>A clear sense of when Postgres&apos;s built-in search is enough, and when it categorically isn&apos;t.</li>
           <li>How an inverted index actually works, and the intuition behind BM25 ranking.</li>
           <li>The production pattern: Postgres as system of record, Elasticsearch as query engine, Debezium / Kafka as the bridge.</li>
           <li>The hard problems: indexing lag, schema migrations on the index, and what to do when the two stores disagree.</li>
@@ -82,7 +82,7 @@ export default function Page() {
       <section className="my-10">
         <p>
           Search is one of those features that looks easy from outside (&quot;just put a search box on it&quot;) and
-          is operationally complicated from inside. The &quot;just&quot; word is doing the work — search means
+          is operationally complicated from inside. The &quot;just&quot; word is doing the work, search means
           tokenization, stemming, ranking, typo tolerance, autocomplete, faceting, spell correction, and a separate
           system to hold the index.
         </p>
@@ -94,7 +94,7 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="search-systems" id="why-search" title="Why DB isn't enough" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Why a database isn&apos;t a search engine</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1, Why a database isn&apos;t a search engine</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">The LIKE trap</h3>
         <p>
@@ -107,7 +107,7 @@ export default function Page() {
           It works for 100 rows. It crawls at 100k rows. It dies at 10M rows. Why?
         </p>
         <ul>
-          <li><strong>Leading wildcard:</strong> <code>%wool%</code> means &quot;any string containing wool.&quot; B-tree indexes can&apos;t help — they&apos;re sorted, but you&apos;re asking for substring matches at every position.</li>
+          <li><strong>Leading wildcard:</strong> <code>%wool%</code> means &quot;any string containing wool.&quot; B-tree indexes can&apos;t help, they&apos;re sorted, but you&apos;re asking for substring matches at every position.</li>
           <li><strong>Full table scan:</strong>{" "}the planner has no choice but to read every row and run a substring check.</li>
           <li><strong>No ranking:</strong>{" "}all matches are equal. There&apos;s no notion of &quot;more relevant.&quot;</li>
           <li><strong>No tokenization:</strong> &quot;wool socks&quot; doesn&apos;t match &quot;socks made of wool.&quot; Token order matters; word matching doesn&apos;t exist.</li>
@@ -148,7 +148,7 @@ LIMIT 20;`}</CodeBlock>
             For datasets up to maybe 10M documents and basic search needs (tokenized matching + ranking + faceting),
             Postgres FTS is genuinely a good choice. You skip an entire system to operate, an entire CDC pipeline,
             and an entire dual-write consistency problem. Reach for Elasticsearch when you actually need what it
-            offers — not by default.
+            offers, not by default.
           </p>
         </Callout>
 
@@ -158,7 +158,7 @@ LIMIT 20;`}</CodeBlock>
           <li><strong>Real-time scoring with custom ranking signals.</strong> &quot;Boost recent items 2x, in-stock items 3x, sponsored items by ad bid.&quot; Possible in Postgres but contortions; native in ES.</li>
           <li><strong>Aggregations / faceting at scale.</strong> &quot;How many results in each category?&quot; Across 100M docs, ES wins easily.</li>
           <li><strong>Vector search alongside text.</strong>{" "}Hybrid retrieval (BM25 + embeddings) is native in ES, doable but bolted-on in Postgres (pgvector).</li>
-          <li><strong>Index size or write rate.</strong>{" "}Hundreds of millions of documents, thousands of writes per second to the index — ES is built for this; Postgres FTS struggles.</li>
+          <li><strong>Index size or write rate.</strong>{" "}Hundreds of millions of documents, thousands of writes per second to the index, ES is built for this; Postgres FTS struggles.</li>
         </ul>
 
         <Quiz
@@ -167,7 +167,7 @@ LIMIT 20;`}</CodeBlock>
           options={[
             { label: "Stand up Elasticsearch with a CDC pipeline.", correct: false, explanation: "Premature. 500k documents is well within Postgres FTS territory. The ES pipeline adds operational complexity that isn't justified yet." },
             { label: "Use Postgres tsvector + GIN index, with pg_trgm for fuzzy matching on titles.", correct: true, explanation: "Right. 500k docs + ranking + fuzzy = exactly what Postgres FTS does well. ts_rank for relevance, pg_trgm for typo tolerance, GIN index for speed. One system to operate, no consistency complexity. Move to ES later only if specific needs (multi-language, custom ranking signals, scale) require it." },
-            { label: "Use Elasticsearch only — store the documents there, no Postgres at all.", correct: false, explanation: "ES isn't a great system of record. You give up transactions, foreign keys, joins, and Postgres's general flexibility. Treat ES as an index, not a primary store." },
+            { label: "Use Elasticsearch only, store the documents there, no Postgres at all.", correct: false, explanation: "ES isn't a great system of record. You give up transactions, foreign keys, joins, and Postgres's general flexibility. Treat ES as an index, not a primary store." },
             { label: "Add a LIKE-based search and add indexes later.", correct: false, explanation: "We just covered why this doesn't work. Skip the LIKE phase; go straight to FTS." },
           ]}
         />
@@ -179,7 +179,7 @@ LIMIT 20;`}</CodeBlock>
             { label: "Custom relevance scoring with multiple signals (recency, popularity, click-through rate).", correct: false, explanation: "Real reason. ES's function_score and rescore APIs are designed for this; doing it in Postgres requires SQL contortions." },
             { label: "Hundreds of millions of documents and thousands of writes per second.", correct: false, explanation: "Real reason. Postgres FTS performance degrades at very high scale; ES is purpose-built for it." },
             { label: "Faceted search with sub-second aggregations across millions of documents.", correct: false, explanation: "Real reason. ES aggregations are first-class and fast; Postgres faceting via GROUP BY can be slow at scale." },
-            { label: "We're worried our LIKE queries are slow and someone said Elasticsearch is faster.", correct: true, explanation: "Not a real reason. The first move from LIKE is Postgres FTS, not ES. ES is a real, operationally heavy commitment — make it for real reasons, not because LIKE is slow." },
+            { label: "We're worried our LIKE queries are slow and someone said Elasticsearch is faster.", correct: true, explanation: "Not a real reason. The first move from LIKE is Postgres FTS, not ES. ES is a real, operationally heavy commitment, make it for real reasons, not because LIKE is slow." },
           ]}
         />
 
@@ -195,7 +195,7 @@ LIMIT 20;`}</CodeBlock>
       </Checkpoint>
 
       <Checkpoint moduleSlug="search-systems" id="inverted-index" title="Inverted index & BM25" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Inverted index &amp; BM25</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2, Inverted index &amp; BM25</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">The inverted index, drawn out</h3>
         <p>
@@ -229,22 +229,22 @@ LIMIT 20;`}</CodeBlock>
         <ul>
           <li><strong>Tokenize:</strong>{" "}split on whitespace + punctuation. &quot;Wool socks!&quot; → [&quot;Wool&quot;, &quot;socks&quot;].</li>
           <li><strong>Lowercase:</strong> [&quot;wool&quot;, &quot;socks&quot;].</li>
-          <li><strong>Remove stopwords:</strong>{" "}drop &quot;the&quot;, &quot;a&quot;, &quot;and&quot; — words that match everything and rank nothing.</li>
+          <li><strong>Remove stopwords:</strong>{" "}drop &quot;the&quot;, &quot;a&quot;, &quot;and&quot;, words that match everything and rank nothing.</li>
           <li><strong>Stem:</strong> &quot;running&quot; → &quot;run&quot;, &quot;socks&quot; → &quot;sock&quot;. Tradeoffs: improves recall, hurts precision.</li>
           <li><strong>Synonyms / lemmatization:</strong>{" "}optional, for cases where domain-specific synonyms matter.</li>
         </ul>
         <p>
-          The analyzer at index time and query time must match — otherwise &quot;Wool Socks&quot; in a doc and
+          The analyzer at index time and query time must match, otherwise &quot;Wool Socks&quot; in a doc and
           &quot;wool socks&quot; in a query don&apos;t collide. This trips up everyone at least once.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">BM25 — the ranking function that ate the world</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">BM25, the ranking function that ate the world</h3>
         <p>
           When a query matches multiple docs, you need to rank them. BM25 is the standard. The intuition (no
           formula needed):
         </p>
         <ul>
-          <li><strong>Term frequency:</strong>{" "}a doc that mentions &quot;wool&quot; ten times is more about wool than one that mentions it once. But not 10x more — diminishing returns kick in fast.</li>
+          <li><strong>Term frequency:</strong>{" "}a doc that mentions &quot;wool&quot; ten times is more about wool than one that mentions it once. But not 10x more, diminishing returns kick in fast.</li>
           <li><strong>Inverse document frequency:</strong>{" "}rare terms are more discriminative. &quot;Wool&quot; in a clothing catalog is informative; &quot;the&quot; is not. Rare terms get weighted higher.</li>
           <li><strong>Document length normalization:</strong>{" "}a 1000-word doc that mentions &quot;wool&quot; once is less &quot;about&quot; wool than a 50-word doc that mentions it once. BM25 normalizes for length.</li>
         </ul>
@@ -259,7 +259,7 @@ LIMIT 20;`}</CodeBlock>
           </p>
         </Callout>
 
-        <CodeBlock lang="java" caption="Spring Data Elasticsearch — basic search query">{`@Document(indexName = "products")
+        <CodeBlock lang="java" caption="Spring Data Elasticsearch, basic search query">{`@Document(indexName = "products")
 public class ProductDoc {
     @Id
     private String id;
@@ -312,9 +312,9 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
 
         <Quiz
           kind="Quick check"
-          question="A query 'lightweight wool jacket' returns the top 10 results. The doc 'Lightweight wool jacket — perfect for fall' is ranked #4. The doc 'Jacket' is ranked #1. What's most likely happening?"
+          question="A query 'lightweight wool jacket' returns the top 10 results. The doc 'Lightweight wool jacket, perfect for fall' is ranked #4. The doc 'Jacket' is ranked #1. What's most likely happening?"
           options={[
-            { label: "BM25 is broken — the more relevant doc should rank higher.", correct: false, explanation: "Almost certainly the analyzer is doing something subtle, not BM25 itself. BM25's been doing this job for decades; the bug is upstream of it." },
+            { label: "BM25 is broken, the more relevant doc should rank higher.", correct: false, explanation: "Almost certainly the analyzer is doing something subtle, not BM25 itself. BM25's been doing this job for decades; the bug is upstream of it." },
             { label: "The 'Jacket' doc has a much higher recency or popularity boost overriding text relevance.", correct: true, explanation: "Likely candidate. Many production search systems combine BM25 with custom signals (recency, popularity, sales, ad bids). A short doc with strong external boosts can outrank a much more text-relevant doc. The fix is auditing the function_score / boost configuration to make sure text relevance still has appropriate weight." },
             { label: "The shorter 'Jacket' doc gets a length normalization bonus that's too aggressive.", correct: false, explanation: "BM25's length normalization (b parameter) penalizes long docs but it usually doesn't outweigh strong term match in long docs. Possible but less likely than the boosting explanation." },
             { label: "Term order matters and BM25 prefers the first matching doc.", correct: false, explanation: "BM25 doesn't care about doc order; it scores each doc independently and ranks." },
@@ -325,7 +325,7 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
           kind="Gut check"
           question="The query analyzer at search time uses English stemming. The index analyzer was set up months ago without stemming. What's the symptom?"
           options={[
-            { label: "Searches for 'running' don't match docs containing 'run'.", correct: true, explanation: "Right. Index analyzer stored the literal 'run' / 'running' / 'runner' tokens. Query analyzer stems 'running' to 'run' and looks for 'run' in the index. Docs with 'running' have 'running' in their postings, not 'run' — no match. The fix is to reindex with the same analyzer at both ends. This is one of the most common search bugs." },
+            { label: "Searches for 'running' don't match docs containing 'run'.", correct: true, explanation: "Right. Index analyzer stored the literal 'run' / 'running' / 'runner' tokens. Query analyzer stems 'running' to 'run' and looks for 'run' in the index. Docs with 'running' have 'running' in their postings, not 'run', no match. The fix is to reindex with the same analyzer at both ends. This is one of the most common search bugs." },
             { label: "The system rejects all queries with errors.", correct: false, explanation: "Mismatch produces silent under-recall, not errors. Worse than errors in some ways." },
             { label: "Indexing slows down 10x.", correct: false, explanation: "Indexing throughput is independent of analyzer mismatch." },
             { label: "Replicas fall out of sync with the master.", correct: false, explanation: "Replication is byte-level; analyzer config doesn't affect it." },
@@ -344,9 +344,9 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
       </Checkpoint>
 
       <Checkpoint moduleSlug="search-systems" id="production" title="Production patterns" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Production patterns</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3, Production patterns</h2>
 
-        <h3 className="mt-4 mb-3 text-xl font-semibold">Postgres + Elasticsearch — the standard architecture</h3>
+        <h3 className="mt-4 mb-3 text-xl font-semibold">Postgres + Elasticsearch, the standard architecture</h3>
         <p>
           The pattern that&apos;s won:
         </p>
@@ -362,7 +362,7 @@ public interface ProductSearchRepository extends ElasticsearchRepository<Product
 
         <p><strong>Dual-write (application-level):</strong>{" "}the service that writes to Postgres also writes to ES. Simple, easy to reason about. <em>Doesn&apos;t survive failures.</em>{" "}If the ES write fails after the Postgres write commits, your two stores are now inconsistent. Retry queues help but don&apos;t fully solve it.</p>
 
-        <CodeBlock lang="java" caption="Naive dual-write — has consistency holes">{`@Transactional
+        <CodeBlock lang="java" caption="Naive dual-write, has consistency holes">{`@Transactional
 public Product create(CreateProductRequest req) {
     Product p = repo.save(new Product(req));
     try {
@@ -388,7 +388,7 @@ public Product create(CreateProductRequest req) {
         <Callout variant="info" title="Why CDC wins for any non-trivial system">
           <p className="m-0">
             CDC has more moving pieces but each piece does one thing well. Postgres is unchanged. Debezium follows
-            the WAL — same log everyone else uses for replication. Kafka buffers between producers and consumers,
+            the WAL, same log everyone else uses for replication. Kafka buffers between producers and consumers,
             absorbing indexer slowness. The indexer can be paused, restarted, replayed without losing data. Most
             critically: <strong>you can rebuild the entire ES index by replaying Kafka topics</strong>. That&apos;s a
             superpower; dual-write doesn&apos;t have it.
@@ -400,7 +400,7 @@ public Product create(CreateProductRequest req) {
           question="A team uses dual-write to keep ES in sync with Postgres. They notice that 0.1% of products in ES don't exist in Postgres. What's the most likely cause?"
           options={[
             { label: "ES is corrupting data.", correct: false, explanation: "Almost never the answer. The bug is in the dual-write pattern itself." },
-            { label: "ES write succeeded but Postgres txn rolled back; or ES write timed out and was retried, creating duplicates.", correct: true, explanation: "Dual-write doesn't have an atomic 'either both succeed or both fail' guarantee. ES accepting a write while Postgres rolls back is exactly how orphans appear. CDC fixes this — Postgres is always written first, ES follows from the WAL." },
+            { label: "ES write succeeded but Postgres txn rolled back; or ES write timed out and was retried, creating duplicates.", correct: true, explanation: "Dual-write doesn't have an atomic 'either both succeed or both fail' guarantee. ES accepting a write while Postgres rolls back is exactly how orphans appear. CDC fixes this, Postgres is always written first, ES follows from the WAL." },
             { label: "Postgres is silently dropping rows.", correct: false, explanation: "Postgres doesn't silently drop committed rows. The bug is on the ES side or in the dual-write coordination." },
             { label: "Network packet loss between Postgres and ES.", correct: false, explanation: "Packet loss might cause writes to fail, but it doesn't explain why ES has rows that Postgres doesn't. The dual-write race does." },
           ]}
@@ -435,10 +435,10 @@ public Product create(CreateProductRequest req) {
 
         <Callout variant="warn" title="Aliases are the only sane way to switch indexes">
           <p className="m-0">
-            ES supports index aliases — a logical name that points to one or more physical indexes. Your application
+            ES supports index aliases, a logical name that points to one or more physical indexes. Your application
             queries <code>products</code>; the alias points to <code>products_v1</code> today and
             <code> products_v2</code> tomorrow. Switching the alias is atomic. Without aliases, you&apos;d have to
-            change every client to switch index names — operational suicide. <strong>Always query through aliases.</strong>
+            change every client to switch index names, operational suicide. <strong>Always query through aliases.</strong>
           </p>
         </Callout>
 
@@ -455,7 +455,7 @@ public Product create(CreateProductRequest req) {
         <p>
           The fix path: always be able to <strong>rebuild ES from Postgres</strong>. Either via CDC replay or via a
           batch reindex job. If reconstruction takes a week, drift is permanent and you&apos;re always firefighting.
-          If reconstruction takes an hour, drift is a non-issue — rebuild on demand.
+          If reconstruction takes an hour, drift is a non-issue, rebuild on demand.
         </p>
 
         <Quiz
@@ -463,8 +463,8 @@ public Product create(CreateProductRequest req) {
           question="A team's product catalog has 50M items. Their reindex job (Postgres → ES) takes 24 hours. They're hitting drift issues monthly. What's the architectural fix?"
           options={[
             { label: "Run reindex daily as a cron.", correct: false, explanation: "Reindex itself is the bottleneck. Running it daily means you're always reindexing, which is wasteful and still leaves drift between rebuilds." },
-            { label: "Make reindex fast — parallelize across shards, batch writes, run multiple workers — so it takes hours, not days.", correct: true, explanation: "Right. The lever is reindex speed itself. Bulk indexing API, multiple workers reading non-overlapping Postgres ranges, sized for throughput. If reindex completes in 2 hours, drift is a fix-by-rebuilding situation, not a creeping problem. Operational confidence comes from being able to rebuild quickly." },
-            { label: "Stop using ES — go back to Postgres FTS.", correct: false, explanation: "Drops a real capability for an operational symptom. Fix the operations." },
+            { label: "Make reindex fast, parallelize across shards, batch writes, run multiple workers, so it takes hours, not days.", correct: true, explanation: "Right. The lever is reindex speed itself. Bulk indexing API, multiple workers reading non-overlapping Postgres ranges, sized for throughput. If reindex completes in 2 hours, drift is a fix-by-rebuilding situation, not a creeping problem. Operational confidence comes from being able to rebuild quickly." },
+            { label: "Stop using ES, go back to Postgres FTS.", correct: false, explanation: "Drops a real capability for an operational symptom. Fix the operations." },
             { label: "Add a third store for verification.", correct: false, explanation: "Adds complexity, doesn't fix the root issue. The right fix is making the rebuild cheap enough to be a tool, not a project." },
           ]}
         />
@@ -515,17 +515,17 @@ public class ProductSearchService {
       <section className="my-12 rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50">
         <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
         <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
-          <li>Vector search and hybrid retrieval (BM25 + embeddings) — that&apos;s its own module.</li>
+          <li>Vector search and hybrid retrieval (BM25 + embeddings), that&apos;s its own module.</li>
           <li>Learned ranking (LambdaMART, neural rerankers) on top of BM25 first-stage retrieval.</li>
           <li>Specific Debezium configuration, Kafka Connect ergonomics, ES cluster sizing.</li>
-          <li>Search analytics — query logging, click-through rate, feedback loops to tune ranking.</li>
+          <li>Search analytics, query logging, click-through rate, feedback loops to tune ranking.</li>
         </ul>
       </section>
 
       <section className="my-12 text-center">
         <p className="mb-2 text-sm text-slate-500">Phase 2 complete</p>
         <Link href="/courses/system-design" className="inline-block text-lg font-semibold text-cyan-600 hover:underline">
-          Back to all modules — Phase 3 covers messaging and event-driven systems →
+          Back to all modules, Phase 3 covers messaging and event-driven systems →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="search-systems" />

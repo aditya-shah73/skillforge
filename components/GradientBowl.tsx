@@ -208,7 +208,7 @@ export default function GradientBowl() {
 
         {overshoot && (
           <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200">
-            ⚠️ Learning rate &gt; 1 on this curve — you&apos;ll overshoot and may diverge. Watch the ball fly off.
+            ⚠️ Learning rate &gt; 1 on this curve, you&apos;ll overshoot and may diverge. Watch the ball fly off.
           </div>
         )}
         {diverging && (

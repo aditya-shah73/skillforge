@@ -57,7 +57,7 @@ export default function Phase5RevisionModule() {
           Phase 5 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          ReAct, agent loops in Spring, multi-agent orchestration — the agent reference card.
+          ReAct, agent loops in Spring, multi-agent orchestration, the agent reference card.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
@@ -66,7 +66,7 @@ export default function Phase5RevisionModule() {
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This is the map of Phase 5 — the ReAct loop, what an agent actually is in Spring, the multi-agent patterns, and (most importantly) the failure modes that bite teams who reach for an agent on every problem. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
+          This is the map of Phase 5, the ReAct loop, what an agent actually is in Spring, the multi-agent patterns, and (most importantly) the failure modes that bite teams who reach for an agent on every problem. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Agent fundamentals</Link>, <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Agents in Spring Boot</Link>, and <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Multi-agent patterns</Link>.
@@ -81,7 +81,7 @@ export default function Phase5RevisionModule() {
       {/* SECTION 1 — Agent fundamentals */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Agent fundamentals — what&apos;s actually under the hood</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Agent fundamentals, what&apos;s actually under the hood</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Strip away the marketing. An agent is tool-use in a while loop with a stopping condition.
         </p>
@@ -93,9 +93,9 @@ export default function Phase5RevisionModule() {
               Three steps repeated until the model stops asking for tools:
             </p>
             <ol className="list-decimal space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>Thought</strong> — model reasons about what to do next</li>
-              <li><strong>Action</strong> — model emits a <code>tool_use</code> block</li>
-              <li><strong>Observation</strong> — runtime executes the tool, appends the <code>tool_result</code> to the conversation</li>
+              <li><strong>Thought</strong>, model reasons about what to do next</li>
+              <li><strong>Action</strong>, model emits a <code>tool_use</code> block</li>
+              <li><strong>Observation</strong>, runtime executes the tool, appends the <code>tool_result</code> to the conversation</li>
             </ol>
             <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Repeat. The model decides on each turn whether to call another tool or emit a final answer. That&apos;s the whole trick.
@@ -105,9 +105,9 @@ export default function Phase5RevisionModule() {
           <div className="rounded-xl border border-slate-200 bg-purple-50/40 p-5 dark:border-slate-800 dark:bg-purple-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-purple-700 uppercase dark:text-purple-300">Three kinds of memory</div>
             <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>Scratchpad</strong> — the message list itself. The model&apos;s working memory within one task.</li>
-              <li><strong>Summarized history</strong> — when the scratchpad blows past your context window, compress old turns into a summary turn.</li>
-              <li><strong>External store</strong> — durable memory across sessions (vector DB, KV store, database). Read via a tool, write via a tool.</li>
+              <li><strong>Scratchpad</strong>, the message list itself. The model&apos;s working memory within one task.</li>
+              <li><strong>Summarized history</strong>, when the scratchpad blows past your context window, compress old turns into a summary turn.</li>
+              <li><strong>External store</strong>, durable memory across sessions (vector DB, KV store, database). Read via a tool, write via a tool.</li>
             </ul>
             <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Most production agents need all three. The scratchpad is automatic; the other two are work.
@@ -115,7 +115,7 @@ export default function Phase5RevisionModule() {
           </div>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Stopping conditions — every one of these must be wired</h3>
+        <h3 className="mb-2 text-base font-semibold">Stopping conditions, every one of these must be wired</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -129,43 +129,43 @@ export default function Phase5RevisionModule() {
               <tr>
                 <td className="px-4 py-3 font-semibold">Final answer</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Model emits a response with no <code>tool_use</code> block</td>
-                <td className="px-4 py-3 text-emerald-600">done — return the answer</td>
+                <td className="px-4 py-3 text-emerald-600">done, return the answer</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Max iterations</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Loop counter exceeds <code>maxIterations</code> (typically 10–25)</td>
-                <td className="px-4 py-3 text-amber-600">failed — return partial result + flag</td>
+                <td className="px-4 py-3 text-amber-600">failed, return partial result + flag</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Token budget</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cumulative input+output tokens exceeds budget</td>
-                <td className="px-4 py-3 text-amber-600">failed — cost-protected halt</td>
+                <td className="px-4 py-3 text-amber-600">failed, cost-protected halt</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Wall-clock</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Total elapsed time exceeds latency SLA</td>
-                <td className="px-4 py-3 text-amber-600">failed — user is waiting</td>
+                <td className="px-4 py-3 text-amber-600">failed, user is waiting</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Tool failure</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">A tool throws after retries are exhausted</td>
-                <td className="px-4 py-3 text-rose-600">failed — escalate</td>
+                <td className="px-4 py-3 text-rose-600">failed, escalate</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">User cancel</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Caller closes the connection / cancels the request</td>
-                <td className="px-4 py-3 text-slate-500">cancelled — clean up in-flight tools</td>
+                <td className="px-4 py-3 text-slate-500">cancelled, clean up in-flight tools</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <Callout variant="insight">
-          <strong>The mental model:</strong>{" "}agent = LLM + toolbox + loop + stopping condition. If you can&apos;t name your stopping conditions, you don&apos;t have an agent — you have an unbounded process.
+          <strong>The mental model:</strong>{" "}agent = LLM + toolbox + loop + stopping condition. If you can&apos;t name your stopping conditions, you don&apos;t have an agent, you have an unbounded process.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24 — Agent fundamentals</Link>.
+          Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24, Agent fundamentals</Link>.
         </p>
       </section>
 
@@ -173,7 +173,7 @@ export default function Phase5RevisionModule() {
       {/* SECTION 2 — When NOT to use an agent */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. When NOT to use an agent — the decision table</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. When NOT to use an agent, the decision table</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The hardest part of agent engineering is choosing to not build one.
         </p>
@@ -205,17 +205,17 @@ export default function Phase5RevisionModule() {
               </tr>
               <tr>
                 <td className="px-4 py-3 text-slate-700 dark:text-slate-300">User strict P99 latency budget (&lt; 500 ms)</td>
-                <td className="px-4 py-3 font-semibold text-emerald-600">Pipeline — or constrained agent with hard caps</td>
+                <td className="px-4 py-3 font-semibold text-emerald-600">Pipeline, or constrained agent with hard caps</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Every agent step is a round-trip. Loops blow latency budgets.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 text-slate-700 dark:text-slate-300">The path is genuinely unknown until you start (research, debugging, exploration)</td>
-                <td className="px-4 py-3 font-semibold text-indigo-600">Agent — bounded</td>
+                <td className="px-4 py-3 font-semibold text-indigo-600">Agent, bounded</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">The agent shines when the next step depends on what you just learned.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 text-slate-700 dark:text-slate-300">Production system with a reliability SLA</td>
-                <td className="px-4 py-3 font-semibold text-indigo-600">Constrained agent — hard caps + fallbacks</td>
+                <td className="px-4 py-3 font-semibold text-indigo-600">Constrained agent, hard caps + fallbacks</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cap iterations, cap cost, cap wall-clock. Fall back to a deterministic path on failure.</td>
               </tr>
             </tbody>
@@ -233,7 +233,7 @@ export default function Phase5RevisionModule() {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Drift</div>
             <p className="text-xs text-slate-700 dark:text-slate-300">
-              The agent loses the plot ten turns in — starts solving a different problem, or pursues an irrelevant tangent that&apos;s now in its scratchpad and biasing every subsequent step.
+              The agent loses the plot ten turns in, starts solving a different problem, or pursues an irrelevant tangent that&apos;s now in its scratchpad and biasing every subsequent step.
             </p>
           </div>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900 dark:bg-rose-950/20">
@@ -245,7 +245,7 @@ export default function Phase5RevisionModule() {
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24 — Agent fundamentals</Link>.
+          Source: <Link href="/courses/ai/modules/agents-intro" className="text-indigo-600 hover:underline">Module 24, Agent fundamentals</Link>.
         </p>
       </section>
 
@@ -255,7 +255,7 @@ export default function Phase5RevisionModule() {
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">3. The agent tool loop, end-to-end</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          The flow your Spring service implements. The two exit edges are the only two things that should ever terminate the loop — everything else is a bug.
+          The flow your Spring service implements. The two exit edges are the only two things that should ever terminate the loop, everything else is a bug.
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -270,12 +270,12 @@ export default function Phase5RevisionModule() {
             <strong>The guard is your safety net.</strong>{" "}If your only exit is the final-answer edge, one bug in the model&apos;s reasoning hangs the process forever. The guard fires <em>before</em>{" "}the next model call so you never pay for a turn you&apos;re about to abort.
           </li>
           <li>
-            <strong>The tool_result must always be appended.</strong>{" "}If the tool fails, append a structured error result — never silently retry or skip the turn. The model needs to see the failure to recover.
+            <strong>The tool_result must always be appended.</strong>{" "}If the tool fails, append a structured error result, never silently retry or skip the turn. The model needs to see the failure to recover.
           </li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring Boot</Link>.
+          Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25, Agents in Spring Boot</Link>.
         </p>
       </section>
 
@@ -283,7 +283,7 @@ export default function Phase5RevisionModule() {
       {/* SECTION 4 — Agents in Spring Boot */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Agents in Spring Boot — the five moving parts</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Agents in Spring Boot, the five moving parts</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           What lives where in a production Spring agent service.
         </p>
@@ -326,7 +326,7 @@ export default function Phase5RevisionModule() {
         </div>
 
         <h3 className="mb-2 text-base font-semibold">The minimal loop in Spring</h3>
-        <CodeBlock lang="java" caption="AgentRunner.run — the entire control flow">{`public AgentResult run(AgentTask task) {
+        <CodeBlock lang="java" caption="AgentRunner.run, the entire control flow">{`public AgentResult run(AgentTask task) {
     List<Message> messages = new ArrayList<>(task.initialMessages());
     int iterations = 0;
     int tokensUsed = 0;
@@ -356,11 +356,11 @@ export default function Phase5RevisionModule() {
 }`}</CodeBlock>
 
         <Callout variant="insight">
-          <strong>The whole production agent is this loop plus observability.</strong>{" "}Frameworks add convenience, not magic. If your agent is misbehaving, you debug it by reading the message list turn by turn — there&apos;s nowhere else for the bug to hide.
+          <strong>The whole production agent is this loop plus observability.</strong>{" "}Frameworks add convenience, not magic. If your agent is misbehaving, you debug it by reading the message list turn by turn, there&apos;s nowhere else for the bug to hide.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring Boot</Link>.
+          Source: <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25, Agents in Spring Boot</Link>.
         </p>
       </section>
 
@@ -368,7 +368,7 @@ export default function Phase5RevisionModule() {
       {/* SECTION 5 — Multi-agent patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Multi-agent patterns — when one agent isn&apos;t enough</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Multi-agent patterns, when one agent isn&apos;t enough</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           You move from one agent to many when the work splits naturally into specialist roles OR when you can parallelize independent subproblems.
         </p>
@@ -408,22 +408,22 @@ export default function Phase5RevisionModule() {
         <h3 className="mb-2 text-base font-semibold">Isolation, communication, and the &quot;why not one bigger context&quot; question</h3>
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
-            <strong>Context isolation</strong>{" "}is the main reason multi-agent works. Each subagent gets only what it needs — its own context window, its own tools, its own scratchpad. The orchestrator never sees the subagent&apos;s 10K-token exploration; only its 300-token summary. That keeps cost linear in <em>useful</em>{" "}work, not total work.
+            <strong>Context isolation</strong>{" "}is the main reason multi-agent works. Each subagent gets only what it needs, its own context window, its own tools, its own scratchpad. The orchestrator never sees the subagent&apos;s 10K-token exploration; only its 300-token summary. That keeps cost linear in <em>useful</em>{" "}work, not total work.
           </li>
           <li>
             <strong>Communication: shared scratchpad vs explicit messages.</strong>{" "}A shared scratchpad is simpler but every agent pays to re-read it; explicit message passing (orchestrator hands a specific brief to a specific subagent) scales better. Prefer explicit messages unless the agents truly need to see each other&apos;s reasoning.
           </li>
           <li>
-            <strong>Why not one bigger context window?</strong>{" "}Three reasons. (1) Cost — you pay per token per turn, so 10× the context = 10× per-turn cost. (2) Attention degrades on very long contexts; the model gets worse at finding the right information. (3) You can&apos;t parallelize a single agent — fan-out gives you wall-clock speedups a single agent can never match.
+            <strong>Why not one bigger context window?</strong>{" "}Three reasons. (1) Cost, you pay per token per turn, so 10× the context = 10× per-turn cost. (2) Attention degrades on very long contexts; the model gets worse at finding the right information. (3) You can&apos;t parallelize a single agent, fan-out gives you wall-clock speedups a single agent can never match.
           </li>
         </ul>
 
         <Callout variant="warn">
-          <strong>Multi-agent is not free.</strong>{" "}Each subagent is a full agent — its own loop, its own caps, its own observability. A 3-subagent orchestrator has 4 agents to monitor. Don&apos;t reach for it unless one agent has genuinely failed to deliver.
+          <strong>Multi-agent is not free.</strong>{" "}Each subagent is a full agent, its own loop, its own caps, its own observability. A 3-subagent orchestrator has 4 agents to monitor. Don&apos;t reach for it unless one agent has genuinely failed to deliver.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26 — Multi-agent patterns</Link>.
+          Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26, Multi-agent patterns</Link>.
         </p>
       </section>
 
@@ -431,7 +431,7 @@ export default function Phase5RevisionModule() {
       {/* SECTION 6 — Cost & latency */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; latency — the agent engineer&apos;s budget sheet</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Cost &amp; latency, the agent engineer&apos;s budget sheet</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Every step is a round-trip. Every round-trip costs money and milliseconds. Internalize this.
         </p>
@@ -449,7 +449,7 @@ export default function Phase5RevisionModule() {
               <tr>
                 <td className="px-4 py-3 font-semibold">Parallelize subagents</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">N independent subagents in parallel → wall-clock latency ≈ slowest, not sum</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fan-out patterns. Doesn&apos;t reduce cost — reduces latency.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fan-out patterns. Doesn&apos;t reduce cost, reduces latency.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Cache tool outputs</td>
@@ -458,7 +458,7 @@ export default function Phase5RevisionModule() {
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Cap iterations aggressively</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lower <code>maxIterations</code> — 80% of useful agent runs finish in &lt; 8 turns</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Lower <code>maxIterations</code>, 80% of useful agent runs finish in &lt; 8 turns</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Always. Start at 10, lower as you measure your task distribution.</td>
               </tr>
               <tr>
@@ -468,7 +468,7 @@ export default function Phase5RevisionModule() {
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Prompt caching</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cache the static prefix (system prompt + tool schemas) — provider charges ~10% of normal rate on cache hits</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cache the static prefix (system prompt + tool schemas), provider charges ~10% of normal rate on cache hits</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Any agent with a stable system prompt. Huge cost win.</td>
               </tr>
               <tr>
@@ -485,7 +485,7 @@ export default function Phase5RevisionModule() {
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26 — Multi-agent patterns</Link> &amp; <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25 — Agents in Spring</Link>.
+          Source: <Link href="/courses/ai/modules/multi-agent" className="text-indigo-600 hover:underline">Module 26, Multi-agent patterns</Link> &amp; <Link href="/courses/ai/modules/agent-spring" className="text-indigo-600 hover:underline">Module 25, Agents in Spring</Link>.
         </p>
       </section>
 
@@ -570,7 +570,7 @@ List<Finding> findings = files.parallelStream()
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Reaching for an agent when a pipeline would do</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              The most expensive bug isn&apos;t in the agent — it&apos;s the decision to build an agent at all. If the steps are fixed and known, a pipeline is cheaper, faster, more reliable, and easier to debug. Adding a loop just to feel modern is how you ship a $40K/month feature that could have cost $400.
+              The most expensive bug isn&apos;t in the agent, it&apos;s the decision to build an agent at all. If the steps are fixed and known, a pipeline is cheaper, faster, more reliable, and easier to debug. Adding a loop just to feel modern is how you ship a $40K/month feature that could have cost $400.
             </p>
             <CodeBlock lang="java" caption="When the steps are fixed: just call them.">{`// BAD — agent for a fixed pipeline
 AgentResult r = agent.run(AgentTask.builder()
@@ -594,17 +594,17 @@ String summary = llm.summarize(c, invoices); // ONE model call
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually have this loaded?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually have this loaded?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="A teammate proposes building an agent to: parse a webhook, look up the user, format a Slack message, and send it. The steps never vary. What do you push back with?"
           options={[
-            { label: "Sounds great — agents are perfect for tool sequences.", explanation: "This is the exact mistake the chapter warns against. Tool use ≠ agent. A fixed sequence of tool calls is a pipeline, not an agent." },
+            { label: "Sounds great, agents are perfect for tool sequences.", explanation: "This is the exact mistake the chapter warns against. Tool use ≠ agent. A fixed sequence of tool calls is a pipeline, not an agent." },
             { label: "Use a deterministic pipeline. The steps are fixed and known, so the loop adds nothing but cost, latency, and a chance of misbehavior.", correct: true, explanation: "Right. An agent is for unknown-at-runtime paths. Known steps → pipeline. You can still call tools from a pipeline; you just don't need the LLM to decide what to do." },
             { label: "Build the agent, then add caps so it can't loop forever.", explanation: "Caps prevent disaster, but they don't justify the loop. If the steps don't vary, the loop is pure overhead." },
-            { label: "Use multi-agent — one per step.", explanation: "Multi-agent is even more overhead. Four agents for what should be four function calls in sequence." },
+            { label: "Use multi-agent, one per step.", explanation: "Multi-agent is even more overhead. Four agents for what should be four function calls in sequence." },
           ]}
         />
 
@@ -614,8 +614,8 @@ String summary = llm.summarize(c, invoices); // ONE model call
           options={[
             { label: "It's the model's internal reasoning about what to do next.", explanation: "That's the Thought step. Observation is what comes back from the tool, not what the model thinks." },
             { label: "It's the final answer the agent emits to the user.", explanation: "The final answer is when the model emits no tool_use. Observation is a per-turn step, not a terminator." },
-            { label: "It's the result of executing a tool, appended to the conversation so the model can decide its next step based on what it just learned.", correct: true, explanation: "Right. Thought → Action (emit tool_use) → Observation (append tool_result) → repeat. The Observation is what makes the loop adaptive — the model's next Thought depends on what it just observed." },
-            { label: "It's a logging-only artifact for debugging — the model doesn't see it.", explanation: "The opposite. The observation IS the message the model reads to decide what to do next. Without it, the loop can't be adaptive." },
+            { label: "It's the result of executing a tool, appended to the conversation so the model can decide its next step based on what it just learned.", correct: true, explanation: "Right. Thought → Action (emit tool_use) → Observation (append tool_result) → repeat. The Observation is what makes the loop adaptive, the model's next Thought depends on what it just observed." },
+            { label: "It's a logging-only artifact for debugging, the model doesn't see it.", explanation: "The opposite. The observation IS the message the model reads to decide what to do next. Without it, the loop can't be adaptive." },
           ]}
         />
 
@@ -623,9 +623,9 @@ String summary = llm.summarize(c, invoices); // ONE model call
           kind="Recall check"
           question="Which of these is NOT a valid reason to stop the agent loop?"
           options={[
-            { label: "The model emits a response with no tool_use block.", explanation: "This is the success case — the model has decided it's done. Always a valid stop." },
+            { label: "The model emits a response with no tool_use block.", explanation: "This is the success case, the model has decided it's done. Always a valid stop." },
             { label: "The cumulative token usage exceeds the configured budget.", explanation: "This is exactly what the token cap is for. Always wire it." },
-            { label: "A tool returned a result the model didn't like.", correct: true, explanation: "Right — this is NOT a stop condition. A bad result is just another observation for the next turn; the model decides whether to retry, switch approach, or give up. The runtime never decides for the model based on tool result content." },
+            { label: "A tool returned a result the model didn't like.", correct: true, explanation: "Right, this is NOT a stop condition. A bad result is just another observation for the next turn; the model decides whether to retry, switch approach, or give up. The runtime never decides for the model based on tool result content." },
             { label: "The wall-clock budget is exhausted before the next model call.", explanation: "This is a valid latency-protection stop. Always wire it." },
           ]}
         />
@@ -634,10 +634,10 @@ String summary = llm.summarize(c, invoices); // ONE model call
           kind="Recall check"
           question="You're building a PR review system that needs to review N files in parallel and aggregate findings. Orchestrator+subagents or peer-to-peer?"
           options={[
-            { label: "Peer-to-peer — one agent hands off to the next.", explanation: "Peer-to-peer is for sequential role-based handoff (triage → billing → refund). It doesn't parallelize." },
+            { label: "Peer-to-peer, one agent hands off to the next.", explanation: "Peer-to-peer is for sequential role-based handoff (triage → billing → refund). It doesn't parallelize." },
             { label: "Orchestrator + fan-out subagents. The orchestrator splits the PR by file, spawns N reviewer subagents in parallel, then reconciles their findings.", correct: true, explanation: "Right. Same subagent type, parallel instances, one per file, then a reducer merges. Wall-clock latency ≈ the slowest file's review, not the sum. Classic fan-out + reduce." },
-            { label: "Single agent — give it all N files in its context window.", explanation: "Possible for small N, but attention degrades on long context, you can't parallelize, and you'll re-process every file on every turn. Doesn't scale." },
-            { label: "Orchestrator + peer-to-peer subagents that pass the PR around.", explanation: "Mixing patterns with no benefit. The work is parallel and uniform — fan-out is the pattern." },
+            { label: "Single agent, give it all N files in its context window.", explanation: "Possible for small N, but attention degrades on long context, you can't parallelize, and you'll re-process every file on every turn. Doesn't scale." },
+            { label: "Orchestrator + peer-to-peer subagents that pass the PR around.", explanation: "Mixing patterns with no benefit. The work is parallel and uniform, fan-out is the pattern." },
           ]}
         />
 
@@ -645,10 +645,10 @@ String summary = llm.summarize(c, invoices); // ONE model call
           kind="Recall check"
           question="Your agent's cost spiked 20× this week. What's the most likely cause to investigate first?"
           options={[
-            { label: "A new model version is more expensive per token.", explanation: "Possible but unusual — model pricing rarely 20×'s overnight. Look at usage patterns first." },
+            { label: "A new model version is more expensive per token.", explanation: "Possible but unusual, model pricing rarely 20×'s overnight. Look at usage patterns first." },
             { label: "A subset of requests is hitting a high iteration count, and each turn re-bills the full (growing) scratchpad. Bad input → loop → scratchpad bloat → cost explosion.", correct: true, explanation: "Right. The leading cause of agent cost overruns is one of two things: a bug that causes the model to loop, or a class of inputs that legitimately needs more turns. Either way, each turn re-sends the entire scratchpad, so cost grows super-linearly with iteration count. Check your iteration histogram first." },
             { label: "Tool execution is now slower.", explanation: "Tool latency affects wall-clock, not cost. The model isn't billed for time spent in your tools." },
-            { label: "You added more tools and the schemas take more tokens.", explanation: "Real but small — the tool schemas are a one-time-per-turn cost. Not a 20× driver unless you added hundreds of tools." },
+            { label: "You added more tools and the schemas take more tokens.", explanation: "Real but small, the tool schemas are a one-time-per-turn cost. Not a 20× driver unless you added hundreds of tools." },
           ]}
         />
       </section>
@@ -658,18 +658,18 @@ String summary = llm.summarize(c, invoices); // ONE model call
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
-          Phase 5 — locked in
+          Phase 5, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re ready for Phase 6 when…</h3>
         <ul className="mb-4 list-disc space-y-2 pl-5 text-slate-700 dark:text-slate-300">
           <li>You can describe the ReAct loop in one sentence (Thought → Action → Observation → repeat) and name your three stopping caps before you start coding.</li>
           <li>You instinctively reach for a pipeline first and only escalate to an agent when the path is genuinely unknown at runtime.</li>
-          <li>You can sketch the Spring agent loop on a napkin — registry, controller, state machine, idempotent tools, structured output — without referring back.</li>
+          <li>You can sketch the Spring agent loop on a napkin, registry, controller, state machine, idempotent tools, structured output, without referring back.</li>
           <li>You pick between orchestrator-subagent, peer-to-peer handoff, and fan-out+reduce by naming the shape of the work, not by vibes.</li>
           <li>The phrase &quot;cost explosion&quot; makes you check iteration histograms and prompt-cache hit rates, not shrug.</li>
         </ul>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Production &amp; Capstone.</strong>{" "}Evals come first because everything you&apos;ve built in Phases 1–5 is opinion until you can measure it. LLM-as-judge, golden sets, regression testing — the discipline that turns a demo into a system.
+          <strong>Up next: Phase 6, Production &amp; Capstone.</strong>{" "}Evals come first because everything you&apos;ve built in Phases 1–5 is opinion until you can measure it. LLM-as-judge, golden sets, regression testing, the discipline that turns a demo into a system.
         </p>
         <Link
           href="/courses/ai/modules/evals"

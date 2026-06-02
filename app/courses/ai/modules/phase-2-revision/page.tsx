@@ -53,7 +53,7 @@ sequenceDiagram
           Phase 2 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Claude API, Spring AI, tool use, streaming, prompt caching — the backend AI toolkit on one card.
+          Claude API, Spring AI, tool use, streaming, prompt caching, the backend AI toolkit on one card.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-2-revision" />
         <ModuleProgress moduleSlug="phase-2-revision" checkpoints={CHECKPOINTS} />
@@ -62,7 +62,7 @@ sequenceDiagram
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 2</strong> — every wire format, every Spring AI shape, every gotcha from the five backend-integration modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module. Treat this as the page you re-read before walking into a design review for an LLM-backed feature.
+          This module is not new material. It&apos;s a <strong>map of Phase 2</strong>, every wire format, every Spring AI shape, every gotcha from the five backend-integration modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module. Treat this as the page you re-read before walking into a design review for an LLM-backed feature.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The five modules you&apos;re consolidating: <Link href="/courses/ai/modules/api-fundamentals" className="text-amber-600 hover:underline">Claude API fundamentals</Link>, <Link href="/courses/ai/modules/spring-ai" className="text-amber-600 hover:underline">Spring AI deep dive</Link>, <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Tool use &amp; function calling</Link>, <Link href="/courses/ai/modules/streaming" className="text-amber-600 hover:underline">Streaming with SSE</Link>, and <Link href="/courses/ai/modules/prompt-caching" className="text-amber-600 hover:underline">Prompt caching</Link>.
@@ -70,7 +70,7 @@ sequenceDiagram
 
         <Callout variant="info" title="What this card covers">
           <p className="m-0">
-            The messages API shape, the model picker, the Spring AI ChatClient pattern, the tool-use loop, SSE streaming end to end, what to cache (and what not to), the BAD/GOOD gotchas that bite people on day one of production, and five recall checks. No new concepts, no code to write — just the lookups you want at your fingertips.
+            The messages API shape, the model picker, the Spring AI ChatClient pattern, the tool-use loop, SSE streaming end to end, what to cache (and what not to), the BAD/GOOD gotchas that bite people on day one of production, and five recall checks. No new concepts, no code to write, just the lookups you want at your fingertips.
           </p>
         </Callout>
       </section>
@@ -114,7 +114,7 @@ sequenceDiagram
   }
 }`}</CodeBlock>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">system vs user vs assistant — which goes where</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">system vs user vs assistant, which goes where</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -130,7 +130,7 @@ sequenceDiagram
                 <td className="px-4 py-3 font-mono font-semibold text-amber-600">system</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Top-level field</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Persistent &quot;mode&quot;: persona, output format, rules. Long and stable.</td>
-                <td className="px-4 py-3 text-emerald-600">Yes — prime candidate</td>
+                <td className="px-4 py-3 text-emerald-600">Yes, prime candidate</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-amber-600">messages[].role=user</td>
@@ -148,13 +148,13 @@ sequenceDiagram
                 <td className="px-4 py-3 font-mono font-semibold text-amber-600">tools[]</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Top-level field</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Tool definitions (name, description, input_schema). Long and stable.</td>
-                <td className="px-4 py-3 text-emerald-600">Yes — almost always</td>
+                <td className="px-4 py-3 text-emerald-600">Yes, almost always</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">temperature, top_p, max_tokens — when to touch what</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">temperature, top_p, max_tokens, when to touch what</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -179,7 +179,7 @@ sequenceDiagram
                 <td className="px-4 py-3 font-mono text-xs">0.0 – 1.0</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Restricts to high-prob tokens</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Allows long tail</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Rarely. Pick temperature OR top_p — not both. Anthropic recommends temperature.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Rarely. Pick temperature OR top_p, not both. Anthropic recommends temperature.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">max_tokens</td>
@@ -207,21 +207,21 @@ sequenceDiagram
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-rose-600">claude-opus-4-5</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Frontier — best at reasoning, code, long-context synthesis</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Frontier, best at reasoning, code, long-context synthesis</td>
                 <td className="px-4 py-3 text-rose-600">$$$ (highest)</td>
                 <td className="px-4 py-3 text-amber-600">Slowest</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Hard reasoning, agentic workflows, eval gold-set generation</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-amber-600">claude-sonnet-4-5</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Strong all-rounder — close to Opus on most tasks</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Strong all-rounder, close to Opus on most tasks</td>
                 <td className="px-4 py-3 text-amber-600">$$ (mid)</td>
                 <td className="px-4 py-3 text-emerald-600">Fast</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Default production pick. Chat, RAG, tool use, most agent loops.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-emerald-600">claude-haiku-4-5</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fast and cheap — capable enough for routine tasks</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fast and cheap, capable enough for routine tasks</td>
                 <td className="px-4 py-3 text-emerald-600">$ (cheapest)</td>
                 <td className="px-4 py-3 text-emerald-600">Fastest</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">High-volume classification, routing, summarization, autocomplete</td>
@@ -231,11 +231,11 @@ sequenceDiagram
         </div>
 
         <Callout variant="insight" title="The model-pick heuristic">
-          Start on Sonnet. Move down to Haiku only after you&apos;ve measured Sonnet&apos;s quality on your task and Haiku still passes your eval. Move up to Opus only when Sonnet measurably fails on your hardest reasoning cases. Never pick by &quot;feel&quot; — pick by eval.
+          Start on Sonnet. Move down to Haiku only after you&apos;ve measured Sonnet&apos;s quality on your task and Haiku still passes your eval. Move up to Opus only when Sonnet measurably fails on your hardest reasoning cases. Never pick by &quot;feel&quot;, pick by eval.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/api-fundamentals" className="text-amber-600 hover:underline">Module 9 — Claude API fundamentals</Link>.
+          Source: <Link href="/courses/ai/modules/api-fundamentals" className="text-amber-600 hover:underline">Module 9, Claude API fundamentals</Link>.
         </p>
       </section>
 
@@ -243,7 +243,7 @@ sequenceDiagram
       {/* SECTION 2 — Spring AI */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Spring AI — the ChatClient pattern</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Spring AI, the ChatClient pattern</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           You inject <code>ChatClient.Builder</code> (the singleton), call <code>.build()</code> per service with the defaults that service wants, and use the fluent prompt API everywhere.
         </p>
@@ -290,7 +290,7 @@ class TerseSummarizer {
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">ChatClient.Builder</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Spring-autoconfigured singleton bean</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Always — inject this, not <code>ChatClient</code></td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Always, inject this, not <code>ChatClient</code></td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">.prompt()</td>
@@ -310,11 +310,11 @@ class TerseSummarizer {
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">.tools(obj)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Registers @Tool-annotated methods</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Function calling — Spring drives the loop</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Function calling, Spring drives the loop</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">.advisors(...)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Middleware chain — log, retry, rewrite, memory</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Middleware chain, log, retry, rewrite, memory</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cross-cutting concerns. Order matters.</td>
               </tr>
               <tr>
@@ -324,16 +324,16 @@ class TerseSummarizer {
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">.entity(Class)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Structured output — auto-parse to a Java record</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Structured output, auto-parse to a Java record</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Classification, extraction, anywhere you want typed output</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Advisors — the middleware chain</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Advisors, the middleware chain</h3>
         <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
-          An <code>Advisor</code> wraps a call. The chain runs in declared order on the way in, reverse order on the way out — same pattern as a Spring filter chain or a Java interceptor stack.
+          An <code>Advisor</code> wraps a call. The chain runs in declared order on the way in, reverse order on the way out, same pattern as a Spring filter chain or a Java interceptor stack.
         </p>
         <CodeBlock lang="java" caption="Composing advisors">{`chatClient.prompt()
     .advisors(
@@ -345,7 +345,7 @@ class TerseSummarizer {
     .call()
     .content();`}</CodeBlock>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Observability — what Spring AI gives you free</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Observability, what Spring AI gives you free</h3>
         <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
             <strong>Micrometer metrics</strong>{" "}on every call: <code>spring.ai.chat.client</code> timer with tags for model and gen_ai operation. Tokens are recorded as <code>gen_ai.token.usage</code> counters.
@@ -354,12 +354,12 @@ class TerseSummarizer {
             <strong>OpenTelemetry traces</strong>{" "}with one span per ChatClient call, child spans for advisors and tool invocations.
           </li>
           <li>
-            <strong>Structured logs</strong>{" "}via <code>SimpleLoggerAdvisor</code> — drop it in <code>defaultAdvisors</code> during local dev, never ship it to prod (PII leak).
+            <strong>Structured logs</strong>{" "}via <code>SimpleLoggerAdvisor</code>, drop it in <code>defaultAdvisors</code> during local dev, never ship it to prod (PII leak).
           </li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/spring-ai" className="text-amber-600 hover:underline">Module 10 — Spring AI deep dive</Link>.
+          Source: <Link href="/courses/ai/modules/spring-ai" className="text-amber-600 hover:underline">Module 10, Spring AI deep dive</Link>.
         </p>
       </section>
 
@@ -378,10 +378,10 @@ class TerseSummarizer {
 
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
-            <strong>Spring AI drives the loop for you.</strong>{" "}When you call <code>.tools(myService)</code> and the model returns <code>tool_use</code>, Spring AI finds the matching <code>@Tool</code> method, invokes it, packages the return value as <code>tool_result</code>, and re-calls the API — all before your <code>chatClient.call()</code> returns.
+            <strong>Spring AI drives the loop for you.</strong>{" "}When you call <code>.tools(myService)</code> and the model returns <code>tool_use</code>, Spring AI finds the matching <code>@Tool</code> method, invokes it, packages the return value as <code>tool_result</code>, and re-calls the API, all before your <code>chatClient.call()</code> returns.
           </li>
           <li>
-            <strong>Loop termination:</strong> <code>stop_reason: end_turn</code> means &quot;no more tool calls, done.&quot; <code>stop_reason: tool_use</code> means &quot;execute and call me back.&quot; <code>stop_reason: max_tokens</code> means &quot;I ran out of room mid-thought&quot; — bump max_tokens or shorten the work.
+            <strong>Loop termination:</strong> <code>stop_reason: end_turn</code> means &quot;no more tool calls, done.&quot; <code>stop_reason: tool_use</code> means &quot;execute and call me back.&quot; <code>stop_reason: max_tokens</code> means &quot;I ran out of room mid-thought&quot;, bump max_tokens or shorten the work.
           </li>
           <li>
             <strong>Parallel tool calls</strong>{" "}are a single assistant turn containing multiple <code>tool_use</code> blocks. You execute all of them, then send back a single user turn with multiple <code>tool_result</code> blocks (one per <code>tool_use_id</code>).
@@ -389,7 +389,7 @@ class TerseSummarizer {
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11 — Tool use &amp; function calling</Link>.
+          Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11, Tool use &amp; function calling</Link>.
         </p>
       </section>
 
@@ -397,7 +397,7 @@ class TerseSummarizer {
       {/* SECTION 4 — Tool use decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Tool use — when, what, how</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Tool use, when, what, how</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A tool is a Java method the model can ask you to invoke. You hand it back the return value, the model decides what to do next.
         </p>
@@ -407,7 +407,7 @@ class TerseSummarizer {
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Use a tool when…</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>The data is small, structured, and on-demand (look up one user by email).</li>
-              <li>The model decides <em>whether</em>{" "}to fetch — not every turn needs it.</li>
+              <li>The model decides <em>whether</em>{" "}to fetch, not every turn needs it.</li>
               <li>You need a side effect (send email, create ticket, write a row).</li>
               <li>Multiple lookups are required, dynamically composed.</li>
             </ul>
@@ -416,14 +416,14 @@ class TerseSummarizer {
             <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Use retrieval (RAG) when…</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>The data is big and unstructured (docs, code, knowledge base).</li>
-              <li>Every turn needs context — there&apos;s nothing to decide.</li>
+              <li>Every turn needs context, there&apos;s nothing to decide.</li>
               <li>Semantic similarity is the right primitive, not keyed lookup.</li>
-              <li>Phase 3 territory — embeddings + vector search.</li>
+              <li>Phase 3 territory, embeddings + vector search.</li>
             </ul>
           </div>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Tool schema — the three things the model needs</h3>
+        <h3 className="mb-2 text-base font-semibold">Tool schema, the three things the model needs</h3>
         <CodeBlock lang="plain" caption="A tool definition the API actually sees">{`{
   "name":        "lookup_user_by_email",
   "description": "Find a user record by their email address. Returns user_id, name, and signup date. Returns null if not found.",
@@ -440,8 +440,8 @@ class TerseSummarizer {
           The <strong>description is the prompt</strong>. The model picks tools by reading their descriptions, not by reading your code. Be specific about inputs, outputs, side effects, and when <em>not</em>{" "}to use the tool.
         </p>
 
-        <h3 className="mt-4 mb-2 text-base font-semibold">Spring AI equivalent — @Tool annotation</h3>
-        <CodeBlock lang="java" caption="The Spring way — Spring extracts schema from the method signature">{`@Service
+        <h3 className="mt-4 mb-2 text-base font-semibold">Spring AI equivalent, @Tool annotation</h3>
+        <CodeBlock lang="java" caption="The Spring way, Spring extracts schema from the method signature">{`@Service
 class UserLookupTools {
     @Tool(description = "Find a user record by their email address. " +
                         "Returns user_id, name, and signup date. " +
@@ -461,7 +461,7 @@ chatClient.prompt()
     .content();`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11 — Tool use &amp; function calling</Link>.
+          Source: <Link href="/courses/ai/modules/tool-use" className="text-amber-600 hover:underline">Module 11, Tool use &amp; function calling</Link>.
         </p>
       </section>
 
@@ -469,7 +469,7 @@ chatClient.prompt()
       {/* SECTION 5 — Streaming */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Streaming with SSE — server to client</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Streaming with SSE, server to client</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Spring Boot returns a <code>Flux&lt;String&gt;</code>, Spring serializes each emission as one SSE event, the browser&apos;s <code>EventSource</code> (or <code>fetch</code> streaming) consumes them.
         </p>
@@ -496,14 +496,14 @@ class StreamController {
 }`}</CodeBlock>
 
         <h3 className="mt-6 mb-2 text-base font-semibold">The React side</h3>
-        <CodeBlock lang="ts" caption="EventSource — the simple path">{`useEffect(() => {
+        <CodeBlock lang="ts" caption="EventSource, the simple path">{`useEffect(() => {
   const es = new EventSource(\`/api/stream?q=\${encodeURIComponent(query)}\`);
   es.onmessage = (e) => setText((prev) => prev + e.data);
   es.onerror = () => es.close();
   return () => es.close();                    // cancel on unmount
 }, [query]);`}</CodeBlock>
 
-        <CodeBlock lang="ts" caption="fetch + ReadableStream — when you need POST or custom headers">{`async function streamPost(body: unknown, onChunk: (s: string) => void, signal: AbortSignal) {
+        <CodeBlock lang="ts" caption="fetch + ReadableStream, when you need POST or custom headers">{`async function streamPost(body: unknown, onChunk: (s: string) => void, signal: AbortSignal) {
   const res = await fetch("/api/stream", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -555,7 +555,7 @@ class StreamController {
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/streaming" className="text-amber-600 hover:underline">Module 12 — Streaming with SSE</Link>.
+          Source: <Link href="/courses/ai/modules/streaming" className="text-amber-600 hover:underline">Module 12, Streaming with SSE</Link>.
         </p>
       </section>
 
@@ -563,9 +563,9 @@ class StreamController {
       {/* SECTION 6 — Prompt caching */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Prompt caching — what, when, how much it saves</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Prompt caching, what, when, how much it saves</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Mark a prefix with <code>cache_control</code>. Identical prefixes within the TTL bill input tokens at ~10% of normal. Cache writes cost a premium (~25% extra) — so cache things you&apos;ll reuse.
+          Mark a prefix with <code>cache_control</code>. Identical prefixes within the TTL bill input tokens at ~10% of normal. Cache writes cost a premium (~25% extra), so cache things you&apos;ll reuse.
         </p>
 
         <h3 className="mb-2 text-base font-semibold">The pricing model in one table</h3>
@@ -587,7 +587,7 @@ class StreamController {
               <tr>
                 <td className="px-4 py-3 font-mono text-rose-600">cache_creation_input_tokens</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">~1.25x (premium for the write)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">First request — you&apos;re paying to store the prefix</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">First request, you&apos;re paying to store the prefix</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-emerald-600">cache_read_input_tokens</td>
@@ -597,7 +597,7 @@ class StreamController {
               <tr>
                 <td className="px-4 py-3 font-mono">output_tokens</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">~4–5x input baseline (unchanged)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Caching never affects output — only the input prefix</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Caching never affects output, only the input prefix</td>
               </tr>
             </tbody>
           </table>
@@ -612,39 +612,39 @@ class StreamController {
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Cache this</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>System prompt</strong> — long, stable, sent on every call</li>
-              <li><strong>Tool definitions</strong> — same input_schema on every turn</li>
-              <li><strong>Few-shot examples</strong> — your demonstrations don&apos;t change call-to-call</li>
-              <li><strong>Large pasted documents</strong>{" "}on a chat tab — same doc, many user questions</li>
-              <li><strong>Early conversation turns</strong>{" "}in a long chat — they&apos;re replayed every turn</li>
+              <li><strong>System prompt</strong>, long, stable, sent on every call</li>
+              <li><strong>Tool definitions</strong>, same input_schema on every turn</li>
+              <li><strong>Few-shot examples</strong>, your demonstrations don&apos;t change call-to-call</li>
+              <li><strong>Large pasted documents</strong>{" "}on a chat tab, same doc, many user questions</li>
+              <li><strong>Early conversation turns</strong>{" "}in a long chat, they&apos;re replayed every turn</li>
             </ul>
           </div>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Don&apos;t bother</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>The latest user turn</strong> — different every time</li>
-              <li><strong>Anything with a timestamp / today&apos;s date</strong> — kills cache reuse</li>
-              <li><strong>Short prompts</strong> &lt; a few hundred tokens — write premium isn&apos;t worth it</li>
-              <li><strong>Per-user PII in the system prompt</strong> — different per user means 0% hit rate</li>
-              <li><strong>One-shot batch jobs</strong> — no second call to read the cache</li>
+              <li><strong>The latest user turn</strong>, different every time</li>
+              <li><strong>Anything with a timestamp / today&apos;s date</strong>, kills cache reuse</li>
+              <li><strong>Short prompts</strong> &lt; a few hundred tokens, write premium isn&apos;t worth it</li>
+              <li><strong>Per-user PII in the system prompt</strong>, different per user means 0% hit rate</li>
+              <li><strong>One-shot batch jobs</strong>, no second call to read the cache</li>
             </ul>
           </div>
         </div>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Invalidation rules — the byte-exact gotcha</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Invalidation rules, the byte-exact gotcha</h3>
         <Callout variant="warn" title="The cache is keyed on exact bytes up to the marker">
-          One whitespace difference, one timestamp, one user&apos;s name interpolated in — and you have a cache miss. Treat cached prefixes like <em>immutable strings</em>: change them only via deliberate releases. If your system prompt contains <code>&quot;Today is 2026-05-13&quot;</code>, your hit rate is 0% on day two. Move volatile content into the <em>user</em>{" "}message, not the system prompt.
+          One whitespace difference, one timestamp, one user&apos;s name interpolated in, and you have a cache miss. Treat cached prefixes like <em>immutable strings</em>: change them only via deliberate releases. If your system prompt contains <code>&quot;Today is 2026-05-13&quot;</code>, your hit rate is 0% on day two. Move volatile content into the <em>user</em>{" "}message, not the system prompt.
         </Callout>
 
         <h3 className="mt-4 mb-2 text-base font-semibold">TTL</h3>
         <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li><strong>Default</strong> — 5 minutes from last access. Each hit refreshes the TTL.</li>
-          <li><strong>Extended</strong> — 1 hour, opt-in. Higher write premium, longer reuse window. Worth it for long-form chat tabs.</li>
-          <li><strong>Past the TTL</strong> — next call writes a fresh entry (premium-billed again).</li>
+          <li><strong>Default</strong>, 5 minutes from last access. Each hit refreshes the TTL.</li>
+          <li><strong>Extended</strong>, 1 hour, opt-in. Higher write premium, longer reuse window. Worth it for long-form chat tabs.</li>
+          <li><strong>Past the TTL</strong>, next call writes a fresh entry (premium-billed again).</li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/prompt-caching" className="text-amber-600 hover:underline">Module 13 — Prompt caching</Link>.
+          Source: <Link href="/courses/ai/modules/prompt-caching" className="text-amber-600 hover:underline">Module 13, Prompt caching</Link>.
         </p>
       </section>
 
@@ -663,10 +663,10 @@ class StreamController {
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Putting persona / rules in the first <em>user</em>{" "}message instead of the <code>system</code> field works, but it kills cache reuse, weakens the &quot;mode&quot; signal to the model, and breaks Spring AI&apos;s <code>defaultSystem</code> pattern.
             </p>
-            <CodeBlock lang="java" caption="BAD — system instructions disguised as user text">{`chatClient.prompt()
+            <CodeBlock lang="java" caption="BAD, system instructions disguised as user text">{`chatClient.prompt()
     .user("You are a senior Java reviewer. Be terse. Review this: " + code)
     .call().content();`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — system in the system field, user in the user field">{`chatClient.prompt()
+            <CodeBlock lang="java" caption="GOOD, system in the system field, user in the user field">{`chatClient.prompt()
     .system("You are a senior Java reviewer. Be terse.")  // cacheable, persistent
     .user(code)                                            // varies per call
     .call().content();`}</CodeBlock>
@@ -677,7 +677,7 @@ class StreamController {
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               When you reply to a <code>tool_use</code>, the <code>tool_result</code> block must include the same <code>tool_use_id</code> the model emitted. Mismatched ID or missing ID → 400 error. With parallel tool calls, every <code>tool_use_id</code> from the assistant turn needs a matching <code>tool_result</code> in the next user turn.
             </p>
-            <CodeBlock lang="plain" caption="BAD — tool_result with no matching id">{`// assistant turn contained: tool_use { id: "toolu_01", name: "lookup", ... }
+            <CodeBlock lang="plain" caption="BAD, tool_result with no matching id">{`// assistant turn contained: tool_use { id: "toolu_01", name: "lookup", ... }
 {
   "role": "user",
   "content": [
@@ -685,7 +685,7 @@ class StreamController {
   ]
 }
 // → 400 invalid_request_error`}</CodeBlock>
-            <CodeBlock lang="plain" caption="GOOD — every tool_result references its tool_use_id">{`{
+            <CodeBlock lang="plain" caption="GOOD, every tool_result references its tool_use_id">{`{
   "role": "user",
   "content": [
     { "type": "tool_result", "tool_use_id": "toolu_01", "content": "{...}" },
@@ -699,11 +699,11 @@ class StreamController {
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Tokens stream perfectly in dev. In staging behind nginx / ALB, the user sees nothing until the full response is done, then everything at once. The proxy is buffering. SSE needs explicit no-buffer headers <em>and</em>{" "}a heartbeat to survive idle timeouts.
             </p>
-            <CodeBlock lang="java" caption="BAD — relying on defaults, no keepalive">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+            <CodeBlock lang="java" caption="BAD, relying on defaults, no keepalive">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public Flux<String> stream(@RequestParam String q) {
     return chatClient.prompt().user(q).stream().content();
 }`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — anti-buffer headers + heartbeat merged into the stream">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+            <CodeBlock lang="java" caption="GOOD, anti-buffer headers + heartbeat merged into the stream">{`@GetMapping(value = "/api/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public ResponseEntity<Flux<ServerSentEvent<String>>> stream(@RequestParam String q) {
     Flux<ServerSentEvent<String>> data = chatClient.prompt().user(q).stream().content()
         .map(chunk -> ServerSentEvent.builder(chunk).build());
@@ -723,13 +723,13 @@ public ResponseEntity<Flux<ServerSentEvent<String>>> stream(@RequestParam String
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Hardcoding <code>&quot;claude-sonnet-4-5&quot;</code> in service code means you can&apos;t swap to Haiku for cheap routes, can&apos;t A/B test, can&apos;t pin a version when something regresses. Drive it from config and inject per-service.
             </p>
-            <CodeBlock lang="java" caption="BAD — model string literal in service">{`public String classify(String text) {
+            <CodeBlock lang="java" caption="BAD, model string literal in service">{`public String classify(String text) {
     return chatClient.prompt()
         .user(text)
         .options(ChatOptions.builder().model("claude-sonnet-4-5").build())  // hardcoded
         .call().content();
 }`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — model from application.yml, injected via @ConfigurationProperties">{`# application.yml
+            <CodeBlock lang="java" caption="GOOD, model from application.yml, injected via @ConfigurationProperties">{`# application.yml
 spring:
   ai:
     anthropic:
@@ -752,16 +752,16 @@ public String classify(String text) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You're building a high-volume classification endpoint that maps support tickets to one of 12 categories. Sonnet handles it perfectly on your eval set. Which model should you actually ship?"
           options={[
-            { label: "Opus — it's the smartest, latency doesn't matter for batch", explanation: "Overkill. If Sonnet passes the eval, Opus burns 3–5x the cost for no measurable lift. Match the model to the task." },
-            { label: "Sonnet — it works, so ship it", explanation: "Tempting, but you haven't checked the cheaper option. The shipping rule is: drop one tier and re-run the eval. If Haiku passes too, ship Haiku." },
-            { label: "Haiku — only if it also passes your eval; otherwise Sonnet", correct: true, explanation: "Right. The discipline is: start one tier above what you need, then try dropping a tier and re-eval. Classification on 12 categories is the canonical Haiku sweet spot — high volume, narrow task. But only ship Haiku after measuring, never by feel." },
+            { label: "Opus, it's the smartest, latency doesn't matter for batch", explanation: "Overkill. If Sonnet passes the eval, Opus burns 3–5x the cost for no measurable lift. Match the model to the task." },
+            { label: "Sonnet, it works, so ship it", explanation: "Tempting, but you haven't checked the cheaper option. The shipping rule is: drop one tier and re-run the eval. If Haiku passes too, ship Haiku." },
+            { label: "Haiku, only if it also passes your eval; otherwise Sonnet", correct: true, explanation: "Right. The discipline is: start one tier above what you need, then try dropping a tier and re-eval. Classification on 12 categories is the canonical Haiku sweet spot, high volume, narrow task. But only ship Haiku after measuring, never by feel." },
             { label: "It doesn't matter, the model is fungible", explanation: "Models are not fungible. Capability, latency, and cost differ by ~5x across the lineup. Pick deliberately." },
           ]}
         />
@@ -771,7 +771,7 @@ public String classify(String text) {
           question="The model returns a turn with stop_reason='tool_use' and two tool_use blocks (toolu_01 and toolu_02). What does your code send next?"
           options={[
             { label: "A new user message saying 'please use the tools'", explanation: "The model already asked. Your job is to execute the tools and return the results, not to reply in natural language." },
-            { label: "Two separate API calls, one tool_result per call", explanation: "No — that breaks the conversation. The model emitted both tool_use blocks in one assistant turn, so your reply is one user turn containing both tool_result blocks." },
+            { label: "Two separate API calls, one tool_result per call", explanation: "No, that breaks the conversation. The model emitted both tool_use blocks in one assistant turn, so your reply is one user turn containing both tool_result blocks." },
             { label: "One user turn containing two tool_result blocks, one per tool_use_id", correct: true, explanation: "Right. Parallel tool calls = one assistant turn with N tool_use blocks, then one user turn with N tool_result blocks, each carrying its matching tool_use_id. Then re-call the API and the model continues." },
             { label: "Append the tool outputs as plain text in a new user message", explanation: "The API requires the structured tool_result block type with tool_use_id. Plain text won't link back to the model's request and you'll get unpredictable behavior." },
           ]}
@@ -781,9 +781,9 @@ public String classify(String text) {
           kind="Recall check"
           question="You need to stream LLM output from Spring Boot to a React chat UI. Most production traffic, behind nginx. Which transport?"
           options={[
-            { label: "WebSockets — full duplex is the obvious choice", explanation: "Overkill. The model only flows server→client. WebSockets add upgrade-handshake complexity, sticky-session requirements, and a separate protocol — for no benefit on a one-way stream." },
-            { label: "Long polling — refresh every 200ms until done", explanation: "Worst of all worlds: more requests, more latency, no real-time feel. Long polling is what SSE replaced." },
-            { label: "Server-Sent Events (SSE) — return Flux<String> with TEXT_EVENT_STREAM_VALUE", correct: true, explanation: "Right. SSE is plain HTTP, one-way (server→client), works with EventSource out of the box, plays nicely with reverse proxies once you set the no-buffer headers, and Spring serializes Flux<String> as SSE automatically. Pick SSE for chat streams unless you genuinely need duplex." },
+            { label: "WebSockets, full duplex is the obvious choice", explanation: "Overkill. The model only flows server→client. WebSockets add upgrade-handshake complexity, sticky-session requirements, and a separate protocol, for no benefit on a one-way stream." },
+            { label: "Long polling, refresh every 200ms until done", explanation: "Worst of all worlds: more requests, more latency, no real-time feel. Long polling is what SSE replaced." },
+            { label: "Server-Sent Events (SSE), return Flux<String> with TEXT_EVENT_STREAM_VALUE", correct: true, explanation: "Right. SSE is plain HTTP, one-way (server→client), works with EventSource out of the box, plays nicely with reverse proxies once you set the no-buffer headers, and Spring serializes Flux<String> as SSE automatically. Pick SSE for chat streams unless you genuinely need duplex." },
             { label: "gRPC server streaming", explanation: "Fine on backend-to-backend, awful for browsers. Browsers can't speak gRPC natively without grpc-web, which adds a proxy layer. SSE is the browser-native answer." },
           ]}
         />
@@ -792,8 +792,8 @@ public String classify(String text) {
           kind="Recall check"
           question="Your system prompt is 2,000 tokens and identical on every call. Your tool definitions are 1,500 tokens, also identical. The latest user question is 50 tokens. What do you mark with cache_control?"
           options={[
-            { label: "The user question — it's the largest cost driver", explanation: "Backwards. The user question is short AND it changes every call, so caching it gets 0% hit rate. Cache things that are long AND stable." },
-            { label: "Nothing — caching adds complexity for marginal gain", explanation: "On 3,500 tokens of stable prefix, caching takes input billing from 1.0x to ~0.1x after the first call. That's a 70%+ cost cut on input. Not marginal." },
+            { label: "The user question, it's the largest cost driver", explanation: "Backwards. The user question is short AND it changes every call, so caching it gets 0% hit rate. Cache things that are long AND stable." },
+            { label: "Nothing, caching adds complexity for marginal gain", explanation: "On 3,500 tokens of stable prefix, caching takes input billing from 1.0x to ~0.1x after the first call. That's a 70%+ cost cut on input. Not marginal." },
             { label: "The system prompt and tool definitions (mark the end of the stable prefix)", correct: true, explanation: "Right. Mark the end of the long, stable prefix. The first call pays the ~1.25x write premium; every subsequent call within the TTL pays ~0.1x for those 3,500 tokens. Output billing is unchanged either way." },
             { label: "The whole request including the user message", explanation: "Marking past the volatile user message means the cache key includes a string that changes every call. Hit rate: 0%. The marker must be placed at the boundary between stable prefix and volatile suffix." },
           ]}
@@ -803,10 +803,10 @@ public String classify(String text) {
           kind="Recall check"
           question="A Claude API call returns HTTP 429 rate_limit_error. Your Spring service is in a tool-use loop on behalf of a user. What's the right retry strategy?"
           options={[
-            { label: "Retry immediately in a tight loop until it succeeds", explanation: "That's how you turn one rate-limit error into a sustained ban. The whole point of 429 is 'slow down' — not 'try again right now'." },
+            { label: "Retry immediately in a tight loop until it succeeds", explanation: "That's how you turn one rate-limit error into a sustained ban. The whole point of 429 is 'slow down', not 'try again right now'." },
             { label: "Exponential backoff with jitter, respect Retry-After if present, give up after N attempts", correct: true, explanation: "Right. Classic backoff: 1s, 2s, 4s, 8s with random jitter to avoid thundering herd. The Anthropic API also returns a Retry-After header you should honor when present. Cap retries (3–5) so a sustained outage surfaces to the user instead of looping forever." },
-            { label: "Switch to a different model and retry", explanation: "Different models share organization-level rate limits in many setups. And changing models mid-call changes the answer — not what you want on a transient error." },
-            { label: "Idempotency means you can safely fire-and-forget; don't retry, just return", explanation: "Idempotency is about safety of retries, not whether to retry. For a user-facing call you absolutely want to retry transient errors — just with backoff." },
+            { label: "Switch to a different model and retry", explanation: "Different models share organization-level rate limits in many setups. And changing models mid-call changes the answer, not what you want on a transient error." },
+            { label: "Idempotency means you can safely fire-and-forget; don't retry, just return", explanation: "Idempotency is about safety of retries, not whether to retry. For a user-facing call you absolutely want to retry transient errors, just with backoff." },
           ]}
         />
       </section>
@@ -817,11 +817,11 @@ public String classify(String text) {
       <section className="not-prose mb-12">
         <Callout variant="spring" title="You're ready for Phase 3 when…">
           <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
-            <li>You can sketch the JSON body of a Claude API call from memory — <code>model</code>, <code>max_tokens</code>, <code>system</code>, <code>messages</code> — and know which fields are required.</li>
+            <li>You can sketch the JSON body of a Claude API call from memory, <code>model</code>, <code>max_tokens</code>, <code>system</code>, <code>messages</code>, and know which fields are required.</li>
             <li>You can explain why you inject <code>ChatClient.Builder</code> and not <code>ChatClient</code>, and what <code>.defaultSystem</code> vs per-call <code>.system</code> buys you.</li>
-            <li>You can describe the tool-use loop end to end — <code>tool_use</code> block out, <code>tool_result</code> block back in, stop on <code>end_turn</code> — and explain what Spring AI&apos;s <code>@Tool</code> handles for you.</li>
+            <li>You can describe the tool-use loop end to end, <code>tool_use</code> block out, <code>tool_result</code> block back in, stop on <code>end_turn</code>, and explain what Spring AI&apos;s <code>@Tool</code> handles for you.</li>
             <li>You can name the four streaming gotchas (proxy buffering, idle timeouts, cancellation on unmount, half-finished UTF-8) and the headers that fix the first two.</li>
-            <li>You can decide — without looking it up — whether a given prompt is worth caching, and you know that the cache is keyed on the exact byte prefix.</li>
+            <li>You can decide, without looking it up, whether a given prompt is worth caching, and you know that the cache is keyed on the exact byte prefix.</li>
           </ul>
         </Callout>
       </section>
@@ -831,14 +831,14 @@ public String classify(String text) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">
-          Phase 2 — locked in
+          Phase 2, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can ship a real LLM backend</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          The messages API, the Spring AI ChatClient pattern, the tool-use loop, SSE streaming, prompt caching — the whole backend toolkit. Every module from here on assumes you can already wire these together.
+          The messages API, the Spring AI ChatClient pattern, the tool-use loop, SSE streaming, prompt caching, the whole backend toolkit. Every module from here on assumes you can already wire these together.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 3 — Vector Search &amp; RAG.</strong>{" "}You&apos;ll go past tool-use lookups into semantic retrieval: embeddings as the bridge between meaning and math, vector databases as the index, RAG as the architecture pattern that lets you ground answers in your own documents.
+          <strong>Up next: Phase 3, Vector Search &amp; RAG.</strong>{" "}You&apos;ll go past tool-use lookups into semantic retrieval: embeddings as the bridge between meaning and math, vector databases as the index, RAG as the architecture pattern that lets you ground answers in your own documents.
         </p>
         <Link
           href="/courses/ai/modules/embeddings-deep"

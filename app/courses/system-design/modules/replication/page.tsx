@@ -64,9 +64,9 @@ export default function Page() {
       <section className="my-10">
         <h2 className="mb-4 text-2xl font-semibold">What you&apos;ll walk out with</h2>
         <ul className="space-y-2">
-          <li>The leader-follower model in concrete terms — sync vs async, what happens during failover, and what Spring code looks like.</li>
+          <li>The leader-follower model in concrete terms, sync vs async, what happens during failover, and what Spring code looks like.</li>
           <li>Multi-leader and leaderless replication, and why <code>R + W &gt; N</code> is the quorum rule everyone keeps writing on whiteboards.</li>
-          <li>The numbers behind replication lag — typical 5–500ms, what causes spikes, and how to design around it.</li>
+          <li>The numbers behind replication lag, typical 5–500ms, what causes spikes, and how to design around it.</li>
           <li>Read-your-writes and monotonic-reads as concrete patterns, not just textbook terms.</li>
         </ul>
       </section>
@@ -78,14 +78,14 @@ export default function Page() {
           consistency bug you&apos;ve ever seen, because the lag is real and the lag is variable.
         </p>
         <p>
-          The trick isn&apos;t learning the algorithms — those are well-defined. The trick is internalizing that
+          The trick isn&apos;t learning the algorithms, those are well-defined. The trick is internalizing that
           your replicas are <em>always slightly behind</em>, and the day a replica is 30 seconds behind instead of
           30 milliseconds, your application better not assume it&apos;s caught up.
         </p>
       </section>
 
       <Checkpoint moduleSlug="replication" id="leader-follower" title="Leader-follower" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Leader-follower (the default)</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1, Leader-follower (the default)</h2>
 
         <p>
           Postgres, MySQL, and most relational databases ship with leader-follower replication. One node accepts writes
@@ -101,15 +101,15 @@ export default function Page() {
         </p>
         <ul>
           <li><strong>Async:</strong>{" "}leader acks the write as soon as it&apos;s in its own WAL. Followers catch up later. Fast writes, but if the leader dies before the WAL replicates, you lose data.</li>
-          <li><strong>Sync:</strong>{" "}leader waits until at least one (or N) follower confirms before acking. Durable. Slow — the write latency is bounded by the slowest follower in the sync set.</li>
+          <li><strong>Sync:</strong>{" "}leader waits until at least one (or N) follower confirms before acking. Durable. Slow, the write latency is bounded by the slowest follower in the sync set.</li>
         </ul>
         <p>
           Postgres lets you mix: <code>synchronous_commit = on</code> with a list of synchronous standbys. The most
-          common production setup is &quot;one sync replica, the rest async&quot; — durability without paying for
+          common production setup is &quot;one sync replica, the rest async&quot;, durability without paying for
           all replicas to confirm.
         </p>
 
-        <CodeBlock lang="plain" caption="postgresql.conf — common production setup">{`# Leader: at least one named follower must ack
+        <CodeBlock lang="plain" caption="postgresql.conf, common production setup">{`# Leader: at least one named follower must ack
 synchronous_commit = on
 synchronous_standby_names = 'FIRST 1 (replica_a, replica_b, replica_c)'
 
@@ -121,14 +121,14 @@ hot_standby_feedback = on   # tells leader not to vacuum rows the follower is re
           kind="Quick check"
           question="Your team runs Postgres with one sync replica and two async replicas. The leader's data center loses power. The sync replica is in a different DC, the async ones are in a third. What's safe to assume about data loss?"
           options={[
-            { label: "Zero data loss — sync replication guarantees it.", correct: true, explanation: "Sync replication means every committed transaction was acked by the sync replica before the client got success. If the leader is gone, the sync replica has every committed write. Promote it; you lose nothing committed." },
+            { label: "Zero data loss, sync replication guarantees it.", correct: true, explanation: "Sync replication means every committed transaction was acked by the sync replica before the client got success. If the leader is gone, the sync replica has every committed write. Promote it; you lose nothing committed." },
             { label: "Up to ~30 seconds of data loss is normal.", correct: false, explanation: "That'd be the answer for an all-async setup. The sync replica's whole job is to make data loss zero on leader failure." },
             { label: "All committed transactions in the past hour are at risk.", correct: false, explanation: "Sync replication's guarantee is exactly that committed = on at least one other DC. Hour-of-data-loss would be a backup-restore scenario, not a failover." },
-            { label: "Whatever the async replicas missed is gone.", correct: false, explanation: "The async replicas' lag is irrelevant for durability — the sync replica is the durability backstop. Async replicas catch up from whoever ends up as the new leader." },
+            { label: "Whatever the async replicas missed is gone.", correct: false, explanation: "The async replicas' lag is irrelevant for durability, the sync replica is the durability backstop. Async replicas catch up from whoever ends up as the new leader." },
           ]}
         />
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Failover — when the leader dies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Failover, when the leader dies</h3>
         <p>
           A leader-follower setup needs a way to promote a follower when the leader dies. This is harder than it sounds:
         </p>
@@ -145,7 +145,7 @@ hot_standby_feedback = on   # tells leader not to vacuum rows the follower is re
         <Callout variant="warn" title="Split brain is a real failure mode">
           <p className="m-0">
             If the network partitions and both halves think they&apos;re leader, both halves accept writes. When the
-            partition heals, you have two divergent histories and a conflict-resolution nightmare. The fix is fencing —
+            partition heals, you have two divergent histories and a conflict-resolution nightmare. The fix is fencing,
             the old leader is forcibly demoted (kill the process, reboot the machine, revoke its credentials) before the
             new leader is allowed to accept writes. <strong>You always need a single source of truth about who&apos;s leader.</strong>
           </p>
@@ -191,8 +191,8 @@ public class OrderQueryService {
           question="A user creates an order, then immediately reloads the order history page. The reload returns an empty list. What's the most likely cause?"
           options={[
             { label: "The leader silently dropped the write.", correct: false, explanation: "Way more likely is replication lag than a silently dropped write. Always check the boring explanation first." },
-            { label: "Replication lag — the create hit the leader, the read hit a follower that hadn't replicated yet.", correct: true, explanation: "Classic read-your-writes violation. The fix is either to route the post-write read to the leader, to use sticky sessions for a short window after a write, or to not split reads/writes inside a single user-visible transaction. We'll dig into this in Part 3." },
-            { label: "The transaction wasn't committed.", correct: false, explanation: "If the create endpoint returned success but didn't commit, that's a transactional bug worth fixing — but the symptom (empty list afterward) is much more commonly replication lag." },
+            { label: "Replication lag, the create hit the leader, the read hit a follower that hadn't replicated yet.", correct: true, explanation: "Classic read-your-writes violation. The fix is either to route the post-write read to the leader, to use sticky sessions for a short window after a write, or to not split reads/writes inside a single user-visible transaction. We'll dig into this in Part 3." },
+            { label: "The transaction wasn't committed.", correct: false, explanation: "If the create endpoint returned success but didn't commit, that's a transactional bug worth fixing, but the symptom (empty list afterward) is much more commonly replication lag." },
             { label: "Postgres serializable isolation rolled back the read.", correct: false, explanation: "Serialization conflicts produce errors, not empty lists. And read-only transactions don't get rolled back from serialization conflicts on their own." },
           ]}
         />
@@ -209,7 +209,7 @@ public class OrderQueryService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="replication" id="quorums" title="Multi-leader & quorums" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Multi-leader &amp; leaderless quorums</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2, Multi-leader &amp; leaderless quorums</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">Multi-leader: every region writes locally</h3>
         <p>
@@ -231,7 +231,7 @@ public class OrderQueryService {
         <Callout variant="info" title="Why most teams shouldn't use multi-leader">
           <p className="m-0">
             Multi-leader sounds attractive (write everywhere! no failover!) until you hit the first conflict. For most
-            CRUD apps, the conflicts are unrecoverable — there&apos;s no &quot;right&quot; way to merge two
+            CRUD apps, the conflicts are unrecoverable, there&apos;s no &quot;right&quot; way to merge two
             simultaneous edits to a user&apos;s billing address. Use multi-leader when conflicts are rare and tolerable
             (geographic isolation, append-only data) or when you have a CRDT that fits your domain. Otherwise, stick
             with leader-follower.
@@ -258,7 +258,7 @@ public class OrderQueryService {
         </p>
         <ul>
           <li><strong>W=3, R=1.</strong>{" "}Every replica has every write. Reads are cheap. Writes fail if any replica is down.</li>
-          <li><strong>W=2, R=2.</strong>{" "}The classic balanced quorum. Tolerates one node failure for both reads and writes. R + W = 4 &gt; 3 — overlap guaranteed.</li>
+          <li><strong>W=2, R=2.</strong>{" "}The classic balanced quorum. Tolerates one node failure for both reads and writes. R + W = 4 &gt; 3, overlap guaranteed.</li>
           <li><strong>W=1, R=3.</strong>{" "}Writes are fast. Reads have to talk to everyone and pick the winner. Tolerates write-node failures only if you allow lower W.</li>
           <li><strong>W=1, R=1.</strong>{" "}R + W = 2, not greater than 3. <em>Stale reads possible.</em>{" "}Available but eventually consistent.</li>
         </ul>
@@ -280,8 +280,8 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           question="A 5-node Cassandra cluster runs with N=3 (replication factor 3), W=QUORUM=2, R=QUORUM=2. Two of the three replicas for some key are down. What happens to writes?"
           options={[
             { label: "Writes succeed using hinted handoff to the survivor.", correct: false, explanation: "Hinted handoff stores writes destined for unreachable replicas, but it doesn't satisfy the W=2 requirement. The write fails with consistency error." },
-            { label: "Writes fail — only one of three replicas is reachable, and W=2 isn't met.", correct: true, explanation: "Right. Quorum requires 2 of 3 to confirm. With only 1 alive, the write can't satisfy W=QUORUM and the client gets a consistency error. This is the durability/availability tradeoff in action." },
-            { label: "Writes succeed because Cassandra automatically downgrades to W=1.", correct: false, explanation: "Cassandra does not silently downgrade consistency. The client gets an error and can choose to retry at a lower consistency if they want — but that's a deliberate choice, not automatic." },
+            { label: "Writes fail, only one of three replicas is reachable, and W=2 isn't met.", correct: true, explanation: "Right. Quorum requires 2 of 3 to confirm. With only 1 alive, the write can't satisfy W=QUORUM and the client gets a consistency error. This is the durability/availability tradeoff in action." },
+            { label: "Writes succeed because Cassandra automatically downgrades to W=1.", correct: false, explanation: "Cassandra does not silently downgrade consistency. The client gets an error and can choose to retry at a lower consistency if they want, but that's a deliberate choice, not automatic." },
             { label: "The cluster fails over to a different replication factor.", correct: false, explanation: "Replication factor is fixed at the keyspace level; it doesn't change in response to failures." },
           ]}
         />
@@ -293,7 +293,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           real owners come back, ship this to them.&quot; Hinted handoff is the mechanism that ships the data later.
         </p>
         <p>
-          Sloppy quorums increase availability but break the R + W &gt; N guarantee — a read might miss writes that
+          Sloppy quorums increase availability but break the R + W &gt; N guarantee, a read might miss writes that
           went to the sloppy nodes. Cassandra and Dynamo both ship with this on by default, so &quot;quorum&quot;
           in production is often fuzzier than the textbook.
         </p>
@@ -305,7 +305,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
             { label: "Banking ledger with strict balance-never-goes-negative invariants.", correct: false, explanation: "Hard pass. Banking needs serializable transactions and strong invariants. LWW and quorum reads can lose writes; you need linearizability + transactions, which is leader-based territory." },
             { label: "High-throughput time-series ingestion where writes are mostly independent and you want every region to write locally.", correct: true, explanation: "This is exactly the Cassandra/Dynamo sweet spot. Independent writes, no conflicts, geographic distribution, and the cluster keeps writing through node failures. The eventual consistency model is fine because each write doesn't need to see every other write." },
             { label: "Account profile updates where users edit their email and immediately reread.", correct: false, explanation: "Read-your-writes on a single key is exactly what eventual consistency violates. Possible to engineer around (read at QUORUM after writing at QUORUM), but a leader-based system handles this for free." },
-            { label: "Inventory management where overselling is unacceptable.", correct: false, explanation: "Overselling protection requires strong consistency on the count — leaderless systems with LWW can't reliably enforce this." },
+            { label: "Inventory management where overselling is unacceptable.", correct: false, explanation: "Overselling protection requires strong consistency on the count, leaderless systems with LWW can't reliably enforce this." },
           ]}
         />
 
@@ -321,7 +321,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
       </Checkpoint>
 
       <Checkpoint moduleSlug="replication" id="lag" title="Replication lag in production" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Replication lag in production</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3, Replication lag in production</h2>
 
         <p>
           Replication lag is the elapsed time between a write being committed on the leader and being visible on a
@@ -351,7 +351,7 @@ CONSISTENCY LOCAL_QUORUM;`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Read-your-writes — three concrete strategies</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Read-your-writes, three concrete strategies</h3>
         <p>
           The most-violated consistency property in real apps. Three patterns to fix it:
         </p>
@@ -401,10 +401,10 @@ protected Object determineCurrentLookupKey() {
           kind="Quick check"
           question="A user updates their profile picture and is then routed to a replica that's 200ms behind. The new picture doesn't show up. They refresh and now it does. What property was violated, and what's a clean fix?"
           options={[
-            { label: "Linearizability — fix with sync replication.", correct: false, explanation: "Sync replication would help, but it's an expensive blanket solution. Read-your-writes is the property at issue, not full linearizability." },
-            { label: "Read-your-writes — fix with a sticky-leader window or by routing the post-write read to the leader.", correct: true, explanation: "The user violated read-your-writes: their own write isn't visible to their own subsequent read. The targeted fix is to route this user's reads to the leader for a few seconds after a write, or to make the post-write GET hit the leader directly." },
-            { label: "Monotonic reads — fix by pinning the session to one replica.", correct: false, explanation: "Monotonic reads is about not going backward in time across reads from the same user. This case is actually read-your-writes — the user's own write didn't show up. Different property." },
-            { label: "Causal consistency — fix by upgrading to a CRDT.", correct: false, explanation: "Causal consistency is a related family but it's broader and more expensive. Read-your-writes is the specific property at play here." },
+            { label: "Linearizability, fix with sync replication.", correct: false, explanation: "Sync replication would help, but it's an expensive blanket solution. Read-your-writes is the property at issue, not full linearizability." },
+            { label: "Read-your-writes, fix with a sticky-leader window or by routing the post-write read to the leader.", correct: true, explanation: "The user violated read-your-writes: their own write isn't visible to their own subsequent read. The targeted fix is to route this user's reads to the leader for a few seconds after a write, or to make the post-write GET hit the leader directly." },
+            { label: "Monotonic reads, fix by pinning the session to one replica.", correct: false, explanation: "Monotonic reads is about not going backward in time across reads from the same user. This case is actually read-your-writes, the user's own write didn't show up. Different property." },
+            { label: "Causal consistency, fix by upgrading to a CRDT.", correct: false, explanation: "Causal consistency is a related family but it's broader and more expensive. Read-your-writes is the specific property at play here." },
           ]}
         />
 
@@ -437,9 +437,9 @@ SELECT
           kind="Gut check"
           question="Which of these is the LEAST effective approach when replication lag is consistently spiking to 10+ seconds during peak hours?"
           options={[
-            { label: "Increase the number of read replicas.", correct: true, explanation: "More replicas don't help lag — each replica replays the same WAL stream independently. If one is behind, adding more produces more replicas behind, not fewer. The bottleneck is single-threaded replay or write rate on the leader, not replica count." },
+            { label: "Increase the number of read replicas.", correct: true, explanation: "More replicas don't help lag, each replica replays the same WAL stream independently. If one is behind, adding more produces more replicas behind, not fewer. The bottleneck is single-threaded replay or write rate on the leader, not replica count." },
             { label: "Audit and chunk large transactions on the leader.", correct: false, explanation: "Big transactions are a top cause of replay-lag spikes. Chunking them into smaller batches lets WAL stream and replay continuously instead of in one huge block. Effective fix." },
-            { label: "Move replicas to faster hardware (more CPU, faster disk).", correct: false, explanation: "Replica hardware can absolutely be the bottleneck — single-threaded WAL replay needs CPU, and disk write throughput needs to keep up with the leader's. Effective fix." },
+            { label: "Move replicas to faster hardware (more CPU, faster disk).", correct: false, explanation: "Replica hardware can absolutely be the bottleneck, single-threaded WAL replay needs CPU, and disk write throughput needs to keep up with the leader's. Effective fix." },
             { label: "Move replicas closer to the leader (same AZ vs cross-region).", correct: false, explanation: "Cross-region network latency is a meaningful contributor to lag. Same-AZ replicas catch up faster. Effective for the network-bound case." },
           ]}
         />
@@ -460,8 +460,8 @@ SELECT
         <h2 className="mb-3 text-xl font-semibold">What this didn&apos;t cover</h2>
         <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
           <li>Logical vs physical replication (Postgres logical replication for selective table sync, schema migrations).</li>
-          <li>Raft and Paxos explicitly — the consensus algorithms behind systems that promise stronger guarantees (etcd, Spanner). They show up in the consistency module.</li>
-          <li>Backup and PITR (point-in-time recovery) — different problem, related toolchain.</li>
+          <li>Raft and Paxos explicitly, the consensus algorithms behind systems that promise stronger guarantees (etcd, Spanner). They show up in the consistency module.</li>
+          <li>Backup and PITR (point-in-time recovery), different problem, related toolchain.</li>
           <li>Geo-replication patterns and conflict resolution at the application layer (Riak siblings, Yugabyte).</li>
         </ul>
       </section>

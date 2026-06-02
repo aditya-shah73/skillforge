@@ -14,8 +14,8 @@ import BookmarkButton from "@/components/BookmarkButton";
 const CHECKPOINTS = [
   { id: "frameworks", title: "Why frameworks matter under pressure" },
   { id: "understand-match", title: "Understand & Match" },
-  { id: "plan", title: "Plan — speak before you code" },
-  { id: "implement", title: "Implement — narrate as you code" },
+  { id: "plan", title: "Plan, speak before you code" },
+  { id: "implement", title: "Implement, narrate as you code" },
   { id: "review-evaluate", title: "Review & Evaluate" },
   { id: "transcripts", title: "Mock-interview transcripts" },
 ];
@@ -117,14 +117,14 @@ flowchart LR
 
         <p>
           And then a real interview starts, and somehow the screen goes blank. The interviewer reads the problem.
-          You read it again. Your hands are slightly cold. You think you should say something — but what? You start
+          You read it again. Your hands are slightly cold. You think you should say something, but what? You start
           coding before you&apos;ve thought, hit a wall ten lines in, and now you&apos;re editing in five places at
           once while the silence stretches. By the time you produce something working, you&apos;ve burned 35 of your
           45 minutes and never once explained your reasoning.
         </p>
 
         <p>
-          This module is the antidote to that. Not more problems — you&apos;ve done the problems. What you need is a
+          This module is the antidote to that. Not more problems, you&apos;ve done the problems. What you need is a
           <strong> repeatable process</strong>{" "}you can run on autopilot when your prefrontal cortex is busy panicking.
         </p>
 
@@ -133,7 +133,7 @@ flowchart LR
         <p>
           Pattern recognition is a high-cognitive-load activity. It depends on holding the problem statement in
           working memory, scanning your mental library of patterns, and pattern-matching against half-remembered
-          examples. Working memory is roughly 4 to 7 chunks on a good day — and stress, time pressure, and an
+          examples. Working memory is roughly 4 to 7 chunks on a good day, and stress, time pressure, and an
           interviewer staring at you all reduce that capacity.
         </p>
 
@@ -141,7 +141,7 @@ flowchart LR
           When working memory is overloaded, your <em>brightest</em>{" "}capabilities are the first to go. You can still
           write a for-loop in your sleep, but the elegant trick you &quot;definitely knew last week&quot; vanishes.
           This is not a sign that you don&apos;t know the material. It&apos;s a sign that you&apos;re a human in a
-          high-stakes interaction — and the fix is not to study more, it&apos;s to <em>off-load process to a
+          high-stakes interaction, and the fix is not to study more, it&apos;s to <em>off-load process to a
           framework</em>{" "}so working memory can focus on the actual problem.
         </p>
 
@@ -162,7 +162,7 @@ flowchart LR
         <p>
           Most candidates think the interview is graded the way LeetCode is graded: a green check or a red X.
           It&apos;s not. Engineering interviews evaluate <strong>five axes</strong>, of which final-correctness is
-          one — and arguably not the most important one for senior roles.
+          one, and arguably not the most important one for senior roles.
         </p>
 
         <ul>
@@ -192,7 +192,7 @@ flowchart LR
 
         <p>
           A framework that forces you to <em>narrate</em>, <em>clarify</em>, and <em>self-test</em>{" "}is a framework
-          that maximizes your score across all five axes — even when your code has a small bug.
+          that maximizes your score across all five axes, even when your code has a small bug.
         </p>
 
         <h3>Introducing UMPIRE</h3>
@@ -222,9 +222,9 @@ flowchart LR
           kind="Quick check"
           question="Why does a process framework matter most when you're nervous, not when you're calm?"
           options={[
-            { label: "Calm candidates already produce optimal code, so the framework is wasted on them.", explanation: "Even calm candidates benefit from clarifying questions and complexity narration. The framework is universally useful — but the difference is largest under stress." },
-            { label: "Stress reduces working-memory capacity, so off-loading process to an explicit pipeline frees up brain for the actual problem.", correct: true, explanation: "Right. Working memory is finite and shrinks under pressure. A framework removes the question 'what do I do now?' from working memory entirely — the answer is always 'the next stage of UMPIRE.' That frees capacity to think about the problem itself." },
-            { label: "Interviewers grade on framework adherence specifically.", explanation: "They don't grade on framework names. They grade on the behaviors a framework produces — clarification, narration, self-review." },
+            { label: "Calm candidates already produce optimal code, so the framework is wasted on them.", explanation: "Even calm candidates benefit from clarifying questions and complexity narration. The framework is universally useful, but the difference is largest under stress." },
+            { label: "Stress reduces working-memory capacity, so off-loading process to an explicit pipeline frees up brain for the actual problem.", correct: true, explanation: "Right. Working memory is finite and shrinks under pressure. A framework removes the question 'what do I do now?' from working memory entirely, the answer is always 'the next stage of UMPIRE.' That frees capacity to think about the problem itself." },
+            { label: "Interviewers grade on framework adherence specifically.", explanation: "They don't grade on framework names. They grade on the behaviors a framework produces, clarification, narration, self-review." },
             { label: "Frameworks make you faster.", explanation: "Often slightly slower up front, but dramatically less likely to flail. The win is consistency, not speed." },
           ]}
         />
@@ -233,9 +233,9 @@ flowchart LR
           kind="Quick check"
           question="A candidate produces optimal O(n) code in silence, and another produces an O(n²) solution while clearly explaining tradeoffs and edge cases. Who typically scores higher in a senior-level interview?"
           options={[
-            { label: "The silent O(n) candidate — correctness is what matters.", explanation: "At a junior level, maybe. At senior level, communication and tradeoff awareness often weigh as much as raw correctness, because real engineering work demands them." },
-            { label: "The O(n²) candidate, in many real loops, because communication and reasoning are graded heavily.", correct: true, explanation: "Right — especially for senior roles. Production engineering rarely rewards lone optimal code; it rewards engineers who can explain choices, weigh tradeoffs, and bring others along. Silent optimality is incomplete; loud reasoning compensates for a slower algorithm. (Caveat: at the bar-line, both candidates need to converge on something working — silence does eventually fail you.)" },
-            { label: "Same — they cancel out.", explanation: "They don't cancel; the rubric weighs communication explicitly." },
+            { label: "The silent O(n) candidate, correctness is what matters.", explanation: "At a junior level, maybe. At senior level, communication and tradeoff awareness often weigh as much as raw correctness, because real engineering work demands them." },
+            { label: "The O(n²) candidate, in many real loops, because communication and reasoning are graded heavily.", correct: true, explanation: "Right, especially for senior roles. Production engineering rarely rewards lone optimal code; it rewards engineers who can explain choices, weigh tradeoffs, and bring others along. Silent optimality is incomplete; loud reasoning compensates for a slower algorithm. (Caveat: at the bar-line, both candidates need to converge on something working, silence does eventually fail you.)" },
+            { label: "Same, they cancel out.", explanation: "They don't cancel; the rubric weighs communication explicitly." },
             { label: "Depends on the interviewer's mood.", explanation: "Calibrated rubrics exist precisely to remove mood. The communication axis is real and consistent across calibrated interviewers." },
           ]}
         />
@@ -249,7 +249,7 @@ flowchart LR
 
         <p>
           The first two stages of UMPIRE happen before you write a single line of code. They take 3 to 5 minutes
-          combined. Skipping them is the most expensive mistake candidates make — and it&apos;s tempting to skip
+          combined. Skipping them is the most expensive mistake candidates make, and it&apos;s tempting to skip
           them because you&apos;re anxious to start coding. Resist.
         </p>
 
@@ -257,7 +257,7 @@ flowchart LR
 
         <p>
           The interviewer reads the problem. You read it back. You ask <strong>2 to 3 clarifying questions</strong>
-          {" "}— even if you think you understand it. Why even if? Three reasons:
+          {" "}, even if you think you understand it. Why even if? Three reasons:
         </p>
 
         <ul>
@@ -314,7 +314,7 @@ A:  "Up to 50,000."`}</CodeBlock>
 
         <ul>
           <li>The character set is small (26 lowercase letters → array of size 26 works as a frequency map).</li>
-          <li>The expected size is moderate — O(n) is fine, O(n²) might also be fine, O(n³) won&apos;t cut it.</li>
+          <li>The expected size is moderate, O(n) is fine, O(n²) might also be fine, O(n³) won&apos;t cut it.</li>
           <li>The empty input is well-defined.</li>
           <li>The substring-vs-subsequence ambiguity (a real one in many problems) is resolved.</li>
         </ul>
@@ -332,12 +332,12 @@ A:  "Up to 50,000."`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>M · Match — pattern recognition pass</h3>
+        <h3>M · Match, pattern recognition pass</h3>
 
         <p>
           With the problem clarified, your second job is to ask: <em>what does this look like?</em>{" "}You&apos;ve
-          spent 40 modules learning the patterns; this is where they pay off. The match step is fast — usually 30
-          seconds to a minute — but it sets the entire direction.
+          spent 40 modules learning the patterns; this is where they pay off. The match step is fast, usually 30
+          seconds to a minute, but it sets the entire direction.
         </p>
 
         <p>
@@ -359,7 +359,7 @@ A:  "Up to 50,000."`}</CodeBlock>
           <li><strong>&quot;all combinations / permutations / partitions&quot;</strong> → backtracking</li>
           <li><strong>&quot;cycle in linked list / array&quot;</strong> → fast/slow pointers</li>
           <li><strong>&quot;next greater / smaller element&quot;</strong> → monotonic stack</li>
-          <li><strong>&quot;intervals — overlap, merge, schedule&quot;</strong> → sort + sweep</li>
+          <li><strong>&quot;intervals, overlap, merge, schedule&quot;</strong> → sort + sweep</li>
           <li><strong>&quot;words / prefix lookup&quot;</strong> → trie</li>
           <li><strong>&quot;dynamic connectivity / merging groups&quot;</strong> → union-find</li>
         </ul>
@@ -383,7 +383,7 @@ A:  "Up to 50,000."`}</CodeBlock>
         <ol>
           <li>
             <strong>Brute force first.</strong> &quot;If I had no constraints, I&apos;d try every pair / every
-            substring / every subset. That&apos;s O(n²) / O(2ⁿ).&quot; State this out loud — it&apos;s a valid
+            substring / every subset. That&apos;s O(n²) / O(2ⁿ).&quot; State this out loud, it&apos;s a valid
             partial answer.
           </li>
           <li>
@@ -395,7 +395,7 @@ A:  "Up to 50,000."`}</CodeBlock>
 
         <ClassifyChallenge
           title="Which pattern matches the problem statement?"
-          prompt="For each problem statement, click the pattern family it most likely belongs to. The point is reflexive recognition — read each one once, decide quickly."
+          prompt="For each problem statement, click the pattern family it most likely belongs to. The point is reflexive recognition, read each one once, decide quickly."
           buckets={[
             { id: "sliding", label: "Sliding window", color: "rose" },
             { id: "bfs", label: "BFS", color: "sky" },
@@ -420,7 +420,7 @@ A:  "Up to 50,000."`}</CodeBlock>
           kind="Pattern check"
           question="The interviewer says: 'You're given a list of meeting time intervals. Return the minimum number of conference rooms needed.' Which pattern fires first?"
           options={[
-            { label: "BFS — meetings are nodes, conflicts are edges.", explanation: "Modeling as a graph is technically possible but massive overkill — the natural pattern is intervals, not graph traversal." },
+            { label: "BFS, meetings are nodes, conflicts are edges.", explanation: "Modeling as a graph is technically possible but massive overkill, the natural pattern is intervals, not graph traversal." },
             { label: "Sort the intervals, then sweep with a heap of end-times.", correct: true, explanation: "Right. Intervals + 'minimum number of resources' is the classic sort-and-sweep with a min-heap of end-times: pop any meeting that's ended before the next starts; the heap size at any moment is the rooms in use; the max heap size over the run is the answer." },
             { label: "Backtracking over assignments.", explanation: "Backtracking would explore an exponential space. The greedy sort-and-sweep is O(n log n) and provably optimal." },
             { label: "1D DP keyed on time.", explanation: "DP over time would work but is heavier than needed and brittle on ranges. Sort-and-sweep is the canonical answer." },
@@ -431,8 +431,8 @@ A:  "Up to 50,000."`}</CodeBlock>
           kind="Pattern check"
           question="The interviewer asks: 'Given a string, return the length of its longest palindromic substring.' What's a sensible Match-stage thought?"
           options={[
-            { label: "'Substring + property' — sliding window.", explanation: "Sliding window assumes a monotonic 'expand-contract' invariant. Palindromes don't have that — adding a character can break or restore palindromicity unpredictably." },
-            { label: "'Expand around center' for each index, or 2D DP over substring endpoints — both are standard for this problem.", correct: true, explanation: "Right. The two canonical solutions: (1) for each index treat it as the center of an odd palindrome and expand outward, plus the same for even-length centers — O(n²) with O(1) space; (2) 2D DP where dp[i][j] = whether s[i..j] is a palindrome — O(n²) time and space. Either is acceptable; expand-around-center is usually preferred for its space efficiency." },
+            { label: "'Substring + property', sliding window.", explanation: "Sliding window assumes a monotonic 'expand-contract' invariant. Palindromes don't have that, adding a character can break or restore palindromicity unpredictably." },
+            { label: "'Expand around center' for each index, or 2D DP over substring endpoints, both are standard for this problem.", correct: true, explanation: "Right. The two canonical solutions: (1) for each index treat it as the center of an odd palindrome and expand outward, plus the same for even-length centers, O(n²) with O(1) space; (2) 2D DP where dp[i][j] = whether s[i..j] is a palindrome, O(n²) time and space. Either is acceptable; expand-around-center is usually preferred for its space efficiency." },
             { label: "Hash map of seen characters.", explanation: "A frequency map doesn't directly help find palindromes, which depend on positional symmetry, not counts." },
             { label: "Backtracking over all substrings.", explanation: "All substrings is O(n²), checking each for palindromicity is O(n) → O(n³). Both standard solutions are O(n²)." },
           ]}
@@ -443,7 +443,7 @@ A:  "Up to 50,000."`}</CodeBlock>
       {/* ───────────────── Part 3 · Plan ───────────────── */}
       <Checkpoint moduleSlug="interview-framework" id="plan" title="I can plan an algorithm in plain English before coding" xp={25}>
       <section>
-        <h2 id="plan">Plan — speak before you code</h2>
+        <h2 id="plan">Plan, speak before you code</h2>
 
         <p>
           Once you&apos;ve clarified and matched, you have a candidate approach. <strong>Do not start typing
@@ -488,7 +488,7 @@ A:  "Up to 50,000."`}</CodeBlock>
         <h3>A concrete planning monologue</h3>
 
         <p>
-          Suppose the problem is &quot;Top K Frequent Elements&quot; — return the K most frequent integers in a list.
+          Suppose the problem is &quot;Top K Frequent Elements&quot;, return the K most frequent integers in a list.
           Here&apos;s what a strong candidate sounds like at the Plan stage:
         </p>
 
@@ -527,7 +527,7 @@ proceed?"`}</CodeBlock>
           <li>It gives the algorithm in three short paragraphs, no code.</li>
           <li>It states the invariant implicitly (&quot;the K most frequent so far&quot;).</li>
           <li>It commits to a complexity target: O(n log K) / O(n).</li>
-          <li>It mentions a known better alternative (bucket sort) — and explains the choice.</li>
+          <li>It mentions a known better alternative (bucket sort), and explains the choice.</li>
           <li>It ends with permission-asking: &quot;Want me to proceed?&quot; This invites course-correction.</li>
         </ul>
 
@@ -535,7 +535,7 @@ proceed?"`}</CodeBlock>
           <p>
             Ending the plan with an explicit handoff (&quot;Does that sound right? Should I start coding?&quot;)
             does two things. It signals that you&apos;re collaborative, not a lone wolf. And it surfaces hidden
-            constraints — sometimes the interviewer says &quot;actually, can you do it in O(n)?&quot; or
+            constraints, sometimes the interviewer says &quot;actually, can you do it in O(n)?&quot; or
             &quot;would your approach work with a custom comparator?&quot;, which would be a costly redirection
             after you&apos;ve already coded.
           </p>
@@ -555,7 +555,7 @@ coding."`}</CodeBlock>
           real ding even if your code works.
         </p>
 
-        <h3>Pseudocode is fine — but don&apos;t live there</h3>
+        <h3>Pseudocode is fine, but don&apos;t live there</h3>
 
         <p>
           If your interviewer gives you a whiteboard or shared doc, sketching pseudocode during Plan is great:
@@ -570,7 +570,7 @@ for each (val, count) in freq:
 return [val for (val, _) in heap]`}</CodeBlock>
 
         <p>
-          But don&apos;t spend more than a minute on pseudocode — it&apos;s a thinking aid, not a deliverable.
+          But don&apos;t spend more than a minute on pseudocode, it&apos;s a thinking aid, not a deliverable.
           Convert to real Java once you and the interviewer agree on the shape.
         </p>
 
@@ -578,7 +578,7 @@ return [val for (val, _) in heap]`}</CodeBlock>
           kind="Plan check"
           question="A candidate says: 'I'll use DFS to find connected components, then for each component count the area, then return the max.' What's missing from the plan?"
           options={[
-            { label: "Nothing — that's a complete plan.", explanation: "It's a fine sketch but it's missing the data structure (visited set / matrix), the invariant, and the complexity. A grader would mark this as 'partial plan.'" },
+            { label: "Nothing, that's a complete plan.", explanation: "It's a fine sketch but it's missing the data structure (visited set / matrix), the invariant, and the complexity. A grader would mark this as 'partial plan.'" },
             { label: "The data structure for tracking visited cells, the invariant of DFS, and the time/space complexity.", correct: true, explanation: "Right. A complete plan names each piece: 'a boolean[][] visited matrix; DFS from each unvisited '1' cell, marking visited as I go and accumulating area; max across all components; O(rows·cols) time, O(rows·cols) space for the visited matrix and the recursion stack in the worst case.' That's three additional details that take 15 seconds to say and signal 'I think structurally.'" },
             { label: "A clearer pseudocode block.", explanation: "Pseudocode is optional. The missing items are conceptual, not syntactic." },
             { label: "Whether to use DFS or BFS.", explanation: "Either works for connected components on a grid. The missing items are not the choice between DFS and BFS." },
@@ -587,11 +587,11 @@ return [val for (val, _) in heap]`}</CodeBlock>
 
         <Quiz
           kind="Plan check"
-          question="At the end of your plan, you ask 'does that sound reasonable?' The interviewer says 'almost — but I'd like you to handle it without extra space if possible.' What do you do?"
+          question="At the end of your plan, you ask 'does that sound reasonable?' The interviewer says 'almost, but I'd like you to handle it without extra space if possible.' What do you do?"
           options={[
             { label: "Apologize and quickly start coding the original plan anyway, hoping they'll forget.", explanation: "Bad signal. Ignoring direct interviewer feedback is one of the strongest negative signals there is." },
-            { label: "Pause, think out loud about an in-place variant, and re-plan briefly before coding.", correct: true, explanation: "Right. The interviewer just gave you a course correction at the cheapest possible moment — and is grading whether you take guidance well. Re-plan: 'Okay, in-place. That probably means I can mark cells in the input grid itself instead of a visited matrix — for example, set visited cells to '0' as I DFS through them. Let me think through whether that's safe... yes, since I only need the count, I don't care about preserving the input. New plan: same DFS but mark cells in-place. Sound good?' That's a senior-level response." },
-            { label: "Argue that the original plan is more readable.", explanation: "Defending a rejected approach when the interviewer has flagged it is rarely a winning move — the rubric grades collaboration." },
+            { label: "Pause, think out loud about an in-place variant, and re-plan briefly before coding.", correct: true, explanation: "Right. The interviewer just gave you a course correction at the cheapest possible moment, and is grading whether you take guidance well. Re-plan: 'Okay, in-place. That probably means I can mark cells in the input grid itself instead of a visited matrix, for example, set visited cells to '0' as I DFS through them. Let me think through whether that's safe... yes, since I only need the count, I don't care about preserving the input. New plan: same DFS but mark cells in-place. Sound good?' That's a senior-level response." },
+            { label: "Argue that the original plan is more readable.", explanation: "Defending a rejected approach when the interviewer has flagged it is rarely a winning move, the rubric grades collaboration." },
             { label: "Switch to a totally different algorithm without explaining why.", explanation: "An unexplained pivot is almost as bad as silence. Explain the new plan briefly so the interviewer can grade your reasoning." },
           ]}
         />
@@ -601,13 +601,13 @@ return [val for (val, _) in heap]`}</CodeBlock>
       {/* ───────────────── Part 4 · Implement ───────────────── */}
       <Checkpoint moduleSlug="interview-framework" id="implement" title="I can narrate as I code" xp={25}>
       <section>
-        <h2 id="implement">Implement — narrate as you code</h2>
+        <h2 id="implement">Implement, narrate as you code</h2>
 
         <p>
           You have a plan. Now you type. The single most common mistake at this stage is going silent. The
           interviewer has been watching you reason through the problem; they need to keep watching as you turn that
-          reasoning into Java. <strong>Talk through every line.</strong>{" "}Not every keystroke — that&apos;s
-          exhausting — but every meaningful decision.
+          reasoning into Java. <strong>Talk through every line.</strong>{" "}Not every keystroke, that&apos;s
+          exhausting, but every meaningful decision.
         </p>
 
         <h3>What &quot;narrating&quot; sounds like</h3>
@@ -672,7 +672,7 @@ sum can't overflow long."`}</CodeBlock>
           <p>
             They prevent the bug, and they signal that you know about the bug. Even if the interviewer would have
             forgiven the unflagged version, the flagged one earns extra credit on the &quot;language fluency&quot;
-            and &quot;edge cases&quot; axes. These callouts are nearly free — they take five seconds to say.
+            and &quot;edge cases&quot; axes. These callouts are nearly free, they take five seconds to say.
           </p>
         </Callout>
 
@@ -680,7 +680,7 @@ sum can't overflow long."`}</CodeBlock>
 
         <p>
           Here&apos;s what a confident, narrated implementation of Two Sum sounds like in real time. Read it slowly
-          — pretend you&apos;re saying it.
+, pretend you&apos;re saying it.
         </p>
 
         <CodeBlock lang="plain">{`"Okay, plan is clear: HashMap from value to index, single pass.
@@ -769,9 +769,9 @@ rotation, right? Just want to be sure."`}</CodeBlock>
           kind="Implement check"
           question="You've just written `int mid = (low + high) / 2;` in a binary search. The interviewer doesn't say anything. What's the senior move?"
           options={[
-            { label: "Move on — they didn't object.", explanation: "Silent acceptance is not endorsement; the interviewer may simply be saving the comment for later, or grading whether you spot it yourself." },
-            { label: "Pre-emptively flag it: 'I'm using / 2 here, but for very large bounds that can overflow — I'll switch to (low + high) >>> 1, which is the same thing but safe under overflow.'", correct: true, explanation: "Right. The classic mid-overflow bug is well-documented (Java's binary search itself had it for nine years). Calling it out before being asked is one of the cleanest 'experienced engineer' signals there is. Even if the bounds in this problem can't overflow, mentioning the awareness costs nothing." },
-            { label: "Replace it silently with bitwise tricks.", explanation: "The fix is right but the silence isn't — you'd lose the credit for noticing." },
+            { label: "Move on, they didn't object.", explanation: "Silent acceptance is not endorsement; the interviewer may simply be saving the comment for later, or grading whether you spot it yourself." },
+            { label: "Pre-emptively flag it: 'I'm using / 2 here, but for very large bounds that can overflow, I'll switch to (low + high) >>> 1, which is the same thing but safe under overflow.'", correct: true, explanation: "Right. The classic mid-overflow bug is well-documented (Java's binary search itself had it for nine years). Calling it out before being asked is one of the cleanest 'experienced engineer' signals there is. Even if the bounds in this problem can't overflow, mentioning the awareness costs nothing." },
+            { label: "Replace it silently with bitwise tricks.", explanation: "The fix is right but the silence isn't, you'd lose the credit for noticing." },
             { label: "Argue that overflow won't happen with these inputs.", explanation: "Even if true for the current bounds, defending an unsafe pattern weakens the impression. Just flag and fix." },
           ]}
         />
@@ -780,10 +780,10 @@ rotation, right? Just want to be sure."`}</CodeBlock>
           kind="Implement check"
           question="Mid-implementation, you realize your recurrence is wrong and the data structure needs another dimension. What should you say next?"
           options={[
-            { label: "Nothing — quietly delete and rewrite.", explanation: "Silent deletion is jarring for the interviewer and forfeits the chance to demonstrate problem-solving — they don't know what you discovered." },
-            { label: "Name the discovery, briefly re-plan, then continue: 'I just noticed the state needs two dimensions, not one — let me update the recurrence...'", correct: true, explanation: "Right. Naming the discovery is graded positively. It shows that you debug your own thinking, and that you self-correct without being prompted. The brief re-plan also gives the interviewer a chance to confirm the new direction before you commit to it." },
+            { label: "Nothing, quietly delete and rewrite.", explanation: "Silent deletion is jarring for the interviewer and forfeits the chance to demonstrate problem-solving, they don't know what you discovered." },
+            { label: "Name the discovery, briefly re-plan, then continue: 'I just noticed the state needs two dimensions, not one, let me update the recurrence...'", correct: true, explanation: "Right. Naming the discovery is graded positively. It shows that you debug your own thinking, and that you self-correct without being prompted. The brief re-plan also gives the interviewer a chance to confirm the new direction before you commit to it." },
             { label: "Apologize repeatedly for the mistake.", explanation: "Excessive apologizing reads as low confidence. State the discovery as a finding, not a confession." },
-            { label: "Keep coding the wrong solution to avoid looking confused.", explanation: "This is the worst path — you'll just produce a broken solution and run out of time. Self-correction is rewarded; doubling down on a wrong approach is not." },
+            { label: "Keep coding the wrong solution to avoid looking confused.", explanation: "This is the worst path, you'll just produce a broken solution and run out of time. Self-correction is rewarded; doubling down on a wrong approach is not." },
           ]}
         />
       </section>
@@ -795,12 +795,12 @@ rotation, right? Just want to be sure."`}</CodeBlock>
         <h2 id="review-evaluate">Review &amp; Evaluate</h2>
 
         <p>
-          The last two stages of UMPIRE are the ones nervous candidates skip — they think the moment the code
+          The last two stages of UMPIRE are the ones nervous candidates skip, they think the moment the code
           compiles, they&apos;re done. Wrong. Reviewing and evaluating are where you catch the bugs that lose
           interviews and where you signal that you understand your own code at a complexity level.
         </p>
 
-        <h3>R · Review — walk through with a small input by hand</h3>
+        <h3>R · Review, walk through with a small input by hand</h3>
 
         <p>
           Once you&apos;ve typed the solution, <strong>do not run it.</strong> (You usually can&apos;t in a coding
@@ -819,7 +819,7 @@ rotation, right? Just want to be sure."`}</CodeBlock>
         <ol>
           <li><strong>Empty.</strong>{" "}What if <code>nums.length == 0</code>? Does your code crash, return a sentinel, or compute correctly?</li>
           <li><strong>Single element.</strong>{" "}Does the loop body even run? What does the answer reduce to?</li>
-          <li><strong>All same.</strong>{" "}Helpful for problems where uniqueness or comparisons matter — heaps, dedup, hash sets.</li>
+          <li><strong>All same.</strong>{" "}Helpful for problems where uniqueness or comparisons matter, heaps, dedup, hash sets.</li>
           <li><strong>The medium example from the problem statement.</strong>{" "}Trace it index by index, narrating what each variable holds. This is the one where most off-by-ones surface.</li>
         </ol>
 
@@ -832,11 +832,11 @@ rotation, right? Just want to be sure."`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>E · Evaluate — final complexity, and what changes at scale</h3>
+        <h3>E · Evaluate, final complexity, and what changes at scale</h3>
 
         <p>
           Once Review passes, state the final time and space complexity. Even if you said it during Plan, repeat it
-          now — the code is in front of you, and you can verify the claim.
+          now, the code is in front of you, and you can verify the claim.
         </p>
 
         <CodeBlock lang="plain">{`"Let me state final complexity. The loop runs n times — that's
@@ -855,7 +855,7 @@ O(n) space might exceed memory. If we needed to streamline:
 But for the contract as given, O(n)/O(n) is optimal."`}</CodeBlock>
 
         <p>
-          That last paragraph — &quot;what would change at scale&quot; — is the bonus credit. It signals that you
+          That last paragraph, &quot;what would change at scale&quot;, is the bonus credit. It signals that you
           think beyond the toy input size and recognize the difference between &quot;optimal for this problem&quot;
           and &quot;optimal at scale.&quot; You don&apos;t have to give it on every problem, but offering it once
           per interview is worth a noticeable bump in the rubric.
@@ -993,7 +993,7 @@ Me: "Final complexity:
      array contract, this is optimal."`}</CodeBlock>
 
         <p>
-          That entire walk-through, fully narrated, takes a strong candidate about 12 to 18 minutes — well within
+          That entire walk-through, fully narrated, takes a strong candidate about 12 to 18 minutes, well within
           the 45-minute budget of a typical interview. And every stage of UMPIRE is visible. The interviewer is
           grading every axis simultaneously: clarification, pattern recognition, planning, narration, self-test,
           complexity reasoning. Even if you have a small bug in the code, the framework leaves enough explicit
@@ -1004,8 +1004,8 @@ Me: "Final complexity:
           kind="Review check"
           question="Your code passes a hand-trace on the medium example. Should you also test the empty input?"
           options={[
-            { label: "No — the medium trace was enough.", explanation: "The medium trace catches index/loop logic, but it can't catch 'what happens on length 0?'. That's a separate failure mode." },
-            { label: "Yes — and ideally also single-element and all-same. Empty in particular is the most common 'IndexOutOfBounds' source.", correct: true, explanation: "Right. Empty input, single element, and all-same are the three short tests that catch the bulk of edge-case crashes. Each takes 5–10 seconds to verbally trace, and they collectively cover most of what fails in production. Doing them shows the interviewer you self-test rigorously, which is graded as a strong signal." },
+            { label: "No, the medium trace was enough.", explanation: "The medium trace catches index/loop logic, but it can't catch 'what happens on length 0?'. That's a separate failure mode." },
+            { label: "Yes, and ideally also single-element and all-same. Empty in particular is the most common 'IndexOutOfBounds' source.", correct: true, explanation: "Right. Empty input, single element, and all-same are the three short tests that catch the bulk of edge-case crashes. Each takes 5–10 seconds to verbally trace, and they collectively cover most of what fails in production. Doing them shows the interviewer you self-test rigorously, which is graded as a strong signal." },
             { label: "Only if the interviewer asks.", explanation: "Waiting to be asked is reactive; pre-emptively testing is proactive. Proactive is graded higher." },
             { label: "Only for problems with arrays.", explanation: "Empty/single/all-same generalize: empty list, empty string, single-node tree, single-vertex graph. They apply across structure types." },
           ]}
@@ -1015,8 +1015,8 @@ Me: "Final complexity:
           kind="Evaluate check"
           question="Your solution is O(n) time and O(n) space. The interviewer asks 'can you do better?' What's the right first response?"
           options={[
-            { label: "'Probably not — O(n) is already linear.'", explanation: "Linear in time is often as good as it gets, but linear in space might be reducible. Don't dismiss without exploring." },
-            { label: "'Time is provably Ω(n) since we have to read every element. Space might be reducible — let me think about whether I can avoid the auxiliary structure...'", correct: true, explanation: "Right. Separate the two dimensions. Time is usually bounded below by the input size; space is more often the optimization target. State the lower-bound argument for time, then explore whether the auxiliary data structure can be replaced or removed. Common space-reduction techniques: in-place modification, two-pointer, prefix-sum-on-the-fly, bit manipulation." },
+            { label: "'Probably not, O(n) is already linear.'", explanation: "Linear in time is often as good as it gets, but linear in space might be reducible. Don't dismiss without exploring." },
+            { label: "'Time is provably Ω(n) since we have to read every element. Space might be reducible, let me think about whether I can avoid the auxiliary structure...'", correct: true, explanation: "Right. Separate the two dimensions. Time is usually bounded below by the input size; space is more often the optimization target. State the lower-bound argument for time, then explore whether the auxiliary data structure can be replaced or removed. Common space-reduction techniques: in-place modification, two-pointer, prefix-sum-on-the-fly, bit manipulation." },
             { label: "Immediately rewrite to a totally different algorithm without explanation.", explanation: "An unmotivated pivot looks panicked. Even when redesigning, name the goal first." },
             { label: "Argue with the interviewer.", explanation: "When the interviewer asks 'can you do better,' they almost always know there's a better answer. Take it as a hint, not a challenge." },
           ]}
@@ -1026,8 +1026,8 @@ Me: "Final complexity:
           kind="Evaluate check"
           question="At the end of your solution, you state O(n log n) time. The interviewer says 'are you sure?' What does that almost certainly mean?"
           options={[
-            { label: "They're testing your confidence — defend the answer firmly.", explanation: "Sometimes, but rarely. 'Are you sure' from an interviewer is almost always a hint that the answer is wrong or incomplete, not a confidence test." },
-            { label: "Re-derive the complexity carefully — you've probably miscounted, often by missing an inner loop or undercounting a sort.", correct: true, explanation: "Right. 'Are you sure' is interview shorthand for 'you got this wrong; please re-examine.' Walk through the code line by line, count loops and recursive calls, account for any sorts or heap operations. Often it's a hidden O(n) operation inside what you thought was an O(log n) step — for example, calling .indexOf() inside a binary search loop." },
+            { label: "They're testing your confidence, defend the answer firmly.", explanation: "Sometimes, but rarely. 'Are you sure' from an interviewer is almost always a hint that the answer is wrong or incomplete, not a confidence test." },
+            { label: "Re-derive the complexity carefully, you've probably miscounted, often by missing an inner loop or undercounting a sort.", correct: true, explanation: "Right. 'Are you sure' is interview shorthand for 'you got this wrong; please re-examine.' Walk through the code line by line, count loops and recursive calls, account for any sorts or heap operations. Often it's a hidden O(n) operation inside what you thought was an O(log n) step, for example, calling .indexOf() inside a binary search loop." },
             { label: "Ignore and move on.", explanation: "Ignoring a direct prompt is one of the strongest negative signals; treat 'are you sure' as the gift it is." },
             { label: "Switch the answer to whatever the interviewer probably wants.", explanation: "Don't guess at what they want; re-derive from the code. If you genuinely conclude the original answer was right, defend it with the derivation." },
           ]}
@@ -1050,7 +1050,7 @@ Me: "Final complexity:
 
         <p>
           A short, low-difficulty warm-up. The candidate is calm, runs UMPIRE briskly, and finishes well under
-          time. Notice how short the transcript is once you have the framework — most of the interview is over in
+          time. Notice how short the transcript is once you have the framework, most of the interview is over in
           eight minutes.
         </p>
 
@@ -1131,7 +1131,7 @@ Me: "Final complexity:
 
         <p>
           Total: about 8 minutes of interview time. The candidate ran the full UMPIRE pipeline visibly. There&apos;s
-          no &quot;clever trick&quot; in the transcript — just thorough, narrated process. That&apos;s the point.
+          no &quot;clever trick&quot; in the transcript, just thorough, narrated process. That&apos;s the point.
         </p>
 
         <h3>Mock 2 · Number of Islands (medium, with a stuck moment)</h3>
@@ -1139,7 +1139,7 @@ Me: "Final complexity:
         <p>
           A medium-difficulty problem where the candidate hits two friction points: a clarifying-question moment
           where the spec was actually ambiguous, and a stuck moment mid-implementation that they recover from
-          gracefully. This transcript is more realistic than Mock 1 — most real interviews include at least one
+          gracefully. This transcript is more realistic than Mock 1, most real interviews include at least one
           such moment.
         </p>
 
@@ -1277,10 +1277,10 @@ Me: "Final complexity:
           </li>
           <li>
             The mutation question explicitly enabled the in-place visited trick. They asked because they were
-            already planning to take advantage of it — the question doubled as a setup.
+            already planning to take advantage of it, the question doubled as a setup.
           </li>
           <li>
-            The mid-implementation &quot;wait — let me reset for a second&quot; was handled in three sentences.
+            The mid-implementation &quot;wait, let me reset for a second&quot; was handled in three sentences.
             They named the issue, weighed two options out loud, picked the cleaner one, and continued. The
             interviewer&apos;s explicit positive comment at the end was about that moment, not the final code.
           </li>
@@ -1290,8 +1290,8 @@ Me: "Final complexity:
 
         <p>
           The hardest of the three. The candidate starts with naive recursion, recognizes it&apos;s exponential
-          mid-trace, and pivots to memoization. This pivot — &quot;I tried recursion, that&apos;s exponential, let
-          me memoize&quot; — is one of the most common transitions in DP interviews and a good one to have a
+          mid-trace, and pivots to memoization. This pivot, &quot;I tried recursion, that&apos;s exponential, let
+          me memoize&quot;, is one of the most common transitions in DP interviews and a good one to have a
           script for.
         </p>
 
@@ -1479,8 +1479,8 @@ Me: "Final complexity:
 
         <p>
           Below are eight observed candidate behaviors. For each one, identify which axis of the rubric it
-          primarily scores on. There are no &quot;wrong&quot; behaviors here — they&apos;re all real moments from
-          real interviews — but each one signals primarily one thing.
+          primarily scores on. There are no &quot;wrong&quot; behaviors here, they&apos;re all real moments from
+          real interviews, but each one signals primarily one thing.
         </p>
 
         <ClassifyChallenge
@@ -1496,11 +1496,11 @@ Me: "Final complexity:
           items={[
             { id: "1", label: "Candidate stops mid-typing and says: 'Wait, I just realized my recurrence is missing a dimension. Let me reset.'", answer: "problemsolving", explanation: "Self-correction under pressure is the canonical problem-solving signal. Naming the discovery, not just silently fixing it, is what gets graded." },
             { id: "2", label: "Candidate uses a HashMap variable name 'seen' rather than 'm' or 'map'.", answer: "codequality", explanation: "Meaningful names are the single highest-leverage code-quality signal in interviews. 'seen' tells the reader the semantics; 'map' tells them only the type." },
-            { id: "3", label: "After the interviewer says 'can you do better on space?', candidate immediately says 'good idea — let me think about an in-place version' and re-plans.", answer: "collaboration", explanation: "Receiving and integrating a hint gracefully is the textbook collaboration signal. The opposite — defending the rejected approach — is the canonical collaboration anti-signal." },
-            { id: "4", label: "Candidate proactively traces three edge cases (empty, single-element, all-same) at the end without being asked.", answer: "problemsolving", explanation: "Self-test rigor is graded under problem-solving. It signals 'I find my own bugs' — the most senior trait there is." },
-            { id: "5", label: "Candidate's code passes all the tests the interviewer mentions, with no off-by-one errors.", answer: "correctness", explanation: "Correctness is its own axis. Note this is the only one of the eight where 'code that works' is the primary signal — most other axes weight process and reasoning above output." },
+            { id: "3", label: "After the interviewer says 'can you do better on space?', candidate immediately says 'good idea, let me think about an in-place version' and re-plans.", answer: "collaboration", explanation: "Receiving and integrating a hint gracefully is the textbook collaboration signal. The opposite, defending the rejected approach, is the canonical collaboration anti-signal." },
+            { id: "4", label: "Candidate proactively traces three edge cases (empty, single-element, all-same) at the end without being asked.", answer: "problemsolving", explanation: "Self-test rigor is graded under problem-solving. It signals 'I find my own bugs', the most senior trait there is." },
+            { id: "5", label: "Candidate's code passes all the tests the interviewer mentions, with no off-by-one errors.", answer: "correctness", explanation: "Correctness is its own axis. Note this is the only one of the eight where 'code that works' is the primary signal, most other axes weight process and reasoning above output." },
             { id: "6", label: "Candidate says 'I'm going to use Integer.compare here, not a - b, because the latter overflows when one side is MAX_VALUE and the other negative.'", answer: "codequality", explanation: "Pre-emptively flagging a known foot-gun is graded as both code quality (you write defensive code) and language fluency. Here, the language-specific awareness leans it toward code quality." },
-            { id: "7", label: "Candidate ends each phase by asking: 'does that sound reasonable before I continue?'", answer: "communication", explanation: "Inviting course correction at phase boundaries is a textbook communication-and-collaboration move. It's primarily communication — making your thinking visible enough that someone else can engage with it." },
+            { id: "7", label: "Candidate ends each phase by asking: 'does that sound reasonable before I continue?'", answer: "communication", explanation: "Inviting course correction at phase boundaries is a textbook communication-and-collaboration move. It's primarily communication, making your thinking visible enough that someone else can engage with it." },
             { id: "8", label: "Candidate, given an open-ended prompt with no example, immediately constructs their own concrete example to disambiguate.", answer: "problemsolving", explanation: "Generating worked examples to clarify a fuzzy prompt is a senior problem-solving habit. It also signals strong communication, but the primary signal is 'I bring structure to ambiguity.'" },
           ]}
         />
@@ -1510,7 +1510,7 @@ Me: "Final complexity:
           question="Across all three transcripts, what's the single most common 'senior signal' the candidates produce?"
           options={[
             { label: "Faster typing.", explanation: "Speed almost never moves the rubric. The signal is process quality, not keystroke rate." },
-            { label: "Visible reasoning — narrating choices, naming tradeoffs, asking permission at phase boundaries — even when the choice is obvious.", correct: true, explanation: "Right. The candidates in all three mocks make their thinking radically visible. They explain WHY they pick a HashMap, WHY they mark cells in-place, WHY they switch to memoization. Most of the credit comes from this visibility — not from arriving at the optimal answer first. Visible reasoning is what allows the interviewer to grade the four non-correctness axes; without it, only correctness shows up, and you've thrown away most of your potential score." },
+            { label: "Visible reasoning, narrating choices, naming tradeoffs, asking permission at phase boundaries, even when the choice is obvious.", correct: true, explanation: "Right. The candidates in all three mocks make their thinking radically visible. They explain WHY they pick a HashMap, WHY they mark cells in-place, WHY they switch to memoization. Most of the credit comes from this visibility, not from arriving at the optimal answer first. Visible reasoning is what allows the interviewer to grade the four non-correctness axes; without it, only correctness shows up, and you've thrown away most of your potential score." },
             { label: "Knowing more obscure data structures than the interviewer expects.", explanation: "Showing off rarely helps. Knowing the standard structures cold and applying them deliberately wins more interviews than knowing exotic ones." },
             { label: "Avoiding any hesitation or pauses.", explanation: "Hesitation is fine; silence is the problem. Thinking out loud during hesitation actually scores positively." },
           ]}
@@ -1521,9 +1521,9 @@ Me: "Final complexity:
           question="In Mock 3, the candidate said 'that's exponential because the same suffix is reached via many different prefix paths.' What does this single sentence demonstrate?"
           options={[
             { label: "That they memorized the Word Break solution.", explanation: "Memorization wouldn't show this articulation; you'd skip straight to 'I'll use DP.' The articulation IS the differentiator." },
-            { label: "That they understand WHY recursion is exponential here, which is the underlying reason DP works — the overlapping-subproblems property.", correct: true, explanation: "Right. That sentence is a compressed statement of the overlapping-subproblems property — the formal precondition for DP. A candidate who recites 'I'll use DP' without articulating why has memorized a template; a candidate who says 'because the same suffix is reached via many paths' has DERIVED the choice from first principles. The latter is the senior signal interviewers look for in DP problems." },
+            { label: "That they understand WHY recursion is exponential here, which is the underlying reason DP works, the overlapping-subproblems property.", correct: true, explanation: "Right. That sentence is a compressed statement of the overlapping-subproblems property, the formal precondition for DP. A candidate who recites 'I'll use DP' without articulating why has memorized a template; a candidate who says 'because the same suffix is reached via many paths' has DERIVED the choice from first principles. The latter is the senior signal interviewers look for in DP problems." },
             { label: "That they know the Big-O of recursion.", explanation: "Big-O knowledge alone wouldn't produce this articulation. The phrase 'same suffix reached via many paths' specifically captures the overlapping-subproblems property, which is the structural precondition for memoization." },
-            { label: "Nothing in particular — it's a throwaway comment.", explanation: "Far from throwaway: it's the load-bearing observation that motivates the entire DP transition. Interviewers grade specifically for moments like this." },
+            { label: "Nothing in particular, it's a throwaway comment.", explanation: "Far from throwaway: it's the load-bearing observation that motivates the entire DP transition. Interviewers grade specifically for moments like this." },
           ]}
         />
 
@@ -1531,23 +1531,23 @@ Me: "Final complexity:
           kind="Final check"
           question="A candidate goes silent for 90 seconds after hearing the problem. What's the single most important thing they could have said in that span?"
           options={[
-            { label: "Nothing — they're thinking, that's what thinking looks like.", explanation: "Silent thinking and verbal thinking score very differently in an interview, even if the underlying cognition is identical. The interviewer can only grade what they observe." },
-            { label: "Anything — even just 'let me think about this for a moment, my first thought is X' — to make their thinking visible.", correct: true, explanation: "Right. The minimum viable response is acknowledging that you're processing and giving the interviewer a partial view of where you are. Even a half-formed first thought is better than silence: it lets the interviewer correct you cheaply, signals you're engaged, and reduces the social pressure of dead air. The exact words matter less than the act of verbalizing." },
-            { label: "The optimal solution.", explanation: "Demanding the optimal solution within 90 seconds is unrealistic and not what the rubric expects. What it expects is engagement — visible thought, not finished answers." },
+            { label: "Nothing, they're thinking, that's what thinking looks like.", explanation: "Silent thinking and verbal thinking score very differently in an interview, even if the underlying cognition is identical. The interviewer can only grade what they observe." },
+            { label: "Anything, even just 'let me think about this for a moment, my first thought is X', to make their thinking visible.", correct: true, explanation: "Right. The minimum viable response is acknowledging that you're processing and giving the interviewer a partial view of where you are. Even a half-formed first thought is better than silence: it lets the interviewer correct you cheaply, signals you're engaged, and reduces the social pressure of dead air. The exact words matter less than the act of verbalizing." },
+            { label: "The optimal solution.", explanation: "Demanding the optimal solution within 90 seconds is unrealistic and not what the rubric expects. What it expects is engagement, visible thought, not finished answers." },
             { label: "An apology for needing time.", explanation: "Apologies signal low confidence. The right move is verbal engagement, not an apology." },
           ]}
         />
 
         <PartRecap
           title="The framework, in one page"
-          gist="Run UMPIRE every time. Make your thinking visible. The framework is the bridge from 'I just heard the problem' to 'I can think clearly' — and it's what allows the interviewer to grade the four non-correctness axes that determine senior-level outcomes."
+          gist="Run UMPIRE every time. Make your thinking visible. The framework is the bridge from 'I just heard the problem' to 'I can think clearly', and it's what allows the interviewer to grade the four non-correctness axes that determine senior-level outcomes."
           points={[
             { takeaway: "U · Understand: ask 2–3 clarifying questions before coding, even if you think you understand.", detail: "Inputs, outputs, constraints, edges. The questions extract real ambiguity AND buy thinking time AND signal curiosity. The cost is 30 seconds; the value is enormous." },
             { takeaway: "M · Match: pattern-recognize against the cheat sheet of trigger phrases.", detail: "'Subarray with property' = sliding window. 'K-th' = heap. 'All paths' = recursion. 'Decision at i' = DP. Build linguistic-to-pattern reflexes until they fire automatically." },
             { takeaway: "P · Plan: speak the algorithm before coding it.", detail: "Data structures, algorithm in 3–5 sentences, invariant, complexity target, alternative considered. End with 'sound reasonable?' to invite course correction." },
             { takeaway: "I · Implement: narrate every meaningful decision, pre-emptively flag known foot-guns.", detail: "Talk WHY, not WHAT. Flag overflow, edge cases, language gotchas before they bite. Five seconds of narration earns measurable rubric credit." },
-            { takeaway: "R · Review: hand-trace empty, single-element, all-same, and the medium example.", detail: "Don't 're-read' the code — actually execute it on paper, writing variable values per iteration. This is what catches off-by-ones." },
-            { takeaway: "E · Evaluate: state final time and space; mention what changes at scale.", detail: "Even when the complexity is 'obvious,' state it explicitly. Bonus credit for the 'at scale' commentary — it shows you think beyond the toy input." },
+            { takeaway: "R · Review: hand-trace empty, single-element, all-same, and the medium example.", detail: "Don't 're-read' the code, actually execute it on paper, writing variable values per iteration. This is what catches off-by-ones." },
+            { takeaway: "E · Evaluate: state final time and space; mention what changes at scale.", detail: "Even when the complexity is 'obvious,' state it explicitly. Bonus credit for the 'at scale' commentary, it shows you think beyond the toy input." },
             { takeaway: "Visible reasoning beats silent optimality, especially at senior levels.", detail: "The interviewer is grading communication, problem-solving, code quality, collaboration, AND correctness. Silence forfeits the first four. Run UMPIRE in a way that surfaces all of them." },
           ]}
         />

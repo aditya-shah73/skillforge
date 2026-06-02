@@ -67,7 +67,7 @@ flowchart LR
       {/* INTRO — set expectations, this is a map not a tutorial */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 1</strong> — every rule, every curve, every gotcha from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 1</strong>, every rule, every curve, every gotcha from the three previous modules, compressed into tables and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Big-O from zero</Link>, <Link href="/courses/dsa/modules/space-complexity" className="text-emerald-600 hover:underline">Space complexity &amp; the call stack</Link>, and <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Best, average, worst &amp; amortized analysis</Link>.
@@ -100,7 +100,7 @@ flowchart LR
                 <td className="px-4 py-3">Constant</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Array index, HashMap lookup</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No loop touching <code>n</code></td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Calling <code>list.contains()</code> in a loop — that&apos;s O(n) inside, not O(1)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Calling <code>list.contains()</code> in a loop, that&apos;s O(n) inside, not O(1)</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-emerald-600">O(log n)</td>
@@ -114,35 +114,35 @@ flowchart LR
                 <td className="px-4 py-3">Linear</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Scanning a list, single pass</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">One <code>for</code> loop from 0 to n</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Two sequential passes — still O(n), not O(2n)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Two sequential passes, still O(n), not O(2n)</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-amber-600">O(n log n)</td>
                 <td className="px-4 py-3">Linearithmic</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Merge sort, quicksort, <code>Arrays.sort</code></td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Sort + linear scan, or divide-and-conquer with merge</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Sort then walk&quot; — the sort dominates, not the walk</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Sort then walk&quot;, the sort dominates, not the walk</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-orange-600">O(n²)</td>
                 <td className="px-4 py-3">Quadratic</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Nested scans, bubble sort, pairwise compare</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Loop inside a loop, both over <code>n</code></td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Building a string with <code>+=</code> in a loop — accidental O(n²)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Building a string with <code>+=</code> in a loop, accidental O(n²)</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-rose-600">O(2ⁿ)</td>
                 <td className="px-4 py-3">Exponential</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Naive recursive Fibonacci, subsets, brute-force subset-sum</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Two recursive calls per frame, no memo</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Forgetting that memoization collapses this to O(n) — the DP trick</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Forgetting that memoization collapses this to O(n), the DP trick</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold text-rose-700">O(n!)</td>
                 <td className="px-4 py-3">Factorial</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Permutations, brute-force TSP</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Backtracking that picks one of the remaining items each level</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Confusing with O(2ⁿ) — n! grows much faster (10! ≈ 3.6M, 2¹⁰ = 1024)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Confusing with O(2ⁿ), n! grows much faster (10! ≈ 3.6M, 2¹⁰ = 1024)</td>
               </tr>
             </tbody>
           </table>
@@ -153,7 +153,7 @@ flowchart LR
         </p>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
+          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1, Big-O from zero</Link>.
         </p>
       </section>
 
@@ -166,11 +166,11 @@ flowchart LR
           Apply in this order. Most Big-O questions are settled by rules 1–3.
         </p>
 
-        <h3 className="mt-6 mb-2 text-lg font-semibold">Rule 1 — Drop constants</h3>
+        <h3 className="mt-6 mb-2 text-lg font-semibold">Rule 1, Drop constants</h3>
         <p className="not-prose text-slate-700 dark:text-slate-300">
           <code>O(2n)</code>, <code>O(3n)</code>, <code>O(500n)</code> are all <code>O(n)</code>. Big-O is about <em>growth rate</em>, not actual operation count.
         </p>
-        <CodeBlock lang="java" caption="Two passes — still O(n)">{`int sumThenMax(int[] a) {
+        <CodeBlock lang="java" caption="Two passes, still O(n)">{`int sumThenMax(int[] a) {
     int s = 0;
     for (int x : a) s += x;          // n ops
     int m = Integer.MIN_VALUE;
@@ -178,11 +178,11 @@ flowchart LR
     return s + m;                    // total 2n → O(n)
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 2 — Drop lower-order terms</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 2, Drop lower-order terms</h3>
         <p className="not-prose text-slate-700 dark:text-slate-300">
           <code>O(n² + n)</code> is <code>O(n²)</code>. <code>O(n log n + n)</code> is <code>O(n log n)</code>. The dominant term wins; the others are noise at large n.
         </p>
-        <CodeBlock lang="java" caption="Setup + nested loop — the nested loop dominates">{`void check(int[] a) {
+        <CodeBlock lang="java" caption="Setup + nested loop, the nested loop dominates">{`void check(int[] a) {
     Arrays.sort(a);                          // n log n
     for (int i = 0; i < a.length; i++) {
         for (int j = i + 1; j < a.length; j++) {
@@ -192,11 +192,11 @@ flowchart LR
     // n log n + n²  →  O(n²)
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 3 — Multiply nested loops</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 3, Multiply nested loops</h3>
         <p className="not-prose text-slate-700 dark:text-slate-300">
           Inner runs once <em>per</em>{" "}outer iteration. Multiply the bounds. If they&apos;re both <code>n</code> → <code>O(n²)</code>. If outer is <code>n</code> and inner is <code>m</code> → <code>O(n·m)</code>.
         </p>
-        <CodeBlock lang="java" caption="Two different bounds — keep them separate">{`boolean hasPair(int[] users, int[] orders) {
+        <CodeBlock lang="java" caption="Two different bounds, keep them separate">{`boolean hasPair(int[] users, int[] orders) {
     for (int u : users) {           // n
         for (int o : orders) {      // m
             if (match(u, o)) return true;  // n · m → O(n·m)
@@ -205,11 +205,11 @@ flowchart LR
     return false;
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 4 — Add sequential blocks (then drop lower-order)</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">Rule 4, Add sequential blocks (then drop lower-order)</h3>
         <p className="not-prose text-slate-700 dark:text-slate-300">
           Independent blocks: add their complexities, then apply rule 2.
         </p>
-        <CodeBlock lang="java" caption="Three sequential passes — drop everything but the dominant">{`void pipeline(int[] a) {
+        <CodeBlock lang="java" caption="Three sequential passes, drop everything but the dominant">{`void pipeline(int[] a) {
     Arrays.sort(a);                          // n log n
     for (int x : a) System.out.println(x);   // n
     for (int i = 0; i < a.length; i++)
@@ -219,7 +219,7 @@ flowchart LR
 }`}</CodeBlock>
 
         <p className="not-prose mt-6 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
+          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1, Big-O from zero</Link>.
         </p>
       </section>
 
@@ -227,7 +227,7 @@ flowchart LR
       {/* SECTION 3 — Reading code for Big-O, 5 patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Reading code for Big-O — the 5 patterns</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Reading code for Big-O, the 5 patterns</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When you see this shape, you say this complexity. No further analysis needed.
         </p>
@@ -242,7 +242,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-orange-600 uppercase">Pattern 2 · nested loops</div>
             <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">for i: for j: work()</code>
-            <div className="font-mono text-sm font-semibold">→ O(n²) — or O(n·m) if different sizes</div>
+            <div className="font-mono text-sm font-semibold">→ O(n²), or O(n·m) if different sizes</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -254,7 +254,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">Pattern 4 · sort + scan</div>
             <code className="mb-2 block text-xs text-slate-700 dark:text-slate-300">sort(a); for x in a: work()</code>
-            <div className="font-mono text-sm font-semibold">→ O(n log n) — sort dominates</div>
+            <div className="font-mono text-sm font-semibold">→ O(n log n), sort dominates</div>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 sm:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
@@ -269,7 +269,7 @@ flowchart LR
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1 — Big-O from zero</Link>.
+          Source: <Link href="/courses/dsa/modules/big-o" className="text-emerald-600 hover:underline">Module 1, Big-O from zero</Link>.
         </p>
       </section>
 
@@ -303,7 +303,7 @@ flowchart LR
             </p>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Stack</strong>: ~512KB–1MB per thread. Holds call frames, local primitives, references. Recursion lives here.</li>
-              <li><strong>Heap</strong>: gigabytes. Every <code>new</code> goes here — arrays, objects, ArrayList internals.</li>
+              <li><strong>Heap</strong>: gigabytes. Every <code>new</code> goes here, arrays, objects, ArrayList internals.</li>
               <li>Java has <strong>no tail-call optimization</strong>. Deep recursion = StackOverflowError.</li>
             </ul>
           </div>
@@ -325,7 +325,7 @@ flowchart LR
                 <td className="px-4 py-3 font-mono text-xs">factorial(n)</td>
                 <td className="px-4 py-3">n</td>
                 <td className="px-4 py-3 font-mono">O(n)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Linear chain — one call per frame</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Linear chain, one call per frame</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">binarySearch</td>
@@ -343,13 +343,13 @@ flowchart LR
                 <td className="px-4 py-3 font-mono text-xs">quickSort (avg)</td>
                 <td className="px-4 py-3">log n</td>
                 <td className="px-4 py-3 font-mono">O(log n)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">In-place — no heap allocation</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">In-place, no heap allocation</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">quickSort (worst)</td>
                 <td className="px-4 py-3">n</td>
                 <td className="px-4 py-3 font-mono">O(n)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Already-sorted input + bad pivot — can StackOverflow</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Already-sorted input + bad pivot, can StackOverflow</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-mono text-xs">DFS on tree</td>
@@ -361,7 +361,7 @@ flowchart LR
                 <td className="px-4 py-3 font-mono text-xs">naive fib(n)</td>
                 <td className="px-4 py-3">n</td>
                 <td className="px-4 py-3 font-mono">O(n)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Despite O(2ⁿ) time — only one branch is on the stack at a time</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Despite O(2ⁿ) time, only one branch is on the stack at a time</td>
               </tr>
             </tbody>
           </table>
@@ -372,7 +372,7 @@ flowchart LR
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/space-complexity" className="text-emerald-600 hover:underline">Module 2 — Space complexity &amp; the call stack</Link>.
+          Source: <Link href="/courses/dsa/modules/space-complexity" className="text-emerald-600 hover:underline">Module 2, Space complexity &amp; the call stack</Link>.
         </p>
       </section>
 
@@ -380,9 +380,9 @@ flowchart LR
       {/* SECTION 5 — Best / average / worst */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Best vs average vs worst — when each one matters</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Best vs average vs worst, when each one matters</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Big-O is an envelope of three cases. The interviewer is usually asking about worst-case unless they say otherwise — but you should know all three.
+          Big-O is an envelope of three cases. The interviewer is usually asking about worst-case unless they say otherwise, but you should know all three.
         </p>
 
         <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
@@ -390,7 +390,7 @@ flowchart LR
             <div className="bg-emerald-50/40 p-5 dark:bg-emerald-950/20">
               <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Best case</div>
               <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-                The luckiest input. Rarely useful on its own — but knowing it tells you the theoretical floor.
+                The luckiest input. Rarely useful on its own, but knowing it tells you the theoretical floor.
               </p>
               <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
                 <li>Insertion sort on sorted: O(n)</li>
@@ -417,8 +417,8 @@ flowchart LR
                 The guarantee. What you commit to in an SLA or a P99 latency target.
               </p>
               <ul className="list-disc space-y-1 pl-4 text-xs text-slate-600 dark:text-slate-400">
-                <li>Quicksort: O(n²) — bad pivot</li>
-                <li>HashMap.get: O(n) — all collide</li>
+                <li>Quicksort: O(n²), bad pivot</li>
+                <li>HashMap.get: O(n), all collide</li>
                 <li>Insertion sort: O(n²)</li>
               </ul>
             </div>
@@ -426,11 +426,11 @@ flowchart LR
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong>{" "}for a hot path in a production service with P99 latency requirements, <em>only worst-case matters</em>. For a one-shot script over random data, average is fine. Best case is only interesting when describing a particular structure&apos;s adaptive behavior (like insertion sort being O(n) on already-sorted data — that&apos;s why TimSort starts with insertion sort on small runs).
+          <strong>Decision rule:</strong>{" "}for a hot path in a production service with P99 latency requirements, <em>only worst-case matters</em>. For a one-shot script over random data, average is fine. Best case is only interesting when describing a particular structure&apos;s adaptive behavior (like insertion sort being O(n) on already-sorted data, that&apos;s why TimSort starts with insertion sort on small runs).
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3 — Best, average, worst &amp; amortized analysis</Link>.
+          Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3, Best, average, worst &amp; amortized analysis</Link>.
         </p>
       </section>
 
@@ -449,16 +449,16 @@ flowchart LR
 
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>
-            <strong>Most adds cost 1 op</strong> (just write to the next free slot). Rare adds trigger a resize — copy the whole array to a new one of double capacity. Those cost <code>1 + currentSize</code>.
+            <strong>Most adds cost 1 op</strong> (just write to the next free slot). Rare adds trigger a resize, copy the whole array to a new one of double capacity. Those cost <code>1 + currentSize</code>.
           </li>
           <li>
-            <strong>The expensive ones get rarer as n grows</strong> — resizes happen at sizes 1, 2, 4, 8, 16, 32… That&apos;s log n resizes total. The sum of resize costs over n adds is roughly <code>1 + 2 + 4 + … + n ≈ 2n</code> (geometric series).
+            <strong>The expensive ones get rarer as n grows</strong>, resizes happen at sizes 1, 2, 4, 8, 16, 32… That&apos;s log n resizes total. The sum of resize costs over n adds is roughly <code>1 + 2 + 4 + … + n ≈ 2n</code> (geometric series).
           </li>
           <li>
             <strong>Total work for n adds ≈ 2n.</strong>{" "}Amortized cost per add = 2n / n = 2 → <strong>O(1)</strong>.
           </li>
           <li>
-            <strong>Banker&apos;s (accounting) method:</strong>{" "}charge each add 3 &quot;coins&quot; — 1 pays for the write, 2 are deposited as credits. When a resize happens, every previously-stored element has accumulated enough credits to pay for its own copy. The math works out exactly, and that&apos;s why you can claim O(1) per add with a clean conscience.
+            <strong>Banker&apos;s (accounting) method:</strong>{" "}charge each add 3 &quot;coins&quot;, 1 pays for the write, 2 are deposited as credits. When a resize happens, every previously-stored element has accumulated enough credits to pay for its own copy. The math works out exactly, and that&apos;s why you can claim O(1) per add with a clean conscience.
           </li>
           <li>
             <strong>What kills the trick:</strong>{" "}arithmetic growth (e.g. <code>capacity + 10</code> each resize). That gives <code>O(n²)</code> total work, which means amortized <code>O(n)</code> per add. Geometric growth (factor &gt; 1, typically 1.5× or 2×) is what makes amortized O(1) possible.
@@ -466,11 +466,11 @@ flowchart LR
         </ul>
 
         <Callout variant="warn">
-          <strong>Amortized O(1) ≠ worst-case O(1).</strong>{" "}A single <code>add()</code> can still take O(n). For P99-sensitive systems (real-time games, trading, latency-critical APIs), pre-size your buffer or accept the spike — don&apos;t rely on the amortized number to hold per-call.
+          <strong>Amortized O(1) ≠ worst-case O(1).</strong>{" "}A single <code>add()</code> can still take O(n). For P99-sensitive systems (real-time games, trading, latency-critical APIs), pre-size your buffer or accept the spike, don&apos;t rely on the amortized number to hold per-call.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3 — Best, average, worst &amp; amortized analysis</Link>.
+          Source: <Link href="/courses/dsa/modules/amortized-analysis" className="text-emerald-600 hover:underline">Module 3, Best, average, worst &amp; amortized analysis</Link>.
         </p>
       </section>
 
@@ -518,7 +518,7 @@ flowchart LR
                 <td className="px-4 py-3 text-emerald-600">O(1) avg</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) avg*</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) avg</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized — rare rehash is O(n). Java 8+ uses tree-bins, so worst is O(log n) per bucket.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized, rare rehash is O(n). Java 8+ uses tree-bins, so worst is O(log n) per bucket.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">TreeMap</td>
@@ -550,7 +550,7 @@ flowchart LR
                 <td className="px-4 py-3 text-amber-600">O(n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)* ends</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) ends</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized. Use this for stacks AND queues — not Stack, not LinkedList.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized. Use this for stacks AND queues, not Stack, not LinkedList.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">PriorityQueue</td>
@@ -573,7 +573,7 @@ flowchart LR
         </div>
 
         <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          Full deep dive: <Link href="/courses/dsa/modules/java-collections" className="text-emerald-600 hover:underline">Module 21 — Java Collections Framework deep dive</Link> (Phase 5).
+          Full deep dive: <Link href="/courses/dsa/modules/java-collections" className="text-emerald-600 hover:underline">Module 21, Java Collections Framework deep dive</Link> (Phase 5).
         </p>
       </section>
 
@@ -655,7 +655,7 @@ int sum(TreeNode root) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">9. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
@@ -673,10 +673,10 @@ int sum(TreeNode root) {
           kind="Recall check"
           question="What is the auxiliary space complexity of merge sort?"
           options={[
-            { label: "O(1) — it sorts in place", explanation: "That's quicksort. Merge sort needs temporary arrays for the merge step." },
-            { label: "O(log n) — just the recursion stack", explanation: "Close, but you're forgetting the heap allocation. The temp arrays during merge add up to O(n) on the heap." },
-            { label: "O(n) — the temporary arrays during merge", correct: true, explanation: "Right. The recursion stack is O(log n) but the temp arrays dominate at O(n). Total auxiliary space: O(n)." },
-            { label: "O(n log n) — same as the time complexity", explanation: "Time and space are independent. Merge sort is O(n log n) time, O(n) space." },
+            { label: "O(1), it sorts in place", explanation: "That's quicksort. Merge sort needs temporary arrays for the merge step." },
+            { label: "O(log n), just the recursion stack", explanation: "Close, but you're forgetting the heap allocation. The temp arrays during merge add up to O(n) on the heap." },
+            { label: "O(n), the temporary arrays during merge", correct: true, explanation: "Right. The recursion stack is O(log n) but the temp arrays dominate at O(n). Total auxiliary space: O(n)." },
+            { label: "O(n log n), same as the time complexity", explanation: "Time and space are independent. Merge sort is O(n log n) time, O(n) space." },
           ]}
         />
 
@@ -685,8 +685,8 @@ int sum(TreeNode root) {
           question="ArrayList.add is O(1) amortized. What does that actually mean for a single call in production?"
           options={[
             { label: "Every call takes constant time.", explanation: "False. The amortized bound averages over a sequence; a single resize call is O(n)." },
-            { label: "Over a long sequence of adds, the total cost is O(n), so per-add averages to O(1) — but one specific call can spike to O(n).", correct: true, explanation: "Right. That's the entire point of amortized analysis: a useful average over a sequence, while individual operations can still spike. P99-sensitive code needs to pre-size." },
-            { label: "It's a marketing term; it's really O(n).", explanation: "The amortized bound is mathematically rigorous (banker's method proves it). It's not marketing — but you have to know what it does and doesn't promise." },
+            { label: "Over a long sequence of adds, the total cost is O(n), so per-add averages to O(1), but one specific call can spike to O(n).", correct: true, explanation: "Right. That's the entire point of amortized analysis: a useful average over a sequence, while individual operations can still spike. P99-sensitive code needs to pre-size." },
+            { label: "It's a marketing term; it's really O(n).", explanation: "The amortized bound is mathematically rigorous (banker's method proves it). It's not marketing, but you have to know what it does and doesn't promise." },
             { label: "It only holds if you use ensureCapacity().", explanation: "It holds with default geometric growth. ensureCapacity is an optimization to avoid the spikes entirely." },
           ]}
         />
@@ -695,9 +695,9 @@ int sum(TreeNode root) {
           kind="Recall check"
           question="Naive recursive fib(n) has O(2ⁿ) time. What's its space complexity?"
           options={[
-            { label: "O(2ⁿ) — same as time", explanation: "Despite the exponential time, only one branch is on the call stack at a time. The other branch hasn't been called yet (or has returned)." },
+            { label: "O(2ⁿ), same as time", explanation: "Despite the exponential time, only one branch is on the call stack at a time. The other branch hasn't been called yet (or has returned)." },
             { label: "O(n²)", explanation: "Not the right shape. Each frame uses O(1); depth determines space." },
-            { label: "O(n) — max recursion depth equals n", correct: true, explanation: "Right. The call tree has 2ⁿ nodes total but the deepest path is n. Only one root-to-leaf path is on the stack at any moment, so space is O(n). This is a classic gotcha — time ≠ space for recursive trees." },
+            { label: "O(n), max recursion depth equals n", correct: true, explanation: "Right. The call tree has 2ⁿ nodes total but the deepest path is n. Only one root-to-leaf path is on the stack at any moment, so space is O(n). This is a classic gotcha, time ≠ space for recursive trees." },
             { label: "O(log n)", explanation: "That would be if the recursion halved each time (like binary search). fib(n) calls fib(n-1), so depth is linear." },
           ]}
         />
@@ -709,7 +709,7 @@ int sum(TreeNode root) {
             { label: "O(1) for all operations.", explanation: "Misleading without an asterisk. Worst case is O(n) with all collisions, or O(log n) per bucket in Java 8+ tree-bins." },
             { label: "O(log n) average, like a balanced tree.", explanation: "That's TreeMap. HashMap is O(1) average." },
             { label: "Amortized O(1) average per put (rare rehash is O(n)); O(n) worst case if every key collides.", correct: true, explanation: "Right. This is the full honest answer: the amortization (for rehash), the average-case bound, AND the worst case. Signals you understand all three lenses." },
-            { label: "O(n) — it's just a wrapped LinkedList of buckets.", explanation: "Too pessimistic. Average case is O(1); the linked-list-per-bucket only shows up in worst case." },
+            { label: "O(n), it's just a wrapped LinkedList of buckets.", explanation: "Too pessimistic. Average case is O(1); the linked-list-per-bucket only shows up in worst case." },
           ]}
         />
       </section>
@@ -719,14 +719,14 @@ int sum(TreeNode root) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">
-          Phase 1 — locked in
+          Phase 1, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now read code for complexity on sight</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          The seven curves, the four calculation rules, the five code patterns, the auxiliary-vs-stack distinction, the three cases, and the amortized trick. That&apos;s the entire mental model — every data structure from here on out will be described in terms you already know.
+          The seven curves, the four calculation rules, the five code patterns, the auxiliary-vs-stack distinction, the three cases, and the amortized trick. That&apos;s the entire mental model, every data structure from here on out will be described in terms you already know.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 2 — Linear Data Structures.</strong>{" "}Arrays, dynamic arrays (you already know how those work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
+          <strong>Up next: Phase 2, Linear Data Structures.</strong>{" "}Arrays, dynamic arrays (you already know how those work), strings, linked lists, stacks, queues. Real implementations, real LeetCode patterns.
         </p>
         <Link
           href="/courses/dsa/modules/arrays"

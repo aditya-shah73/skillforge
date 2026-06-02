@@ -37,7 +37,7 @@ export default function EmbeddingsIntroModule() {
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Embeddings: numbers become geometry</h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Why &quot;king − man + woman ≈ queen&quot; isn&apos;t a party trick — it&apos;s the whole reason semantic search works.
+          Why &quot;king − man + woman ≈ queen&quot; isn&apos;t a party trick, it&apos;s the whole reason semantic search works.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="embeddings-intro" />
         <ModuleProgress moduleSlug="embeddings-intro" checkpoints={CHECKPOINTS} />
@@ -50,7 +50,7 @@ export default function EmbeddingsIntroModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          Module 1 turned text into token IDs — integers. Integers are terrible for meaning: 5 and 6 are &quot;close&quot;
+          Module 1 turned text into token IDs, integers. Integers are terrible for meaning: 5 and 6 are &quot;close&quot;
           but <code>cat</code> token 5 has nothing to do with <code>dog</code> token 6. Embeddings fix that. By the end you&apos;ll:
         </p>
         <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
@@ -83,12 +83,12 @@ banana → 41022`}</CodeBlock>
         <p>
           These numbers are <em>identifiers</em>, not measurements. The fact that <code>cat</code> (7453) and <code>dog</code> (3290) differ by 4163
           tells you exactly nothing about whether cats and dogs are similar. <code>dog</code> and <code>canine</code> are
-          near-synonyms and they&apos;re separated by 14941. Integers don&apos;t encode meaning — they encode position in a lookup table.
+          near-synonyms and they&apos;re separated by 14941. Integers don&apos;t encode meaning, they encode position in a lookup table.
         </p>
 
         <h3>The fix: give every word a vector</h3>
         <p>
-          What if instead of one number per word, we gave every word a <em>list</em>{" "}of numbers — say, three of them?
+          What if instead of one number per word, we gave every word a <em>list</em>{" "}of numbers, say, three of them?
         </p>
         <CodeBlock lang="plain">{`cat    → [0.8, 0.1, 0.9]
 dog    → [0.7, 0.2, 0.9]
@@ -100,8 +100,8 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           the first three words cluster, the fourth is an outlier.
         </p>
         <p>
-          Each list is a <strong>vector</strong>. Each number in the list is a <strong>dimension</strong>. The whole arrangement —
-          every word living at some point in this multi-dimensional space — is the <strong>embedding space</strong>. Real-world embedding
+          Each list is a <strong>vector</strong>. Each number in the list is a <strong>dimension</strong>. The whole arrangement,
+          every word living at some point in this multi-dimensional space, is the <strong>embedding space</strong>. Real-world embedding
           spaces have <strong>384</strong>, <strong>768</strong>, <strong>1024</strong>, or even <strong>3072</strong>{" "}dimensions.
           Three is just for our eyes.
         </p>
@@ -110,7 +110,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           <p className="m-0">
             The same way neural-network weights come from: <strong>training</strong>. A model reads billions of words and
             learns numbers for each token that make a prediction task work (e.g. &quot;predict the next word&quot;). The numbers that
-            fall out are never hand-designed — and nobody can tell you &quot;dimension 47 means furriness.&quot; They&apos;re just the
+            fall out are never hand-designed, and nobody can tell you &quot;dimension 47 means furriness.&quot; They&apos;re just the
             arrangement that makes prediction easiest. Meaning emerges as a side effect.
           </p>
         </Callout>
@@ -120,7 +120,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           Imagine a map where every word is a building. Cities cluster by topic: a Food district (apple, banana, pizza),
           a Pets district (cat, dog, hamster), an Emotions district (angry, sad, happy). Synonyms are next-door neighbors.
           Antonyms are across town. When you ask &quot;what&apos;s near <code>joy</code>?&quot; the map says: <code>happiness</code>,
-          <code>delight</code>, <code>elation</code> — and <code>sorrow</code> is the bus ride across the city.
+          <code>delight</code>, <code>elation</code>, and <code>sorrow</code> is the bus ride across the city.
         </p>
         <p>
           That map is what an embedding space <em>is</em>. Every semantic-search, RAG, or &quot;similar items&quot; feature
@@ -140,7 +140,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         </p>
         <p>
           This works because the direction &quot;king → man&quot; and the direction &quot;queen → woman&quot; both encode
-          the same concept (removing royalty, or flipping gender — the axes are entangled but consistent). The training
+          the same concept (removing royalty, or flipping gender, the axes are entangled but consistent). The training
           never told the model &quot;royalty is a thing&quot;; the arrangement of billions of sentences forced that structure to appear.
         </p>
 
@@ -148,7 +148,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           question="Why are vectors better than integer token IDs for representing meaning?"
           options={[
             { label: "Vectors are faster to store in memory than integers." },
-            { label: "Vectors have multiple dimensions, so two words can be 'similar on some axes but different on others' — integers can't express that.", correct: true, explanation: "Vectors encode gradients of similarity across many independent dimensions. 'cat' and 'dog' can match on 'pet-ness' while differing on 'bark-likelihood'. A single integer can only be 'equal' or 'unequal' — no in-between." },
+            { label: "Vectors have multiple dimensions, so two words can be 'similar on some axes but different on others', integers can't express that.", correct: true, explanation: "Vectors encode gradients of similarity across many independent dimensions. 'cat' and 'dog' can match on 'pet-ness' while differing on 'bark-likelihood'. A single integer can only be 'equal' or 'unequal', no in-between." },
             { label: "Vectors are always normalized to have length 1, which integers can't do." },
             { label: "Vectors use floats, which GPUs process faster than integers." },
           ]}
@@ -157,10 +157,10 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         <Quiz
           question="In a real 768-dimensional embedding from a model like BERT, what does dimension 47 typically mean?"
           options={[
-            { label: "It encodes part-of-speech — dimension 47 is always the noun flag." },
-            { label: "It encodes topic — dimension 47 is the 'food' axis." },
-            { label: "Nothing interpretable on its own. Individual dimensions are entangled; meaning comes from the combination of all 768.", correct: true, explanation: "Embedding dimensions are not individually interpretable. Meaning lives in the geometry of the whole vector — the directions and distances — not in any single coordinate. This is why you can't 'edit dimension 47 to make the model happier.'" },
-            { label: "It's always the hidden 'sentiment' dimension — that's why sentiment analysis works." },
+            { label: "It encodes part-of-speech, dimension 47 is always the noun flag." },
+            { label: "It encodes topic, dimension 47 is the 'food' axis." },
+            { label: "Nothing interpretable on its own. Individual dimensions are entangled; meaning comes from the combination of all 768.", correct: true, explanation: "Embedding dimensions are not individually interpretable. Meaning lives in the geometry of the whole vector, the directions and distances, not in any single coordinate. This is why you can't 'edit dimension 47 to make the model happier.'" },
+            { label: "It's always the hidden 'sentiment' dimension, that's why sentiment analysis works." },
           ]}
         />
       </section>
@@ -168,10 +168,10 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         title="Part 1 recap: vectors as geometry"
         gist="Embeddings replace opaque token IDs with points in 384-to-3072-dimensional space, where semantic similarity is literal nearness."
         points={[
-          { takeaway: "Token IDs are labels, not measurements.", detail: <>Integer IDs like 7453 for <code>cat</code> only identify a slot in a vocabulary — arithmetic on them is meaningless.</> },
+          { takeaway: "Token IDs are labels, not measurements.", detail: <>Integer IDs like 7453 for <code>cat</code> only identify a slot in a vocabulary, arithmetic on them is meaningless.</> },
           { takeaway: "Embeddings give every token a vector so similarity has room to exist.", detail: <>Two words can agree on some dimensions and disagree on others. That&apos;s the whole point.</> },
           { takeaway: "The numbers are learned, not designed.", detail: <>Training on billions of words produces the arrangement that makes prediction easiest. Meaning emerges as a byproduct.</> },
-          { takeaway: "Directions carry meaning; individual dimensions usually don't.", detail: <>&quot;king − man + woman ≈ queen&quot; works because the <em>gender direction</em> is consistent across the space — even though no single axis is &quot;gender.&quot;</> },
+          { takeaway: "Directions carry meaning; individual dimensions usually don't.", detail: <>&quot;king − man + woman ≈ queen&quot; works because the <em>gender direction</em> is consistent across the space, even though no single axis is &quot;gender.&quot;</> },
         ]}
       />
       </Checkpoint>
@@ -181,7 +181,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
       {/* ================================================================= */}
       <Checkpoint moduleSlug="embeddings-intro" id="cosine-similarity" title="Cosine similarity, by hand" xp={30} celebration="This formula is the single most-used equation in production AI after softmax. You now own it.">
       <section>
-        <h2>Part 2: Cosine similarity — the one formula</h2>
+        <h2>Part 2: Cosine similarity, the one formula</h2>
 
         <h3>If words are points, what does &quot;close&quot; mean?</h3>
         <p>
@@ -196,11 +196,11 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           d(a, b) = √( Σᵢ (aᵢ − bᵢ)² )
         </div>
         <p className="text-xs text-slate-600 italic dark:text-slate-400">
-          That&apos;s just the Pythagorean theorem in n dimensions: subtract the vectors element by element, square the differences, add them up, take the square root. Same recipe you used in high school for the distance between two points on a grid — just with more numbers per point.
+          That&apos;s just the Pythagorean theorem in n dimensions: subtract the vectors element by element, square the differences, add them up, take the square root. Same recipe you used in high school for the distance between two points on a grid, just with more numbers per point.
         </p>
         <p>
           The trouble: Euclidean distance cares about <strong>magnitude</strong>. If someone embeds a 5-word tweet and a 5000-word essay,
-          the essay&apos;s embedding is often <em>longer</em> (larger magnitude) than the tweet&apos;s — even if they&apos;re about the same topic.
+          the essay&apos;s embedding is often <em>longer</em> (larger magnitude) than the tweet&apos;s, even if they&apos;re about the same topic.
           Euclidean distance will say they&apos;re far apart when they&apos;re semantically twins.
         </p>
         <p>
@@ -215,7 +215,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           a · b = Σᵢ aᵢ · bᵢ = |a| · |b| · cos(θ)
         </div>
         <p className="text-xs text-slate-600 italic dark:text-slate-400">
-          Two ways to read the same number. <strong>Computationally:</strong>{" "}pair up the entries of <code>a</code> and <code>b</code>, multiply each pair, add them all up — one number out. <strong>Geometrically:</strong>{" "}that number equals the lengths of the two arrows multiplied together, times the cosine of the angle between them. The first form tells you how to compute it; the second tells you what it means.
+          Two ways to read the same number. <strong>Computationally:</strong>{" "}pair up the entries of <code>a</code> and <code>b</code>, multiply each pair, add them all up, one number out. <strong>Geometrically:</strong>{" "}that number equals the lengths of the two arrows multiplied together, times the cosine of the angle between them. The first form tells you how to compute it; the second tells you what it means.
         </p>
         <p>
           The second form is the important one: the dot product is <em>length times length times the cosine of the angle between them</em>.
@@ -223,7 +223,7 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
         </p>
 
         <h3>Candidate 3 (the winner): cosine similarity</h3>
-        <p>Divide the dot product by both lengths — lengths cancel, leaving only the angle:</p>
+        <p>Divide the dot product by both lengths, lengths cancel, leaving only the angle:</p>
         <div className="not-prose mx-auto my-6 max-w-xl rounded-xl border-2 border-indigo-300 bg-gradient-to-br from-indigo-50 to-purple-50 p-5 text-center dark:border-indigo-800 dark:from-indigo-950/40 dark:to-purple-950/40">
           <div className="mb-2 text-[11px] font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">Cosine similarity</div>
           <div className="font-mono text-lg">cos(a, b) = (a · b) / ( |a| · |b| )</div>
@@ -233,9 +233,9 @@ banana → [0.1, 0.9, 0.1]`}</CodeBlock>
           The output lives in <code>[−1, +1]</code>:
         </p>
         <ul>
-          <li><strong>+1</strong> — same direction (most similar)</li>
-          <li><strong>0</strong> — orthogonal, unrelated</li>
-          <li><strong>−1</strong> — opposite direction (rarely happens in practice with text embeddings — most sit in a narrow cone)</li>
+          <li><strong>+1</strong>, same direction (most similar)</li>
+          <li><strong>0</strong>, orthogonal, unrelated</li>
+          <li><strong>−1</strong>, opposite direction (rarely happens in practice with text embeddings, most sit in a narrow cone)</li>
         </ul>
 
         <WorkedExample title="Cosine similarity by hand" steps={[
@@ -297,7 +297,7 @@ cos(cat, banana) = 0.26 / (1.208 · 0.911) = 0.26 / 1.100 ≈ 0.236`}</CodeBlock
         <h3>Why people normalize first</h3>
         <p>
           If you pre-divide every vector by its length (<strong>L2 normalize</strong>, so every vector has length 1),
-          then <em>cosine similarity equals the dot product</em> — no division needed at query time. This is why production vector DBs store normalized vectors: search becomes a pure matrix multiply.
+          then <em>cosine similarity equals the dot product</em>, no division needed at query time. This is why production vector DBs store normalized vectors: search becomes a pure matrix multiply.
         </p>
         <CodeBlock lang="java">{`// L2 normalize: in place
 static void normalize(double[] v) {
@@ -328,8 +328,8 @@ static double cosine(double[] a, double[] b) {
           options={[
             { label: "They're opposites." },
             { label: "They're unrelated." },
-            { label: "They point in nearly the same direction — almost certainly semantically similar.", correct: true, explanation: "0.94 is very close to 1 (maximum). That means the angle between the vectors is small, which for text embeddings is a reliable signal of semantic similarity. (Most text vectors sit in a narrow positive cone, so the 'useful' range is often more like 0.3–0.99, but 0.94 is clearly at the top of it.)" },
-            { label: "Nothing — cosine similarity is always positive for text, so 0.94 could mean anything." },
+            { label: "They point in nearly the same direction, almost certainly semantically similar.", correct: true, explanation: "0.94 is very close to 1 (maximum). That means the angle between the vectors is small, which for text embeddings is a reliable signal of semantic similarity. (Most text vectors sit in a narrow positive cone, so the 'useful' range is often more like 0.3–0.99, but 0.94 is clearly at the top of it.)" },
+            { label: "Nothing, cosine similarity is always positive for text, so 0.94 could mean anything." },
           ]}
         />
 
@@ -338,7 +338,7 @@ static double cosine(double[] a, double[] b) {
           options={[
             { label: "Cosine is faster to compute than Euclidean." },
             { label: "Euclidean distance is undefined in high dimensions." },
-            { label: "Cosine ignores magnitude — so a short document and a long document on the same topic still match. Euclidean can be fooled by length differences.", correct: true, explanation: "Text embeddings can vary in magnitude for reasons unrelated to meaning (length, frequency of the tokens involved). Cosine strips out magnitude and keeps only direction — which is where the semantics actually live." },
+            { label: "Cosine ignores magnitude, so a short document and a long document on the same topic still match. Euclidean can be fooled by length differences.", correct: true, explanation: "Text embeddings can vary in magnitude for reasons unrelated to meaning (length, frequency of the tokens involved). Cosine strips out magnitude and keeps only direction, which is where the semantics actually live." },
             { label: "Cosine returns a probability, Euclidean doesn't." },
           ]}
         />
@@ -355,7 +355,7 @@ static double cosine(double[] a, double[] b) {
       </section>
       <PartRecap
         title="Part 2 recap: cosine is the metric"
-        gist="Cosine similarity = dot product divided by both lengths. It measures direction, which is where semantic meaning lives — and it collapses to a pure dot product once you pre-normalize."
+        gist="Cosine similarity = dot product divided by both lengths. It measures direction, which is where semantic meaning lives, and it collapses to a pure dot product once you pre-normalize."
         points={[
           { takeaway: "Euclidean distance gets fooled by vector length.", detail: <>A long essay and a short tweet on the same topic can sit far apart in Euclidean distance even though they&apos;re near-parallel.</> },
           { takeaway: "Cosine ranges from −1 to +1.", detail: <>+1 = same direction, 0 = orthogonal, −1 = opposite. Most real text pairs sit in a positive cone.</> },
@@ -368,9 +368,9 @@ static double cosine(double[] a, double[] b) {
       {/* ================================================================= */}
       {/* PART 3: WHAT EMBEDDINGS ENCODE                                     */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="embeddings-intro" id="properties" title="What embeddings encode" xp={25} celebration="You now know which model to grab for which job — that's more than most engineers shipping RAG in 2026.">
+      <Checkpoint moduleSlug="embeddings-intro" id="properties" title="What embeddings encode" xp={25} celebration="You now know which model to grab for which job, that's more than most engineers shipping RAG in 2026.">
       <section>
-        <h2>Part 3: Static vs contextual embeddings — and where they fail</h2>
+        <h2>Part 3: Static vs contextual embeddings, and where they fail</h2>
 
         <h3>Two families of embeddings</h3>
         <p>
@@ -380,7 +380,7 @@ static double cosine(double[] a, double[] b) {
         <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
             <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase dark:text-amber-400">Static (word2vec, GloVe)</div>
-            <p className="m-0 mb-2 text-sm">One vector per word, forever. The word <code>bank</code> has exactly one embedding — even though a river bank and a savings bank are different concepts.</p>
+            <p className="m-0 mb-2 text-sm">One vector per word, forever. The word <code>bank</code> has exactly one embedding, even though a river bank and a savings bank are different concepts.</p>
             <p className="m-0 text-xs text-slate-500">Fast, tiny, obsolete for new work. Still useful for quick prototypes and teaching.</p>
           </div>
           <div className="rounded-xl border border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-800 dark:bg-indigo-950/20">
@@ -392,7 +392,7 @@ static double cosine(double[] a, double[] b) {
 
         <Callout variant="insight" title="Sentence embeddings, which you'll actually use">
           <p className="m-0">
-            In RAG and search, you rarely embed single words. You embed <strong>chunks of text</strong> — a paragraph, a question, a product description. A contextual model reads the whole chunk and returns
+            In RAG and search, you rarely embed single words. You embed <strong>chunks of text</strong>, a paragraph, a question, a product description. A contextual model reads the whole chunk and returns
             <em> one</em>{" "}vector summarizing it. That&apos;s what gets stored in a vector DB. We&apos;ll do this for real in Phase 3.
           </p>
         </Callout>
@@ -412,7 +412,7 @@ static double cosine(double[] a, double[] b) {
           Nobody told the model these concepts exist. They emerge because a model that captures them predicts text better than one that doesn&apos;t.
         </p>
 
-        <h3>Where embeddings fail — three gotchas</h3>
+        <h3>Where embeddings fail, three gotchas</h3>
 
         <h4>1. Anisotropy (the narrow-cone problem)</h4>
         <p>
@@ -428,7 +428,7 @@ static double cosine(double[] a, double[] b) {
         <p>
           In high dimensions, distances become weirdly flat. In 3-D, a nearest neighbor is clearly the nearest. In 1024-D,
           the nearest and farthest point often have similar distances. Brute-force search still works (what you&apos;ll build in the project),
-          but at millions of vectors you need <strong>approximate nearest neighbor</strong>{" "}indexes (HNSW, IVFFlat) — also Phase 3.
+          but at millions of vectors you need <strong>approximate nearest neighbor</strong>{" "}indexes (HNSW, IVFFlat), also Phase 3.
         </p>
 
         <h3>Embeddings you&apos;ll encounter in practice</h3>
@@ -438,35 +438,35 @@ Voyage voyage-3 / voyage-3-large  → 1024 / 2048 dims, tuned for code & retriev
 sentence-transformers all-MiniLM  → 384 dims, runs locally, free, weaker
 Cohere embed-english-v3 / v4      → 1024+ dims, strong for English`}</CodeBlock>
         <p>
-          (Model lineups shift every few months — check each provider&apos;s docs for the current names and prices before you commit.) You&apos;ll pick between these in Phase 3. For today: they all return a list of floats that obeys the same math you just learned.
+          (Model lineups shift every few months, check each provider&apos;s docs for the current names and prices before you commit.) You&apos;ll pick between these in Phase 3. For today: they all return a list of floats that obeys the same math you just learned.
         </p>
 
         <Quiz
-          question="Someone says: 'Embeddings can't distinguish a river bank from a financial bank — they both map to the same vector.' When is that true?"
+          question="Someone says: 'Embeddings can't distinguish a river bank from a financial bank, they both map to the same vector.' When is that true?"
           options={[
-            { label: "Always — it's a fundamental limitation of vectors." },
+            { label: "Always, it's a fundamental limitation of vectors." },
             { label: "Only for static embeddings (word2vec, GloVe). Contextual embeddings (BERT, OpenAI) use the whole sentence and produce different vectors for each sense.", correct: true, explanation: "This is the static-vs-contextual distinction. Static models collapse all senses of 'bank' into one point; contextual models read the surrounding sentence and produce a different vector per occurrence. All production embedding APIs in 2026 are contextual." },
             { label: "Only for high-dimensional embeddings; low-dim ones separate senses cleanly." },
-            { label: "Never — any modern embedding model perfectly separates word senses." },
+            { label: "Never, any modern embedding model perfectly separates word senses." },
           ]}
         />
 
         <Quiz
           question="Your semantic search retrieves 'I don't like spicy food' when the user asked about 'I like spicy food.' What's going on?"
           options={[
-            { label: "The embedding model is broken — file a bug report." },
+            { label: "The embedding model is broken, file a bug report." },
             { label: "You forgot to normalize the vectors." },
-            { label: "Most embedding models are weak at negation — one small word flipping meaning doesn't shift the vector much. Add re-ranking or hybrid search to fix it.", correct: true, explanation: "Negation is a well-known weakness of dense-vector retrieval. The sentences share almost every word, so their embeddings are near-identical. Production systems fix this by adding a re-ranker (a cross-encoder that reads both texts together)." },
+            { label: "Most embedding models are weak at negation, one small word flipping meaning doesn't shift the vector much. Add re-ranking or hybrid search to fix it.", correct: true, explanation: "Negation is a well-known weakness of dense-vector retrieval. The sentences share almost every word, so their embeddings are near-identical. Production systems fix this by adding a re-ranker (a cross-encoder that reads both texts together)." },
             { label: "Cosine similarity always ignores negations by design." },
           ]}
         />
       </section>
       <PartRecap
         title="Part 3 recap: what embeddings actually encode"
-        gist="Modern embedding APIs return contextual sentence vectors. They work beautifully most of the time — and fail in a few predictable ways you need to know about."
+        gist="Modern embedding APIs return contextual sentence vectors. They work beautifully most of the time, and fail in a few predictable ways you need to know about."
         points={[
           { takeaway: "Static vs contextual is the most important distinction.", detail: <>word2vec/GloVe = one vector per word forever. BERT/OpenAI = one vector per occurrence, shaped by context. Production is always contextual.</> },
-          { takeaway: "Directions in embedding space carry semantic relations.", detail: <>Gender, tense, plural, country→capital — all of these emerge as roughly consistent directions without being labeled during training.</> },
+          { takeaway: "Directions in embedding space carry semantic relations.", detail: <>Gender, tense, plural, country→capital, all of these emerge as roughly consistent directions without being labeled during training.</> },
           { takeaway: "Anisotropy shifts the zero baseline.", detail: <>Random unrelated text pairs often cosine around 0.6, not 0. Calibrate thresholds per model; don&apos;t assume 0 means &quot;unrelated.&quot;</> },
           { takeaway: "Negation blindness is the classic failure.", detail: <>&quot;I love X&quot; and &quot;I don&apos;t love X&quot; look nearly identical to cosine. Layer in a re-ranker or hybrid BM25+vector search to recover.</> },
         ]}
@@ -478,7 +478,7 @@ Cohere embed-english-v3 / v4      → 1024+ dims, strong for English`}</CodeBloc
       {/* ================================================================= */}
       <Checkpoint moduleSlug="embeddings-intro" id="nearest-neighbor" title="Nearest-neighbor search" xp={25} celebration="That's a vector database in 30 lines. pgvector is literally this plus an index.">
       <section>
-        <h2>Part 4: Nearest-neighbor search — the algorithm under every RAG system</h2>
+        <h2>Part 4: Nearest-neighbor search, the algorithm under every RAG system</h2>
 
         <h3>The problem</h3>
         <p>
@@ -492,13 +492,13 @@ Cohere embed-english-v3 / v4      → 1024+ dims, strong for English`}</CodeBloc
        score[d] = cosine(q, d.vector)
 3. Return the top-k documents by score (descending)`}</CodeBlock>
         <p>
-          That&apos;s it. No magic. Complexity is <strong>O(n · dim)</strong> — linear in the number of documents. At
+          That&apos;s it. No magic. Complexity is <strong>O(n · dim)</strong>, linear in the number of documents. At
           10,000 documents × 768 dims, that&apos;s ~8M multiplies per query. A modern laptop does billions of those per second.
           Brute force is fine up to roughly a million vectors.
         </p>
         <p>
           Only beyond that (tens of millions, hundreds of millions) do you need <strong>approximate</strong>{" "}nearest neighbors
-          (HNSW, IVFFlat, product quantization) — Phase 3&apos;s pgvector module covers those. You don&apos;t need them today.
+          (HNSW, IVFFlat, product quantization), Phase 3&apos;s pgvector module covers those. You don&apos;t need them today.
         </p>
 
         <h3>Java skeleton</h3>
@@ -519,7 +519,7 @@ static List<Document> topK(double[] query, List<Document> corpus, int k) {
     return scored.stream().limit(k).map(Map.Entry::getKey).toList();
 }`}</CodeBlock>
         <p>
-          If you don&apos;t pre-normalize, compute <code>a·b / (|a|·|b|)</code> instead. If your corpus is bigger than fits in memory, you use a database with a vector index — but the concept is the same.
+          If you don&apos;t pre-normalize, compute <code>a·b / (|a|·|b|)</code> instead. If your corpus is bigger than fits in memory, you use a database with a vector index, but the concept is the same.
         </p>
 
         <Callout variant="info" title="Why sort is fine at small scale">
@@ -570,10 +570,10 @@ q · d4 = 0.95·(-0.707) + 0.312·0.707 = -0.671 + 0.221 = -0.450`}</CodeBlock>
         <Quiz
           question="You have 50,000 documents, each a 768-dim embedding, and you want top-5 for a query. What's the per-query cost of brute-force cosine search with normalized vectors?"
           options={[
-            { label: "O(1) — vectors make it instant." },
-            { label: "O(log n) — it's basically a binary search." },
-            { label: "O(n · dim) ≈ 38 million multiplies per query — easy on a laptop.", correct: true, explanation: "One dot product per doc = 768 multiplies. 50,000 × 768 = 38.4M multiplies. A laptop CPU does billions of multiplies per second, so this runs in milliseconds. That's why brute force carries you surprisingly far." },
-            { label: "O(n²) — comparing every pair." },
+            { label: "O(1), vectors make it instant." },
+            { label: "O(log n), it's basically a binary search." },
+            { label: "O(n · dim) ≈ 38 million multiplies per query, easy on a laptop.", correct: true, explanation: "One dot product per doc = 768 multiplies. 50,000 × 768 = 38.4M multiplies. A laptop CPU does billions of multiplies per second, so this runs in milliseconds. That's why brute force carries you surprisingly far." },
+            { label: "O(n²), comparing every pair." },
           ]}
         />
 
@@ -581,7 +581,7 @@ q · d4 = 0.95·(-0.707) + 0.312·0.707 = -0.671 + 0.221 = -0.450`}</CodeBlock>
           question="Why do production vector stores (pgvector, Qdrant, Pinecone) usually require or encourage you to normalize vectors before storing them?"
           options={[
             { label: "Normalization makes the vectors smaller on disk." },
-            { label: "With L2-normalized vectors, cosine similarity equals the dot product — which is a single fused multiply-add per dim, perfect for SIMD and GPU kernels.", correct: true, explanation: "Cosine = dot / (|a|·|b|). If |a| = |b| = 1, the division vanishes and you just dot. Hardware loves that: no divides, no square roots, just a tight multiply-add loop." },
+            { label: "With L2-normalized vectors, cosine similarity equals the dot product, which is a single fused multiply-add per dim, perfect for SIMD and GPU kernels.", correct: true, explanation: "Cosine = dot / (|a|·|b|). If |a| = |b| = 1, the division vanishes and you just dot. Hardware loves that: no divides, no square roots, just a tight multiply-add loop." },
             { label: "The vector DB will reject unnormalized vectors as malformed." },
             { label: "Normalization is required for the vectors to be valid embeddings." },
           ]}
@@ -589,11 +589,11 @@ q · d4 = 0.95·(-0.707) + 0.312·0.707 = -0.671 + 0.221 = -0.450`}</CodeBlock>
       </section>
       <PartRecap
         title="Part 4 recap: nearest-neighbor search is a loop"
-        gist="Embed the query, dot-product against every stored vector, sort, return the top k. That's it — the whole algorithm behind every RAG system."
+        gist="Embed the query, dot-product against every stored vector, sort, return the top k. That's it, the whole algorithm behind every RAG system."
         points={[
-          { takeaway: "The inner loop is literally a dot product.", detail: <>Per query: <code>O(n · dim)</code>. A 1M-doc, 768-dim corpus is ~770M multiplies — still under a second on a laptop.</> },
-          { takeaway: "Sort vs heap matters only at scale.", detail: <>Sort: O(n log n). Min-heap of size k: O(n log k). For &lt;1M docs just sort — simpler and plenty fast.</> },
-          { takeaway: "Approximate indexes take over beyond ~10M vectors.", detail: <>HNSW, IVFFlat, PQ — same interface, trade a tiny bit of recall for orders of magnitude in speed. We build one in Phase 3.</> },
+          { takeaway: "The inner loop is literally a dot product.", detail: <>Per query: <code>O(n · dim)</code>. A 1M-doc, 768-dim corpus is ~770M multiplies, still under a second on a laptop.</> },
+          { takeaway: "Sort vs heap matters only at scale.", detail: <>Sort: O(n log n). Min-heap of size k: O(n log k). For &lt;1M docs just sort, simpler and plenty fast.</> },
+          { takeaway: "Approximate indexes take over beyond ~10M vectors.", detail: <>HNSW, IVFFlat, PQ, same interface, trade a tiny bit of recall for orders of magnitude in speed. We build one in Phase 3.</> },
           { takeaway: "Pre-normalize everything at ingest time.", detail: <>Do it once, at storage. Query time becomes a pure dot product that vectorizes perfectly.</> },
         ]}
       />
@@ -615,7 +615,7 @@ q · d4 = 0.95·(-0.707) + 0.312·0.707 = -0.671 + 0.221 = -0.450`}</CodeBlock>
         <h2>Project: build a tiny semantic search in Java</h2>
         <p>
           You&apos;re going to build a mini-corpus of 8–12 sentences, give each one a hand-crafted 3-D &quot;embedding&quot; that reflects its meaning,
-          and write a nearest-neighbor search that retrieves the top-k for a query sentence. You won&apos;t use a real embedding model yet — that
+          and write a nearest-neighbor search that retrieves the top-k for a query sentence. You won&apos;t use a real embedding model yet, that
           comes in Phase 3. The point today is to feel the algorithm.
         </p>
 
@@ -640,9 +640,9 @@ List<Document> corpus = List.of(
 
         <h3>What to implement</h3>
         <ol>
-          <li><code>void normalize(double[] v)</code> — L2 normalize in place.</li>
-          <li><code>double cosine(double[] a, double[] b)</code> — assume both pre-normalized; return dot product.</li>
-          <li><code>double cosineUnnormalized(double[] a, double[] b)</code> — full formula, no assumptions.</li>
+          <li><code>void normalize(double[] v)</code>, L2 normalize in place.</li>
+          <li><code>double cosine(double[] a, double[] b)</code>, assume both pre-normalized; return dot product.</li>
+          <li><code>double cosineUnnormalized(double[] a, double[] b)</code>, full formula, no assumptions.</li>
           <li><code>List&lt;Document&gt; topK(double[] query, List&lt;Document&gt; corpus, int k)</code>.</li>
           <li>A <code>main</code> that normalizes every doc once, then runs three queries and prints top-3 for each.</li>
         </ol>
@@ -663,9 +663,9 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
 
         <h3>Stretch goals</h3>
         <ul>
-          <li>Replace the hand-crafted vectors with <strong>TF-IDF</strong>{" "}features over a small vocab — same math, real embeddings (lexical, not semantic, but a real step up).</li>
+          <li>Replace the hand-crafted vectors with <strong>TF-IDF</strong>{" "}features over a small vocab, same math, real embeddings (lexical, not semantic, but a real step up).</li>
           <li>Add a tiny React 2-D visualizer: plot the first two dims on a scatter plot, highlight the query and top-k. (We&apos;ll help you wire this in later.)</li>
-          <li>Benchmark brute-force search time on 100k random vectors — see when it starts to feel slow.</li>
+          <li>Benchmark brute-force search time on 100k random vectors, see when it starts to feel slow.</li>
         </ul>
 
         <h3>Gotchas</h3>
@@ -698,7 +698,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
           options={[
             { label: "A hash of a token." },
             { label: "A compressed version of the original text." },
-            { label: "A vector in high-dimensional space whose geometry encodes meaning — learned from data.", correct: true },
+            { label: "A vector in high-dimensional space whose geometry encodes meaning, learned from data.", correct: true },
             { label: "A lookup key into a vocabulary table." },
           ]}
         />
@@ -708,8 +708,8 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
           options={[
             { label: "They're almost identical." },
             { label: "They're opposites." },
-            { label: "They're essentially unrelated — nearly orthogonal.", correct: true },
-            { label: "They can't be text embeddings — text embeddings are never that low." },
+            { label: "They're essentially unrelated, nearly orthogonal.", correct: true },
+            { label: "They can't be text embeddings, text embeddings are never that low." },
           ]}
         />
 
@@ -717,7 +717,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
           question="Static embeddings (word2vec) map the word 'bank' to:"
           options={[
             { label: "A different vector depending on surrounding words." },
-            { label: "Exactly one vector — regardless of whether it's a river bank or a savings bank.", correct: true },
+            { label: "Exactly one vector, regardless of whether it's a river bank or a savings bank.", correct: true },
             { label: "Two vectors, one per known sense." },
             { label: "The average of all its uses in context." },
           ]}
@@ -727,7 +727,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
           question="You pre-normalize all stored vectors. What's the payoff at query time?"
           options={[
             { label: "Vectors take less memory." },
-            { label: "Cosine similarity reduces to a pure dot product — no division, no sqrt.", correct: true },
+            { label: "Cosine similarity reduces to a pure dot product, no division, no sqrt.", correct: true },
             { label: "Rankings are more accurate." },
             { label: "You can skip the dot product entirely." },
           ]}
@@ -736,7 +736,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
         <Quiz
           question="Brute-force nearest neighbor on a 100k-doc, 768-dim corpus typically..."
           options={[
-            { label: "is impractical — you must use an ANN index." },
+            { label: "is impractical, you must use an ANN index." },
             { label: "runs in milliseconds per query on a laptop.", correct: true },
             { label: "is O(n²)." },
             { label: "requires a GPU to be feasible." },
@@ -747,7 +747,7 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
           question="Your semantic search returns 'I hate skiing' for the query 'I love skiing'. What's the most likely explanation?"
           options={[
             { label: "The embedding model is broken." },
-            { label: "Cosine similarity is the wrong metric here — use Euclidean." },
+            { label: "Cosine similarity is the wrong metric here, use Euclidean." },
             { label: "Dense-vector models are weak at negation: small words that flip meaning barely shift the vector. Add a re-ranker or hybrid search.", correct: true },
             { label: "You forgot to normalize the query vector." },
           ]}
@@ -759,10 +759,10 @@ Q3 "I'm not doing well emotionally" → [0.0, 0.0, 0.95]  expect: overwhelmed + 
       {/* NEXT MODULE                                                        */}
       {/* ================================================================= */}
       <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
-        <h3 className="mt-0 mb-2">Next up: Module 7 — Prompt engineering</h3>
+        <h3 className="mt-0 mb-2">Next up: Module 7, Prompt engineering</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           You&apos;ve built the model-side understanding. Next you turn it around and learn how to
-          <em> talk</em>{" "}to one: system prompts, few-shot, chain-of-thought, structured output — all locally, no API key required.
+          <em> talk</em>{" "}to one: system prompts, few-shot, chain-of-thought, structured output, all locally, no API key required.
         </p>
         <Link
           href="/courses/ai/modules/prompt-engineering"

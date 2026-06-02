@@ -12,10 +12,10 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "setup", title: "What two-pointers is — and the sorted-array tell" },
+  { id: "setup", title: "What two-pointers is, and the sorted-array tell" },
   { id: "opposite", title: "Opposite-end pointers (the converging pattern)" },
   { id: "same-dir", title: "Same-direction pointers (fast/slow, partition)" },
-  { id: "container", title: "Container With Most Water — geometric two-pointer" },
+  { id: "container", title: "Container With Most Water, geometric two-pointer" },
   { id: "project", title: "Project: 3Sum from scratch" },
   { id: "final", title: "Final quiz" },
 ];
@@ -115,12 +115,12 @@ flowchart TB
       {/* ───────────────── Part 1 · Setup ───────────────── */}
       <Checkpoint moduleSlug="two-pointers" id="setup" title="I see the sorted-array tell and reach for two pointers" xp={20}>
       <section>
-        <h2 id="setup">What two-pointers is — and the sorted-array tell</h2>
+        <h2 id="setup">What two-pointers is, and the sorted-array tell</h2>
 
         <p>
           <strong>Two pointers</strong>{" "}is the technique where you maintain two indices into an array (or two
           references into a string, or two cursors into a linked list) and move them according to some rule that
-          shrinks the search space at every step. That&apos;s the whole idea. The trick is the rule — and the rule
+          shrinks the search space at every step. That&apos;s the whole idea. The trick is the rule, and the rule
           almost always exploits some <em>monotonic structure</em>{" "}in the data, most commonly sortedness.
         </p>
 
@@ -133,7 +133,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
 
         <p>
           They share one structural promise: <strong>each pointer moves O(n) times total across the whole
-          algorithm</strong>. So both flavors run in O(n) — a dramatic improvement over the brute-force O(n²) nested
+          algorithm</strong>. So both flavors run in O(n), a dramatic improvement over the brute-force O(n²) nested
           loop that would otherwise solve these problems.
         </p>
 
@@ -141,7 +141,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
 
         <p>
           When you see the words &quot;sorted array&quot; in a problem statement and you&apos;re asked about pairs,
-          triples, sums, or differences — <em>think two pointers immediately</em>. Sortedness is the structural
+          triples, sums, or differences, <em>think two pointers immediately</em>. Sortedness is the structural
           property that makes the converging-pointer rule work: if you know the sum is too big, you also know which
           end to shrink. If the array were unsorted, you&apos;d have no such signal.
         </p>
@@ -161,26 +161,26 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
 
         <p>
           Consider Two Sum on a sorted array: find indices <code>i &lt; j</code> with{" "}
-          <code>a[i] + a[j] == target</code>. The brute force is two nested loops — O(n²). With two pointers, you
+          <code>a[i] + a[j] == target</code>. The brute force is two nested loops, O(n²). With two pointers, you
           start <code>l = 0, r = n - 1</code>:
         </p>
 
         <ul>
           <li>If <code>a[l] + a[r] == target</code>: done.</li>
-          <li>If <code>a[l] + a[r] &lt; target</code>: the sum is too small. <code>a[r]</code> is the largest available — pairing it with anything to the left of <code>l</code> wouldn&apos;t help (those are smaller than <code>a[l]</code>). The only way to grow the sum is <code>l++</code>.</li>
+          <li>If <code>a[l] + a[r] &lt; target</code>: the sum is too small. <code>a[r]</code> is the largest available, pairing it with anything to the left of <code>l</code> wouldn&apos;t help (those are smaller than <code>a[l]</code>). The only way to grow the sum is <code>l++</code>.</li>
           <li>If <code>a[l] + a[r] &gt; target</code>: by symmetry, <code>r--</code>.</li>
         </ul>
 
         <p>
           Each comparison eliminates an entire row or column of the brute-force table. <code>l</code> only moves right
-          and <code>r</code> only moves left — together at most <code>n</code> moves — so the loop is O(n).
+          and <code>r</code> only moves left, together at most <code>n</code> moves, so the loop is O(n).
         </p>
 
         <h3>The monotone-search-space framing</h3>
 
         <p>
           Here&apos;s the deeper view. The brute-force search space is the set of all index pairs{" "}
-          <code>(i, j)</code> with <code>i &lt; j</code> — there are <code>n(n-1)/2</code> of them, the upper triangle
+          <code>(i, j)</code> with <code>i &lt; j</code>, there are <code>n(n-1)/2</code> of them, the upper triangle
           of an <code>n × n</code> grid. Each comparison in the two-pointer walk is a single cell of that grid, but
           the move rule guarantees that we never revisit a cell <em>and</em>{" "}we never skip the answer. Net effect:
           we visit a path of length <code>≤ 2n</code> through that triangle and we&apos;re done.
@@ -195,7 +195,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
           question="On a sorted array, you're searching for a pair that sums to target. With l=0, r=n-1, you compute a[l] + a[r] and it's less than target. What's the next move?"
           options={[
             { label: "r-- (move the right pointer left).", explanation: "That would shrink the sum further. We need it to grow, not shrink." },
-            { label: "l++ (move the left pointer right).", correct: true, explanation: "Right. The sum is too small, and a[r] is already the largest available. The only way to grow the sum is to replace a[l] with something larger — i.e., l++. Each side's move is forced by the comparison." },
+            { label: "l++ (move the left pointer right).", correct: true, explanation: "Right. The sum is too small, and a[r] is already the largest available. The only way to grow the sum is to replace a[l] with something larger, i.e., l++. Each side's move is forced by the comparison." },
             { label: "Both l++ and r--.", explanation: "Moving both at once skips the diagonal in the search space and you can miss valid pairs. Move exactly one each step." },
             { label: "Restart with binary search.", explanation: "Binary search on a sorted array is fine for finding ONE element, but two pointers is the simpler O(n) tool for pair-sum questions." },
           ]}
@@ -205,8 +205,8 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
           kind="Quick check"
           question="Why does the two-pointer move rule for Two Sum II require the array to be sorted?"
           options={[
-            { label: "It doesn't — it works on any array.", explanation: "It does require sorting. Without it, comparing a[l]+a[r] to target gives no signal about which end to shrink." },
-            { label: "Sortedness lets the comparison 'sum too big' or 'sum too small' tell you which end to move. Without it, you'd have no directional signal.", correct: true, explanation: "Right. The monotonic structure is the bridge between 'this single comparison failed' and 'so I can rule out an entire chunk of the search space.' On an unsorted array, the same failed comparison tells you nothing about what to try next — you'd have to fall back to brute force." },
+            { label: "It doesn't, it works on any array.", explanation: "It does require sorting. Without it, comparing a[l]+a[r] to target gives no signal about which end to shrink." },
+            { label: "Sortedness lets the comparison 'sum too big' or 'sum too small' tell you which end to move. Without it, you'd have no directional signal.", correct: true, explanation: "Right. The monotonic structure is the bridge between 'this single comparison failed' and 'so I can rule out an entire chunk of the search space.' On an unsorted array, the same failed comparison tells you nothing about what to try next, you'd have to fall back to brute force." },
             { label: "It's a Java requirement.", explanation: "The technique is language-independent. The reason is algorithmic." },
             { label: "Sorting is faster than two pointers.", explanation: "Sorting is O(n log n); two pointers is O(n). Sorting is what enables two pointers, not a substitute for it." },
           ]}
@@ -225,7 +225,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
           which pointer to move. The loop terminates when <code>l &gt;= r</code>.
         </p>
 
-        <h3>Two Sum II — input array is sorted</h3>
+        <h3>Two Sum II, input array is sorted</h3>
 
         <Mermaid chart={oppositeEnd} />
 
@@ -249,13 +249,13 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
           </p>
           <p>
             When we move <code>l++</code> because the sum was too small, we&apos;re ruling out all pairs of the form
-            <code>(l, k)</code> for <code>k &lt;= r</code> — the largest possible right partner is already <code>a[r]</code>,
+            <code>(l, k)</code> for <code>k &lt;= r</code>, the largest possible right partner is already <code>a[r]</code>,
             and even that wasn&apos;t enough. Similarly for <code>r--</code>. So each move is provably safe: we never
             discard a valid answer.
           </p>
         </Callout>
 
-        <h3>Valid Palindrome — skip non-alphanumeric, case-insensitive</h3>
+        <h3>Valid Palindrome, skip non-alphanumeric, case-insensitive</h3>
 
         <p>
           Same shape, different rule. Walk <code>l</code> and <code>r</code> inward; at each step, advance past any
@@ -309,7 +309,7 @@ Same-direction (fast/slow)  ──→ s  ──→ f    both start near 0, fast 
 }`}</CodeBlock>
 
         <p>
-          Boring, but it&apos;s the cleanest possible illustration of the loop shape — two pointers, swap or compare,
+          Boring, but it&apos;s the cleanest possible illustration of the loop shape, two pointers, swap or compare,
           both move inward each iteration, terminate when they cross.
         </p>
 
@@ -336,9 +336,9 @@ while (l < r) {
           question="On a sorted array of length n, what's the time and space complexity of the converging two-pointer Two Sum?"
           options={[
             { label: "O(n²) time, O(1) space.", explanation: "O(n²) is the brute force. The two-pointer walk eliminates one row or column of the search grid per comparison, so it's linear." },
-            { label: "O(n) time, O(1) space.", correct: true, explanation: "Right. l only moves right, r only moves left, and together they take at most n steps before crossing. No auxiliary data structure needed — just two ints. This is why two pointers is the gold-standard solution: optimal time, minimal space." },
+            { label: "O(n) time, O(1) space.", correct: true, explanation: "Right. l only moves right, r only moves left, and together they take at most n steps before crossing. No auxiliary data structure needed, just two ints. This is why two pointers is the gold-standard solution: optimal time, minimal space." },
             { label: "O(n log n) time, O(1) space.", explanation: "That would be the cost if you sorted first. The Two Sum II problem assumes the array is already sorted, so the walk itself is just O(n)." },
-            { label: "O(n) time, O(n) space.", explanation: "No extra space — the two pointers replace the HashMap that the unsorted-array Two Sum needs." },
+            { label: "O(n) time, O(n) space.", explanation: "No extra space, the two pointers replace the HashMap that the unsorted-array Two Sum needs." },
           ]}
         />
       </section>
@@ -395,12 +395,12 @@ fast = "read head"    — scans every element, decides if it should be kept`}</C
             We just advance fast and skip the write.
           </p>
           <p>
-            The slow pointer only moves when we discover a new value to keep —
+            The slow pointer only moves when we discover a new value to keep,
             that&apos;s why it ends up pointing at the last unique element, and the answer is <code>slow + 1</code>.
           </p>
         </Callout>
 
-        <h3>Move Zeroes — keep order, push zeroes to the end</h3>
+        <h3>Move Zeroes, keep order, push zeroes to the end</h3>
 
         <p>
           Same template, &quot;keep&quot; means &quot;is non-zero.&quot;
@@ -445,7 +445,7 @@ public void moveZeroes(int[] nums) {
 
         <p>
           Generalize: any &quot;keep these, drop those&quot; problem fits. Predicate &quot;is even&quot;, &quot;less
-          than pivot&quot;, &quot;not deleted&quot; — same template.
+          than pivot&quot;, &quot;not deleted&quot;, same template.
         </p>
 
         <CodeBlock lang="java">{`public int partitionByPredicate(int[] nums, java.util.function.IntPredicate keep) {
@@ -485,7 +485,7 @@ for (int fast = 0; fast < n; fast++) {
             The next kept element overwrites the one you just placed, and you lose data.
           </p>
           <p>
-            Or the symmetric bug: increment <code>slow</code> first, then copy — now you write past the kept region.
+            Or the symmetric bug: increment <code>slow</code> first, then copy, now you write past the kept region.
             Always think: <strong>copy at slow, then advance.</strong>
           </p>
         </Callout>
@@ -494,10 +494,10 @@ for (int fast = 0; fast < n; fast++) {
           kind="Same-direction check"
           question="In remove-duplicates from a sorted array, why do we initialize slow = 0 and start the for-loop at fast = 1?"
           options={[
-            { label: "It's an off-by-one workaround.", explanation: "It's not a workaround — it's the right initial state. The first element is trivially unique (it's the first), so it's already 'kept' at index 0. No comparison needed." },
-            { label: "The first element is always unique relative to itself, so a[0] is already the first kept value at slot 0. Fast starts at 1 because that's the first element we actually need to compare.", correct: true, explanation: "Right. slow=0 means 'a[0] is in its final position.' fast=1 means 'now I'll scan starting at the second element and keep new values as I find them.' This invariant — slow points at the last kept value, fast at the next candidate — is the heart of the same-direction pattern." },
+            { label: "It's an off-by-one workaround.", explanation: "It's not a workaround, it's the right initial state. The first element is trivially unique (it's the first), so it's already 'kept' at index 0. No comparison needed." },
+            { label: "The first element is always unique relative to itself, so a[0] is already the first kept value at slot 0. Fast starts at 1 because that's the first element we actually need to compare.", correct: true, explanation: "Right. slow=0 means 'a[0] is in its final position.' fast=1 means 'now I'll scan starting at the second element and keep new values as I find them.' This invariant, slow points at the last kept value, fast at the next candidate, is the heart of the same-direction pattern." },
             { label: "Java arrays are zero-indexed.", explanation: "True but irrelevant to why these specific starting values are correct." },
-            { label: "Performance — skipping index 0 is faster.", explanation: "Same asymptotic cost; the choice is about correctness, not speed." },
+            { label: "Performance, skipping index 0 is faster.", explanation: "Same asymptotic cost; the choice is about correctness, not speed." },
           ]}
         />
 
@@ -506,7 +506,7 @@ for (int fast = 0; fast < n; fast++) {
           question="Move Zeroes: for input [0, 1, 0, 3, 12], after the one-pass swap version finishes, what's the array?"
           options={[
             { label: "[1, 3, 12, 0, 0].", correct: true, explanation: "Right. slow tracks the next non-zero slot. We swap each non-zero forward as we find it, which both fills the front with non-zeros in order AND pushes zeros to the back. Final state: non-zeros [1, 3, 12], then zeros [0, 0]." },
-            { label: "[0, 0, 1, 3, 12].", explanation: "Backwards — that would push zeros to the front. The problem asks for zeros at the end with the order of non-zeros preserved." },
+            { label: "[0, 0, 1, 3, 12].", explanation: "Backwards, that would push zeros to the front. The problem asks for zeros at the end with the order of non-zeros preserved." },
             { label: "[1, 0, 3, 12, 0].", explanation: "This is what you'd get if you only copied without swapping (or skipped the second-phase fill), but the swap version both moves non-zeros forward and pushes zeros backward in a single pass." },
             { label: "[12, 3, 1, 0, 0].", explanation: "Order of non-zeros must be preserved. Reverse order would mean we sorted, which we didn't." },
           ]}
@@ -517,7 +517,7 @@ for (int fast = 0; fast < n; fast++) {
       {/* ───────────────── Part 4 · Container ───────────────── */}
       <Checkpoint moduleSlug="two-pointers" id="container" title="I understand the geometric two-pointer greedy" xp={25}>
       <section>
-        <h2 id="container">Container With Most Water — geometric two-pointer</h2>
+        <h2 id="container">Container With Most Water, geometric two-pointer</h2>
 
         <p>
           LeetCode 11. You have an array <code>h[]</code> where each entry is a vertical line&apos;s height. Pick two
@@ -535,7 +535,7 @@ for (int fast = 0; fast < n; fast++) {
         <h3>The greedy move rule</h3>
 
         <p>
-          Start with <code>l = 0</code> and <code>r = n - 1</code> — the widest possible container. Compute the area.
+          Start with <code>l = 0</code> and <code>r = n - 1</code>, the widest possible container. Compute the area.
           Now you&apos;re going to lose width with every move (both pointers move inward), so the question is whether
           you can compensate by gaining height. <strong>Always move the pointer pointing at the shorter line.</strong>
         </p>
@@ -561,26 +561,26 @@ for (int fast = 0; fast < n; fast++) {
 
         <p>
           Here&apos;s the proof. Say <code>height[l] &lt; height[r]</code> at some step. Consider what happens if we
-          move the <em>taller</em>{" "}side instead — that is, <code>r--</code> while keeping <code>l</code> fixed:
+          move the <em>taller</em>{" "}side instead, that is, <code>r--</code> while keeping <code>l</code> fixed:
         </p>
 
         <ul>
           <li>The width strictly decreases (from <code>r - l</code> to <code>r - 1 - l</code>).</li>
-          <li>The height is bounded above by <code>height[l]</code>, the shorter side. New <code>r-1</code> might be taller or shorter than the old <code>r</code> — it doesn&apos;t matter, because <code>min(height[l], height[r-1]) &lt;= height[l]</code> regardless.</li>
+          <li>The height is bounded above by <code>height[l]</code>, the shorter side. New <code>r-1</code> might be taller or shorter than the old <code>r</code>, it doesn&apos;t matter, because <code>min(height[l], height[r-1]) &lt;= height[l]</code> regardless.</li>
           <li>So the new area is at most <code>(r - 1 - l) × height[l]</code>, which is strictly less than <code>(r - l) × height[l]</code>, which is what we had before.</li>
         </ul>
 
         <p>
-          In other words: <strong>moving the taller side strictly reduces the area — it can never
+          In other words: <strong>moving the taller side strictly reduces the area, it can never
           improve it.</strong>{" "}Every pair containing the current shorter line on the shorter side has been examined
-          (or strictly dominated by what we just computed). So we&apos;re safe to throw away that line — increment
-          <code>l</code> — and continue.
+          (or strictly dominated by what we just computed). So we&apos;re safe to throw away that line, increment
+          <code>l</code>, and continue.
         </p>
 
         <Callout variant="insight" title="The greedy invariant">
           <p>
-            At every step, the optimal pair is somewhere in the window <code>[l, r]</code>. Each move — always shrinking
-            from the side with the shorter line — removes only pairs that are <em>provably non-optimal</em>. Eventually
+            At every step, the optimal pair is somewhere in the window <code>[l, r]</code>. Each move, always shrinking
+            from the side with the shorter line, removes only pairs that are <em>provably non-optimal</em>. Eventually
             the pointers meet and we&apos;re left with the maximum.
           </p>
           <p>
@@ -592,16 +592,16 @@ for (int fast = 0; fast < n; fast++) {
         <h3>What about ties?</h3>
 
         <p>
-          If <code>height[l] == height[r]</code>, you can move either side — the proof goes through for whichever you
+          If <code>height[l] == height[r]</code>, you can move either side, the proof goes through for whichever you
           pick. The standard convention is to put the equality on the <code>r--</code> branch (as in the code above:{" "}
           <code>if &lt; else</code>). It doesn&apos;t affect correctness.
         </p>
 
-        <h3>Trapping Rain Water — the harder cousin</h3>
+        <h3>Trapping Rain Water, the harder cousin</h3>
 
         <p>
           LC 42. Same array of heights, but now you&apos;re asked: how much water does the entire skyline trap, summed
-          across all positions? It&apos;s a different problem — Container With Most Water finds one pair&apos;s area;
+          across all positions? It&apos;s a different problem, Container With Most Water finds one pair&apos;s area;
           Trapping Rain Water sums water above every column.
         </p>
 
@@ -632,12 +632,12 @@ for (int fast = 0; fast < n; fast++) {
         <Callout variant="info" title="Why this is the same family of trick">
           <p>
             Container With Most Water moves the shorter side because the shorter side is the bottleneck. Trapping
-            Rain Water moves the shorter side because the shorter side is what determines the local water level — so
+            Rain Water moves the shorter side because the shorter side is what determines the local water level, so
             we can confidently compute its contribution to the total.
           </p>
           <p>
             Both problems exploit the same structural fact: when you&apos;re bounded by two endpoints, the minimum
-            of the two is what matters. That&apos;s the geometric heart of opposite-end two pointers — and it shows
+            of the two is what matters. That&apos;s the geometric heart of opposite-end two pointers, and it shows
             up in surprisingly many places.
           </p>
         </Callout>
@@ -646,10 +646,10 @@ for (int fast = 0; fast < n; fast++) {
           kind="Container check"
           question="In Container With Most Water, suppose at some step l=2, r=7, height[2]=3, height[7]=5. What's the next move and why?"
           options={[
-            { label: "r-- because height[r] is bigger.", explanation: "Moving the TALLER side is exactly what we never do. The water level is capped by the shorter side (3), so changing the taller side can't raise that cap — and the width is shrinking either way." },
+            { label: "r-- because height[r] is bigger.", explanation: "Moving the TALLER side is exactly what we never do. The water level is capped by the shorter side (3), so changing the taller side can't raise that cap, and the width is shrinking either way." },
             { label: "l++ because height[l] is the shorter side; moving the taller side can't grow the area, only shrink it.", correct: true, explanation: "Right. height[l]=3 caps the area at min(3, anything)=3. Moving r doesn't lift that cap; it only loses width. Moving l might find a taller line, which can lift the cap. So l++ is the only move with potential upside." },
-            { label: "Both, because we explore symmetrically.", explanation: "Moving both pointers at once skips diagonals in the search space and can miss valid configurations. Move exactly one per step — the shorter side." },
-            { label: "Neither — record the area and stop.", explanation: "We only stop when l >= r. There may still be better areas inward; the greedy walk explores them all." },
+            { label: "Both, because we explore symmetrically.", explanation: "Moving both pointers at once skips diagonals in the search space and can miss valid configurations. Move exactly one per step, the shorter side." },
+            { label: "Neither, record the area and stop.", explanation: "We only stop when l >= r. There may still be better areas inward; the greedy walk explores them all." },
           ]}
         />
       </section>
@@ -670,7 +670,7 @@ for (int fast = 0; fast < n; fast++) {
 
         <p>
           Given an array <code>nums</code>, return all unique triples <code>(a, b, c)</code> such that{" "}
-          <code>a + b + c == 0</code>. The triples must be unique — no duplicates of the same set of three values
+          <code>a + b + c == 0</code>. The triples must be unique, no duplicates of the same set of three values
           in different orders.
         </p>
 
@@ -757,7 +757,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
           <ul>
             <li><strong>Outer dedup</strong> (<code>nums[i] == nums[i - 1]</code>): the same first-of-triple has already been processed; the inner loop would re-find the same pairs.</li>
             <li><strong>Inner left dedup after a match</strong> (<code>nums[l] == nums[l - 1]</code>): once we&apos;ve recorded a triple and advanced <code>l</code>, if the new <code>nums[l]</code> equals the previous one we&apos;d record the same triple again.</li>
-            <li><strong>Inner right dedup after a match</strong> (<code>nums[r] == nums[r + 1]</code>): symmetric — slide <code>r</code> past equal values so the next pair we test is genuinely new.</li>
+            <li><strong>Inner right dedup after a match</strong> (<code>nums[r] == nums[r + 1]</code>): symmetric, slide <code>r</code> past equal values so the next pair we test is genuinely new.</li>
           </ul>
           <p>
             Skipping any one of these produces duplicates. Forgetting all three turns 3Sum into &quot;wrong answer&quot;
@@ -782,7 +782,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
           <p>
             A &quot;HashSet of seen pairs&quot; approach also works for 3Sum and is also O(n²), but the two-pointer
             version wins on space (O(1) extra vs O(n)) and on dedup clarity. The HashSet version requires you to put
-            sorted-tuple representations into a Set to dedupe — more code, more allocations.
+            sorted-tuple representations into a Set to dedupe, more code, more allocations.
           </p>
           <p>
             The two-pointer version is the canonical interview solution. Practice it until you can write it without
@@ -795,10 +795,10 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
         <p>Type these out, submit, verify the green check.</p>
 
         <ul>
-          <li><strong>LC 167 · Two Sum II</strong> — straight opposite-end pattern. ~10 lines.</li>
-          <li><strong>LC 125 · Valid Palindrome</strong> — opposite-end with skip-non-alphanumeric. ~12 lines.</li>
-          <li><strong>LC 11 · Container With Most Water</strong> — opposite-end with the shorter-side rule. ~10 lines.</li>
-          <li><strong>LC 26 · Remove Duplicates from Sorted Array</strong> — same-direction slow/fast. ~8 lines.</li>
+          <li><strong>LC 167 · Two Sum II</strong>, straight opposite-end pattern. ~10 lines.</li>
+          <li><strong>LC 125 · Valid Palindrome</strong>, opposite-end with skip-non-alphanumeric. ~12 lines.</li>
+          <li><strong>LC 11 · Container With Most Water</strong>, opposite-end with the shorter-side rule. ~10 lines.</li>
+          <li><strong>LC 26 · Remove Duplicates from Sorted Array</strong>, same-direction slow/fast. ~8 lines.</li>
         </ul>
 
         <h3>Stretch: Trapping Rain Water (LC 42)</h3>
@@ -819,7 +819,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="two-pointers" id="final" title="Two pointers is reflex" xp={30} celebration="Sorted arrays, in-place rewrites, and skyline-style problems all bend to the same trick. Up next: sliding window — the same kind of cleverness, on contiguous subarrays.">
+      <Checkpoint moduleSlug="two-pointers" id="final" title="Two pointers is reflex" xp={30} celebration="Sorted arrays, in-place rewrites, and skyline-style problems all bend to the same trick. Up next: sliding window, the same kind of cleverness, on contiguous subarrays.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -832,12 +832,12 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
             { id: "not-two-pointer", label: "Not two-pointer", color: "rose" },
           ]}
           items={[
-            { id: "1", label: "Given a sorted array, find two indices that sum to a target value.", answer: "opposite", explanation: "Two Sum II — the canonical opposite-end pattern. Sortedness gives the directional move signal." },
-            { id: "2", label: "Move all zeros in an array to the end while preserving the order of non-zeros, in place.", answer: "same-direction", explanation: "Move Zeroes — slow points at the next non-zero slot, fast scans. Classic same-direction filter." },
-            { id: "3", label: "Given an unsorted array of integers, return whether any two elements sum to k.", answer: "not-two-pointer", explanation: "Unsorted means no monotonic structure — two pointers can't help. Use a HashSet (Module 11): for each x, check if k-x has been seen. O(n) time, O(n) space." },
+            { id: "1", label: "Given a sorted array, find two indices that sum to a target value.", answer: "opposite", explanation: "Two Sum II, the canonical opposite-end pattern. Sortedness gives the directional move signal." },
+            { id: "2", label: "Move all zeros in an array to the end while preserving the order of non-zeros, in place.", answer: "same-direction", explanation: "Move Zeroes, slow points at the next non-zero slot, fast scans. Classic same-direction filter." },
+            { id: "3", label: "Given an unsorted array of integers, return whether any two elements sum to k.", answer: "not-two-pointer", explanation: "Unsorted means no monotonic structure, two pointers can't help. Use a HashSet (Module 11): for each x, check if k-x has been seen. O(n) time, O(n) space." },
             { id: "4", label: "Find the maximum area of water trapped between two vertical lines in a height array.", answer: "opposite", explanation: "Container With Most Water. Greedy: always move the shorter side; the area is bounded by min(h[l], h[r])." },
-            { id: "5", label: "Remove every occurrence of a given value from an array, in place. Return the new length.", answer: "same-direction", explanation: "LC 27 Remove Element — slow/fast filter. Keep predicate is 'value != target'. Slow ends as the new length." },
-            { id: "6", label: "Find the shortest path in an unweighted graph between two nodes.", answer: "not-two-pointer", explanation: "Graph traversal, not array walking. BFS (Module 18). 'Two pointers' applies to linear structures with monotonic move rules — not graphs." },
+            { id: "5", label: "Remove every occurrence of a given value from an array, in place. Return the new length.", answer: "same-direction", explanation: "LC 27 Remove Element, slow/fast filter. Keep predicate is 'value != target'. Slow ends as the new length." },
+            { id: "6", label: "Find the shortest path in an unweighted graph between two nodes.", answer: "not-two-pointer", explanation: "Graph traversal, not array walking. BFS (Module 18). 'Two pointers' applies to linear structures with monotonic move rules, not graphs." },
             { id: "7", label: "Determine if a string is a palindrome, ignoring non-alphanumeric characters and case.", answer: "opposite", explanation: "Valid Palindrome. l and r walk inward; skip non-alphanumeric on each side, then compare normalized characters." },
             { id: "8", label: "Find the kth smallest element in an unsorted array.", answer: "not-two-pointer", explanation: "Quickselect or heap-of-size-k. No two-element structure to track; you're partitioning around a pivot or maintaining a top-k. Different algorithmic family." },
           ]}
@@ -848,7 +848,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
           question="When is two-pointer NOT the right tool, even on an array problem?"
           options={[
             { label: "Whenever the array is sorted.", explanation: "Sorted arrays are exactly when two-pointer is most useful. The sortedness is the structural signal." },
-            { label: "When the array isn't sorted AND there's no monotonic move rule available — the comparison gives you no signal about which pointer to move.", correct: true, explanation: "Right. Two pointers needs SOMETHING — sortedness, a slow/fast write-vs-read split, a greedy invariant — that lets one comparison rule out a chunk of the search space. Without that, every pair is independent, and you fall back to either brute force or a hash-based trick (which is what unsorted Two Sum uses)." },
+            { label: "When the array isn't sorted AND there's no monotonic move rule available, the comparison gives you no signal about which pointer to move.", correct: true, explanation: "Right. Two pointers needs SOMETHING, sortedness, a slow/fast write-vs-read split, a greedy invariant, that lets one comparison rule out a chunk of the search space. Without that, every pair is independent, and you fall back to either brute force or a hash-based trick (which is what unsorted Two Sum uses)." },
             { label: "On any problem larger than n=10⁴.", explanation: "Two pointers is O(n), so it scales fine to millions. The constraint is structural, not size-based." },
             { label: "When the language is Java.", explanation: "Two pointers is language-independent. Java implements it the same way Python or C++ would." },
           ]}
@@ -859,7 +859,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
           question="In 3Sum, why do we sort the array as the very first step?"
           options={[
             { label: "Because LeetCode's grader expects sorted output.", explanation: "Output ordering doesn't matter for 3Sum (the problem accepts triples in any order). We sort for algorithmic reasons, not formatting." },
-            { label: "Sorting enables the opposite-end two-pointer move rule for the inner loop, AND it makes adjacent-equal dedup possible (so 'skip duplicates' is just 'skip equal neighbors').", correct: true, explanation: "Right. Two reasons in one. (1) Sorted = the inner two-pointer works (sum < target → l++, sum > target → r--). (2) Sorted = duplicates are adjacent, so 'nums[i] == nums[i-1]' is the dedup test. Without sorting, you'd need a HashSet of canonicalized triples — more code, more allocations." },
+            { label: "Sorting enables the opposite-end two-pointer move rule for the inner loop, AND it makes adjacent-equal dedup possible (so 'skip duplicates' is just 'skip equal neighbors').", correct: true, explanation: "Right. Two reasons in one. (1) Sorted = the inner two-pointer works (sum < target → l++, sum > target → r--). (2) Sorted = duplicates are adjacent, so 'nums[i] == nums[i-1]' is the dedup test. Without sorting, you'd need a HashSet of canonicalized triples, more code, more allocations." },
             { label: "Sorting makes the algorithm O(n log n).", explanation: "Sorting is O(n log n), but the overall algorithm is O(n²) dominated by the outer-loop times inner-walk. Sorting is a setup cost, not the main cost." },
             { label: "It's not actually required.", explanation: "Without sorting, you can't use the two-pointer inner loop AND dedup is much harder. The whole solution shape depends on it." },
           ]}
@@ -873,7 +873,7 @@ public List<List<Integer>> threeSumNaive(int[] nums) {
             { takeaway: "'Filter / compact / partition in place' → same-direction slow/fast.", detail: "Remove duplicates, move zeroes, remove element, partition by predicate. Slow is the write head; fast is the read head; the gap is the dropped region. Always copy at slow, then advance." },
             { takeaway: "Container With Most Water: always move the shorter side.", detail: "The water is bounded by the shorter side, and moving the taller side strictly shrinks the area. Same logic powers Trapping Rain Water's two-pointer solution: the shorter running-max determines the local water level." },
             { takeaway: "3Sum needs three dedup checks: outer i, inner l after match, inner r after match.", detail: "Forgetting any one produces duplicate triples. The skip pattern (nums[i] == nums[i-1] → continue, similarly for l and r after a recorded match) is the crux of getting 3Sum right on the first submit." },
-            { takeaway: "Two pointers always runs in O(n) — its defining promise.", detail: "Each pointer moves at most n times across the whole algorithm. Combined with O(n log n) sort when needed, you turn brute O(n²) or O(n³) problems into O(n) or O(n²)." },
+            { takeaway: "Two pointers always runs in O(n), its defining promise.", detail: "Each pointer moves at most n times across the whole algorithm. Combined with O(n log n) sort when needed, you turn brute O(n²) or O(n³) problems into O(n) or O(n²)." },
           ]}
         />
 

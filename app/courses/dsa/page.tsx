@@ -30,7 +30,7 @@ export default function DsaHome() {
         <div className="border-l-2 border-emerald-500 pl-5 dark:border-emerald-400">
           <h2 className="mb-3 text-lg font-bold tracking-tight">Prerequisites</h2>
           <ul className="m-0 list-none space-y-2 p-0 text-sm text-slate-700 dark:text-slate-300">
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java</strong> (loops, classes, generics — that&apos;s it)</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java</strong> (loops, classes, generics, that&apos;s it)</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>You studied DSA <em>once</em>, years ago, and most of it has faded</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>A LeetCode account (free tier is plenty)</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Willingness to <strong>solve by hand on paper</strong>{" "}before touching the keyboard</span></li>
@@ -91,18 +91,15 @@ export default function DsaHome() {
 function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
   return (
     <>
-      <div className="mb-2 flex items-start justify-between">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
-            {m.number}
-          </span>
-          {m.status === "available" ? (
-            <span className="text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Ready</span>
-          ) : (
-            <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
-          )}
-        </div>
-        <span className="text-xs text-slate-400">{m.duration}</span>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
+          {m.number}
+        </span>
+        {m.status === "available" ? (
+          <span className="text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Ready</span>
+        ) : (
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
+        )}
       </div>
       <h3 className="mb-1 text-base font-semibold">{m.title}</h3>
       <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">{m.subtitle}</p>

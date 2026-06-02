@@ -39,7 +39,7 @@ export default function TransformersModule() {
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Attention &amp; transformers</h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          The one idea that ate the ML world — built from scratch, one matrix at a time.
+          The one idea that ate the ML world, built from scratch, one matrix at a time.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="transformers" />
         <ModuleProgress moduleSlug="transformers" checkpoints={CHECKPOINTS} />
@@ -52,19 +52,19 @@ export default function TransformersModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          The famous 2017 paper &quot;Attention Is All You Need&quot; introduced the transformer — the architecture behind every LLM you use.
+          The famous 2017 paper &quot;Attention Is All You Need&quot; introduced the transformer, the architecture behind every LLM you use.
           We&apos;re going to build its single most important piece, scaled dot-product attention, by hand in Java. By the end you&apos;ll:
         </p>
         <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
-          <li>Explain <em>why</em>{" "}attention was invented — and what RNNs couldn&apos;t do.</li>
+          <li>Explain <em>why</em>{" "}attention was invented, and what RNNs couldn&apos;t do.</li>
           <li>Understand queries, keys, and values without hand-waving.</li>
           <li>Compute an attention output for a 5-token sequence <em>by hand</em>.</li>
           <li>Know why it&apos;s &quot;scaled&quot; and why softmax is there.</li>
           <li>Ship a Java implementation of self-attention. 40 lines, no library.</li>
-          <li>Sketch a full transformer block — residuals, layer norm, FFN — and know what each piece does.</li>
+          <li>Sketch a full transformer block, residuals, layer norm, FFN, and know what each piece does.</li>
         </ol>
         <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
-          Fair warning: this is one idea, explained thoroughly. Budget ~3–4h. The math is easier than Module 4&apos;s backprop — the <em>intuition</em>{" "}is what takes time.
+          Fair warning: this is one idea, explained thoroughly. Budget ~3–4h. The math is easier than Module 4&apos;s backprop, the <em>intuition</em>{" "}is what takes time.
         </p>
       </section>
 
@@ -77,13 +77,13 @@ export default function TransformersModule() {
 
         <Callout variant="info" title="Where Module 4 leaves off, and why we need something new">
           <p className="m-0">
-            Module 4&apos;s MLP can take a fixed-size input vector (784 pixels) and produce a fixed-size output (10 digit scores). What it <em>can&apos;t</em>{" "}do is process a variable-length sequence — &quot;Why is String immutable?&quot; vs an entire RAG document — and let every token influence every other token. Attention is the operation that fills that gap. The MLP isn&apos;t going away (you&apos;ll see it inside every transformer block, doing the same widen-then-project trick you built); it just gets a sequence-aware partner. <strong>Attention mixes across positions; the MLP transforms at each position.</strong>{" "}That one line is the whole module in miniature.
+            Module 4&apos;s MLP can take a fixed-size input vector (784 pixels) and produce a fixed-size output (10 digit scores). What it <em>can&apos;t</em>{" "}do is process a variable-length sequence, &quot;Why is String immutable?&quot; vs an entire RAG document, and let every token influence every other token. Attention is the operation that fills that gap. The MLP isn&apos;t going away (you&apos;ll see it inside every transformer block, doing the same widen-then-project trick you built); it just gets a sequence-aware partner. <strong>Attention mixes across positions; the MLP transforms at each position.</strong>{" "}That one line is the whole module in miniature.
           </p>
         </Callout>
 
         <h3>The problem: long sentences break sequential models</h3>
         <p>
-          Before 2017, the standard way to process sequences (translation, summarization) was the <strong>RNN</strong> — a recurrent neural network.
+          Before 2017, the standard way to process sequences (translation, summarization) was the <strong>RNN</strong>, a recurrent neural network.
           An RNN processes one token at a time, updating a single &quot;hidden state&quot; vector that&apos;s supposed to summarize everything it&apos;s seen so far.
         </p>
 
@@ -130,7 +130,7 @@ export default function TransformersModule() {
         </p>
 
         <p>
-          Quick: what does &quot;it&quot; refer to — the trophy or the suitcase? You know it&apos;s the trophy (because of &quot;big&quot;).
+          Quick: what does &quot;it&quot; refer to, the trophy or the suitcase? You know it&apos;s the trophy (because of &quot;big&quot;).
           To answer that, the model processing the word &quot;it&quot; needs to look back at &quot;trophy&quot; and &quot;suitcase&quot;, compare them against the context, and weigh them.
           Attention is precisely the mechanism that lets it do so.
         </p>
@@ -140,19 +140,19 @@ export default function TransformersModule() {
             Three properties made attention dominate:
           </p>
           <ul className="m-0 ml-5 list-disc space-y-1 text-sm">
-            <li><strong>No recurrence</strong> — process the whole sequence in parallel on a GPU, instead of one token at a time.</li>
-            <li><strong>No long-distance decay</strong> — every pair of tokens is one matmul apart, no matter how far.</li>
-            <li><strong>Learned routing</strong> — the network figures out which tokens should influence which, per example, from data.</li>
+            <li><strong>No recurrence</strong>, process the whole sequence in parallel on a GPU, instead of one token at a time.</li>
+            <li><strong>No long-distance decay</strong>, every pair of tokens is one matmul apart, no matter how far.</li>
+            <li><strong>Learned routing</strong>, the network figures out which tokens should influence which, per example, from data.</li>
           </ul>
         </Callout>
 
         <Quiz
           question="Classic RNN processes a 100-token sentence. It struggles to use information from token 1 when generating the output at token 100. Why?"
           options={[
-            { label: "Token 1 is too long ago — RNNs have a fixed memory size.", explanation: "RNNs don't have a fixed memory — they have a single hidden state that keeps updating. The issue is WHAT happens to that state over many updates." },
+            { label: "Token 1 is too long ago, RNNs have a fixed memory size.", explanation: "RNNs don't have a fixed memory, they have a single hidden state that keeps updating. The issue is WHAT happens to that state over many updates." },
             { label: "Information from token 1 has been rewritten 99 times by subsequent updates, so little of it survives intact at step 100.", correct: true, explanation: "Exactly. Every step blends new input into the hidden state, overwriting previous content. Gradients also vanish across that many steps. Long-range dependencies are therefore hard to learn." },
-            { label: "RNNs can't handle sequences longer than 50 tokens.", explanation: "They can handle arbitrary length, technically — they just do it poorly at long range. There's no hard limit." },
-            { label: "RNNs need to see the future to predict the past.", explanation: "That's nonsensical. RNNs are causal — they only see past tokens. The issue is hidden-state blending, not causality." },
+            { label: "RNNs can't handle sequences longer than 50 tokens.", explanation: "They can handle arbitrary length, technically, they just do it poorly at long range. There's no hard limit." },
+            { label: "RNNs need to see the future to predict the past.", explanation: "That's nonsensical. RNNs are causal, they only see past tokens. The issue is hidden-state blending, not causality." },
           ]}
           hint="Think about what happens to the hidden state at each step."
         />
@@ -161,15 +161,15 @@ export default function TransformersModule() {
           question="What's the single most important property of attention that RNNs lack?"
           options={[
             { label: "Attention uses softmax; RNNs don't.", explanation: "Softmax is a detail. The big win is something structural." },
-            { label: "Every pair of tokens is connected by a single operation, regardless of distance.", correct: true, explanation: "Exactly. In an RNN, connecting tokens 1 and 100 requires 99 sequential steps. In attention, it's ONE matrix multiplication. Distance in the sequence doesn't matter — no information decays." },
-            { label: "Attention has more parameters.", explanation: "Parameter count varies by implementation — not the fundamental advantage." },
-            { label: "Attention is differentiable.", explanation: "RNNs are also differentiable — that's how they train with backprop. Not the differentiator." },
+            { label: "Every pair of tokens is connected by a single operation, regardless of distance.", correct: true, explanation: "Exactly. In an RNN, connecting tokens 1 and 100 requires 99 sequential steps. In attention, it's ONE matrix multiplication. Distance in the sequence doesn't matter, no information decays." },
+            { label: "Attention has more parameters.", explanation: "Parameter count varies by implementation, not the fundamental advantage." },
+            { label: "Attention is differentiable.", explanation: "RNNs are also differentiable, that's how they train with backprop. Not the differentiator." },
           ]}
         />
 
         <PartRecap
           title="Part 1 recap"
-          gist="Attention exists because sequential bottlenecks don't scale — direct look-ups do."
+          gist="Attention exists because sequential bottlenecks don't scale, direct look-ups do."
           points={[
             { takeaway: "RNNs process sequences one step at a time, through a single hidden state.", detail: <>The hidden state has to carry everything seen so far, which gets progressively worse as the sequence grows longer.</> },
             { takeaway: "Long-range dependencies fail: token 1 barely reaches token 100.", detail: <>Because the hidden state is repeatedly overwritten, and gradients vanish across many steps.</> },
@@ -185,7 +185,7 @@ export default function TransformersModule() {
       {/* ================================================================= */}
       <Checkpoint moduleSlug="transformers" id="qkv" title="Queries, keys, values" xp={25} celebration="The QKV framework clicks. Everything from now on is mechanics.">
       <section>
-        <h2>Part 2: Queries, keys, values — the filing-cabinet metaphor</h2>
+        <h2>Part 2: Queries, keys, values, the filing-cabinet metaphor</h2>
 
         <h3>Forget the biology; use the filing cabinet</h3>
 
@@ -196,21 +196,21 @@ export default function TransformersModule() {
         <p>Imagine a drawer full of folders. Each folder has:</p>
 
         <ul>
-          <li>A <strong>label on the tab</strong> (the <em>key</em>) — what the folder is <em>about</em>.</li>
-          <li>The <strong>contents inside</strong> (the <em>value</em>) — the actual information.</li>
+          <li>A <strong>label on the tab</strong> (the <em>key</em>), what the folder is <em>about</em>.</li>
+          <li>The <strong>contents inside</strong> (the <em>value</em>), the actual information.</li>
         </ul>
 
-        <p>Now you walk up with a request in mind — the <strong>query</strong>. Maybe your query is &quot;2023 tax documents.&quot; You compare your query to each folder&apos;s tab:</p>
+        <p>Now you walk up with a request in mind, the <strong>query</strong>. Maybe your query is &quot;2023 tax documents.&quot; You compare your query to each folder&apos;s tab:</p>
 
         <ul>
-          <li>Tab says &quot;2023 taxes&quot; — strong match.</li>
-          <li>Tab says &quot;2022 taxes&quot; — weak match.</li>
-          <li>Tab says &quot;cat photos&quot; — no match.</li>
+          <li>Tab says &quot;2023 taxes&quot;, strong match.</li>
+          <li>Tab says &quot;2022 taxes&quot;, weak match.</li>
+          <li>Tab says &quot;cat photos&quot;, no match.</li>
         </ul>
 
         <p>
           Then you pull out the contents of each folder, but <em>weighted</em>{" "}by how well its tab matched your query. Mostly 2023, a pinch of 2022, nothing from cats.
-          The output is a mixture — dominated by the best match, but not purely one-hot.
+          The output is a mixture, dominated by the best match, but not purely one-hot.
         </p>
 
         <Callout variant="insight" title="That's the whole of attention">
@@ -225,7 +225,7 @@ export default function TransformersModule() {
 
         <p>
           Here&apos;s where it gets interesting: in self-attention, <em>every token is at once a query, a key, and a value</em>. The token &quot;it&quot; produces a query (&quot;what am I referring to?&quot;),
-          and every other token — &quot;trophy,&quot; &quot;suitcase,&quot; &quot;big&quot; — produces a key (&quot;here&apos;s what I am&quot;) and a value (&quot;here&apos;s my content&quot;).
+          and every other token, &quot;trophy,&quot; &quot;suitcase,&quot; &quot;big&quot;, produces a key (&quot;here&apos;s what I am&quot;) and a value (&quot;here&apos;s my content&quot;).
           The query scans the keys, picks the best matches, and pulls out a blend of values.
         </p>
 
@@ -242,10 +242,10 @@ each token's 'question', 'label', and 'content' should look like.`}
         </CodeBlock>
 
         <p>
-          So for a sequence of 5 tokens, you end up with 5 queries, 5 keys, and 5 values — all vectors.
+          So for a sequence of 5 tokens, you end up with 5 queries, 5 keys, and 5 values, all vectors.
         </p>
 
-        <h3>A concrete mini-example — shapes only</h3>
+        <h3>A concrete mini-example, shapes only</h3>
 
         <p>
           Say the embedding dimension is <code>d_model = 4</code> and we choose <code>d_k = 3</code> for our query/key dimension.
@@ -266,7 +266,7 @@ V = X · W_V    shape = (5 × 3)`}
 
         <Callout variant="info" title="d_model vs d_k">
           <p className="m-0">
-            <code>d_model</code> is the embedding size — the dimension of each token&apos;s representation everywhere else in the network.
+            <code>d_model</code> is the embedding size, the dimension of each token&apos;s representation everywhere else in the network.
             <code>d_k</code> is the dimension inside attention. They don&apos;t have to be equal. In most real transformers <code>d_k = d_model / num_heads</code>, but you can pick freely when building one from scratch.
           </p>
         </Callout>
@@ -274,9 +274,9 @@ V = X · W_V    shape = (5 × 3)`}
         <Quiz
           question="In attention, which matrix answers the question 'what does this token represent for OTHER tokens to look up?'"
           options={[
-            { label: "The query matrix (W_Q)", explanation: "The query is what a token is LOOKING FOR — its outgoing question, not the 'label it presents to others.' Close, but not it." },
-            { label: "The key matrix (W_K)", correct: true, explanation: "Right. The key is the 'tab on the folder' — what this token ADVERTISES about itself to other tokens' queries. Other tokens' queries match against these keys." },
-            { label: "The value matrix (W_V)", explanation: "Values are what gets PULLED OUT once a match happens — the contents of the folder. Keys are what decides whether you pull them out." },
+            { label: "The query matrix (W_Q)", explanation: "The query is what a token is LOOKING FOR, its outgoing question, not the 'label it presents to others.' Close, but not it." },
+            { label: "The key matrix (W_K)", correct: true, explanation: "Right. The key is the 'tab on the folder', what this token ADVERTISES about itself to other tokens' queries. Other tokens' queries match against these keys." },
+            { label: "The value matrix (W_V)", explanation: "Values are what gets PULLED OUT once a match happens, the contents of the folder. Keys are what decides whether you pull them out." },
             { label: "The output matrix (W_O)", explanation: "W_O is a projection applied AFTER attention, not part of the Q/K/V setup." },
           ]}
           hint="Query = asks. Key = advertises. Value = delivers."
@@ -286,20 +286,20 @@ V = X · W_V    shape = (5 × 3)`}
           question="In SELF-attention (as opposed to cross-attention), what's true?"
           options={[
             { label: "Only Q comes from the same sequence; K and V come from a different source.", explanation: "That's CROSS-attention (like in encoder-decoder). In self-attention, all three come from the same sequence." },
-            { label: "Q, K, and V all come from the same sequence — each token produces its own Q, K, and V.", correct: true, explanation: "Exactly. In self-attention every token is simultaneously a query (asking questions about the others), a key (advertising itself), and a value (providing content). This is what lets a single sentence attend to itself." },
-            { label: "There are no keys in self-attention.", explanation: "Keys are central — they're how the queries find matches. You can't do attention without them." },
-            { label: "Q, K, V are the same matrix.", explanation: "They're derived from the same input X, but via three DIFFERENT learned projection matrices W_Q, W_K, W_V — so the Q, K, V vectors are distinct." },
+            { label: "Q, K, and V all come from the same sequence, each token produces its own Q, K, and V.", correct: true, explanation: "Exactly. In self-attention every token is simultaneously a query (asking questions about the others), a key (advertising itself), and a value (providing content). This is what lets a single sentence attend to itself." },
+            { label: "There are no keys in self-attention.", explanation: "Keys are central, they're how the queries find matches. You can't do attention without them." },
+            { label: "Q, K, V are the same matrix.", explanation: "They're derived from the same input X, but via three DIFFERENT learned projection matrices W_Q, W_K, W_V, so the Q, K, V vectors are distinct." },
           ]}
         />
 
         <PartRecap
           title="Part 2 recap"
-          gist="Every token plays three roles — asker (Q), advertiser (K), and content-bearer (V) — via three learned projections."
+          gist="Every token plays three roles, asker (Q), advertiser (K), and content-bearer (V), via three learned projections."
           points={[
             { takeaway: "Query / Key / Value = 'what I’m looking for' / 'what I am' / 'what I’ll give you.'", detail: <>The filing-cabinet metaphor: query walks in with a question, keys advertise tabs, values are the folder contents pulled out in proportion to match.</> },
             { takeaway: "In self-attention, Q, K, V are all derived from the same input sequence.", detail: <>Q = X · W_Q, K = X · W_K, V = X · W_V. Three different learned matrices, same input. Every token ends up with its own q, k, v vectors.</> },
             { takeaway: "d_k is the internal attention dimension; it can differ from d_model.", detail: <>Convention in multi-head attention is d_k = d_model / num_heads. Building from scratch, you pick it.</> },
-            { takeaway: "Attention is 'learned routing' — which tokens influence which, decided per example.", detail: <>No hard-coded connections. The Q·Kᵀ matrix is different for every input, because Q and K depend on the input.</> },
+            { takeaway: "Attention is 'learned routing', which tokens influence which, decided per example.", detail: <>No hard-coded connections. The Q·Kᵀ matrix is different for every input, because Q and K depend on the input.</> },
           ]}
         />
       </section>
@@ -315,7 +315,7 @@ V = X · W_V    shape = (5 × 3)`}
         <h3>The one equation you will memorize</h3>
 
         <p>
-          Here it is — the formula from &quot;Attention Is All You Need&quot;, and the center of every LLM:
+          Here it is, the formula from &quot;Attention Is All You Need&quot;, and the center of every LLM:
         </p>
 
         <div className="not-prose my-6 text-center">
@@ -325,7 +325,7 @@ V = X · W_V    shape = (5 × 3)`}
         </div>
 
         <p>
-          <strong>In plain English:</strong>{" "}for every token, compare its question (<code>Q</code>) against every other token&apos;s label (<code>K</code>) to get a similarity score. Shrink those scores so they don&apos;t blow up (the <code>/√d_k</code>). Turn the scores into percentages that add to 100% (<code>softmax</code>). Then take a weighted blend of the other tokens&apos; content (<code>V</code>) using those percentages. The result is each token&apos;s new representation — informed by whichever neighbors it cared about.
+          <strong>In plain English:</strong>{" "}for every token, compare its question (<code>Q</code>) against every other token&apos;s label (<code>K</code>) to get a similarity score. Shrink those scores so they don&apos;t blow up (the <code>/√d_k</code>). Turn the scores into percentages that add to 100% (<code>softmax</code>). Then take a weighted blend of the other tokens&apos; content (<code>V</code>) using those percentages. The result is each token&apos;s new representation, informed by whichever neighbors it cared about.
         </p>
 
         <p>
@@ -333,16 +333,16 @@ V = X · W_V    shape = (5 × 3)`}
         </p>
 
         <ol>
-          <li><code>Q · Kᵀ</code> — for every pair of (query, key), compute a dot-product similarity score.</li>
-          <li><code>/ √d_k</code> — divide by the square root of the key dimension (we&apos;ll justify this).</li>
-          <li><code>softmax(...)</code> — turn each row of scores into a probability distribution over keys.</li>
-          <li><code>... · V</code> — take the weighted sum of values using those probabilities.</li>
+          <li><code>Q · Kᵀ</code>, for every pair of (query, key), compute a dot-product similarity score.</li>
+          <li><code>/ √d_k</code>, divide by the square root of the key dimension (we&apos;ll justify this).</li>
+          <li><code>softmax(...)</code>, turn each row of scores into a probability distribution over keys.</li>
+          <li><code>... · V</code>, take the weighted sum of values using those probabilities.</li>
         </ol>
 
         <h3>Why dot product for similarity?</h3>
 
         <p>
-          Dot product is the cheapest operator that captures &quot;pointing in the same direction.&quot; For two unit vectors, <code>q · k = cos(angle)</code> — maxed out at 1 when identical, 0 when perpendicular, −1 when opposite.
+          Dot product is the cheapest operator that captures &quot;pointing in the same direction.&quot; For two unit vectors, <code>q · k = cos(angle)</code>, maxed out at 1 when identical, 0 when perpendicular, −1 when opposite.
           For non-unit vectors you also pick up magnitudes, but the angular signal is still there. And crucially: a matrix multiply computes all pairs at once.
         </p>
 
@@ -350,7 +350,7 @@ V = X · W_V    shape = (5 × 3)`}
 
         <Callout variant="info" title="The scaling is a fix for high-dimensional softmax">
           <p className="mb-2">
-            When <code>d_k</code> is large, dot products of random vectors get large too — variance scales with <code>d_k</code>. Feed big numbers into softmax and it becomes almost one-hot:
+            When <code>d_k</code> is large, dot products of random vectors get large too, variance scales with <code>d_k</code>. Feed big numbers into softmax and it becomes almost one-hot:
             one weight near 1, the rest near 0. That kills gradient flow everywhere except the &quot;winning&quot; key.
           </p>
           <p className="m-0">
@@ -363,17 +363,17 @@ V = X · W_V    shape = (5 × 3)`}
 
         <p>
           Two reasons: it turns arbitrary real-valued scores into non-negative weights that sum to 1 (so the output is a proper weighted average), and it&apos;s differentiable (so backprop flows through).
-          The softmax in attention plays the same role as the one in Module 4&apos;s multi-class output — it&apos;s just a way of saying &quot;normalize these scores into a distribution.&quot;
+          The softmax in attention plays the same role as the one in Module 4&apos;s multi-class output, it&apos;s just a way of saying &quot;normalize these scores into a distribution.&quot;
         </p>
 
         <h3>Worked example: attention on 5 tokens, by hand</h3>
 
         <p>
-          We&apos;re going to compute attention for a tiny toy sequence. Five tokens — but don&apos;t worry about what the &quot;words&quot; are; we&apos;re working with raw vectors. <code>d_k = 2</code> for sanity.
+          We&apos;re going to compute attention for a tiny toy sequence. Five tokens, but don&apos;t worry about what the &quot;words&quot; are; we&apos;re working with raw vectors. <code>d_k = 2</code> for sanity.
         </p>
 
         <WorkedExample
-          title="Scaled dot-product attention — 5 tokens, 2-dim keys"
+          title="Scaled dot-product attention, 5 tokens, 2-dim keys"
           subtitle="We'll follow one row all the way through. The same thing happens for each of the 5 rows in parallel."
           steps={[
             {
@@ -395,14 +395,14 @@ shape: (5 × 2)          shape: (5 × 2)            shape: (5 × 2)`}
               ),
             },
             {
-              title: "Step 1: Q · Kᵀ — pairwise scores",
+              title: "Step 1: Q · Kᵀ, pairwise scores",
               body: (
                 <>
                   <p className="m-0 mb-2">
-                    <code>Kᵀ</code> is K transposed — shape <code>(2 × 5)</code>. The product <code>Q · Kᵀ</code> has shape <code>(5 × 5)</code> — one entry per (query, key) pair.
+                    <code>Kᵀ</code> is K transposed, shape <code>(2 × 5)</code>. The product <code>Q · Kᵀ</code> has shape <code>(5 × 5)</code>, one entry per (query, key) pair.
                     Entry <code>(i, j)</code> is the dot product of query <code>i</code> with key <code>j</code>.
                   </p>
-                  <p className="m-0 mb-2">Let&apos;s compute <strong>row 0</strong> — query [1.0, 0.0] against every key:</p>
+                  <p className="m-0 mb-2">Let&apos;s compute <strong>row 0</strong>, query [1.0, 0.0] against every key:</p>
                   <CodeBlock lang="plain">
 {`[1.0, 0.0] · [1.0,  0.0]  = 1.0·1.0 + 0.0·0.0  =  1.0
 [1.0, 0.0] · [0.0,  1.0]  = 1.0·0.0 + 0.0·1.0  =  0.0
@@ -412,7 +412,7 @@ shape: (5 × 2)          shape: (5 × 2)            shape: (5 × 2)`}
 
 row 0 of (Q · Kᵀ) = [ 1.0, 0.0, 1.0, 0.5, 1.0 ]`}
                   </CodeBlock>
-                  <p className="m-0 text-xs italic">High score (1.0) for keys pointing in the +x direction. Zero for the +y one. Makes sense — query 0 is pure +x.</p>
+                  <p className="m-0 text-xs italic">High score (1.0) for keys pointing in the +x direction. Zero for the +y one. Makes sense, query 0 is pure +x.</p>
                 </>
               ),
             },
@@ -465,7 +465,7 @@ softmax   ≈ [ 0.238, 0.118, 0.238, 0.167, 0.238 ]`}
 attention output for token 0 ≈ [0.305, 0.694]`}
                   </CodeBlock>
                   <p className="m-0 text-xs italic">
-                    That&apos;s the new representation for token 0 — a weighted blend of everyone&apos;s values, mostly pulled toward the things it matched on.
+                    That&apos;s the new representation for token 0, a weighted blend of everyone&apos;s values, mostly pulled toward the things it matched on.
                     Repeat for tokens 1–4 and you get the full <code>(5 × 2)</code> output matrix. One call, whole sequence processed.
                   </p>
                 </>
@@ -531,7 +531,7 @@ public static double[][] attention(double[][] Q, double[][] K, double[][] V) {
         <h3>Masked (causal) attention: the one-line change for LLMs</h3>
 
         <p>
-          GPT-style language models predict the next token, so position <code>i</code> must not see positions <code>j &gt; i</code> — that would be cheating.
+          GPT-style language models predict the next token, so position <code>i</code> must not see positions <code>j &gt; i</code>, that would be cheating.
           The fix is to add a <strong>mask</strong>: set the &quot;future&quot; entries of the score matrix to <code>−∞</code> before softmax. They become exactly 0 after softmax.
         </p>
 
@@ -556,10 +556,10 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
         <Quiz
           question="You remove the '/ √d_k' scaling from the attention formula and train a model with d_k = 64. What's most likely to happen?"
           options={[
-            { label: "Nothing — the scaling is cosmetic.", explanation: "Not cosmetic. With d_k = 64, dot products of random vectors have variance ~64, so scores easily reach ±10 or more." },
-            { label: "Softmax saturates — one weight near 1, the rest near 0 — and gradients stall.", correct: true, explanation: "Exactly. Huge pre-softmax scores make softmax almost one-hot. Gradients only flow to the 'winning' key, and training collapses. The √d_k scaling is what keeps softmax soft." },
-            { label: "Loss explodes to infinity.", explanation: "Usually not — the output is still bounded. You just train into a bad local minimum because gradients don't flow properly." },
-            { label: "Outputs become negative, which is invalid.", explanation: "Outputs of attention can be whatever — they're weighted averages of values, which can be any real numbers. Not the issue." },
+            { label: "Nothing, the scaling is cosmetic.", explanation: "Not cosmetic. With d_k = 64, dot products of random vectors have variance ~64, so scores easily reach ±10 or more." },
+            { label: "Softmax saturates, one weight near 1, the rest near 0, and gradients stall.", correct: true, explanation: "Exactly. Huge pre-softmax scores make softmax almost one-hot. Gradients only flow to the 'winning' key, and training collapses. The √d_k scaling is what keeps softmax soft." },
+            { label: "Loss explodes to infinity.", explanation: "Usually not, the output is still bounded. You just train into a bad local minimum because gradients don't flow properly." },
+            { label: "Outputs become negative, which is invalid.", explanation: "Outputs of attention can be whatever, they're weighted averages of values, which can be any real numbers. Not the issue." },
           ]}
           hint="What does softmax do when its inputs have very large spread?"
         />
@@ -577,9 +577,9 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
         <Quiz
           question="For a causal (GPT-style) language model with a 5-token sequence, how does the attention mask look?"
           options={[
-            { label: "No mask — causal models don't need one.", explanation: "Causal is ALL about the mask. Without it, position 0 could attend to positions 1-4, which means 'seeing the future.' That's forbidden when training an LM to predict next tokens." },
+            { label: "No mask, causal models don't need one.", explanation: "Causal is ALL about the mask. Without it, position 0 could attend to positions 1-4, which means 'seeing the future.' That's forbidden when training an LM to predict next tokens." },
             { label: "A lower-triangular matrix: position i can attend to positions 0..i, everything above the diagonal is −∞.", correct: true, explanation: "Exactly. Row i keeps columns 0..i and masks columns i+1..n-1 to −∞ (so softmax zeroes them). Position 0 only attends to itself; position 4 attends to 0..4." },
-            { label: "An upper-triangular matrix: position i can attend to positions i..n-1.", explanation: "That would be 'future only' — the opposite of causal. You'd be training the model to predict from the future, which is ill-defined." },
+            { label: "An upper-triangular matrix: position i can attend to positions i..n-1.", explanation: "That would be 'future only', the opposite of causal. You'd be training the model to predict from the future, which is ill-defined." },
             { label: "A random binary mask.", explanation: "Random masking is used in some training regimes (BERT's MLM), but not for causal language modeling." },
           ]}
         />
@@ -602,14 +602,14 @@ if (j > i) scores[i][j] = Double.NEGATIVE_INFINITY;`}
       {/* ================================================================= */}
       {/* PART 4: MULTI-HEAD                                                 */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="transformers" id="multi-head" title="Multi-head attention" xp={20} celebration="You now know why transformers have 'heads' — and why more of them helps.">
+      <Checkpoint moduleSlug="transformers" id="multi-head" title="Multi-head attention" xp={20} celebration="You now know why transformers have 'heads', and why more of them helps.">
       <section>
-        <h2>Part 4: Multi-head attention — parallel perspectives</h2>
+        <h2>Part 4: Multi-head attention, parallel perspectives</h2>
 
         <h3>One attention head sees one view of the data</h3>
 
         <p>
-          Attention as we&apos;ve defined it has three learned matrices <code>W_Q, W_K, W_V</code>. They learn <em>one</em>{" "}way to compare tokens — for example,
+          Attention as we&apos;ve defined it has three learned matrices <code>W_Q, W_K, W_V</code>. They learn <em>one</em>{" "}way to compare tokens, for example,
           &quot;match tokens with similar syntactic roles.&quot; But a real sentence has many relevant relationships at once: syntax, coreference, tense, sentiment, topic.
           Asking a single set of Q/K/V projections to capture all of them is asking a lot.
         </p>
@@ -635,13 +635,13 @@ W_O is a learned output-projection matrix.`}
         </CodeBlock>
 
         <p>
-          Total parameter count is about the same as single-head attention with <code>d_k = d_model</code> — we just carved it into <em>h</em>{" "}smaller heads.
+          Total parameter count is about the same as single-head attention with <code>d_k = d_model</code>, we just carved it into <em>h</em>{" "}smaller heads.
           The win is that each head can learn a <em>different</em>{" "}notion of &quot;matching,&quot; and together they capture richer structure.
         </p>
 
         <Callout variant="insight" title="What do heads actually learn?">
           <p className="m-0">
-            Famous result from interpretability research: in a trained transformer, you can often inspect individual heads and find specialized behavior — one head attends mostly to the previous token,
+            Famous result from interpretability research: in a trained transformer, you can often inspect individual heads and find specialized behavior, one head attends mostly to the previous token,
             another to subject-verb pairs, another to coreference (&quot;it&quot; → its referent). Not every head is interpretable, but many are. It&apos;s like spinning up multiple tiny specialists instead of one generalist.
           </p>
         </Callout>
@@ -657,7 +657,7 @@ W_O is a learned output-projection matrix.`}
         <Quiz
           question="A transformer has d_model = 768 and 12 heads. What's d_k per head?"
           options={[
-            { label: "768 — each head uses the full dimension.", explanation: "That would blow up the parameter count. Heads split the model dimension." },
+            { label: "768, each head uses the full dimension.", explanation: "That would blow up the parameter count. Heads split the model dimension." },
             { label: "64 (= 768 / 12).", correct: true, explanation: "Exactly. Per-head dim = d_model / num_heads. 768 / 12 = 64 is the classic BERT-base configuration." },
             { label: "12.", explanation: "12 is the number of heads, not per-head dimension." },
             { label: "It depends on what the model learns.", explanation: "d_k is a fixed architectural choice, not a learned value." },
@@ -667,9 +667,9 @@ W_O is a learned output-projection matrix.`}
         <Quiz
           question="Why use multi-head attention rather than one big single-head attention with d_k = d_model?"
           options={[
-            { label: "It's faster in wall-clock time.", explanation: "Not necessarily — multiple small matmuls aren't inherently faster than one big matmul on a GPU." },
+            { label: "It's faster in wall-clock time.", explanation: "Not necessarily, multiple small matmuls aren't inherently faster than one big matmul on a GPU." },
             { label: "Each head can learn a different notion of 'similarity,' capturing multiple types of structure at once.", correct: true, explanation: "Right. One head might learn 'nearby tokens matter', another 'subject-verb', another 'coreference'. Together they give the network multiple attention patterns in a single layer. Single-head is forced to compress all of that into one view." },
-            { label: "Multi-head reduces parameters.", explanation: "Roughly the same parameter count — you've partitioned the dimension, not reduced it." },
+            { label: "Multi-head reduces parameters.", explanation: "Roughly the same parameter count, you've partitioned the dimension, not reduced it." },
             { label: "Multi-head is necessary to make softmax stable.", explanation: "Softmax stability comes from the √d_k scaling. Multi-head is about expressive diversity." },
           ]}
         />
@@ -681,7 +681,7 @@ W_O is a learned output-projection matrix.`}
             { takeaway: "d_k per head = d_model / h. Same total budget, split h ways.", detail: <>Each head is a 'thinner' attention; together they match the expressive width of a single big head but with diverse perspectives.</> },
             { takeaway: "Heads learn different 'kinds' of match.", detail: <>Some heads track syntax, others track coreference, topic, tense. Not every head is interpretable, but many are.</> },
             { takeaway: "Outputs are concatenated, then projected by W_O.", detail: <>The concat brings all head outputs back to d_model dimension; W_O lets the network mix and re-weight them before moving on.</> },
-            { takeaway: "Adding more heads ≠ always better.", detail: <>Beyond a point, heads become redundant. As reference points (2020-era models): BERT-base uses 12, GPT-2 small uses 12, GPT-3 uses 96 — tuned per model size. Modern frontier models go further still.</> },
+            { takeaway: "Adding more heads ≠ always better.", detail: <>Beyond a point, heads become redundant. As reference points (2020-era models): BERT-base uses 12, GPT-2 small uses 12, GPT-3 uses 96, tuned per model size. Modern frontier models go further still.</> },
           ]}
         />
       </section>
@@ -690,13 +690,13 @@ W_O is a learned output-projection matrix.`}
       {/* ================================================================= */}
       {/* PART 5a: POSITIONAL ENCODING                                        */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="transformers" id="positional" title="Positional encoding" xp={15} celebration="You spotted attention's blind spot — and saw the fix every modern LLM uses.">
+      <Checkpoint moduleSlug="transformers" id="positional" title="Positional encoding" xp={15} celebration="You spotted attention's blind spot, and saw the fix every modern LLM uses.">
       <section>
-        <h2>Part 5: putting order back in — positional encoding</h2>
+        <h2>Part 5: putting order back in, positional encoding</h2>
 
         <p>
           Here&apos;s a property of attention you may not have noticed yet: <strong>it doesn&apos;t care about order</strong>.
-          Run attention on <code>[the, cat, sat]</code> and on <code>[sat, the, cat]</code> and — assuming the same Q/K/V values — you get the
+          Run attention on <code>[the, cat, sat]</code> and on <code>[sat, the, cat]</code> and, assuming the same Q/K/V values, you get the
           <em> same set of output vectors</em>, just permuted. Attention is <strong>permutation-invariant</strong>: shuffle the inputs, you shuffle the outputs identically.
         </p>
 
@@ -720,10 +720,10 @@ where p_i is a fixed (non-learned) vector that depends only on the integer i.`}
 
         <p>
           That&apos;s it. The model now sees a vector that encodes both <em>what</em>{" "}the token is and <em>where</em>{" "}it sits.
-          Attention still does its permutation-invariant math — but the <em>inputs</em>{" "}are no longer interchangeable, because position got baked in.
+          Attention still does its permutation-invariant math, but the <em>inputs</em>{" "}are no longer interchangeable, because position got baked in.
         </p>
 
-        <h3>Sinusoidal positions — what the original paper used</h3>
+        <h3>Sinusoidal positions, what the original paper used</h3>
 
         <p>
           The original choice was a clever sinusoid:
@@ -736,12 +736,12 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
 
         <p>
           Each dimension oscillates at a different frequency. Low-index dims wiggle slowly (encoding coarse position); high-index dims wiggle fast (encoding fine position).
-          Why <em>this</em>{" "}shape? Two nice properties: it generalizes to sequences longer than ever seen at training time, and the dot product <code>p_i · p_j</code> depends only on the offset <code>j − i</code> — so &quot;distance between positions&quot; is something attention can pick up cleanly.
+          Why <em>this</em>{" "}shape? Two nice properties: it generalizes to sequences longer than ever seen at training time, and the dot product <code>p_i · p_j</code> depends only on the offset <code>j − i</code>, so &quot;distance between positions&quot; is something attention can pick up cleanly.
         </p>
 
         <Callout variant="insight" title="Modern LLMs use RoPE, not sinusoidal addition">
           <p className="m-0">
-            Newer models (LLaMA, Claude, GPT-NeoX, most of 2023+) use <strong>Rotary Position Embedding (RoPE)</strong>. Instead of <em>adding</em>{" "}a position vector to the embedding, RoPE <em>rotates</em>{" "}the Q and K vectors by a position-dependent angle inside each attention head. The intuition stays the same — &quot;tell the model where each token is&quot; — but the mechanism plays nicer with long context. You don&apos;t need the math; you do need to know that &quot;positional encoding&quot; is the umbrella term and RoPE is the modern flavor.
+            Newer models (LLaMA, Claude, GPT-NeoX, most of 2023+) use <strong>Rotary Position Embedding (RoPE)</strong>. Instead of <em>adding</em>{" "}a position vector to the embedding, RoPE <em>rotates</em>{" "}the Q and K vectors by a position-dependent angle inside each attention head. The intuition stays the same, &quot;tell the model where each token is&quot;, but the mechanism plays nicer with long context. You don&apos;t need the math; you do need to know that &quot;positional encoding&quot; is the umbrella term and RoPE is the modern flavor.
           </p>
         </Callout>
 
@@ -749,8 +749,8 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
           question="Why does attention need positional encoding at all?"
           options={[
             { label: "Because softmax doesn't normalize correctly without it.", explanation: "Softmax is unrelated. Softmax just turns scores into a probability distribution; position is a separate concern." },
-            { label: "Because attention is permutation-invariant — without position info, 'dog bites man' and 'man bites dog' would produce the same set of output vectors.", correct: true, explanation: "Right. Attention treats its inputs as a set, not a sequence. To recover sequence semantics, you have to inject position somewhere — usually by adding (sinusoidal) or rotating (RoPE) a per-position signal into the token vectors before attention runs." },
-            { label: "Because the Q, K, V projections lose dimensionality.", explanation: "The projections are linear maps; they don't lose order information because there was none to begin with — that's the point." },
+            { label: "Because attention is permutation-invariant, without position info, 'dog bites man' and 'man bites dog' would produce the same set of output vectors.", correct: true, explanation: "Right. Attention treats its inputs as a set, not a sequence. To recover sequence semantics, you have to inject position somewhere, usually by adding (sinusoidal) or rotating (RoPE) a per-position signal into the token vectors before attention runs." },
+            { label: "Because the Q, K, V projections lose dimensionality.", explanation: "The projections are linear maps; they don't lose order information because there was none to begin with, that's the point." },
             { label: "Because residual connections require it.", explanation: "Residuals are unrelated to positional encoding. They solve gradient flow, not order awareness." },
           ]}
         />
@@ -772,10 +772,10 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
       {/* ================================================================= */}
       <Checkpoint moduleSlug="transformers" id="transformer-block" title="The transformer block" xp={20} celebration="You can draw a transformer block from memory. You understand every component.">
       <section>
-        <h2>Part 6: The transformer block — what surrounds attention</h2>
+        <h2>Part 6: The transformer block, what surrounds attention</h2>
 
         <p>
-          Attention is the headliner, but a transformer &quot;block&quot; has a few other pieces — each solving a specific training problem.
+          Attention is the headliner, but a transformer &quot;block&quot; has a few other pieces, each solving a specific training problem.
           Once you know them, you&apos;ll never be surprised by a transformer diagram again.
         </p>
 
@@ -841,7 +841,7 @@ p_i[2k + 1] = cos(i / 10000^(2k / d_model))`}
         </CodeBlock>
 
         <p>
-          Why do this? Without it, activations drift over training — one layer outputs values around 0.01, the next around 1000. Big shifts wreck the next layer&apos;s inputs and destabilize training.
+          Why do this? Without it, activations drift over training, one layer outputs values around 0.01, the next around 1000. Big shifts wreck the next layer&apos;s inputs and destabilize training.
           LayerNorm keeps the scale predictable. <strong>Pre-norm</strong> (normalize before sub-layer) is the modern default; the original paper used post-norm but training was trickier.
         </p>
 
@@ -859,7 +859,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         </CodeBlock>
 
         <p>
-          The FFN widens each vector to 4× the model dimension, applies non-linearity, then projects back. It&apos;s where most of the transformer&apos;s parameters actually live — often 2/3 of the total.
+          The FFN widens each vector to 4× the model dimension, applies non-linearity, then projects back. It&apos;s where most of the transformer&apos;s parameters actually live, often 2/3 of the total.
           Interpretability research suggests the FFN is where &quot;facts&quot; get stored: attention routes, FFN remembers.
         </p>
 
@@ -886,7 +886,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         <Quiz
           question="Why are residual connections critical for deep transformers?"
           options={[
-            { label: "They reduce parameter count.", explanation: "Residuals don't change parameter count — they're just adds." },
+            { label: "They reduce parameter count.", explanation: "Residuals don't change parameter count, they're just adds." },
             { label: "They give gradients a direct path backward through each block, preventing vanishing gradients in very deep networks.", correct: true, explanation: "Exactly. Without residuals, gradient magnitudes shrink as they pass through each sub-layer. With residuals, the gradient also flows directly through the skip connection, so the effective depth seen by gradient doesn't grow unboundedly. This is WHY 96-layer transformers train." },
             { label: "They make attention causal.", explanation: "Causality comes from masking, not residuals." },
             { label: "They're required for softmax to work.", explanation: "Softmax is unrelated to residuals." },
@@ -897,9 +897,9 @@ activation σ = ReLU (original) or GELU (modern).`}
           question="Where are most of a transformer's parameters?"
           options={[
             { label: "In the attention Q/K/V matrices.", explanation: "Attention Q/K/V use 3 · d_model² parameters per layer. That's substantial, but dwarfed by the FFN." },
-            { label: "In the feed-forward network (FFN), which widens to 4·d_model.", correct: true, explanation: "Right. FFN has two matrices: (4·d_model × d_model) and (d_model × 4·d_model) — about 8·d_model² per layer, ~2/3 of total params. Attention is the more expensive op per token, but FFN holds the weight count." },
-            { label: "In the token embeddings.", explanation: "Embeddings are big (vocab_size × d_model) but not per-layer — they're paid once. In a deep model, per-layer weights dominate." },
-            { label: "In the positional encodings.", explanation: "Positional encodings are tiny — typically a fixed sinusoid table or a small learned lookup." },
+            { label: "In the feed-forward network (FFN), which widens to 4·d_model.", correct: true, explanation: "Right. FFN has two matrices: (4·d_model × d_model) and (d_model × 4·d_model), about 8·d_model² per layer, ~2/3 of total params. Attention is the more expensive op per token, but FFN holds the weight count." },
+            { label: "In the token embeddings.", explanation: "Embeddings are big (vocab_size × d_model) but not per-layer, they're paid once. In a deep model, per-layer weights dominate." },
+            { label: "In the positional encodings.", explanation: "Positional encodings are tiny, typically a fixed sinusoid table or a small learned lookup." },
           ]}
         />
 
@@ -909,7 +909,7 @@ activation σ = ReLU (original) or GELU (modern).`}
           points={[
             { takeaway: "Residual connections (x + SubLayer(x)) make deep stacks trainable.", detail: <>They give gradients a direct highway backward, avoiding the vanishing-gradient problem that haunted deep MLPs.</> },
             { takeaway: "LayerNorm keeps per-token activations at a stable scale.", detail: <>Without it, training is unstable; with it, you can stack many layers. Pre-norm (norm before sublayer) is the modern default.</> },
-            { takeaway: "The FFN is a per-token 2-layer MLP — widens 4×, non-linear, projects back.", detail: <>Holds most of a transformer&apos;s parameters. Good evidence it&apos;s where &quot;facts&quot; are stored.</> },
+            { takeaway: "The FFN is a per-token 2-layer MLP, widens 4×, non-linear, projects back.", detail: <>Holds most of a transformer&apos;s parameters. Good evidence it&apos;s where &quot;facts&quot; are stored.</> },
             { takeaway: "The whole transformer: embed → N blocks → final LayerNorm → unembed → softmax.", detail: <>That&apos;s GPT. Everything clever in modern LLMs is a tweak to this skeleton.</> },
           ]}
         />
@@ -919,7 +919,7 @@ activation σ = ReLU (original) or GELU (modern).`}
       {/* ================================================================= */}
       {/* PROJECT                                                            */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="transformers" id="java-project" title="Project: scaled dot-product attention in Java" xp={60} manual manualLabel="I built it — mark done" celebration="You hand-rolled the central operation of modern AI. In Java. With no library.">
+      <Checkpoint moduleSlug="transformers" id="java-project" title="Project: scaled dot-product attention in Java" xp={60} manual manualLabel="I built it, mark done" celebration="You hand-rolled the central operation of modern AI. In Java. With no library.">
       <section>
         <h2>Project: scaled dot-product attention in Java</h2>
 
@@ -934,7 +934,7 @@ activation σ = ReLU (original) or GELU (modern).`}
           <div className="mb-3 font-bold">Build a self-contained attention module that passes three tests.</div>
           <ol className="ml-5 list-decimal space-y-2">
             <li>
-              <strong>Implement</strong> <code>attention(Q, K, V)</code> returning a <code>(n × d)</code> matrix — the formula from Part 3.
+              <strong>Implement</strong> <code>attention(Q, K, V)</code> returning a <code>(n × d)</code> matrix, the formula from Part 3.
               Use the numerically-stable softmax (subtract the row max first).
             </li>
             <li>
@@ -994,7 +994,7 @@ activation σ = ReLU (original) or GELU (modern).`}
         <Callout variant="warn" title="Only mark done when row 0 prints [0.305, 0.694]">
           <p className="m-0">
             Everyone who claims to &quot;understand transformers&quot; on LinkedIn has not typed out this computation. You should. When row 0 of your output comes out right,
-            you&apos;ll know — viscerally, not just semantically — what attention is. That moment is the entire point of this module.
+            you&apos;ll know, viscerally, not just semantically, what attention is. That moment is the entire point of this module.
           </p>
         </Callout>
       </section>
@@ -1003,16 +1003,16 @@ activation σ = ReLU (original) or GELU (modern).`}
       {/* ================================================================= */}
       {/* FINAL QUIZ                                                         */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="transformers" id="final" title="Final quiz — Module 5" xp={30} celebration="You just internalized attention. Most engineers never do. Embeddings next — you'll find Module 6 downright gentle after this.">
+      <Checkpoint moduleSlug="transformers" id="final" title="Final quiz, Module 5" xp={30} celebration="You just internalized attention. Most engineers never do. Embeddings next, you'll find Module 6 downright gentle after this.">
       <section>
-        <h2>Final quiz — Module 5</h2>
+        <h2>Final quiz, Module 5</h2>
 
         <Quiz
           question="In the 2017 paper, 'Attention Is All You Need' refers to the fact that:"
           options={[
-            { label: "Attention can replace RNNs entirely — you don't need recurrence or convolution for sequence modeling.", correct: true, explanation: "Right. The paper's claim: with multi-head attention + residuals + LayerNorm + FFN, you can drop RNNs and CNNs entirely and still get best-in-class sequence models. This was a seismic shift in NLP architecture." },
+            { label: "Attention can replace RNNs entirely, you don't need recurrence or convolution for sequence modeling.", correct: true, explanation: "Right. The paper's claim: with multi-head attention + residuals + LayerNorm + FFN, you can drop RNNs and CNNs entirely and still get best-in-class sequence models. This was a seismic shift in NLP architecture." },
             { label: "Attention has more parameters than RNNs.", explanation: "Parameter count varies. The paper's claim was structural, not about capacity." },
-            { label: "Attention replaces backprop.", explanation: "Attention is trained by backprop — it doesn't replace it." },
+            { label: "Attention replaces backprop.", explanation: "Attention is trained by backprop, it doesn't replace it." },
             { label: "You don't need layers at all.", explanation: "Transformers use many layers. The 'you don't need' was about RNN/CNN layers specifically." },
           ]}
         />
@@ -1021,7 +1021,7 @@ activation σ = ReLU (original) or GELU (modern).`}
           question="Self-attention has what time complexity in sequence length n?"
           options={[
             { label: "O(n)", explanation: "Too fast. The Q · Kᵀ matrix alone has n² entries." },
-            { label: "O(n log n)", explanation: "That's the complexity of FFT-like operations. Plain attention is simpler and worse — quadratic." },
+            { label: "O(n log n)", explanation: "That's the complexity of FFT-like operations. Plain attention is simpler and worse, quadratic." },
             { label: "O(n²)", correct: true, explanation: "Right. Q · Kᵀ builds an (n × n) score matrix. Both the multiply and the storage are O(n²·d). This quadratic cost is the headline scalability limit and why long-context models are hard." },
             { label: "O(n · d²)", explanation: "That's the per-token cost of projecting to Q/K/V. Total attention (across all pairs) scales as n², which dominates for long sequences." },
           ]}
@@ -1031,8 +1031,8 @@ activation σ = ReLU (original) or GELU (modern).`}
           question="You train a causal (GPT-style) language model. At inference, you give it 'The cat sat on the' and want it to predict the next word. What attention mask is applied to position 4 ('the')?"
           options={[
             { label: "It attends to all tokens, past and future.", explanation: "That'd be non-causal. For autoregressive generation, you can only attend to past tokens." },
-            { label: "It attends only to positions 0-4 (itself and all previous tokens), with future positions masked.", correct: true, explanation: "Exactly. Causal masking zeros out anything to the right. Position 4 sees positions 0-4. At inference, there ARE no future tokens yet — but the mask is still there for training consistency." },
-            { label: "It attends only to position 0 (the first token).", explanation: "No — it attends to all previous, not just the first." },
+            { label: "It attends only to positions 0-4 (itself and all previous tokens), with future positions masked.", correct: true, explanation: "Exactly. Causal masking zeros out anything to the right. Position 4 sees positions 0-4. At inference, there ARE no future tokens yet, but the mask is still there for training consistency." },
+            { label: "It attends only to position 0 (the first token).", explanation: "No, it attends to all previous, not just the first." },
             { label: "No mask is used at inference.", explanation: "Masking is still applied at inference to match how the model was trained. Without it, outputs would shift." },
           ]}
         />
@@ -1040,10 +1040,10 @@ activation σ = ReLU (original) or GELU (modern).`}
         <Quiz
           question="You use 8 heads with d_model = 256. Each head gets d_k = 32. Someone proposes using 16 heads with d_k = 16 instead. What's a likely outcome?"
           options={[
-            { label: "Exact same behavior — total budget is the same.", explanation: "Total params are the same, but the model can behave differently. More narrower heads lets the network specialize into finer-grained patterns; too-narrow heads can also become redundant or underpowered." },
-            { label: "More heads can specialize into finer patterns, but each head has less capacity per view — diminishing returns past some point.", correct: true, explanation: "Right. More heads = more parallel 'views' but each is narrower. Beyond a point heads become redundant. The sweet spot is model-dependent; 8-16 per 768-dim model is typical." },
-            { label: "16 heads will always be better than 8.", explanation: "Not always — empirically there's a sweet spot and diminishing returns. BERT-base picked 12 for a reason." },
-            { label: "The math breaks — d_k = 16 is too small.", explanation: "d_k = 16 is fine mathematically. Attention works at any d_k, just with different scaling." },
+            { label: "Exact same behavior, total budget is the same.", explanation: "Total params are the same, but the model can behave differently. More narrower heads lets the network specialize into finer-grained patterns; too-narrow heads can also become redundant or underpowered." },
+            { label: "More heads can specialize into finer patterns, but each head has less capacity per view, diminishing returns past some point.", correct: true, explanation: "Right. More heads = more parallel 'views' but each is narrower. Beyond a point heads become redundant. The sweet spot is model-dependent; 8-16 per 768-dim model is typical." },
+            { label: "16 heads will always be better than 8.", explanation: "Not always, empirically there's a sweet spot and diminishing returns. BERT-base picked 12 for a reason." },
+            { label: "The math breaks, d_k = 16 is too small.", explanation: "d_k = 16 is fine mathematically. Attention works at any d_k, just with different scaling." },
           ]}
         />
 
@@ -1060,10 +1060,10 @@ activation σ = ReLU (original) or GELU (modern).`}
         <Quiz
           question="You finished the Java project. Your causal-masked attention on a 4-token sequence gives row 0 = [1, 0, 0, 0]. What does that tell you?"
           options={[
-            { label: "Your mask is broken — row 0 should be uniform.", explanation: "Row 0 of causal attention CAN only attend to position 0 — everything else is masked to −∞, and softmax of [something, −∞, −∞, −∞] is [1, 0, 0, 0]. That's correct behavior." },
-            { label: "Your implementation is correct — position 0 can only attend to itself under the causal mask, so its weight on position 0 is 1 and everything else is 0.", correct: true, explanation: "Exactly right. That's the expected output and a good sanity test. If you saw any non-zero weight on positions 1, 2, or 3 for row 0, your mask would be leaking." },
-            { label: "Nothing — attention weights are arbitrary.", explanation: "Attention weights are very NOT arbitrary — they satisfy the softmax constraint (non-negative, sum to 1) and the mask constraint (masked positions get 0). Your output proves both." },
-            { label: "Your softmax must be broken — it can't output exactly 1.", explanation: "softmax([0, −∞, −∞, −∞]) is exactly [1, 0, 0, 0] by math: e^0 = 1 and e^−∞ = 0. Perfectly correct." },
+            { label: "Your mask is broken, row 0 should be uniform.", explanation: "Row 0 of causal attention CAN only attend to position 0, everything else is masked to −∞, and softmax of [something, −∞, −∞, −∞] is [1, 0, 0, 0]. That's correct behavior." },
+            { label: "Your implementation is correct, position 0 can only attend to itself under the causal mask, so its weight on position 0 is 1 and everything else is 0.", correct: true, explanation: "Exactly right. That's the expected output and a good sanity test. If you saw any non-zero weight on positions 1, 2, or 3 for row 0, your mask would be leaking." },
+            { label: "Nothing, attention weights are arbitrary.", explanation: "Attention weights are very NOT arbitrary, they satisfy the softmax constraint (non-negative, sum to 1) and the mask constraint (masked positions get 0). Your output proves both." },
+            { label: "Your softmax must be broken, it can't output exactly 1.", explanation: "softmax([0, −∞, −∞, −∞]) is exactly [1, 0, 0, 0] by math: e^0 = 1 and e^−∞ = 0. Perfectly correct." },
           ]}
         />
       </section>
@@ -1073,7 +1073,7 @@ activation σ = ReLU (original) or GELU (modern).`}
       <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Onward to geometry</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Module 6 pulls the camera back: what <em>are</em>{" "}those vectors floating through attention? <strong>Embeddings</strong> — numbers that turn into geometry.
+          Module 6 pulls the camera back: what <em>are</em>{" "}those vectors floating through attention? <strong>Embeddings</strong>, numbers that turn into geometry.
           You&apos;ll learn cosine similarity, build a nearest-neighbor search in Java, and get the foundation for RAG in Phase 3.
         </p>
         <Link

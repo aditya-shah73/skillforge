@@ -81,7 +81,7 @@ export default function Page() {
           <li>Redis topologies (single, sentinel, cluster) and when each one is the right call.</li>
           <li>Spring&apos;s <code>@Cacheable</code> stack and when to drop down to <code>RedisTemplate</code>.</li>
           <li>Hot keys, thundering herds, and the actual mitigations (not just &quot;use a CDN&quot;).</li>
-          <li>What happens when a Redis cache fails — eviction policies, persistence, and the ops realities of running it in production.</li>
+          <li>What happens when a Redis cache fails, eviction policies, persistence, and the ops realities of running it in production.</li>
         </ul>
       </section>
 
@@ -99,7 +99,7 @@ export default function Page() {
       </section>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="redis-arch" title="Redis architecture" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 1 — Redis architecture &amp; Spring integration</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 1, Redis architecture &amp; Spring integration</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">Three deployment shapes</h3>
 
@@ -129,7 +129,7 @@ export default function Page() {
           <p className="m-0">
             If you need keys to live on the same node (so you can MGET them or transact on them), wrap a portion of
             the key in <code>{"{...}"}</code>. <code>user:{`{42}`}:profile</code> and <code>user:{`{42}`}:settings</code>
-            both hash on <code>42</code>, so they land on the same slot. Use sparingly — abuse breaks the whole
+            both hash on <code>42</code>, so they land on the same slot. Use sparingly, abuse breaks the whole
             distribution model.
           </p>
         </Callout>
@@ -138,7 +138,7 @@ export default function Page() {
           kind="Quick check"
           question="Your team's Redis dataset is 60GB and growing 10% per month. Read traffic is 80k QPS, writes are 5k QPS. The current setup is a single 128GB instance. What's the next move?"
           options={[
-            { label: "Move to Redis Cluster immediately — 60GB is too much for one node.", correct: false, explanation: "60GB is fine for one Redis instance. The bigger box has plenty of headroom. Cluster has real ergonomic costs (no cross-slot operations) — only adopt it when needed." },
+            { label: "Move to Redis Cluster immediately, 60GB is too much for one node.", correct: false, explanation: "60GB is fine for one Redis instance. The bigger box has plenty of headroom. Cluster has real ergonomic costs (no cross-slot operations), only adopt it when needed." },
             { label: "Move to Sentinel: replicas for HA, master handles writes, replicas absorb read traffic.", correct: true, explanation: "Sentinel gives you HA and read scaling without the cluster ergonomic costs. 80k reads / 5k writes is replica territory. You'd want maybe 3 replicas to spread the read load. When the dataset crosses ~150GB or writes exceed ~50k QPS, then revisit cluster." },
             { label: "Stay single-instance and hope the master never dies.", correct: false, explanation: "At 80k QPS, an outage is going to be very visible. HA isn't optional at this scale." },
             { label: "Switch to Memcached.", correct: false, explanation: "Memcached has even thinner HA story than single-instance Redis. Switching tools doesn't address the HA gap." },
@@ -151,7 +151,7 @@ export default function Page() {
 
         <p><strong>@Cacheable / @CacheEvict (annotation-based).</strong>{" "}Highest level. You annotate a service method, Spring wraps it in cache-aside logic. Easy, opinionated.</p>
 
-        <CodeBlock lang="java" caption="@Cacheable — cache-aside in 4 lines">{`@Configuration
+        <CodeBlock lang="java" caption="@Cacheable, cache-aside in 4 lines">{`@Configuration
 @EnableCaching
 public class CacheConfig {
     @Bean
@@ -176,9 +176,9 @@ public class UserService {
     }
 }`}</CodeBlock>
 
-        <p><strong>RedisTemplate (manual).</strong>{" "}Low level. You call <code>redis.opsForValue().get(...)</code> yourself. More code, more control — necessary for negative caching, jitter, stampede protection, multi-key operations, pub/sub.</p>
+        <p><strong>RedisTemplate (manual).</strong>{" "}Low level. You call <code>redis.opsForValue().get(...)</code> yourself. More code, more control, necessary for negative caching, jitter, stampede protection, multi-key operations, pub/sub.</p>
 
-        <CodeBlock lang="java" caption="RedisTemplate — when you need control">{`@Service
+        <CodeBlock lang="java" caption="RedisTemplate, when you need control">{`@Service
 public class UserService {
     @Autowired RedisTemplate<String, User> redis;
     @Autowired UserRepository repo;
@@ -207,7 +207,7 @@ public class UserService {
             Default to <code>@Cacheable</code> for boring cache-aside on single-key reads. Drop down to
             <code> RedisTemplate</code> when you need multi-key operations (MGET, pipelining), TTL jitter,
             stampede locks, pub/sub, or anything Redis-specific (sorted sets for leaderboards, streams for queues,
-            HyperLogLog for cardinality). One project can — and usually does — use both.
+            HyperLogLog for cardinality). One project can, and usually does, use both.
           </p>
         </Callout>
 
@@ -215,7 +215,7 @@ public class UserService {
           kind="Gut check"
           question="A team uses @Cacheable everywhere and has tuned it for 6 months. They're now adding a feature that needs to fetch 100 user profiles in one request. What's the right move?"
           options={[
-            { label: "Loop with @Cacheable — Spring handles the cache lookups.", correct: false, explanation: "100 sequential cache lookups = 100 network round trips to Redis. At 1ms each that's 100ms of pure latency. There's a much better way." },
+            { label: "Loop with @Cacheable, Spring handles the cache lookups.", correct: false, explanation: "100 sequential cache lookups = 100 network round trips to Redis. At 1ms each that's 100ms of pure latency. There's a much better way." },
             { label: "Drop down to RedisTemplate.opsForValue().multiGet() to fetch all 100 in one round trip, fill misses from DB.", correct: true, explanation: "Right. Multi-key operations are exactly the case where @Cacheable's per-call abstraction breaks down. MGET returns 100 values in one round trip. Fill the misses from DB, populate, return. This is the kind of thing you reach for RedisTemplate for." },
             { label: "Add a local cache in front of Redis to avoid the round trips.", correct: false, explanation: "Local caches help, but they don't fix the underlying issue and they introduce their own staleness problem. MGET is the targeted fix." },
             { label: "Cache the whole list as one entry: 'top-100-users' with the joined result.", correct: false, explanation: "If the input set varies per request (which user_ids you fetch), you can't pre-cache the joined result. MGET is more flexible." },
@@ -234,7 +234,7 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="hot-keys" title="Hot keys & herd" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 2 — Hot keys, thundering herd, and big keys</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 2, Hot keys, thundering herd, and big keys</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">The hot key problem</h3>
         <p>
@@ -253,12 +253,12 @@ public class UserService {
 
         <p><strong>2. Local in-process cache for hot keys.</strong>{" "}Put a Caffeine cache in front of Redis with a tiny TTL (1–10 seconds). Hot keys hit the local cache 99.9% of the time and never hit Redis. Each app instance has its own copy; staleness window is at most the TTL.</p>
 
-        <p><strong>3. Detect and tier.</strong>{" "}Redis 6.0 added client-side caching with invalidation messages — clients keep their own copy and Redis tells them when to evict. Effectively automatic local caching with cluster-driven invalidation.</p>
+        <p><strong>3. Detect and tier.</strong>{" "}Redis 6.0 added client-side caching with invalidation messages, clients keep their own copy and Redis tells them when to evict. Effectively automatic local caching with cluster-driven invalidation.</p>
 
         <Callout variant="warn" title="Consistent hashing does not fix this">
           <p className="m-0">
             A common interview answer to &quot;hot key&quot; is &quot;use consistent hashing.&quot; It&apos;s wrong.
-            Consistent hashing decides where a key lives — once it&apos;s decided, all reads of that key go to one node.
+            Consistent hashing decides where a key lives, once it&apos;s decided, all reads of that key go to one node.
             The fix is to make there be more than one place to read from (replication, local cache) or to spread
             <em>the key</em>{" "}across nodes (suffixing). Algorithms that distribute keys don&apos;t help when the skew is on
             a single key.
@@ -330,7 +330,7 @@ public class UserService {
           <li><strong>Memory fragmentation.</strong>{" "}Big allocations are harder for the allocator to recycle.</li>
         </ul>
         <p>
-          The fix is usually structural: split the value. A user&apos;s 1MB feed shouldn&apos;t be one key —
+          The fix is usually structural: split the value. A user&apos;s 1MB feed shouldn&apos;t be one key,
           split it into pages (<code>feed:42:page:0</code>, <code>feed:42:page:1</code>) and fetch only what&apos;s
           needed. Use Redis&apos;s data structures (hashes, lists, sorted sets) instead of one big serialized blob.
         </p>
@@ -346,7 +346,7 @@ public class UserService {
           kind="Gut check"
           question="A team's Redis p99 latency randomly spikes to 200ms a few times per hour. CPU is moderate, network has headroom, no obvious traffic spikes. What should they look at first?"
           options={[
-            { label: "Big keys — a single large GET or SERIALIZE blocks everything else.", correct: true, explanation: "Classic profile: occasional spikes with no obvious correlation. Big keys block the single-threaded event loop. Run --bigkeys, look for outliers, restructure them. This is the boring answer that's almost always right." },
+            { label: "Big keys, a single large GET or SERIALIZE blocks everything else.", correct: true, explanation: "Classic profile: occasional spikes with no obvious correlation. Big keys block the single-threaded event loop. Run --bigkeys, look for outliers, restructure them. This is the boring answer that's almost always right." },
             { label: "Network packet loss.", correct: false, explanation: "Possible but would usually correlate with broader infrastructure issues. Big keys are statistically more likely with the symptom described." },
             { label: "Redis is corrupting data.", correct: false, explanation: "Not the symptom. Latency spikes without errors mean blocking, not corruption." },
             { label: "Spring is pooling too few connections.", correct: false, explanation: "Connection pool exhaustion would cause wait times on the client side, not Redis-side latency. Possible but secondary." },
@@ -355,7 +355,7 @@ public class UserService {
 
         <PartRecap
           title="Part 2 recap"
-          gist="Hot keys need replication or local caching. Stampedes need a per-key lock or stale-while-revalidate. Big keys silently kill latency — find them with --bigkeys."
+          gist="Hot keys need replication or local caching. Stampedes need a per-key lock or stale-while-revalidate. Big keys silently kill latency, find them with --bigkeys."
           points={[
             { takeaway: "Hot keys are skew, not distribution.", detail: "Consistent hashing won't save you. Replicate hot keys across multiple keys, or cache locally with short TTL." },
             { takeaway: "Stampedes need explicit protection.", detail: "Per-key lock is the simple fix; stale-while-revalidate is the better one. Probabilistic early refresh is the elegant one." },
@@ -365,7 +365,7 @@ public class UserService {
       </Checkpoint>
 
       <Checkpoint moduleSlug="distributed-cache-deep" id="operations" title="Operations" xp={25}>
-        <h2 className="mb-4 text-2xl font-semibold">Part 3 — Operational realities</h2>
+        <h2 className="mb-4 text-2xl font-semibold">Part 3, Operational realities</h2>
 
         <h3 className="mt-4 mb-3 text-xl font-semibold">Eviction policies</h3>
         <p>
@@ -388,7 +388,7 @@ public class UserService {
 
         <h3 className="mt-8 mb-3 text-xl font-semibold">Persistence: RDB vs AOF</h3>
         <p>
-          Caches don&apos;t strictly need persistence — losing the cache means falling back to the DB. But warm-up time
+          Caches don&apos;t strictly need persistence, losing the cache means falling back to the DB. But warm-up time
           matters. Cold cache after restart = DB stampede.
         </p>
         <ul>
@@ -397,7 +397,7 @@ public class UserService {
           <li><strong>Both:</strong>{" "}RDB for warm-up, AOF for durability. Common in production.</li>
         </ul>
         <p>
-          For pure caches, RDB every 5 minutes is usually fine — you accept losing a few minutes of cache on crash
+          For pure caches, RDB every 5 minutes is usually fine, you accept losing a few minutes of cache on crash
           because the cost of warm-up + DB pressure is the actual concern, not the cached values themselves.
         </p>
 
@@ -465,13 +465,13 @@ public User get(long id) {
           <li><strong>Eviction rate.</strong>{" "}Keys evicted per second. Should be near zero in steady state; spikes mean memory pressure.</li>
           <li><strong>Slowlog.</strong>{" "}Commands taking &gt;10ms. Almost always big keys or expensive operations.</li>
           <li><strong>Connected clients.</strong>{" "}If this trends up unboundedly, you have a connection leak.</li>
-          <li><strong>Replication lag.</strong>{" "}For replicas — same conversation as the database replication module.</li>
+          <li><strong>Replication lag.</strong>{" "}For replicas, same conversation as the database replication module.</li>
         </ul>
 
         <Callout variant="insight" title="The hit rate trap">
           <p className="m-0">
             A cache with a 99% hit rate and a 0.1ms hit latency seems great. But check the 1% miss latency: if that&apos;s 100ms,
-            your effective average latency is 1.099ms — a 10x degradation hiding inside great-looking aggregate numbers.
+            your effective average latency is 1.099ms, a 10x degradation hiding inside great-looking aggregate numbers.
             Plot p99 of the miss path separately. Make sure your stampede protection is working there.
           </p>
         </Callout>
@@ -489,7 +489,7 @@ public User get(long id) {
 
         <PartRecap
           title="Part 3 recap"
-          gist="Set maxmemory + eviction policy. Persistence is for warm-up, not durability. Tight client timeouts. Test what happens when Redis dies — preferably before it does."
+          gist="Set maxmemory + eviction policy. Persistence is for warm-up, not durability. Tight client timeouts. Test what happens when Redis dies, preferably before it does."
           points={[
             { takeaway: "maxmemory + allkeys-lru is the sane default.", detail: "Without limits, Redis grows until OOM. LRU is the right default for cache use cases." },
             { takeaway: "Cache outages should fail fast.", detail: "100ms client timeouts. Catch and fall through to DB. Test it under load. A slow cache is worse than a dead one." },

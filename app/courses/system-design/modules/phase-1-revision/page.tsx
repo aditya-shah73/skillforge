@@ -52,7 +52,7 @@ flowchart LR
           Phase 1 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Estimation numbers, scaling ladder, CAP/PACELC, consistency models — every foundation from Phase 1 compressed to a reference card you re-read in 15 minutes before a system-design interview.
+          Estimation numbers, scaling ladder, CAP/PACELC, consistency models, every foundation from Phase 1 compressed to a reference card you re-read in 15 minutes before a system-design interview.
         </p>
         <BookmarkButton courseId="system-design" moduleSlug="phase-1-revision" />
         <ModuleProgress moduleSlug="phase-1-revision" checkpoints={CHECKPOINTS} />
@@ -61,14 +61,14 @@ flowchart LR
       {/* INTRO — set expectations */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 1</strong> — every number, every rung, every trade-off from the four previous modules, compressed into tables and decision cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before an interview, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 1</strong>, every number, every rung, every trade-off from the four previous modules, compressed into tables and decision cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read on the train before an interview, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The four modules you&apos;re consolidating: <Link href="/courses/system-design/modules/back-of-envelope" className="text-cyan-600 hover:underline">Back-of-envelope estimation</Link>, <Link href="/courses/system-design/modules/scaling-ladder" className="text-cyan-600 hover:underline">The scaling ladder</Link>, <Link href="/courses/system-design/modules/cap-pacelc" className="text-cyan-600 hover:underline">CAP &amp; PACELC</Link>, and <Link href="/courses/system-design/modules/consistency-models" className="text-cyan-600 hover:underline">Consistency models</Link>.
         </p>
 
         <Callout variant="info" title="What this card covers">
-          <p className="m-0 text-sm">Latency numbers + QPS/storage math · the six-rung scaling ladder · CAP corrected and PACELC&apos;s extra dimension · the consistency hierarchy and the four session guarantees · the gotchas that bite in real designs. No worked examples, no projects — just the reference rows you point at on a whiteboard.</p>
+          <p className="m-0 text-sm">Latency numbers + QPS/storage math · the six-rung scaling ladder · CAP corrected and PACELC&apos;s extra dimension · the consistency hierarchy and the four session guarantees · the gotchas that bite in real designs. No worked examples, no projects, just the reference rows you point at on a whiteboard.</p>
         </Callout>
       </section>
 
@@ -81,7 +81,7 @@ flowchart LR
           The unit system every design discussion uses. Memorize the order of magnitude, not the exact digits.
         </p>
 
-        <h3 className="mb-2 text-base font-semibold">Latency table — five tiers, four orders of magnitude</h3>
+        <h3 className="mb-2 text-base font-semibold">Latency table, five tiers, four orders of magnitude</h3>
         <CodeBlock lang="plain" caption="The numbers you cite from memory in the first 30 seconds of any design">{`OP                                   LATENCY     TIER     MENTAL ANCHOR
 L1 cache reference                   ~1 ns       ns       Clock tick on a 1GHz CPU
 Branch mispredict                    ~3 ns       ns       Cost of guessing wrong at an if
@@ -102,7 +102,7 @@ Cross-continent (US ↔ EU)            ~150 ms     slow     Half a second for a 
           <p className="m-0">99% of design discussions are really about one of three jumps: <strong>RAM → SSD (~1000x), SSD → network (~5x), within-region → cross-region (~100x).</strong>{" "}Every &quot;add a cache&quot; argument is about avoiding the first jump. Every &quot;why is this slow&quot; conversation is about which jump just happened. Memorize those three multipliers and you can reason about feasibility in 10 seconds.</p>
         </Callout>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Capacity math — the four conversions</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Capacity math, the four conversions</h3>
         <CodeBlock lang="plain" caption="Every back-of-envelope is one of these four lines">{`# 1. QPS from users
 average_QPS  = (DAU × actions_per_user_per_day) / 86_400
 peak_QPS     = average_QPS × peak_factor    # 2–3x consumer, 5–10x B2B
@@ -148,7 +148,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">NIC bandwidth</td>
                 <td className="px-4 py-3 font-mono">1 Gbps ≈ 125 MB/s</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Big payloads × moderate QPS saturates fast — invisible until it isn&apos;t</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Big payloads × moderate QPS saturates fast, invisible until it isn&apos;t</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">WebSocket conns</td>
@@ -158,14 +158,14 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">HikariCP pool</td>
                 <td className="px-4 py-3 font-mono">(cores × 2) + spindles ≈ 10</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">50 app instances × 10 = 500 conns to PG — needs pgBouncer</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">50 app instances × 10 = 500 conns to PG, needs pgBouncer</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/back-of-envelope" className="text-cyan-600 hover:underline">Module 1 — Back-of-envelope estimation</Link>.
+          Source: <Link href="/courses/system-design/modules/back-of-envelope" className="text-cyan-600 hover:underline">Module 1, Back-of-envelope estimation</Link>.
         </p>
       </section>
 
@@ -173,7 +173,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 2 — The scaling ladder */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The scaling ladder — six rungs, in order</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. The scaling ladder, six rungs, in order</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           When traffic grows, you walk these rungs roughly in order. Skipping rungs is how systems get over-engineered.
         </p>
@@ -241,7 +241,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/scaling-ladder" className="text-cyan-600 hover:underline">Module 2 — The scaling ladder</Link>.
+          Source: <Link href="/courses/system-design/modules/scaling-ladder" className="text-cyan-600 hover:underline">Module 2, The scaling ladder</Link>.
         </p>
       </section>
 
@@ -259,7 +259,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li><strong>Rungs 1–3 are reversible.</strong>{" "}Bigger box, more boxes, externalize session — all undo cleanly. Do them aggressively.</li>
+          <li><strong>Rungs 1–3 are reversible.</strong>{" "}Bigger box, more boxes, externalize session, all undo cleanly. Do them aggressively.</li>
           <li><strong>Rung 4 (cache) is the first one-way door.</strong>{" "}Once your reads depend on cache hit rate, your invalidation strategy becomes part of your contract. Pick cache-aside until you have a reason not to.</li>
           <li><strong>Rung 5 (sharding) reshapes your schema.</strong>{" "}Joins across shards either die or get pushed to the app layer. Resharding is one of the hardest operations in distributed systems.</li>
           <li><strong>Rung 6 (async) reshapes the user contract.</strong>{" "}Your API stops being &quot;the work is done&quot; and starts being &quot;the work is queued.&quot; That&apos;s a UX change and an at-least-once delivery problem.</li>
@@ -270,13 +270,13 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 4 — CAP / PACELC */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. CAP &amp; PACELC — corrected</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. CAP &amp; PACELC, corrected</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The bumper sticker is wrong. The real claim is narrower and more useful.
         </p>
 
         <Callout variant="insight" title="The corrected one-liner">
-          <p className="m-0"><strong>CAP:</strong>{" "}during a network partition, a distributed system must give up either linearizability (C) or per-request availability (A). Partition tolerance isn&apos;t a choice — networks fail. <strong>PACELC:</strong>{" "}and when there&apos;s no partition, you still have to choose between latency (L) and consistency (C). The &quot;else&quot; clause is where 99% of real design lives, because partitions are rare.</p>
+          <p className="m-0"><strong>CAP:</strong>{" "}during a network partition, a distributed system must give up either linearizability (C) or per-request availability (A). Partition tolerance isn&apos;t a choice, networks fail. <strong>PACELC:</strong>{" "}and when there&apos;s no partition, you still have to choose between latency (L) and consistency (C). The &quot;else&quot; clause is where 99% of real design lives, because partitions are rare.</p>
         </Callout>
 
         <h3 className="mt-6 mb-2 text-base font-semibold">Where the popular datastores sit</h3>
@@ -297,46 +297,46 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
                 <td className="px-4 py-3 font-mono text-rose-600">PA / EL</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Stays up, accepts divergent writes</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fast: write returns when one replica accepts</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes — quorum R+W &gt; N approximates PC/EC</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes, quorum R+W &gt; N approximates PC/EC</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">DynamoDB</td>
                 <td className="px-4 py-3 font-mono text-rose-600">PA / EL (default)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Stays up, eventual reads</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Fast eventual; strong reads at 2× read units</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Per-request — flip to strong reads on demand</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Per-request, flip to strong reads on demand</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">MongoDB (majority/majority)</td>
                 <td className="px-4 py-3 font-mono text-amber-600">PA / EC</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Majority side stays up</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Reads see committed data</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes — per write/read concern</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes, per write/read concern</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Postgres (single primary, async replicas)</td>
                 <td className="px-4 py-3 font-mono text-rose-600">PA / EL-leaning</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Primary keeps going; replicas may lag</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Async replication — reads from replica can be stale</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes — sync replication moves toward PC/EC</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Async replication, reads from replica can be stale</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Yes, sync replication moves toward PC/EC</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Spanner / CockroachDB</td>
                 <td className="px-4 py-3 font-mono text-indigo-600">PC / EC</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Minority side refuses writes</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cross-region quorum on every write (≥ tens of ms)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No — design center is strong</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No, design center is strong</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">etcd / ZooKeeper / Consul</td>
                 <td className="px-4 py-3 font-mono text-indigo-600">PC / EC</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Minority refuses; quorum required</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Raft/Paxos — every write through consensus</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No — coordination demands linearizability</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Raft/Paxos, every write through consensus</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">No, coordination demands linearizability</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Redis (single node)</td>
-                <td className="px-4 py-3 font-mono text-slate-500">N/A — not distributed</td>
+                <td className="px-4 py-3 font-mono text-slate-500">N/A, not distributed</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Nothing to partition</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Strongly consistent (one node, one copy)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cluster mode pushes toward AP</td>
@@ -346,11 +346,11 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <Callout variant="warn" title="The three questions that place any datastore">
-          <p className="m-0">Don&apos;t ask &quot;CP or AP?&quot; — ask three concrete questions: <strong>(1)</strong>{" "}What happens to a write during a partition? <strong>(2)</strong>{" "}What happens to a read during a partition? <strong>(3)</strong>{" "}In normal operation, does a write wait for replicas? Three answers and you&apos;ve placed the system on the matrix.</p>
+          <p className="m-0">Don&apos;t ask &quot;CP or AP?&quot;, ask three concrete questions: <strong>(1)</strong>{" "}What happens to a write during a partition? <strong>(2)</strong>{" "}What happens to a read during a partition? <strong>(3)</strong>{" "}In normal operation, does a write wait for replicas? Three answers and you&apos;ve placed the system on the matrix.</p>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/cap-pacelc" className="text-cyan-600 hover:underline">Module 3 — CAP &amp; PACELC</Link>.
+          Source: <Link href="/courses/system-design/modules/cap-pacelc" className="text-cyan-600 hover:underline">Module 3, CAP &amp; PACELC</Link>.
         </p>
       </section>
 
@@ -358,7 +358,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
       {/* SECTION 5 — Consistency models */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Consistency models — pick the weakest that&apos;s safe</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Consistency models, pick the weakest that&apos;s safe</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The hierarchy from strongest to weakest. Each model lets through specific bugs the stronger ones forbid.
         </p>
@@ -384,7 +384,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
                 <td className="px-4 py-3 font-semibold text-indigo-500">Sequential</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Total order across all processes, but not tied to wall clock</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Processes disagreeing on operation order</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Rarely an explicit goal — usually a byproduct of consensus internals</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Rarely an explicit goal, usually a byproduct of consensus internals</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-amber-600">Causal</td>
@@ -407,7 +407,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold text-rose-600">Eventual</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">If writes stop, replicas converge. No ordering guarantee in between.</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">(Prevents almost nothing — it&apos;s the floor)</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">(Prevents almost nothing, it&apos;s the floor)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Like counters, view counts, leaderboards with staleness tolerance</td>
               </tr>
             </tbody>
@@ -425,7 +425,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
 4. Writes-follow-reads   — a write you make is ordered after what you just read`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/consistency-models" className="text-cyan-600 hover:underline">Module 4 — Consistency models</Link>.
+          Source: <Link href="/courses/system-design/modules/consistency-models" className="text-cyan-600 hover:underline">Module 4, Consistency models</Link>.
         </p>
       </section>
 
@@ -441,7 +441,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-indigo-600 uppercase">Pick linearizable</div>
-            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When the invariant is unrecoverable if violated — money, inventory, uniqueness, locks.</p>
+            <p className="mb-2 text-xs text-slate-600 dark:text-slate-400">When the invariant is unrecoverable if violated, money, inventory, uniqueness, locks.</p>
             <code className="text-xs text-slate-700 dark:text-slate-300">bank balance · flash-sale stock · unique username · leader election</code>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -467,7 +467,7 @@ hot_set = fraction_hot × total_rows × bytes_per_row`}</CodeBlock>
         </div>
 
         <Callout variant="warn" title="The silent failure">
-          <p className="m-0">When you pick AP/eventual for a workload that needed CP/linearizable, you don&apos;t find out at deploy time. You find out six months later when a duplicate row appears, a customer gets double-charged, or two users get the same username. <strong>Inconsistency bugs are silent until they aren&apos;t.</strong>{" "}Pick the weakest model that&apos;s safe — but be honest about &quot;safe.&quot;</p>
+          <p className="m-0">When you pick AP/eventual for a workload that needed CP/linearizable, you don&apos;t find out at deploy time. You find out six months later when a duplicate row appears, a customer gets double-charged, or two users get the same username. <strong>Inconsistency bugs are silent until they aren&apos;t.</strong>{" "}Pick the weakest model that&apos;s safe, but be honest about &quot;safe.&quot;</p>
         </Callout>
       </section>
 
@@ -517,7 +517,7 @@ bandwidth = 200_000 × 500 bytes = 100 MB/s ≈ 0.8 Gbps
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 3 · &quot;Eventually consistent&quot; treated as &quot;might be stale forever&quot;</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              Eventual means convergence in the absence of new writes — typically milliseconds to seconds in healthy systems. It does NOT mean &quot;stale forever&quot; — but it also doesn&apos;t prevent specific UX bugs. The fix isn&apos;t to give up; it&apos;s to layer session guarantees on top.
+              Eventual means convergence in the absence of new writes, typically milliseconds to seconds in healthy systems. It does NOT mean &quot;stale forever&quot;, but it also doesn&apos;t prevent specific UX bugs. The fix isn&apos;t to give up; it&apos;s to layer session guarantees on top.
             </p>
             <CodeBlock lang="java">{`// BAD — Cassandra default, user edits profile, refresh shows old name
 @Transactional
@@ -561,17 +561,17 @@ public ProfileResponse updateName(Long userId, String newName) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="A consumer app has 50M DAU. Each user takes ~20 actions/day. What's the average QPS, and what should you provision for?"
           options={[
-            { label: "~12,000 average QPS — provision for 12k", explanation: "You computed average correctly but forgot the peak factor. Consumer traffic isn't flat — provision for 2–3× average." },
-            { label: "~12,000 average QPS — provision for ~25–35k peak (2–3× consumer multiplier)", correct: true, explanation: "Right. (50M × 20) / 86,400 ≈ 11,600 ≈ 12k average. Consumer apps spike to 2–3× peak, so plan for ~25–35k. The honest interview answer always cites both numbers and the multiplier." },
-            { label: "~1,000 QPS — these numbers aren't that big", explanation: "Off by 10×. Probably forgot to multiply by 20 actions/day, or treated the result as per-minute instead of per-second." },
-            { label: "~120,000 QPS — bigger systems always need more headroom", explanation: "Off by 10× in the other direction. Recompute: (50M × 20) / 86,400 ≈ 12k average." },
+            { label: "~12,000 average QPS, provision for 12k", explanation: "You computed average correctly but forgot the peak factor. Consumer traffic isn't flat, provision for 2–3× average." },
+            { label: "~12,000 average QPS, provision for ~25–35k peak (2–3× consumer multiplier)", correct: true, explanation: "Right. (50M × 20) / 86,400 ≈ 11,600 ≈ 12k average. Consumer apps spike to 2–3× peak, so plan for ~25–35k. The honest interview answer always cites both numbers and the multiplier." },
+            { label: "~1,000 QPS, these numbers aren't that big", explanation: "Off by 10×. Probably forgot to multiply by 20 actions/day, or treated the result as per-minute instead of per-second." },
+            { label: "~120,000 QPS, bigger systems always need more headroom", explanation: "Off by 10× in the other direction. Recompute: (50M × 20) / 86,400 ≈ 12k average." },
           ]}
         />
 
@@ -579,10 +579,10 @@ public ProfileResponse updateName(Long userId, String newName) {
           kind="Recall check"
           question="A video service streams ~3 Mbps per active viewer. At peak you have 50k concurrent viewers, and your origin has a single 10 Gbps NIC. What does the bandwidth math tell you?"
           options={[
-            { label: "Fine — 10 Gbps is plenty for 50k viewers.", explanation: "Recompute: 50k × 3 Mbps = 150 Gbps required, NIC has 10 Gbps available. You're 15× over budget." },
-            { label: "You need ~150 Gbps — 15× over a single NIC. The math forces a CDN (or many origin nodes); you cannot serve this from one box.", correct: true, explanation: "Right. 50k × 3 Mbps = 150 Gbps; NIC is 10 Gbps. This is exactly why every video service in the world fans out via CDN — the origin only serves cache fills, never end users. Bandwidth math derives the architecture before you draw a box." },
+            { label: "Fine, 10 Gbps is plenty for 50k viewers.", explanation: "Recompute: 50k × 3 Mbps = 150 Gbps required, NIC has 10 Gbps available. You're 15× over budget." },
+            { label: "You need ~150 Gbps, 15× over a single NIC. The math forces a CDN (or many origin nodes); you cannot serve this from one box.", correct: true, explanation: "Right. 50k × 3 Mbps = 150 Gbps; NIC is 10 Gbps. This is exactly why every video service in the world fans out via CDN, the origin only serves cache fills, never end users. Bandwidth math derives the architecture before you draw a box." },
             { label: "Compress the stream harder and it fits.", explanation: "You can't compress your way out of a 15× gap, and 3 Mbps is already aggressive H.264/H.265. The constraint is real." },
-            { label: "Add a second NIC — 20 Gbps fixes it.", explanation: "Still 7.5× over budget. The shape of the answer is &quot;many nodes / CDN,&quot; not &quot;a slightly bigger box.&quot;" },
+            { label: "Add a second NIC, 20 Gbps fixes it.", explanation: "Still 7.5× over budget. The shape of the answer is &quot;many nodes / CDN,&quot; not &quot;a slightly bigger box.&quot;" },
           ]}
         />
 
@@ -590,10 +590,10 @@ public ProfileResponse updateName(Long userId, String newName) {
           kind="Recall check"
           question="Your Java service is at 30% CPU on a 4-core box. p99 latency is climbing. A teammate proposes adding Kafka to &quot;handle scale.&quot; What's the right first move?"
           options={[
-            { label: "Add Kafka — async is always more scalable than sync.", explanation: "30% CPU is a system that's bored, not overloaded. Adding rung-6 complexity to a rung-1 problem is the classic over-engineering trap." },
-            { label: "Profile first. 30% CPU with climbing latency usually means the bottleneck isn't CPU — it's pool exhaustion, a slow query, GC, or I/O wait. Climb rung 1 (e.g. bump HikariCP from 10 to 30) before considering anything async.", correct: true, explanation: "Right. The ladder starts with diagnosis. If the box has headroom, the latency is coming from somewhere specific — pool, query, GC — and the fix is usually a config change, not an architecture change. Most slow services get fixed at rung 1 or 2." },
+            { label: "Add Kafka, async is always more scalable than sync.", explanation: "30% CPU is a system that's bored, not overloaded. Adding rung-6 complexity to a rung-1 problem is the classic over-engineering trap." },
+            { label: "Profile first. 30% CPU with climbing latency usually means the bottleneck isn't CPU, it's pool exhaustion, a slow query, GC, or I/O wait. Climb rung 1 (e.g. bump HikariCP from 10 to 30) before considering anything async.", correct: true, explanation: "Right. The ladder starts with diagnosis. If the box has headroom, the latency is coming from somewhere specific, pool, query, GC, and the fix is usually a config change, not an architecture change. Most slow services get fixed at rung 1 or 2." },
             { label: "Add 5 more replicas behind a load balancer.", explanation: "Possibly the right answer eventually, but you don't know what's slow yet. If it's a slow query, more replicas just means more boxes blocked on the same query." },
-            { label: "Move to a bigger instance immediately.", explanation: "Closer to right, but still skipping the diagnostic step. If the CPU is only 30% used, a bigger box doesn't help — you'd just have more idle cores." },
+            { label: "Move to a bigger instance immediately.", explanation: "Closer to right, but still skipping the diagnostic step. If the CPU is only 30% used, a bigger box doesn't help, you'd just have more idle cores." },
           ]}
         />
 
@@ -601,10 +601,10 @@ public ProfileResponse updateName(Long userId, String newName) {
           kind="Recall check"
           question="Which of these is the most accurate one-line summary of CAP &amp; PACELC for an interview?"
           options={[
-            { label: "CAP says pick two of three; PACELC adds latency.", explanation: "Misleading. Partition tolerance isn't optional in real distributed systems — &quot;pick two&quot; is a slide-deck simplification. The real choice is C-vs-A during partition." },
+            { label: "CAP says pick two of three; PACELC adds latency.", explanation: "Misleading. Partition tolerance isn't optional in real distributed systems, &quot;pick two&quot; is a slide-deck simplification. The real choice is C-vs-A during partition." },
             { label: "CAP: during a network partition, you must give up linearizability or per-request availability. PACELC adds the else clause: with no partition, you still pick latency or consistency on every replicated write.", correct: true, explanation: "Right. This is the full honest summary: P isn't a choice, the C-vs-A trade only kicks in during partition, and PACELC captures the latency-vs-consistency trade that dominates the 99%+ of time when there's no partition. Signals you understand both theorems beyond the bumper sticker." },
-            { label: "CAP only applies to NoSQL; PACELC only applies to SQL.", explanation: "Both apply to any replicated system — Postgres with replicas is squarely in the framework, as is Cassandra." },
-            { label: "PACELC disproved CAP — modern systems can have all three.", explanation: "CAP is still a theorem. Spanner doesn't disprove it; it chose PC/EC and pays the latency cost. PACELC extends CAP, it doesn't replace it." },
+            { label: "CAP only applies to NoSQL; PACELC only applies to SQL.", explanation: "Both apply to any replicated system, Postgres with replicas is squarely in the framework, as is Cassandra." },
+            { label: "PACELC disproved CAP, modern systems can have all three.", explanation: "CAP is still a theorem. Spanner doesn't disprove it; it chose PC/EC and pays the latency cost. PACELC extends CAP, it doesn't replace it." },
           ]}
         />
 
@@ -612,10 +612,10 @@ public ProfileResponse updateName(Long userId, String newName) {
           kind="Recall check"
           question="A user updates their display name from &quot;Alice&quot; to &quot;Alice Smith&quot;, sees a success response, refreshes the page, and sees &quot;Alice&quot; again. The database is Postgres with async read replicas. What consistency model would fix this, and what's the cheapest way to provide it?"
           options={[
-            { label: "Linearizability — switch to Spanner.", explanation: "Linearizability would fix it, but switching the entire database is wildly disproportionate. The bug is per-call-site; the fix should be too." },
-            { label: "Read-your-writes — pin the post-write read to the primary (or carry an LSN forward) so the user always sees their own edit, even if other users still see stale.", correct: true, explanation: "Right. RYW is the precise model the bug demands — &quot;if YOU wrote it, YOUR next read sees it&quot; — and it's much cheaper than full linearizability. Sticky-to-primary for the rest of the request is the simplest implementation; LSN-tracking is the more rigorous one. Other users can still hit replicas and see stale values; that's fine." },
-            { label: "Eventual consistency — wait for replicas to catch up.", explanation: "&quot;Eventual&quot; is what the system already gives you and is exactly the model that lets this bug through. You need something stronger, specifically scoped to the writer's session." },
-            { label: "Causal consistency — order the read after the write.", explanation: "Causal is in the right neighborhood but does more than you need (and is harder to implement). RYW is the precise session guarantee for this bug." },
+            { label: "Linearizability, switch to Spanner.", explanation: "Linearizability would fix it, but switching the entire database is wildly disproportionate. The bug is per-call-site; the fix should be too." },
+            { label: "Read-your-writes, pin the post-write read to the primary (or carry an LSN forward) so the user always sees their own edit, even if other users still see stale.", correct: true, explanation: "Right. RYW is the precise model the bug demands, &quot;if YOU wrote it, YOUR next read sees it&quot;, and it's much cheaper than full linearizability. Sticky-to-primary for the rest of the request is the simplest implementation; LSN-tracking is the more rigorous one. Other users can still hit replicas and see stale values; that's fine." },
+            { label: "Eventual consistency, wait for replicas to catch up.", explanation: "&quot;Eventual&quot; is what the system already gives you and is exactly the model that lets this bug through. You need something stronger, specifically scoped to the writer's session." },
+            { label: "Causal consistency, order the read after the write.", explanation: "Causal is in the right neighborhood but does more than you need (and is harder to implement). RYW is the precise session guarantee for this bug." },
           ]}
         />
       </section>
@@ -627,10 +627,10 @@ public ProfileResponse updateName(Long userId, String newName) {
         <Callout variant="spring" title="You're ready for Phase 2 when…">
           <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>You can convert any DAU number to average &amp; peak QPS in 10 seconds, without writing it down.</li>
-            <li>You can size storage, bandwidth, and cache memory for a sketched system on a napkin — and remember to include all four axes, including bandwidth.</li>
+            <li>You can size storage, bandwidth, and cache memory for a sketched system on a napkin, and remember to include all four axes, including bandwidth.</li>
             <li>You can name the rung any production system is currently on, and the one cheaper rung the team probably skipped.</li>
             <li>You stop saying &quot;CAP says pick two&quot; and start saying &quot;under partition, this system picks X; in the normal case, it picks Y.&quot;</li>
-            <li>You stop using &quot;eventually consistent&quot; as a blanket label and start naming the specific guarantee a call site needs — linearizable, causal, read-your-writes, monotonic, or eventual.</li>
+            <li>You stop using &quot;eventually consistent&quot; as a blanket label and start naming the specific guarantee a call site needs, linearizable, causal, read-your-writes, monotonic, or eventual.</li>
             <li>You diagnose before you architect: profile, then climb one rung at a time, then consider rung 6.</li>
           </ul>
         </Callout>
@@ -641,14 +641,14 @@ public ProfileResponse updateName(Long userId, String newName) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/30 dark:via-slate-900 dark:to-yellow-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">
-          Phase 1 — locked in
+          Phase 1, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You have the foundations</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          The numbers, the ladder, the CAP/PACELC matrix, the consistency hierarchy. Every later module — sharding, replication, caching patterns, the case studies — will assume you can do back-of-envelope arithmetic, place a datastore on the PACELC matrix, and name the consistency model a call site needs. That&apos;s the entire Phase 1 toolkit, and it&apos;s the toolkit every senior interviewer expects in the first 10 minutes.
+          The numbers, the ladder, the CAP/PACELC matrix, the consistency hierarchy. Every later module, sharding, replication, caching patterns, the case studies, will assume you can do back-of-envelope arithmetic, place a datastore on the PACELC matrix, and name the consistency model a call site needs. That&apos;s the entire Phase 1 toolkit, and it&apos;s the toolkit every senior interviewer expects in the first 10 minutes.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 2 — Storage Layer.</strong>{" "}SQL vs NoSQL, indexing (B-tree vs LSM), partitioning &amp; sharding, replication strategies, caching patterns, distributed cache deep-dive, search systems. Real datastores, real decision trees, real Java/Spring labs.
+          <strong>Up next: Phase 2, Storage Layer.</strong>{" "}SQL vs NoSQL, indexing (B-tree vs LSM), partitioning &amp; sharding, replication strategies, caching patterns, distributed cache deep-dive, search systems. Real datastores, real decision trees, real Java/Spring labs.
         </p>
         <Link
           href="/courses/system-design/modules/sql-vs-nosql"

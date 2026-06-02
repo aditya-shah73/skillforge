@@ -12,7 +12,7 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "setup", title: "What greedy means — and why it fails" },
+  { id: "setup", title: "What greedy means, and why it fails" },
   { id: "exchange", title: "The exchange argument: how you prove greedy is correct" },
   { id: "intervals", title: "Interval scheduling: the canonical greedy" },
   { id: "jump", title: "Jump Game: tracking the reachable frontier" },
@@ -171,7 +171,7 @@ flowchart TB
       {/* ───────────────── Part 1 · Setup ───────────────── */}
       <Checkpoint moduleSlug="greedy" id="setup" title="I know what greedy means and why it can fail" xp={20}>
       <section>
-        <h2 id="setup">What greedy means — and why it fails</h2>
+        <h2 id="setup">What greedy means, and why it fails</h2>
 
         <p>
           A <strong>greedy algorithm</strong>{" "}follows one rule: at each step, take the locally optimal choice and never
@@ -181,7 +181,7 @@ flowchart TB
 
         <p>
           When greedy works, it&apos;s magical: a problem that looks like it might need exponential search collapses
-          into a single linear sweep. When it doesn&apos;t, it produces confidently wrong answers — and that&apos;s
+          into a single linear sweep. When it doesn&apos;t, it produces confidently wrong answers, and that&apos;s
           what makes it dangerous. Greedy is the only major algorithmic technique whose correctness is not implied by
           its structure. Every greedy solution needs a <em>proof</em>.
         </p>
@@ -205,8 +205,8 @@ flowchart TB
         <Callout variant="warn" title="Greedy works on US coins. That's a coincidence.">
           <p>
             US coin denominations <code>{`{1, 5, 10, 25}`}</code> happen to form what&apos;s called a <em>canonical</em>{" "}
-            coin system, where greedy is provably optimal. But change the denominations slightly — to{" "}
-            <code>{`{1, 3, 4}`}</code>, or to many real-world currencies — and greedy breaks.
+            coin system, where greedy is provably optimal. But change the denominations slightly, to{" "}
+            <code>{`{1, 3, 4}`}</code>, or to many real-world currencies, and greedy breaks.
           </p>
           <p>
             This is the trap: greedy <em>often</em>{" "}works on small examples, so it looks correct after a few hand
@@ -219,18 +219,18 @@ flowchart TB
 
         <ol>
           <li>
-            <strong>What&apos;s the &quot;greedy choice&quot;?</strong> — the local rule for picking the next item.
+            <strong>What&apos;s the &quot;greedy choice&quot;?</strong>, the local rule for picking the next item.
             Sort by end-time? Sort by frequency? Pick the largest? Pick the earliest deadline? The choice itself is
             often the only design decision.
           </li>
           <li>
-            <strong>Why is this choice safe?</strong> — the proof that committing to this choice never closes off the
+            <strong>Why is this choice safe?</strong>, the proof that committing to this choice never closes off the
             optimal solution. Without a proof, you have a guess.
           </li>
         </ol>
 
         <p>
-          The next section walks through the most common proof technique — the <strong>exchange argument</strong> —
+          The next section walks through the most common proof technique, the <strong>exchange argument</strong>,
           on a real problem. Once you&apos;ve seen one exchange argument, you&apos;ll recognize the shape of every other
           one.
         </p>
@@ -239,10 +239,10 @@ flowchart TB
           kind="Quick check"
           question="Greedy applied to coin change with denominations {1, 3, 4} and target 6 returns 3 coins. The optimum is 2 coins. What does this tell you about greedy in general?"
           options={[
-            { label: "Greedy never works for coin change.", explanation: "It does work for some denomination sets — like US coins. The lesson is more subtle." },
+            { label: "Greedy never works for coin change.", explanation: "It does work for some denomination sets, like US coins. The lesson is more subtle." },
             { label: "The locally optimal choice can lock you out of the globally optimal solution. Greedy needs a proof, not a hand trace, to be trusted.", correct: true, explanation: "Right. Picking 4 first looked best by 'biggest coin that fits', but it forced a remainder of 2 that needed two more coins. Picking 3 looked worse locally but led to a perfect remainder. Without a proof, you can't tell which case you're in." },
             { label: "Greedy only fails on small inputs.", explanation: "Backwards: greedy bugs often hide on small inputs and only surface on specific patterns. The {1,3,4}/6 example is small and still breaks." },
-            { label: "Coin change is always a DP problem.", explanation: "It depends on the denominations. For canonical systems (like US coins), greedy is provably optimal. For arbitrary systems, you need DP. The lesson is that greedy correctness is denomination-dependent — and that's exactly why proof matters." },
+            { label: "Coin change is always a DP problem.", explanation: "It depends on the denominations. For canonical systems (like US coins), greedy is provably optimal. For arbitrary systems, you need DP. The lesson is that greedy correctness is denomination-dependent, and that's exactly why proof matters." },
           ]}
         />
 
@@ -251,8 +251,8 @@ flowchart TB
           question="Which of these is NOT a property of a greedy algorithm?"
           options={[
             { label: "It makes a single locally optimal choice at each step.", explanation: "This IS the defining property of greedy." },
-            { label: "It never reconsiders a choice once made.", explanation: "Also true — once committed, greedy moves on. No backtracking." },
-            { label: "It explores multiple candidate solutions and picks the best at the end.", correct: true, explanation: "Right — that's what greedy is NOT. Exploring multiple candidates is brute force, branch-and-bound, or DP. Greedy commits to ONE path, never revisits, and trusts the local rule." },
+            { label: "It never reconsiders a choice once made.", explanation: "Also true, once committed, greedy moves on. No backtracking." },
+            { label: "It explores multiple candidate solutions and picks the best at the end.", correct: true, explanation: "Right, that's what greedy is NOT. Exploring multiple candidates is brute force, branch-and-bound, or DP. Greedy commits to ONE path, never revisits, and trusts the local rule." },
             { label: "Its correctness usually requires a proof, not just empirical testing.", explanation: "True. Greedy is the technique most likely to look right and be wrong, which is why proofs matter." },
           ]}
         />
@@ -272,7 +272,7 @@ flowchart TB
         <ol>
           <li>Assume some optimal solution exists (we don&apos;t know what it looks like).</li>
           <li>Show that wherever the greedy and the optimal disagree, you can <em>swap</em>{" "}the optimal&apos;s choice for the greedy&apos;s choice without making the optimal worse.</li>
-          <li>Repeat the swap until the optimal looks exactly like greedy. Greedy is therefore at least as good as optimal — i.e., greedy is also optimal.</li>
+          <li>Repeat the swap until the optimal looks exactly like greedy. Greedy is therefore at least as good as optimal, i.e., greedy is also optimal.</li>
         </ol>
 
         <p>
@@ -283,7 +283,7 @@ flowchart TB
         <h3>Walking through it: interval scheduling</h3>
 
         <p>
-          Here&apos;s the canonical greedy problem. You have a set of intervals — meetings, classes, jobs — each with a
+          Here&apos;s the canonical greedy problem. You have a set of intervals, meetings, classes, jobs, each with a
           start and end time. You want to pick the largest possible subset where no two overlap.
         </p>
 
@@ -303,7 +303,7 @@ flowchart TB
 
         <p>
           Find the first position where they differ. Greedy&apos;s rule guarantees <code>g₁</code> has the earliest end
-          time among <em>all</em>{" "}intervals — so <code>g₁.end ≤ o₁.end</code>. If greedy and optimal already agree on
+          time among <em>all</em>{" "}intervals, so <code>g₁.end ≤ o₁.end</code>. If greedy and optimal already agree on
           interval 1, look at interval 2; same argument applies among the remaining intervals.
         </p>
 
@@ -328,7 +328,7 @@ flowchart TB
 
         <p>
           So <code>O&apos;</code> is also optimal, and now it agrees with greedy at one more position. Repeat until the
-          modified <code>O</code> matches <code>G</code> entirely (or until <code>O</code> runs out — but that&apos;s
+          modified <code>O</code> matches <code>G</code> entirely (or until <code>O</code> runs out, but that&apos;s
           impossible since we&apos;re only making swaps, never deletions). At that point <code>|G| ≥ |O|</code>, so
           greedy is optimal too.
         </p>
@@ -337,7 +337,7 @@ flowchart TB
           <p>
             Sorting by start-time or by duration both feel reasonable, and both are wrong. Counterexample for
             start-time: <code>[0, 10], [1, 2], [3, 4]</code>. Picking earliest-start grabs <code>[0, 10]</code> and
-            blocks the other two — answer 1, optimum 2.
+            blocks the other two, answer 1, optimum 2.
           </p>
           <p>
             End-time wins because it&apos;s the rule that <em>maximizes the room left for future picks</em>. Every
@@ -366,10 +366,10 @@ flowchart TB
           kind="Proof check"
           question="In the interval scheduling exchange argument, why is it crucial that greedy's pick has end-time ≤ optimal's pick at the disagreement position?"
           options={[
-            { label: "It's the only way to break ties.", explanation: "Tie-breaking isn't the issue. The argument needs more than 'they're equal' — it needs greedy to be no worse." },
-            { label: "Because then anything compatible with optimal's pick (everything starting after optimal's end) is also compatible with greedy's pick. The swap can't create future conflicts.", correct: true, explanation: "Right. The future intervals were chosen to start after optimal's pick ends. Since greedy ends no later, those same future intervals also start after greedy ends. The swap is safe — that's the whole exchange." },
-            { label: "It guarantees greedy and optimal pick the same intervals.", explanation: "They might pick different intervals — the proof handles exactly that case. The point is that greedy's choice is INTERCHANGEABLE with optimal's, not identical." },
-            { label: "It's not crucial — any greedy rule would work.", explanation: "It is crucial. Other rules (sort by start, sort by duration) fail the exchange argument because their picks can have LATER end times, which would block intervals that optimal had room for." },
+            { label: "It's the only way to break ties.", explanation: "Tie-breaking isn't the issue. The argument needs more than 'they're equal', it needs greedy to be no worse." },
+            { label: "Because then anything compatible with optimal's pick (everything starting after optimal's end) is also compatible with greedy's pick. The swap can't create future conflicts.", correct: true, explanation: "Right. The future intervals were chosen to start after optimal's pick ends. Since greedy ends no later, those same future intervals also start after greedy ends. The swap is safe, that's the whole exchange." },
+            { label: "It guarantees greedy and optimal pick the same intervals.", explanation: "They might pick different intervals, the proof handles exactly that case. The point is that greedy's choice is INTERCHANGEABLE with optimal's, not identical." },
+            { label: "It's not crucial, any greedy rule would work.", explanation: "It is crucial. Other rules (sort by start, sort by duration) fail the exchange argument because their picks can have LATER end times, which would block intervals that optimal had room for." },
           ]}
         />
       </section>
@@ -406,7 +406,7 @@ flowchart TB
 
         <p>
           One sort, one pass, two integer variables. That&apos;s the entire algorithm. The whole intelligence is in
-          which key you sort by — get that wrong and the same code returns suboptimal answers.
+          which key you sort by, get that wrong and the same code returns suboptimal answers.
         </p>
 
         <h3>LC 435 · Non-overlapping Intervals (the inverse problem)</h3>
@@ -470,17 +470,17 @@ flowchart TB
           <li><strong>Max compatible (LC 435 inverse):</strong>{" "}sort by end, count picks.</li>
           <li><strong>Min removals (LC 435):</strong>{" "}n − max compatible.</li>
           <li><strong>Min arrows (LC 452):</strong>{" "}max compatible with strict <code>&gt;</code>.</li>
-          <li><strong>Meeting rooms II:</strong>{" "}different beast — count concurrent intervals at any moment. Sort by start, use a min-heap of active end-times. Not the same template; mentioned here so you don&apos;t mis-classify it.</li>
+          <li><strong>Meeting rooms II:</strong>{" "}different beast, count concurrent intervals at any moment. Sort by start, use a min-heap of active end-times. Not the same template; mentioned here so you don&apos;t mis-classify it.</li>
         </ul>
 
         <Quiz
           kind="Interval check"
           question="You sort intervals by end-time and sweep. The first three intervals (sorted) are [1,3], [2,4], [3,6]. Which does greedy pick?"
           options={[
-            { label: "[1,3] and [2,4] — both end early.", explanation: "[2,4] starts at 2, before [1,3]'s end of 3. They overlap, so greedy can't keep both." },
-            { label: "[1,3] and [3,6] — pick [1,3], skip [2,4] (overlaps), pick [3,6] (starts at 3 ≥ 3).", correct: true, explanation: "Right. [1,3] picked first (earliest end). [2,4] overlaps [1,3] (start 2 < end 3) → skip. [3,6] starts exactly at 3, which equals lastEnd, so under the standard 'touch is fine' convention it's compatible → pick it." },
+            { label: "[1,3] and [2,4], both end early.", explanation: "[2,4] starts at 2, before [1,3]'s end of 3. They overlap, so greedy can't keep both." },
+            { label: "[1,3] and [3,6], pick [1,3], skip [2,4] (overlaps), pick [3,6] (starts at 3 ≥ 3).", correct: true, explanation: "Right. [1,3] picked first (earliest end). [2,4] overlaps [1,3] (start 2 < end 3) → skip. [3,6] starts exactly at 3, which equals lastEnd, so under the standard 'touch is fine' convention it's compatible → pick it." },
             { label: "All three.", explanation: "[1,3] and [2,4] overlap on the interval [2,3], so they can't both be in any valid selection." },
-            { label: "Only [3,6].", explanation: "Greedy always picks the first one (earliest end) — [1,3] is taken first." },
+            { label: "Only [3,6].", explanation: "Greedy always picks the first one (earliest end), [1,3] is taken first." },
           ]}
         />
       </section>
@@ -511,9 +511,9 @@ flowchart TB
         </p>
 
         <ul>
-          <li>If <code>farthest &lt; i</code>, we can&apos;t even reach <code>i</code> — return false.</li>
+          <li>If <code>farthest &lt; i</code>, we can&apos;t even reach <code>i</code>, return false.</li>
           <li>Otherwise update <code>farthest = max(farthest, i + nums[i])</code> and continue.</li>
-          <li>If <code>farthest ≥ n - 1</code> at any point, we can reach the end — return true.</li>
+          <li>If <code>farthest ≥ n - 1</code> at any point, we can reach the end, return true.</li>
         </ul>
 
         <Mermaid chart={jumpTrace} />
@@ -536,11 +536,11 @@ flowchart TB
           </p>
           <p>
             The greedy commitment: we don&apos;t care <em>which</em>{" "}path got us to <code>i</code>. The reachable set
-            from the start is fully characterized by a single number — the right endpoint. That&apos;s the win.
+            from the start is fully characterized by a single number, the right endpoint. That&apos;s the win.
           </p>
         </Callout>
 
-        <h3>LC 45 · Jump Game II — minimum jumps</h3>
+        <h3>LC 45 · Jump Game II, minimum jumps</h3>
 
         <p>
           The same problem with a twist: return the minimum number of jumps to reach the end. The trick is to think in{" "}
@@ -566,7 +566,7 @@ flowchart TB
 
         <Callout variant="info" title="Why the loop stops at n - 1">
           <p>
-            Once <code>i == n - 1</code>, you&apos;re already at the end — no need to jump. If you let the loop run to{" "}
+            Once <code>i == n - 1</code>, you&apos;re already at the end, no need to jump. If you let the loop run to{" "}
             <code>n - 1</code> inclusive, you might increment <code>jumps</code> one extra time when{" "}
             <code>currEnd == n - 1</code>. Stop early and the count is correct.
           </p>
@@ -576,7 +576,7 @@ flowchart TB
 
         <p>
           Both versions share a structure: a single integer summarizes the reachable set. This shows up in other
-          problems too — &quot;Can you reach the end of the string given these rules?&quot;, &quot;Minimum platforms
+          problems too, &quot;Can you reach the end of the string given these rules?&quot;, &quot;Minimum platforms
           to schedule trains?&quot;, &quot;Maximum number of segments to cover a target with given pieces?&quot;.
           Whenever the search space can be summarized by &quot;the frontier I&apos;ve reached so far,&quot; one or two
           integers replace a full DP table.
@@ -584,12 +584,12 @@ flowchart TB
 
         <Quiz
           kind="Jump check"
-          question="In Jump Game, why is `farthest = max(farthest, i + nums[i])` enough — why don't we need to track WHICH position got us to farthest?"
+          question="In Jump Game, why is `farthest = max(farthest, i + nums[i])` enough, why don't we need to track WHICH position got us to farthest?"
           options={[
             { label: "Because the answer doesn't ask for the path.", explanation: "Closer, but the deeper reason is structural: even if we wanted the path, the frontier captures all reachability info." },
-            { label: "Because if any position in [0..i] can reach j, then i can also reach j (we only need to maintain the upper envelope of reachability — a single integer).", correct: true, explanation: "Right. The reachable set from the start is always a contiguous prefix [0..farthest]. One number fully describes it. Knowing 'who got us there' would tell us about a specific PATH, but reachability is what we need, not paths." },
+            { label: "Because if any position in [0..i] can reach j, then i can also reach j (we only need to maintain the upper envelope of reachability, a single integer).", correct: true, explanation: "Right. The reachable set from the start is always a contiguous prefix [0..farthest]. One number fully describes it. Knowing 'who got us there' would tell us about a specific PATH, but reachability is what we need, not paths." },
             { label: "Because nums[i] is always positive.", explanation: "It can be 0 (a 'stuck' cell), and the algorithm handles that. The reason isn't about positivity." },
-            { label: "Because the array is sorted.", explanation: "It isn't sorted — it's an arbitrary positive-or-zero array. Sorting would lose the position-to-jump mapping." },
+            { label: "Because the array is sorted.", explanation: "It isn't sorted, it's an arbitrary positive-or-zero array. Sorting would lose the position-to-jump mapping." },
           ]}
         />
       </section>
@@ -609,7 +609,7 @@ flowchart TB
         <h3>The signal: do local choices have nonlocal consequences?</h3>
 
         <p>
-          Greedy works when each choice can be evaluated using only local information — when picking the &quot;best
+          Greedy works when each choice can be evaluated using only local information, when picking the &quot;best
           next thing&quot; doesn&apos;t change what counts as &quot;best&quot; later. Examples where this holds:
         </p>
 
@@ -637,7 +637,7 @@ flowchart TB
           </p>
           <p>
             If you can find one in 30 seconds, the rule is wrong and you need DP (or a different greedy rule). If you
-            can&apos;t, that&apos;s some evidence — but write the brute-force comparison test (next subsection) before
+            can&apos;t, that&apos;s some evidence, but write the brute-force comparison test (next subsection) before
             committing.
           </p>
         </Callout>
@@ -700,7 +700,7 @@ public static void stressTest() {
         <Callout variant="insight" title="What the stress test buys you">
           <p>
             For coin change with random denominations, this stress test will produce a counterexample within seconds.
-            Once you have a concrete failing input, you&apos;re done — you know greedy is wrong, and you have the exact
+            Once you have a concrete failing input, you&apos;re done, you know greedy is wrong, and you have the exact
             case to debug or to convince a teammate.
           </p>
           <p>
@@ -724,17 +724,17 @@ public static void stressTest() {
           kind="Greedy-or-DP check"
           question="You're asked: 'given a set of items each with weight and value, fill a knapsack of capacity W to maximize total value. Items are 0/1 (take or leave).' Greedy: sort by value/weight, take greedily until capacity runs out. Is that correct?"
           options={[
-            { label: "Yes — value-per-weight is the right greedy key for any knapsack variant.", explanation: "It's correct for FRACTIONAL knapsack (where you can take fractions of items). 0/1 knapsack is different — and this is exactly the trap." },
+            { label: "Yes, value-per-weight is the right greedy key for any knapsack variant.", explanation: "It's correct for FRACTIONAL knapsack (where you can take fractions of items). 0/1 knapsack is different, and this is exactly the trap." },
             { label: "No. 0/1 knapsack needs DP. The greedy can be forced to leave a small unused gap that DP would fill with two cheaper items, beating the greedy total.", correct: true, explanation: "Right. Counterexample: capacity 10, items {(weight=6, value=10), (weight=5, value=7), (weight=5, value=7)}. Greedy by value/weight picks the first (10/6 ≈ 1.67), leaves capacity 4, total value 10. Optimal picks the other two: total value 14. The atomicity of items means local-best doesn't compose. DP is required." },
-            { label: "Yes — greedy is always at least within 50% of optimal for knapsack.", explanation: "A 50% approximation result exists, but the question asks about exact optimum. For exact 0/1 knapsack, greedy is wrong, period." },
-            { label: "Sometimes — depends on whether the items are sorted.", explanation: "Sorting is part of the greedy; the issue is structural. Greedy fails on 0/1 knapsack regardless of preprocessing because of item atomicity." },
+            { label: "Yes, greedy is always at least within 50% of optimal for knapsack.", explanation: "A 50% approximation result exists, but the question asks about exact optimum. For exact 0/1 knapsack, greedy is wrong, period." },
+            { label: "Sometimes, depends on whether the items are sorted.", explanation: "Sorting is part of the greedy; the issue is structural. Greedy fails on 0/1 knapsack regardless of preprocessing because of item atomicity." },
           ]}
         />
       </section>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Project ───────────────── */}
-      <Checkpoint moduleSlug="greedy" id="project" title="I solved Gas Station, Task Scheduler, and the rest" xp={40} manual manualLabel="I solved all four LeetCode problems" celebration="Greedy is the technique you reach for when local moves have global consequences only through the obvious channel — and you can prove it. On to bit manipulation, where the &quot;moves&quot; are XOR tricks.">
+      <Checkpoint moduleSlug="greedy" id="project" title="I solved Gas Station, Task Scheduler, and the rest" xp={40} manual manualLabel="I solved all four LeetCode problems" celebration="Greedy is the technique you reach for when local moves have global consequences only through the obvious channel, and you can prove it. On to bit manipulation, where the &quot;moves&quot; are XOR tricks.">
       <section>
         <h2 id="project">Project: Gas Station + Task Scheduler</h2>
 
@@ -764,7 +764,7 @@ public static void stressTest() {
         <p>
           Why the second claim is true is the elegant part. Walk the loop from station 0, tracking the running tank{" "}
           <code>tank = sum of (gas[i] - cost[i])</code>. The point where <code>tank</code> reaches its minimum is the
-          worst spot — every previous starting choice was at least that bad. Starting from one past it, every prefix
+          worst spot, every previous starting choice was at least that bad. Starting from one past it, every prefix
           deficit is ≥ 0 (we&apos;re measuring against the lowest point), so we never run out.
         </p>
 
@@ -792,7 +792,7 @@ public static void stressTest() {
             in <code>[s, i]</code> can reach <code>i+1</code> either. Reason: starting at any <code>s&apos; ∈ [s, i]</code>{" "}
             gives less running tank at <code>i</code> than starting at <code>s</code> did (you&apos;d have skipped some
             of the surpluses between <code>s</code> and <code>s&apos;</code>). So we can safely jump <code>start</code>{" "}
-            forward to <code>i+1</code> — no candidate is being silently abandoned.
+            forward to <code>i+1</code>, no candidate is being silently abandoned.
           </p>
           <p>
             That&apos;s the greedy commitment: the failed start poisons every position behind it, so we don&apos;t
@@ -850,7 +850,7 @@ public static void stressTest() {
           task&apos;s frequency, and let <code>k</code> be how many tasks tie for that frequency. The schedule looks
           like <code>(maxFreq - 1)</code> full <code>(n + 1)</code>-slot rounds plus a final round of <code>k</code>{" "}
           tasks. If that&apos;s shorter than the total task count, we have enough non-max tasks to fill all idle slots
-          without padding — and the answer is just <code>tasks.length</code>.
+          without padding, and the answer is just <code>tasks.length</code>.
         </p>
 
         <CodeBlock lang="java">{`public int leastIntervalFormula(char[] tasks, int n) {
@@ -874,7 +874,7 @@ public static void stressTest() {
             on the spot.
           </p>
           <p>
-            Reach for the heap version first — it&apos;s easier to argue is correct in real time. If the interviewer
+            Reach for the heap version first, it&apos;s easier to argue is correct in real time. If the interviewer
             asks &quot;can you do better,&quot; the formula is the &quot;better&quot; answer.
           </p>
         </Callout>
@@ -887,10 +887,10 @@ public static void stressTest() {
         </p>
 
         <ul>
-          <li><strong>LC 55 · Jump Game</strong> — frontier tracking. ~7 lines.</li>
-          <li><strong>LC 435 · Non-overlapping Intervals</strong> — sort by end, count overlaps. ~12 lines.</li>
-          <li><strong>LC 134 · Gas Station</strong> — sweep with cumulative deficit. ~14 lines.</li>
-          <li><strong>LC 621 · Task Scheduler</strong> — heap version OR formula. ~20 lines or ~10 lines.</li>
+          <li><strong>LC 55 · Jump Game</strong>, frontier tracking. ~7 lines.</li>
+          <li><strong>LC 435 · Non-overlapping Intervals</strong>, sort by end, count overlaps. ~12 lines.</li>
+          <li><strong>LC 134 · Gas Station</strong>, sweep with cumulative deficit. ~14 lines.</li>
+          <li><strong>LC 621 · Task Scheduler</strong>, heap version OR formula. ~20 lines or ~10 lines.</li>
         </ul>
 
         <h3>Recognize the pattern, not the problem</h3>
@@ -905,13 +905,13 @@ public static void stressTest() {
           ]}
           items={[
             { id: "1", label: "Schedule the maximum number of non-overlapping meetings.", answer: "works", explanation: "Classic interval scheduling. Sort by end time, sweep, pick. Provable by exchange argument." },
-            { id: "2", label: "Make change for amount T using coin denominations {1, 5, 10, 25}, minimizing the number of coins.", answer: "constrained", explanation: "Greedy works for US coins because the denominations are 'canonical' — every value is most efficiently made with the largest-fits-first rule. For arbitrary denominations the same algorithm fails." },
-            { id: "3", label: "Fill a knapsack of capacity W with 0/1 items to maximize value.", answer: "fails", explanation: "Greedy by value/weight ratio fails — items are atomic, leftover capacity may not be efficiently fillable. Classic DP problem." },
-            { id: "4", label: "Find the minimum number of platforms a train station needs given arrival and departure times.", answer: "works", explanation: "Sort arrivals and departures separately, sweep with two pointers tracking concurrent trains. Provably optimal — count the maximum overlap at any moment." },
+            { id: "2", label: "Make change for amount T using coin denominations {1, 5, 10, 25}, minimizing the number of coins.", answer: "constrained", explanation: "Greedy works for US coins because the denominations are 'canonical', every value is most efficiently made with the largest-fits-first rule. For arbitrary denominations the same algorithm fails." },
+            { id: "3", label: "Fill a knapsack of capacity W with 0/1 items to maximize value.", answer: "fails", explanation: "Greedy by value/weight ratio fails, items are atomic, leftover capacity may not be efficiently fillable. Classic DP problem." },
+            { id: "4", label: "Find the minimum number of platforms a train station needs given arrival and departure times.", answer: "works", explanation: "Sort arrivals and departures separately, sweep with two pointers tracking concurrent trains. Provably optimal, count the maximum overlap at any moment." },
             { id: "5", label: "Find the minimum number of arrows to burst all balloons (each balloon is an interval; one arrow at point x bursts every balloon containing x).", answer: "works", explanation: "Sort by end, greedy sweep with strict overlap. Same machinery as interval scheduling, provable by exchange." },
             { id: "6", label: "Make change for amount T using coin denominations {1, 3, 4}, minimizing coins.", answer: "fails", explanation: "Counterexample: T=6 → greedy gives 4+1+1 = 3 coins; optimal is 3+3 = 2 coins. Need DP." },
             { id: "7", label: "Find the longest increasing subsequence of an array.", answer: "fails", explanation: "Local 'always extend with smallest' fails because a small element might block a longer chain that started larger. Patience sorting / DP is needed." },
-            { id: "8", label: "Schedule jobs with deadlines and unit length to maximize profit (each job has deadline d_i and profit p_i; you can do one job per time slot).", answer: "constrained", explanation: "Greedy works (sort by profit descending, greedily place each job in the latest free slot ≤ its deadline) — but only because all jobs have unit duration. With variable durations, the same rule fails and you need a different approach." },
+            { id: "8", label: "Schedule jobs with deadlines and unit length to maximize profit (each job has deadline d_i and profit p_i; you can do one job per time slot).", answer: "constrained", explanation: "Greedy works (sort by profit descending, greedily place each job in the latest free slot ≤ its deadline), but only because all jobs have unit duration. With variable durations, the same rule fails and you need a different approach." },
           ]}
         />
 
@@ -919,8 +919,8 @@ public static void stressTest() {
           kind="Final check"
           question="You design a greedy rule for a scheduling problem and it passes 100% of your hand-traced examples. The interviewer asks: 'How do you know it's correct?' What's the strongest answer?"
           options={[
-            { label: "I tested it on examples and it always worked.", explanation: "Empirical testing is evidence, not proof. Greedy bugs often hide on specific input patterns that small hand traces miss — that's literally the failure mode of the {1,3,4}/6 coin example." },
-            { label: "I wrote an exchange argument: any optimal solution can be transformed into my greedy's output by swapping choices, without making the optimal worse. So my greedy is at least as good as optimal — i.e., it IS optimal.", correct: true, explanation: "Right. The exchange argument is the standard proof technique for greedy correctness. It directly addresses the concern that greedy might 'miss' a better solution by showing any better solution can be edited into greedy's solution without loss." },
+            { label: "I tested it on examples and it always worked.", explanation: "Empirical testing is evidence, not proof. Greedy bugs often hide on specific input patterns that small hand traces miss, that's literally the failure mode of the {1,3,4}/6 coin example." },
+            { label: "I wrote an exchange argument: any optimal solution can be transformed into my greedy's output by swapping choices, without making the optimal worse. So my greedy is at least as good as optimal, i.e., it IS optimal.", correct: true, explanation: "Right. The exchange argument is the standard proof technique for greedy correctness. It directly addresses the concern that greedy might 'miss' a better solution by showing any better solution can be edited into greedy's solution without loss." },
             { label: "Greedy is always correct when the problem is sortable by some key.", explanation: "Many sortable problems aren't greedy-solvable (LIS, 0/1 knapsack are both 'sortable' but need DP). Sortability is a hint, not a guarantee." },
             { label: "I compared it to a brute-force solution on random inputs.", explanation: "Stress testing is a great way to FIND counterexamples, but absence of counterexamples in 1000 trials doesn't prove correctness. The exchange argument actually proves it." },
           ]}
@@ -928,13 +928,13 @@ public static void stressTest() {
 
         <PartRecap
           title="What you can now do that you couldn't an hour ago"
-          gist="Greedy is the technique that's tempting to use everywhere and only correct in specific places. The skill is recognizing those places — and proving it when you do."
+          gist="Greedy is the technique that's tempting to use everywhere and only correct in specific places. The skill is recognizing those places, and proving it when you do."
           points={[
-            { takeaway: "State the greedy rule explicitly before coding.", detail: "'Sort by end-time, sweep, pick non-overlapping' is a complete description. If you can't say the rule in one sentence, you don't have a greedy yet — you have a vague hope." },
+            { takeaway: "State the greedy rule explicitly before coding.", detail: "'Sort by end-time, sweep, pick non-overlapping' is a complete description. If you can't say the rule in one sentence, you don't have a greedy yet, you have a vague hope." },
             { takeaway: "Write the exchange argument before submitting.", detail: "Take an optimal solution, find the first place it disagrees with greedy, swap greedy's choice in, verify nothing breaks. If you can't, suspect the greedy is wrong." },
             { takeaway: "Counterexamples are the fastest disproof.", detail: "If you suspect greedy is wrong, write a brute force and stress-test on small random inputs. Disagreement = bug found. This is how you'd debug coin change with {1,3,4}." },
-            { takeaway: "Default to DP when in doubt.", detail: "A correct DP solution beats a buggy greedy every time. If you can't write the exchange argument and can't find a counterexample fast, the safe move is DP — even if it's slower." },
-            { takeaway: "Recognize the patterns: sort-and-sweep (intervals), frontier-tracking (jump game), heap-driven (task scheduler), prefix-sum (gas station).", detail: "These four cover most provably-correct greedy problems. When you spot the pattern, the implementation is mechanical — the proof is the hard part." },
+            { takeaway: "Default to DP when in doubt.", detail: "A correct DP solution beats a buggy greedy every time. If you can't write the exchange argument and can't find a counterexample fast, the safe move is DP, even if it's slower." },
+            { takeaway: "Recognize the patterns: sort-and-sweep (intervals), frontier-tracking (jump game), heap-driven (task scheduler), prefix-sum (gas station).", detail: "These four cover most provably-correct greedy problems. When you spot the pattern, the implementation is mechanical, the proof is the hard part." },
           ]}
         />
 
@@ -947,7 +947,7 @@ public static void stressTest() {
             Bit manipulation →
           </Link>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            The operators you forgot existed — and the surprising LeetCode patterns they unlock.
+            The operators you forgot existed, and the surprising LeetCode patterns they unlock.
           </p>
         </div>
       </section>

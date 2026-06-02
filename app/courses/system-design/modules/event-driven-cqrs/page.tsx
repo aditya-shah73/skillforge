@@ -62,14 +62,14 @@ export default function Page() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          Three patterns that get talked about as one: event-driven architecture, event sourcing, and CQRS. They compose, but they&apos;re not the same thing — and confusing them is how teams accidentally adopt the most complex variant when they only needed the simplest. By the end you&apos;ll know what each buys you, what each costs, and when to walk away.
+          Three patterns that get talked about as one: event-driven architecture, event sourcing, and CQRS. They compose, but they&apos;re not the same thing, and confusing them is how teams accidentally adopt the most complex variant when they only needed the simplest. By the end you&apos;ll know what each buys you, what each costs, and when to walk away.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li>Events vs commands — the verb-tense distinction that decides your coupling</li>
-          <li>Choreography vs orchestration — when each fits</li>
+          <li>Events vs commands, the verb-tense distinction that decides your coupling</li>
+          <li>Choreography vs orchestration, when each fits</li>
           <li>Event sourcing: events as source of truth, replay, snapshotting, schema evolution</li>
           <li>CQRS: separate read and write models, eventual consistency, when it&apos;s overkill</li>
-          <li>Picking the right pattern for the workload — without buzzword-driven design</li>
+          <li>Picking the right pattern for the workload, without buzzword-driven design</li>
         </ul>
       </section>
 
@@ -87,23 +87,23 @@ export default function Page() {
           <li><strong>CQRS:</strong>{" "}separate the model used to write data from the model(s) used to read data. Different storage, different shape. Useful when read and write have very different patterns.</li>
         </ul>
         <p>
-          You can do event-driven without event sourcing, and CQRS without either. You can also stack all three — that&apos;s where the legendary complexity comes from.
+          You can do event-driven without event sourcing, and CQRS without either. You can also stack all three, that&apos;s where the legendary complexity comes from.
         </p>
       </section>
 
       <Checkpoint moduleSlug="event-driven-cqrs" id="event-driven" title="Part 1 · Event-driven & pub-sub" xp={25}>
         <h3>Events vs commands: verb tense matters</h3>
         <ul>
-          <li><strong>Command:</strong> &quot;PlaceOrder&quot; — imperative, asks something to happen, addressed to a specific receiver, can be rejected.</li>
-          <li><strong>Event:</strong> &quot;OrderPlaced&quot; — past tense, states something that happened, not addressed to anyone in particular, can&apos;t be rejected (it already happened).</li>
+          <li><strong>Command:</strong> &quot;PlaceOrder&quot;, imperative, asks something to happen, addressed to a specific receiver, can be rejected.</li>
+          <li><strong>Event:</strong> &quot;OrderPlaced&quot;, past tense, states something that happened, not addressed to anyone in particular, can&apos;t be rejected (it already happened).</li>
         </ul>
         <p>
-          The grammatical difference shapes the architectural one. Commands couple sender to receiver: &quot;I, the API, am telling you, the OrderService, to place this order.&quot; Events decouple: &quot;Hey, an order was placed — anyone interested can act on it.&quot; Commands have at most one handler. Events have any number — including zero.
+          The grammatical difference shapes the architectural one. Commands couple sender to receiver: &quot;I, the API, am telling you, the OrderService, to place this order.&quot; Events decouple: &quot;Hey, an order was placed, anyone interested can act on it.&quot; Commands have at most one handler. Events have any number, including zero.
         </p>
 
         <Callout variant="insight" title="The verb-tense rule of thumb">
           <p className="m-0">
-            If your event names sound like commands (&quot;CreateUser,&quot; &quot;ProcessPayment&quot;), you&apos;re probably doing point-to-point messaging dressed up as events. Real events use past tense (&quot;UserCreated,&quot; &quot;PaymentProcessed&quot;) and don&apos;t name a recipient. The naming is the architecture — get it right and the boundaries clarify themselves.
+            If your event names sound like commands (&quot;CreateUser,&quot; &quot;ProcessPayment&quot;), you&apos;re probably doing point-to-point messaging dressed up as events. Real events use past tense (&quot;UserCreated,&quot; &quot;PaymentProcessed&quot;) and don&apos;t name a recipient. The naming is the architecture, get it right and the boundaries clarify themselves.
           </p>
         </Callout>
 
@@ -119,7 +119,7 @@ export default function Page() {
         <Mermaid chart={choreography} />
 
         <p>
-          Choreography is loosely coupled and easy to extend — adding a new consumer of <code>OrderPlaced</code> doesn&apos;t touch any existing code. The cost: the workflow exists nowhere; you have to read N services to understand &quot;what happens when an order is placed.&quot; Debugging cross-service flows is harder.
+          Choreography is loosely coupled and easy to extend, adding a new consumer of <code>OrderPlaced</code> doesn&apos;t touch any existing code. The cost: the workflow exists nowhere; you have to read N services to understand &quot;what happens when an order is placed.&quot; Debugging cross-service flows is harder.
         </p>
         <p>
           Orchestration centralizes the workflow logic. The flow is visible in one place. Easier to debug, easier to add compensation logic. The cost: the orchestrator becomes a coupling point and (often) a deploy bottleneck. Tools like Temporal, Camunda, or AWS Step Functions exist for exactly this.
@@ -127,7 +127,7 @@ export default function Page() {
 
         <Callout variant="warn" title="The choreography sprawl trap">
           <p className="m-0">
-            Choreography starts beautifully simple, and at 3 services it is. At 12 services with complex multi-step flows, it becomes &quot;nobody knows what happens after we publish OrderPlaced; we&apos;ll find out when production breaks.&quot; The pivot point is usually around the time someone says &quot;can we add a manual approval step?&quot; — easy in orchestration, painful in choreography.
+            Choreography starts beautifully simple, and at 3 services it is. At 12 services with complex multi-step flows, it becomes &quot;nobody knows what happens after we publish OrderPlaced; we&apos;ll find out when production breaks.&quot; The pivot point is usually around the time someone says &quot;can we add a manual approval step?&quot;, easy in orchestration, painful in choreography.
           </p>
         </Callout>
 
@@ -203,25 +203,25 @@ public class OrderEventPublisher {
           <li><strong>Orchestrated saga:</strong>{" "}a saga orchestrator drives the flow with explicit steps and compensations.</li>
         </ul>
         <p>
-          For 2-3 step sagas, choreography is fine. Beyond that, orchestration earns its keep — you can <em>see</em>{" "}the flow, you can pause it, you can monitor stuck instances, you can add retry policies per step.
+          For 2-3 step sagas, choreography is fine. Beyond that, orchestration earns its keep, you can <em>see</em>{" "}the flow, you can pause it, you can monitor stuck instances, you can add retry policies per step.
         </p>
 
         <Quiz
           question="A team names their events 'CreateUser', 'UpdateOrder', 'DeleteAccount'. Why is this a smell?"
           options={[
-            { label: "Event names should be all-caps for convention.", explanation: "Casing is style — the issue is grammatical." },
-            { label: "Those are commands, not events. They’re imperative — naming them as events doesn’t change that they’re point-to-point messages with implicit recipients.", correct: true, explanation: "Right. Real events are past tense ('UserCreated', 'OrderUpdated'). Imperative names mean someone is actually telling someone else to do something — that's command-shaped messaging dressed up as events. The naming exposes the architectural mistake." },
+            { label: "Event names should be all-caps for convention.", explanation: "Casing is style, the issue is grammatical." },
+            { label: "Those are commands, not events. They’re imperative, naming them as events doesn’t change that they’re point-to-point messages with implicit recipients.", correct: true, explanation: "Right. Real events are past tense ('UserCreated', 'OrderUpdated'). Imperative names mean someone is actually telling someone else to do something, that's command-shaped messaging dressed up as events. The naming exposes the architectural mistake." },
             { label: "Events should never reference verbs.", explanation: "Past-tense verbs are exactly what you want. The bug is imperative tense, not verbs in general." },
-            { label: "Events must be exactly two words.", explanation: "There's no length rule — it's the verb tense that signals the issue." },
+            { label: "Events must be exactly two words.", explanation: "There's no length rule, it's the verb tense that signals the issue." },
           ]}
         />
 
         <Quiz
           question="Your team has 8 services orchestrating a 6-step order flow purely via choreography (each step listens for the previous). The product team wants to add a manual review step in the middle. What's the practical impact?"
           options={[
-            { label: "Trivial — just publish a new event and listen for the approval.", explanation: "It's not trivial at scale. You have to coordinate which existing events still flow, which are blocked, who handles timeouts on manual review, and how to retry without re-running completed steps." },
-            { label: "Hard — there’s no central place to pause, resume, or surface “waiting for review” state. Each service has to be aware of the new step. This is where orchestration earns its keep.", correct: true, explanation: "Right. Choreography distributes the workflow logic across services. Adding a step requires touching multiple services and reasoning about every existing flow. Orchestrators (Temporal, Camunda, Step Functions) make this kind of change a single config update." },
-            { label: "Impossible without a full rewrite.", explanation: "You can do it — it's just expensive. The point is that orchestration would have made this kind of change cheap." },
+            { label: "Trivial, just publish a new event and listen for the approval.", explanation: "It's not trivial at scale. You have to coordinate which existing events still flow, which are blocked, who handles timeouts on manual review, and how to retry without re-running completed steps." },
+            { label: "Hard, there’s no central place to pause, resume, or surface “waiting for review” state. Each service has to be aware of the new step. This is where orchestration earns its keep.", correct: true, explanation: "Right. Choreography distributes the workflow logic across services. Adding a step requires touching multiple services and reasoning about every existing flow. Orchestrators (Temporal, Camunda, Step Functions) make this kind of change a single config update." },
+            { label: "Impossible without a full rewrite.", explanation: "You can do it, it's just expensive. The point is that orchestration would have made this kind of change cheap." },
             { label: "It works automatically because the broker handles workflow.", explanation: "Brokers move messages; they don't know what your workflow is." },
           ]}
         />
@@ -362,11 +362,11 @@ public Account loadAccount(String accountId) {
         </p>
         <ul>
           <li><strong>Upcasters / event versioning:</strong>{" "}on read, transform old event versions into the latest. Pay the migration cost in code, not in storage.</li>
-          <li><strong>Weak schema (JSON, optional fields):</strong>{" "}pretend you have flexibility. You don&apos;t — you just delay finding out about the bugs.</li>
+          <li><strong>Weak schema (JSON, optional fields):</strong>{" "}pretend you have flexibility. You don&apos;t, you just delay finding out about the bugs.</li>
           <li><strong>Rewriting history:</strong>{" "}compaction or migration to rewrite old events into the new shape. Operationally heavy, controversial (events are supposed to be immutable).</li>
         </ul>
         <p>
-          Production event-sourced systems plan for this from day one — versioned events, upcasters, contract reviews before any event change ships. It&apos;s a real cost, and it&apos;s why event sourcing isn&apos;t free.
+          Production event-sourced systems plan for this from day one, versioned events, upcasters, contract reviews before any event change ships. It&apos;s a real cost, and it&apos;s why event sourcing isn&apos;t free.
         </p>
 
         <h3>When event sourcing is genuinely worth it</h3>
@@ -379,27 +379,27 @@ public Account loadAccount(String accountId) {
 
         <Callout variant="warn" title="When event sourcing is the wrong call">
           <p className="m-0">
-            Most CRUD apps. Most internal tools. Most e-commerce flows that aren&apos;t fundamentally about historical reconstruction. Event sourcing imposes a permanent operational tax: snapshotting, schema evolution, replay performance, eventual consistency between writes and reads. Don&apos;t pay it unless one of the above genuinely applies. &quot;We might want it later&quot; is not a reason — by the time you do, you&apos;ll know enough to decide for real.
+            Most CRUD apps. Most internal tools. Most e-commerce flows that aren&apos;t fundamentally about historical reconstruction. Event sourcing imposes a permanent operational tax: snapshotting, schema evolution, replay performance, eventual consistency between writes and reads. Don&apos;t pay it unless one of the above genuinely applies. &quot;We might want it later&quot; is not a reason, by the time you do, you&apos;ll know enough to decide for real.
           </p>
         </Callout>
 
         <Quiz
           question="Three years into an event-sourced system, replay of an aggregate with 50,000 events takes 4 seconds. Loading is now too slow. What's the right fix?"
           options={[
-            { label: "Migrate away from event sourcing.", explanation: "Drastic — and unnecessary. There’s a known fix for this exact problem." },
+            { label: "Migrate away from event sourcing.", explanation: "Drastic, and unnecessary. There’s a known fix for this exact problem." },
             { label: "Add snapshotting: persist the folded state every N events; loads start from the snapshot and replay only events since.", correct: true, explanation: "Right. Snapshots are the standard answer to slow replay. Snapshot every 100-1000 events depending on event volume; cap replay tail to a few hundred events at most." },
             { label: "Cache the loaded aggregate in Redis.", explanation: "Cache invalidation across services using the aggregate becomes its own complexity. Snapshots fix the underlying problem." },
-            { label: "Reduce the event count by deleting old events.", explanation: "Events are the source of truth — deleting them loses the history that was the whole point of event sourcing." },
+            { label: "Reduce the event count by deleting old events.", explanation: "Events are the source of truth, deleting them loses the history that was the whole point of event sourcing." },
           ]}
         />
 
         <Quiz
           question="You've decided to rename a field in an OrderPlaced event from customer_email to buyer_email. The event store has 5 years of events with the old name. What do you do on read?"
           options={[
-            { label: "Rewrite all old events to use the new name.", explanation: "Possible but operationally heavy and controversial — events are supposed to be immutable. Most teams avoid it." },
+            { label: "Rewrite all old events to use the new name.", explanation: "Possible but operationally heavy and controversial, events are supposed to be immutable. Most teams avoid it." },
             { label: "Add an upcaster that translates old-shape events to the new shape on read; keep stored events untouched. Bump event version.", correct: true, explanation: "Right. Upcasters are the standard pattern: bump the schema version, write an upcaster from version N to N+1, replay paths apply upcasters before passing to handlers. Cost lives in code, not storage." },
-            { label: "Have consumers handle both names indefinitely.", explanation: "Works short-term but creates per-consumer inconsistency — every team has to remember the dual handling. Centralize via upcaster." },
-            { label: "Drop the old events.", explanation: "Loses history — the whole reason event sourcing was chosen." },
+            { label: "Have consumers handle both names indefinitely.", explanation: "Works short-term but creates per-consumer inconsistency, every team has to remember the dual handling. Centralize via upcaster." },
+            { label: "Drop the old events.", explanation: "Loses history, the whole reason event sourcing was chosen." },
           ]}
         />
 
@@ -418,7 +418,7 @@ public Account loadAccount(String accountId) {
       <Checkpoint moduleSlug="event-driven-cqrs" id="cqrs" title="Part 3 · CQRS" xp={30}>
         <h3>The premise</h3>
         <p>
-          CQRS — Command Query Responsibility Segregation — splits the model used to write data from the model(s) used to read it. The write side optimizes for consistency and validation; the read sides optimize for query patterns. Different models, different storage, different scaling characteristics.
+          CQRS, Command Query Responsibility Segregation, splits the model used to write data from the model(s) used to read it. The write side optimizes for consistency and validation; the read sides optimize for query patterns. Different models, different storage, different scaling characteristics.
         </p>
 
         <Mermaid chart={cqrsDiagram} />
@@ -436,7 +436,7 @@ public Account loadAccount(String accountId) {
           <li>Read side: denormalized SQL DB or Elasticsearch, builds projections from the events. Optimized for the queries the UI/API actually runs.</li>
         </ul>
         <p>
-          This is &quot;CQRS lite&quot; — separate read and write paths, both backed by their own storage, kept in sync via events. Eventual consistency between write and read; bounded staleness usually under a second.
+          This is &quot;CQRS lite&quot;, separate read and write paths, both backed by their own storage, kept in sync via events. Eventual consistency between write and read; bounded staleness usually under a second.
         </p>
 
         <CodeBlock lang="java">{`// Write side — normalized JPA model
@@ -502,7 +502,7 @@ public class OrderProjector {
 
         <h3>Eventual consistency: the consequence to plan for</h3>
         <p>
-          The read side lags the write side. A user places an order, then immediately queries &quot;my orders&quot; — and the projection hasn&apos;t caught up yet, so the new order isn&apos;t in the response. Three coping strategies:
+          The read side lags the write side. A user places an order, then immediately queries &quot;my orders&quot;, and the projection hasn&apos;t caught up yet, so the new order isn&apos;t in the response. Three coping strategies:
         </p>
         <ul>
           <li><strong>Read your writes from the write side.</strong>{" "}For &quot;just placed&quot; queries, route to the write DB. Bypass the projection delay for the user&apos;s own most-recent activity.</li>
@@ -512,7 +512,7 @@ public class OrderProjector {
 
         <Callout variant="warn" title="Eventual consistency is a UX problem, not just a tech one">
           <p className="m-0">
-            The most common CQRS production bug isn&apos;t in the projector — it&apos;s the user clicking &quot;refresh&quot; and being confused by missing data. Get the UX team involved early. Optimistic UI patterns and clear progress states are part of CQRS done right, not afterthoughts.
+            The most common CQRS production bug isn&apos;t in the projector, it&apos;s the user clicking &quot;refresh&quot; and being confused by missing data. Get the UX team involved early. Optimistic UI patterns and clear progress states are part of CQRS done right, not afterthoughts.
           </p>
         </Callout>
 
@@ -527,7 +527,7 @@ public class OrderProjector {
           <li>A cache (Redis) for hot lookups.</li>
         </ul>
         <p>
-          Each is rebuildable from the event stream — drop and recreate when the schema changes. That replay capability is what makes CQRS sustainable at scale: you can iterate on read models without touching the write side or migrating data through schema changes.
+          Each is rebuildable from the event stream, drop and recreate when the schema changes. That replay capability is what makes CQRS sustainable at scale: you can iterate on read models without touching the write side or migrating data through schema changes.
         </p>
 
         <h3>When CQRS is overkill</h3>
@@ -539,21 +539,21 @@ public class OrderProjector {
 
         <Callout variant="insight" title="Test for CQRS need: how often do queries differ from the write shape?">
           <p className="m-0">
-            If most queries are &quot;get the entity I just wrote&quot; or &quot;list entities of this type with simple filters,&quot; the same model serves both fine. CQRS earns its keep when reads need joins, aggregates, search, or shapes the write model can&apos;t produce efficiently. Hot signal: when you see the team adding read replicas, materialized views, or search indexes ad-hoc — that&apos;s the read side wanting to separate, even if you don&apos;t call it CQRS.
+            If most queries are &quot;get the entity I just wrote&quot; or &quot;list entities of this type with simple filters,&quot; the same model serves both fine. CQRS earns its keep when reads need joins, aggregates, search, or shapes the write model can&apos;t produce efficiently. Hot signal: when you see the team adding read replicas, materialized views, or search indexes ad-hoc, that&apos;s the read side wanting to separate, even if you don&apos;t call it CQRS.
           </p>
         </Callout>
 
         <h3>The full stack: event-driven + event sourcing + CQRS</h3>
         <p>
-          When all three combine: events are the source of truth (event sourcing), they&apos;re published to other services (event-driven), and read models are projections from the event stream (CQRS). This is the maximum-power configuration — and the maximum-cost one. Reserve it for systems where every part of the stack carries its weight: financial ledgers, regulated audit-heavy systems, complex analytics platforms.
+          When all three combine: events are the source of truth (event sourcing), they&apos;re published to other services (event-driven), and read models are projections from the event stream (CQRS). This is the maximum-power configuration, and the maximum-cost one. Reserve it for systems where every part of the stack carries its weight: financial ledgers, regulated audit-heavy systems, complex analytics platforms.
         </p>
         <p>
-          The mistake most teams make is reaching for the full stack on a system that needed event-driven only — or just plain CRUD with a few queues. The cost shows up months later in operational complexity, debugging difficulty, and onboarding time for new engineers.
+          The mistake most teams make is reaching for the full stack on a system that needed event-driven only, or just plain CRUD with a few queues. The cost shows up months later in operational complexity, debugging difficulty, and onboarding time for new engineers.
         </p>
 
         <ClassifyChallenge
           title="Pick the right architecture"
-          prompt="For each scenario, pick the simplest pattern that fits. Adding more isn’t better — only what you need."
+          prompt="For each scenario, pick the simplest pattern that fits. Adding more isn’t better, only what you need."
           buckets={[
             { id: "crud", label: "Plain CRUD", color: "rose" },
             { id: "event-driven", label: "Event-driven (pub-sub)", color: "amber" },
@@ -564,7 +564,7 @@ public class OrderProjector {
             { id: "internal-tool", label: "Internal admin tool to manage product catalog. 5 admins, low traffic, basic CRUD operations.", answer: "crud", explanation: "No scale pressure, no integration concerns, no audit needs beyond basic logging. CRUD is the right tool. Anything more is wasted complexity." },
             { id: "order-fanout", label: "Order placement triggers email, inventory update, and analytics. The same data flows from one source to multiple consumers.", answer: "event-driven", explanation: "Pub-sub fits perfectly: order service publishes OrderPlaced, three consumers each react. No shared write model, no need for replay, just decoupling between services." },
             { id: "search-perf", label: "User search needs to query across many fields with complex filters. Write model is normalized, but search would force expensive joins on every query.", answer: "cqrs", explanation: "Classic CQRS shape: write model stays normalized for consistency, read model lives in Elasticsearch for fast search. Eventual consistency is acceptable for search results." },
-            { id: "ledger", label: "Financial ledger system: every transaction must be auditable, balance must be reconstructable for any past date, regulators may request 7-year history.", answer: "event-sourcing", explanation: "Audit, temporal queries, regulatory replay — exactly the use case event sourcing is built for. CQRS naturally pairs with it for read-side dashboards. Worth the cost." },
+            { id: "ledger", label: "Financial ledger system: every transaction must be auditable, balance must be reconstructable for any past date, regulators may request 7-year history.", answer: "event-sourcing", explanation: "Audit, temporal queries, regulatory replay, exactly the use case event sourcing is built for. CQRS naturally pairs with it for read-side dashboards. Worth the cost." },
             { id: "blog", label: "Personal blog with comments. ~1000 readers a day.", answer: "crud", explanation: "Stop. Don’t do this to yourself. CRUD." },
             { id: "saas-tenants", label: "SaaS dashboard: writes are tenant-scoped CRUD, but reads need cross-tenant analytics aggregations for the admin view.", answer: "cqrs", explanation: "Different read shape (aggregated cross-tenant) than write shape (per-tenant). Project from write events into an analytics read model. No event sourcing needed." },
           ]}
@@ -583,21 +583,21 @@ public class OrderProjector {
         <Quiz
           question="A user places an order, immediately navigates to 'My Orders', and doesn't see the order they just placed. What's the design fix?"
           options={[
-            { label: "Force the read side to be synchronous with the write side.", explanation: "That defeats the entire purpose of CQRS — strong consistency between write and read is what you traded away." },
+            { label: "Force the read side to be synchronous with the write side.", explanation: "That defeats the entire purpose of CQRS, strong consistency between write and read is what you traded away." },
             { label: "Either show the just-placed order from the write side’s response (read-your-writes routing), or use optimistic UI to render it locally before the projection catches up.", correct: true, explanation: "Right. CQRS means eventual consistency between write and read by design. Production-grade UX includes either targeted read-your-writes (route the user’s own most-recent queries to the write DB) or optimistic UI (show the local result, refresh from projection later)." },
-            { label: "Disable CQRS for that flow.", explanation: "The full read path doesn’t need to be torn down — just the user’s own immediate read needs special handling." },
+            { label: "Disable CQRS for that flow.", explanation: "The full read path doesn’t need to be torn down, just the user’s own immediate read needs special handling." },
             { label: "Add a 'try refreshing' message.", explanation: "Production-grade UX shouldn’t require user retries. Read-your-writes or optimistic UI is the answer." },
           ]}
         />
 
         <PartRecap
           title="Part 3 recap"
-          gist="CQRS splits read and write models. Useful when their shapes genuinely differ. Eventual consistency is the cost — plan for it in code AND in UX."
+          gist="CQRS splits read and write models. Useful when their shapes genuinely differ. Eventual consistency is the cost, plan for it in code AND in UX."
           points={[
             { takeaway: "CQRS doesn’t require event sourcing. CQRS-lite with a normalized write DB and projected read models is common and tractable.", detail: "Write side validates and persists. Events propagate. Projectors build read models in their own storage. No replay infrastructure needed unless you also event-source." },
             { takeaway: "Eventual consistency is a UX problem, not just a tech one.", detail: "Read-your-writes routing or optimistic UI handles the ‘I just wrote it, where is it?’ case. Without these, users will hit refresh loops and your perceived reliability tanks." },
             { takeaway: "Multiple read models, each shaped to its query pattern.", detail: "Search → Elasticsearch. Aggregates → pre-aggregated tables. Hot lookups → Redis. Each rebuildable from the event stream. That replay capability is what makes CQRS sustainable." },
-            { takeaway: "Don’t reach for event-sourcing-plus-CQRS as a default. Justify each layer on its merits.", detail: "Event-driven for service decoupling. CQRS when read and write shapes differ. Event sourcing when audit, temporal, or replay is genuinely needed. Most systems need at most one or two of these — the full stack is rare and expensive." },
+            { takeaway: "Don’t reach for event-sourcing-plus-CQRS as a default. Justify each layer on its merits.", detail: "Event-driven for service decoupling. CQRS when read and write shapes differ. Event sourcing when audit, temporal, or replay is genuinely needed. Most systems need at most one or two of these, the full stack is rare and expensive." },
           ]}
         />
       </Checkpoint>
@@ -605,7 +605,7 @@ public class OrderProjector {
       <section className="not-prose my-12 rounded-2xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 to-green-50 p-6 dark:border-emerald-800 dark:from-emerald-950/40 dark:to-green-950/40">
         <h3 className="mt-0 mb-2 text-lg font-bold">Phase 3 complete</h3>
         <p className="mb-0 text-sm text-slate-700 dark:text-slate-300">
-          You can design the synchronous side (REST, gRPC, GraphQL) and the asynchronous side (queues, Kafka, event-driven, CQRS) — and you know when each is right and when each is overkill. The next phase moves to operating these systems: caching, observability, and the patterns that keep them running. <Link href="/courses/system-design" className="text-cyan-600 hover:underline">Back to all modules →</Link>
+          You can design the synchronous side (REST, gRPC, GraphQL) and the asynchronous side (queues, Kafka, event-driven, CQRS), and you know when each is right and when each is overkill. The next phase moves to operating these systems: caching, observability, and the patterns that keep them running. <Link href="/courses/system-design" className="text-cyan-600 hover:underline">Back to all modules →</Link>
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="event-driven-cqrs" />

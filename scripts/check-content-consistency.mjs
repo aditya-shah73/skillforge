@@ -258,11 +258,214 @@ for (const c of COURSES) {
 /**
  * Heuristic: is `n` plausibly a claim about a course's *total* module count
  * rather than some unrelated number that happens to precede "modules"?
- * Course totals live in the 30–60 range; we accept 10–99 to stay future-proof
+ * Course totals live in the 30-60 range; we accept 10-99 to stay future-proof
  * but this guard keeps the check honest about intent.
  */
 function plausibleCourseTotal(n) {
   return n >= 10 && n <= 99;
+}
+
+// ---------------------------------------------------------------------------
+// Check 5: prose must not use the em dash (U+2014). House style is commas or
+// periods instead. This is a *prose-only* rule: code samples, comments, and
+// inline code legitimately contain em dashes (ASCII art, regex, code prose),
+// so we strip those contexts before scanning. We do NOT touch the en dash
+// (U+2013), which stays for numeric ranges ("15-20 min", "Modules 1-7").
+//
+// Detection is line-based and deliberately conservative. The only place an em
+// dash should survive is inside a template-literal block (the children of
+// <CodeBlock>{`...`}</CodeBlock> / <pre><code>{`...`}</code></pre>), a JS/JSX
+// comment, or an inline <code>/backtick span. Anything left after stripping
+// those is visible reading text and gets flagged.
+//
+// Escape hatch (rare, e.g. a decorative "— Fin —" sign-off): mark the file with
+//     {/* content-lint-disable em-dash */}
+const EM_DASH = "—";
+const EMDASH_OPT_OUT = "content-lint-disable em-dash";
+
+/**
+ * Scan one source file for em dashes that survive in *prose*, using a single
+ * character-level state machine. Returns an array of { line } findings.
+ *
+ * The machine classifies every character as either CODE context (where an em
+ * dash is fine) or PROSE context (where it is flagged):
+ *
+ *   CODE context, skipped:
+ *     - template literals     `...`        (CodeBlock / <pre><code> samples,
+ *                                            and code embedded in {`...`}, where
+ *                                            em dashes appear in code comments)
+ *     - inline <code>...</code> spans       (code identifiers shown in prose)
+ *     - line comments        //  ... to end of line
+ *     - block / JSX comments  /* ... *\/   (the {/* ... *\/} form too)
+ *
+ *   PROSE context, checked:
+ *     - JSX text between tags        (>visible reading text<)
+ *     - quoted-string VALUES         ("caption", quiz question/label/explanation,
+ *       lib data title/subtitle/project): the codebase puts user-facing copy in
+ *       string literals, so an em dash there is still visible prose.
+ *
+ * Deliberate design choice: we do NOT track single-/double-quoted strings as a
+ * separate context. In TSX, a char-level scanner cannot reliably tell a JS
+ * string literal apart from an apostrophe in JSX prose ("doesn't", "LinkedList's")
+ * or a quote inside JSX text, so quote-tracking desynchronizes and corrupts all
+ * downstream state. We instead treat string contents the same as JSX text: an
+ * em dash anywhere outside a template literal / <code> / comment is prose. This
+ * is exactly what we want, since user-facing copy lives in those string values,
+ * and code identifiers never contain em dashes.
+ *
+ * Because we don't track strings, we must avoid mis-reading `//` inside a URL
+ * (https://) as a line comment. We only start a line comment on `//` that is
+ * NOT preceded by a colon. An in-string "/*" at worst masks a region we'd never
+ * flag anyway, so it is harmless.
+ *
+ * We do NOT special-case the en dash (U+2013); it is intentionally left alone.
+ */
+function findProseEmDashes(src) {
+  const out = [];
+  const n = src.length;
+  let line = 1;
+  // Mutually-exclusive CODE-context flags. Anything not in one of these is prose.
+  let inLineComment = false;
+  let inBlockComment = false;
+  let inTemplate = false; // backtick template literal
+  let inCodeTag = false; // inside an inline <code>...</code> span
+
+  for (let i = 0; i < n; i++) {
+    const ch = src[i];
+    const next = src[i + 1];
+
+    if (ch === "\n") {
+      line++;
+      inLineComment = false; // line comments end at the newline
+      continue;
+    }
+
+    // --- Exit / skip conditions for active CODE contexts ---
+    if (inLineComment) continue;
+    if (inBlockComment) {
+      if (ch === "*" && next === "/") {
+        inBlockComment = false;
+        i++;
+      }
+      continue;
+    }
+    if (inTemplate) {
+      if (ch === "\\") {
+        i++; // skip escaped char (e.g. \` or \$)
+      } else if (ch === "`") {
+        inTemplate = false;
+      }
+      continue;
+    }
+    if (inCodeTag) {
+      // Look for the closing </code>; everything until then is code.
+      if (ch === "<" && src.slice(i, i + 7).toLowerCase() === "</code>") {
+        inCodeTag = false;
+        i += 6;
+      }
+      continue;
+    }
+
+    // --- Enter conditions for CODE contexts (we're in prose/JSX/string text) ---
+    // Line comment: `//` not part of a URL scheme (e.g. https://). We approximate
+    // "URL" as a `//` immediately preceded by a colon.
+    if (ch === "/" && next === "/" && src[i - 1] !== ":") {
+      inLineComment = true;
+      i++;
+      continue;
+    }
+    if (ch === "/" && next === "*") {
+      inBlockComment = true;
+      i++;
+      continue;
+    }
+    if (ch === "`") {
+      inTemplate = true;
+      continue;
+    }
+    if (ch === "<" && src.slice(i, i + 6).toLowerCase() === "<code>") {
+      inCodeTag = true;
+      i += 5;
+      continue;
+    }
+
+    // --- Prose context (JSX text or a user-facing string value): flag em dash,
+    // unless it's a standalone glyph rather than prose punctuation. A bare em
+    // dash whose neighbors (ignoring spaces) are JSX tag boundaries, e.g.
+    // <td>—</td>, is a "not applicable" / placeholder marker in a table, not a
+    // dash joining clauses. We only skip the isolated-glyph case: prev non-space
+    // is ">" (end of the opening tag) AND next non-space is "<" (start of the
+    // closing tag).
+    if (ch === EM_DASH) {
+      let p = i - 1;
+      while (p >= 0 && (src[p] === " " || src[p] === "\t")) p--;
+      let q = i + 1;
+      while (q < n && (src[q] === " " || src[q] === "\t")) q++;
+      const isStandaloneGlyph = src[p] === ">" && src[q] === "<";
+      if (!isStandaloneGlyph) out.push({ line });
+    }
+  }
+
+  return out;
+}
+
+// Files to scan for prose em dashes: every course module page + landing page,
+// the course data sources (titles/subtitles/projects/phase names are prose),
+// shared UI components, and top-level app pages.
+const proseFiles = [];
+for (const c of COURSES) {
+  const landing = `app/courses/${c}/page.tsx`;
+  if (existsSync(join(root, landing))) proseFiles.push(landing);
+  for (const slug of pageSlugs(c)) {
+    proseFiles.push(`app/courses/${c}/modules/${slug}/page.tsx`);
+  }
+  proseFiles.push(`lib/courses/${c}.ts`);
+}
+// `ai` data lives at lib/modules.ts (re-exported), include it too.
+if (existsSync(join(root, "lib/modules.ts"))) proseFiles.push("lib/modules.ts");
+// Shared components (UI strings) and top-level app pages.
+for (const rel of walkSource(join(root, "components"))) proseFiles.push(rel);
+for (const rel of walkSource(join(root, "app"), "app/courses")) proseFiles.push(rel);
+
+for (const rel of [...new Set(proseFiles)]) {
+  const abs = join(root, rel);
+  if (!existsSync(abs)) continue;
+  const src = readFileSync(abs, "utf8");
+  // Whole-file opt-out: a marker anywhere in the file exempts the entire file.
+  if (src.includes(EMDASH_OPT_OUT)) continue;
+  const srcLines = src.split("\n");
+  for (const { line } of findProseEmDashes(src)) {
+    // Per-line opt-out: the em dash on this line is an intentional non-prose use
+    // (a table "not applicable" glyph, graph edge notation, etc.). Honor a marker
+    // on the same line or the line immediately above it, so the rest of the file
+    // still catches genuinely new prose em dashes.
+    const here = srcLines[line - 1] || "";
+    const above = srcLines[line - 2] || "";
+    if (here.includes(EMDASH_OPT_OUT) || above.includes(EMDASH_OPT_OUT)) continue;
+    report("style", rel, `prose em dash (—) at line ${line}; use a comma or period instead`);
+  }
+}
+
+/**
+ * Recursively collect .ts/.tsx source files under `dir`, skipping any path that
+ * starts with `excludePrefix` (relative to root) and node_modules/.next.
+ */
+function walkSource(dir, excludePrefix) {
+  const acc = [];
+  if (!existsSync(dir)) return acc;
+  for (const name of readdirSync(dir)) {
+    if (name === "node_modules" || name === ".next") continue;
+    const abs = join(dir, name);
+    const rel = abs.slice(root.length + 1);
+    if (excludePrefix && rel.startsWith(excludePrefix)) continue;
+    const st = statSync(abs);
+    if (st.isDirectory()) {
+      acc.push(...walkSource(abs, excludePrefix));
+    } else if (/\.(ts|tsx)$/.test(name)) {
+      acc.push(rel);
+    }
+  }
+  return acc;
 }
 
 // ---------------------------------------------------------------------------

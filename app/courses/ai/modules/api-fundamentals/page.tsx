@@ -53,7 +53,7 @@ flowchart LR
           Claude API fundamentals
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Auth, models, parameters — from zero to your first real request.
+          Auth, models, parameters, from zero to your first real request.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="api-fundamentals" />
         <ModuleProgress moduleSlug="api-fundamentals" checkpoints={CHECKPOINTS} />
@@ -61,14 +61,14 @@ flowchart LR
 
       <Callout variant="insight" title="Where Phase 2 picks up">
         <p className="m-0">
-          Phase 1 you built the model from scratch. Phase 2 you call someone else&apos;s. From here on, every module is &quot;real Java code, real network calls, real costs.&quot; By the end of this module you&apos;ll have a Spring Boot CLI on your laptop that posts to Anthropic and prints back a code review — and you&apos;ll know exactly which knob to turn when something goes wrong.
+          Phase 1 you built the model from scratch. Phase 2 you call someone else&apos;s. From here on, every module is &quot;real Java code, real network calls, real costs.&quot; By the end of this module you&apos;ll have a Spring Boot CLI on your laptop that posts to Anthropic and prints back a code review, and you&apos;ll know exactly which knob to turn when something goes wrong.
         </p>
       </Callout>
 
       {/* ============================================================ */}
       {/* PART 1: WHAT A CALL IS                                        */}
       {/* ============================================================ */}
-      <Checkpoint moduleSlug="api-fundamentals" id="what-is-a-call" title="What a call is" xp={15} celebration="You see what a Claude API call really is — a JSON POST. On to auth.">
+      <Checkpoint moduleSlug="api-fundamentals" id="what-is-a-call" title="What a call is" xp={15} celebration="You see what a Claude API call really is, a JSON POST. On to auth.">
       <section>
         <h2>Part 1: What an API call to Claude actually <em>is</em></h2>
 
@@ -89,7 +89,7 @@ flowchart LR
           </div>
           <div className="rounded-xl border border-amber-300 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
             <div className="mb-1 text-xs font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300"><code>max_tokens</code></div>
-            <div className="text-sm">Hard ceiling on the reply. Required. Always. The model will never produce more than this — even mid-sentence.</div>
+            <div className="text-sm">Hard ceiling on the reply. Required. Always. The model will never produce more than this, even mid-sentence.</div>
           </div>
         </div>
 
@@ -123,21 +123,21 @@ flowchart LR
 }`}</CodeBlock>
 
         <p>
-          That <code>usage</code> block is your bill. Multiply <code>input_tokens</code> by the model&apos;s input price, <code>output_tokens</code> by the (higher) output price, sum them up. Output is typically 4–5× more expensive per token than input — which is why Module 13 (Prompt caching) exists.
+          That <code>usage</code> block is your bill. Multiply <code>input_tokens</code> by the model&apos;s input price, <code>output_tokens</code> by the (higher) output price, sum them up. Output is typically 4–5× more expensive per token than input, which is why Module 13 (Prompt caching) exists.
         </p>
 
         <h3>How a request actually flows</h3>
         <Mermaid chart={requestFlowchart} />
 
-        <Callout variant="info" title="system isn't a message — it's a parameter">
+        <Callout variant="info" title="system isn't a message, it's a parameter">
           <p className="m-0">
-            Notice <code>system</code> is its own top-level field, not a role in the messages array. This is a deliberate Anthropic API design: the system prompt is meant to be persistent &quot;mode&quot; instructions, not a conversational turn. (OpenAI&apos;s API folds it into messages instead — same idea, different shape. Spring AI hides this difference for you.)
+            Notice <code>system</code> is its own top-level field, not a role in the messages array. This is a deliberate Anthropic API design: the system prompt is meant to be persistent &quot;mode&quot; instructions, not a conversational turn. (OpenAI&apos;s API folds it into messages instead, same idea, different shape. Spring AI hides this difference for you.)
           </p>
         </Callout>
 
         <Callout variant="warn" title="Stateless. Every call. Always.">
           <p className="m-0">
-            The API does not remember a thing between calls. If you want a conversation, <em>you</em>{" "}append the assistant&apos;s reply to your <code>messages</code> array and re-send the whole thing next turn. The &quot;memory&quot; lives in your code, not on Anthropic&apos;s servers. (This is also why long chats get expensive — every turn re-bills for all prior turns as input tokens.)
+            The API does not remember a thing between calls. If you want a conversation, <em>you</em>{" "}append the assistant&apos;s reply to your <code>messages</code> array and re-send the whole thing next turn. The &quot;memory&quot; lives in your code, not on Anthropic&apos;s servers. (This is also why long chats get expensive, every turn re-bills for all prior turns as input tokens.)
           </p>
         </Callout>
 
@@ -145,8 +145,8 @@ flowchart LR
           kind="Quick check"
           question="You build a chat UI. The user types message #4. What does your Spring app send to Anthropic?"
           options={[
-            { label: "Just message #4 — Anthropic remembers messages 1–3 from earlier calls", explanation: "Nope. The API is stateless. Anthropic remembers nothing between requests." },
-            { label: "Messages 1, 2, 3, and 4 — the full conversation, every time", correct: true, explanation: "Right. You re-send the whole conversation each turn. The memory lives in your client. (And yes, this means you re-pay for messages 1–3 as input tokens on every turn — Module 13 covers caching to dodge that bill.)" },
+            { label: "Just message #4, Anthropic remembers messages 1–3 from earlier calls", explanation: "Nope. The API is stateless. Anthropic remembers nothing between requests." },
+            { label: "Messages 1, 2, 3, and 4, the full conversation, every time", correct: true, explanation: "Right. You re-send the whole conversation each turn. The memory lives in your client. (And yes, this means you re-pay for messages 1–3 as input tokens on every turn, Module 13 covers caching to dodge that bill.)" },
             { label: "Just message #4 plus a session ID Anthropic generated", explanation: "Anthropic doesn't return a session ID for you to reuse. Each call is independent." },
             { label: "Messages 1–4 the first call, then just deltas after", explanation: "There's no delta protocol. It's the full message array on every request." },
           ]}
@@ -156,8 +156,8 @@ flowchart LR
           kind="Quick check"
           question="A request returns usage = { input_tokens: 1200, output_tokens: 300 }. Roughly which side of the bill is bigger?"
           options={[
-            { label: "Input — there are 4× more input tokens", explanation: "Token count favors input, but per-token price favors output. Output is ~5× more expensive per token across most Claude models." },
-            { label: "Output — output tokens cost roughly 5× more per token", correct: true, explanation: "Right. 1200 input × $3/MTok = $0.0036; 300 output × $15/MTok = $0.0045 (using Sonnet's price). Even with 4× fewer output tokens, output dominates the bill. This is why most caching/optimization wins come from shortening output, not input." },
+            { label: "Input, there are 4× more input tokens", explanation: "Token count favors input, but per-token price favors output. Output is ~5× more expensive per token across most Claude models." },
+            { label: "Output, output tokens cost roughly 5× more per token", correct: true, explanation: "Right. 1200 input × $3/MTok = $0.0036; 300 output × $15/MTok = $0.0045 (using Sonnet's price). Even with 4× fewer output tokens, output dominates the bill. This is why most caching/optimization wins come from shortening output, not input." },
             { label: "They're roughly equal", explanation: "Run the math at Sonnet pricing: input ≈ $0.0036, output ≈ $0.0045. Output's bigger." },
             { label: "Impossible to know without the model name", explanation: "Across every Claude tier the output:input price ratio is ~5:1, so output dominates here regardless." },
           ]}
@@ -170,8 +170,8 @@ flowchart LR
         gist="An API call is a stateless JSON POST. You send model + messages + max_tokens; you pay for input + output tokens."
         points={[
           { takeaway: "One endpoint, one verb: POST /v1/messages.", detail: "Everything Spring AI does ultimately becomes one HTTPS call to that URL. Knowing this means you can debug at the curl level when something gets weird." },
-          { takeaway: "messages is an array of {role, content}; system is a separate top-level field.", detail: "user and assistant roles alternate. system is persistent mode instructions and lives outside the array — different from OpenAI's shape." },
-          { takeaway: "max_tokens is required and is a hard cap on the reply.", detail: "If the model hits it mid-sentence, the reply just stops. stop_reason will say \"max_tokens\" instead of \"end_turn\" — always check that field." },
+          { takeaway: "messages is an array of {role, content}; system is a separate top-level field.", detail: "user and assistant roles alternate. system is persistent mode instructions and lives outside the array, different from OpenAI's shape." },
+          { takeaway: "max_tokens is required and is a hard cap on the reply.", detail: "If the model hits it mid-sentence, the reply just stops. stop_reason will say \"max_tokens\" instead of \"end_turn\", always check that field." },
           { takeaway: "The API has zero memory. You re-send the conversation every turn.", detail: "Conversation state is your client's job. The only thing Anthropic stores between calls is your usage counter for billing." },
           { takeaway: "Output tokens cost ~5× more than input tokens.", detail: "Across Haiku/Sonnet/Opus the ratio is consistent. Optimization usually means \"make the model say less,\" not \"shorten the prompt.\"" },
         ]}
@@ -184,20 +184,20 @@ flowchart LR
       <section>
         <h2>Part 2: Auth and picking a model</h2>
 
-        <h3>Auth — the world&apos;s simplest header</h3>
+        <h3>Auth, the world&apos;s simplest header</h3>
         <p>
           Anthropic auth is a single HTTP header: <code>x-api-key: sk-ant-...</code>. No OAuth dance, no JWT signing, no AWS SigV4. Get a key at <code>console.anthropic.com</code>, drop it in a header, you&apos;re in.
         </p>
 
         <Callout variant="warn" title="Never hardcode the key">
           <p className="m-0">
-            <strong>Treat it like a credit card.</strong>{" "}Read it from an environment variable (<code>ANTHROPIC_API_KEY</code>), a secret manager, or your config server — never commit it. If you push a key to GitHub, Anthropic&apos;s scanners will detect it within minutes and auto-revoke. Then you&apos;ve had a bad afternoon.
+            <strong>Treat it like a credit card.</strong>{" "}Read it from an environment variable (<code>ANTHROPIC_API_KEY</code>), a secret manager, or your config server, never commit it. If you push a key to GitHub, Anthropic&apos;s scanners will detect it within minutes and auto-revoke. Then you&apos;ve had a bad afternoon.
           </p>
         </Callout>
 
         <h3>The three models you&apos;ll actually use</h3>
         <p>
-          Claude has three current-generation tiers. They&apos;re all the same API shape — you swap the <code>model</code> string and nothing else changes. Pick by use case:
+          Claude has three current-generation tiers. They&apos;re all the same API shape, you swap the <code>model</code> string and nothing else changes. Pick by use case:
         </p>
 
         <div className="not-prose my-6 grid gap-4 md:grid-cols-3">
@@ -216,7 +216,7 @@ flowchart LR
             <div className="space-y-1.5 text-xs">
               <div><strong>The default. Use this unless you have a reason not to.</strong></div>
               <div>Good for: most coding, agents, RAG, customer-facing apps.</div>
-              <div>Sonnet 4.5 is the workhorse — fast enough for interactive use, smart enough for hard problems.</div>
+              <div>Sonnet 4.5 is the workhorse, fast enough for interactive use, smart enough for hard problems.</div>
             </div>
           </div>
           <div className="rounded-xl border-2 border-purple-300 bg-purple-50 p-4 dark:border-purple-800 dark:bg-purple-950/30">
@@ -230,7 +230,7 @@ flowchart LR
           </div>
         </div>
 
-        <Callout variant="info" title="Picking a model — the dumb-simple heuristic">
+        <Callout variant="info" title="Picking a model, the dumb-simple heuristic">
           <p className="mb-2">When in doubt:</p>
           <ol className="m-0 list-decimal space-y-1 pl-5">
             <li>Build everything on <strong>Sonnet</strong>.</li>
@@ -248,7 +248,7 @@ flowchart LR
         </p>
 
         <ul>
-          <li><strong>Family, then tier, then version</strong> — <code>claude-{`{tier}`}-{`{version}`}</code>.</li>
+          <li><strong>Family, then tier, then version</strong>, <code>claude-{`{tier}`}-{`{version}`}</code>.</li>
           <li><strong>Old models don&apos;t auto-upgrade.</strong>{" "}If you pin <code>claude-3-5-sonnet-20241022</code>, you keep getting that exact snapshot until Anthropic deprecates it. New behavior = new model string.</li>
           <li><strong>Wrong string → 404 not_found_error</strong>. Typos here are the most common &quot;why doesn&apos;t my call work&quot; bug.</li>
         </ul>
@@ -257,10 +257,10 @@ flowchart LR
           kind="Quick check"
           question="You're building an internal Slack bot that classifies support tickets into 5 categories. Volume: ~50,000/day. Which model should you start with?"
           options={[
-            { label: "Opus — classifications affect the user, you want max quality", explanation: "Opus is overkill for 5-way classification, and at 50K/day the cost would be wild. Classification is exactly what cheaper tiers were built for." },
-            { label: "Sonnet — the default, can't go wrong", explanation: "Solid default for new projects, but classification is a textbook Haiku use case and Sonnet would cost ~5× more for no quality gain on this task." },
-            { label: "Haiku — cheap, fast, classification is its sweet spot", correct: true, explanation: "Right. 5-way classification is well within Haiku's range and the price/latency win is huge at 50K/day. The heuristic 'Sonnet by default' applies to general-purpose features — narrow well-defined tasks like classification can usually start a tier lower." },
-            { label: "Whichever is cheapest at the moment — switch dynamically", explanation: "Don't dynamic-switch on price. Pick the cheapest tier that meets quality on a held-out eval set, then stick with it. Switching mid-flight changes behavior in ways your tests won't catch." },
+            { label: "Opus, classifications affect the user, you want max quality", explanation: "Opus is overkill for 5-way classification, and at 50K/day the cost would be wild. Classification is exactly what cheaper tiers were built for." },
+            { label: "Sonnet, the default, can't go wrong", explanation: "Solid default for new projects, but classification is a textbook Haiku use case and Sonnet would cost ~5× more for no quality gain on this task." },
+            { label: "Haiku, cheap, fast, classification is its sweet spot", correct: true, explanation: "Right. 5-way classification is well within Haiku's range and the price/latency win is huge at 50K/day. The heuristic 'Sonnet by default' applies to general-purpose features, narrow well-defined tasks like classification can usually start a tier lower." },
+            { label: "Whichever is cheapest at the moment, switch dynamically", explanation: "Don't dynamic-switch on price. Pick the cheapest tier that meets quality on a held-out eval set, then stick with it. Switching mid-flight changes behavior in ways your tests won't catch." },
           ]}
         />
 
@@ -269,7 +269,7 @@ flowchart LR
           question="Your code passes model = 'claude-3-5-sonnet'. The API returns 404 not_found_error. What's wrong?"
           options={[
             { label: "Your API key doesn't have access to that model", explanation: "Access errors return 403 permission_error, not 404. 404 means the string doesn't match any model." },
-            { label: "The model string is incomplete — Anthropic uses dated versions like claude-3-5-sonnet-20241022, not bare names", correct: true, explanation: "Right. Pre-Claude-4 model strings required the date suffix. (Claude 4+ models accept the bare name like claude-sonnet-4-5.) When you get a 404, the first thing to check is whether the model string matches an actual published model name exactly." },
+            { label: "The model string is incomplete, Anthropic uses dated versions like claude-3-5-sonnet-20241022, not bare names", correct: true, explanation: "Right. Pre-Claude-4 model strings required the date suffix. (Claude 4+ models accept the bare name like claude-sonnet-4-5.) When you get a 404, the first thing to check is whether the model string matches an actual published model name exactly." },
             { label: "Anthropic is rate-limiting you", explanation: "Rate limits return 429, never 404." },
             { label: "Your max_tokens is set wrong", explanation: "max_tokens issues return 400 invalid_request, not 404. 404 specifically means 'no such model'." },
           ]}
@@ -282,10 +282,10 @@ flowchart LR
         gist="Auth = one header. Model selection = Sonnet by default; tier down for narrow tasks, tier up only for cases Sonnet visibly fails."
         points={[
           { takeaway: "Auth is a single x-api-key header; never hardcode the value.", detail: "Read from ANTHROPIC_API_KEY env var or a secret manager. Anthropic auto-revokes leaked keys but the damage from a bad commit is yours to clean up." },
-          { takeaway: "Three tiers: Haiku (cheap/fast), Sonnet (default), Opus (max quality, slow).", detail: "All three speak the same API. You swap the model string and nothing else changes — including the rest of your request body." },
+          { takeaway: "Three tiers: Haiku (cheap/fast), Sonnet (default), Opus (max quality, slow).", detail: "All three speak the same API. You swap the model string and nothing else changes, including the rest of your request body." },
           { takeaway: "Default to Sonnet; tier down for narrow tasks; tier up only when Sonnet measurably fails.", detail: "Most teams burn money by starting with Opus or trade quality away by starting with Haiku. Sonnet first, then specialize per use case." },
           { takeaway: "Output is ~5× more expensive than input across all three tiers.", detail: "Optimization wins come from making the model say less (use system prompts to keep output terse) and from prompt caching, not from clever prompt-shrinking." },
-          { takeaway: "Wrong model string → 404 not_found_error.", detail: "Most common Phase-2 bug. Always copy/paste model names from the official docs — don't type them from memory." },
+          { takeaway: "Wrong model string → 404 not_found_error.", detail: "Most common Phase-2 bug. Always copy/paste model names from the official docs, don't type them from memory." },
         ]}
       />
 
@@ -300,7 +300,7 @@ flowchart LR
           Beyond <code>model</code>, <code>messages</code>, and <code>max_tokens</code>, the request body has four optional knobs that change behavior. Most code only ever touches these. Skip the rest until you have a specific reason.
         </p>
 
-        <h3><code>temperature</code> — randomness vs determinism</h3>
+        <h3><code>temperature</code>, randomness vs determinism</h3>
 
         <p>
           You met this in <Link href="/courses/ai/modules/recap" className="text-indigo-600 hover:underline">Module 8</Link>: temperature scales the logits before softmax. Lower = sharper distribution = more deterministic. Higher = flatter = more varied. The Anthropic API accepts <code>0.0</code> to <code>1.0</code>.
@@ -327,7 +327,7 @@ flowchart LR
           </p>
         </Callout>
 
-        <h3><code>stop_sequences</code> — make the model stop early</h3>
+        <h3><code>stop_sequences</code>, make the model stop early</h3>
 
         <p>
           Pass an array of strings. The moment the model produces any of them, generation stops (and the stop string is <em>not</em>{" "}included in the reply). Useful when:
@@ -339,7 +339,7 @@ flowchart LR
           <li>You&apos;re running an agent loop and need to stop on a sentinel like <code>&lt;END&gt;</code>.</li>
         </ul>
 
-        <CodeBlock lang="plain" caption="Few-shot pattern — stop before the model fabricates an Example 4">{`{
+        <CodeBlock lang="plain" caption="Few-shot pattern, stop before the model fabricates an Example 4">{`{
   "model": "claude-sonnet-4-5",
   "max_tokens": 200,
   "stop_sequences": ["\\n\\nExample"],
@@ -349,7 +349,7 @@ flowchart LR
   }]
 }`}</CodeBlock>
 
-        <h3><code>top_p</code> — nucleus sampling</h3>
+        <h3><code>top_p</code>, nucleus sampling</h3>
 
         <p>
           Instead of considering all tokens weighted by their softmax probability, only consider the smallest set of tokens whose cumulative probability ≥ <code>top_p</code>. So <code>top_p: 0.9</code> means &quot;sample only from the most-likely tokens that together account for 90% of the probability mass.&quot;
@@ -359,16 +359,16 @@ flowchart LR
           Honestly: <strong>tune temperature OR top_p, not both</strong>. The Anthropic docs say so. In practice, almost every team just sets temperature and ignores top_p exists.
         </p>
 
-        <h3><code>system</code> — persistent mode instructions</h3>
+        <h3><code>system</code>, persistent mode instructions</h3>
 
         <p>
           We saw this in Part 1. It&apos;s the field where you write &quot;You are a senior Java reviewer. Be terse and specific.&quot; Different from a <code>user</code> message because:
         </p>
 
         <ul>
-          <li><strong>The model treats it as higher priority</strong>{" "}than user turns. (Not bulletproof — see Module 25 on prompt injection — but a meaningful nudge.)</li>
+          <li><strong>The model treats it as higher priority</strong>{" "}than user turns. (Not bulletproof, see Module 25 on prompt injection, but a meaningful nudge.)</li>
           <li><strong>It doesn&apos;t count as a turn</strong>{" "}in the messages array, so you can use it to set tone without polluting the conversation history.</li>
-          <li><strong>It&apos;s where prompt caching applies most cleanly</strong> (Module 13) — long stable system prompts get cached server-side.</li>
+          <li><strong>It&apos;s where prompt caching applies most cleanly</strong> (Module 13), long stable system prompts get cached server-side.</li>
         </ul>
 
         <Callout variant="insight" title="The four-knob mental model">
@@ -381,10 +381,10 @@ flowchart LR
           kind="Quick check"
           question="You're building a feature that extracts amounts and dates from receipts and writes them to a database. Which knobs?"
           options={[
-            { label: "temperature: 0.7, no system prompt", explanation: "Default temperature is for chat — for extraction you want sharp, repeatable outputs. And a system prompt locks the output format, which matters more for extraction than almost anything else." },
+            { label: "temperature: 0.7, no system prompt", explanation: "Default temperature is for chat, for extraction you want sharp, repeatable outputs. And a system prompt locks the output format, which matters more for extraction than almost anything else." },
             { label: "temperature: 0, system prompt that pins the output format, max_tokens generous enough to fit a large receipt", correct: true, explanation: "Right. Extraction = structured task = temperature 0 + a system prompt that specifies the exact JSON shape you want. Generous max_tokens prevents mid-receipt truncation. This is the canonical 'structured output' configuration." },
             { label: "temperature: 1.0 with stop_sequences = [\"}\"]", explanation: "High temperature for an extraction task gives you wrong amounts and creative dates. And stopping at } breaks on the very first nested object." },
-            { label: "Just messages and max_tokens, defaults for everything else", explanation: "Defaults work but you're leaving determinism on the table — extractions should be temperature 0 so two identical receipts diff cleanly." },
+            { label: "Just messages and max_tokens, defaults for everything else", explanation: "Defaults work but you're leaving determinism on the table, extractions should be temperature 0 so two identical receipts diff cleanly." },
           ]}
         />
 
@@ -392,10 +392,10 @@ flowchart LR
           kind="Gut check"
           question="Your stop_sequences = ['\\n\\nQ:']. The model returns stop_reason: 'stop_sequence'. What's in the response content?"
           options={[
-            { label: "The full reply, including '\\n\\nQ:' at the end", explanation: "The stop string is excluded from the response. That's the whole point — you don't want it polluting your output." },
+            { label: "The full reply, including '\\n\\nQ:' at the end", explanation: "The stop string is excluded from the response. That's the whole point, you don't want it polluting your output." },
             { label: "The full reply, NOT including '\\n\\nQ:'", correct: true, explanation: "Right. The stop sequence is the trigger to halt, but it's stripped from the returned content. If you need to know which sequence triggered the stop, the response includes a stop_sequence field naming it." },
-            { label: "An empty string — the API errored when it hit the stop", explanation: "stop_reason: 'stop_sequence' is success, not error. The model produced output, then gracefully halted." },
-            { label: "Just '\\n\\nQ:' alone", explanation: "Other way around — the stop string is the one thing NOT in the response." },
+            { label: "An empty string, the API errored when it hit the stop", explanation: "stop_reason: 'stop_sequence' is success, not error. The model produced output, then gracefully halted." },
+            { label: "Just '\\n\\nQ:' alone", explanation: "Other way around, the stop string is the one thing NOT in the response." },
           ]}
         />
       </section>
@@ -405,11 +405,11 @@ flowchart LR
         title="Part 3 recap"
         gist="Four knobs cover 90% of apps: system, temperature, max_tokens, stop_sequences. Skip the rest until you have a reason."
         points={[
-          { takeaway: "temperature controls randomness; 0 for structured tasks, 0.7 for chat.", detail: "Lower = sharper softmax = more repeatable. But even at 0 the API isn't bit-deterministic — don't snapshot-test on string equality." },
+          { takeaway: "temperature controls randomness; 0 for structured tasks, 0.7 for chat.", detail: "Lower = sharper softmax = more repeatable. But even at 0 the API isn't bit-deterministic, don't snapshot-test on string equality." },
           { takeaway: "stop_sequences halt generation at any of the listed strings; the stop string is excluded from the reply.", detail: "Useful for few-shot patterns, structured output delimiters, and agent sentinels. The response's stop_reason field tells you whether it was 'end_turn' or 'stop_sequence' or 'max_tokens'." },
-          { takeaway: "top_p exists but you almost never need it — tune temperature OR top_p, not both.", detail: "Nucleus sampling restricts to the smallest set of tokens covering top_p of the probability mass. In practice teams just set temperature and ignore top_p." },
+          { takeaway: "top_p exists but you almost never need it, tune temperature OR top_p, not both.", detail: "Nucleus sampling restricts to the smallest set of tokens covering top_p of the probability mass. In practice teams just set temperature and ignore top_p." },
           { takeaway: "system is a separate parameter, not a message, and it's where you set persona / output format.", detail: "Higher implicit priority than user turns, doesn't count as a conversation turn, and is the prime target for prompt caching in Module 13." },
-          { takeaway: "Always set max_tokens generously enough to never truncate but tight enough to bound runaway costs.", detail: "If stop_reason comes back as 'max_tokens' you got cut off mid-thought — bump it. If your bills are spiking, lower it. Always check the field." },
+          { takeaway: "Always set max_tokens generously enough to never truncate but tight enough to bound runaway costs.", detail: "If stop_reason comes back as 'max_tokens' you got cut off mid-thought, bump it. If your bills are spiking, lower it. Always check the field." },
         ]}
       />
 
@@ -418,7 +418,7 @@ flowchart LR
       {/* ============================================================ */}
       <Checkpoint moduleSlug="api-fundamentals" id="project" title="Project: code reviewer CLI" xp={40} manual manualLabel="I built and ran it" celebration="You shipped a working AI feature. Phase 2 is officially open.">
       <section>
-        <h2>Part 4: Project — AI code reviewer CLI</h2>
+        <h2>Part 4: Project, AI code reviewer CLI</h2>
 
         <p>
           Time to build it. We&apos;re going to make a Spring Boot CLI that takes a Java file path as an argument, reads the file, sends it to Claude with a code-review system prompt, and prints the review to stdout. Real Spring Boot, real Spring AI, real Claude.
@@ -432,18 +432,18 @@ flowchart LR
 
         <ul>
           <li><strong>Java 21 JDK</strong>{" "}installed and on your PATH. Verify: <code>java --version</code> should print <code>21</code> or higher. If you don&apos;t have it, install via <a href="https://sdkman.io/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">SDKMAN</a> (macOS/Linux: <code>sdk install java 21-tem</code>) or <a href="https://adoptium.net/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">Adoptium Temurin 21</a> (any OS, installer-based).</li>
-          <li><strong>An Anthropic API key</strong> — get one at <a href="https://console.anthropic.com/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">console.anthropic.com</a>. Sign up, go to <em>Settings → API Keys → Create Key</em>, copy the <code>sk-ant-...</code> string somewhere safe. New accounts get a small free credit — more than enough for this module.</li>
-          <li><strong>An IDE</strong> — IntelliJ IDEA Community Edition is free and has the smoothest Spring Boot UX. VS Code with the &quot;Extension Pack for Java&quot; works too. We&apos;ll show IntelliJ paths below; VS Code users, the file paths and Maven commands are identical, you just open the folder instead.</li>
-          <li><strong>No global Maven needed</strong> — the project ships with Maven Wrapper (<code>mvnw</code>), which downloads the right Maven version on first run.</li>
+          <li><strong>An Anthropic API key</strong>, get one at <a href="https://console.anthropic.com/" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">console.anthropic.com</a>. Sign up, go to <em>Settings → API Keys → Create Key</em>, copy the <code>sk-ant-...</code> string somewhere safe. New accounts get a small free credit, more than enough for this module.</li>
+          <li><strong>An IDE</strong>, IntelliJ IDEA Community Edition is free and has the smoothest Spring Boot UX. VS Code with the &quot;Extension Pack for Java&quot; works too. We&apos;ll show IntelliJ paths below; VS Code users, the file paths and Maven commands are identical, you just open the folder instead.</li>
+          <li><strong>No global Maven needed</strong>, the project ships with Maven Wrapper (<code>mvnw</code>), which downloads the right Maven version on first run.</li>
         </ul>
 
         <h3>Step 1: Scaffold the project</h3>
 
         <p>
-          Pick whichever path is more comfortable — both produce <strong>identical output</strong>. Path A is the one I&apos;d recommend for this course because it&apos;s self-documenting (you&apos;ll see exactly which dependencies got picked).
+          Pick whichever path is more comfortable, both produce <strong>identical output</strong>. Path A is the one I&apos;d recommend for this course because it&apos;s self-documenting (you&apos;ll see exactly which dependencies got picked).
         </p>
 
-        <h4 className="mt-6">Path A — start.spring.io (browser, recommended)</h4>
+        <h4 className="mt-6">Path A, start.spring.io (browser, recommended)</h4>
 
         <p>
           <a href="https://start.spring.io" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">start.spring.io</a> is the official Spring Initializr. It generates a zip with all the boilerplate (pom.xml, Maven Wrapper, an empty <code>@SpringBootApplication</code> class). Steps:
@@ -452,21 +452,21 @@ flowchart LR
         <ol>
           <li>Open <a href="https://start.spring.io" className="text-indigo-600 hover:underline" target="_blank" rel="noreferrer">start.spring.io</a> in your browser.</li>
           <li>In the left panel, set <strong>Project</strong>{" "}to <code>Maven</code> and <strong>Language</strong>{" "}to <code>Java</code>.</li>
-          <li><strong>Spring Boot</strong>: pick the latest <code>3.x</code> stable release (avoid <code>SNAPSHOT</code> and <code>M*</code> milestones — those are pre-release).</li>
+          <li><strong>Spring Boot</strong>: pick the latest <code>3.x</code> stable release (avoid <code>SNAPSHOT</code> and <code>M*</code> milestones, those are pre-release).</li>
           <li>In <strong>Project Metadata</strong>, set:
             <ul>
               <li><strong>Group:</strong> <code>com.example</code></li>
               <li><strong>Artifact:</strong> <code>claude-code-reviewer</code></li>
               <li><strong>Name:</strong> <code>claude-code-reviewer</code> (auto-fills from Artifact)</li>
               <li><strong>Description:</strong>{" "}anything, e.g. <code>AI code reviewer CLI</code></li>
-              <li><strong>Package name:</strong> <code>com.example.codereviewer</code> (auto-fills, but double-check — this becomes the Java package)</li>
+              <li><strong>Package name:</strong> <code>com.example.codereviewer</code> (auto-fills, but double-check, this becomes the Java package)</li>
               <li><strong>Packaging:</strong> <code>Jar</code></li>
               <li><strong>Java:</strong> <code>21</code></li>
             </ul>
           </li>
-          <li>On the right, click <strong>ADD DEPENDENCIES</strong>. Search for <code>Anthropic</code> and select <strong>Anthropic Claude</strong> (this is Spring AI&apos;s Anthropic starter). That&apos;s the only dependency we need — Spring AI&apos;s autoconfig pulls in everything else.</li>
+          <li>On the right, click <strong>ADD DEPENDENCIES</strong>. Search for <code>Anthropic</code> and select <strong>Anthropic Claude</strong> (this is Spring AI&apos;s Anthropic starter). That&apos;s the only dependency we need, Spring AI&apos;s autoconfig pulls in everything else.</li>
           <li>Click <strong>GENERATE</strong>{" "}at the bottom. A <code>claude-code-reviewer.zip</code> downloads.</li>
-          <li>Unzip it somewhere (e.g. <code>~/projects/claude-code-reviewer</code>). Open that folder in IntelliJ via <em>File → Open</em> (point it at the <strong>folder</strong>, not the pom.xml — IntelliJ auto-detects Maven). Wait for IntelliJ to finish indexing and downloading dependencies; you&apos;ll see &quot;Maven: ... downloading&quot; in the bottom status bar. Could take 1–3 minutes the first time.</li>
+          <li>Unzip it somewhere (e.g. <code>~/projects/claude-code-reviewer</code>). Open that folder in IntelliJ via <em>File → Open</em> (point it at the <strong>folder</strong>, not the pom.xml, IntelliJ auto-detects Maven). Wait for IntelliJ to finish indexing and downloading dependencies; you&apos;ll see &quot;Maven: ... downloading&quot; in the bottom status bar. Could take 1–3 minutes the first time.</li>
         </ol>
 
         <Callout variant="info" title="Direct link with everything pre-filled">
@@ -484,7 +484,7 @@ flowchart LR
           </p>
         </Callout>
 
-        <h4 className="mt-6">Path B — IntelliJ&apos;s built-in Spring Initializr</h4>
+        <h4 className="mt-6">Path B, IntelliJ&apos;s built-in Spring Initializr</h4>
 
         <p>If you live in IntelliJ and don&apos;t want to leave it:</p>
 
@@ -499,7 +499,7 @@ flowchart LR
         <h3>Step 2: Verify the scaffold</h3>
 
         <p>
-          Whichever path you used, you should now have a folder structure that looks roughly like this. Compare it against yours — if anything&apos;s missing, the scaffold step didn&apos;t finish:
+          Whichever path you used, you should now have a folder structure that looks roughly like this. Compare it against yours, if anything&apos;s missing, the scaffold step didn&apos;t finish:
         </p>
 
         <CodeBlock lang="plain" caption="claude-code-reviewer/">{`claude-code-reviewer/
@@ -535,7 +535,7 @@ flowchart LR
           </p>
           <CodeBlock lang="plain" caption="terminal">{`./mvnw -version`}</CodeBlock>
           <p className="mt-2 mb-0">
-            This should print Maven and Java versions without error. (On Windows, use <code>mvnw.cmd -version</code>. If you get &quot;permission denied&quot; on macOS/Linux, run <code>chmod +x mvnw</code> first.) If this fails, fix it before going further — every later step depends on the wrapper working.
+            This should print Maven and Java versions without error. (On Windows, use <code>mvnw.cmd -version</code>. If you get &quot;permission denied&quot; on macOS/Linux, run <code>chmod +x mvnw</code> first.) If this fails, fix it before going further, every later step depends on the wrapper working.
           </p>
         </Callout>
 
@@ -557,7 +557,7 @@ echo $env:ANTHROPIC_API_KEY`}</CodeBlock>
 
         <Callout variant="info" title="Persisting the env var (optional)">
           <p className="m-0">
-            <code>export</code> only lasts for the current shell session. To make it stick across reboots, add the line to <code>~/.zshrc</code> (zsh, the macOS default since Catalina) or <code>~/.bashrc</code> (bash). On Windows, use <em>System Properties → Environment Variables → New</em>{" "}for permanent. <strong>But:</strong>{" "}a permanent var means any process on your machine can read your key. The cleaner pattern is the IntelliJ Run Config option below — scoped to one run, never touches the shell.
+            <code>export</code> only lasts for the current shell session. To make it stick across reboots, add the line to <code>~/.zshrc</code> (zsh, the macOS default since Catalina) or <code>~/.bashrc</code> (bash). On Windows, use <em>System Properties → Environment Variables → New</em>{" "}for permanent. <strong>But:</strong>{" "}a permanent var means any process on your machine can read your key. The cleaner pattern is the IntelliJ Run Config option below, scoped to one run, never touches the shell.
           </p>
         </Callout>
 
@@ -569,17 +569,17 @@ echo $env:ANTHROPIC_API_KEY`}</CodeBlock>
             <li>In IntelliJ, open <code>CodeReviewerApplication.java</code> and click the green ▶ in the gutter next to <code>main(...)</code> once. This creates a Run Configuration named &quot;CodeReviewerApplication&quot;.</li>
             <li>Top-right of IntelliJ, click the dropdown showing &quot;CodeReviewerApplication&quot; → <em>Edit Configurations…</em></li>
             <li>Find the <strong>Environment variables</strong>{" "}field (you may need to expand &quot;Modify options&quot; on newer IntelliJ versions). Set it to: <code>ANTHROPIC_API_KEY=sk-ant-api03-...</code></li>
-            <li>Click OK. Your key is now bound to that one run config — never touches your shell, never lands in a commit.</li>
+            <li>Click OK. Your key is now bound to that one run config, never touches your shell, never lands in a commit.</li>
           </ol>
           <p className="mt-3 mb-0 text-sm">
-            (You can also set program arguments here for Step 8 — same dialog, &quot;Program arguments&quot; field.)
+            (You can also set program arguments here for Step 8, same dialog, &quot;Program arguments&quot; field.)
           </p>
         </Callout>
 
         <h3>Step 4: Verify <code>pom.xml</code></h3>
 
         <p>
-          The scaffold already wrote a <code>pom.xml</code>. Open it and compare against this — it should match closely. The only thing you might need to add is the Spring AI BOM in <code>dependencyManagement</code>, which start.spring.io includes automatically but some older IntelliJ versions skip:
+          The scaffold already wrote a <code>pom.xml</code>. Open it and compare against this, it should match closely. The only thing you might need to add is the Spring AI BOM in <code>dependencyManagement</code>, which start.spring.io includes automatically but some older IntelliJ versions skip:
         </p>
 
         <CodeBlock lang="plain" caption="pom.xml">{`<?xml version="1.0" encoding="UTF-8"?>
@@ -677,7 +677,7 @@ spring.main.log-startup-info=false`}</CodeBlock>
         <h3>Step 6: <code>CodeReviewerApplication.java</code></h3>
 
         <p>
-          The scaffold already created this file. Open it — it&apos;s a one-line stub, and that&apos;s actually the final version. Just double-check it matches:
+          The scaffold already created this file. Open it, it&apos;s a one-line stub, and that&apos;s actually the final version. Just double-check it matches:
         </p>
 
         <CodeBlock lang="java" caption="src/main/java/com/example/codereviewer/CodeReviewerApplication.java">{`package com.example.codereviewer;
@@ -787,7 +787,7 @@ public class ReviewService {
         <h3>Step 8: <code>CliRunner.java</code> <span className="text-sm font-normal opacity-60">(create this file)</span></h3>
 
         <p>
-          Same as before — right-click the <code>com.example.codereviewer</code> package → <em>New → Java Class</em> → name it <code>CliRunner</code>. Paste:
+          Same as before, right-click the <code>com.example.codereviewer</code> package → <em>New → Java Class</em> → name it <code>CliRunner</code>. Paste:
         </p>
 
         <CodeBlock lang="java" caption="src/main/java/com/example/codereviewer/CliRunner.java">{`package com.example.codereviewer;
@@ -844,7 +844,7 @@ public class CliRunner implements CommandLineRunner {
         <h3>Step 9: Run it</h3>
 
         <p>
-          From the project root in your terminal (make sure your <code>ANTHROPIC_API_KEY</code> env var is set in this shell — re-run the <code>export</code> from Step 3 if you opened a new terminal):
+          From the project root in your terminal (make sure your <code>ANTHROPIC_API_KEY</code> env var is set in this shell, re-run the <code>export</code> from Step 3 if you opened a new terminal):
         </p>
 
         <CodeBlock lang="plain" caption="terminal">{`# Make a test file to review (with a deliberate bug):
@@ -900,11 +900,11 @@ Needs work.
           </div>
           <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
             <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">429 rate_limit_error</div>
-            <div className="text-sm">You&apos;re calling too fast or hit your monthly tier&apos;s cap. New accounts have low limits — wait a minute and retry, or top up at the console.</div>
+            <div className="text-sm">You&apos;re calling too fast or hit your monthly tier&apos;s cap. New accounts have low limits, wait a minute and retry, or top up at the console.</div>
           </div>
           <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
             <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">No qualifying bean of type &apos;ChatClient.Builder&apos;</div>
-            <div className="text-sm">Spring AI&apos;s autoconfig didn&apos;t fire. 99% of the time this means the <code>spring-ai-starter-model-anthropic</code> dep didn&apos;t resolve — re-run <code>./mvnw clean install</code> and check for download errors.</div>
+            <div className="text-sm">Spring AI&apos;s autoconfig didn&apos;t fire. 99% of the time this means the <code>spring-ai-starter-model-anthropic</code> dep didn&apos;t resolve, re-run <code>./mvnw clean install</code> and check for download errors.</div>
           </div>
           <div className="rounded-lg border border-rose-300 bg-rose-50/40 p-4 dark:border-rose-800 dark:bg-rose-950/30">
             <div className="mb-1 text-sm font-bold text-rose-800 dark:text-rose-300">App hangs at startup, no output</div>
@@ -923,7 +923,7 @@ Needs work.
             <li>Handled retries on transient 5xx errors and surfaced 4xx errors as Java exceptions.</li>
           </ul>
           <p className="mt-3 mb-0">
-            Module 10 goes deeper into Spring AI — multi-message conversations, structured output via <code>.entity(MyClass.class)</code>, and the advisor chain. For now: feel the leverage. One dep + one annotation = working LLM call.
+            Module 10 goes deeper into Spring AI, multi-message conversations, structured output via <code>.entity(MyClass.class)</code>, and the advisor chain. For now: feel the leverage. One dep + one annotation = working LLM call.
           </p>
         </Callout>
       </section>
@@ -955,9 +955,9 @@ Needs work.
           question="Without using any SDK, what's the absolute minimum you'd need to call Claude via curl?"
           options={[
             { label: "POST to api.anthropic.com/v1/messages with x-api-key header and a JSON body containing model + messages + max_tokens", correct: true, explanation: "That's the whole API surface. The x-api-key header for auth, and the three required body fields. Everything else is optional." },
-            { label: "Run an OAuth flow first, get a bearer token, then POST", explanation: "No OAuth on Anthropic — just a single x-api-key header. Way simpler than most APIs." },
+            { label: "Run an OAuth flow first, get a bearer token, then POST", explanation: "No OAuth on Anthropic, just a single x-api-key header. Way simpler than most APIs." },
             { label: "Open a WebSocket and stream JSON frames", explanation: "Anthropic's API is HTTPS request/response. Streaming uses Server-Sent Events over a regular HTTP connection (Module 12), not WebSockets." },
-            { label: "Send model + messages — max_tokens has a sensible default", explanation: "max_tokens is required. The API rejects requests without it. (Different from some other providers — don't carry this assumption over.)" },
+            { label: "Send model + messages, max_tokens has a sensible default", explanation: "max_tokens is required. The API rejects requests without it. (Different from some other providers, don't carry this assumption over.)" },
           ]}
         />
 
@@ -966,10 +966,10 @@ Needs work.
           xp={6}
           question="You're building a high-volume internal classifier (200K calls/day, 5 categories). You start with Sonnet, but want to optimize cost. What's the right next step?"
           options={[
-            { label: "Switch the production traffic to Haiku and watch error rates", explanation: "Don't do flag-day model swaps. Test offline first — quality regressions in production look bad." },
-            { label: "Move to Opus — more expensive but more accurate, fewer reruns", explanation: "Opus would multiply your bill ~5×. Going UP a tier for high-volume classification is the opposite of cost optimization." },
+            { label: "Switch the production traffic to Haiku and watch error rates", explanation: "Don't do flag-day model swaps. Test offline first, quality regressions in production look bad." },
+            { label: "Move to Opus, more expensive but more accurate, fewer reruns", explanation: "Opus would multiply your bill ~5×. Going UP a tier for high-volume classification is the opposite of cost optimization." },
             { label: "Build an offline eval set, run both Sonnet and Haiku on it, switch to Haiku only if accuracy holds", correct: true, explanation: "Right. Eval-driven model selection. For narrow well-defined tasks like 5-way classification, Haiku usually holds quality, but you prove it on your real data before flipping the switch." },
-            { label: "Tune temperature down to 0 — that fixes most cost issues", explanation: "Temperature affects determinism, not cost. Cost is dominated by token count × per-token-price. Lowering temperature doesn't change either." },
+            { label: "Tune temperature down to 0, that fixes most cost issues", explanation: "Temperature affects determinism, not cost. Cost is dominated by token count × per-token-price. Lowering temperature doesn't change either." },
           ]}
         />
 
@@ -978,10 +978,10 @@ Needs work.
           xp={6}
           question="Your reviewer CLI works for small files but throws errors on a 5,000-line file. The response says stop_reason: 'max_tokens'. What happened?"
           options={[
-            { label: "The input was too long — Claude's context window was exceeded", explanation: "Context overflow returns an invalid_request error, not a stop_reason of 'max_tokens'. stop_reason refers to why the OUTPUT stopped." },
+            { label: "The input was too long, Claude's context window was exceeded", explanation: "Context overflow returns an invalid_request error, not a stop_reason of 'max_tokens'. stop_reason refers to why the OUTPUT stopped." },
             { label: "Claude generated a reply up to your max_tokens limit and was cut off mid-output", correct: true, explanation: "Right. stop_reason: 'max_tokens' means the OUTPUT hit your ceiling. Bump max_tokens, or system-prompt the model to be terser. (Don't confuse this with input-side context-window errors, which return a different error type entirely.)" },
             { label: "Anthropic rate-limited you mid-stream", explanation: "Rate limits return 429 errors, not partial responses with stop_reason: 'max_tokens'." },
-            { label: "Your temperature was too high so the model rambled", explanation: "Temperature affects token selection variety, not length. The reply stopped because of max_tokens specifically — that field tells you the answer." },
+            { label: "Your temperature was too high so the model rambled", explanation: "Temperature affects token selection variety, not length. The reply stopped because of max_tokens specifically, that field tells you the answer." },
           ]}
         />
 
@@ -992,8 +992,8 @@ Needs work.
           options={[
             { label: "system messages count as 0 tokens (free)", explanation: "system tokens are billed exactly like any other input tokens. There's no free tier within a request." },
             { label: "system has higher implicit priority for the model AND it's the field that prompt caching applies to most cleanly", correct: true, explanation: "Right. Two real reasons: (1) the model treats system as persistent priority instructions over per-turn user content, (2) Module 13's prompt caching is most effective on long stable system prompts. Plus it doesn't pollute your conversation history with format boilerplate." },
-            { label: "system messages can't be jailbroken — user messages can", explanation: "system gives a meaningful nudge but is NOT bulletproof against prompt injection. Module 25 covers exactly this. Don't trust system prompts as a security boundary." },
-            { label: "The Anthropic API rejects formatting in user messages", explanation: "It doesn't — both work. The question is which is better, not which is allowed." },
+            { label: "system messages can't be jailbroken, user messages can", explanation: "system gives a meaningful nudge but is NOT bulletproof against prompt injection. Module 25 covers exactly this. Don't trust system prompts as a security boundary." },
+            { label: "The Anthropic API rejects formatting in user messages", explanation: "It doesn't, both work. The question is which is better, not which is allowed." },
           ]}
         />
 
@@ -1002,9 +1002,9 @@ Needs work.
           xp={6}
           question="Your Spring app starts up but crashes on the first call with 'No qualifying bean of type ChatClient.Builder available.' What's the most likely cause?"
           options={[
-            { label: "Your @Service annotation is missing on ReviewService", explanation: "That would show as a different error — Spring would say it can't autowire ReviewService into CliRunner, not that ChatClient.Builder is missing." },
-            { label: "spring-ai-starter-model-anthropic isn't on the classpath — Maven didn't resolve it, or you used the wrong artifactId", correct: true, explanation: "Right. ChatClient.Builder is registered by Spring AI's autoconfig, which only fires if the starter dep is actually on the classpath. Run ./mvnw dependency:tree | grep spring-ai to confirm. The most common gotcha: typo in the artifactId or missing the spring-ai BOM in dependencyManagement." },
-            { label: "Your ANTHROPIC_API_KEY is wrong", explanation: "A wrong key returns 401 at first call — the bean would still be built. This error happens earlier, before any HTTP call." },
+            { label: "Your @Service annotation is missing on ReviewService", explanation: "That would show as a different error, Spring would say it can't autowire ReviewService into CliRunner, not that ChatClient.Builder is missing." },
+            { label: "spring-ai-starter-model-anthropic isn't on the classpath, Maven didn't resolve it, or you used the wrong artifactId", correct: true, explanation: "Right. ChatClient.Builder is registered by Spring AI's autoconfig, which only fires if the starter dep is actually on the classpath. Run ./mvnw dependency:tree | grep spring-ai to confirm. The most common gotcha: typo in the artifactId or missing the spring-ai BOM in dependencyManagement." },
+            { label: "Your ANTHROPIC_API_KEY is wrong", explanation: "A wrong key returns 401 at first call, the bean would still be built. This error happens earlier, before any HTTP call." },
             { label: "Java 21 isn't installed", explanation: "Wrong Java version causes compilation or class-version errors at startup, not bean-resolution errors." },
           ]}
         />
@@ -1017,14 +1017,14 @@ Needs work.
       <section className="mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-900 dark:from-amber-950/40 dark:to-yellow-950/40">
         <h3 className="mt-0 mb-2">Module 9 done → Module 10 next</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          You can call Claude. Now we go deeper into the Spring AI side: multi-turn conversations, structured output (<code>.entity(MyDto.class)</code> directly into a typed object), advisors (Spring AI&apos;s middleware-style hooks for memory, logging, and rate-limiting), and the personal journal assistant project. Same Claude API underneath — much more leverage on top.
+          You can call Claude. Now we go deeper into the Spring AI side: multi-turn conversations, structured output (<code>.entity(MyDto.class)</code> directly into a typed object), advisors (Spring AI&apos;s middleware-style hooks for memory, logging, and rate-limiting), and the personal journal assistant project. Same Claude API underneath, much more leverage on top.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/ai/modules/spring-ai"
             className="inline-flex items-center gap-2 rounded-lg bg-amber-200/60 px-5 py-2.5 text-sm font-medium text-amber-700 transition hover:bg-amber-300/60 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/60"
           >
-            Module 10 — Spring AI integration →
+            Module 10, Spring AI integration →
           </Link>
           <Link
             href="/courses/ai"

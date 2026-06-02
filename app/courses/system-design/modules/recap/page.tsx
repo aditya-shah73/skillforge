@@ -73,7 +73,7 @@ export default function Page() {
       <section className="my-8">
         <p className="lead">
           You&apos;ve walked through 50 modules. Replication, sharding, queues, caches, consistency models, idempotency,
-          migrations, security. Now we tie it together. The goal of this recap isn&apos;t to re-explain — it&apos;s to
+          migrations, security. Now we tie it together. The goal of this recap isn&apos;t to re-explain, it&apos;s to
           give you a compass. When someone hands you a vague design problem, what do you reach for first, and why?
         </p>
 
@@ -83,14 +83,14 @@ export default function Page() {
             <li>A single mental map covering the six layers of every system you&apos;ll design.</li>
             <li>A &quot;first questions&quot; checklist for novel problems.</li>
             <li>Practice picking the right tool from a crowded toolkit.</li>
-            <li>The traps that catch experienced designers — so you don&apos;t walk into them.</li>
+            <li>The traps that catch experienced designers, so you don&apos;t walk into them.</li>
           </ul>
         </div>
       </section>
 
       {/* ============================== PART 1 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 1 — The compass</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 1, The compass</h2>
         <p>
           Every system design problem can be decomposed into the same handful of layers. Once you internalize them,
           you stop staring at a blank page when someone says &quot;design Twitter.&quot;
@@ -159,7 +159,7 @@ export default function Page() {
             xp={15}
             question="Across the six layers, which one is most often skipped in interviews and on the job?"
             options={[
-              { label: "Data plane", correct: false, explanation: "This usually gets attention — DB choice, schema, sharding." },
+              { label: "Data plane", correct: false, explanation: "This usually gets attention, DB choice, schema, sharding." },
               { label: "Traffic plane", correct: false, explanation: "Caches and queues are popular topics." },
               { label: "Evolution", correct: true, explanation: "Right. Most designs ignore how the system will change. The first migration tells you whether the design has joints or just rigid bones." },
             ]}
@@ -179,10 +179,10 @@ export default function Page() {
 
       {/* ============================== PART 2 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 2 — Picking the right tool</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 2, Picking the right tool</h2>
         <p>
           The toolbox is the same across the industry: Postgres, Redis, Kafka, Cassandra, S3, Elasticsearch, Spanner,
-          DynamoDB. The skill isn&apos;t knowing them all — it&apos;s knowing when each earns its place.
+          DynamoDB. The skill isn&apos;t knowing them all, it&apos;s knowing when each earns its place.
         </p>
 
         <ClassifyChallenge
@@ -236,7 +236,7 @@ export default function Page() {
         <h3 className="mt-8 mb-3 text-xl font-semibold">The consistency dial</h3>
         <p>
           You learned the lattice in module 4: linearizable, sequential, causal, read-your-writes, eventual. Most
-          systems mix levels by design — strong for money, eventual for likes, causal for chat. Knowing where the dial
+          systems mix levels by design, strong for money, eventual for likes, causal for chat. Knowing where the dial
           sits per feature is the heart of system design.
         </p>
 
@@ -246,8 +246,8 @@ export default function Page() {
             xp={15}
             question={`Your team wants to add an "events" table in Postgres that workers poll every second. Volume is 50k/sec. What do you push back on?`}
             options={[
-              { label: "Postgres is fine — just add an index on processed=false", correct: false, explanation: "Polling at 50k/sec turns the table into a hot row contention nightmare. Indexes don't fix the lock storm." },
-              { label: "Move to a real queue (Kafka, SQS) — DBs are not queues at this scale", correct: true, explanation: "Right. The polling pattern is a leading indicator that you've outgrown the DB-as-queue antipattern. Move to a log/queue." },
+              { label: "Postgres is fine, just add an index on processed=false", correct: false, explanation: "Polling at 50k/sec turns the table into a hot row contention nightmare. Indexes don't fix the lock storm." },
+              { label: "Move to a real queue (Kafka, SQS), DBs are not queues at this scale", correct: true, explanation: "Right. The polling pattern is a leading indicator that you've outgrown the DB-as-queue antipattern. Move to a log/queue." },
               { label: "Increase Postgres connection pool size", correct: false, explanation: "More connections fighting for the same hot rows. Doesn't help." },
             ]}
             hint="The shape of the workload, not the volume, is the tell."
@@ -258,7 +258,7 @@ export default function Page() {
             xp={15}
             question="Designing a banking ledger. Which mix of consistency levels makes sense?"
             options={[
-              { label: "Eventual consistency everywhere — it's faster", correct: false, explanation: "Eventual on money = double spends and audit nightmares." },
+              { label: "Eventual consistency everywhere, it's faster", correct: false, explanation: "Eventual on money = double spends and audit nightmares." },
               { label: "Strong consistency on balance updates, eventual on derived dashboards/reports", correct: true, explanation: "Right. Money requires linearizable updates; reporting can lag a few seconds. The dial sits in different places per feature." },
               { label: "Linearizable across the entire system, end to end", correct: false, explanation: "Possible but pays a huge latency tax for things that don't need it. Pick consistency per feature." },
             ]}
@@ -269,7 +269,7 @@ export default function Page() {
           title="Part 2 recap"
           gist="The toolbox is finite; the discipline is matching tool to constraint, and resisting shiny."
           points={[
-            { takeaway: "Each datastore has a sweet spot — and a wrong-spot.", detail: "RDBMS-as-queue, cache-as-truth, search-as-primary all end in tears." },
+            { takeaway: "Each datastore has a sweet spot, and a wrong-spot.", detail: "RDBMS-as-queue, cache-as-truth, search-as-primary all end in tears." },
             { takeaway: "Polyglot persistence has an operational tax.", detail: "Add tools deliberately, not opportunistically." },
             { takeaway: "Consistency is a per-feature dial, not a global setting.", detail: "Strong where it matters, eventual where it pays for itself." },
           ]}
@@ -278,20 +278,20 @@ export default function Page() {
 
       {/* ============================== PART 3 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 3 — The traps that catch experienced designers</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 3, The traps that catch experienced designers</h2>
         <p>
           You can know all the patterns and still walk into the same five mistakes that catch every senior. Naming
           them out loud is half the fix.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 1 — &quot;It scales linearly&quot;</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 1, &quot;It scales linearly&quot;</h3>
         <p>
           Your design works at 1k qps. Multiplying everything by 10 does NOT mean it works at 10k qps. Hot keys
           dominate. Coordination overhead grows. Network becomes the bottleneck. The number that matters is &quot;what
           breaks first as we scale,&quot; and you almost never see it without testing.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 2 — Trusting the happy path</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 2, Trusting the happy path</h3>
         <p>
           Diagrams show successful flows. Reality is timeouts, partial failures, slow responses, network partitions,
           and zombie nodes. The design isn&apos;t real until you&apos;ve walked the failure modes for every arrow on
@@ -299,26 +299,26 @@ export default function Page() {
         </p>
 
         <Callout variant="warn" title={'Walk every arrow with "what if this hangs?"'}>
-          Not &quot;what if this fails fast&quot; — failure is easy to handle. The killer is partial: the request goes
+          Not &quot;what if this fails fast&quot;, failure is easy to handle. The killer is partial: the request goes
           through, the response is lost. Did the operation happen or not? That&apos;s the question idempotency design
           answers, and it&apos;s the failure mode most designs gloss over.
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 3 — Premature optimization</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 3, Premature optimization</h3>
         <p>
           Sharding before you have a scale problem. Adding a cache before you have a latency problem. Microservices
           before the monolith hurts. Each of these has a complexity tax and you&apos;re paying for value you
           haven&apos;t demonstrated yet.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 4 — Ignoring operability</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 4, Ignoring operability</h3>
         <p>
           A design isn&apos;t complete without answers to: How do you deploy it? How do you observe it? How do you
           page on-call when it breaks? How do you roll it back? &quot;The code works on my laptop&quot; is not a system
           design.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 5 — Forgetting the human boundaries</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Trap 5, Forgetting the human boundaries</h3>
         <p>
           Conway&apos;s law: your system shape will mirror your team shape. If two teams own one service, you&apos;ll
           have constant merge conflicts and unclear oncall. If one team owns ten services, you&apos;ll burn out. The
@@ -331,9 +331,9 @@ export default function Page() {
             xp={15}
             question="Your design works at 1k qps in load tests. You're asked if it'll handle 10k qps. Best answer?"
             options={[
-              { label: "Yes — we'll just add 10x more replicas", correct: false, explanation: "Linear scaling is rare. Hot keys, coordination, and network effects break the assumption." },
-              { label: "I don't know yet — let's test at 5k and 10k to find what breaks first", correct: true, explanation: "Right. The honest answer is empirical. You almost always discover a non-obvious bottleneck somewhere." },
-              { label: "Yes — the architecture is horizontally scalable", correct: false, explanation: "Architecture being scalable on paper doesn't mean it scales linearly in practice." },
+              { label: "Yes, we'll just add 10x more replicas", correct: false, explanation: "Linear scaling is rare. Hot keys, coordination, and network effects break the assumption." },
+              { label: "I don't know yet, let's test at 5k and 10k to find what breaks first", correct: true, explanation: "Right. The honest answer is empirical. You almost always discover a non-obvious bottleneck somewhere." },
+              { label: "Yes, the architecture is horizontally scalable", correct: false, explanation: "Architecture being scalable on paper doesn't mean it scales linearly in practice." },
             ]}
           />
 
@@ -343,7 +343,7 @@ export default function Page() {
             question="Two teams own one shared payment service. What's the most likely operational symptom?"
             options={[
               { label: "Faster development from shared expertise", correct: false, explanation: "Sometimes. More often: friction." },
-              { label: "Unclear ownership during incidents and merge conflicts in the codebase", correct: true, explanation: "Right. Conway's law in action — diffuse ownership creates exactly these problems. Either give it to one team or split the service." },
+              { label: "Unclear ownership during incidents and merge conflicts in the codebase", correct: true, explanation: "Right. Conway's law in action, diffuse ownership creates exactly these problems. Either give it to one team or split the service." },
               { label: "Better test coverage from two perspectives", correct: false, explanation: "In theory; in practice ownership ambiguity hurts more than it helps." },
             ]}
             hint="Conway's law cuts both ways."
@@ -355,7 +355,7 @@ export default function Page() {
           gist="Five traps that catch seniors: linear scaling, happy-path thinking, premature optimization, ignored operability, ignored people."
           points={[
             { takeaway: "Always walk failure modes for every arrow.", detail: "Timeouts and partial failures, not just hard errors." },
-            { takeaway: "Operability is part of the design, not aftercare.", detail: "Deploy, observe, page, roll back — all four answers required." },
+            { takeaway: "Operability is part of the design, not aftercare.", detail: "Deploy, observe, page, roll back, all four answers required." },
             { takeaway: "Conway's law is real.", detail: "Service boundaries follow team boundaries whether you like it or not." },
           ]}
         />
@@ -363,10 +363,10 @@ export default function Page() {
 
       {/* ============================== PART 4 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 4 — Mock interview transcripts</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 4, Mock interview transcripts</h2>
         <p>
           You have the patterns. You have the compass. The last gap is what a real senior interview <em>sounds</em>{" "}
-          like — the cadence, the clarifying questions, the moment a candidate pauses and says &quot;let me think about
+          like, the cadence, the clarifying questions, the moment a candidate pauses and says &quot;let me think about
           that for a second.&quot; Below are two annotated transcripts (one backend-heavy, one frontend-heavy), each
           followed by a short contrast showing the same problem answered <em>without</em>{" "}the senior signals.
         </p>
@@ -374,13 +374,13 @@ export default function Page() {
         <Callout variant="info" title="How to read these">
           <p className="m-0">
             Don&apos;t skim. Read the candidate lines out loud. Notice when they push back, when they pause, when they
-            do math, when they invite the interviewer in. Those are the patterns you&apos;re trying to absorb — not the
+            do math, when they invite the interviewer in. Those are the patterns you&apos;re trying to absorb, not the
             specific design.
           </p>
         </Callout>
 
         {/* ============== Transcript 1: URL shortener ============== */}
-        <h3 className="mt-10 mb-3 text-xl font-semibold">Transcript 1 — &quot;Design a URL shortener&quot; (backend)</h3>
+        <h3 className="mt-10 mb-3 text-xl font-semibold">Transcript 1, &quot;Design a URL shortener&quot; (backend)</h3>
         <p className="mb-4 text-sm text-slate-500 italic">
           Senior backend interview, 50 minutes. Candidate is a mid-level Java/Spring engineer interviewing for a senior
           role. The interviewer is a staff engineer.
@@ -562,7 +562,7 @@ export default function Page() {
             </li>
             <li>
               <strong>Pushed back with reasoning.</strong>{" "}When the interviewer suggested hashing for slug generation,
-              the candidate articulated <em>why</em>{" "}counter-based was better — not dogmatically, but with the
+              the candidate articulated <em>why</em>{" "}counter-based was better, not dogmatically, but with the
               tradeoff named.
             </li>
             <li>
@@ -578,7 +578,7 @@ export default function Page() {
           </ul>
         </Callout>
 
-        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast — the mediocre version</h4>
+        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast, the mediocre version</h4>
         <p className="mb-4 text-sm text-slate-500 italic">Same problem, weaker candidate. Notice what&apos;s missing.</p>
 
         <div className="my-6 space-y-3 rounded-xl border border-amber-200 bg-amber-50/40 p-6 dark:border-amber-900/50 dark:bg-amber-950/20">
@@ -632,18 +632,18 @@ export default function Page() {
           </p>
         </div>
 
-        <Callout variant="warn" title="What's missing — the senior gap">
+        <Callout variant="warn" title="What's missing, the senior gap">
           <ul className="m-0 space-y-1">
             <li>No clarifying questions. Jumped to a tool (MongoDB) and a technique (MD5) before pinning scope.</li>
             <li>No math. &quot;Sized based on growth&quot; is a non-answer. No QPS, no GB, no horizon.</li>
             <li>One design, no alternatives. Picked MD5 hashing without considering counter-based or addressing why.</li>
-            <li>Hand-waved failures. &quot;Replicas handle it&quot; / &quot;a transaction or a lock&quot; — generic, no specifics.</li>
+            <li>Hand-waved failures. &quot;Replicas handle it&quot; / &quot;a transaction or a lock&quot;, generic, no specifics.</li>
             <li>Reactive, not proactive. Every detail had to be pulled out by the interviewer. Candidate never volunteered SLOs, abuse, or operational concerns.</li>
           </ul>
         </Callout>
 
         {/* ============== Transcript 2: Twitter feed UI ============== */}
-        <h3 className="mt-12 mb-3 text-xl font-semibold">Transcript 2 — &quot;Design a Twitter feed UI&quot; (frontend)</h3>
+        <h3 className="mt-12 mb-3 text-xl font-semibold">Transcript 2, &quot;Design a Twitter feed UI&quot; (frontend)</h3>
         <p className="mb-4 text-sm text-slate-500 italic">
           Senior frontend interview, 50 minutes. The candidate is a Java/Spring engineer with React experience
           interviewing for a full-stack senior role.
@@ -834,7 +834,7 @@ export default function Page() {
             </li>
             <li>
               <strong>State shape sketched explicitly.</strong>{" "}Three buckets named (server cache, UI state,
-              optimistic mutations) with reasoning for the split — not a vague &quot;use Redux.&quot;
+              optimistic mutations) with reasoning for the split, not a vague &quot;use Redux.&quot;
             </li>
             <li>
               <strong>Real perf numbers.</strong> 200k–500k DOM nodes without virtualization, 30 visible with it,
@@ -846,12 +846,12 @@ export default function Page() {
             </li>
             <li>
               <strong>Accessibility as a real product requirement.</strong>{" "}Live regions, focus traps, keyboard
-              shortcuts, alt text on compose. Not bolted on at the end — woven through.
+              shortcuts, alt text on compose. Not bolted on at the end, woven through.
             </li>
           </ul>
         </Callout>
 
-        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast — the mediocre version</h4>
+        <h4 className="mt-8 mb-3 text-lg font-semibold">Contrast, the mediocre version</h4>
         <p className="mb-4 text-sm text-slate-500 italic">Same problem, weaker candidate.</p>
 
         <div className="my-6 space-y-3 rounded-xl border border-amber-200 bg-amber-50/40 p-6 dark:border-amber-900/50 dark:bg-amber-950/20">
@@ -899,7 +899,7 @@ export default function Page() {
           </p>
         </div>
 
-        <Callout variant="warn" title="What's missing — the senior gap">
+        <Callout variant="warn" title="What's missing, the senior gap">
           <ul className="m-0 space-y-1">
             <li>No clarifying questions. Jumped straight to React + Redux.</li>
             <li>No state shape. &quot;A feed reducer&quot; tells you nothing about what&apos;s in it.</li>
@@ -929,7 +929,7 @@ export default function Page() {
           <li>
             <strong>Tradeoff conversations under pressure.</strong>{" "}When pushed (cache invalidation; flaky network),
             the candidate paused, named two real options with explicit axes, and recommended a phased approach. They
-            didn&apos;t defend one design — they articulated the space.
+            didn&apos;t defend one design, they articulated the space.
           </li>
           <li>
             <strong>Production-readiness thinking unprompted.</strong>{" "}SLOs, fail-open with circuit breaker, abuse,
@@ -945,7 +945,7 @@ export default function Page() {
           </li>
           <li>
             <strong>Defend one design, never offer alternatives.</strong>{" "}Even when a question invites a tradeoff
-            (&quot;what about X?&quot;), the answer is a stronger version of the same design — not a real comparison.
+            (&quot;what about X?&quot;), the answer is a stronger version of the same design, not a real comparison.
           </li>
           <li>
             <strong>Skip the math.</strong> &quot;Sized based on growth.&quot; &quot;React is pretty fast.&quot; No QPS,
@@ -1025,18 +1025,18 @@ export default function Page() {
                 explanation: `Tool-first thinking again. The framework isn't the issue — the assumption that scale is free under replication is the issue.`,
               },
             ]}
-            hint="The flaw isn't 'wrong answer' — it's 'unfalsifiable answer.'"
+            hint="The flaw isn't 'wrong answer', it's 'unfalsifiable answer.'"
           />
         </Checkpoint>
 
         <PartRecap
           title="Part 4 recap"
-          gist="Senior interviews aren't pattern-matching contests — they're conversations where scope, numbers, tradeoffs, and prod-readiness are all on display. The five signals are universal across backend and frontend."
+          gist="Senior interviews aren't pattern-matching contests, they're conversations where scope, numbers, tradeoffs, and prod-readiness are all on display. The five signals are universal across backend and frontend."
           points={[
             { takeaway: "Scope before solution, every time.", detail: "The first 90 seconds is for clarifying questions, not architecture." },
-            { takeaway: "Real numbers carry the design.", detail: "QPS, GB, DOM-node counts — without them, choices are unfalsifiable." },
+            { takeaway: "Real numbers carry the design.", detail: "QPS, GB, DOM-node counts, without them, choices are unfalsifiable." },
             { takeaway: "Tradeoff conversations are the test.", detail: "When pressed, name two options, name the axis, recommend with reasoning." },
-            { takeaway: "Production-readiness is unprompted.", detail: "SLOs, failure modes, abuse, accessibility — volunteer them, don't wait to be asked." },
+            { takeaway: "Production-readiness is unprompted.", detail: "SLOs, failure modes, abuse, accessibility, volunteer them, don't wait to be asked." },
             { takeaway: "Pause-and-think is a senior signal, not a weakness.", detail: "'Let me think about that for a second' beats a confident wrong answer every time." },
           ]}
         />
@@ -1050,7 +1050,7 @@ export default function Page() {
           reliability, evolution, security. The toolbox gives you the components. The traps give you humility.
         </p>
         <p className="mt-3">
-          What&apos;s left? Putting it all together on a real, end-to-end design. That&apos;s the capstone — one
+          What&apos;s left? Putting it all together on a real, end-to-end design. That&apos;s the capstone, one
           system, every layer, every decision justified out loud. See you there.
         </p>
       </section>
@@ -1058,7 +1058,7 @@ export default function Page() {
       <section className="my-12">
         <h3 className="mb-3 text-lg font-semibold">Next up</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Module 45: Capstone — design a code review platform end to end. Bring the compass.
+          Module 45: Capstone, design a code review platform end to end. Bring the compass.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="recap" />

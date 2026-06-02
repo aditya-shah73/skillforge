@@ -87,7 +87,7 @@ flowchart TB
           Phase 5 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          The entire Java Collections Framework — hierarchy, Big-O, ordering, contracts, thread-safety — compressed to one reference card.
+          The entire Java Collections Framework, hierarchy, Big-O, ordering, contracts, thread-safety, compressed to one reference card.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-5-revision" />
         <ModuleProgress moduleSlug="phase-5-revision" checkpoints={CHECKPOINTS} />
@@ -96,7 +96,7 @@ flowchart TB
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          Phase 5 is one module long: the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Java Collections Framework deep dive</Link>. That makes this revision card different from Phase 1&apos;s — instead of consolidating three modules, we&apos;re going <em>deeper</em>{" "}on one. The goal is to lock in the <strong>pick-the-right-collection</strong>{" "}mental model: hierarchy, Big-O, ordering rules, the <code>equals/hashCode</code> contract, <code>Comparable</code> vs <code>Comparator</code>, and the thread-safety options.
+          Phase 5 is one module long: the <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Java Collections Framework deep dive</Link>. That makes this revision card different from Phase 1&apos;s, instead of consolidating three modules, we&apos;re going <em>deeper</em>{" "}on one. The goal is to lock in the <strong>pick-the-right-collection</strong>{" "}mental model: hierarchy, Big-O, ordering rules, the <code>equals/hashCode</code> contract, <code>Comparable</code> vs <code>Comparator</code>, and the thread-safety options.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           If anything here looks unfamiliar, the deep dive is one click away. Otherwise: this is the page you re-read before an interview, before a code review, before you reach for <code>new ArrayList&lt;&gt;()</code> on autopilot.
@@ -121,14 +121,14 @@ flowchart TB
         </Callout>
 
         <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li><code>List</code> — ordered, indexed, allows duplicates. <code>ArrayList</code> (array-backed) and <code>LinkedList</code> (doubly-linked).</li>
-          <li><code>Set</code> — no duplicates. <code>HashSet</code> (no order), <code>LinkedHashSet</code> (insertion order), <code>TreeSet</code> (sorted).</li>
-          <li><code>Queue</code> / <code>Deque</code> — FIFO / double-ended. <code>ArrayDeque</code> is the modern default; <code>PriorityQueue</code> is a binary heap.</li>
-          <li><code>Map</code> — key→value. <code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>, <code>ConcurrentHashMap</code>.</li>
+          <li><code>List</code>, ordered, indexed, allows duplicates. <code>ArrayList</code> (array-backed) and <code>LinkedList</code> (doubly-linked).</li>
+          <li><code>Set</code>, no duplicates. <code>HashSet</code> (no order), <code>LinkedHashSet</code> (insertion order), <code>TreeSet</code> (sorted).</li>
+          <li><code>Queue</code> / <code>Deque</code>, FIFO / double-ended. <code>ArrayDeque</code> is the modern default; <code>PriorityQueue</code> is a binary heap.</li>
+          <li><code>Map</code>, key→value. <code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>, <code>ConcurrentHashMap</code>.</li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Module 21 — Java Collections Framework deep dive</Link>.
+          Source: <Link href="/courses/dsa/modules/java-collections" className="text-cyan-600 hover:underline">Module 21, Java Collections Framework deep dive</Link>.
         </p>
       </section>
 
@@ -176,7 +176,7 @@ flowchart TB
                 <td className="px-4 py-3 text-emerald-600">O(1) avg</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) avg*</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) avg</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized — rare rehash is O(n). Java 8+ tree-bins make worst-case-per-bucket O(log n) instead of O(n).</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized, rare rehash is O(n). Java 8+ tree-bins make worst-case-per-bucket O(log n) instead of O(n).</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">LinkedHashMap</td>
@@ -192,7 +192,7 @@ flowchart TB
                 <td className="px-4 py-3 text-emerald-600">O(log n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(log n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(log n)</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Red-Black tree. Slower than HashMap, but supports <code>firstKey</code>, <code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code> — range queries.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Red-Black tree. Slower than HashMap, but supports <code>firstKey</code>, <code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code>, range queries.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">HashSet</td>
@@ -224,7 +224,7 @@ flowchart TB
                 <td className="px-4 py-3 text-amber-600">O(n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)* ends</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) ends</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized. Modern default for both stacks AND queues — not <code>Stack</code>, not <code>LinkedList</code>. Disallows <code>null</code>.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">*amortized. Modern default for both stacks AND queues, not <code>Stack</code>, not <code>LinkedList</code>. Disallows <code>null</code>.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">PriorityQueue</td>
@@ -328,8 +328,8 @@ flowchart TB
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-slate-500">Concept</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">The <em>natural</em>{" "}ordering — &quot;there is one obvious way to sort these&quot;</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">An <em>alternative</em>{" "}ordering — &quot;here&apos;s how I want them sorted right now&quot;</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">The <em>natural</em>{" "}ordering, &quot;there is one obvious way to sort these&quot;</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">An <em>alternative</em>{" "}ordering, &quot;here&apos;s how I want them sorted right now&quot;</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-slate-500">How many?</td>
@@ -343,14 +343,14 @@ flowchart TB
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-slate-500">When you can&apos;t modify the class</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">Can&apos;t use it — you&apos;d have to edit the source</td>
-                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">Perfect — define a Comparator externally</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">Can&apos;t use it, you&apos;d have to edit the source</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">Perfect, define a Comparator externally</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <CodeBlock lang="java" caption="Comparable — natural ordering baked into the class">{`class Employee implements Comparable<Employee> {
+        <CodeBlock lang="java" caption="Comparable, natural ordering baked into the class">{`class Employee implements Comparable<Employee> {
     String name;
     int salary;
 
@@ -364,7 +364,7 @@ List<Employee> emps = ...;
 Collections.sort(emps);             // uses compareTo
 TreeSet<Employee> set = new TreeSet<>(emps); // uses compareTo too`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="Comparator — multiple orderings, no class changes">{`// Sort by name (ascending)
+        <CodeBlock lang="java" caption="Comparator, multiple orderings, no class changes">{`// Sort by name (ascending)
 Comparator<Employee> byName = Comparator.comparing(e -> e.name);
 
 // Sort by salary descending, then name as a tiebreaker
@@ -379,7 +379,7 @@ PriorityQueue<Employee> pq =
     new PriorityQueue<>(Comparator.comparingInt((Employee e) -> -e.salary));`}</CodeBlock>
 
         <Callout variant="info" title="Rule of thumb">
-          <code>Comparable</code> when there is one obvious natural ordering (numbers, dates, strings). <code>Comparator</code> when ordering is contextual, when you need more than one, or when you can&apos;t touch the class. <code>TreeMap</code>/<code>TreeSet</code>/<code>PriorityQueue</code> all accept a <code>Comparator</code> in their constructor — use it.
+          <code>Comparable</code> when there is one obvious natural ordering (numbers, dates, strings). <code>Comparator</code> when ordering is contextual, when you need more than one, or when you can&apos;t touch the class. <code>TreeMap</code>/<code>TreeSet</code>/<code>PriorityQueue</code> all accept a <code>Comparator</code> in their constructor, use it.
         </Callout>
       </section>
 
@@ -395,7 +395,7 @@ PriorityQueue<Employee> pq =
         <div className="mb-4 grid gap-3 md:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 1 · Reflexive</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300"><code>x.equals(x)</code> must be <code>true</code>. (Don&apos;t worry — the default <code>Object</code> impl already does this.)</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300"><code>x.equals(x)</code> must be <code>true</code>. (Don&apos;t worry, the default <code>Object</code> impl already does this.)</p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-cyan-600 uppercase">Rule 2 · Symmetric</div>
@@ -415,7 +415,7 @@ PriorityQueue<Employee> pq =
           </div>
         </div>
 
-        <CodeBlock lang="java" caption="BAD — overrides equals but not hashCode">{`class UserId {
+        <CodeBlock lang="java" caption="BAD, overrides equals but not hashCode">{`class UserId {
     final String value;
     UserId(String v) { this.value = v; }
 
@@ -433,7 +433,7 @@ System.out.println(map.get(new UserId("u1"))); // → null !
 // equals says they're equal, but hashCode gives different buckets,
 // so HashMap looks in the wrong bucket and finds nothing.`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="GOOD — override both, derived from the same fields">{`class UserId {
+        <CodeBlock lang="java" caption="GOOD, override both, derived from the same fields">{`class UserId {
     final String value;
     UserId(String v) { this.value = v; }
 
@@ -485,7 +485,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">HashMap / HashSet</td>
                 <td className="px-4 py-3 text-rose-600">No guaranteed order</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Bucket order depends on the hash function and table size — and can change between JVM versions. <strong>Never depend on it.</strong></td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Bucket order depends on the hash function and table size, and can change between JVM versions. <strong>Never depend on it.</strong></td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">LinkedHashMap / LinkedHashSet</td>
@@ -505,7 +505,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">PriorityQueue</td>
                 <td className="px-4 py-3 text-rose-600">No useful order!</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Iteration walks the heap array — <em>not</em>{" "}in sorted order. Only <code>poll()</code> returns elements in priority order. This catches everyone once.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Iteration walks the heap array, <em>not</em>{" "}in sorted order. Only <code>poll()</code> returns elements in priority order. This catches everyone once.</td>
               </tr>
             </tbody>
           </table>
@@ -539,7 +539,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">HashMap</td>
                 <td className="px-4 py-3 font-semibold text-rose-600">No</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">None. Concurrent writes can <em>corrupt the structure</em> — infinite loops on resize have been observed in the wild.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">None. Concurrent writes can <em>corrupt the structure</em>, infinite loops on resize have been observed in the wild.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Single-threaded only.</td>
               </tr>
               <tr>
@@ -551,7 +551,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-mono font-semibold">Collections.synchronizedMap(m)</td>
                 <td className="px-4 py-3 font-semibold text-amber-600">Yes, coarsely</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">One mutex on the whole map. Every operation grabs the same lock — serialized.</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">One mutex on the whole map. Every operation grabs the same lock, serialized.</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Legacy code or when contention is genuinely low. Iteration still needs external <code>synchronized</code> blocks.</td>
               </tr>
               <tr>
@@ -568,7 +568,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           <li><strong>List equivalents:</strong> <code>CopyOnWriteArrayList</code> for read-heavy workloads (every write copies the array). <code>Collections.synchronizedList(...)</code> for everything else.</li>
           <li><strong>Set equivalents:</strong> <code>ConcurrentHashMap.newKeySet()</code> for a concurrent <code>Set</code>. <code>CopyOnWriteArraySet</code> for read-heavy.</li>
           <li><strong>Queue equivalents:</strong> <code>ConcurrentLinkedQueue</code> (lock-free FIFO), <code>LinkedBlockingQueue</code> (bounded, blocks producers/consumers), <code>PriorityBlockingQueue</code> for ordered.</li>
-          <li><strong>Iteration caveat:</strong> <code>ConcurrentHashMap</code>&apos;s iterators are <em>weakly consistent</em> — they don&apos;t throw <code>ConcurrentModificationException</code>, but they may or may not reflect modifications made after the iterator was created.</li>
+          <li><strong>Iteration caveat:</strong> <code>ConcurrentHashMap</code>&apos;s iterators are <em>weakly consistent</em>, they don&apos;t throw <code>ConcurrentModificationException</code>, but they may or may not reflect modifications made after the iterator was created.</li>
         </ul>
 
         <Callout variant="insight" title="The decision in one line">
@@ -591,7 +591,7 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           options={[
             { label: "HashMap", explanation: "HashMap has no iteration order and no notion of 'nearest key'. Wrong on both counts." },
             { label: "LinkedHashMap", explanation: "LinkedHashMap iterates in insertion order, not sorted order. And it has no nearest-key API." },
-            { label: "TreeMap", correct: true, explanation: "Right. TreeMap is a Red-Black tree — sorted iteration AND it exposes floorKey/ceilingKey/lowerKey/higherKey for nearest-neighbor lookups. The cost is O(log n) per operation instead of O(1)." },
+            { label: "TreeMap", correct: true, explanation: "Right. TreeMap is a Red-Black tree, sorted iteration AND it exposes floorKey/ceilingKey/lowerKey/higherKey for nearest-neighbor lookups. The cost is O(log n) per operation instead of O(1)." },
             { label: "ConcurrentHashMap", explanation: "ConcurrentHashMap is unordered (it's a hash table, just thread-safe). Order is not its job." },
           ]}
         />
@@ -601,8 +601,8 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           question="You override equals() on a class but forget to override hashCode(). You put one instance into a HashMap. What happens when you try to get(equalInstance)?"
           options={[
             { label: "It returns the value you put in.", explanation: "Only if hashCode is also consistent with equals. Default Object.hashCode is identity-based, so equal-by-fields instances land in different buckets." },
-            { label: "It throws an exception at put-time.", explanation: "No exception — HashMap doesn't validate the equals/hashCode contract. The bug is silent." },
-            { label: "It returns null — the map appears to lose the key.", correct: true, explanation: "Right. HashMap computes the bucket from hashCode. Since the default Object.hashCode is identity-based, two equal-by-fields instances hash to different buckets, so get() looks in the wrong bucket and returns null. This is the canonical equals/hashCode bug." },
+            { label: "It throws an exception at put-time.", explanation: "No exception, HashMap doesn't validate the equals/hashCode contract. The bug is silent." },
+            { label: "It returns null, the map appears to lose the key.", correct: true, explanation: "Right. HashMap computes the bucket from hashCode. Since the default Object.hashCode is identity-based, two equal-by-fields instances hash to different buckets, so get() looks in the wrong bucket and returns null. This is the canonical equals/hashCode bug." },
             { label: "It works, but only for the first call.", explanation: "There's no special-case caching here. Every call to get() recomputes the hash and lands in the wrong bucket." },
           ]}
         />
@@ -611,10 +611,10 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           kind="Recall check"
           question="You're writing a class Card that should sort naturally by suit then rank. You also want one specific list of cards sorted by rank only. What's the right design?"
           options={[
-            { label: "Implement Comparable for both — switch behavior with a flag.", explanation: "A class has exactly one natural ordering. Don't toggle it with state — that breaks the contract." },
+            { label: "Implement Comparable for both, switch behavior with a flag.", explanation: "A class has exactly one natural ordering. Don't toggle it with state, that breaks the contract." },
             { label: "Two Comparators, no Comparable.", explanation: "Works, but you lose the convenience of Collections.sort(list) without an argument. Better to have ONE natural ordering plus alternates." },
             { label: "Implement Comparable<Card> for suit-then-rank (the natural order). Use a Comparator<Card> for the rank-only sort.", correct: true, explanation: "Right. Comparable for the one obvious ordering; Comparator for situational alternates. Pass the Comparator to sort/TreeMap/PriorityQueue at the call site." },
-            { label: "Two Comparables on the same class.", explanation: "You can only implement Comparable once per class — there's only one compareTo method." },
+            { label: "Two Comparables on the same class.", explanation: "You can only implement Comparable once per class, there's only one compareTo method." },
           ]}
         />
 
@@ -622,9 +622,9 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           kind="Recall check"
           question="You have a PriorityQueue<Integer> with elements [5, 1, 8, 3, 2]. You iterate it with an enhanced-for loop. What do you see?"
           options={[
-            { label: "1, 2, 3, 5, 8 — sorted ascending.", explanation: "That's what poll() in a loop would give. Iteration does NOT sort." },
-            { label: "8, 5, 3, 2, 1 — sorted descending.", explanation: "PriorityQueue is a min-heap by default, and even so, iteration doesn't sort." },
-            { label: "The underlying heap array order — typically NOT sorted.", correct: true, explanation: "Right. Iteration walks the internal heap array. Only the head is guaranteed to be the min; the rest of the array has the heap property but is not sorted. To get sorted output, call poll() in a loop until empty." },
+            { label: "1, 2, 3, 5, 8, sorted ascending.", explanation: "That's what poll() in a loop would give. Iteration does NOT sort." },
+            { label: "8, 5, 3, 2, 1, sorted descending.", explanation: "PriorityQueue is a min-heap by default, and even so, iteration doesn't sort." },
+            { label: "The underlying heap array order, typically NOT sorted.", correct: true, explanation: "Right. Iteration walks the internal heap array. Only the head is guaranteed to be the min; the rest of the array has the heap property but is not sorted. To get sorted output, call poll() in a loop until empty." },
             { label: "Insertion order: 5, 1, 8, 3, 2.", explanation: "Insertions reshape the heap. After the inserts, the internal array won't match insertion order in general." },
           ]}
         />
@@ -633,9 +633,9 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
           kind="Recall check"
           question="Your service has 50 worker threads sharing a Map<UserId, Profile>. Reads dominate writes 100:1. Which collection?"
           options={[
-            { label: "HashMap with a single mutex around every access.", explanation: "Same as synchronizedMap — coarse global lock. Scales badly with 50 threads doing reads concurrently." },
-            { label: "ConcurrentHashMap.", correct: true, explanation: "Right. ConcurrentHashMap uses bucket-level locking / CAS — reads are mostly lock-free, and writes only contend at the bucket level. Perfect fit for high-concurrency, mixed read/write workloads." },
-            { label: "Hashtable.", explanation: "Legacy — same global-lock model as synchronizedMap, no benefit. Don't use." },
+            { label: "HashMap with a single mutex around every access.", explanation: "Same as synchronizedMap, coarse global lock. Scales badly with 50 threads doing reads concurrently." },
+            { label: "ConcurrentHashMap.", correct: true, explanation: "Right. ConcurrentHashMap uses bucket-level locking / CAS, reads are mostly lock-free, and writes only contend at the bucket level. Perfect fit for high-concurrency, mixed read/write workloads." },
+            { label: "Hashtable.", explanation: "Legacy, same global-lock model as synchronizedMap, no benefit. Don't use." },
             { label: "Collections.synchronizedMap(new HashMap<>()).", explanation: "Works correctly but serializes ALL access on one mutex. Under high read concurrency this becomes the bottleneck." },
           ]}
         />
@@ -646,14 +646,14 @@ System.out.println(map.get(new UserId("u1"))); // → "Alice"  ✓`}</CodeBlock>
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/30 dark:via-slate-900 dark:to-purple-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">
-          Phase 5 — locked in
+          Phase 5, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now pick the right collection on sight</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Hierarchy, the 11-row Big-O table, the four decision questions, Comparable vs Comparator, the equals/hashCode contract, iteration order rules, thread safety. That&apos;s the entire framework — every container choice you make from now on should be a conscious one.
+          Hierarchy, the 11-row Big-O table, the four decision questions, Comparable vs Comparator, the equals/hashCode contract, iteration order rules, thread safety. That&apos;s the entire framework, every container choice you make from now on should be a conscious one.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 6 — Algorithmic Techniques.</strong>{" "}Two pointers, sliding window, binary search patterns, recursion, backtracking. The shapes that show up over and over in interviews — implemented on top of the data structures you now understand cold.
+          <strong>Up next: Phase 6, Algorithmic Techniques.</strong>{" "}Two pointers, sliding window, binary search patterns, recursion, backtracking. The shapes that show up over and over in interviews, implemented on top of the data structures you now understand cold.
         </p>
         <Link
           href="/courses/dsa/modules/two-pointers"

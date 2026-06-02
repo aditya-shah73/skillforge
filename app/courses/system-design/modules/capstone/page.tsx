@@ -86,7 +86,7 @@ export default function Page() {
       </header>
 
       <Callout variant="info" title="What this capstone is">
-        We design a code review platform — call it &quot;CodeForge&quot; — end to end. Five parts, every layer of the
+        We design a code review platform, call it &quot;CodeForge&quot;, end to end. Five parts, every layer of the
         compass: requirements, data, traffic, reliability, security &amp; rollout. By the end you&apos;ll have a
         defensible architecture you could whiteboard in a senior interview without flinching.
       </Callout>
@@ -104,7 +104,7 @@ export default function Page() {
             <li>A complete architecture for a non-trivial multi-service system.</li>
             <li>Justified tradeoffs at every box: why this DB, why this queue, why this consistency level.</li>
             <li>A capacity model that says &quot;here&apos;s where it breaks first.&quot;</li>
-            <li>An evolution plan — how this thing ships, scales, and migrates.</li>
+            <li>An evolution plan, how this thing ships, scales, and migrates.</li>
             <li>Confidence to defend the design against a senior architect&apos;s pushback.</li>
           </ul>
         </div>
@@ -112,7 +112,7 @@ export default function Page() {
 
       {/* ============================== PART 1 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 1 — Requirements and capacity</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 1, Requirements and capacity</h2>
         <p>
           Before any boxes on a diagram, we pin down what we&apos;re building and at what scale. Designs go wrong when
           this step is skipped.
@@ -123,7 +123,7 @@ export default function Page() {
           <li>Users create pull requests against a target branch.</li>
           <li>Reviewers leave inline (file/line) and general comments. Threaded replies.</li>
           <li>Required reviewers must approve before merge. CI checks must pass.</li>
-          <li>Notifications via email, Slack, in-app — when assigned, mentioned, status changes.</li>
+          <li>Notifications via email, Slack, in-app, when assigned, mentioned, status changes.</li>
           <li>Search across PRs, comments, files.</li>
           <li>Audit log of every state-changing action.</li>
         </ul>
@@ -132,7 +132,7 @@ export default function Page() {
         <ul className="space-y-2">
           <li><strong>Latency:</strong>{" "}p99 &lt; 300ms for PR view; &lt; 150ms for comment post.</li>
           <li><strong>Availability:</strong> 99.9% (~8.7h of allowed downtime/year).</li>
-          <li><strong>Durability:</strong>{" "}zero loss for PRs and comments — they&apos;re audit-bearing.</li>
+          <li><strong>Durability:</strong>{" "}zero loss for PRs and comments, they&apos;re audit-bearing.</li>
           <li><strong>Scale:</strong> 5,000 devs, ~2,000 PRs/day, ~50 comments/PR average. Bursty during business hours.</li>
         </ul>
 
@@ -152,7 +152,7 @@ Search index size:      ~100 GB at year 1, growing
 Bandwidth:              comfortable on a single AZ; CDN only for static assets`}</CodeBlock>
 
         <Callout variant="insight" title="Why these numbers matter">
-          5 PRs/sec sounds tiny — and it is. But peak comment burst (~100/sec) plus the notification fanout (~3
+          5 PRs/sec sounds tiny, and it is. But peak comment burst (~100/sec) plus the notification fanout (~3
           channels × dependent listeners) is the actual hot path. Always design for the burst, not the average.
         </Callout>
 
@@ -170,8 +170,8 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
             xp={15}
             question={`The numbers say 100 comment writes/sec at peak. A teammate proposes Cassandra for the comments table because it "scales better." Right call?`}
             options={[
-              { label: "Yes — Cassandra is a better fit for write-heavy workloads", correct: false, explanation: "100 writes/sec is trivial for any modern DB. Postgres handles thousands easily." },
-              { label: "No — Postgres comfortably handles this volume; Cassandra adds operational tax for no gain", correct: true, explanation: "Right. Don't reach for distributed datastores at scales they're not needed for. Postgres is the simpler, faster path here." },
+              { label: "Yes, Cassandra is a better fit for write-heavy workloads", correct: false, explanation: "100 writes/sec is trivial for any modern DB. Postgres handles thousands easily." },
+              { label: "No, Postgres comfortably handles this volume; Cassandra adds operational tax for no gain", correct: true, explanation: "Right. Don't reach for distributed datastores at scales they're not needed for. Postgres is the simpler, faster path here." },
               { label: "Only if we expect 100x growth", correct: false, explanation: "Even at 100x (10k writes/sec) Postgres handles it. Reach for Cassandra at 100k+ or specific access patterns." },
             ]}
             hint="What scale does Postgres actually break at?"
@@ -183,7 +183,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
             question="Which is the most useful single number to argue for or against a cache?"
             options={[
               { label: "Total request volume", correct: false, explanation: "Volume alone doesn't tell you about repeat reads." },
-              { label: "Read:write ratio (here, ~50:1)", correct: true, explanation: "Right. High read:write means the same data is read many times — that's the cache opportunity. 1:1 ratios benefit much less from caching." },
+              { label: "Read:write ratio (here, ~50:1)", correct: true, explanation: "Right. High read:write means the same data is read many times, that's the cache opportunity. 1:1 ratios benefit much less from caching." },
               { label: "Latency budget", correct: false, explanation: "Latency tells you whether you need a cache, not whether one will help. Read:write tells you whether it will pay off." },
             ]}
           />
@@ -193,7 +193,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
           title="Part 1 recap"
           gist="Requirements and numbers first. Without them every later choice is a guess."
           points={[
-            { takeaway: "Always design for peak, not average.", detail: "5 PRs/sec average becomes 100 comments/sec at burst — that's the hot path." },
+            { takeaway: "Always design for peak, not average.", detail: "5 PRs/sec average becomes 100 comments/sec at burst, that's the hot path." },
             { takeaway: "Read:write ratio drives caching strategy.", detail: "50:1 here means caching will pay back significantly." },
             { takeaway: "Modest scale lets us keep the architecture simple.", detail: "Don't reach for distributed datastores you don't need." },
           ]}
@@ -202,7 +202,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
 
       {/* ============================== PART 2 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 2 — High-level architecture and data plane</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 2, High-level architecture and data plane</h2>
         <p>
           With requirements pinned, we sketch the system and decide where the bytes live. Six services, four
           datastores, one streaming backbone.
@@ -221,7 +221,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
         </ul>
 
         <Callout variant="insight" title="Why these boundaries">
-          PRs and comments could be one service — but comments are 50x the volume and have different access patterns
+          PRs and comments could be one service, but comments are 50x the volume and have different access patterns
           (write-bursty, search-heavy). Splitting lets each scale and evolve independently. Notifications are async by
           nature; they don&apos;t belong in the request path. Search is naturally a read replica fed by events.
         </Callout>
@@ -233,7 +233,7 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
             One DB per service for ownership; logical replication if we need cross-service reads.
           </li>
           <li>
-            <strong>S3 for diffs and large blobs.</strong>{" "}Cheap, durable. Diff blobs are immutable per commit — perfect
+            <strong>S3 for diffs and large blobs.</strong>{" "}Cheap, durable. Diff blobs are immutable per commit, perfect
             for object storage. Postgres holds the metadata pointer.
           </li>
           <li>
@@ -245,12 +245,12 @@ Bandwidth:              comfortable on a single AZ; CDN only for static assets`}
             from notification + search + audit consumers.
           </li>
           <li>
-            <strong>Elasticsearch for search.</strong>{" "}Async-fed from Kafka. Eventually consistent — that&apos;s fine
+            <strong>Elasticsearch for search.</strong>{" "}Async-fed from Kafka. Eventually consistent, that&apos;s fine
             for search.
           </li>
         </ul>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Schema sketch — Review service</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Schema sketch, Review service</h3>
         <CodeBlock lang="plain" caption="Postgres tables (Review service)">{`pull_request
   id              UUID PK
   repo_id         UUID
@@ -289,7 +289,7 @@ pr_status_check
         <h3 className="mt-8 mb-3 text-xl font-semibold">Sharding and replication</h3>
         <ul className="space-y-2">
           <li><strong>At year-1 scale:</strong>{" "}single Postgres primary + 2 read replicas per service. No sharding.</li>
-          <li><strong>If we need to scale:</strong>{" "}shard by <code>repo_id</code> — a repo&apos;s PRs/comments are naturally co-located, queries don&apos;t cross repos.</li>
+          <li><strong>If we need to scale:</strong>{" "}shard by <code>repo_id</code>, a repo&apos;s PRs/comments are naturally co-located, queries don&apos;t cross repos.</li>
           <li><strong>Read replicas</strong>{" "}handle read traffic for &quot;list my PRs&quot; pages. Tolerate slight lag.</li>
         </ul>
 
@@ -306,7 +306,7 @@ pr_status_check
             question="Why split comments into their own service + DB rather than keeping them in the review service?"
             options={[
               { label: "Microservices are always better than monoliths", correct: false, explanation: "Cargo-cult thinking. Decomposition has to earn its complexity." },
-              { label: "Different volume profile and access patterns — independent scaling and indexing", correct: true, explanation: "Right. Comments are 50x the volume of PRs and need different indexes (search-heavy). Splitting lets them scale and evolve independently." },
+              { label: "Different volume profile and access patterns, independent scaling and indexing", correct: true, explanation: "Right. Comments are 50x the volume of PRs and need different indexes (search-heavy). Splitting lets them scale and evolve independently." },
               { label: "It's required by REST principles", correct: false, explanation: "Service boundaries aren't a REST concern." },
             ]}
           />
@@ -317,7 +317,7 @@ pr_status_check
             question="We pick repo_id as the future shard key. Why not user_id?"
             options={[
               { label: "user_id has fewer values", correct: false, explanation: "Cardinality is fine for either. The question is about access patterns." },
-              { label: "Most queries are scoped to a repo (list PRs, list comments) — sharding by repo keeps queries local", correct: true, explanation: "Right. Co-locating data with the query pattern is the whole point. user_id sharding would scatter every repo across shards." },
+              { label: "Most queries are scoped to a repo (list PRs, list comments), sharding by repo keeps queries local", correct: true, explanation: "Right. Co-locating data with the query pattern is the whole point. user_id sharding would scatter every repo across shards." },
               { label: "user_id is PII", correct: false, explanation: "True but not a sharding consideration on its own." },
             ]}
             hint="Where do most of the queries scope to?"
@@ -329,7 +329,7 @@ pr_status_check
             question="Diffs are stored in S3, metadata in Postgres. What's the failure mode to watch for?"
             options={[
               { label: "S3 is too slow", correct: false, explanation: "Hundreds of ms is fine for diff fetches; cache the hot ones." },
-              { label: "Postgres pointer can outlive the S3 object (or vice versa) — orphan/inconsistency", correct: true, explanation: "Right. Two-system writes need careful ordering: write to S3 first, then commit to Postgres. Background reaper for orphan blobs." },
+              { label: "Postgres pointer can outlive the S3 object (or vice versa), orphan/inconsistency", correct: true, explanation: "Right. Two-system writes need careful ordering: write to S3 first, then commit to Postgres. Background reaper for orphan blobs." },
               { label: "S3 is more expensive than blob columns", correct: false, explanation: "Wildly cheaper than storing blobs in Postgres." },
             ]}
           />
@@ -348,7 +348,7 @@ pr_status_check
 
       {/* ============================== PART 3 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 3 — Traffic plane and reliability</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 3, Traffic plane and reliability</h2>
         <p>
           Now: how requests actually flow, and what keeps the system honest when things break.
         </p>
@@ -357,10 +357,10 @@ pr_status_check
         <Mermaid chart={reviewLifecycle} />
         <p className="mt-4">
           Every state transition emits a Kafka event. That&apos;s the seam where notifications, audit, and search hook
-          in — none of them sit in the request path.
+          in, none of them sit in the request path.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Comment write — the hot path</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Comment write, the hot path</h3>
         <Mermaid chart={commentFanout} />
 
         <CodeBlock lang="java" caption="Comment write with idempotency and outbox">{`@PostMapping("/comments")
@@ -395,7 +395,7 @@ public ResponseEntity<Comment> create(
           background poller ships it to Kafka. At-least-once delivery, atomic with the DB write.
         </Callout>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Read path — PR view caching</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Read path, PR view caching</h3>
         <ul className="space-y-2">
           <li>UI requests <code>GET /pr/{`{id}`}</code> via API gateway.</li>
           <li>Cache check in Redis (key = <code>pr:{`{id}`}:v{`{version}`}</code>, TTL 60s).</li>
@@ -403,11 +403,11 @@ public ResponseEntity<Comment> create(
           <li>On any state change, increment the version counter (cache busting).</li>
         </ul>
         <p>
-          Comment list is fetched separately by the UI — paginated, smaller cache footprint. The version-on-state-change
+          Comment list is fetched separately by the UI, paginated, smaller cache footprint. The version-on-state-change
           pattern avoids stale-read confusion when reviewers approve.
         </p>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Reliability — what breaks, and how we contain it</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Reliability, what breaks, and how we contain it</h3>
         <ul className="space-y-3">
           <li>
             <strong>Notification service down.</strong>{" "}Kafka buffers events. When it recovers, consumers catch up.
@@ -415,7 +415,7 @@ public ResponseEntity<Comment> create(
           </li>
           <li>
             <strong>Elasticsearch down.</strong>{" "}Search is degraded; everything else works. Indexer falls behind on
-            Kafka, catches up later. Eventually consistent — user sees a 5-minute lag in search results, not an outage.
+            Kafka, catches up later. Eventually consistent, user sees a 5-minute lag in search results, not an outage.
           </li>
           <li>
             <strong>Postgres primary fails.</strong>{" "}Replica promotes (managed RDS handles this in ~60s). API
@@ -440,8 +440,8 @@ public ResponseEntity<Comment> create(
         <ul className="space-y-2">
           <li><strong>Metrics:</strong>{" "}RED (rate, errors, duration) per endpoint; per-consumer Kafka lag; cache hit ratio.</li>
           <li><strong>Logs:</strong>{" "}structured JSON; trace ID propagated end-to-end (W3C traceparent).</li>
-          <li><strong>Traces:</strong>{" "}OpenTelemetry across services — every API request is a single trace.</li>
-          <li><strong>Alarms:</strong>{" "}p99 latency, error rate, Kafka consumer lag, replica lag — paged on threshold.</li>
+          <li><strong>Traces:</strong>{" "}OpenTelemetry across services, every API request is a single trace.</li>
+          <li><strong>Alarms:</strong>{" "}p99 latency, error rate, Kafka consumer lag, replica lag, paged on threshold.</li>
         </ul>
 
         <Checkpoint moduleSlug="capstone" id="reliability" title="Traffic + reliability checkpoint" xp={25}>
@@ -450,8 +450,8 @@ public ResponseEntity<Comment> create(
             xp={15}
             question="Why use the outbox pattern instead of publishing to Kafka right after the DB commit?"
             options={[
-              { label: "Outbox is faster", correct: false, explanation: "It's actually slower — adds a poller hop. The benefit is correctness." },
-              { label: "Atomicity — if the publish fails after commit, downstream loses the event forever", correct: true, explanation: "Right. Outbox couples the event to the DB write in one transaction. The poller then ships at-least-once. No lost events." },
+              { label: "Outbox is faster", correct: false, explanation: "It's actually slower, adds a poller hop. The benefit is correctness." },
+              { label: "Atomicity, if the publish fails after commit, downstream loses the event forever", correct: true, explanation: "Right. Outbox couples the event to the DB write in one transaction. The poller then ships at-least-once. No lost events." },
               { label: "Kafka requires it", correct: false, explanation: "Kafka has no opinion on outbox. The pattern is a correctness solution, not a Kafka requirement." },
             ]}
           />
@@ -461,7 +461,7 @@ public ResponseEntity<Comment> create(
             xp={15}
             question="The notification service crashes for 10 minutes. What's the user-visible impact?"
             options={[
-              { label: "PR creates and comment writes start failing", correct: false, explanation: "They go through fine — Kafka is decoupled from the write path." },
+              { label: "PR creates and comment writes start failing", correct: false, explanation: "They go through fine, Kafka is decoupled from the write path." },
               { label: "Notifications arrive late but everything else works", correct: true, explanation: "Right. Kafka buffers the events. When notify recovers, it drains the backlog. This is the whole point of asynchronous fanout." },
               { label: "Search results become stale", correct: false, explanation: "Search is fed by a different consumer; it's unaffected by notify being down." },
             ]}
@@ -474,7 +474,7 @@ public ResponseEntity<Comment> create(
             question="A reviewer approves a PR but the UI still shows it as 'pending' for 30 seconds. What's the most likely cause?"
             options={[
               { label: "Kafka lost the event", correct: false, explanation: "Possible but unlikely given delivery guarantees." },
-              { label: "Stale Redis cache — version counter didn't bust the entry", correct: true, explanation: "Right. State change should bump the cache version key. If that's missed, TTL is the only thing forcing a refresh — hence the 30s wait. Always bust on state change." },
+              { label: "Stale Redis cache, version counter didn't bust the entry", correct: true, explanation: "Right. State change should bump the cache version key. If that's missed, TTL is the only thing forcing a refresh, hence the 30s wait. Always bust on state change." },
               { label: "Postgres replication lag", correct: false, explanation: "Possible but typically sub-second; 30s points to cache, not replica lag." },
             ]}
           />
@@ -493,7 +493,7 @@ public ResponseEntity<Comment> create(
 
       {/* ============================== PART 4 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 4 — Security and rollout</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 4, Security and rollout</h2>
         <p>
           Security is woven through every layer. Rollout is how we ship without breaking 5,000 engineers&apos; days.
         </p>
@@ -505,7 +505,7 @@ public ResponseEntity<Comment> create(
           <li><strong>Authorization:</strong>{" "}repo-level roles (admin, maintainer, contributor); enforced at the data layer (<code>WHERE repo_id IN :allowed</code>), not just the controller.</li>
         </ul>
 
-        <h3 className="mt-8 mb-3 text-xl font-semibold">Threat model — what we care about</h3>
+        <h3 className="mt-8 mb-3 text-xl font-semibold">Threat model, what we care about</h3>
         <ClassifyChallenge
           title="Threats vs controls"
           prompt="Match each threat to the primary control."
@@ -517,33 +517,33 @@ public ResponseEntity<Comment> create(
             { id: "pii", label: "Data minimization / encryption", color: "sky" },
           ]}
           items={[
-            { id: "t1", label: "Engineer reads another team's private PR by guessing the URL", answer: "authz", explanation: "BOLA — every PR fetch must check repo membership at the query layer." },
+            { id: "t1", label: "Engineer reads another team's private PR by guessing the URL", answer: "authz", explanation: "BOLA, every PR fetch must check repo membership at the query layer." },
             { id: "t2", label: "JWT minted for the search API is replayed against the merge endpoint", answer: "tokens", explanation: "Audience claim must be validated per service. Token from one aud should fail on another." },
             { id: "t3", label: "GitHub webhook signing key is committed to a repo by accident", answer: "secrets", explanation: "Vault + rotation. Pre-commit scanners catch the obvious; rotation policy handles the rest." },
             { id: "t4", label: "Six months later, who approved this merge?", answer: "audit", explanation: "Append-only audit log of every state transition. Can't reconstruct without it." },
-            { id: "t5", label: "User requests deletion under GDPR — comments contain their email in mentions", answer: "pii", explanation: "Avoid storing emails inline; use stable IDs. Per-user crypto keys for any PII makes deletion tractable." },
+            { id: "t5", label: "User requests deletion under GDPR, comments contain their email in mentions", answer: "pii", explanation: "Avoid storing emails inline; use stable IDs. Per-user crypto keys for any PII makes deletion tractable." },
           ]}
         />
 
         <h3 className="mt-8 mb-3 text-xl font-semibold">Rollout plan</h3>
         <ol className="space-y-3">
           <li>
-            <strong>Phase 0 — internal alpha.</strong>{" "}Deploy to a single repo&apos;s team (~10 devs). Real PRs.
+            <strong>Phase 0, internal alpha.</strong>{" "}Deploy to a single repo&apos;s team (~10 devs). Real PRs.
             Monitor latency, error rate, edge cases.
           </li>
           <li>
-            <strong>Phase 1 — opt-in pilot.</strong>{" "}Open to ~5 teams. Feature flag at the org level. Mirror PRs to the
+            <strong>Phase 1, opt-in pilot.</strong>{" "}Open to ~5 teams. Feature flag at the org level. Mirror PRs to the
             existing system (dual-read) for 2 weeks. Compare for parity.
           </li>
           <li>
-            <strong>Phase 2 — strangler.</strong>{" "}New repos go to CodeForge by default. Existing repos migrate on
+            <strong>Phase 2, strangler.</strong>{" "}New repos go to CodeForge by default. Existing repos migrate on
             request. Both systems run in parallel.
           </li>
           <li>
-            <strong>Phase 3 — full migration.</strong>{" "}Old system enters read-only mode. Active PRs drain. Backups taken.
+            <strong>Phase 3, full migration.</strong>{" "}Old system enters read-only mode. Active PRs drain. Backups taken.
           </li>
           <li>
-            <strong>Phase 4 — decommission.</strong>{" "}Old system retired after a 90-day cooling-off period.
+            <strong>Phase 4, decommission.</strong>{" "}Old system retired after a 90-day cooling-off period.
           </li>
         </ol>
 
@@ -575,7 +575,7 @@ public ResponseEntity<Comment> create(
             question="Why dual-read against the legacy system in Phase 1?"
             options={[
               { label: "Performance comparison", correct: false, explanation: "Tangentially useful but not the main reason." },
-              { label: "Parity verification — catch behavioral differences before they bite users", correct: true, explanation: "Right. Real users on real PRs surface edge cases that synthetic tests miss. Dual-read with comparison alarms on divergence." },
+              { label: "Parity verification, catch behavioral differences before they bite users", correct: true, explanation: "Right. Real users on real PRs surface edge cases that synthetic tests miss. Dual-read with comparison alarms on divergence." },
               { label: "To meet SOC2 requirements", correct: false, explanation: "Not a SOC2 driver." },
             ]}
           />
@@ -586,8 +586,8 @@ public ResponseEntity<Comment> create(
             question="The threat model explicitly assumes engineers may try to read other teams' private PRs. Where does the primary control live?"
             options={[
               { label: "Frontend hides the link if you don't have access", correct: false, explanation: "Client-side controls are bypassable. URL guessing defeats them in seconds." },
-              { label: "Query layer in the review service: WHERE repo_id IN (caller's allowed repos)", correct: true, explanation: "Right. Push enforcement to the data access layer. There's no way to construct a SQL query that returns data you can't see — defense by construction." },
-              { label: "API gateway IP allowlist", correct: false, explanation: "Doesn't address the threat — engineers are inside the perimeter." },
+              { label: "Query layer in the review service: WHERE repo_id IN (caller's allowed repos)", correct: true, explanation: "Right. Push enforcement to the data access layer. There's no way to construct a SQL query that returns data you can't see, defense by construction." },
+              { label: "API gateway IP allowlist", correct: false, explanation: "Doesn't address the threat, engineers are inside the perimeter." },
             ]}
             hint="Where does enforcement become hard to bypass?"
           />
@@ -617,7 +617,7 @@ public ResponseEntity<Comment> create(
 
       {/* ============================== PART 5 ============================== */}
       <section className="my-12">
-        <h2 className="mb-4 text-2xl font-bold">Part 5 — Defending the design</h2>
+        <h2 className="mb-4 text-2xl font-bold">Part 5, Defending the design</h2>
         <p>
           The final test of any architecture isn&apos;t whether you can draw it. It&apos;s whether you can defend the
           decisions when someone smart pushes back. Here are the questions you&apos;ll get and how to answer them.
@@ -626,7 +626,7 @@ public ResponseEntity<Comment> create(
         <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;Why not just use GitHub?&quot;</h3>
         <p>
           Cost at 5k devs, data residency requirements, custom workflow integrations. Out of scope for this
-          conversation, but a real architect would push back here too — &quot;build vs buy&quot; is itself a design
+          conversation, but a real architect would push back here too, &quot;build vs buy&quot; is itself a design
           decision.
         </p>
 
@@ -655,18 +655,18 @@ public ResponseEntity<Comment> create(
         <p>
           Postgres goes to read replicas + connection pool tuning first; sharding by <code>repo_id</code> is the second
           lever. Kafka and Redis scale horizontally with capacity. The bottleneck likely shows up in Postgres write
-          throughput on the comment service — that&apos;s the first thing to shard.
+          throughput on the comment service, that&apos;s the first thing to shard.
         </p>
 
         <h3 className="mt-8 mb-3 text-xl font-semibold">&quot;What&apos;s the single point of failure?&quot;</h3>
         <p>
           Honest answer: the API gateway, until we run multiple instances behind a load balancer (which we do in prod).
-          Beyond that: the corporate IdP — if SSO is down, no logins, but in-flight sessions continue. Kafka brokers
+          Beyond that: the corporate IdP, if SSO is down, no logins, but in-flight sessions continue. Kafka brokers
           and Postgres are clustered.
         </p>
 
         <Callout variant="insight" title="The skill that matters">
-          A senior architect doesn&apos;t pretend to have no SPOFs or no weaknesses — they enumerate them
+          A senior architect doesn&apos;t pretend to have no SPOFs or no weaknesses, they enumerate them
           deliberately. &quot;These are the failures we&apos;ve designed against. These are the ones we&apos;ve chosen
           to accept. Here&apos;s the migration path if those become unacceptable.&quot; That&apos;s the answer that
           earns trust.
@@ -679,7 +679,7 @@ public ResponseEntity<Comment> create(
             question={`An interviewer says "your design has six services for 5k devs — that's overengineered." Best response?`}
             options={[
               { label: "Six services is industry standard", correct: false, explanation: "Appeal to authority. Doesn't address the critique." },
-              { label: "Fair point — minimum is 3 (review, comment, notify); search and audit start as libraries and split when they earn it", correct: true, explanation: "Right. Acknowledge the critique, defend the core, and show you'd evolve the boundaries with evidence. That's senior thinking." },
+              { label: "Fair point, minimum is 3 (review, comment, notify); search and audit start as libraries and split when they earn it", correct: true, explanation: "Right. Acknowledge the critique, defend the core, and show you'd evolve the boundaries with evidence. That's senior thinking." },
               { label: "We need separate services for separate teams to own", correct: false, explanation: "Conway's law is real but not a justification for unjustified decomposition." },
             ]}
             hint="Acknowledge what's true, defend what matters, evolve the rest."
@@ -691,8 +691,8 @@ public ResponseEntity<Comment> create(
             question={`Asked "what's your single point of failure?" The wrong answer is:`}
             options={[
               { label: "The API gateway, mitigated by running multiple instances", correct: false, explanation: "This is honest and shows you've thought about it." },
-              { label: "The corporate IdP — SSO outage blocks new logins", correct: false, explanation: "Honest acknowledgment of an external dependency. Good answer." },
-              { label: "There are no SPOFs in our design", correct: true, explanation: "Right — that's the WORST answer. Every system has SPOFs. Pretending otherwise tells the interviewer you haven't thought it through. Always enumerate them." },
+              { label: "The corporate IdP, SSO outage blocks new logins", correct: false, explanation: "Honest acknowledgment of an external dependency. Good answer." },
+              { label: "There are no SPOFs in our design", correct: true, explanation: "Right, that's the WORST answer. Every system has SPOFs. Pretending otherwise tells the interviewer you haven't thought it through. Always enumerate them." },
             ]}
           />
 
@@ -728,19 +728,19 @@ public ResponseEntity<Comment> create(
           system design.
         </p>
         <p className="mt-3">
-          The patterns repeat. The next time someone hands you &quot;design X&quot; — payments, search, notifications,
-          analytics — you&apos;ll start with the same compass. Foundations, data, traffic, reliability, evolution,
+          The patterns repeat. The next time someone hands you &quot;design X&quot;, payments, search, notifications,
+          analytics, you&apos;ll start with the same compass. Foundations, data, traffic, reliability, evolution,
           security. Numbers first, tools second, tradeoffs justified out loud.
         </p>
         <p className="mt-3 font-semibold">
-          Backend system design — complete. One more phase to go.
+          Backend system design, complete. One more phase to go.
         </p>
       </section>
 
       <section className="my-12">
-        <h3 className="mb-3 text-lg font-semibold">Next up — Phase 8: Frontend System Design</h3>
+        <h3 className="mb-3 text-lg font-semibold">Next up, Phase 8: Frontend System Design</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          The same patterns — rendering strategies, state shape, real-time, virtualization — applied to the browser. Three case studies (feed UI, real-time UI) and a closing phase-revision card. Then pick a real system at work and describe it end-to-end. The first time you do it on something live, this all clicks.
+          The same patterns, rendering strategies, state shape, real-time, virtualization, applied to the browser. Three case studies (feed UI, real-time UI) and a closing phase-revision card. Then pick a real system at work and describe it end-to-end. The first time you do it on something live, this all clicks.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="capstone" />

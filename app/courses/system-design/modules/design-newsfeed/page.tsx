@@ -102,10 +102,10 @@ export default function Page() {
           <span className="text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">The opener</span>
         </div>
         <p className="m-0 text-base leading-relaxed">
-          The interviewer says: <em>&quot;Design a news feed. Like Instagram or Facebook home.&quot;</em>{" "}The whole problem is one sentence: <strong>given a user, return the most recent posts from the people they follow, ranked, in &lt;200ms.</strong>{" "}The hard part is the asymmetry — most users have a few hundred followers, but a celebrity has 50 million, and the strategy that works for the average user breaks for the celebrity. The senior signal is recognizing that no single fanout strategy works for both, and proposing a <strong>hybrid</strong>.
+          The interviewer says: <em>&quot;Design a news feed. Like Instagram or Facebook home.&quot;</em>{" "}The whole problem is one sentence: <strong>given a user, return the most recent posts from the people they follow, ranked, in &lt;200ms.</strong>{" "}The hard part is the asymmetry, most users have a few hundred followers, but a celebrity has 50 million, and the strategy that works for the average user breaks for the celebrity. The senior signal is recognizing that no single fanout strategy works for both, and proposing a <strong>hybrid</strong>.
         </p>
         <p className="mt-3 mb-0 text-sm text-slate-600 dark:text-slate-400">
-          We&apos;ll use the framework: clarify, estimate, API + data, high-level, deep-dive on the fanout choice. The fanout decision IS the interview here — get it right and the rest follows.
+          We&apos;ll use the framework: clarify, estimate, API + data, high-level, deep-dive on the fanout choice. The fanout decision IS the interview here, get it right and the rest follows.
         </p>
       </section>
 
@@ -120,7 +120,7 @@ export default function Page() {
           <li><strong>Home feed.</strong>{" "}User opens the app, gets ~50 most recent posts from people they follow, in reverse-chronological order.</li>
         </ul>
         <p>
-          Out of scope: ranking by ML, ads, comments/likes, stories, search, push notifications. I&apos;ll mention ranking at wrap because in real products the feed is ranked, not chronological — but the architecture for chronological is the foundation.
+          Out of scope: ranking by ML, ads, comments/likes, stories, search, push notifications. I&apos;ll mention ranking at wrap because in real products the feed is ranked, not chronological, but the architecture for chronological is the foundation.
         </p>
 
         <h3>Non-functional requirements</h3>
@@ -134,7 +134,7 @@ export default function Page() {
         <Callout variant="info" title="Questions I'd ask the interviewer">
           <ul className="m-0">
             <li>Strict reverse-chrono, or ranked? (I&apos;ll assume chrono and mention ranking at wrap.)</li>
-            <li>Are there celebrity-class users (millions of followers)? (Yes — this changes everything.)</li>
+            <li>Are there celebrity-class users (millions of followers)? (Yes, this changes everything.)</li>
             <li>What&apos;s the typical follower count distribution?</li>
             <li>Should the feed include the user&apos;s own posts? (Usually yes.)</li>
           </ul>
@@ -168,16 +168,16 @@ Storage (timelines):
   Posts table: 500M × 0.5/day × 365 days × 3 yrs × ~1KB = ~270 TB (cold-tier candidates)`}</CodeBlock>
 
         <p>
-          Two takeaways: (1) the average user&apos;s fanout is fine — 1.8M writes/sec across a sharded Redis cluster is routine. (2) <strong>The celebrity case is structurally broken under fanout-on-write.</strong>{" "}One celebrity post = 50M timeline writes; that single event can saturate a fanout queue. This is the canonical hot-key problem and it&apos;s why a hybrid is the right answer.
+          Two takeaways: (1) the average user&apos;s fanout is fine, 1.8M writes/sec across a sharded Redis cluster is routine. (2) <strong>The celebrity case is structurally broken under fanout-on-write.</strong>{" "}One celebrity post = 50M timeline writes; that single event can saturate a fanout queue. This is the canonical hot-key problem and it&apos;s why a hybrid is the right answer.
         </p>
 
         <Quiz
           question="The interviewer pushes: 'Why is the celebrity case different from the average user, beyond just being bigger?'"
           options={[
-            { label: "It's not just bigger — it's structurally different. Average fanout (200 writes per post) is uniform load: spread across millions of authors, you get steady throughput. A celebrity post (50M writes) is a single hot event that produces a sudden burst in a tiny number of timeline shards (the celebrity's followers' shards). It overwhelms a fanout queue and creates write-amplification asymmetry that the average case doesn't.", correct: true, explanation: "Yes. The senior framing: not 'big' but 'asymmetric.' Bursty single events vs steady distributed load are fundamentally different problems and need different mechanisms." },
-            { label: "Celebrities post more often than average users.", explanation: "The hard problem isn't post frequency — it's per-post fanout scale. A celebrity who posts once a day still produces a 50M-write event when they do." },
+            { label: "It's not just bigger, it's structurally different. Average fanout (200 writes per post) is uniform load: spread across millions of authors, you get steady throughput. A celebrity post (50M writes) is a single hot event that produces a sudden burst in a tiny number of timeline shards (the celebrity's followers' shards). It overwhelms a fanout queue and creates write-amplification asymmetry that the average case doesn't.", correct: true, explanation: "Yes. The senior framing: not 'big' but 'asymmetric.' Bursty single events vs steady distributed load are fundamentally different problems and need different mechanisms." },
+            { label: "Celebrities post more often than average users.", explanation: "The hard problem isn't post frequency, it's per-post fanout scale. A celebrity who posts once a day still produces a 50M-write event when they do." },
             { label: "Celebrity posts get more engagement so they need more compute.", explanation: "Engagement is real but separate from fanout. We're talking about the write-amplification of the fanout itself, not the read traffic afterwards." },
-            { label: "Celebrities follow more people.", explanation: "Not relevant — what matters is how many follow them, not how many they follow." },
+            { label: "Celebrities follow more people.", explanation: "Not relevant, what matters is how many follow them, not how many they follow." },
           ]}
           hint="Distribution shape, not magnitude."
           xp={8}
@@ -186,10 +186,10 @@ Storage (timelines):
         <Quiz
           question="At 1.8M timeline writes/sec peak (from average users alone), what's the first architectural decision the math forces?"
           options={[
-            { label: "Fanout has to be async — the post-create API can't synchronously write to 200 timelines and return in <200ms. We need a queue between post-create and the timeline writers.", correct: true, explanation: "Right. The math forces the queue: synchronous fanout would multiply the post-create latency by the follower count. Async fanout decouples the user-facing path from the heavy work." },
+            { label: "Fanout has to be async, the post-create API can't synchronously write to 200 timelines and return in <200ms. We need a queue between post-create and the timeline writers.", correct: true, explanation: "Right. The math forces the queue: synchronous fanout would multiply the post-create latency by the follower count. Async fanout decouples the user-facing path from the heavy work." },
             { label: "We need a single global Redis cluster.", explanation: "Sharding decisions come later. The first force from the math is async vs sync, which is structural." },
             { label: "We need to switch from Postgres to Cassandra.", explanation: "Store choice is a downstream decision. The structural decision the math forces is async fanout." },
-            { label: "We need to cap follower counts.", explanation: "Real products don't cap follows — you'd lose the celebrity use case entirely." },
+            { label: "We need to cap follower counts.", explanation: "Real products don't cap follows, you'd lose the celebrity use case entirely." },
           ]}
           hint="Look at what's between the API call and the 200 followers' timelines."
           xp={6}
@@ -197,10 +197,10 @@ Storage (timelines):
 
         <PartRecap
           title="Part 1 recap"
-          gist="The feed problem is shaped by one number: the follower-count distribution. Average users are uniform load; celebrities are hot events. The architecture has to handle both — that's why no single fanout strategy works, and why a hybrid is the senior answer."
+          gist="The feed problem is shaped by one number: the follower-count distribution. Average users are uniform load; celebrities are hot events. The architecture has to handle both, that's why no single fanout strategy works, and why a hybrid is the senior answer."
           points={[
             { takeaway: "Scope: post, follow, chronological feed", detail: "Three primitives. Punt ranking, comments, search at first; mention them at wrap. Real feeds are ranked, but chronological is the architectural foundation." },
-            { takeaway: "Quantify the asymmetry", detail: "Average fanout: 200 writes per post, 1.8M writes/sec total — uniform. Celebrity fanout: 50M writes per post — bursty hot event. Different mechanisms needed." },
+            { takeaway: "Quantify the asymmetry", detail: "Average fanout: 200 writes per post, 1.8M writes/sec total, uniform. Celebrity fanout: 50M writes per post, bursty hot event. Different mechanisms needed." },
             { takeaway: "Async fanout is forced by latency", detail: "Synchronous fanout would tie post-create latency to follower count. A queue between post-create and timeline writes is the structural fix." },
             { takeaway: "Eventual consistency on the feed is acceptable", detail: "5-10 seconds of staleness is fine. That tolerance is what lets fanout be async, lets timelines be cached, lets reads be fast." },
           ]}
@@ -263,7 +263,7 @@ record CreatePostRequest(@NotBlank @Size(max = 5000) String text, @URL String im
 record FeedResponse(List<PostDto> posts, String nextCursor) {}`}</CodeBlock>
 
         <p>
-          Three things to call out: (1) post-create returns immediately after enqueueing fanout — that&apos;s the async boundary the latency math forced. (2) on a new follow we backfill the timeline so users don&apos;t see an empty feed; this is the kind of detail that signals you&apos;ve actually shipped feeds. (3) the feed endpoint takes a cursor for pagination, not an offset, because ZSETs don&apos;t support efficient offset paging.
+          Three things to call out: (1) post-create returns immediately after enqueueing fanout, that&apos;s the async boundary the latency math forced. (2) on a new follow we backfill the timeline so users don&apos;t see an empty feed; this is the kind of detail that signals you&apos;ve actually shipped feeds. (3) the feed endpoint takes a cursor for pagination, not an offset, because ZSETs don&apos;t support efficient offset paging.
         </p>
 
         <h2>Data model</h2>
@@ -310,15 +310,15 @@ Celebrity flag (in user metadata):
         </p>
         <ul>
           <li><strong>Write path:</strong>{" "}Post API persists to DB, enqueues a fanout job, returns immediately.</li>
-          <li><strong>Fanout worker:</strong>{" "}dequeues a job, looks up the author&apos;s followers, ZADDs the post into each follower&apos;s timeline ZSET. <strong>Skips celebrity authors</strong> — their followers will pull at read time.</li>
+          <li><strong>Fanout worker:</strong>{" "}dequeues a job, looks up the author&apos;s followers, ZADDs the post into each follower&apos;s timeline ZSET. <strong>Skips celebrity authors</strong>, their followers will pull at read time.</li>
           <li><strong>Read path:</strong>{" "}Feed API ZREVRANGEs the user&apos;s timeline (precomputed for non-celeb authors) AND pulls recent posts from each celebrity the user follows. Merge, sort, return.</li>
         </ul>
 
         <Quiz
           question="Why backfill a new follower's timeline when they hit the follow button?"
           options={[
-            { label: "Otherwise their feed shows nothing for the followed user until that user posts again. Backfilling pulls the followed user's last N posts and ZADDs them so the new follower's feed is immediately useful.", correct: true, explanation: "Right. UX is the reason — but the architectural cost is one extra small batch of writes at follow time, paid once. Naming this detail signals product-aware design." },
-            { label: "It's required for consistency.", explanation: "It's not a consistency issue — without backfill the system is consistent but the feed appears empty for the newly-followed user until they post." },
+            { label: "Otherwise their feed shows nothing for the followed user until that user posts again. Backfilling pulls the followed user's last N posts and ZADDs them so the new follower's feed is immediately useful.", correct: true, explanation: "Right. UX is the reason, but the architectural cost is one extra small batch of writes at follow time, paid once. Naming this detail signals product-aware design." },
+            { label: "It's required for consistency.", explanation: "It's not a consistency issue, without backfill the system is consistent but the feed appears empty for the newly-followed user until they post." },
             { label: "It avoids the celebrity problem.", explanation: "Backfill applies to everyone equally; it doesn't address the celebrity problem (which is fanout-on-write at post time)." },
             { label: "It's a denormalization required by the schema.", explanation: "The schema works without backfill. Backfill is a UX choice, not a schema requirement." },
           ]}
@@ -330,7 +330,7 @@ Celebrity flag (in user metadata):
           question="Why use cursor-based pagination instead of offset on the feed endpoint?"
           options={[
             { label: "ZSETs support O(log N) range queries by score, so cursor = (timestamp, post_id) lets us page efficiently. Offset paging would require skipping N entries on each page, which is O(N+K) per call and gets slower as you scroll. Cursors are also stable across new posts inserted at the head.", correct: true, explanation: "Yes. Both the data structure and the consistency-under-inserts arguments matter. Senior candidates name both." },
-            { label: "Offset is deprecated in REST APIs.", explanation: "Offset is fine for some workloads (small datasets, no inserts) — it's just wrong for feeds." },
+            { label: "Offset is deprecated in REST APIs.", explanation: "Offset is fine for some workloads (small datasets, no inserts), it's just wrong for feeds." },
             { label: "Cursors are smaller on the wire.", explanation: "Marginal at best, and not the architectural reason." },
             { label: "Offset breaks Redis.", explanation: "Redis supports both LRANGE-style offset and ZRANGEBYSCORE cursor patterns. The reason to choose cursors is consistency under inserts and O(log N) lookup." },
           ]}
@@ -340,9 +340,9 @@ Celebrity flag (in user metadata):
 
         <PartRecap
           title="Part 2 recap"
-          gist="Three endpoints, three storage layers (posts in a durable DB, follows in a graph-shaped store, timelines in Redis ZSETs). The async fanout queue is the structural decoupler. Celebrities skip fanout-on-write — that's the seed of the hybrid we'll dig into next."
+          gist="Three endpoints, three storage layers (posts in a durable DB, follows in a graph-shaped store, timelines in Redis ZSETs). The async fanout queue is the structural decoupler. Celebrities skip fanout-on-write, that's the seed of the hybrid we'll dig into next."
           points={[
-            { takeaway: "Async post-create — enqueue and return", detail: "Synchronous fanout would tie latency to follower count. The queue is the latency boundary that keeps post-create <200ms regardless of follower fan." },
+            { takeaway: "Async post-create, enqueue and return", detail: "Synchronous fanout would tie latency to follower count. The queue is the latency boundary that keeps post-create <200ms regardless of follower fan." },
             { takeaway: "Three stores, each chosen for its access pattern", detail: "Posts in a durable PK store; follow graph in a graph-shaped store; timelines in Redis ZSETs (O(log N) range, bounded memory)." },
             { takeaway: "Backfill on follow, cursor on read", detail: "Backfill pulls the followed user's recent posts so the new follower sees a non-empty feed. Cursor pagination keeps reads stable when new posts arrive at the head." },
             { takeaway: "Celebrity branch sketched, not solved", detail: "Diagram shows celebrities skip fanout-on-write. The how (pull at read time, merge with cached timeline) is the deep-dive ahead." },
@@ -351,14 +351,14 @@ Celebrity flag (in user metadata):
       </Checkpoint>
 
       <Checkpoint moduleSlug={mod.slug} id="fanout-deep-dive" title="Part 3 · Fanout deep-dive (the interview)" xp={14}>
-        <h2>The three fanout strategies — name them, compare, hybridize</h2>
+        <h2>The three fanout strategies, name them, compare, hybridize</h2>
         <p>
           This is where the interview lives. There are exactly three approaches; you should know all three, when each is best, and why no single one wins.
         </p>
 
         <h3>A. Fanout-on-write (push)</h3>
         <p>
-          On post, write the post_id into every follower&apos;s precomputed timeline ZSET. Read is fast — one ZREVRANGE and you&apos;re done. Write is expensive — proportional to follower count.
+          On post, write the post_id into every follower&apos;s precomputed timeline ZSET. Read is fast, one ZREVRANGE and you&apos;re done. Write is expensive, proportional to follower count.
         </p>
         <ul>
           <li><strong>Best for:</strong>{" "}users with small follower counts (the vast majority).</li>
@@ -368,7 +368,7 @@ Celebrity flag (in user metadata):
 
         <h3>B. Fanout-on-read (pull)</h3>
         <p>
-          On post, write only the post itself. On read, query each followed user&apos;s recent posts and merge by timestamp. Writes are cheap. Reads are expensive — proportional to <em>following</em>{" "}count.
+          On post, write only the post itself. On read, query each followed user&apos;s recent posts and merge by timestamp. Writes are cheap. Reads are expensive, proportional to <em>following</em>{" "}count.
         </p>
         <ul>
           <li><strong>Best for:</strong>{" "}users who follow few people, or for the celebrity branch where push doesn&apos;t scale.</li>
@@ -378,16 +378,16 @@ Celebrity flag (in user metadata):
 
         <h3>C. Hybrid (push + pull)</h3>
         <p>
-          Push for non-celebrities (most posts; small fanout per post). Pull for celebrities (few authors; large follower count). On read, merge the user&apos;s precomputed timeline with the recent posts of each celebrity they follow. The pull step is bounded by &quot;how many celebrities do you follow?&quot; — usually &lt;50 — which is a small N of small SELECTs.
+          Push for non-celebrities (most posts; small fanout per post). Pull for celebrities (few authors; large follower count). On read, merge the user&apos;s precomputed timeline with the recent posts of each celebrity they follow. The pull step is bounded by &quot;how many celebrities do you follow?&quot;, usually &lt;50, which is a small N of small SELECTs.
         </p>
 
         <p>
           <strong>This is the right answer.</strong>{" "}Push is wrong for celebrities; pull is wrong for normal users; hybrid does the right thing for each.
         </p>
 
-        <Callout variant="warn" title="The threshold question — name it before they ask">
+        <Callout variant="warn" title="The threshold question, name it before they ask">
           <p className="m-0">
-            What follower count makes someone &quot;celebrity&quot;? In practice ~10k-100k is where push starts hurting. I&apos;d set the threshold around 100k followers and tune it by watching fanout queue lag. If queue lag exceeds, say, 30 seconds during normal traffic, lower the threshold so more authors go pull. This is a tuneable knob and you should call it out as such — not a hardcoded constant.
+            What follower count makes someone &quot;celebrity&quot;? In practice ~10k-100k is where push starts hurting. I&apos;d set the threshold around 100k followers and tune it by watching fanout queue lag. If queue lag exceeds, say, 30 seconds during normal traffic, lower the threshold so more authors go pull. This is a tuneable knob and you should call it out as such, not a hardcoded constant.
           </p>
         </Callout>
 
@@ -405,12 +405,12 @@ Celebrity flag (in user metadata):
             { id: "hybrid", label: "Hybrid (both)", color: "emerald" },
           ]}
           items={[
-            { id: "celebrity-50m", label: "Celebrity author with 50M followers posts", answer: "pull", explanation: "Push would write 50M timeline entries per post — a hot event that saturates the fanout queue. Pull means the post is written once; followers fetch on read." },
+            { id: "celebrity-50m", label: "Celebrity author with 50M followers posts", answer: "pull", explanation: "Push would write 50M timeline entries per post, a hot event that saturates the fanout queue. Pull means the post is written once; followers fetch on read." },
             { id: "average-user-200", label: "Average user with 200 followers posts", answer: "push", explanation: "200 writes per post is uniform, cheap load. Push gives instant feed for every follower with sub-millisecond reads." },
             { id: "celeb-and-normals", label: "User who follows 100 normal accounts and 5 celebrities reads their feed", answer: "hybrid", explanation: "Their precomputed timeline has the 100 normals' posts; on read we additionally pull recent posts from the 5 celebs and merge. That's the hybrid read path." },
             { id: "new-follow-backfill", label: "User just followed a new account; backfill their feed", answer: "push", explanation: "Backfill is a one-time push of the followed user's recent posts into the new follower's timeline. Pure push at follow time." },
             { id: "low-follow-account", label: "User with only 20 follows ever; reads their feed", answer: "pull", explanation: "20 SELECTs is cheap, and avoids paying for storing a precomputed timeline they barely use. Some products pull-only for low-engagement users to save memory." },
-            { id: "viral-post-by-normal", label: "Average user's post unexpectedly goes viral and is shared widely", answer: "push", explanation: "Followers of the original author still get the post via push. Resharing/quoting is a separate fanout event for the resharer's followers — also push (assuming the resharer isn't a celeb)." },
+            { id: "viral-post-by-normal", label: "Average user's post unexpectedly goes viral and is shared widely", answer: "push", explanation: "Followers of the original author still get the post via push. Resharing/quoting is a separate fanout event for the resharer's followers, also push (assuming the resharer isn't a celeb)." },
           ]}
         />
 
@@ -448,7 +448,7 @@ public class FanoutWorker {
 }`}</CodeBlock>
 
         <p>
-          Three things to point at: (1) the celebrity check is the first gate — non-celeb authors get fanned out, celebs return early. (2) followers are streamed and chunked so a 50k-follower author doesn&apos;t pull all 50k IDs into memory before writing. (3) writes go in batches via Redis pipelining (the <code>zaddBatch</code> implementation), so we issue ~50k commands per network round-trip instead of 1 per round-trip.
+          Three things to point at: (1) the celebrity check is the first gate, non-celeb authors get fanned out, celebs return early. (2) followers are streamed and chunked so a 50k-follower author doesn&apos;t pull all 50k IDs into memory before writing. (3) writes go in batches via Redis pipelining (the <code>zaddBatch</code> implementation), so we issue ~50k commands per network round-trip instead of 1 per round-trip.
         </p>
 
         <h2>Building the hybrid feed</h2>
@@ -476,7 +476,7 @@ public class TimelineService {
           question="Why parallelStream() on the celebrity pull?"
           options={[
             { label: "Each celebrity post lookup is an independent IO call to the posts DB. Doing them sequentially would add up to N × per-call latency. Parallelizing across the small N (typically <50 celebs followed) keeps the pull-side latency to roughly one round-trip plus merge time.", correct: true, explanation: "Right. Parallel I/O is the move when each call is independent and bounded. You'd want a thread pool or a non-blocking client in production; parallelStream is fine sketch-level." },
-            { label: "Java parallelStream is faster than serial stream for any workload.", explanation: "Not true — for CPU-bound or small workloads parallelStream often hurts. The reason here is independent I/O." },
+            { label: "Java parallelStream is faster than serial stream for any workload.", explanation: "Not true, for CPU-bound or small workloads parallelStream often hurts. The reason here is independent I/O." },
             { label: "Parallelism prevents head-of-line blocking on the cache.", explanation: "There's no shared cache contention here that parallelism would resolve; the reason is independent I/O latency." },
             { label: "It's required by the parallelStream's reduction semantics.", explanation: "There's no semantic requirement; serial would produce the same result, just slower." },
           ]}
@@ -488,9 +488,9 @@ public class TimelineService {
           question="A user complains: 'I followed a celebrity 30 minutes ago and they posted 5 minutes ago, but I don't see the post.' What's the most likely cause?"
           options={[
             { label: "Celebrities skip fanout-on-write, so their posts only show via the read-time pull. If the user's pull-side query isn't including this celebrity, the bug is in the celebrity-followed lookup or in the user's celebrity-set caching. Confirm: does the user's followed-celebrities cache include the new follow?", correct: true, explanation: "Yes. The first thing to check is whether the read path knows the user follows this celebrity. The follow happened, but the cached celebrity-set might be stale, so the pull query never reaches that celeb's recent posts." },
-            { label: "Fanout queue is backed up.", explanation: "Doesn't apply — celebrity posts skip the fanout queue entirely. If the bug were a backed-up queue, only non-celebs would be missing." },
-            { label: "Redis ZSET evicted the post.", explanation: "Posts from celebs aren't in the user's ZSET — they're never written there. ZSET eviction can't be the cause for celebrity posts." },
-            { label: "The celebrity's post hasn't been persisted yet.", explanation: "You said the post was 5 minutes ago — well past the persistence write. The post exists; the read path isn't finding it." },
+            { label: "Fanout queue is backed up.", explanation: "Doesn't apply, celebrity posts skip the fanout queue entirely. If the bug were a backed-up queue, only non-celebs would be missing." },
+            { label: "Redis ZSET evicted the post.", explanation: "Posts from celebs aren't in the user's ZSET, they're never written there. ZSET eviction can't be the cause for celebrity posts." },
+            { label: "The celebrity's post hasn't been persisted yet.", explanation: "You said the post was 5 minutes ago, well past the persistence write. The post exists; the read path isn't finding it." },
           ]}
           hint="Trace the read path for a celebrity post and ask which step is failing."
           xp={8}
@@ -498,7 +498,7 @@ public class TimelineService {
 
         <PartRecap
           title="Part 3 recap"
-          gist="Hybrid fanout — push for non-celebs, pull for celebs — is the right answer because the average and the extreme have structurally different load shapes. The threshold is a tuneable knob, not a constant."
+          gist="Hybrid fanout, push for non-celebs, pull for celebs, is the right answer because the average and the extreme have structurally different load shapes. The threshold is a tuneable knob, not a constant."
           points={[
             { takeaway: "Push optimizes read latency at the cost of write amplification", detail: "Best for the bulk of users where follower count is small. Reads = one ZREVRANGE, sub-millisecond." },
             { takeaway: "Pull optimizes write cost at the cost of read fanout", detail: "Best for celebrity authors where push is structurally broken. Reads pay N small SELECTs proportional to follows." },
@@ -511,13 +511,13 @@ public class TimelineService {
       <Checkpoint moduleSlug={mod.slug} id="ranking-layer" title="Part 4 · Ranking layer (the ML systems lens)" xp={14}>
         <h2>Why ranking exists at all</h2>
         <p>
-          The system we just built returns the most recent posts from people you follow. That&apos;s how Facebook actually worked until ~2009, and it broke at scale for a boring reason: <strong>users have too many friends</strong>. If you follow 500 people who collectively post 2,000 times a day, your reverse-chronological feed pushes your sister&apos;s wedding photos off the top within minutes — buried under random lunch pics from acquaintances. The fanout system worked perfectly; the <em>product</em>{" "}was failing.
+          The system we just built returns the most recent posts from people you follow. That&apos;s how Facebook actually worked until ~2009, and it broke at scale for a boring reason: <strong>users have too many friends</strong>. If you follow 500 people who collectively post 2,000 times a day, your reverse-chronological feed pushes your sister&apos;s wedding photos off the top within minutes, buried under random lunch pics from acquaintances. The fanout system worked perfectly; the <em>product</em>{" "}was failing.
         </p>
         <p>
           The fix is to score every candidate post by predicted engagement and reorder. Controversial in the abstract, but for the interview it&apos;s the constraint: <strong>ranking optimizes for engagement (time spent, interactions)</strong>, and that&apos;s the metric the system is graded on. Note the second-order architectural consequence: <strong>without ranking, fanout strategy stops mattering past N≈200 friends.</strong>{" "}If you only ever read the top 50 of your timeline anyway, it doesn&apos;t matter whether the bottom 9,950 candidates were precomputed or not. Ranking makes candidate <em>generation</em>{" "}matter more than candidate <em>delivery</em>.
         </p>
 
-        <Callout variant="info" title="The architecture above doesn't change — ranking is an addition">
+        <Callout variant="info" title="The architecture above doesn't change, ranking is an addition">
           <p className="m-0">
             Hybrid fanout still produces the candidate set. Ranking is a transform applied to that set before the response. You don&apos;t throw away the previous three parts; you stack a ranking funnel on top of them. That&apos;s the single most important framing for the interview: <em>delivery and ranking are orthogonal concerns</em>.
           </p>
@@ -525,22 +525,22 @@ public class TimelineService {
 
         <h2>The three-stage funnel: candidate gen → ranking → re-ranking</h2>
         <p>
-          Every production feed-ranking system on the planet looks like this funnel. Get the shape in your head — the names, the sizes, the cost profile of each stage.
+          Every production feed-ranking system on the planet looks like this funnel. Get the shape in your head, the names, the sizes, the cost profile of each stage.
         </p>
 
         <Mermaid chart={rankingFunnelDiagram} />
 
         <h3>Stage 1 · Candidate generation (~10,000 candidates)</h3>
         <p>
-          The question this stage answers is <em>&quot;what could this user plausibly see?&quot;</em>{" "}It&apos;s recall-oriented — false negatives are catastrophic (a great post you never considered), false positives are cheap (the next stage filters them). Candidates come from multiple parallel <strong>retrieval sources</strong>:
+          The question this stage answers is <em>&quot;what could this user plausibly see?&quot;</em>{" "}It&apos;s recall-oriented, false negatives are catastrophic (a great post you never considered), false positives are cheap (the next stage filters them). Candidates come from multiple parallel <strong>retrieval sources</strong>:
         </p>
         <ul>
-          <li><strong>Friends&apos; recent posts</strong> — the hybrid timeline we built in Parts 2-3.</li>
-          <li><strong>Groups joined / pages followed</strong> — same fanout pattern, different graph edge.</li>
-          <li><strong>Follow-graph 2-hop</strong> — &quot;your friend liked this&quot; posts, fetched from a graph traversal.</li>
-          <li><strong>Viral content pool</strong> — top-K trending posts globally, regardless of follow.</li>
-          <li><strong>Embedding-based ANN</strong> — &quot;posts similar to ones you engaged with&quot;, served from a vector index (FAISS, ScaNN, Vespa).</li>
-          <li><strong>Ads inventory</strong> — separate retrieval system, joined in here so ads compete with organic in ranking.</li>
+          <li><strong>Friends&apos; recent posts</strong>, the hybrid timeline we built in Parts 2-3.</li>
+          <li><strong>Groups joined / pages followed</strong>, same fanout pattern, different graph edge.</li>
+          <li><strong>Follow-graph 2-hop</strong>, &quot;your friend liked this&quot; posts, fetched from a graph traversal.</li>
+          <li><strong>Viral content pool</strong>, top-K trending posts globally, regardless of follow.</li>
+          <li><strong>Embedding-based ANN</strong>, &quot;posts similar to ones you engaged with&quot;, served from a vector index (FAISS, ScaNN, Vespa).</li>
+          <li><strong>Ads inventory</strong>, separate retrieval system, joined in here so ads compete with organic in ranking.</li>
         </ul>
         <p>
           Each source is a <strong>separate retrieval system</strong>{" "}with its own latency and cache budget. They run in parallel and union their outputs. Latency budget per source: ~10-30ms.
@@ -548,12 +548,12 @@ public class TimelineService {
 
         <h3>Stage 2 · Ranking (~500 survivors)</h3>
         <p>
-          The question here is <em>&quot;which 500 of these 10,000 are the best?&quot;</em>{" "}This is where the heavy ML lives — a neural network scores each candidate against the user. Modern ranking is <strong>multi-task</strong>: a single network predicts P(like), P(comment), P(share), P(skip), P(report), and a final score is a weighted sum tuned by the product team.
+          The question here is <em>&quot;which 500 of these 10,000 are the best?&quot;</em>{" "}This is where the heavy ML lives, a neural network scores each candidate against the user. Modern ranking is <strong>multi-task</strong>: a single network predicts P(like), P(comment), P(share), P(skip), P(report), and a final score is a weighted sum tuned by the product team.
         </p>
         <ul>
           <li><strong>Features per candidate:</strong>{" "}user history embedding, post content embedding, post age, author affinity (how often you engage with this author), recent CTR on similar content.</li>
           <li><strong>Compute cost:</strong> 10,000 candidates × one forward pass each. Either batched on a GPU or distilled into a lighter model. Latency budget: 30-50ms total.</li>
-          <li><strong>Why a neural net and not a heuristic?</strong>{" "}Heuristics work until they don&apos;t — &quot;recent + popular&quot; was the rule for years; it lost to learned models because the interaction effects (this user, this author, this time of day, this content type) are too combinatorial to hand-tune.</li>
+          <li><strong>Why a neural net and not a heuristic?</strong>{" "}Heuristics work until they don&apos;t, &quot;recent + popular&quot; was the rule for years; it lost to learned models because the interaction effects (this user, this author, this time of day, this content type) are too combinatorial to hand-tune.</li>
         </ul>
 
         <h3>Stage 3 · Re-ranking (~50 final posts)</h3>
@@ -561,22 +561,22 @@ public class TimelineService {
           The question here is <em>&quot;of the top 500, which final 50 do we show, and in what order?&quot;</em>{" "}This stage is rule-based, not learned. It enforces:
         </p>
         <ul>
-          <li><strong>Diversity</strong> — don&apos;t show 5 cat photos in a row even if the model loves them. Cap consecutive items by author, topic, content type.</li>
-          <li><strong>Freshness boost</strong> — penalize posts older than ~24h; the model alone often over-weights timeless content.</li>
-          <li><strong>Business constraints</strong> — ads every N posts (typically 1-in-6 to 1-in-10), no two ads adjacent, no two posts from the same advertiser within K positions.</li>
-          <li><strong>Floor rules</strong> — guarantee at least one post from a close friend in the top 10 even if the model didn&apos;t pick them.</li>
+          <li><strong>Diversity</strong>, don&apos;t show 5 cat photos in a row even if the model loves them. Cap consecutive items by author, topic, content type.</li>
+          <li><strong>Freshness boost</strong>, penalize posts older than ~24h; the model alone often over-weights timeless content.</li>
+          <li><strong>Business constraints</strong>, ads every N posts (typically 1-in-6 to 1-in-10), no two ads adjacent, no two posts from the same advertiser within K positions.</li>
+          <li><strong>Floor rules</strong>, guarantee at least one post from a close friend in the top 10 even if the model didn&apos;t pick them.</li>
         </ul>
         <p>
-          Re-ranking is cheap (~5ms) but politically expensive — every product team wants their thumb on this scale. Treat it as a configuration layer with a config-as-code review process.
+          Re-ranking is cheap (~5ms) but politically expensive, every product team wants their thumb on this scale. Treat it as a configuration layer with a config-as-code review process.
         </p>
 
         <Quiz
           question="Why split candidate generation and ranking into separate stages instead of running one big model over everything in the user's reachable graph?"
           options={[
-            { label: "Cost. Running the heavy ranking model over millions of reachable posts is computationally infeasible at request time. Candidate generation is a fast, recall-oriented funnel that brings the set down to ~10K — small enough that the heavier ranking model can score every survivor inside the latency budget. The two stages have fundamentally different cost models: cheap-and-broad vs expensive-and-precise.", correct: true, explanation: "Right. The funnel exists because you can't afford to run a 100M-parameter model over 10M candidates per feed load. Each stage is a different cost/quality trade." },
+            { label: "Cost. Running the heavy ranking model over millions of reachable posts is computationally infeasible at request time. Candidate generation is a fast, recall-oriented funnel that brings the set down to ~10K, small enough that the heavier ranking model can score every survivor inside the latency budget. The two stages have fundamentally different cost models: cheap-and-broad vs expensive-and-precise.", correct: true, explanation: "Right. The funnel exists because you can't afford to run a 100M-parameter model over 10M candidates per feed load. Each stage is a different cost/quality trade." },
             { label: "Because candidate generation requires writes and ranking is read-only.", explanation: "Both stages are read-only at request time. The split is a compute budget decision, not a read/write boundary." },
             { label: "To support multiple A/B test cells.", explanation: "A/B testing happens regardless of the funnel structure. The funnel exists because of compute economics." },
-            { label: "Ranking models can't operate on more than 1,000 inputs.", explanation: "There's no hard limit; the model would happily ingest more — but at unacceptable cost and latency." },
+            { label: "Ranking models can't operate on more than 1,000 inputs.", explanation: "There's no hard limit; the model would happily ingest more, but at unacceptable cost and latency." },
           ]}
           hint="Multiply the candidate count by the per-candidate model cost. What does it look like at 10M candidates?"
           xp={8}
@@ -592,32 +592,32 @@ public class TimelineService {
           <li><strong>Feature cache:</strong>{" "}user-side features (profile embedding, recent activity vector) cached at session start. Post-side features cached per post for ~5 minutes.</li>
         </ul>
         <p>
-          The reason this works: <strong>the user&apos;s scroll behavior is the cache eviction policy</strong>. They&apos;ll see the top 50 and bail; recomputing past position 50 is wasted compute most of the time. Reality check on scale: Facebook serves ~1B feed loads/day. At that volume, re-running the full funnel on every load is impossible by a factor of ~100x — caching <em>is</em>{" "}the architecture.
+          The reason this works: <strong>the user&apos;s scroll behavior is the cache eviction policy</strong>. They&apos;ll see the top 50 and bail; recomputing past position 50 is wasted compute most of the time. Reality check on scale: Facebook serves ~1B feed loads/day. At that volume, re-running the full funnel on every load is impossible by a factor of ~100x, caching <em>is</em>{" "}the architecture.
         </p>
 
         <Callout variant="warn" title="What you cache vs what you don't">
           <p className="m-0">
-            Cache the <em>candidate set</em>{" "}and the <em>ranked order</em>. Don&apos;t cache the final assembled response — re-ranking constraints (ads cadence, diversity windows, floor rules) depend on what the user has already seen <em>this session</em>, which the cache doesn&apos;t know. Re-ranking is cheap; run it fresh on every page request against the cached ranked top 500.
+            Cache the <em>candidate set</em>{" "}and the <em>ranked order</em>. Don&apos;t cache the final assembled response, re-ranking constraints (ads cadence, diversity windows, floor rules) depend on what the user has already seen <em>this session</em>, which the cache doesn&apos;t know. Re-ranking is cheap; run it fresh on every page request against the cached ranked top 500.
           </p>
         </Callout>
 
         <h2>A/B testing at the feed level</h2>
         <p>
-          You don&apos;t ship a new ranking model the way you ship a backend change — you ship it to 1% of users, watch metrics for a week, and ramp from there. The infrastructure for this lives next to the ranking service and you should be ready to talk about it.
+          You don&apos;t ship a new ranking model the way you ship a backend change, you ship it to 1% of users, watch metrics for a week, and ramp from there. The infrastructure for this lives next to the ranking service and you should be ready to talk about it.
         </p>
         <ul>
           <li><strong>Bucketing:</strong>{" "}consistent hashing on user_id maps every user to a stable bucket. The same user always gets the same experiment cell unless explicitly rerolled.</li>
           <li><strong>Why you can&apos;t change buckets mid-experiment:</strong>{" "}selection bias. If you move a user from cell A to cell B because A is &quot;not working for them&quot;, you&apos;ve broken the random-assignment invariant and the metric comparison is meaningless.</li>
-          <li><strong>Metrics to watch:</strong>{" "}short-term engagement (sessions, time spent, interactions) AND long-term retention (D7, D28). A model that boosts short-term engagement but tanks D28 retention is shipping outrage-bait — not what you want.</li>
-          <li><strong>Holdouts:</strong>{" "}a small population (1-5%) that <em>never</em>{" "}gets new ranking changes. Compare their long-run engagement to the rest of the user base. If holdouts show better retention than the main population, you&apos;ve been over-fitting on short-term metrics — a slow-burn quality regression you can only see with a stable control.</li>
+          <li><strong>Metrics to watch:</strong>{" "}short-term engagement (sessions, time spent, interactions) AND long-term retention (D7, D28). A model that boosts short-term engagement but tanks D28 retention is shipping outrage-bait, not what you want.</li>
+          <li><strong>Holdouts:</strong>{" "}a small population (1-5%) that <em>never</em>{" "}gets new ranking changes. Compare their long-run engagement to the rest of the user base. If holdouts show better retention than the main population, you&apos;ve been over-fitting on short-term metrics, a slow-burn quality regression you can only see with a stable control.</li>
         </ul>
         <p>
-          Real number: Meta runs roughly 1,000 concurrent A/B tests on feed ranking at any given time. Each user is in dozens of tests simultaneously. The ranking service has to know <em>which</em>{" "}tests this user is in and <em>which model variant</em>{" "}to call — usually via a feature flag service queried at the start of the request.
+          Real number: Meta runs roughly 1,000 concurrent A/B tests on feed ranking at any given time. Each user is in dozens of tests simultaneously. The ranking service has to know <em>which</em>{" "}tests this user is in and <em>which model variant</em>{" "}to call, usually via a feature flag service queried at the start of the request.
         </p>
 
         <h2>Cold start for ranking</h2>
         <p>
-          A new user has no history — no likes, no prior sessions, no engagement signal. Every candidate looks equally good to the model, which is the same as ranking randomly. You need explicit fallbacks:
+          A new user has no history, no likes, no prior sessions, no engagement signal. Every candidate looks equally good to the model, which is the same as ranking randomly. You need explicit fallbacks:
         </p>
         <ul>
           <li><strong>Demographic similarity:</strong>{" "}bootstrap the user&apos;s embedding from users with similar declared attributes (age range, region, language). Rough but usable.</li>
@@ -626,19 +626,19 @@ public class TimelineService {
           <li><strong>Active onboarding:</strong>{" "}first-session prompts (&quot;pick 3 topics&quot;) generate explicit signal you can feed into the model immediately.</li>
         </ul>
         <p>
-          This connects to the broader cold-start pattern from the caching-patterns module — same principle (no historical signal, fall back to a population prior), different surface area.
+          This connects to the broader cold-start pattern from the caching-patterns module, same principle (no historical signal, fall back to a population prior), different surface area.
         </p>
 
         <h2>What the full-stack engineer actually builds</h2>
         <p>
-          Important boundary to know in interviews: <strong>the ranking model itself is owned by the ML team</strong>. You&apos;re not training neural networks at the whiteboard. What you <em>are</em>{" "}building is the serving infrastructure around the model — and that&apos;s where most of the interesting systems work lives.
+          Important boundary to know in interviews: <strong>the ranking model itself is owned by the ML team</strong>. You&apos;re not training neural networks at the whiteboard. What you <em>are</em>{" "}building is the serving infrastructure around the model, and that&apos;s where most of the interesting systems work lives.
         </p>
         <ul>
-          <li><strong>Feature store</strong> — low-latency reads of user features (recent activity, embedding) and post features (engagement counters, content embedding) at request time. Redis or an in-memory feature server. p99 read budget: ~5ms across hundreds of features.</li>
-          <li><strong>Model serving</strong> — gRPC call to a Python TF Serving / TorchServe / Triton process. Batch the candidate set into a single inference call. p99 budget: &lt;50ms.</li>
-          <li><strong>Logging pipeline</strong> — every <em>impression</em> (post shown) and every <em>action</em> (like, comment, dwell-time, skip) goes to a Kafka topic that feeds the ML training pipeline. Without this loop, the model can&apos;t learn from what it shipped.</li>
-          <li><strong>Experiment service</strong> — flag lookup at request time to decide which model variant to call.</li>
-          <li><strong>Fallback path</strong> — if the model serving call fails or times out, drop to a heuristic ranker (recency + simple popularity). The feed must never fail closed.</li>
+          <li><strong>Feature store</strong>, low-latency reads of user features (recent activity, embedding) and post features (engagement counters, content embedding) at request time. Redis or an in-memory feature server. p99 read budget: ~5ms across hundreds of features.</li>
+          <li><strong>Model serving</strong>, gRPC call to a Python TF Serving / TorchServe / Triton process. Batch the candidate set into a single inference call. p99 budget: &lt;50ms.</li>
+          <li><strong>Logging pipeline</strong>, every <em>impression</em> (post shown) and every <em>action</em> (like, comment, dwell-time, skip) goes to a Kafka topic that feeds the ML training pipeline. Without this loop, the model can&apos;t learn from what it shipped.</li>
+          <li><strong>Experiment service</strong>, flag lookup at request time to decide which model variant to call.</li>
+          <li><strong>Fallback path</strong>, if the model serving call fails or times out, drop to a heuristic ranker (recency + simple popularity). The feed must never fail closed.</li>
         </ul>
 
         <Callout variant="warn" title="Training-serving skew is the silent killer">
@@ -696,15 +696,15 @@ public class RankedFeedController {
 }`}</CodeBlock>
 
         <p>
-          Three things to point at in the interview: (1) the <code>experiments.variantFor()</code> call right at the top — every request is in some bucket, and bucketing happens before any work that depends on the model variant. (2) the try/catch around <code>rankingClient.score</code> with a heuristic fallback — the feed never fails closed; if the model service is down, users still get a (worse) feed. (3) <code>impressionLog.logAsync</code> is the closing of the loop — without that event stream the model can&apos;t learn.
+          Three things to point at in the interview: (1) the <code>experiments.variantFor()</code> call right at the top, every request is in some bucket, and bucketing happens before any work that depends on the model variant. (2) the try/catch around <code>rankingClient.score</code> with a heuristic fallback, the feed never fails closed; if the model service is down, users still get a (worse) feed. (3) <code>impressionLog.logAsync</code> is the closing of the loop, without that event stream the model can&apos;t learn.
         </p>
 
         <Quiz
           question="The model serving call (gRPC to a Python process) starts timing out at p99 ~80ms, blowing the 200ms feed SLO. What's the right first move?"
           options={[
-            { label: "Short-circuit to the heuristic fallback when latency exceeds the budget — the feed must keep loading. In parallel, investigate the model service: is it a GC pause, a batch-size tuning issue, a feature-store slowdown propagating through? The SLO is non-negotiable; quality regression for some users is preferable to a broken feed for everyone.", correct: true, explanation: "Right. The feed never fails closed. The fallback path exists exactly for this. You diagnose in parallel — but you don't let p99 latency degrade while you investigate." },
+            { label: "Short-circuit to the heuristic fallback when latency exceeds the budget, the feed must keep loading. In parallel, investigate the model service: is it a GC pause, a batch-size tuning issue, a feature-store slowdown propagating through? The SLO is non-negotiable; quality regression for some users is preferable to a broken feed for everyone.", correct: true, explanation: "Right. The feed never fails closed. The fallback path exists exactly for this. You diagnose in parallel, but you don't let p99 latency degrade while you investigate." },
             { label: "Increase the gRPC timeout so calls don't fail.", explanation: "That makes the SLO miss worse, not better. Higher timeouts mean more users wait longer; the failure rate stays the same." },
-            { label: "Add caching in front of the model service.", explanation: "Ranking output is per-user, per-candidate-set — cache hit rate would be near zero unless the user reloads quickly. The fallback is the right immediate move." },
+            { label: "Add caching in front of the model service.", explanation: "Ranking output is per-user, per-candidate-set, cache hit rate would be near zero unless the user reloads quickly. The fallback is the right immediate move." },
             { label: "Roll back the most recent model deploy.", explanation: "That might be the right diagnosis eventually, but it doesn't address the immediate user-facing degradation. Fall back first, then diagnose." },
           ]}
           hint="What happens to the user-visible product if the model service is slow? What guarantee should the feed make even when ML is broken?"
@@ -714,9 +714,9 @@ public class RankedFeedController {
         <Quiz
           question="A new ranking model wins +3% engagement in a 1% A/B test for 7 days. The team wants to ramp to 100%. What's the most important check before you do?"
           options={[
-            { label: "Compare the test cell against a long-running holdout that has never received recent ranking changes. Short-term wins compound — many models that win in week-1 A/B tests cause slow-burn retention regressions that only show up in holdouts measured over months. Without that comparison you can't distinguish a real improvement from a sugar-rush metric.", correct: true, explanation: "Right. Short-term engagement and long-term retention often diverge. Holdouts are the only way to detect cumulative drift across many sequential 'wins'." },
+            { label: "Compare the test cell against a long-running holdout that has never received recent ranking changes. Short-term wins compound, many models that win in week-1 A/B tests cause slow-burn retention regressions that only show up in holdouts measured over months. Without that comparison you can't distinguish a real improvement from a sugar-rush metric.", correct: true, explanation: "Right. Short-term engagement and long-term retention often diverge. Holdouts are the only way to detect cumulative drift across many sequential 'wins'." },
             { label: "Re-run the experiment at 5% to confirm.", explanation: "Re-running at higher exposure gives you tighter confidence intervals on the same metric, but doesn't tell you whether short-term engagement maps to long-term retention. The holdout comparison is the missing check." },
-            { label: "Make sure the model passes offline evaluation.", explanation: "Offline eval was already passed before the A/B test launched — that's how it got there. The question is what comes next, not what came before." },
+            { label: "Make sure the model passes offline evaluation.", explanation: "Offline eval was already passed before the A/B test launched, that's how it got there. The question is what comes next, not what came before." },
             { label: "Verify the bucketing hash hasn't drifted.", explanation: "Bucketing integrity is important, but the substantive question for ramping is about long-term metrics, not infrastructure correctness." },
           ]}
           hint="What's the difference between 'this model won the A/B test' and 'this model is good for the product'?"
@@ -725,13 +725,13 @@ public class RankedFeedController {
 
         <PartRecap
           title="Part 4 recap"
-          gist="Ranking is a three-stage funnel — candidate gen, ranking model, re-ranking — stacked on top of the hybrid fanout from Parts 2-3. The full-stack engineer owns the serving infrastructure (feature store, model RPC, impression logging, experiment service, fallbacks), not the model itself. Caching and A/B testing are how this scales to 1B feed loads/day."
+          gist="Ranking is a three-stage funnel, candidate gen, ranking model, re-ranking, stacked on top of the hybrid fanout from Parts 2-3. The full-stack engineer owns the serving infrastructure (feature store, model RPC, impression logging, experiment service, fallbacks), not the model itself. Caching and A/B testing are how this scales to 1B feed loads/day."
           points={[
-            { takeaway: "The funnel exists because compute is finite", detail: "Candidate gen is recall-oriented and cheap (~10K out). Ranking is precision-oriented and expensive (~500 out). Re-ranking is rule-based and applies business constraints (~50 out). Each stage has a different cost model — that's why they're separate." },
+            { takeaway: "The funnel exists because compute is finite", detail: "Candidate gen is recall-oriented and cheap (~10K out). Ranking is precision-oriented and expensive (~500 out). Re-ranking is rule-based and applies business constraints (~50 out). Each stage has a different cost model, that's why they're separate." },
             { takeaway: "Caching is structural, not a tweak", detail: "Cache the candidate set per-user (5-15 min TTL) and the ranked top-500 per-session. Re-ranking runs fresh per page because it depends on what was already shown. At 1B/day there's no other way to fit." },
             { takeaway: "A/B testing requires bucketing AND holdouts", detail: "Consistent-hash bucketing for assignment stability. Long-running holdouts to detect slow-burn retention regressions that short-term metrics hide. Meta runs ~1000 concurrent feed-ranking tests." },
             { takeaway: "Cold start needs explicit fallbacks", detail: "New users have no signal; the model degenerates to random ordering. Fall back to demographic priors, popular content, and friend-engagement proxies until enough history accumulates." },
-            { takeaway: "Full-stack owns the serving plane, not the model", detail: "Feature store, model RPC, impression logging, experiment service, heuristic fallback — that's the system. Watch for training-serving skew: the silent quality killer." },
+            { takeaway: "Full-stack owns the serving plane, not the model", detail: "Feature store, model RPC, impression logging, experiment service, heuristic fallback, that's the system. Watch for training-serving skew: the silent quality killer." },
             { takeaway: "The feed must never fail closed", detail: "Model timeout = fall back to heuristic ranking. Feature store down = fall back to default features. Logging broken = drop logs and serve. A working bad feed beats a broken good feed every time." },
           ]}
         />
@@ -740,7 +740,7 @@ public class RankedFeedController {
       <Checkpoint moduleSlug={mod.slug} id="wrap" title="Part 5 · Wrap and what I'd revisit" xp={6}>
         <h2>What I&apos;d revisit if I had more time</h2>
         <ul>
-          <li><strong>Multi-region.</strong>{" "}Posts table replicates cross-region with conflict resolution (last-write-wins on post_id is fine because post_ids are immutable). Timelines are per-region — a user&apos;s feed is computed in their home region against the local replica of the posts table.</li>
+          <li><strong>Multi-region.</strong>{" "}Posts table replicates cross-region with conflict resolution (last-write-wins on post_id is fine because post_ids are immutable). Timelines are per-region, a user&apos;s feed is computed in their home region against the local replica of the posts table.</li>
           <li><strong>Backpressure on the fanout queue.</strong>{" "}If queue lag exceeds threshold, we should either drop the celebrity threshold dynamically (more authors go pull, less push load) or shed non-critical fanout (e.g. for inactive followers). Naming this as a control mechanism is a senior signal.</li>
           <li><strong>Inactive user GC.</strong>{" "}Storing precomputed timelines for users who haven&apos;t opened the app in 6 months is wasted memory. Periodically evict inactive timelines and lazily rebuild on next login (which is a one-time pull).</li>
         </ul>
@@ -773,7 +773,7 @@ public class RankedFeedController {
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <p className="mb-2 text-sm font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Up next</p>
         <p className="m-0 text-base">
-          Module 36: Design Twitter. Newsfeed + timelines + search + trending — a busier surface area, but the framework you just used on news feed handles all of it.
+          Module 36: Design Twitter. Newsfeed + timelines + search + trending, a busier surface area, but the framework you just used on news feed handles all of it.
         </p>
       </section>
         <ModuleNav courseId="system-design" currentSlug="design-newsfeed" />

@@ -20,7 +20,7 @@ export default function SystemDesignHome() {
           Distributed systems, <span className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">layered</span>
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-          A layered system design course for Java engineers. Start with the fundamentals — CAP, consistency, scaling math — build up through storage, communication, and reliability patterns, then design real systems end-to-end. Concept-first, with Java/Spring where it matters.
+          A layered system design course for Java engineers. Start with the fundamentals, CAP, consistency, scaling math, build up through storage, communication, and reliability patterns, then design real systems end-to-end. Concept-first, with Java/Spring where it matters.
         </p>
       </section>
 
@@ -91,18 +91,15 @@ export default function SystemDesignHome() {
 function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
   return (
     <>
-      <div className="mb-2 flex items-start justify-between">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
-            {m.number}
-          </span>
-          {m.status === "available" ? (
-            <span className="text-[10px] font-semibold tracking-wider text-cyan-600 uppercase dark:text-cyan-400">Ready</span>
-          ) : (
-            <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
-          )}
-        </div>
-        <span className="text-xs text-slate-400">{m.duration}</span>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
+          {m.number}
+        </span>
+        {m.status === "available" ? (
+          <span className="text-[10px] font-semibold tracking-wider text-cyan-600 uppercase dark:text-cyan-400">Ready</span>
+        ) : (
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
+        )}
       </div>
       <h3 className="mb-1 text-base font-semibold">{m.title}</h3>
       <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">{m.subtitle}</p>

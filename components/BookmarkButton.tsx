@@ -32,7 +32,7 @@ export default function BookmarkButton({
       onClick={() => toggleBookmark(key)}
       aria-pressed={active}
       aria-label={active ? "Remove bookmark" : "Bookmark this module"}
-      title={active ? "Bookmarked — click to remove" : "Bookmark this module"}
+      title={active ? "Bookmarked, click to remove" : "Bookmark this module"}
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition print:hidden ${
         active
           ? "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200"

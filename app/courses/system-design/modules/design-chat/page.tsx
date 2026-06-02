@@ -68,7 +68,7 @@ export default function Page() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          A defensible answer to the WhatsApp/Slack interview. The connection layer is the heart of it — once you can talk about persistent websockets, sticky routing, and how a message travels from sender to recipient through Kafka and a wide-column store, the rest is bookkeeping.
+          A defensible answer to the WhatsApp/Slack interview. The connection layer is the heart of it, once you can talk about persistent websockets, sticky routing, and how a message travels from sender to recipient through Kafka and a wide-column store, the rest is bookkeeping.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The connection model: stateful gateways holding millions of sticky websockets</li>
@@ -82,7 +82,7 @@ export default function Page() {
       <section>
         <h2>Why this prompt is a senior filter</h2>
         <p>
-          &quot;Design WhatsApp&quot; sounds simple — it&apos;s just messaging — and that&apos;s exactly why it&apos;s a good interview. The naive answer is one HTTPS POST per message into a Postgres table, and it falls over in three different ways at the first follow-up question. The interesting parts are all the things that look like polish until you do the math: persistent connections at scale, presence that doesn&apos;t hammer the DB, group fanout that doesn&apos;t go quadratic, and history that scales past a billion messages a day.
+          &quot;Design WhatsApp&quot; sounds simple, it&apos;s just messaging, and that&apos;s exactly why it&apos;s a good interview. The naive answer is one HTTPS POST per message into a Postgres table, and it falls over in three different ways at the first follow-up question. The interesting parts are all the things that look like polish until you do the math: persistent connections at scale, presence that doesn&apos;t hammer the DB, group fanout that doesn&apos;t go quadratic, and history that scales past a billion messages a day.
         </p>
         <p>
           What the interviewer is actually testing: do you reach for stateful gateways and a message bus instinctively, or do you try to build chat on top of REST? Do you know that &quot;online&quot; is a TTL problem, not a write problem? Can you push back when someone says &quot;exactly-once&quot; and explain why at-least-once with msgId dedup is the real design? Those are the senior tells.
@@ -97,26 +97,26 @@ export default function Page() {
 
         <h3>Functional requirements</h3>
         <ul>
-          <li><strong>1:1 chat</strong> — send/receive text messages, with delivery to offline users when they come back online.</li>
+          <li><strong>1:1 chat</strong>, send/receive text messages, with delivery to offline users when they come back online.</li>
           <li><strong>Group chat</strong>, capped at ~200 members. (Discord-scale 10k+ servers is a whole other shape; we&apos;ll scope it out.)</li>
-          <li><strong>Presence</strong> — &quot;online / last seen at X&quot;.</li>
-          <li><strong>Read receipts</strong> — sent / delivered / read state per message.</li>
-          <li><strong>Attachments</strong> — images and files up to ~100MB, stored separately from the message log.</li>
-          <li><strong>Message history</strong> — accessible forever, paginated, searchable later (out of scope for this round).</li>
+          <li><strong>Presence</strong>, &quot;online / last seen at X&quot;.</li>
+          <li><strong>Read receipts</strong>, sent / delivered / read state per message.</li>
+          <li><strong>Attachments</strong>, images and files up to ~100MB, stored separately from the message log.</li>
+          <li><strong>Message history</strong>, accessible forever, paginated, searchable later (out of scope for this round).</li>
         </ul>
 
         <h3>Non-functional requirements</h3>
         <ul>
           <li><strong>p99 send-to-deliver latency under 500ms</strong>{" "}when both parties are online and on a normal network. This is the headline number that pins the design.</li>
-          <li><strong>~50M DAU</strong>, with peak concurrent users about a third of that — call it 17M concurrent.</li>
+          <li><strong>~50M DAU</strong>, with peak concurrent users about a third of that, call it 17M concurrent.</li>
           <li><strong>~40 messages per active user per day</strong>{" "}on average. That gives us 50M × 40 = 2B messages/day.</li>
-          <li><strong>Durability matters</strong> — once we ack a message, it must not vanish. But strict ordering is per-conversation, not global.</li>
+          <li><strong>Durability matters</strong>, once we ack a message, it must not vanish. But strict ordering is per-conversation, not global.</li>
           <li><strong>End-to-end encryption</strong>{" "}is a yes/no the interviewer should make explicit. Saying &quot;yes E2EE&quot; changes server-side search and many other things; we&apos;ll assume transport encryption only for this round.</li>
         </ul>
 
         <h3>Back of the envelope</h3>
         <p>
-          The numbers anchor every later decision. Don&apos;t skip this — and don&apos;t pretend to compute them in your head; show the work.
+          The numbers anchor every later decision. Don&apos;t skip this, and don&apos;t pretend to compute them in your head; show the work.
         </p>
         <ul>
           <li><strong>Messages per day:</strong> 50M DAU × 40 msgs = 2B messages/day.</li>
@@ -131,11 +131,11 @@ export default function Page() {
         </Callout>
 
         <Quiz
-          question="A candidate says: 'We'll use REST with long polling for chat — every client polls every 2 seconds for new messages.' What's the strongest objection at WhatsApp scale?"
+          question="A candidate says: 'We'll use REST with long polling for chat, every client polls every 2 seconds for new messages.' What's the strongest objection at WhatsApp scale?"
           options={[
             { label: "At 17M concurrent users polling every 2s, you get 8.5M QPS of polling traffic on a system that's mostly returning 'no new messages.' The cost dwarfs the actual messaging load, latency is bounded below by the poll interval, and battery on mobile dies. Persistent websockets are the correct primitive.", correct: true, explanation: "Right. Polling at scale is mostly wasted work. WebSockets give you sub-second push, far less overhead per delivered message, and a single TCP connection per device. The trade is server-side state, which is exactly what the gateway layer absorbs." },
-            { label: "REST can't handle 100k QPS — you need gRPC.", explanation: "REST/HTTPS itself can absolutely do 100k QPS at a load balancer; that's not the issue. The issue is the polling pattern, which forces you to a latency floor and creates traffic for no message activity." },
-            { label: "Long polling violates HTTP semantics and won't work behind corporate proxies.", explanation: "Long polling actually works through most proxies — it's literally just a held GET. The real problem is the inefficiency at scale and the latency floor." },
+            { label: "REST can't handle 100k QPS, you need gRPC.", explanation: "REST/HTTPS itself can absolutely do 100k QPS at a load balancer; that's not the issue. The issue is the polling pattern, which forces you to a latency floor and creates traffic for no message activity." },
+            { label: "Long polling violates HTTP semantics and won't work behind corporate proxies.", explanation: "Long polling actually works through most proxies, it's literally just a held GET. The real problem is the inefficiency at scale and the latency floor." },
             { label: "You can't do read receipts over REST.", explanation: "You can; that's not the structural issue. The structural issue is that server-push is a much better fit for a chat workload than client-pull." },
           ]}
           hint="What's the cost of the connection model when most polls return nothing?"
@@ -145,10 +145,10 @@ export default function Page() {
         <Quiz
           question="The interviewer says: 'Assume 50M DAU, 40 messages per user per day, and peak is 4x average.' What's the rough peak write QPS you'd commit to?"
           options={[
-            { label: "Around 90-100k QPS. Average is 2B / 86,400 ≈ 23k QPS, and 4x peak puts us near 90-100k QPS at the busy hour.", correct: true, explanation: "Right. Always show the math: total daily messages, divide by seconds in a day for the average, then apply the peak multiplier. Round numbers — interviewers want defensible estimates, not five-decimal precision." },
-            { label: "Around 1M QPS — you have to assume worst case.", explanation: "1M QPS doesn't fall out of the assumptions given. Be careful not to inflate; over-provisioning by 10x signals you didn't do the math." },
-            { label: "Around 23k QPS — peak is just the average.", explanation: "Peak is explicitly 4x average per the prompt. Sizing for the average alone leaves you blown out at the busy hour." },
-            { label: "Around 5k QPS — most users don't message every day.", explanation: "The prompt already said 50M DAU (daily active users — they did message that day). 5k is an under-estimate." },
+            { label: "Around 90-100k QPS. Average is 2B / 86,400 ≈ 23k QPS, and 4x peak puts us near 90-100k QPS at the busy hour.", correct: true, explanation: "Right. Always show the math: total daily messages, divide by seconds in a day for the average, then apply the peak multiplier. Round numbers, interviewers want defensible estimates, not five-decimal precision." },
+            { label: "Around 1M QPS, you have to assume worst case.", explanation: "1M QPS doesn't fall out of the assumptions given. Be careful not to inflate; over-provisioning by 10x signals you didn't do the math." },
+            { label: "Around 23k QPS, peak is just the average.", explanation: "Peak is explicitly 4x average per the prompt. Sizing for the average alone leaves you blown out at the busy hour." },
+            { label: "Around 5k QPS, most users don't message every day.", explanation: "The prompt already said 50M DAU (daily active users, they did message that day). 5k is an under-estimate." },
           ]}
           hint="2B messages divided by seconds in a day, then times the peak multiplier."
           xp={6}
@@ -158,7 +158,7 @@ export default function Page() {
           title="Part 1 recap"
           gist="Chat at WhatsApp scale is 2B messages/day, ~100k peak write QPS, and 17M concurrent persistent connections. The connection count is the unusual constraint that breaks REST-style designs."
           points={[
-            { takeaway: "Scope before you design", detail: "1:1, groups capped at 200, presence, receipts, attachments — but say E2EE and global search are out of scope for this round, or it spirals." },
+            { takeaway: "Scope before you design", detail: "1:1, groups capped at 200, presence, receipts, attachments, but say E2EE and global search are out of scope for this round, or it spirals." },
             { takeaway: "Show the QPS math out loud", detail: "50M × 40 msgs / 86,400s ≈ 23k average, 4x at peak ≈ 100k. Round numbers, defensible." },
             { takeaway: "Connection count is the design driver", detail: "17M persistent websockets sized at 100k per gateway box means hundreds of gateway machines. This is what kills the REST-with-polling answer." },
             { takeaway: "Attachments are not in the message log", detail: "Store payload in S3-style object storage, store the URL/metadata in the message row. Otherwise your 290TB/year balloons by 10x and you waste expensive DB space on bytes that don't need to be queried." },
@@ -174,12 +174,12 @@ export default function Page() {
 
         <Mermaid chart={chatArchitectureDiagram} />
 
-        <h3>API surface — websockets first, REST for the rest</h3>
+        <h3>API surface, websockets first, REST for the rest</h3>
         <p>
           The hot path is over a websocket frame, not REST. But there&apos;s still a control plane in HTTPS for everything that doesn&apos;t need server push. A clean API surface looks like this:
         </p>
 
-        <CodeBlock lang="java" caption="ChatController.java — control plane (REST)">{`@RestController
+        <CodeBlock lang="java" caption="ChatController.java, control plane (REST)">{`@RestController
 @RequestMapping("/api/v1")
 public class ChatController {
 
@@ -204,15 +204,15 @@ public class ChatController {
 }`}</CodeBlock>
 
         <p>
-          The websocket frames are tiny, JSON or protobuf, with a small set of message types: <code>SEND</code>, <code>ACK</code>, <code>DELIVERED</code>, <code>READ</code>, <code>TYPING</code>, <code>PRESENCE_UPDATE</code>. The most important thing on the wire is that the client provides a <code>clientMsgId</code> on every <code>SEND</code> — that&apos;s the idempotency key the server uses to dedup retries.
+          The websocket frames are tiny, JSON or protobuf, with a small set of message types: <code>SEND</code>, <code>ACK</code>, <code>DELIVERED</code>, <code>READ</code>, <code>TYPING</code>, <code>PRESENCE_UPDATE</code>. The most important thing on the wire is that the client provides a <code>clientMsgId</code> on every <code>SEND</code>, that&apos;s the idempotency key the server uses to dedup retries.
         </p>
 
-        <h3>Data model — where messages actually live</h3>
+        <h3>Data model, where messages actually live</h3>
         <p>
           Two storage systems, each picked for what it&apos;s good at:
         </p>
 
-        <CodeBlock lang="plain" caption="Cassandra schema — message log">{`-- Partition by conversation, cluster by time DESC.
+        <CodeBlock lang="plain" caption="Cassandra schema, message log">{`-- Partition by conversation, cluster by time DESC.
 -- A single conversation = a single hot partition with append-only writes.
 CREATE TABLE messages (
   conversation_id  UUID,
@@ -245,7 +245,7 @@ CREATE TABLE user_conversations (
         </p>
 
         <p>
-          Presence is in Redis, with a hash keyed by user, and heartbeats from the gateway extend a TTL. No durability needed — if Redis flickers, every gateway just re-pushes presence on the next heartbeat tick.
+          Presence is in Redis, with a hash keyed by user, and heartbeats from the gateway extend a TTL. No durability needed, if Redis flickers, every gateway just re-pushes presence on the next heartbeat tick.
         </p>
 
         <CodeBlock lang="plain" caption="Redis presence model">{`# Hash per user. TTL extended by gateway heartbeat every 30s.
@@ -262,7 +262,7 @@ EXPIRE presence:user:{userId} 90`}</CodeBlock>
         </p>
         <ol>
           <li>Client sends a <code>SEND</code> frame with <code>clientMsgId</code> on its websocket to gateway G1.</li>
-          <li>G1 assigns a server-side <code>msgId</code> (TIMEUUID), checks the dedup cache for <code>clientMsgId</code> (Redis SETNX with TTL), and immediately ACKs the client. Latency to ACK should be under 50ms — this is the budget of the rest of the trip.</li>
+          <li>G1 assigns a server-side <code>msgId</code> (TIMEUUID), checks the dedup cache for <code>clientMsgId</code> (Redis SETNX with TTL), and immediately ACKs the client. Latency to ACK should be under 50ms, this is the budget of the rest of the trip.</li>
           <li>G1 publishes the message to Kafka topic <code>messages</code>, partitioned by <code>conversationId</code> so per-conversation order is preserved on a single partition.</li>
           <li>The fanout consumer reads the message, writes it to Cassandra, and looks up the conversation members.</li>
           <li>For each member, the fanout service consults Redis presence: if online and connected to gateway Gn, push the message frame to Gn over an internal RPC; if offline, append to the user&apos;s inbox queue (Kafka or a per-user list).</li>
@@ -270,15 +270,15 @@ EXPIRE presence:user:{userId} 90`}</CodeBlock>
         </ol>
 
         <Callout variant="spring" title="Why Kafka in the middle and not direct calls">
-          <p className="m-0">You could have G1 write to Cassandra directly and call other gateways over RPC. Some teams do. The reason most production designs have Kafka in the middle: backpressure, replay, and cross-team sanity. The fanout service can lag without dropping messages; if the storage tier is degraded, Kafka holds the buffer; new consumers (search indexing, anti-spam, ML signals) can subscribe to the same topic without re-architecting the gateway. The cost is one extra hop of latency — usually 5-15ms — which fits inside our 500ms p99 budget with room to spare.</p>
+          <p className="m-0">You could have G1 write to Cassandra directly and call other gateways over RPC. Some teams do. The reason most production designs have Kafka in the middle: backpressure, replay, and cross-team sanity. The fanout service can lag without dropping messages; if the storage tier is degraded, Kafka holds the buffer; new consumers (search indexing, anti-spam, ML signals) can subscribe to the same topic without re-architecting the gateway. The cost is one extra hop of latency, usually 5-15ms, which fits inside our 500ms p99 budget with room to spare.</p>
         </Callout>
 
         <Quiz
           question="Why partition the Cassandra messages table by conversation_id with timestamp as the cluster key, instead of partitioning by message_id?"
           options={[
-            { label: "The dominant read pattern is 'give me the most recent N messages in this conversation,' which is a single-partition range scan when partitioned by conversation. Partitioning by message_id would scatter those reads across the cluster and make pagination slow.", correct: true, explanation: "Right. Wide-column partitioning is all about access pattern. Conversations are bounded (most never exceed a few hundred MB) so the partition stays sane, and history pagination becomes a single-partition slice — the operation Cassandra is fastest at." },
+            { label: "The dominant read pattern is 'give me the most recent N messages in this conversation,' which is a single-partition range scan when partitioned by conversation. Partitioning by message_id would scatter those reads across the cluster and make pagination slow.", correct: true, explanation: "Right. Wide-column partitioning is all about access pattern. Conversations are bounded (most never exceed a few hundred MB) so the partition stays sane, and history pagination becomes a single-partition slice, the operation Cassandra is fastest at." },
             { label: "Partition by message_id avoids hot partitions during peak load.", explanation: "It does spread writes more evenly, but it also destroys read performance for the dominant query. The right answer is to size partitions by conversation activity and shard hot conversations if needed." },
-            { label: "Cassandra can't have compound primary keys.", explanation: "It can — the parens-grouped first column is the partition key, and remaining columns are clustering keys. That's how this table is built." },
+            { label: "Cassandra can't have compound primary keys.", explanation: "It can, the parens-grouped first column is the partition key, and remaining columns are clustering keys. That's how this table is built." },
             { label: "It allows global ordering of all messages.", explanation: "There's no global ordering across conversations in this schema, and you don't need one. Per-conversation order is what users see." },
           ]}
           hint="What query has to be fast: history scroll, or random message lookup?"
@@ -288,10 +288,10 @@ EXPIRE presence:user:{userId} 90`}</CodeBlock>
         <Quiz
           question="The gateway maintains a sticky websocket per device. What does that imply for routing during fanout?"
           options={[
-            { label: "The fanout service has to look up which gateway each recipient is connected to (via the presence cache), then RPC that specific gateway. Any gateway can't deliver to any user — it has to be the one holding that user's socket.", correct: true, explanation: "Right. The connection state is on a specific pod. Presence stores the gateway pod ID; fanout uses it to route. When a gateway restarts, every connected client reconnects to a (probably) different pod and updates presence." },
-            { label: "It doesn't matter — the load balancer routes to any healthy gateway.", explanation: "The LB routes new connections; existing connections are sticky to a specific pod. If you fan out to a random gateway, that gateway has no socket to the recipient." },
+            { label: "The fanout service has to look up which gateway each recipient is connected to (via the presence cache), then RPC that specific gateway. Any gateway can't deliver to any user, it has to be the one holding that user's socket.", correct: true, explanation: "Right. The connection state is on a specific pod. Presence stores the gateway pod ID; fanout uses it to route. When a gateway restarts, every connected client reconnects to a (probably) different pod and updates presence." },
+            { label: "It doesn't matter, the load balancer routes to any healthy gateway.", explanation: "The LB routes new connections; existing connections are sticky to a specific pod. If you fan out to a random gateway, that gateway has no socket to the recipient." },
             { label: "Each recipient must reconnect for every incoming message.", explanation: "That's polling, not websockets. The connection stays open; messages flow over it without reconnecting." },
-            { label: "The fanout service itself holds every websocket.", explanation: "That would centralize state in the fanout service. Real designs split: gateways own connections, fanout owns delivery routing — and crosses the wire between them via Redis presence + RPC." },
+            { label: "The fanout service itself holds every websocket.", explanation: "That would centralize state in the fanout service. Real designs split: gateways own connections, fanout owns delivery routing, and crosses the wire between them via Redis presence + RPC." },
           ]}
           hint="If the websocket is on gateway pod G1, can pod G2 deliver to that user?"
           xp={7}
@@ -312,15 +312,15 @@ EXPIRE presence:user:{userId} 90`}</CodeBlock>
       <Checkpoint moduleSlug="design-chat" id="deep" title="Part 3 · Scale & deep dives" xp={30}>
         <h2>The three follow-ups every interviewer asks</h2>
 
-        <h3>Deep dive 1 — group fanout: when push-on-write fails</h3>
+        <h3>Deep dive 1, group fanout: when push-on-write fails</h3>
         <p>
-          For 1:1 chat, fanout is trivial: write the message, deliver to one recipient. Groups are where it gets interesting. We capped groups at 200 members, which is on purpose: at 200 members, push-on-write is fine. Fanout writes the message once to Cassandra, then pushes 200 delivery events. At 100k peak send QPS with average group size of, say, 10 members, that&apos;s 1M delivery events per second — heavy but bounded.
+          For 1:1 chat, fanout is trivial: write the message, deliver to one recipient. Groups are where it gets interesting. We capped groups at 200 members, which is on purpose: at 200 members, push-on-write is fine. Fanout writes the message once to Cassandra, then pushes 200 delivery events. At 100k peak send QPS with average group size of, say, 10 members, that&apos;s 1M delivery events per second, heavy but bounded.
         </p>
         <p>
           What breaks the design: relaxing the cap. If groups can be 100k members (Telegram-style channels), push-on-write becomes 100k delivery events per send. A single popular channel could chew through your gateway capacity on a single message. The fix is to <strong>switch to pull-on-read for large groups</strong>: store the message once, let recipients query when they open the conversation. That trades push latency for read latency, and that trade only makes sense for asymmetric &quot;broadcast&quot; conversations. WhatsApp&apos;s 200 cap is a deliberate design choice that keeps push-on-write viable.
         </p>
 
-        <CodeBlock lang="java" caption="Fanout consumer — sketch">{`@Service
+        <CodeBlock lang="java" caption="Fanout consumer, sketch">{`@Service
 public class FanoutConsumer {
 
   private final CassandraTemplate cassandra;
@@ -354,7 +354,7 @@ public class FanoutConsumer {
   }
 }`}</CodeBlock>
 
-        <h3>Deep dive 2 — delivery semantics: at-least-once + msgId dedup</h3>
+        <h3>Deep dive 2, delivery semantics: at-least-once + msgId dedup</h3>
         <p>
           Candidates often say &quot;exactly-once delivery.&quot; Push back. <strong>Exactly-once over a network is a fiction</strong>; what real systems do is at-least-once delivery with idempotent consumers. Here it works like this:
         </p>
@@ -367,7 +367,7 @@ public class FanoutConsumer {
           This is the standard pattern: at-least-once on the wire, dedup on the endpoints. It&apos;s simple, it&apos;s robust, and it&apos;s what every production chat system actually does. &quot;Exactly-once&quot; on a job description is shorthand for this pattern, not a real wire-level guarantee.
         </p>
 
-        <h3>Deep dive 3 — the offline-and-back path</h3>
+        <h3>Deep dive 3, the offline-and-back path</h3>
         <p>
           A user&apos;s phone goes into airplane mode for two hours, then comes back online. They expect to see every message they missed, in order, in every conversation. How does that work without re-fanning-out 50M offline messages on reconnect?
         </p>
@@ -375,7 +375,7 @@ public class FanoutConsumer {
           Two complementary paths:
         </p>
         <ul>
-          <li><strong>Inbox queue per user</strong> (Kafka topic, or a per-user list in storage) populated by the fanout service when the recipient is offline. On reconnect, the gateway drains the inbox to the client. Bounded size — usually capped at last 7 days or 1000 messages.</li>
+          <li><strong>Inbox queue per user</strong> (Kafka topic, or a per-user list in storage) populated by the fanout service when the recipient is offline. On reconnect, the gateway drains the inbox to the client. Bounded size, usually capped at last 7 days or 1000 messages.</li>
           <li><strong>History pull-on-demand</strong>{" "}for older content. The client tracks the last <code>msgId</code> it has per conversation; when the user opens the conversation, it requests <code>GET /conversations/{`{id}`}/messages?cursor=lastMsgId</code> and gets the gap.</li>
         </ul>
         <p>
@@ -383,7 +383,7 @@ public class FanoutConsumer {
         </p>
 
         <Callout variant="warn" title="Read receipts are not the message log">
-          <p className="m-0">A common mistake: writing read receipts back into the messages table. Don&apos;t. Receipts are a high-volume, low-importance, often best-effort write — at-most-once is fine, and losing one is invisible to users. Put them on a separate path (a small Cassandra table or even just the gateway memory + periodic flush) so receipts can&apos;t back up your message ingestion. Mixing them is the main reason teams blow out their write capacity at 10am Monday.</p>
+          <p className="m-0">A common mistake: writing read receipts back into the messages table. Don&apos;t. Receipts are a high-volume, low-importance, often best-effort write, at-most-once is fine, and losing one is invisible to users. Put them on a separate path (a small Cassandra table or even just the gateway memory + periodic flush) so receipts can&apos;t back up your message ingestion. Mixing them is the main reason teams blow out their write capacity at 10am Monday.</p>
         </Callout>
 
         <ClassifyChallenge
@@ -408,8 +408,8 @@ public class FanoutConsumer {
         <Quiz
           question="A candidate says 'we'll guarantee exactly-once delivery from sender to recipient.' What's the correct senior pushback?"
           options={[
-            { label: "Exactly-once on a network is a marketing phrase. The real pattern is at-least-once on the wire with idempotent endpoints — sender attaches a clientMsgId, gateway dedups, recipient client drops duplicates by msgId. That delivers exactly-once user experience without the impossible wire guarantee.", correct: true, explanation: "Right. This is one of the cleanest senior tells in the chat interview. Exactly-once requires either coordinated consensus (slow, fragile) or idempotency (the actual pattern everyone uses). Naming the pattern correctly is the move." },
-            { label: "Just use TCP — it already gives exactly-once.", explanation: "TCP gives exactly-once at the segment level for one connection, but a chat send crosses many systems (gateway, Kafka, fanout, recipient gateway, recipient socket). Each hop can drop or duplicate." },
+            { label: "Exactly-once on a network is a marketing phrase. The real pattern is at-least-once on the wire with idempotent endpoints, sender attaches a clientMsgId, gateway dedups, recipient client drops duplicates by msgId. That delivers exactly-once user experience without the impossible wire guarantee.", correct: true, explanation: "Right. This is one of the cleanest senior tells in the chat interview. Exactly-once requires either coordinated consensus (slow, fragile) or idempotency (the actual pattern everyone uses). Naming the pattern correctly is the move." },
+            { label: "Just use TCP, it already gives exactly-once.", explanation: "TCP gives exactly-once at the segment level for one connection, but a chat send crosses many systems (gateway, Kafka, fanout, recipient gateway, recipient socket). Each hop can drop or duplicate." },
             { label: "Use a distributed transaction across all hops.", explanation: "2PC across the gateway, Kafka, Cassandra, and the recipient's socket would be operationally insane and would still not survive coordinator failure. Idempotency is the real answer." },
             { label: "Set a unique HTTP header on every send.", explanation: "Headers are the right shape (carrying the idempotency key) but the substance is the dedup logic on the gateway, not the header itself." },
           ]}
@@ -420,10 +420,10 @@ public class FanoutConsumer {
         <Quiz
           question="The interviewer asks 'why do you cap groups at 200?' What's the most defensible answer?"
           options={[
-            { label: "Because at 200 members, push-on-write fanout stays viable: each send produces a bounded number of delivery events. If the cap were 100k (channel-style), you'd switch to pull-on-read for large rooms — different design, different tradeoffs. The cap pins the fanout strategy.", correct: true, explanation: "Right. The product cap is in service of the architecture. WhatsApp's 200 limit isn't arbitrary — it's the number where push fanout still scales linearly with sends, not with members per send." },
-            { label: "It's a database limit — Cassandra can't store more than 200 rows per partition.", explanation: "There's no such limit. Cassandra partitions can comfortably hold millions of rows; the cap is a product/architecture decision, not a DB constraint." },
+            { label: "Because at 200 members, push-on-write fanout stays viable: each send produces a bounded number of delivery events. If the cap were 100k (channel-style), you'd switch to pull-on-read for large rooms, different design, different tradeoffs. The cap pins the fanout strategy.", correct: true, explanation: "Right. The product cap is in service of the architecture. WhatsApp's 200 limit isn't arbitrary, it's the number where push fanout still scales linearly with sends, not with members per send." },
+            { label: "It's a database limit, Cassandra can't store more than 200 rows per partition.", explanation: "There's no such limit. Cassandra partitions can comfortably hold millions of rows; the cap is a product/architecture decision, not a DB constraint." },
             { label: "Encryption requires every member to share keys, and 200 is the max keyset.", explanation: "E2EE group keys (Signal protocol's Sender Keys) scale beyond 200 members. The fanout architecture is the binding constraint, not crypto." },
-            { label: "It's just historical — there's no technical reason.", explanation: "There's a strong technical reason: it keeps push-on-write a viable strategy. Lifting the cap forces a different architecture for large rooms." },
+            { label: "It's just historical, there's no technical reason.", explanation: "There's a strong technical reason: it keeps push-on-write a viable strategy. Lifting the cap forces a different architecture for large rooms." },
           ]}
           hint="What changes about fanout if a single send needs to reach 100k recipients?"
           xp={8}
@@ -449,7 +449,7 @@ public class FanoutConsumer {
           When you go global, you can&apos;t make every send round-trip to a single region. The standard answer: <strong>conversations are home-regioned</strong>. Each conversation has a primary region (chosen on creation, often by the creator&apos;s region), and writes for that conversation route there. Reads for history can be served from a regional replica. Cross-region calls happen only when participants are spread across regions, and the latency impact is bounded to those conversations.
         </p>
         <p>
-          The gateway layer is regional too: a user connects to the nearest gateway, and that gateway routes their writes to the conversation&apos;s home region. Presence is regional with cross-region sync — &quot;is Alice online&quot; doesn&apos;t need millisecond freshness across regions.
+          The gateway layer is regional too: a user connects to the nearest gateway, and that gateway routes their writes to the conversation&apos;s home region. Presence is regional with cross-region sync, &quot;is Alice online&quot; doesn&apos;t need millisecond freshness across regions.
         </p>
 
         <h3>Abuse and spam at the protocol layer</h3>
@@ -466,8 +466,8 @@ public class FanoutConsumer {
           The two metrics that matter most:
         </p>
         <ul>
-          <li><strong>Send-to-deliver p99 latency</strong> — measured by client-emitted timestamps. If this creeps from 300ms to 800ms, fanout is lagging or a gateway is unhealthy.</li>
-          <li><strong>Inbox drain rate on reconnect</strong> — messages delivered per second from the inbox queue when a user comes online. If this drops, your inbox storage is degraded or a gateway is dropping reconnections.</li>
+          <li><strong>Send-to-deliver p99 latency</strong>, measured by client-emitted timestamps. If this creeps from 300ms to 800ms, fanout is lagging or a gateway is unhealthy.</li>
+          <li><strong>Inbox drain rate on reconnect</strong>, messages delivered per second from the inbox queue when a user comes online. If this drops, your inbox storage is degraded or a gateway is dropping reconnections.</li>
         </ul>
         <p>
           Connection count per gateway is a leading indicator: if one pod has 3x the average, something&apos;s broken in the LB&apos;s connection-draining policy and you&apos;re a redeploy away from a thundering herd.
@@ -480,9 +480,9 @@ public class FanoutConsumer {
         <Quiz
           question="Why home-region conversations rather than letting any region accept any write?"
           options={[
-            { label: "If any region could accept writes for any conversation, you'd need cross-region consensus on every send to maintain per-conversation order. That kills latency. Pinning a conversation to one region makes ordering local — only cross-region delivery has to traverse the WAN, and only for participants in other regions.", correct: true, explanation: "Right. Per-conversation ordering is the invariant we have to preserve, and that's much cheaper if all writes for a conversation hit the same region. Cross-region cost is then proportional to cross-region participation, not total send volume." },
-            { label: "It's required by GDPR.", explanation: "Data residency rules can influence the decision but they're not the architectural reason — the architectural reason is preserving per-conversation order without cross-region consensus." },
-            { label: "Cassandra can't replicate across regions.", explanation: "It can — Cassandra has multi-DC replication. The choice to home-region conversations is about latency and ordering, not capability." },
+            { label: "If any region could accept writes for any conversation, you'd need cross-region consensus on every send to maintain per-conversation order. That kills latency. Pinning a conversation to one region makes ordering local, only cross-region delivery has to traverse the WAN, and only for participants in other regions.", correct: true, explanation: "Right. Per-conversation ordering is the invariant we have to preserve, and that's much cheaper if all writes for a conversation hit the same region. Cross-region cost is then proportional to cross-region participation, not total send volume." },
+            { label: "It's required by GDPR.", explanation: "Data residency rules can influence the decision but they're not the architectural reason, the architectural reason is preserving per-conversation order without cross-region consensus." },
+            { label: "Cassandra can't replicate across regions.", explanation: "It can, Cassandra has multi-DC replication. The choice to home-region conversations is about latency and ordering, not capability." },
             { label: "Otherwise users couldn't message internationally.", explanation: "They can; cross-region messages just take longer for the cross-region hop. Home-regioning is about minimizing how often that hop happens, not whether it can." },
           ]}
           hint="What's the cost of cross-region consensus on every write?"
@@ -504,7 +504,7 @@ public class FanoutConsumer {
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Next up</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          A distributed rate limiter. The thing every chat system, payment system, and public API needs — and which everyone underestimates until they meet a hot key in Redis at 3am.
+          A distributed rate limiter. The thing every chat system, payment system, and public API needs, and which everyone underestimates until they meet a hot key in Redis at 3am.
         </p>
         <Link
           href="/courses/system-design/modules/design-rate-limiter"

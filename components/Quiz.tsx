@@ -31,7 +31,7 @@ const ENCOURAGE_CORRECT = [
 
 const ENCOURAGE_WRONG = [
   "Close! Try again.",
-  "Nope — read it once more.",
+  "Nope, read it once more.",
   "Not this one. Think it through.",
   "Nah, but you're close.",
 ];
@@ -67,7 +67,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
     // Hardcore mode — wrong, locked.
     statusMessage = `Incorrect. Hardcore mode locks the question.${selectedOption.explanation ? ` ${selectedOption.explanation}` : ""}`;
   } else if (selectedOption && !selectedOption.correct) {
-    statusMessage = `Incorrect — try another answer.${selectedOption.explanation ? ` ${selectedOption.explanation}` : ""}`;
+    statusMessage = `Incorrect, try another answer.${selectedOption.explanation ? ` ${selectedOption.explanation}` : ""}`;
   }
 
   useEffect(() => {
@@ -108,7 +108,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
       if (newCombo >= 5) {
         say({ mood: "celebrate", text: `${newCombo}x combo! You're on fire 🔥`, duration: 3500 });
       } else if (newCombo >= 3) {
-        say({ mood: "excited", text: `${newCombo} in a row — combo unlocked!`, duration: 3000 });
+        say({ mood: "excited", text: `${newCombo} in a row, combo unlocked!`, duration: 3000 });
       } else if (isSpeed) {
         say({ mood: "excited", text: "Speed bonus! +5 XP for being quick.", duration: 3000 });
       } else {
@@ -121,7 +121,7 @@ export default function Quiz({ question, options, hint, kind = "Quick check", xp
       resetCombo();
       play("wrong");
       if (hardcoreMode) {
-        say({ mood: "sad", text: "Hardcore mode — one shot. Moving on.", duration: 3500 });
+        say({ mood: "sad", text: "Hardcore mode, one shot. Moving on.", duration: 3500 });
       } else {
         const msg = ENCOURAGE_WRONG[Math.floor(Math.random() * ENCOURAGE_WRONG.length)];
         say({ mood: "teasing", text: msg, duration: 2500 });

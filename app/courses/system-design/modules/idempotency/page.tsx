@@ -66,15 +66,15 @@ export default function Page() {
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The difference between idempotent, naturally-idempotent, and non-idempotent operations</li>
-          <li>Idempotency keys — where they come from, how they&apos;re scoped, when they expire</li>
+          <li>Idempotency keys, where they come from, how they&apos;re scoped, when they expire</li>
           <li>The dedupe table pattern with stored response replay</li>
           <li>Handling concurrent retries with row-level locking and the &quot;in-progress&quot; state</li>
-          <li>Why Stripe also fingerprints the request body — and how to detect mutated retries</li>
+          <li>Why Stripe also fingerprints the request body, and how to detect mutated retries</li>
         </ul>
       </section>
 
       <Callout variant="info" title="Why this matters">
-        <p className="m-0">Every retry, every webhook redelivery, every &quot;the response was lost in transit&quot; — they all become safe the moment your endpoint is idempotent. Without idempotency, retry is a charge-the-customer-twice bug waiting for a network blip. The mechanics aren&apos;t complicated; the edge cases are. This module is mostly about the edges.</p>
+        <p className="m-0">Every retry, every webhook redelivery, every &quot;the response was lost in transit&quot;, they all become safe the moment your endpoint is idempotent. Without idempotency, retry is a charge-the-customer-twice bug waiting for a network blip. The mechanics aren&apos;t complicated; the edge cases are. This module is mostly about the edges.</p>
       </Callout>
 
       {/* PART 1 — What and why */}
@@ -83,19 +83,19 @@ export default function Page() {
         <h2>Part 1: What idempotency actually means</h2>
 
         <p>
-          The textbook definition: an operation is <strong>idempotent</strong>{" "}if performing it multiple times has the same effect as performing it once. <code>SET balance = 100</code> is idempotent — running it twice still leaves balance at 100. <code>balance += 100</code> is not — running it twice doubles the deposit. This distinction is the entire reason for this module.
+          The textbook definition: an operation is <strong>idempotent</strong>{" "}if performing it multiple times has the same effect as performing it once. <code>SET balance = 100</code> is idempotent, running it twice still leaves balance at 100. <code>balance += 100</code> is not, running it twice doubles the deposit. This distinction is the entire reason for this module.
         </p>
 
         <h3>Three categories of operations</h3>
 
         <ul>
-          <li><strong>Naturally idempotent.</strong> <code>GET /users/123</code> doesn&apos;t change state. <code>PUT /users/123 {`{name: "Aria"}`}</code> sets state to a known value — repeating it is a no-op. <code>DELETE /users/123</code> repeated is a no-op (the user is still gone). HTTP&apos;s <em>safe</em>{" "}and <em>idempotent</em>{" "}method semantics — GET, PUT, DELETE, HEAD — are designed around this.</li>
-          <li><strong>Idempotent with cooperation.</strong> <code>POST /charges</code> creating a new charge is not naturally idempotent — every retry creates another charge. But if the client sends an <em>idempotency key</em>{" "}and the server dedupes on it, the operation becomes idempotent. This is the Stripe pattern, and the focus of Part 2.</li>
-          <li><strong>Inherently non-idempotent.</strong> &quot;Increment the counter,&quot; &quot;append to the log,&quot; &quot;trigger the email send&quot; — operations whose only meaning is &quot;produce a side effect this many times.&quot; These can be made safe with idempotency keys, but you have to think harder about what &quot;same effect&quot; means.</li>
+          <li><strong>Naturally idempotent.</strong> <code>GET /users/123</code> doesn&apos;t change state. <code>PUT /users/123 {`{name: "Aria"}`}</code> sets state to a known value, repeating it is a no-op. <code>DELETE /users/123</code> repeated is a no-op (the user is still gone). HTTP&apos;s <em>safe</em>{" "}and <em>idempotent</em>{" "}method semantics, GET, PUT, DELETE, HEAD, are designed around this.</li>
+          <li><strong>Idempotent with cooperation.</strong> <code>POST /charges</code> creating a new charge is not naturally idempotent, every retry creates another charge. But if the client sends an <em>idempotency key</em>{" "}and the server dedupes on it, the operation becomes idempotent. This is the Stripe pattern, and the focus of Part 2.</li>
+          <li><strong>Inherently non-idempotent.</strong> &quot;Increment the counter,&quot; &quot;append to the log,&quot; &quot;trigger the email send&quot;, operations whose only meaning is &quot;produce a side effect this many times.&quot; These can be made safe with idempotency keys, but you have to think harder about what &quot;same effect&quot; means.</li>
         </ul>
 
         <Callout variant="insight" title="The contract is between client and server">
-          <p className="m-0">Idempotency isn&apos;t a property the server can grant unilaterally — the client has to know the key matters and reuse it on retries. Stripe&apos;s API documentation is explicit: &quot;Send the same Idempotency-Key on retries; do not generate a new one.&quot; Your client SDK must capture the key once at the top of the operation, then pass it through every retry. Generating a new UUID per attempt defeats the entire mechanism.</p>
+          <p className="m-0">Idempotency isn&apos;t a property the server can grant unilaterally, the client has to know the key matters and reuse it on retries. Stripe&apos;s API documentation is explicit: &quot;Send the same Idempotency-Key on retries; do not generate a new one.&quot; Your client SDK must capture the key once at the top of the operation, then pass it through every retry. Generating a new UUID per attempt defeats the entire mechanism.</p>
         </Callout>
 
         <h3>Why this is a 4 a.m. problem</h3>
@@ -107,7 +107,7 @@ export default function Page() {
           <li><strong>Network blips.</strong>{" "}The request reached the server, the response was lost. The client retries, not knowing the call already succeeded.</li>
           <li><strong>Client-side timeouts.</strong>{" "}The client gave up at 5 seconds, the server kept working and succeeded at 5.1. The client retries.</li>
           <li><strong>Webhook redelivery.</strong>{" "}The webhook receiver returned 500 (or didn&apos;t respond fast enough); the source redelivers. Stripe redelivers webhooks for up to 3 days.</li>
-          <li><strong>Queue redelivery.</strong>{" "}Kafka, SQS, RabbitMQ — all guarantee at-least-once delivery. A consumer crash mid-processing means the same message comes back.</li>
+          <li><strong>Queue redelivery.</strong>{" "}Kafka, SQS, RabbitMQ, all guarantee at-least-once delivery. A consumer crash mid-processing means the same message comes back.</li>
           <li><strong>User-driven retries.</strong>{" "}The user sees a spinner, taps the button again. Most clients have a deduplication window of zero.</li>
         </ul>
         <p>
@@ -125,13 +125,13 @@ export default function Page() {
             { id: "inherent", label: "Inherently non-idempotent", color: "rose" },
           ]}
           items={[
-            { id: "o1", label: "PUT /users/42 with body { name: 'Aria' }", answer: "natural", explanation: "PUT with a complete representation is naturally idempotent — repeating it sets the same final state." },
+            { id: "o1", label: "PUT /users/42 with body { name: 'Aria' }", answer: "natural", explanation: "PUT with a complete representation is naturally idempotent, repeating it sets the same final state." },
             { id: "o2", label: "POST /charges to charge a customer's card $100", answer: "cooperative", explanation: "POST creating new resources is the canonical idempotency-key case. Without a key, every retry creates a new charge." },
-            { id: "o3", label: "DELETE /sessions/abc123", answer: "natural", explanation: "DELETE is naturally idempotent — re-deleting a missing resource is a no-op." },
+            { id: "o3", label: "DELETE /sessions/abc123", answer: "natural", explanation: "DELETE is naturally idempotent, re-deleting a missing resource is a no-op." },
             { id: "o4", label: "POST /counters/views/increment to bump a view count by 1", answer: "inherent", explanation: "Incrementing has no natural same-result-on-replay. You can make it safe with an idempotency key per event source, but the operation's semantics are 'add one each time.'" },
-            { id: "o5", label: "GET /users/42", answer: "natural", explanation: "GET is safe and idempotent by HTTP definition — it doesn't change state." },
+            { id: "o5", label: "GET /users/42", answer: "natural", explanation: "GET is safe and idempotent by HTTP definition, it doesn't change state." },
             { id: "o6", label: "POST /transfers with body { from, to, amount } and Idempotency-Key", answer: "cooperative", explanation: "Money movement is the highest-stakes idempotency case. The key is what makes retry safe. This is exactly the Stripe pattern." },
-            { id: "o7", label: "POST /messages to send an email to a user", answer: "inherent", explanation: "Emails are inherently non-idempotent — every send is a real outgoing message. Make safe with an idempotency key tied to the source event." },
+            { id: "o7", label: "POST /messages to send an email to a user", answer: "inherent", explanation: "Emails are inherently non-idempotent, every send is a real outgoing message. Make safe with an idempotency key tied to the source event." },
           ]}
         />
 
@@ -139,31 +139,31 @@ export default function Page() {
           kind="Quick check"
           question="HTTP defines GET, PUT, DELETE as idempotent and POST as non-idempotent. What does that actually mean for your service?"
           options={[
-            { label: "POST endpoints can never be idempotent.", explanation: "POST endpoints can absolutely be made idempotent with cooperation — that's the whole idempotency-key pattern. The HTTP spec describes the default semantics, not what's possible." },
-            { label: "It's a default contract for HTTP intermediaries (caches, retrying clients): they're allowed to retry GET/PUT/DELETE without asking, but should not retry POST without explicit cooperation. Your service can still make POST endpoints idempotent — you just have to advertise it (via Idempotency-Key support) so clients know retries are safe.", correct: true, explanation: "Right. The HTTP spec gives intermediaries a baseline rule. POST is non-idempotent by default, so well-behaved retry libraries (and proxies, and browsers) won't auto-retry POST without explicit signal. Your idempotency-key header is exactly that signal — it tells everyone in the chain 'go ahead, retry, we handle dedup.'" },
-            { label: "It just describes the HTTP method names — pure convention.", explanation: "It's a real semantic contract that real software relies on (browsers, retry middleware, CDNs). It's not just nomenclature." },
-            { label: "PUT is always safer than POST.", explanation: "PUT being idempotent doesn't make it safer — it has different semantics (full-representation update vs. resource creation). Choose by semantics, not by 'safety.'" },
+            { label: "POST endpoints can never be idempotent.", explanation: "POST endpoints can absolutely be made idempotent with cooperation, that's the whole idempotency-key pattern. The HTTP spec describes the default semantics, not what's possible." },
+            { label: "It's a default contract for HTTP intermediaries (caches, retrying clients): they're allowed to retry GET/PUT/DELETE without asking, but should not retry POST without explicit cooperation. Your service can still make POST endpoints idempotent, you just have to advertise it (via Idempotency-Key support) so clients know retries are safe.", correct: true, explanation: "Right. The HTTP spec gives intermediaries a baseline rule. POST is non-idempotent by default, so well-behaved retry libraries (and proxies, and browsers) won't auto-retry POST without explicit signal. Your idempotency-key header is exactly that signal, it tells everyone in the chain 'go ahead, retry, we handle dedup.'" },
+            { label: "It just describes the HTTP method names, pure convention.", explanation: "It's a real semantic contract that real software relies on (browsers, retry middleware, CDNs). It's not just nomenclature." },
+            { label: "PUT is always safer than POST.", explanation: "PUT being idempotent doesn't make it safer, it has different semantics (full-representation update vs. resource creation). Choose by semantics, not by 'safety.'" },
           ]}
         />
 
         <Quiz
           kind="Reality check"
-          question="An engineer says: 'we don't need idempotency keys — we run all writes in a database transaction.' What's wrong with that reasoning?"
+          question="An engineer says: 'we don't need idempotency keys, we run all writes in a database transaction.' What's wrong with that reasoning?"
           options={[
-            { label: "Nothing — transactions handle this.", explanation: "Transactions handle atomicity within one call. They don't help when the same call is made twice." },
-            { label: "Transactions guarantee atomicity within one request — they don't dedupe across requests. A retry is a brand-new transaction; it'll happily insert a second charge alongside the first.", correct: true, explanation: "Right. Transactions and idempotency solve different problems. Transactions: 'all of this happens or none of it does.' Idempotency: 'doing this twice is the same as doing it once.' You need both — transactions to keep individual writes consistent, idempotency keys to make retries safe across requests." },
-            { label: "Transactions are too slow for idempotency work.", explanation: "Performance isn't the issue — the semantics are. Even infinitely fast transactions don't dedupe across calls." },
+            { label: "Nothing, transactions handle this.", explanation: "Transactions handle atomicity within one call. They don't help when the same call is made twice." },
+            { label: "Transactions guarantee atomicity within one request, they don't dedupe across requests. A retry is a brand-new transaction; it'll happily insert a second charge alongside the first.", correct: true, explanation: "Right. Transactions and idempotency solve different problems. Transactions: 'all of this happens or none of it does.' Idempotency: 'doing this twice is the same as doing it once.' You need both, transactions to keep individual writes consistent, idempotency keys to make retries safe across requests." },
+            { label: "Transactions are too slow for idempotency work.", explanation: "Performance isn't the issue, the semantics are. Even infinitely fast transactions don't dedupe across calls." },
             { label: "Transactions don't work in a microservices environment.", explanation: "Local transactions work fine in microservices; distributed transactions are a different conversation. Neither replaces idempotency." },
           ]}
         />
 
         <PartRecap
           title="Part 1 recap"
-          gist="Idempotency is the contract that makes retry safe — different operations need different mechanisms."
+          gist="Idempotency is the contract that makes retry safe, different operations need different mechanisms."
           points={[
-            { takeaway: "Idempotent = doing it N times has the same effect as doing it once.", detail: <>The key word is &quot;effect&quot; — observable state at the end. Returning the same response is a separate, often desirable, property.</> },
+            { takeaway: "Idempotent = doing it N times has the same effect as doing it once.", detail: <>The key word is &quot;effect&quot;, observable state at the end. Returning the same response is a separate, often desirable, property.</> },
             { takeaway: "Natural idempotency lives in HTTP semantics: GET, PUT, DELETE.", detail: <>POST is non-idempotent by default. That&apos;s a contract with the entire HTTP ecosystem (proxies, retry libraries, browsers).</> },
-            { takeaway: "POST mutations need explicit cooperation — an idempotency key.", detail: <>The client generates a key once at the top of an operation and reuses it on every retry. The server dedupes on the key.</> },
+            { takeaway: "POST mutations need explicit cooperation, an idempotency key.", detail: <>The client generates a key once at the top of an operation and reuses it on every retry. The server dedupes on the key.</> },
             { takeaway: "Inherently non-idempotent operations need careful key design.", detail: <>&quot;Send email&quot; or &quot;increment counter&quot; have no natural same-effect-on-replay. The key has to scope to the source event so replays of the same event are safe.</> },
             { takeaway: "Database transactions don't solve this. Idempotency keys do.", detail: <>Transactions handle atomicity within one request. Idempotency handles dedup across requests. They&apos;re complementary.</> },
           ]}
@@ -179,7 +179,7 @@ export default function Page() {
         <h3>The dedupe table</h3>
 
         <p>
-          The standard implementation is a database table — call it <code>idempotency_keys</code> — that stores every key the service has seen and the response that was sent. On a retry, the server reads the stored response and replays it instead of doing the work.
+          The standard implementation is a database table, call it <code>idempotency_keys</code>, that stores every key the service has seen and the response that was sent. On a retry, the server reads the stored response and replays it instead of doing the work.
         </p>
 
         <CodeBlock lang="plain" caption="The schema (Postgres flavored)">{`CREATE TABLE idempotency_keys (
@@ -198,7 +198,7 @@ CREATE INDEX idx_idem_expires ON idempotency_keys (expires_at);
 CREATE UNIQUE INDEX idx_idem_scope_key ON idempotency_keys (scope, key);`}</CodeBlock>
 
         <p>
-          A few important schema choices here. The primary key is the idempotency key itself, scoped per account — this is what enforces dedup. The <code>request_fingerprint</code> is a hash of the request body; we&apos;ll use it in Part 3 to detect mutated retries. <code>status</code> distinguishes &quot;the work is happening right now&quot; from &quot;the work finished&quot; — critical for handling concurrent retries. <code>expires_at</code> lets you garbage-collect old keys without scanning the whole table.
+          A few important schema choices here. The primary key is the idempotency key itself, scoped per account, this is what enforces dedup. The <code>request_fingerprint</code> is a hash of the request body; we&apos;ll use it in Part 3 to detect mutated retries. <code>status</code> distinguishes &quot;the work is happening right now&quot; from &quot;the work finished&quot;, critical for handling concurrent retries. <code>expires_at</code> lets you garbage-collect old keys without scanning the whole table.
         </p>
 
         <h3>The handler flow</h3>
@@ -207,7 +207,7 @@ CREATE UNIQUE INDEX idx_idem_scope_key ON idempotency_keys (scope, key);`}</Code
           The handler does five things in order. Each step matters.
         </p>
 
-        <CodeBlock lang="java" caption="Idempotent POST handler — happy path">{`@RestController
+        <CodeBlock lang="java" caption="Idempotent POST handler, happy path">{`@RestController
 public class ChargesController {
 
     private final IdempotencyStore store;
@@ -257,7 +257,7 @@ public class ChargesController {
           The single subtle thing: step 1 is an atomic INSERT-or-return-existing. In Postgres that&apos;s an <code>INSERT ... ON CONFLICT (scope, key) DO NOTHING RETURNING *</code> followed by a SELECT if nothing was returned. The atomicity is what protects us from two concurrent retries both thinking they&apos;re first.
         </p>
 
-        <CodeBlock lang="java" caption="The atomic begin-or-return-existing — JdbcTemplate flavor">{`@Repository
+        <CodeBlock lang="java" caption="The atomic begin-or-return-existing, JdbcTemplate flavor">{`@Repository
 public class IdempotencyStore {
 
     private final JdbcTemplate jdbc;
@@ -303,13 +303,13 @@ public class IdempotencyStore {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="Concurrent retries hit the in_progress state">
-          <p className="m-0">Two retries arrive in the same millisecond. One inserts the row in <code>in_progress</code>; the second sees the row already exists, in_progress, with the same fingerprint. What should the second one do? Three options: (1) wait and poll for completion, (2) return 409 Conflict immediately and let the client retry, (3) return 425 Too Early. Stripe&apos;s answer is (2) — return 409 with a clear &quot;there&apos;s already a request with this key in progress&quot; message. This is simpler for the server and gives the client a chance to back off. Whatever you pick, decide explicitly — silently re-doing the work because the row is in_progress is the bug that causes double-charges.</p>
+          <p className="m-0">Two retries arrive in the same millisecond. One inserts the row in <code>in_progress</code>; the second sees the row already exists, in_progress, with the same fingerprint. What should the second one do? Three options: (1) wait and poll for completion, (2) return 409 Conflict immediately and let the client retry, (3) return 425 Too Early. Stripe&apos;s answer is (2), return 409 with a clear &quot;there&apos;s already a request with this key in progress&quot; message. This is simpler for the server and gives the client a chance to back off. Whatever you pick, decide explicitly, silently re-doing the work because the row is in_progress is the bug that causes double-charges.</p>
         </Callout>
 
         <h3>Stored-response replay</h3>
 
         <p>
-          When a retry arrives after the original completed, the server doesn&apos;t re-run the business logic — it just returns the stored response with the original status code. This matters: the retry must look identical to the original from the client&apos;s perspective. Same status, same body, ideally the same headers (or at least the meaningful ones — the <code>Date</code> header should obviously be fresh).
+          When a retry arrives after the original completed, the server doesn&apos;t re-run the business logic, it just returns the stored response with the original status code. This matters: the retry must look identical to the original from the client&apos;s perspective. Same status, same body, ideally the same headers (or at least the meaningful ones, the <code>Date</code> header should obviously be fresh).
         </p>
 
         <p>
@@ -319,17 +319,17 @@ public class IdempotencyStore {
         <h3>Expiration</h3>
 
         <p>
-          Storing every key forever is unsustainable. The standard policy is 24 hours to 7 days — enough to cover any reasonable retry window. Stripe documents 24 hours; most homegrown systems land at 24-72 hours. After expiration, the key is gone and a retry would create a new charge — but no sane client retries a payment after 24 hours, so the practical risk is near zero.
+          Storing every key forever is unsustainable. The standard policy is 24 hours to 7 days, enough to cover any reasonable retry window. Stripe documents 24 hours; most homegrown systems land at 24-72 hours. After expiration, the key is gone and a retry would create a new charge, but no sane client retries a payment after 24 hours, so the practical risk is near zero.
         </p>
 
         <Quiz
           kind="Drill"
-          question="Two clients retry the same Idempotency-Key concurrently — they arrive within a millisecond of each other. Both check 'is this key in the table?' before either inserts. Both find it absent. Both insert. What happened?"
+          question="Two clients retry the same Idempotency-Key concurrently, they arrive within a millisecond of each other. Both check 'is this key in the table?' before either inserts. Both find it absent. Both insert. What happened?"
           options={[
-            { label: "Both successful — first INSERT wins, second is rejected by the unique constraint.", explanation: "If the unique constraint is in place, the second INSERT will indeed fail. The bug here is that you described the check-then-insert pattern, which is racy — and the question is what happens when you don't use the atomic INSERT ON CONFLICT pattern. With a unique constraint, the second insert errors, but the second handler now has to deal with that error correctly. Better to use INSERT ON CONFLICT DO NOTHING and avoid the error path entirely." },
-            { label: "Without an atomic INSERT-or-return, you get a race: both handlers see 'no row' and both insert. The unique constraint prevents two rows, but one INSERT throws — and depending on how the error is handled, the second handler might either re-do the work or 500 the client. The fix is INSERT ... ON CONFLICT DO NOTHING (atomic), then SELECT the row that won — never check-then-insert.", correct: true, explanation: "Right. The check-then-insert pattern is the classic TOCTOU (time-of-check-to-time-of-use) race. Even with a unique constraint, the error you'd get on the losing insert has to be caught and handled — and the bug surface is enormous. INSERT ... ON CONFLICT DO NOTHING (or INSERT IGNORE in MySQL, MERGE in SQL Server) collapses both 'first writer' and 'replay' into one atomic operation. Then a SELECT after gives you whatever now exists." },
-            { label: "Postgres serializes everything internally — there's no race.", explanation: "Postgres serializes inside a single statement, but two separate SELECT-then-INSERT sequences in different transactions absolutely race." },
-            { label: "The application's @Transactional handles this.", explanation: "@Transactional doesn't prevent two transactions from each running their SELECT-INSERT pair in parallel. Even at SERIALIZABLE isolation, you'd get a serialization error on one of them — still a code path you have to handle." },
+            { label: "Both successful, first INSERT wins, second is rejected by the unique constraint.", explanation: "If the unique constraint is in place, the second INSERT will indeed fail. The bug here is that you described the check-then-insert pattern, which is racy, and the question is what happens when you don't use the atomic INSERT ON CONFLICT pattern. With a unique constraint, the second insert errors, but the second handler now has to deal with that error correctly. Better to use INSERT ON CONFLICT DO NOTHING and avoid the error path entirely." },
+            { label: "Without an atomic INSERT-or-return, you get a race: both handlers see 'no row' and both insert. The unique constraint prevents two rows, but one INSERT throws, and depending on how the error is handled, the second handler might either re-do the work or 500 the client. The fix is INSERT ... ON CONFLICT DO NOTHING (atomic), then SELECT the row that won, never check-then-insert.", correct: true, explanation: "Right. The check-then-insert pattern is the classic TOCTOU (time-of-check-to-time-of-use) race. Even with a unique constraint, the error you'd get on the losing insert has to be caught and handled, and the bug surface is enormous. INSERT ... ON CONFLICT DO NOTHING (or INSERT IGNORE in MySQL, MERGE in SQL Server) collapses both 'first writer' and 'replay' into one atomic operation. Then a SELECT after gives you whatever now exists." },
+            { label: "Postgres serializes everything internally, there's no race.", explanation: "Postgres serializes inside a single statement, but two separate SELECT-then-INSERT sequences in different transactions absolutely race." },
+            { label: "The application's @Transactional handles this.", explanation: "@Transactional doesn't prevent two transactions from each running their SELECT-INSERT pair in parallel. Even at SERIALIZABLE isolation, you'd get a serialization error on one of them, still a code path you have to handle." },
           ]}
         />
 
@@ -338,9 +338,9 @@ public class IdempotencyStore {
           question="A retry arrives 200ms after the original request, while the original is still running (status='in_progress'). What does Stripe do, and why?"
           options={[
             { label: "Wait until the original completes, then return its stored response.", explanation: "Possible design but introduces unbounded waits and complicated client semantics. Not what Stripe does." },
-            { label: "Return 409 Conflict with an error indicating a request with this key is already in progress. Lets the client back off and retry, doesn't risk double-execution, and keeps server logic simple.", correct: true, explanation: "Right. Returning 409 immediately is simpler and safer than blocking the second handler on the in-progress operation. The client's retry library will back off and try again, by which time the original will likely have completed — and the third attempt becomes a clean replay. Stripe documents this exact behavior." },
-            { label: "Run the request again — the work is idempotent anyway.", explanation: "The whole point of the in_progress state is to prevent double-execution. Running again defeats the purpose." },
-            { label: "Return a 200 with the request that's still in progress.", explanation: "You can't return a real response when the work hasn't finished — there's nothing to return." },
+            { label: "Return 409 Conflict with an error indicating a request with this key is already in progress. Lets the client back off and retry, doesn't risk double-execution, and keeps server logic simple.", correct: true, explanation: "Right. Returning 409 immediately is simpler and safer than blocking the second handler on the in-progress operation. The client's retry library will back off and try again, by which time the original will likely have completed, and the third attempt becomes a clean replay. Stripe documents this exact behavior." },
+            { label: "Run the request again, the work is idempotent anyway.", explanation: "The whole point of the in_progress state is to prevent double-execution. Running again defeats the purpose." },
+            { label: "Return a 200 with the request that's still in progress.", explanation: "You can't return a real response when the work hasn't finished, there's nothing to return." },
           ]}
         />
 
@@ -351,7 +351,7 @@ public class IdempotencyStore {
             { takeaway: "The dedupe table stores key, scope, fingerprint, status, response, expiry.", detail: <>Scope ties the key to the calling account so two accounts can both use &quot;abc123&quot; without colliding.</> },
             { takeaway: "INSERT ... ON CONFLICT DO NOTHING is the atomic begin-or-return-existing.", detail: <>Then SELECT the row that now exists. This collapses &quot;first writer&quot; and &quot;replay&quot; into one operation with no race.</> },
             { takeaway: "Replays return the stored response, not a freshly-computed one.", detail: <>Even if the business logic is naturally idempotent, generated IDs and timestamps would differ. Replaying the stored body keeps wire-level behavior identical.</> },
-            { takeaway: "Concurrent retries hit the in_progress state — return 409, don't double-execute.", detail: <>Stripe&apos;s answer is to return 409 Conflict immediately. The client backs off and the next attempt becomes a clean replay.</> },
+            { takeaway: "Concurrent retries hit the in_progress state, return 409, don't double-execute.", detail: <>Stripe&apos;s answer is to return 409 Conflict immediately. The client backs off and the next attempt becomes a clean replay.</> },
             { takeaway: "Expire keys after 24-72 hours.", detail: <>Long enough for any reasonable retry, short enough to keep the table from growing unbounded. Index on expires_at and run a periodic cleanup.</> },
           ]}
         />
@@ -367,16 +367,16 @@ public class IdempotencyStore {
           Most idempotency bugs hide in the corners. This part is the corners.
         </p>
 
-        <h3>Mutated retries — the request body changed</h3>
+        <h3>Mutated retries, the request body changed</h3>
 
         <p>
           A client reuses an idempotency key but sends a different request body. Maybe a logic bug, maybe a developer experimenting with the same key in curl, maybe an actual attempt to game the system. What should the server do?
         </p>
         <p>
-          Stripe&apos;s answer is to reject mutated retries with <code>422 Unprocessable Entity</code>. The reasoning: the idempotency key is a contract that says &quot;this exact operation happened.&quot; If the body differs, the new request is not a retry — it&apos;s a different operation, and silently treating it as a replay would mislead the client about what was actually executed.
+          Stripe&apos;s answer is to reject mutated retries with <code>422 Unprocessable Entity</code>. The reasoning: the idempotency key is a contract that says &quot;this exact operation happened.&quot; If the body differs, the new request is not a retry, it&apos;s a different operation, and silently treating it as a replay would mislead the client about what was actually executed.
         </p>
         <p>
-          The fingerprint is just a hash of the canonicalized body — sort the JSON keys, drop whitespace, hash with SHA-256. Compare the new request&apos;s fingerprint to the stored one. If they differ, reject.
+          The fingerprint is just a hash of the canonicalized body, sort the JSON keys, drop whitespace, hash with SHA-256. Compare the new request&apos;s fingerprint to the stored one. If they differ, reject.
         </p>
 
         <CodeBlock lang="java" caption="Body fingerprinting for mutated-retry detection">{`import com.fasterxml.jackson.databind.ObjectMapper;
@@ -408,7 +408,7 @@ public class RequestFingerprint {
         <h3>Partial-success rollbacks</h3>
 
         <p>
-          The handler started the work, the database write succeeded, but the response failed to send (network error after the commit). The client retries. The handler runs the work again — and now you have a duplicate.
+          The handler started the work, the database write succeeded, but the response failed to send (network error after the commit). The client retries. The handler runs the work again, and now you have a duplicate.
         </p>
         <p>
           This is exactly why we set <code>in_progress</code> before doing the work and <code>completed</code> after, all in the same transaction as the actual mutation. The flow:
@@ -428,7 +428,7 @@ public class RequestFingerprint {
           <p className="m-0">If the &quot;real work&quot; involves an external API call (charge a card, send an email), it can&apos;t be in your local transaction. The standard workaround is the <em>outbox pattern</em>: write a record to an &quot;events to publish&quot; table inside the same transaction as the dedupe row, then a separate worker reads the outbox and makes the external call. The external call uses the idempotency key as its own dedupe token, and the worker can retry safely. This converts &quot;in-transaction with external system&quot; (impossible) into &quot;in-transaction with local outbox&quot; (easy).</p>
         </Callout>
 
-        <h3>Key scoping — per-account is non-negotiable</h3>
+        <h3>Key scoping, per-account is non-negotiable</h3>
 
         <p>
           Two different customers might both pick &quot;abc123&quot; as an idempotency key. Without scoping, customer B&apos;s retry replays customer A&apos;s response, and you&apos;ve leaked data across tenants. Always scope keys to the account / tenant / API key that owns them. The dedupe table&apos;s primary key is <code>(scope, key)</code>, never just <code>key</code>.
@@ -437,7 +437,7 @@ public class RequestFingerprint {
         <h3>What about read-only operations?</h3>
 
         <p>
-          GET endpoints don&apos;t need idempotency keys. They&apos;re already idempotent — replaying them is harmless. The dedupe table is for mutations. Adding it to GETs adds latency and storage for no benefit. Stripe explicitly skips idempotency on GETs.
+          GET endpoints don&apos;t need idempotency keys. They&apos;re already idempotent, replaying them is harmless. The dedupe table is for mutations. Adding it to GETs adds latency and storage for no benefit. Stripe explicitly skips idempotency on GETs.
         </p>
 
         <h3>The deeper truth: idempotency is a system property</h3>
@@ -451,32 +451,32 @@ public class RequestFingerprint {
           question="A client retries a POST /charges with the same Idempotency-Key but accidentally sends amount=500 instead of amount=100. Your dedupe table has the original (amount=100) record completed. What should happen?"
           options={[
             { label: "Replay the stored response (amount=100). The client retried with the same key, that's their problem.", explanation: "Replaying would silently lie to the client: they sent amount=500 and got back a response saying amount=100. They'll think the 500 worked." },
-            { label: "Compare the request body fingerprint. If it differs from the stored one, reject with 422 Unprocessable Entity. Don't replay, don't double-execute — make the client face their bug.", correct: true, explanation: "Right. This is what Stripe does. Fingerprinting the request body and comparing it to the stored fingerprint is what catches mutated retries. The 422 makes the bug surface immediately on the client side, where it can be fixed, instead of silently mismatching responses." },
-            { label: "Run the second request as a fresh charge — same key but it's a 'different operation.'", explanation: "Now you've broken idempotency in the other direction: the same key produced two different operations. The dedup contract is shattered." },
+            { label: "Compare the request body fingerprint. If it differs from the stored one, reject with 422 Unprocessable Entity. Don't replay, don't double-execute, make the client face their bug.", correct: true, explanation: "Right. This is what Stripe does. Fingerprinting the request body and comparing it to the stored fingerprint is what catches mutated retries. The 422 makes the bug surface immediately on the client side, where it can be fixed, instead of silently mismatching responses." },
+            { label: "Run the second request as a fresh charge, same key but it's a 'different operation.'", explanation: "Now you've broken idempotency in the other direction: the same key produced two different operations. The dedup contract is shattered." },
             { label: "Ignore the new amount and return the stored response with a warning header.", explanation: "Same problem as 'replay the stored response.' The client thinks their amount=500 went through." },
           ]}
         />
 
         <Quiz
           kind="Reality check"
-          question="An engineer ships idempotency keys but stores them globally — primary key is just (key), no account scoping. Two days later, customer A complains they got customer B's charge response. What's the bug and the fix?"
+          question="An engineer ships idempotency keys but stores them globally, primary key is just (key), no account scoping. Two days later, customer A complains they got customer B's charge response. What's the bug and the fix?"
           options={[
-            { label: "Bug: idempotency keys are leaking across tenants. Fix: change the primary key to (account_id, key) and add an index. Backfill is dangerous because some live customers may have collided keys; rotate keys for everyone.", correct: true, explanation: "Right. Globally-scoped keys are a tenant-isolation bug. The fix is to scope keys per account (or per API key, or per tenant — whatever your isolation unit is). The unique constraint becomes (scope, key), not just (key). The backfill question is real — if customers have already collided, you can't safely deduplicate without dropping data, so a key rotation is usually the right answer." },
+            { label: "Bug: idempotency keys are leaking across tenants. Fix: change the primary key to (account_id, key) and add an index. Backfill is dangerous because some live customers may have collided keys; rotate keys for everyone.", correct: true, explanation: "Right. Globally-scoped keys are a tenant-isolation bug. The fix is to scope keys per account (or per API key, or per tenant, whatever your isolation unit is). The unique constraint becomes (scope, key), not just (key). The backfill question is real, if customers have already collided, you can't safely deduplicate without dropping data, so a key rotation is usually the right answer." },
             { label: "Bug: not enough randomness in the keys. Fix: enforce minimum key entropy.", explanation: "Even with high-entropy keys, two customers might independently pick the same UUID. Tenant scoping is the structural fix; entropy alone is hopeful." },
-            { label: "Not a bug — clients are supposed to use unique keys.", explanation: "The server cannot trust client-side uniqueness across tenants. Defense in depth is a server-side scope." },
-            { label: "Fix: hash the keys before storing.", explanation: "Hashing doesn't prevent the same input from colliding — it preserves the equality. The bug isn't representation, it's missing scope." },
+            { label: "Not a bug, clients are supposed to use unique keys.", explanation: "The server cannot trust client-side uniqueness across tenants. Defense in depth is a server-side scope." },
+            { label: "Fix: hash the keys before storing.", explanation: "Hashing doesn't prevent the same input from colliding, it preserves the equality. The bug isn't representation, it's missing scope." },
           ]}
         />
 
         <PartRecap
           title="Part 3 recap"
-          gist="The edges are where idempotency designs get tested — fingerprints, scoping, partial failures, downstream propagation."
+          gist="The edges are where idempotency designs get tested, fingerprints, scoping, partial failures, downstream propagation."
           points={[
             { takeaway: "Fingerprint the request body to detect mutated retries.", detail: <>Same key + different body → 422. Without fingerprinting, you silently mismatch responses, which is worse than a clean error.</> },
             { takeaway: "The dedupe row update must commit in the same transaction as the business write.", detail: <>Otherwise a crash between &quot;business done&quot; and &quot;dedupe marked complete&quot; lets the retry double-execute. Couple them in one transaction.</> },
             { takeaway: "Always scope keys per account / tenant / API key.", detail: <>Globally-scoped keys leak data across tenants. Primary key is (scope, key), never just (key).</> },
             { takeaway: "External-system calls need the outbox pattern.", detail: <>You can&apos;t put an external API call in a local transaction. Write to an outbox table in-transaction; let a worker drain the outbox and propagate the idempotency key to the external system.</> },
-            { takeaway: "Idempotency has to propagate through the whole chain.", detail: <>API, DB, outbox, message bus, consumer, downstream APIs — each layer needs its own idempotency story, usually rooted on the same identifier.</> },
+            { takeaway: "Idempotency has to propagate through the whole chain.", detail: <>API, DB, outbox, message bus, consumer, downstream APIs, each layer needs its own idempotency story, usually rooted on the same identifier.</> },
           ]}
         />
       </section>

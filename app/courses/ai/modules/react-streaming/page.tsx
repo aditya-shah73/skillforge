@@ -51,11 +51,11 @@ export default function ReactStreamingModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          A small, headless chat UI library — the components you&apos;ll reuse for every AI feature
+          A small, headless chat UI library, the components you&apos;ll reuse for every AI feature
           you ship from here on. By the end of the module:
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li>You can consume an SSE stream from a browser — and you know why <code>EventSource</code> isn&apos;t enough</li>
+          <li>You can consume an SSE stream from a browser, and you know why <code>EventSource</code> isn&apos;t enough</li>
           <li>A <code>useStreamingChat</code> hook with a clean state machine (idle / streaming / done / error) and abort support</li>
           <li>Optimistic message rendering, mid-stream tool-call rendering, and recovery from dropped streams</li>
           <li>Three reusable components: <code>&lt;StreamingMessage&gt;</code>, <code>&lt;ChatComposer&gt;</code>, <code>&lt;MessageList&gt;</code></li>
@@ -66,7 +66,7 @@ export default function ReactStreamingModule() {
       <Callout variant="info" title="Prerequisites">
         <p className="m-0">
           Module 12 (streaming with SSE) for the backend mental model. You don&apos;t need a running
-          Spring Boot server — we ship a mock SSE endpoint as a Next.js API route so the project runs
+          Spring Boot server, we ship a mock SSE endpoint as a Next.js API route so the project runs
           standalone.
         </p>
       </Callout>
@@ -75,12 +75,12 @@ export default function ReactStreamingModule() {
       {/* PART 1: WHY STREAMING CHANGES THE UX                                */}
       {/* ================================================================= */}
       <section id="why-streaming">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1 — Why streaming changes the UX</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 1, Why streaming changes the UX</h2>
 
         <p>
           The first time you wire up an LLM call from a button-click, you build it the same way you&apos;d
           build any REST call: <code>fetch</code>, <code>await</code>, render. Then you click the button
-          and stare at a spinner for eight seconds. The model is generating fine — you just hid the
+          and stare at a spinner for eight seconds. The model is generating fine, you just hid the
           generation behind a loader.
         </p>
 
@@ -124,14 +124,14 @@ Streaming:
         <p>
           Streaming is not free. It locks you into incremental rendering, makes error handling harder
           (you might have already shown half a message before the stream dies), and complicates anything
-          downstream that needs the <em>full</em>{" "}response — JSON validation, tool calls, post-processing.
+          downstream that needs the <em>full</em>{" "}response, JSON validation, tool calls, post-processing.
         </p>
 
         <p>Skip streaming when:</p>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>The response is short enough that the spinner is invisible.</strong>{" "}Classification, yes/no, single-word output — non-streaming is simpler and the user can&apos;t tell.</li>
-          <li><strong>You need the whole structured output before doing anything.</strong>{" "}If the LLM is producing JSON for your code to consume, partial JSON is useless — wait for it.</li>
+          <li><strong>The response is short enough that the spinner is invisible.</strong>{" "}Classification, yes/no, single-word output, non-streaming is simpler and the user can&apos;t tell.</li>
+          <li><strong>You need the whole structured output before doing anything.</strong>{" "}If the LLM is producing JSON for your code to consume, partial JSON is useless, wait for it.</li>
           <li><strong>The output goes to a non-human consumer.</strong>{" "}Cron job, webhook, batch process. Nobody&apos;s watching.</li>
         </ul>
 
@@ -147,10 +147,10 @@ Streaming:
           kind="Quick check"
           question="A teammate wants to stream the response from an LLM call that returns a JSON array of `{vendor, total}` for a receipt-parsing endpoint. The frontend then renders a table from that array. Should you stream?"
           options={[
-            { label: "Yes — streaming always feels faster", explanation: "The user can't read partial JSON, and the table can't render from invalid JSON. Streaming buys nothing here and complicates parsing." },
-            { label: "No — the consumer is your code, not a human reader, and partial JSON is unusable", correct: true, explanation: "Right. The output is structured data feeding a UI component. You need the full, valid JSON before you can render. Show a friendly loader on the table, and let the API call complete." },
-            { label: "Stream the raw text and parse on every chunk", explanation: "Possible but fragile — partial JSON is invalid by definition until the closing brace, so most chunks are throwaway." },
-            { label: "Stream only if the array might be long", explanation: "Length isn't the signal — usability of partial output is. If the consumer can't use partial output, don't stream." },
+            { label: "Yes, streaming always feels faster", explanation: "The user can't read partial JSON, and the table can't render from invalid JSON. Streaming buys nothing here and complicates parsing." },
+            { label: "No, the consumer is your code, not a human reader, and partial JSON is unusable", correct: true, explanation: "Right. The output is structured data feeding a UI component. You need the full, valid JSON before you can render. Show a friendly loader on the table, and let the API call complete." },
+            { label: "Stream the raw text and parse on every chunk", explanation: "Possible but fragile, partial JSON is invalid by definition until the closing brace, so most chunks are throwaway." },
+            { label: "Stream only if the array might be long", explanation: "Length isn't the signal, usability of partial output is. If the consumer can't use partial output, don't stream." },
           ]}
           xp={10}
         />
@@ -167,7 +167,7 @@ Streaming:
         <Checkpoint moduleSlug="react-streaming" id="why-streaming" title="Why streaming changes the UX" xp={15} celebration="You know when to reach for streaming and when to skip it.">
           <p>
             You should be able to articulate, in two sentences, why a streaming chat UI feels faster than
-            a non-streaming one — and name two cases where streaming is the wrong choice.
+            a non-streaming one, and name two cases where streaming is the wrong choice.
           </p>
         </Checkpoint>
       </section>
@@ -176,7 +176,7 @@ Streaming:
       {/* PART 2: SSE IN THE BROWSER                                          */}
       {/* ================================================================= */}
       <section id="browser-sse">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2 — SSE in the browser, properly</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 2, SSE in the browser, properly</h2>
 
         <p>
           Module 12 set up the server side: Spring Boot returns a <code>text/event-stream</code> response
@@ -195,11 +195,11 @@ Streaming:
 es.onmessage = (e) => console.log(e.data);
 es.onerror = () => es.close();`}</CodeBlock>
 
-        <p>This is great — for demos. It falls apart in production for two reasons:</p>
+        <p>This is great, for demos. It falls apart in production for two reasons:</p>
 
         <ol className="list-decimal space-y-1 pl-6">
           <li>
-            <strong>It only does GET.</strong>{" "}Your chat request has a body — messages, tool config,
+            <strong>It only does GET.</strong>{" "}Your chat request has a body, messages, tool config,
             session ID, model parameters. None of that fits in a query string. (And query strings show
             up in server logs, which you don&apos;t want for user prompts.)
           </li>
@@ -409,7 +409,7 @@ export async function POST() {
               body: (
                 <p className="text-sm">
                   The <code>for await</code> loop exits. The hook flips state to <code>idle</code>;
-                  the UI re-enables the composer. Seven hops, no magic — each one is a place you can
+                  the UI re-enables the composer. Seven hops, no magic, each one is a place you can
                   drop a <code>console.log</code> if something goes wrong.
                 </p>
               ),
@@ -421,10 +421,10 @@ export async function POST() {
           kind="Quick check"
           question="Your chat request needs to include an `Authorization: Bearer ...` header. Which approach works?"
           options={[
-            { label: "EventSource — pass the token in the URL query string", explanation: "Tokens in URLs leak via logs, browser history, and referrers. Don't." },
+            { label: "EventSource, pass the token in the URL query string", explanation: "Tokens in URLs leak via logs, browser history, and referrers. Don't." },
             { label: "EventSource with a custom .headers property", explanation: "EventSource has no headers property. The API doesn't support it." },
-            { label: "fetch + ReadableStream — fetch supports arbitrary headers including Authorization", correct: true, explanation: "Right. fetch is the only option once you need POST bodies, custom headers, or any auth scheme other than cookies. EventSource is a demo-grade tool." },
-            { label: "Both work fine — pick whichever", explanation: "EventSource literally cannot set headers. They are not equivalent." },
+            { label: "fetch + ReadableStream, fetch supports arbitrary headers including Authorization", correct: true, explanation: "Right. fetch is the only option once you need POST bodies, custom headers, or any auth scheme other than cookies. EventSource is a demo-grade tool." },
+            { label: "Both work fine, pick whichever", explanation: "EventSource literally cannot set headers. They are not equivalent." },
           ]}
           xp={10}
         />
@@ -433,10 +433,10 @@ export async function POST() {
           kind="Quick check"
           question="Your stream parser splits on \\n\\n to find frame boundaries. Why buffer across reads instead of parsing each read independently?"
           options={[
-            { label: "It's faster", explanation: "Performance isn't the issue — correctness is." },
+            { label: "It's faster", explanation: "Performance isn't the issue, correctness is." },
             { label: "A single read may contain a partial frame, multiple frames, or one-and-a-half frames; you can only know where frames end by scanning for \\n\\n across the running buffer", correct: true, explanation: "TCP gives you bytes, not message boundaries. The HTTP layer doesn't either. You have to reassemble at the SSE layer yourself, which means accumulating bytes until you see \\n\\n and only then parsing." },
             { label: "It saves memory", explanation: "It uses slightly more memory, not less. The reason is correctness." },
-            { label: "ReadableStream requires it", explanation: "ReadableStream is happy either way — buffering is a parser concern, not a stream concern." },
+            { label: "ReadableStream requires it", explanation: "ReadableStream is happy either way, buffering is a parser concern, not a stream concern." },
           ]}
           xp={10}
         />
@@ -463,7 +463,7 @@ export async function POST() {
       {/* PART 3: useStreamingChat                                            */}
       {/* ================================================================= */}
       <section id="use-streaming-chat">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3 — The <code>useStreamingChat</code> hook</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 3, The <code>useStreamingChat</code> hook</h2>
 
         <p>
           The async generator is the engine. The hook is the dashboard the rest of your app talks to.
@@ -584,7 +584,7 @@ export function useStreamingChat() {
           </li>
           <li>
             <strong>Cancelled streams aren&apos;t errors.</strong>{" "}If the user clicks stop, the partial
-            text is fine — we keep it and go back to idle. Network failures are the actual error path.
+            text is fine, we keep it and go back to idle. Network failures are the actual error path.
           </li>
           <li>
             <strong>The history sent to the server includes the new user message.</strong>{" "}Easy to get
@@ -599,7 +599,7 @@ export function useStreamingChat() {
             token will re-render the whole list. Two cheap fixes: split the in-flight message into its
             own state slot rendered by a sibling component, or switch to a reducer +{" "}
             <code>useSyncExternalStore</code> for that slot. For most chat UIs (under a few thousand
-            tokens per message), the simple version is fine — measure before you optimize.
+            tokens per message), the simple version is fine, measure before you optimize.
           </p>
         </Callout>
 
@@ -650,7 +650,7 @@ export function ChatExample() {
           question="Why does the hook build `history` from `[...messages, userMsg]` instead of just reading `messages` after setMessages?"
           options={[
             { label: "Performance", explanation: "Performance isn't the issue. Correctness is." },
-            { label: "setMessages is async — at the moment we call streamChat, the latest `messages` ref still points at the OLD array, missing the user message we just added", correct: true, explanation: "React state updates are batched and applied asynchronously. If you read `messages` right after setMessages, you get the previous value. Building the history explicitly from the value you already have avoids the race." },
+            { label: "setMessages is async, at the moment we call streamChat, the latest `messages` ref still points at the OLD array, missing the user message we just added", correct: true, explanation: "React state updates are batched and applied asynchronously. If you read `messages` right after setMessages, you get the previous value. Building the history explicitly from the value you already have avoids the race." },
             { label: "TypeScript inference fails otherwise", explanation: "Inference works either way." },
             { label: "It's idiomatic React", explanation: "It's idiomatic to *avoid* reading state right after setting it; that's the underlying reason." },
           ]}
@@ -661,7 +661,7 @@ export function ChatExample() {
           kind="Quick check"
           question="The user clicks Stop mid-stream. What's the right behavior?"
           options={[
-            { label: "Throw away the partial assistant message — it's incomplete", explanation: "Partial answers are still useful — the user explicitly asked to stop because they had enough. Discarding their content is hostile." },
+            { label: "Throw away the partial assistant message, it's incomplete", explanation: "Partial answers are still useful, the user explicitly asked to stop because they had enough. Discarding their content is hostile." },
             { label: "Keep the partial assistant message, flip its streaming flag off, return to idle. Don't surface it as an error.", correct: true, explanation: "User-initiated abort is a normal control flow, not a failure. Keep the partial content (it's often what they wanted). Only surface real errors (network, server) as errors." },
             { label: "Show an error 'request cancelled'", explanation: "User cancels are not errors. Reserve error UI for actual failures." },
             { label: "Re-send the request automatically when they hit send next", explanation: "That conflates two user actions. Treat stop as final." },
@@ -675,7 +675,7 @@ export function ChatExample() {
           points={[
             { takeaway: "Optimistically add both user and assistant messages on send.", detail: "The assistant is born empty + streaming=true; tokens append; streaming flips off at done. Single source of truth for the whole conversation." },
             { takeaway: "AbortController belongs in useRef.", detail: "It's a side-effect handle, not data that drives rendering. Putting it in state would just cause unnecessary re-renders." },
-            { takeaway: "Build the request history from the values you already have.", detail: "Don't read state right after setting it — React batching means you'd miss your own update. Construct the new array inline." },
+            { takeaway: "Build the request history from the values you already have.", detail: "Don't read state right after setting it, React batching means you'd miss your own update. Construct the new array inline." },
           ]}
         />
 
@@ -691,11 +691,11 @@ export function ChatExample() {
       {/* PART 4: OPTIMISTIC UI & TOOL RESULTS                                */}
       {/* ================================================================= */}
       <section id="optimistic-tools">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4 — Optimistic UI &amp; tool results</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 4, Optimistic UI &amp; tool results</h2>
 
         <p>
           The basics are working. Now let&apos;s deal with the realities: the assistant doesn&apos;t
-          just emit text — it sometimes calls tools (Module 11), and the user wants to see what&apos;s
+          just emit text, it sometimes calls tools (Module 11), and the user wants to see what&apos;s
           happening. Streams also drop. We need to handle both.
         </p>
 
@@ -766,7 +766,7 @@ export type Message =
 }`}</CodeBlock>
 
         <p>
-          Now the renderer walks <code>message.parts</code> and shows each one — text as text, tools as
+          Now the renderer walks <code>message.parts</code> and shows each one, text as text, tools as
           a styled badge with the tool name, status icon, and (after tool_result lands) a small preview
           of the output.
         </p>
@@ -809,7 +809,7 @@ function Part({ part }: { part: MessagePart }) {
 
         <p>
           Every chat UI wants to auto-scroll as new tokens land. But you can&apos;t just scroll on every
-          token — the user might have scrolled up to re-read something earlier, and yanking them back
+          token, the user might have scrolled up to re-read something earlier, and yanking them back
           to the bottom mid-read is infuriating.
         </p>
 
@@ -894,7 +894,7 @@ export function useAutoScroll<T>(dep: T) {
 
         <Callout variant="insight" title="Partial content + retry is the industry pattern">
           <p className="m-0">
-            Every mature chat product does this — ChatGPT, Claude.ai, Cursor. Keep the partial content;
+            Every mature chat product does this, ChatGPT, Claude.ai, Cursor. Keep the partial content;
             offer a continue button. Don&apos;t silent-retry and don&apos;t erase what arrived.
           </p>
         </Callout>
@@ -903,10 +903,10 @@ export function useAutoScroll<T>(dep: T) {
           kind="Quick check"
           question="Mid-stream, the user scrolls up to re-read an earlier message. New tokens arrive. What should the UI do?"
           options={[
-            { label: "Always scroll to bottom — that's where the action is", explanation: "Yanks the user out of what they're reading. Terrible UX." },
-            { label: "Never auto-scroll — let the user manage scrolling themselves", explanation: "Then the new live tokens go off-screen and the user has to manually scroll down constantly. Annoying." },
+            { label: "Always scroll to bottom, that's where the action is", explanation: "Yanks the user out of what they're reading. Terrible UX." },
+            { label: "Never auto-scroll, let the user manage scrolling themselves", explanation: "Then the new live tokens go off-screen and the user has to manually scroll down constantly. Annoying." },
             { label: "Auto-scroll only when the user is already near the bottom (within ~100px); leave them alone otherwise", correct: true, explanation: "This is the polite rule. If the user is following the live stream, keep them there. If they're reading history, respect that. A 'Jump to latest' button can offer the option to rejoin." },
-            { label: "Pause the stream when the user scrolls up", explanation: "Pausing the API call would cancel and restart it — pure waste. Just stop auto-scrolling." },
+            { label: "Pause the stream when the user scrolls up", explanation: "Pausing the API call would cancel and restart it, pure waste. Just stop auto-scrolling." },
           ]}
           xp={10}
         />
@@ -928,7 +928,7 @@ export function useAutoScroll<T>(dep: T) {
           gist="Real chat UIs surface tool calls inline, auto-scroll only when the user is near the bottom, and treat stream failures as recoverable: keep partial content, offer a continue button."
           points={[
             { takeaway: "Tool calls deserve their own message parts.", detail: "Don't merge tool I/O into the text stream. Model the message as parts: [text, tool, text, tool, text]. Let the renderer style each part appropriately." },
-            { takeaway: "Auto-scroll only when the user is already at the bottom.", detail: "Sticky-bottom is the right rule. If the user has scrolled up, they're reading — don't yank them back. Add a 'Jump to latest' button as the escape hatch." },
+            { takeaway: "Auto-scroll only when the user is already at the bottom.", detail: "Sticky-bottom is the right rule. If the user has scrolled up, they're reading, don't yank them back. Add a 'Jump to latest' button as the escape hatch." },
             { takeaway: "Failed streams keep their partial content.", detail: "Mark the message errored, surface a continue button. Don't silent-retry, don't erase content, don't disable the UI." },
           ]}
         />
@@ -946,7 +946,7 @@ export function useAutoScroll<T>(dep: T) {
       {/* PART 5: PROJECT                                                     */}
       {/* ================================================================= */}
       <section id="project">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5 — Project: chat UI component library</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 5, Project: chat UI component library</h2>
 
         <p>
           Build a small, reusable chat UI library. Three components, one hook, one mock endpoint.
@@ -957,12 +957,12 @@ export function useAutoScroll<T>(dep: T) {
         <h3 className="mt-8 mb-3 text-xl font-bold">Project scope</h3>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>Hook:</strong> <code>useStreamingChat</code> — the one from Part 3, extended with the parts model from Part 4.</li>
-          <li><strong>Component:</strong> <code>&lt;StreamingMessage&gt;</code> — renders one message, handles text + tool parts.</li>
-          <li><strong>Component:</strong> <code>&lt;MessageList&gt;</code> — renders an array of messages with <code>useAutoScroll</code>.</li>
-          <li><strong>Component:</strong> <code>&lt;ChatComposer&gt;</code> — input + send/stop buttons; disabled while streaming.</li>
-          <li><strong>Mock endpoint:</strong> <code>app/api/chat/route.ts</code> — fakes tokens and one tool call so you can develop without a backend.</li>
-          <li><strong>Demo page:</strong> <code>app/chat-demo/page.tsx</code> — wires it all together; this is your manual test bed.</li>
+          <li><strong>Hook:</strong> <code>useStreamingChat</code>, the one from Part 3, extended with the parts model from Part 4.</li>
+          <li><strong>Component:</strong> <code>&lt;StreamingMessage&gt;</code>, renders one message, handles text + tool parts.</li>
+          <li><strong>Component:</strong> <code>&lt;MessageList&gt;</code>, renders an array of messages with <code>useAutoScroll</code>.</li>
+          <li><strong>Component:</strong> <code>&lt;ChatComposer&gt;</code>, input + send/stop buttons; disabled while streaming.</li>
+          <li><strong>Mock endpoint:</strong> <code>app/api/chat/route.ts</code>, fakes tokens and one tool call so you can develop without a backend.</li>
+          <li><strong>Demo page:</strong> <code>app/chat-demo/page.tsx</code>, wires it all together; this is your manual test bed.</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Setup</h3>
@@ -973,7 +973,7 @@ mkdir -p src/lib/chat
 mkdir -p src/app/api/chat
 mkdir -p src/app/chat-demo`}</CodeBlock>
 
-        <p>(Tailwind optional — the components should be unstyled enough that consumers can theme them.)</p>
+        <p>(Tailwind optional, the components should be unstyled enough that consumers can theme them.)</p>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Mock endpoint with one tool call</h3>
 
@@ -1046,15 +1046,15 @@ export default function ChatDemo() {
           <li>The tool-call appears as a styled badge with a &quot;running&quot; → &quot;done&quot; transition.</li>
           <li>Clicking <strong>Stop</strong>{" "}mid-stream keeps the partial assistant content and re-enables the input.</li>
           <li>Scrolling up while a stream is live <em>doesn&apos;t</em>{" "}yank you back down. Scrolling back to the bottom resumes auto-scroll.</li>
-          <li>Refreshing the page returns you to a clean state — no zombie streams in the network tab.</li>
+          <li>Refreshing the page returns you to a clean state, no zombie streams in the network tab.</li>
           <li>The components have no styling tied to the demo page; they&apos;re drop-in usable elsewhere.</li>
         </ul>
 
         <h3 className="mt-8 mb-3 text-xl font-bold">Stretch goals</h3>
 
         <ul className="list-disc space-y-1 pl-6">
-          <li><strong>Markdown rendering</strong> — use <code>react-markdown</code> with safe defaults to render the text parts.</li>
-          <li><strong>Code block syntax highlighting</strong> — your AI is going to emit a lot of code. Make it readable.</li>
+          <li><strong>Markdown rendering</strong>, use <code>react-markdown</code> with safe defaults to render the text parts.</li>
+          <li><strong>Code block syntax highlighting</strong>, your AI is going to emit a lot of code. Make it readable.</li>
           <li><strong>Continue button</strong>{" "}on errored messages, as in Part 4.</li>
           <li><strong>Persist conversations</strong>{" "}to <code>localStorage</code> so a refresh doesn&apos;t lose history. (We&apos;ll do this properly in Module 21 with a backend session store.)</li>
         </ul>
@@ -1072,13 +1072,13 @@ export default function ChatDemo() {
       {/* PART 6: FINAL QUIZ                                                  */}
       {/* ================================================================= */}
       <section id="final">
-        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6 — Final quiz</h2>
+        <h2 className="mt-12 mb-3 text-2xl font-bold">Part 6, Final quiz</h2>
 
         <Quiz
           kind="Final check"
           question="A new dev on your team uses EventSource to consume your /api/chat endpoint. It works in their demo but breaks in staging because staging requires an Authorization header. What's the fix?"
           options={[
-            { label: "Add the token to the EventSource URL as a query parameter", explanation: "Tokens in URLs leak via logs and are anti-pattern. Don't paper over EventSource's limits — replace it." },
+            { label: "Add the token to the EventSource URL as a query parameter", explanation: "Tokens in URLs leak via logs and are anti-pattern. Don't paper over EventSource's limits, replace it." },
             { label: "Switch to fetch + ReadableStream + a small SSE parser; pass Authorization in the headers", correct: true, explanation: "Right. EventSource hits a wall as soon as you need POST bodies or non-cookie auth. The 20-line fetch parser handles both, and you control the protocol completely." },
             { label: "Use an SSE library from npm", explanation: "Most SSE libraries wrap fetch + ReadableStream too. You don't need 80KB of dependencies for 20 lines of parser." },
             { label: "Tell ops to allow auth via cookie only", explanation: "Restructuring your auth to fit a transport limitation is backwards. Pick the right transport." },
@@ -1090,21 +1090,21 @@ export default function ChatDemo() {
           kind="Final check"
           question="Your hook accumulates tokens by calling setMessages with a map over the array on every token. After ~5000 tokens in a single message, the UI gets noticeably janky. What's the smallest fix that keeps the architecture intact?"
           options={[
-            { label: "Switch to vanilla JS — React is too slow", explanation: "Premature retreat. The bottleneck is rerendering a long list of messages, not React itself." },
-            { label: "Move the in-flight assistant message into its own state slot rendered by a sibling component, so the rest of the message list doesn't rerender on every token", correct: true, explanation: "The full message list rerendering on every token is the cost. Splitting the live message into its own state means the historical list rerenders zero times during the stream — only the live message rerenders, and React is fast at small components." },
-            { label: "Throttle setMessages to every 50ms", explanation: "Works but feels laggy — you've now decoupled visual update from token arrival. The split-state approach is cheaper and feels native." },
-            { label: "Keep the tokens in a ref and only flush to state on done", explanation: "Then the user sees nothing until done — you've turned streaming back into batch. Defeats the point." },
+            { label: "Switch to vanilla JS, React is too slow", explanation: "Premature retreat. The bottleneck is rerendering a long list of messages, not React itself." },
+            { label: "Move the in-flight assistant message into its own state slot rendered by a sibling component, so the rest of the message list doesn't rerender on every token", correct: true, explanation: "The full message list rerendering on every token is the cost. Splitting the live message into its own state means the historical list rerenders zero times during the stream, only the live message rerenders, and React is fast at small components." },
+            { label: "Throttle setMessages to every 50ms", explanation: "Works but feels laggy, you've now decoupled visual update from token arrival. The split-state approach is cheaper and feels native." },
+            { label: "Keep the tokens in a ref and only flush to state on done", explanation: "Then the user sees nothing until done, you've turned streaming back into batch. Defeats the point." },
           ]}
           xp={15}
         />
 
         <Quiz
           kind="Final check"
-          question="You shipped the chat UI. A user reports: 'I asked a question, the model started answering, then stopped halfway through. I refreshed and now my whole conversation is gone.' Two bugs — name them."
+          question="You shipped the chat UI. A user reports: 'I asked a question, the model started answering, then stopped halfway through. I refreshed and now my whole conversation is gone.' Two bugs, name them."
           options={[
             { label: "(a) The dropped stream wasn't surfaced as recoverable; (b) conversation state lives only in component state", correct: true, explanation: "Right on both. Drop-recovery should leave partial content in place with a continue button, not silently strand the user. And conversation state belongs somewhere durable (localStorage at minimum, server-side ideally) so a refresh doesn't nuke history. Module 21 handles the server-side persistence." },
-            { label: "The user's network is flaky — not your bug", explanation: "Network is flaky everywhere. It's exactly your job to handle it gracefully." },
-            { label: "EventSource auto-reconnect failed", explanation: "We're not using EventSource — and even if we were, auto-reconnect doesn't help in the middle of one stream." },
+            { label: "The user's network is flaky, not your bug", explanation: "Network is flaky everywhere. It's exactly your job to handle it gracefully." },
+            { label: "EventSource auto-reconnect failed", explanation: "We're not using EventSource, and even if we were, auto-reconnect doesn't help in the middle of one stream." },
             { label: "The model produced a malformed response", explanation: "Possible but not the systemic issue. The systemic issues are recovery UX and persistence." },
           ]}
           xp={15}
@@ -1114,10 +1114,10 @@ export default function ChatDemo() {
           kind="Final check"
           question="The product team wants the assistant to show 'Searching docs...' → 'Reading 3 results...' → 'Drafting answer...' before the final answer streams in. What's the right model?"
           options={[
-            { label: "Encode tool steps as text tokens (e.g. literally stream 'Searching docs...' as text and then erase it)", explanation: "Hacky and brittle — you'd have to deal with characters that look like real tokens, and erasing streamed text is jarring." },
-            { label: "Extend the SSE protocol with tool_call and tool_result events; render the message as an ordered list of parts (text/tool/text/tool); the renderer styles tool parts as badges with status icons", correct: true, explanation: "This is the clean shape. Each tool gets its own structured part with id/name/input/output. The renderer styles them however the product wants — minimal badge, expandable details, whatever. Same data, multiple presentations." },
-            { label: "Open a second WebSocket for tool events", explanation: "Second connection means coordination problems. SSE already supports multiple event types in one stream — use them." },
-            { label: "Stream the tool steps through a separate API route", explanation: "Same problem as the second WebSocket — two streams to coordinate. One stream, multiple event types." },
+            { label: "Encode tool steps as text tokens (e.g. literally stream 'Searching docs...' as text and then erase it)", explanation: "Hacky and brittle, you'd have to deal with characters that look like real tokens, and erasing streamed text is jarring." },
+            { label: "Extend the SSE protocol with tool_call and tool_result events; render the message as an ordered list of parts (text/tool/text/tool); the renderer styles tool parts as badges with status icons", correct: true, explanation: "This is the clean shape. Each tool gets its own structured part with id/name/input/output. The renderer styles them however the product wants, minimal badge, expandable details, whatever. Same data, multiple presentations." },
+            { label: "Open a second WebSocket for tool events", explanation: "Second connection means coordination problems. SSE already supports multiple event types in one stream, use them." },
+            { label: "Stream the tool steps through a separate API route", explanation: "Same problem as the second WebSocket, two streams to coordinate. One stream, multiple event types." },
           ]}
           xp={15}
         />
@@ -1127,8 +1127,8 @@ export default function ChatDemo() {
           question="Reviewing a teammate's PR. They store the AbortController in `useState`. What do you tell them?"
           options={[
             { label: "Looks good", explanation: "It will work, but it's a misuse of state." },
-            { label: "Move it to useRef — it's a side-effect handle, not data the UI renders from. Storing it in state causes unnecessary re-renders and the controller identity changes on every render", correct: true, explanation: "Refs are for mutable values that don't drive rendering. The controller is exactly that — UI doesn't 'show' the controller; it just needs a way to .abort(). useRef is correct." },
-            { label: "Wrap it in useMemo", explanation: "useMemo can't help — you actually need a NEW controller for every send call, and a stable reference between renders. That's useRef." },
+            { label: "Move it to useRef, it's a side-effect handle, not data the UI renders from. Storing it in state causes unnecessary re-renders and the controller identity changes on every render", correct: true, explanation: "Refs are for mutable values that don't drive rendering. The controller is exactly that, UI doesn't 'show' the controller; it just needs a way to .abort(). useRef is correct." },
+            { label: "Wrap it in useMemo", explanation: "useMemo can't help, you actually need a NEW controller for every send call, and a stable reference between renders. That's useRef." },
             { label: "Move it outside the component as a module-level singleton", explanation: "Now multiple instances of the chat component would fight over the same controller. Per-instance state belongs in a per-instance hook." },
           ]}
           xp={15}
@@ -1136,8 +1136,8 @@ export default function ChatDemo() {
 
         <Checkpoint moduleSlug="react-streaming" id="final" title="Final quiz" xp={50} celebration="You can build any streaming chat UI from here. Module 21 turns the mock into a real backend.">
           <p>
-            With this module complete, you have the React-side primitives — a streaming generator, a
-            state-machine hook, and a small set of components — that every AI feature in the rest of
+            With this module complete, you have the React-side primitives, a streaming generator, a
+            state-machine hook, and a small set of components, that every AI feature in the rest of
             the course will reuse. Next: connect it all to the Spring Boot service from Phase 2 and
             ship a real product.
           </p>

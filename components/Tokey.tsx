@@ -83,7 +83,7 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
         // ~1 min idle
         setMessage({
           mood: "teasing",
-          text: "Still there? Don't just scroll — try the quiz. I promise it won't bite.",
+          text: "Still there? Don't just scroll, try the quiz. I promise it won't bite.",
         });
         setVisible(true);
         if (hideTimer) clearTimeout(hideTimer);

@@ -53,7 +53,7 @@ export default function CodeExercise({
       <div className="space-y-4 p-5">
         <div>
           <div className="mb-1 text-xs font-semibold tracking-wider text-orange-800 uppercase dark:text-orange-300">
-            Stub — fill in the TODOs
+            Stub, fill in the TODOs
           </div>
           <pre className="overflow-x-auto rounded-lg border border-slate-700 bg-slate-900 p-4 font-mono text-xs leading-relaxed text-slate-100 sm:text-sm dark:bg-slate-950">
             <code className={`language-${lang}`}>{stub}</code>
@@ -95,7 +95,7 @@ export default function CodeExercise({
               <code className={`language-${lang}`}>{solution}</code>
             </pre>
             <p className="mt-2 text-xs text-slate-600 italic dark:text-slate-400">
-              Your solution doesn&apos;t have to match this exactly — as long as the behavior is right, it&apos;s right. Compare and see if theirs is cleaner or yours is.
+              Your solution doesn&apos;t have to match this exactly, as long as the behavior is right, it&apos;s right. Compare and see if theirs is cleaner or yours is.
             </p>
           </div>
         )}

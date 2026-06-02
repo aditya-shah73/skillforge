@@ -61,57 +61,57 @@ export default function Page() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          A repeatable structure for any open-ended &quot;design X&quot; question — clarify, estimate, API, data, scale, tradeoffs — and the meta-skill of communicating that structure to your interviewer in 45 minutes.
+          A repeatable structure for any open-ended &quot;design X&quot; question, clarify, estimate, API, data, scale, tradeoffs, and the meta-skill of communicating that structure to your interviewer in 45 minutes.
         </p>
         <ul className="mb-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li>The 6 phases of a system design interview and how long each gets</li>
           <li>The questions to ask before drawing a single box</li>
           <li>How to do back-of-envelope math without panicking</li>
           <li>The pitfalls that fail otherwise-strong candidates</li>
-          <li>How to talk through the design — pacing, drawing, when to push back</li>
+          <li>How to talk through the design, pacing, drawing, when to push back</li>
         </ul>
       </section>
 
       <section>
         <h2>The interview is a conversation, not a quiz</h2>
         <p>
-          Here&apos;s the thing nobody tells you: the system design interview isn&apos;t really about whether your final architecture is &quot;correct.&quot; There is no single correct architecture. What the interviewer is testing is whether you can take an ambiguous prompt, ask the right questions to make it concrete, do the math, propose something that works, and reason out loud about its tradeoffs — all under time pressure, while a stranger watches.
+          Here&apos;s the thing nobody tells you: the system design interview isn&apos;t really about whether your final architecture is &quot;correct.&quot; There is no single correct architecture. What the interviewer is testing is whether you can take an ambiguous prompt, ask the right questions to make it concrete, do the math, propose something that works, and reason out loud about its tradeoffs, all under time pressure, while a stranger watches.
         </p>
         <p>
           Strong candidates fail this interview by being smart about the wrong things. They jump straight to &quot;I&apos;d use Kafka and Cassandra&quot; before asking a single clarifying question. They sketch a beautiful architecture without doing the QPS math. They wave their hands at the data model and burn 30 minutes on caching minutiae. The framework in this module is the antidote: a sequence that forces you to spend your time where it matters.
         </p>
         <p>
-          This is the meta-module for Phase 6. The next four modules — TinyURL, news feed, Twitter, chat — all walk through this exact framework with concrete content. So learn the rhythm here, and the case studies become reps.
+          This is the meta-module for Phase 6. The next four modules, TinyURL, news feed, Twitter, chat, all walk through this exact framework with concrete content. So learn the rhythm here, and the case studies become reps.
         </p>
       </section>
 
       <Checkpoint moduleSlug="interview-framework" id="framework" title="Part 1 · The framework" xp={25}>
         <h2>The 6-phase rhythm (call it RESHAD if you need a mnemonic)</h2>
         <p>
-          You have roughly 45 minutes. Not 60 — there&apos;s usually intro, behavioral chat, and a wrap-up that eats the rest. So your design budget is about 45 minutes, and you need to spend it deliberately. Here&apos;s the rhythm I want you to internalize:
+          You have roughly 45 minutes. Not 60, there&apos;s usually intro, behavioral chat, and a wrap-up that eats the rest. So your design budget is about 45 minutes, and you need to spend it deliberately. Here&apos;s the rhythm I want you to internalize:
         </p>
         <Mermaid chart={frameworkDiagram} />
         <p>
-          Six phases, roughly proportional to the time each deserves. The names don&apos;t matter (call it RESHAD: Requirements, Estimate, Schema/API, High-level, Adapt to scale, Discuss tradeoffs). What matters is the sequence — and the discipline to not skip steps.
+          Six phases, roughly proportional to the time each deserves. The names don&apos;t matter (call it RESHAD: Requirements, Estimate, Schema/API, High-level, Adapt to scale, Discuss tradeoffs). What matters is the sequence, and the discipline to not skip steps.
         </p>
 
-        <h3>Phase 1 — Clarify (~5 min)</h3>
+        <h3>Phase 1, Clarify (~5 min)</h3>
         <p>
           The prompt &quot;Design Twitter&quot; is intentionally vague. Twitter has a million features. Your first job is to pin down what we&apos;re actually building. Two buckets of questions:
         </p>
         <p>
-          <strong>Functional requirements</strong> — what does the system <em>do</em>? Post tweets? Read a timeline? Search? DMs? Trending? Most prompts in 45 minutes need 3-4 core features, not 12. Pick a tight scope and get the interviewer&apos;s buy-in: &quot;I&apos;ll focus on posting tweets, the home timeline, and following users — does that match what you had in mind?&quot;
+          <strong>Functional requirements</strong>, what does the system <em>do</em>? Post tweets? Read a timeline? Search? DMs? Trending? Most prompts in 45 minutes need 3-4 core features, not 12. Pick a tight scope and get the interviewer&apos;s buy-in: &quot;I&apos;ll focus on posting tweets, the home timeline, and following users, does that match what you had in mind?&quot;
         </p>
         <p>
-          <strong>Non-functional requirements</strong> — how <em>well</em>{" "}does it have to do those things? Read-heavy or write-heavy? What&apos;s the latency budget (p99 100ms? 500ms?)? How available — three nines, four, five? Strongly consistent or eventually? What&apos;s the scale (DAU, QPS)?
+          <strong>Non-functional requirements</strong>, how <em>well</em>{" "}does it have to do those things? Read-heavy or write-heavy? What&apos;s the latency budget (p99 100ms? 500ms?)? How available, three nines, four, five? Strongly consistent or eventually? What&apos;s the scale (DAU, QPS)?
         </p>
         <p>
           You&apos;ll often need to assume some answers when the interviewer waves you off. That&apos;s fine. Say the assumption out loud: &quot;I&apos;ll assume read-heavy, roughly 100:1 reads to writes, and we can tolerate a few seconds of staleness on the timeline.&quot; Now both of you are operating on the same assumptions and they can correct you if those assumptions matter for what they&apos;re testing.
         </p>
 
-        <h3>Phase 2 — Estimate (~5 min)</h3>
+        <h3>Phase 2, Estimate (~5 min)</h3>
         <p>
-          Back-of-envelope math. The point is not exact precision — the point is to figure out which constraints actually bite. A system at 100 QPS and a system at 100,000 QPS are completely different designs. You need a number, even a rough one, before you start drawing.
+          Back-of-envelope math. The point is not exact precision, the point is to figure out which constraints actually bite. A system at 100 QPS and a system at 100,000 QPS are completely different designs. You need a number, even a rough one, before you start drawing.
         </p>
         <p>
           The standard quick math: DAU, requests-per-user-per-day, peak-vs-average multiplier (typically 2-3x for peak), storage per record, retention. If you covered Phase 1 of this course you have the latency numbers in your back pocket already.
@@ -130,11 +130,11 @@ Annual storage growth             ~36 TB`}</CodeBlock>
           Five lines of math and you suddenly know: this needs more than one machine, your write path needs to handle 50k+ QPS at peak, and you&apos;re looking at 30+ TB/year of storage. That immediately rules out &quot;just put it in one Postgres&quot; and unlocks the rest of the design.
         </p>
 
-        <h3>Phase 3 — API + Data model (~10 min)</h3>
+        <h3>Phase 3, API + Data model (~10 min)</h3>
         <p>
-          Now you can be concrete. Define 3-5 endpoints with realistic signatures. Don&apos;t over-engineer — a Java method signature, a request shape, a response shape. The point is to anchor what the system <em>does</em>{" "}in code that you and the interviewer both understand.
+          Now you can be concrete. Define 3-5 endpoints with realistic signatures. Don&apos;t over-engineer, a Java method signature, a request shape, a response shape. The point is to anchor what the system <em>does</em>{" "}in code that you and the interviewer both understand.
         </p>
-        <CodeBlock lang="java" caption="API surface — make it look like real Spring code">{`@PostMapping("/tweets")
+        <CodeBlock lang="java" caption="API surface, make it look like real Spring code">{`@PostMapping("/tweets")
 public TweetResponse postTweet(
     @RequestHeader("X-User-Id") long userId,
     @Valid @RequestBody PostTweetRequest req
@@ -153,18 +153,18 @@ public void follow(
     @PathVariable long targetId
 );`}</CodeBlock>
         <p>
-          Then the data model. Tables (or KV keys, or document shapes — whatever fits) with the columns/fields that matter. Don&apos;t list every field; list the ones that affect access patterns, indexing, and sharding decisions. If you&apos;re using Postgres + Redis, show both: a few SQL tables and a few Redis key patterns.
+          Then the data model. Tables (or KV keys, or document shapes, whatever fits) with the columns/fields that matter. Don&apos;t list every field; list the ones that affect access patterns, indexing, and sharding decisions. If you&apos;re using Postgres + Redis, show both: a few SQL tables and a few Redis key patterns.
         </p>
 
-        <h3>Phase 4 — High-level architecture (~5 min)</h3>
+        <h3>Phase 4, High-level architecture (~5 min)</h3>
         <p>
-          Now you can draw boxes. Client → CDN → Load balancer → API service → Cache + DB + Queue. Keep it simple at first — five boxes, arrows, labels on the arrows for what flows through. Don&apos;t add components you can&apos;t justify.
+          Now you can draw boxes. Client → CDN → Load balancer → API service → Cache + DB + Queue. Keep it simple at first, five boxes, arrows, labels on the arrows for what flows through. Don&apos;t add components you can&apos;t justify.
         </p>
         <p>
           The mistake here is to over-decorate. You don&apos;t need a Kafka cluster on the diagram in minute 5 unless you can name the workload it&apos;s carrying. Every box should map to something from your API or data model.
         </p>
 
-        <h3>Phase 5 — Scale and deep-dive (~15 min)</h3>
+        <h3>Phase 5, Scale and deep-dive (~15 min)</h3>
         <p>
           This is where most of the actual signal lives. Pick the 2-3 hot subproblems your earlier estimation revealed, and go deep. For Twitter: the timeline fanout problem and the celebrity hot key. For TinyURL: the read-heavy cache strategy and the key-generation scheme. For chat: connection management and message ordering.
         </p>
@@ -172,18 +172,18 @@ public void follow(
           For each deep-dive, follow the same micro-pattern: <strong>name the problem</strong>, <strong>propose 2-3 approaches</strong>, <strong>compare them on the relevant axis</strong> (latency, write amplification, complexity), <strong>pick one and say why</strong>. That&apos;s a complete deep-dive in 4-5 minutes if you&apos;re tight, and the interviewer can stop you mid-stream to redirect.
         </p>
 
-        <h3>Phase 6 — Wrap and tradeoffs (~5 min)</h3>
+        <h3>Phase 6, Wrap and tradeoffs (~5 min)</h3>
         <p>
-          End strong. Walk back to the top of your diagram and say what you&apos;d revisit if you had more time, what the failure modes are, what you&apos;d monitor, what you punted on intentionally. This is where you signal that you understand the system isn&apos;t finished — you just had 45 minutes.
+          End strong. Walk back to the top of your diagram and say what you&apos;d revisit if you had more time, what the failure modes are, what you&apos;d monitor, what you punted on intentionally. This is where you signal that you understand the system isn&apos;t finished, you just had 45 minutes.
         </p>
 
         <Callout variant="insight" title="The four dimensions of 'good design'">
-          <p className="m-0">When you&apos;re evaluating tradeoffs, score against four axes: <strong>correctness</strong> (does it satisfy the requirements?), <strong>scalability</strong> (does it handle the QPS and storage you estimated?), <strong>reliability</strong> (what happens when things fail — single-AZ outage, hot key, downstream timeout?), <strong>simplicity</strong> (could a junior engineer be on-call for this?). Strong candidates name two or three of these explicitly when justifying choices.</p>
+          <p className="m-0">When you&apos;re evaluating tradeoffs, score against four axes: <strong>correctness</strong> (does it satisfy the requirements?), <strong>scalability</strong> (does it handle the QPS and storage you estimated?), <strong>reliability</strong> (what happens when things fail, single-AZ outage, hot key, downstream timeout?), <strong>simplicity</strong> (could a junior engineer be on-call for this?). Strong candidates name two or three of these explicitly when justifying choices.</p>
         </Callout>
 
         <h3>The classifier: which step does each question belong in?</h3>
         <p>
-          Before we move on, drill the framework by mapping common interview moves to phases. Same skill you&apos;ll use in the room — recognize what phase you&apos;re in and what you should be doing right now.
+          Before we move on, drill the framework by mapping common interview moves to phases. Same skill you&apos;ll use in the room, recognize what phase you&apos;re in and what you should be doing right now.
         </p>
         <ClassifyChallenge
           title="Map the move to the phase"
@@ -196,10 +196,10 @@ public void follow(
           ]}
           items={[
             { id: "qps", label: "'If we have 200M DAU and each posts twice a day, that's 400M writes/day or about 4.6k average write QPS, peak maybe 14k.'", answer: "estimate", explanation: "Pure back-of-envelope math. Belongs in Phase 2, before any architecture." },
-            { id: "scope", label: "'Should I include direct messages, or just focus on the public timeline?'", answer: "clarify", explanation: "Scoping the functional requirements. Always Phase 1 — get this nailed before drawing anything." },
+            { id: "scope", label: "'Should I include direct messages, or just focus on the public timeline?'", answer: "clarify", explanation: "Scoping the functional requirements. Always Phase 1, get this nailed before drawing anything." },
             { id: "celeb", label: "'For users with more than 1M followers, fanout-on-write becomes the bottleneck. Let me show how I'd handle that with a hybrid pull approach.'", answer: "scale", explanation: "Naming a hot subproblem and proposing an approach is exactly what Phase 5 is for." },
-            { id: "endpoint", label: "'getTimeline(userId, cursor, limit) returns a page of tweets ordered by timestamp, with cursor-based pagination.'", answer: "api-data", explanation: "Concrete endpoint signature — Phase 3. This anchors the rest of the design." },
-            { id: "consistency", label: "'Are stale reads OK, or do we need read-your-writes for the user's own posts?'", answer: "clarify", explanation: "Non-functional requirement — consistency model. Surface it during clarification before assuming." },
+            { id: "endpoint", label: "'getTimeline(userId, cursor, limit) returns a page of tweets ordered by timestamp, with cursor-based pagination.'", answer: "api-data", explanation: "Concrete endpoint signature, Phase 3. This anchors the rest of the design." },
+            { id: "consistency", label: "'Are stale reads OK, or do we need read-your-writes for the user's own posts?'", answer: "clarify", explanation: "Non-functional requirement, consistency model. Surface it during clarification before assuming." },
             { id: "shard", label: "'The tweets table at 30TB/year needs sharding. I'd shard by user_id with consistent hashing.'", answer: "scale", explanation: "Deep-dive on a subproblem that the estimate revealed. Phase 5 territory." },
             { id: "table", label: "'Tweet table: id, author_id, text, created_at, indexed on (author_id, created_at desc).'", answer: "api-data", explanation: "Schema design. Phase 3, alongside the API surface." },
           ]}
@@ -210,8 +210,8 @@ public void follow(
           options={[
             { label: "They skipped clarification and estimation. Without functional/non-functional requirements and rough QPS math, they're drawing an architecture for an imaginary scale.", correct: true, explanation: "Right. The first 10 minutes (clarify + estimate) drive the rest of the design. Skip them and you're committing to an architecture before you know the constraints." },
             { label: "They skipped naming the framework explicitly.", explanation: "You don't need to announce 'I will now use the RESHAD framework.' The framework shapes your work; you don't recite it." },
-            { label: "Nothing — fast architecture sketches signal experience.", explanation: "Speed without grounding signals memorization. The interviewer wants to see that you can adapt to the actual requirements, which you don't have yet." },
-            { label: "They skipped the data model.", explanation: "They'll get there, but the first miss is much earlier — they jumped to architecture without requirements or scale numbers." },
+            { label: "Nothing, fast architecture sketches signal experience.", explanation: "Speed without grounding signals memorization. The interviewer wants to see that you can adapt to the actual requirements, which you don't have yet." },
+            { label: "They skipped the data model.", explanation: "They'll get there, but the first miss is much earlier, they jumped to architecture without requirements or scale numbers." },
           ]}
           hint="What two phases come before drawing boxes?"
           xp={7}
@@ -220,10 +220,10 @@ public void follow(
         <Quiz
           question="In the 45-minute design budget, which phase tends to carry the most signal for the interviewer?"
           options={[
-            { label: "Phase 5 — scale and deep-dive. That's where you reason about real tradeoffs on a hot subproblem and where senior judgement shows up.", correct: true, explanation: "Yes. Anyone can draw boxes. The deep-dive is where you compare approaches, pick one, and justify it under pressure — that's the most diagnostic part of the interview." },
-            { label: "Phase 1 — clarify. If you ask the right questions, the rest writes itself.", explanation: "Clarification is necessary but not sufficient. A great clarifier with a weak deep-dive doesn't pass." },
-            { label: "Phase 4 — high-level architecture. The diagram is the artifact the interviewer remembers.", explanation: "The diagram matters but it's descriptive. Senior signal lives in the analysis of the hot subproblems, not the boxes themselves." },
-            { label: "Phase 6 — wrap. A strong summary anchors the whole interview.", explanation: "A strong wrap helps but it's 5 minutes. The 15-minute deep-dive is where most of the evaluative signal is." },
+            { label: "Phase 5, scale and deep-dive. That's where you reason about real tradeoffs on a hot subproblem and where senior judgement shows up.", correct: true, explanation: "Yes. Anyone can draw boxes. The deep-dive is where you compare approaches, pick one, and justify it under pressure, that's the most diagnostic part of the interview." },
+            { label: "Phase 1, clarify. If you ask the right questions, the rest writes itself.", explanation: "Clarification is necessary but not sufficient. A great clarifier with a weak deep-dive doesn't pass." },
+            { label: "Phase 4, high-level architecture. The diagram is the artifact the interviewer remembers.", explanation: "The diagram matters but it's descriptive. Senior signal lives in the analysis of the hot subproblems, not the boxes themselves." },
+            { label: "Phase 6, wrap. A strong summary anchors the whole interview.", explanation: "A strong wrap helps but it's 5 minutes. The 15-minute deep-dive is where most of the evaluative signal is." },
           ]}
           hint="Which phase gets the most minutes?"
           xp={6}
@@ -231,13 +231,13 @@ public void follow(
 
         <PartRecap
           title="Part 1 recap"
-          gist="Six phases — clarify, estimate, API+data, high-level, scale, wrap — proportioned to the 45-minute budget. The deep-dive carries the most signal."
+          gist="Six phases, clarify, estimate, API+data, high-level, scale, wrap, proportioned to the 45-minute budget. The deep-dive carries the most signal."
           points={[
             { takeaway: "Clarify before drawing", detail: "5 minutes of functional + non-functional questions saves you from designing for the wrong scale, the wrong consistency, or the wrong feature set." },
-            { takeaway: "Math anchors architecture", detail: "QPS, storage, peak multiplier — five lines of estimation tell you whether you need one box or one hundred. Without it you're guessing." },
+            { takeaway: "Math anchors architecture", detail: "QPS, storage, peak multiplier, five lines of estimation tell you whether you need one box or one hundred. Without it you're guessing." },
             { takeaway: "API + data is the contract", detail: "Concrete endpoint signatures and a sketched schema make the rest of the design legible. Junior candidates skip this; senior candidates lean on it." },
             { takeaway: "Deep-dives get the most time and signal", detail: "Pick 2-3 hot subproblems, propose 2-3 approaches each, compare on the axis that matters, pick one and say why." },
-            { takeaway: "End with tradeoffs", detail: "What you'd revisit, what failure modes you punted on, what you'd monitor. Signals that you know the system isn't done — you just had 45 minutes." },
+            { takeaway: "End with tradeoffs", detail: "What you'd revisit, what failure modes you punted on, what you'd monitor. Signals that you know the system isn't done, you just had 45 minutes." },
           ]}
         />
       </Checkpoint>
@@ -245,10 +245,10 @@ public void follow(
       <Checkpoint moduleSlug="interview-framework" id="pitfalls" title="Part 2 · Common pitfalls" xp={25}>
         <h2>The five ways smart candidates fail this interview</h2>
         <p>
-          I&apos;ve seen these patterns across hundreds of mock interviews. None of them are about lack of knowledge. They&apos;re all about misallocating the 45 minutes — spending energy on the wrong axis at the wrong moment.
+          I&apos;ve seen these patterns across hundreds of mock interviews. None of them are about lack of knowledge. They&apos;re all about misallocating the 45 minutes, spending energy on the wrong axis at the wrong moment.
         </p>
 
-        <h3>Pitfall 1 — Jumping to architecture without requirements</h3>
+        <h3>Pitfall 1, Jumping to architecture without requirements</h3>
         <p>
           Candidate hears &quot;Design Twitter,&quot; and within 60 seconds is sketching microservices and Kafka topics. The problem: you&apos;re committing to a scale and feature set the interviewer hasn&apos;t signed off on. Maybe the interviewer wants you to focus on the timeline and DM is out of scope. Maybe they want a 10k-user version, not 200M. You&apos;re solving a different problem than the one being asked.
         </p>
@@ -256,19 +256,19 @@ public void follow(
           The fix: <strong>force yourself to ask 3 questions before drawing anything.</strong>{" "}What features matter? What&apos;s the read/write ratio? What&apos;s the rough scale? You can do this in 2 minutes and it shapes everything else.
         </p>
 
-        <h3>Pitfall 2 — Hand-waving the estimation</h3>
+        <h3>Pitfall 2, Hand-waving the estimation</h3>
         <p>
           &quot;It&apos;ll be high QPS so we need to scale.&quot; That&apos;s not estimation; that&apos;s a vibe. Without numbers you can&apos;t tell whether your design needs sharding, just replicas, or just a bigger box. And if you can&apos;t do back-of-envelope math under pressure, the interviewer assumes you can&apos;t do it on the job either.
         </p>
         <p>
-          The fix: <strong>practice the standard formula until it&apos;s automatic.</strong>{" "}DAU × actions/day = total daily ops. Divide by 86,400 for average QPS. Multiply by 3 for peak. Multiply storage-per-record by daily ops for daily storage growth. Five operations, every interview, every time. Slow down and write the numbers down — out loud is fine, on the whiteboard is better.
+          The fix: <strong>practice the standard formula until it&apos;s automatic.</strong>{" "}DAU × actions/day = total daily ops. Divide by 86,400 for average QPS. Multiply by 3 for peak. Multiply storage-per-record by daily ops for daily storage growth. Five operations, every interview, every time. Slow down and write the numbers down, out loud is fine, on the whiteboard is better.
         </p>
 
         <Callout variant="warn" title="The 'I'll use Kafka and Cassandra' antipattern">
-          <p className="m-0">If your first sentence after &quot;Design X&quot; names specific technologies, you&apos;re doing it wrong. Technology choices come <em>after</em>{" "}you know the constraints. Naming Kafka before you&apos;ve estimated write QPS is like prescribing a medication before taking the patient&apos;s temperature — it might be the right answer, but you have no way to know yet, and the interviewer can&apos;t evaluate your reasoning because you didn&apos;t do any.</p>
+          <p className="m-0">If your first sentence after &quot;Design X&quot; names specific technologies, you&apos;re doing it wrong. Technology choices come <em>after</em>{" "}you know the constraints. Naming Kafka before you&apos;ve estimated write QPS is like prescribing a medication before taking the patient&apos;s temperature, it might be the right answer, but you have no way to know yet, and the interviewer can&apos;t evaluate your reasoning because you didn&apos;t do any.</p>
         </Callout>
 
-        <h3>Pitfall 3 — Skipping the data model</h3>
+        <h3>Pitfall 3, Skipping the data model</h3>
         <p>
           Candidates often draw a beautiful service-level architecture and then wave at &quot;and there&apos;s a database.&quot; That&apos;s a tell. The data model is where the access patterns live, and the access patterns are what determine whether your architecture works. If you can&apos;t show what a row looks like and how the hot query reads it, you don&apos;t actually know if your design works.
         </p>
@@ -276,17 +276,17 @@ public void follow(
           The fix: <strong>always sketch at least one table or KV pattern explicitly.</strong> &quot;Tweet table has these columns, indexed by (user_id, created_at desc), sharded by user_id.&quot; That sentence carries more signal than 10 minutes of microservice naming.
         </p>
 
-        <h3>Pitfall 4 — No explicit tradeoffs</h3>
+        <h3>Pitfall 4, No explicit tradeoffs</h3>
         <p>
-          Candidate proposes &quot;use Cassandra for the timeline.&quot; Interviewer asks &quot;why not Postgres?&quot; Candidate freezes. The fix isn&apos;t to memorize databases — it&apos;s to make the tradeoff explicit when you propose the choice, not when challenged. &quot;I&apos;ll use Cassandra here because the workload is write-heavy and tolerates eventual consistency; Postgres would force me to shard manually and pay vertical-scale costs for write QPS we don&apos;t need to be transactional.&quot;
+          Candidate proposes &quot;use Cassandra for the timeline.&quot; Interviewer asks &quot;why not Postgres?&quot; Candidate freezes. The fix isn&apos;t to memorize databases, it&apos;s to make the tradeoff explicit when you propose the choice, not when challenged. &quot;I&apos;ll use Cassandra here because the workload is write-heavy and tolerates eventual consistency; Postgres would force me to shard manually and pay vertical-scale costs for write QPS we don&apos;t need to be transactional.&quot;
         </p>
         <p>
           That sentence does three things: names the alternative, names the axis (write QPS, consistency), names the cost. Practice that sentence shape until it&apos;s muscle memory.
         </p>
 
-        <h3>Pitfall 5 — Going deep on the wrong subproblem</h3>
+        <h3>Pitfall 5, Going deep on the wrong subproblem</h3>
         <p>
-          A candidate spends 10 minutes on which CDN to use, while the actual hard problem in the design — the celebrity fanout, or the consensus protocol, or the geo-routing — sits unaddressed. Time gets eaten and the interviewer never sees you reason about what they&apos;re actually testing.
+          A candidate spends 10 minutes on which CDN to use, while the actual hard problem in the design, the celebrity fanout, or the consensus protocol, or the geo-routing, sits unaddressed. Time gets eaten and the interviewer never sees you reason about what they&apos;re actually testing.
         </p>
         <p>
           The fix: <strong>at the start of Phase 5, name the 2-3 hardest problems out loud and ask the interviewer which to dig into.</strong> &quot;The hard parts here are timeline fanout for celebrities, the read cache strategy, and tweet ingestion at peak. Which would you like me to deep-dive first?&quot; That single sentence calibrates the rest of the interview.
@@ -294,13 +294,13 @@ public void follow(
 
         <h3>The senior &quot;I would also...&quot; pattern</h3>
         <p>
-          Here&apos;s a power move that costs almost nothing: when you make a choice, mention the thing you&apos;re <em>not</em>{" "}doing and why. &quot;I&apos;d use Redis as a write-through cache for the hot timeline. I would also consider write-behind for higher throughput, but it makes failure recovery messier — happy to dig into that if useful.&quot;
+          Here&apos;s a power move that costs almost nothing: when you make a choice, mention the thing you&apos;re <em>not</em>{" "}doing and why. &quot;I&apos;d use Redis as a write-through cache for the hot timeline. I would also consider write-behind for higher throughput, but it makes failure recovery messier, happy to dig into that if useful.&quot;
         </p>
         <p>
           That sentence shows you know the alternative exists, you&apos;ve thought about why you&apos;re not picking it, and you&apos;re willing to go deeper if asked. It signals depth without spending time. Use it 3-4 times in the interview.
         </p>
 
-        <CodeBlock lang="java" caption="The 'tradeoff sentence' shape — practice this">{`// Pattern: [Choice] because [axis-1, axis-2].
+        <CodeBlock lang="java" caption="The 'tradeoff sentence' shape, practice this">{`// Pattern: [Choice] because [axis-1, axis-2].
 // I considered [alternative] but [cost on axis we care about].
 
 // Example:
@@ -311,7 +311,7 @@ public void follow(
  cache warmth on every deploy."`}</CodeBlock>
 
         <Callout variant="info" title="When to push back on the prompt">
-          <p className="m-0">If the interviewer&apos;s prompt has a contradiction or seems to be pointing you at a bad design, push back politely. &quot;You said strongly consistent and 5ms p99 globally — those two are in tension. Did you want me to assume one region, or are we OK with eventual cross-region?&quot; That&apos;s not insubordination; it&apos;s exactly the senior signal they&apos;re looking for. The interviewer often baked the contradiction in deliberately to see if you&apos;d catch it.</p>
+          <p className="m-0">If the interviewer&apos;s prompt has a contradiction or seems to be pointing you at a bad design, push back politely. &quot;You said strongly consistent and 5ms p99 globally, those two are in tension. Did you want me to assume one region, or are we OK with eventual cross-region?&quot; That&apos;s not insubordination; it&apos;s exactly the senior signal they&apos;re looking for. The interviewer often baked the contradiction in deliberately to see if you&apos;d catch it.</p>
         </Callout>
 
         <Quiz
@@ -319,7 +319,7 @@ public void follow(
           options={[
             { label: "Name the axes that drove the choice (write QPS, consistency tolerance), name what Postgres would cost on those axes (manual sharding, vertical scale, sync replication latency), and acknowledge the upside Postgres has (transactions, joins) that this workload doesn't need.", correct: true, explanation: "That's the tradeoff sentence shape: name the axes, name the alternative's cost on those axes, acknowledge what you're giving up. Demonstrates you considered the alternative rather than reflexively reaching for the trendy answer." },
             { label: "'Cassandra is web-scale; Postgres doesn't scale.'", explanation: "Postgres scales fine for many workloads, including some Twitter-scale ones with the right sharding. This answer signals you're using a slogan instead of reasoning." },
-            { label: "'That's a good question, let me think... actually, let's go with Postgres then.'", explanation: "Flipping at the first pushback is worse than picking wrong. Stand by your reasoning or update it explicitly — don't collapse." },
+            { label: "'That's a good question, let me think... actually, let's go with Postgres then.'", explanation: "Flipping at the first pushback is worse than picking wrong. Stand by your reasoning or update it explicitly, don't collapse." },
             { label: "'Postgres would also work; I just like Cassandra.'", explanation: "Preference isn't reasoning. The whole question is 'why this and not that on the axes that matter for this workload?'" },
           ]}
           hint="Name the axis, name the alternative's cost on that axis, acknowledge the alternative's upside."
@@ -329,9 +329,9 @@ public void follow(
         <Quiz
           question="You're 25 minutes in. You've done clarify, estimate, API/data, and high-level. The interviewer asks you to deep-dive. You can either dig into (A) the celebrity fanout problem, which is hard and central, or (B) the CDN configuration, which is easier and you have a lot to say about. Which do you pick?"
           options={[
-            { label: "(A) — celebrity fanout. Pick the hardest, most-central subproblem so the interviewer sees you reason on something that actually tests senior judgement. The CDN is wallpaper next to that.", correct: true, explanation: "Right. Time is finite and the interviewer is scoring on signal density. The hardest subproblem is where the most signal lives — even if you only get part-way through it, that's worth more than a complete tour of an easy subproblem." },
-            { label: "(B) — CDN. Show off depth on something you know well, build confidence, then move to the harder problem.", explanation: "By the time you finish the easy thing, you'll be out of time for the hard one. The interviewer wanted to see you on the celebrity fanout; you optimized for your comfort instead." },
-            { label: "Ask the interviewer to choose for you.", explanation: "Asking which subproblem to dig into is great. But if you have a strong opinion on which is more central, lead with that — 'I think the celebrity fanout is the hardest part; OK if I start there?'" },
+            { label: "(A), celebrity fanout. Pick the hardest, most-central subproblem so the interviewer sees you reason on something that actually tests senior judgement. The CDN is wallpaper next to that.", correct: true, explanation: "Right. Time is finite and the interviewer is scoring on signal density. The hardest subproblem is where the most signal lives, even if you only get part-way through it, that's worth more than a complete tour of an easy subproblem." },
+            { label: "(B), CDN. Show off depth on something you know well, build confidence, then move to the harder problem.", explanation: "By the time you finish the easy thing, you'll be out of time for the hard one. The interviewer wanted to see you on the celebrity fanout; you optimized for your comfort instead." },
+            { label: "Ask the interviewer to choose for you.", explanation: "Asking which subproblem to dig into is great. But if you have a strong opinion on which is more central, lead with that, 'I think the celebrity fanout is the hardest part; OK if I start there?'" },
             { label: "Both, switching every 3 minutes.", explanation: "You'll do neither well. Pick the one that shows the most signal and commit to depth over breadth in this phase." },
           ]}
           hint="Where is the most senior judgement on display?"
@@ -340,12 +340,12 @@ public void follow(
 
         <PartRecap
           title="Part 2 recap"
-          gist="The pitfalls aren't about knowledge gaps — they're about misspending the 45-minute budget. Force the rhythm and these go away."
+          gist="The pitfalls aren't about knowledge gaps, they're about misspending the 45-minute budget. Force the rhythm and these go away."
           points={[
             { takeaway: "Don't draw before you've clarified", detail: "3 questions in 2 minutes calibrate the rest of the interview. Skip them and you're solving a problem that may not be the one asked." },
             { takeaway: "Estimation is non-negotiable", detail: "Five lines of math. DAU × actions ÷ 86400 × peak ratio. Storage per record × daily ops. Without numbers, the design has no anchor." },
             { takeaway: "Sketch at least one table", detail: "Showing how the hot query hits the data model carries more signal than 10 minutes of high-level box-drawing." },
-            { takeaway: "Make tradeoffs explicit when you propose, not when challenged", detail: "'X because A, not Y, which would cost B' — that sentence shape, repeated, is what senior judgement sounds like under pressure." },
+            { takeaway: "Make tradeoffs explicit when you propose, not when challenged", detail: "'X because A, not Y, which would cost B', that sentence shape, repeated, is what senior judgement sounds like under pressure." },
             { takeaway: "Spend deep-dive time on the hardest subproblem", detail: "Name the 2-3 hard parts up front, let the interviewer pick if you're not sure, then go deep. Don't fritter the budget on easy wins." },
           ]}
         />
@@ -362,18 +362,18 @@ public void follow(
           Your drawing is your shared workspace. Keep it readable. A few rules I&apos;ve seen the strongest candidates follow:
         </p>
         <ul>
-          <li><strong>Boxes for components, arrows for data flow, labels on every arrow.</strong>{" "}An unlabeled arrow is just a vibe — what flows through it? &quot;tweet write&quot;, &quot;timeline read&quot;, &quot;async fanout job&quot;.</li>
+          <li><strong>Boxes for components, arrows for data flow, labels on every arrow.</strong>{" "}An unlabeled arrow is just a vibe, what flows through it? &quot;tweet write&quot;, &quot;timeline read&quot;, &quot;async fanout job&quot;.</li>
           <li><strong>Direction matters.</strong>{" "}Single arrow for one-way (writes to a queue), double-headed only when there&apos;s genuinely bidirectional sync request/response.</li>
-          <li><strong>Don&apos;t erase. Strike through.</strong>{" "}If you change your mind about a component, cross it out and redraw — the interviewer wants to see your evolving thinking, not a clean final state.</li>
+          <li><strong>Don&apos;t erase. Strike through.</strong>{" "}If you change your mind about a component, cross it out and redraw, the interviewer wants to see your evolving thinking, not a clean final state.</li>
           <li><strong>Section your space.</strong>{" "}Top of the board: requirements + estimation. Middle: API + data. Bottom: architecture diagram. Side: scratch math. Don&apos;t mix.</li>
         </ul>
 
-        <h3>Pacing — the 45-minute clock</h3>
+        <h3>Pacing, the 45-minute clock</h3>
         <p>
           Roughly track the clock in your head. If you&apos;re 15 minutes in and still clarifying, you&apos;ve over-spent. If you&apos;re 30 minutes in and haven&apos;t deep-dived, you need to move. A useful trick: at every phase boundary, say it out loud. &quot;OK, I think I&apos;ve got the requirements. Let me move to estimation.&quot; That signals to the interviewer (and to yourself) that you&apos;re managing the budget.
         </p>
         <p>
-          If you&apos;re running long on a phase, the interviewer will often help — they&apos;ll redirect you. But don&apos;t wait for them; <strong>self-pace.</strong>{" "}Better to wrap a phase 80% complete and move on than to nail one phase and run out of time for the rest.
+          If you&apos;re running long on a phase, the interviewer will often help, they&apos;ll redirect you. But don&apos;t wait for them; <strong>self-pace.</strong>{" "}Better to wrap a phase 80% complete and move on than to nail one phase and run out of time for the rest.
         </p>
 
         <h3>Talking through, not at</h3>
@@ -381,11 +381,11 @@ public void follow(
           Pause every 2-3 minutes and check in. &quot;Does this match what you had in mind?&quot; &quot;Want me to dig into this further or move on?&quot; The interviewer has signal they want to extract; if they&apos;re not getting it, they&apos;ll redirect you. If you&apos;re monologuing for 8 minutes straight, you&apos;ve missed those opportunities.
         </p>
         <p>
-          When you don&apos;t know something — say so, then reason about it. &quot;I&apos;m not sure of the exact write throughput a single Kafka partition can handle, but I think it&apos;s in the tens of thousands per second on commodity hardware. Let me size assuming 30k/sec/partition and we can revisit if needed.&quot; That&apos;s much stronger than guessing a number with false confidence, and it shows you know how to operate under uncertainty.
+          When you don&apos;t know something, say so, then reason about it. &quot;I&apos;m not sure of the exact write throughput a single Kafka partition can handle, but I think it&apos;s in the tens of thousands per second on commodity hardware. Let me size assuming 30k/sec/partition and we can revisit if needed.&quot; That&apos;s much stronger than guessing a number with false confidence, and it shows you know how to operate under uncertainty.
         </p>
 
         <Callout variant="info" title="When to ask vs assume">
-          <p className="m-0">If the question is core to the design — read/write ratio, scale, consistency — <strong>ask</strong>. If it&apos;s a detail that doesn&apos;t change your architecture — exact retention, exact CDN vendor — <strong>assume out loud</strong>. The signal you&apos;re sending: &quot;I know which decisions are load-bearing.&quot; A candidate who asks 12 questions about details signals they can&apos;t triage; one who assumes everything signals they can&apos;t scope.</p>
+          <p className="m-0">If the question is core to the design, read/write ratio, scale, consistency, <strong>ask</strong>. If it&apos;s a detail that doesn&apos;t change your architecture, exact retention, exact CDN vendor, <strong>assume out loud</strong>. The signal you&apos;re sending: &quot;I know which decisions are load-bearing.&quot; A candidate who asks 12 questions about details signals they can&apos;t triage; one who assumes everything signals they can&apos;t scope.</p>
         </Callout>
 
         <h3>The structure of a deep-dive</h3>
@@ -413,17 +413,17 @@ public void follow(
 5. Note what you'd test    "I'd verify the threshold empirically — the
                             crossover depends on follower distribution."`}</CodeBlock>
         <p>
-          That&apos;s a tight, complete deep-dive. 5 steps, 3-5 minutes, transferable across any subproblem. Practice it on familiar problems first (caching, sharding, queue choice) until the structure is automatic — then it&apos;s available to you under interview pressure.
+          That&apos;s a tight, complete deep-dive. 5 steps, 3-5 minutes, transferable across any subproblem. Practice it on familiar problems first (caching, sharding, queue choice) until the structure is automatic, then it&apos;s available to you under interview pressure.
         </p>
 
-        <h3>The wrap — last 5 minutes</h3>
+        <h3>The wrap, last 5 minutes</h3>
         <p>
           When you sense time is running out, claim a wrap. &quot;Want me to spend the last few minutes on what I&apos;d revisit?&quot; That signals time-awareness. Then hit three things:
         </p>
         <ol>
-          <li><strong>What I&apos;d revisit if I had more time</strong> — components you sketched but didn&apos;t deep-dive. &quot;I&apos;d look at how the search service indexes and the trending pipeline; both are real problems I punted on.&quot;</li>
-          <li><strong>Failure modes I&apos;m worried about</strong> — single-AZ outage, hot keys, queue backpressure. Naming a failure you didn&apos;t fully solve is a senior signal, not a weakness.</li>
-          <li><strong>What I&apos;d monitor</strong> — at minimum p99 latency, write QPS, queue depth, cache hit rate. Bonus: an SLO and an error budget.</li>
+          <li><strong>What I&apos;d revisit if I had more time</strong>, components you sketched but didn&apos;t deep-dive. &quot;I&apos;d look at how the search service indexes and the trending pipeline; both are real problems I punted on.&quot;</li>
+          <li><strong>Failure modes I&apos;m worried about</strong>, single-AZ outage, hot keys, queue backpressure. Naming a failure you didn&apos;t fully solve is a senior signal, not a weakness.</li>
+          <li><strong>What I&apos;d monitor</strong>, at minimum p99 latency, write QPS, queue depth, cache hit rate. Bonus: an SLO and an error budget.</li>
         </ol>
 
         <Callout variant="insight" title="The hidden grading rubric">
@@ -434,7 +434,7 @@ public void follow(
           question="You're 35 minutes in, deep into the celebrity fanout. The interviewer asks 'how would you handle a regional outage?' What's the strongest move?"
           options={[
             { label: "Briefly answer the regional-outage question (2 min, name multi-region active-passive or active-active and the cost), then ask if they want you to go deeper or wrap with what you'd revisit.", correct: true, explanation: "Right. Honor the question with a quick concrete answer, then surface the meta-decision (deeper vs wrap) since you're running short on time. That's pacing + responsiveness in one move." },
-            { label: "Spend the next 8 minutes deep-diving regional failover.", explanation: "You'll burn the wrap. The interviewer asked a question, not for a full deep-dive — calibrate the answer to the time you have." },
+            { label: "Spend the next 8 minutes deep-diving regional failover.", explanation: "You'll burn the wrap. The interviewer asked a question, not for a full deep-dive, calibrate the answer to the time you have." },
             { label: "Say 'I'd use multi-region' and immediately pivot back to celebrity fanout.", explanation: "Too dismissive. The interviewer asked because they want to see you reason about it. One-line answers signal you didn't engage." },
             { label: "Apologize for not having time to cover it and skip.", explanation: "Never skip a direct question. Answer concisely, even briefly, before redirecting." },
           ]}
@@ -445,10 +445,10 @@ public void follow(
         <Quiz
           question="The interviewer asks: 'How big do you think the metadata records would be?' You don't know exactly. What's the right move?"
           options={[
-            { label: "'I don't know the exact number, but I'd estimate 200-500 bytes — short text, a few timestamps, some IDs. Let me size with 500 to be safe.' Then proceed.", correct: true, explanation: "Yes. Honest about uncertainty, ranges instead of false precision, picks a value to make progress, and signals you'd revisit. That's exactly the operating-under-uncertainty pattern interviewers want to see." },
+            { label: "'I don't know the exact number, but I'd estimate 200-500 bytes, short text, a few timestamps, some IDs. Let me size with 500 to be safe.' Then proceed.", correct: true, explanation: "Yes. Honest about uncertainty, ranges instead of false precision, picks a value to make progress, and signals you'd revisit. That's exactly the operating-under-uncertainty pattern interviewers want to see." },
             { label: "'Around 100 bytes.' Pick a number with confidence and move on.", explanation: "False precision is worse than a range. If you're wrong by 5x, your storage estimate is wrong by 5x, and the interviewer can tell you guessed." },
             { label: "'I'd need to know more about the schema before I can answer.' Punt.", explanation: "You're showing you can't make progress under uncertainty. The whole point of estimation is to operate with rough numbers and refine later." },
-            { label: "'Let's skip storage estimation and focus on QPS.'", explanation: "Storage and QPS are both load-bearing — skipping one will bite you in deep-dive. Estimate even with a wide range." },
+            { label: "'Let's skip storage estimation and focus on QPS.'", explanation: "Storage and QPS are both load-bearing, skipping one will bite you in deep-dive. Estimate even with a wide range." },
           ]}
           hint="Honest, range-based, picks a value, moves on."
           xp={6}
@@ -470,7 +470,7 @@ public void follow(
       <Checkpoint moduleSlug="interview-framework" id="frontend" title="Part 4 · The frontend variant" xp={30}>
         <h2>The frontend round is a different game</h2>
         <p>
-          Everything above assumed you&apos;re being asked to design a backend system — APIs, databases, queues, fanout. But more and more senior interviews now include a <strong>frontend system design round</strong>, especially for full-stack roles. Candidates who only prep the backend framework get blindsided. The 45-minute clock is the same. The phases look superficially similar. But what the interviewer is testing is almost completely different.
+          Everything above assumed you&apos;re being asked to design a backend system, APIs, databases, queues, fanout. But more and more senior interviews now include a <strong>frontend system design round</strong>, especially for full-stack roles. Candidates who only prep the backend framework get blindsided. The 45-minute clock is the same. The phases look superficially similar. But what the interviewer is testing is almost completely different.
         </p>
         <p>
           If you&apos;re a Java/Spring engineer interviewing at a FAANG for a senior role that touches the client, you need a second framework alongside the first. This part gives it to you.
@@ -478,9 +478,9 @@ public void follow(
 
         <h3>How the frontend round differs from the backend round</h3>
         <p>
-          Same surface — &quot;Design X&quot; — but the axes shift. Here&apos;s the diff against the backend framework you just learned:
+          Same surface, &quot;Design X&quot;, but the axes shift. Here&apos;s the diff against the backend framework you just learned:
         </p>
-        <CodeBlock lang="plain" caption="Backend round vs frontend round — what changes">{`AXIS                       BACKEND ROUND               FRONTEND ROUND
+        <CodeBlock lang="plain" caption="Backend round vs frontend round, what changes">{`AXIS                       BACKEND ROUND               FRONTEND ROUND
 ---------------------------------------------------------------------------
 Capacity math              QPS, storage, fanout        Bytes per scroll, JS budget,
                                                        frame-time budget (16ms)
@@ -507,7 +507,7 @@ Cross-cutting concerns     Auth, observability, ratelimits   A11y, i18n, respons
         </p>
 
         <Callout variant="warn" title="The most common backend-prep blindspot">
-          <p className="m-0">Backend-trained candidates underestimate how much the network matters on the client side. Between two services in your VPC, a 10ms round trip is a slow day. Between a phone on 3G and your API, 800ms is realistic. <strong>Every interaction has to assume the network might be slow or fail.</strong>{" "}Optimistic updates, retries, error states, offline queues — these aren&apos;t edge cases on the frontend; they&apos;re the main path.</p>
+          <p className="m-0">Backend-trained candidates underestimate how much the network matters on the client side. Between two services in your VPC, a 10ms round trip is a slow day. Between a phone on 3G and your API, 800ms is realistic. <strong>Every interaction has to assume the network might be slow or fail.</strong>{" "}Optimistic updates, retries, error states, offline queues, these aren&apos;t edge cases on the frontend; they&apos;re the main path.</p>
         </Callout>
 
         <h3>The frontend interview 45-minute flow</h3>
@@ -550,14 +550,14 @@ Cross-cutting concerns     Auth, observability, ratelimits   A11y, i18n, respons
 
         <h3>The frontend &quot;capacity&quot; questions (when they come)</h3>
         <p>
-          Backend rounds drill QPS. Frontend rounds drill <em>budgets</em> — bytes, frames, milliseconds. These are the three numbers you should be able to talk about without flinching:
+          Backend rounds drill QPS. Frontend rounds drill <em>budgets</em>, bytes, frames, milliseconds. These are the three numbers you should be able to talk about without flinching:
         </p>
         <ul>
           <li>
-            <strong>Bundle size budget.</strong> &quot;Your app must be interactive in 3 seconds on 3G — what&apos;s your JS budget?&quot; Rough answer: <strong>~170 KB compressed</strong>{" "}over the wire (3G ≈ 400 Kbps effective; 3 sec × 50 KB/sec ≈ 150–200 KB). That&apos;s the entire critical-path JS. Anything beyond that is code-split and lazy-loaded.
+            <strong>Bundle size budget.</strong> &quot;Your app must be interactive in 3 seconds on 3G, what&apos;s your JS budget?&quot; Rough answer: <strong>~170 KB compressed</strong>{" "}over the wire (3G ≈ 400 Kbps effective; 3 sec × 50 KB/sec ≈ 150–200 KB). That&apos;s the entire critical-path JS. Anything beyond that is code-split and lazy-loaded.
           </li>
           <li>
-            <strong>List rendering cost.</strong> &quot;Feed has 10,000 items, you render them all at once, why is the page locked?&quot; Each DOM node costs memory and layout work. 10k nodes × maybe 50 bytes of layout state each plus reflow time = browser stalls. Fix: <strong>virtualization</strong> — only render the ~20 visible items plus a buffer; recycle nodes as the user scrolls.
+            <strong>List rendering cost.</strong> &quot;Feed has 10,000 items, you render them all at once, why is the page locked?&quot; Each DOM node costs memory and layout work. 10k nodes × maybe 50 bytes of layout state each plus reflow time = browser stalls. Fix: <strong>virtualization</strong>, only render the ~20 visible items plus a buffer; recycle nodes as the user scrolls.
           </li>
           <li>
             <strong>Re-render cost.</strong> &quot;Every keystroke re-renders the whole tree, you have a 16ms-per-frame budget at 60fps, why is it janky?&quot; React&apos;s reconciler has to walk the tree every render. Fixes: <strong>memoization</strong> (React.memo, useMemo on derived values), <strong>stable keys</strong> (no array index keys on dynamic lists), <strong>state colocation</strong> (push state down so only the leaf re-renders).
@@ -569,7 +569,7 @@ Time-to-interactive              < 3s on mid-tier phone, < 1s on desktop
 List render                      Don't put more than ~100 nodes in the DOM
                                  at once; virtualize beyond that`}</CodeBlock>
 
-        <h3>Common archetypes — and what each one is testing</h3>
+        <h3>Common archetypes, and what each one is testing</h3>
         <p>
           Frontend prompts cluster into a small number of archetypes. The prompt is a wrapper; the test underneath is consistent. Recognize the test and you know which deep-dive to lean into.
         </p>
@@ -592,10 +592,10 @@ List render                      Don't put more than ~100 nodes in the DOM
         </ul>
 
         <Callout variant="insight" title="Recognize the archetype, recognize the test">
-          <p className="m-0">If you hear &quot;design Twitter feed,&quot; the interviewer is almost certainly going to push you on virtualization and optimistic updates. If you hear &quot;design autocomplete,&quot; they want to see debounce + abort + cache. Mapping the prompt to the archetype on minute one tells you which deep-dives to pre-load. Just don&apos;t skip the clarify phase — the prompt may have a twist that changes which archetype it actually is.</p>
+          <p className="m-0">If you hear &quot;design Twitter feed,&quot; the interviewer is almost certainly going to push you on virtualization and optimistic updates. If you hear &quot;design autocomplete,&quot; they want to see debounce + abort + cache. Mapping the prompt to the archetype on minute one tells you which deep-dives to pre-load. Just don&apos;t skip the clarify phase, the prompt may have a twist that changes which archetype it actually is.</p>
         </Callout>
 
-        <h3>State shape — the thing junior candidates skip</h3>
+        <h3>State shape, the thing junior candidates skip</h3>
         <p>
           When the interviewer asks &quot;where does state live?&quot;, the wrong answer is &quot;Redux&quot; (or &quot;Zustand,&quot; or &quot;Context&quot;). The right answer starts with <strong>what&apos;s actually in the state</strong>, then talks about where it goes. Sketch it in JSON. Make the field names real.
         </p>
@@ -622,7 +622,7 @@ List render                      Don't put more than ~100 nodes in the DOM
   }
 }`}</CodeBlock>
         <p>
-          Two things this sketch shows that the interviewer is grading on: (1) <strong>normalization</strong> — posts and users are stored once and referenced by id, so a like update touches one place; (2) <strong>separation</strong> — server cache (refetched, evictable) is separate from UI state (ephemeral, never serialized to the server). That distinction alone separates mid from senior signal.
+          Two things this sketch shows that the interviewer is grading on: (1) <strong>normalization</strong>, posts and users are stored once and referenced by id, so a like update touches one place; (2) <strong>separation</strong>, server cache (refetched, evictable) is separate from UI state (ephemeral, never serialized to the server). That distinction alone separates mid from senior signal.
         </p>
 
         <h3>Deep-dive: the data fetching + caching strategy</h3>
@@ -634,7 +634,7 @@ List render                      Don't put more than ~100 nodes in the DOM
           <li><strong>What to cache:</strong>{" "}by query key (URL + params), normalized by entity id, or both.</li>
           <li><strong>Invalidation:</strong>{" "}after a mutation (write), invalidate which queries? &quot;User likes a post&quot; → invalidate that post&apos;s query key, but probably not the whole feed.</li>
           <li><strong>Optimistic updates:</strong>{" "}apply the mutation locally first, roll back if the server rejects. Critical for likes, follow buttons, anything that needs to feel instant.</li>
-          <li><strong>Refetch on focus / reconnect:</strong>{" "}the user came back to the tab after 10 minutes — is your data stale?</li>
+          <li><strong>Refetch on focus / reconnect:</strong>{" "}the user came back to the tab after 10 minutes, is your data stale?</li>
         </ul>
         <CodeBlock lang="plain" caption="The fetching deep-dive sentence shape (use this verbatim shape)">{`"For the feed I'd use a server cache library (React Query) with the
  query key 'home-feed:{cursor}'. Fresh-while-revalidate strategy:
@@ -645,9 +645,9 @@ List render                      Don't put more than ~100 nodes in the DOM
 
         <h3>Deep-dive: a perf-critical interaction</h3>
         <p>
-          The other typical deep-dive is one specific interaction: scroll, drag, real-time update, animation. The micro-pattern is the same as the backend one — name the constraint, propose approaches, compare, pick:
+          The other typical deep-dive is one specific interaction: scroll, drag, real-time update, animation. The micro-pattern is the same as the backend one, name the constraint, propose approaches, compare, pick:
         </p>
-        <CodeBlock lang="plain" caption="Perf deep-dive — virtualized infinite scroll">{`Constraint: 10,000+ feed items, 16ms frame budget.
+        <CodeBlock lang="plain" caption="Perf deep-dive, virtualized infinite scroll">{`Constraint: 10,000+ feed items, 16ms frame budget.
 
 Approaches:
   (a) Render all items                  -> DOM blows up, scroll janks
@@ -673,7 +673,7 @@ What I'd verify:
         </p>
         <ul>
           <li>
-            <strong>Junior signal:</strong>{" "}can build it. Misses edge cases — empty state, error state, loading state, what happens when the API is slow. Doesn&apos;t talk about a11y or perf unprompted.
+            <strong>Junior signal:</strong>{" "}can build it. Misses edge cases, empty state, error state, loading state, what happens when the API is slow. Doesn&apos;t talk about a11y or perf unprompted.
           </li>
           <li>
             <strong>Mid signal:</strong>{" "}handles edge cases, perf, a11y. Has a few tradeoff conversations when prompted. Picks reasonable defaults but doesn&apos;t always justify them.
@@ -692,13 +692,13 @@ What I'd verify:
         </p>
         <ul>
           <li>
-            <strong>Diving straight into components without clarifying scope.</strong> &quot;OK so I&apos;ll have a Header, a Feed, a Sidebar...&quot; Same mistake as jumping to architecture in the backend round — you&apos;re solving a problem you haven&apos;t scoped.
+            <strong>Diving straight into components without clarifying scope.</strong> &quot;OK so I&apos;ll have a Header, a Feed, a Sidebar...&quot; Same mistake as jumping to architecture in the backend round, you&apos;re solving a problem you haven&apos;t scoped.
           </li>
           <li>
-            <strong>No state shape — handwaves &quot;we&apos;ll store it in Redux.&quot;</strong>{" "}Show me what&apos;s in the store. If you can&apos;t sketch the JSON, you don&apos;t have a design yet.
+            <strong>No state shape, handwaves &quot;we&apos;ll store it in Redux.&quot;</strong>{" "}Show me what&apos;s in the store. If you can&apos;t sketch the JSON, you don&apos;t have a design yet.
           </li>
           <li>
-            <strong>Forgetting accessibility entirely.</strong>{" "}Even one sentence — &quot;I&apos;d make sure the feed is keyboard-navigable and the like button has a clear aria-label and aria-pressed state&quot; — separates you from candidates who don&apos;t mention a11y once.
+            <strong>Forgetting accessibility entirely.</strong>{" "}Even one sentence, &quot;I&apos;d make sure the feed is keyboard-navigable and the like button has a clear aria-label and aria-pressed state&quot;, separates you from candidates who don&apos;t mention a11y once.
           </li>
           <li>
             <strong>Not addressing what happens when the network fails.</strong>{" "}Slow API, dropped request, offline. If you don&apos;t bring it up, the interviewer will, and you&apos;ll be answering reactively instead of leading.
@@ -709,7 +709,7 @@ What I'd verify:
         </ul>
 
         <Callout variant="info" title="The 'because' rule">
-          <p className="m-0">For every technology you name in a frontend round, append a <strong>because</strong>{" "}clause naming the constraint that drove the choice. &quot;Next.js because we need SSR for SEO on the public pages.&quot; &quot;React Query because we have a lot of derived server state and want stale-while-revalidate out of the box.&quot; &quot;Tailwind because the team values design-system consistency and we&apos;re not building a CSS framework from scratch.&quot; If you can&apos;t produce the &quot;because,&quot; don&apos;t name the tech — describe the capability instead.</p>
+          <p className="m-0">For every technology you name in a frontend round, append a <strong>because</strong>{" "}clause naming the constraint that drove the choice. &quot;Next.js because we need SSR for SEO on the public pages.&quot; &quot;React Query because we have a lot of derived server state and want stale-while-revalidate out of the box.&quot; &quot;Tailwind because the team values design-system consistency and we&apos;re not building a CSS framework from scratch.&quot; If you can&apos;t produce the &quot;because,&quot; don&apos;t name the tech, describe the capability instead.</p>
         </Callout>
 
         <h3>Pre-interview checklist for the candidate</h3>
@@ -718,13 +718,13 @@ What I'd verify:
         </p>
         <ul>
           <li>
-            <strong>Rendering strategies cold.</strong>{" "}SSR, SSG, ISR, CSR — when each. SSR for SEO + first-paint + dynamic per-user content. SSG for content that&apos;s the same for everyone (marketing, docs). ISR for SSG with periodic regeneration. CSR for app-shell after auth wall.
+            <strong>Rendering strategies cold.</strong>{" "}SSR, SSG, ISR, CSR, when each. SSR for SEO + first-paint + dynamic per-user content. SSG for content that&apos;s the same for everyone (marketing, docs). ISR for SSG with periodic regeneration. CSR for app-shell after auth wall.
           </li>
           <li>
-            <strong>One state management lib deeply, not three superficially.</strong>{" "}Pick one (React Query, Redux Toolkit, Zustand, Jotai) and know its mental model — when it shines, what it&apos;s bad at. Don&apos;t name three on the whiteboard.
+            <strong>One state management lib deeply, not three superficially.</strong>{" "}Pick one (React Query, Redux Toolkit, Zustand, Jotai) and know its mental model, when it shines, what it&apos;s bad at. Don&apos;t name three on the whiteboard.
           </li>
           <li>
-            <strong>How to virtualize a list — the algorithm, not just the lib.</strong>{" "}Compute visible range from scrollTop and item height, render that range plus a buffer, recycle DOM. You should be able to whiteboard this without naming react-window.
+            <strong>How to virtualize a list, the algorithm, not just the lib.</strong>{" "}Compute visible range from scrollTop and item height, render that range plus a buffer, recycle DOM. You should be able to whiteboard this without naming react-window.
           </li>
           <li>
             <strong>Debounce, throttle, cancel.</strong>{" "}Debounce for &quot;wait until they stop typing&quot; (search). Throttle for &quot;limit rate of fires&quot; (scroll handlers). AbortController for canceling in-flight fetches when a new query supersedes them. They will come up.
@@ -737,9 +737,9 @@ What I'd verify:
         <Quiz
           question="A candidate is asked 'Design a Twitter-like feed.' Their first move is: 'I'll have a <Header>, a <Feed> with <Post> children, and a <Sidebar>. Posts will be in Redux.' What did they skip, and which phase is the bigger miss?"
           options={[
-            { label: "They skipped clarifying scope (devices, online/offline, a11y, SEO) and they handwaved state — 'in Redux' isn't a state shape. The bigger miss is clarification, because it determines whether SSR matters, whether you need offline support, and whether the device constraints change the perf budget.", correct: true, explanation: "Right. Both misses are real, but clarification comes first by ordering. You can fix a vague state shape with a follow-up sketch; you can't recover from designing the wrong product. Same pattern as Pitfall 1 in the backend round, just on different axes." },
-            { label: "Nothing — that's a fast, confident start.", explanation: "Same antipattern as jumping to architecture in the backend round. The interviewer hasn't told you what surfaces matter, what devices, whether SEO is needed. You're committing to a design before you have constraints." },
-            { label: "They skipped naming the framework (Next.js / Remix / etc).", explanation: "Naming a framework before you've clarified is the opposite mistake — picking tech without constraints. You don't fix the miss by adding more tech earlier." },
+            { label: "They skipped clarifying scope (devices, online/offline, a11y, SEO) and they handwaved state, 'in Redux' isn't a state shape. The bigger miss is clarification, because it determines whether SSR matters, whether you need offline support, and whether the device constraints change the perf budget.", correct: true, explanation: "Right. Both misses are real, but clarification comes first by ordering. You can fix a vague state shape with a follow-up sketch; you can't recover from designing the wrong product. Same pattern as Pitfall 1 in the backend round, just on different axes." },
+            { label: "Nothing, that's a fast, confident start.", explanation: "Same antipattern as jumping to architecture in the backend round. The interviewer hasn't told you what surfaces matter, what devices, whether SEO is needed. You're committing to a design before you have constraints." },
+            { label: "They skipped naming the framework (Next.js / Remix / etc).", explanation: "Naming a framework before you've clarified is the opposite mistake, picking tech without constraints. You don't fix the miss by adding more tech earlier." },
             { label: "They forgot to mention TypeScript.", explanation: "TypeScript is a detail compared to scoping the product. The interviewer will infer language choices from the rest of the conversation." },
           ]}
           hint="Which phase always comes first, and what does 'state in Redux' actually tell the interviewer?"
@@ -749,24 +749,24 @@ What I'd verify:
         <Quiz
           question="The interviewer says: 'Your feed page must be interactive in 3 seconds on a 3G connection. What's your JavaScript budget for the critical path?' What's the strongest answer?"
           options={[
-            { label: "'Roughly 170 KB compressed. 3G effective throughput is around 400 Kbps, which is ~50 KB/sec, so 3 seconds of download budget gives you about 150-200 KB. That's the whole critical-path bundle — anything beyond that has to be code-split and lazy-loaded after first interactive.'", correct: true, explanation: "Yes. Names the number, shows the math, and bridges to the architectural consequence (code-splitting). That's exactly the shape of answer that signals you've internalized the budget rather than memorized a slogan." },
-            { label: "'Bundle size matters a lot — I'd use code splitting and lazy loading.'", explanation: "True but generic. The interviewer asked for a number; you didn't give one. They're testing whether you actually know the budget, not whether you know the technique names." },
+            { label: "'Roughly 170 KB compressed. 3G effective throughput is around 400 Kbps, which is ~50 KB/sec, so 3 seconds of download budget gives you about 150-200 KB. That's the whole critical-path bundle, anything beyond that has to be code-split and lazy-loaded after first interactive.'", correct: true, explanation: "Yes. Names the number, shows the math, and bridges to the architectural consequence (code-splitting). That's exactly the shape of answer that signals you've internalized the budget rather than memorized a slogan." },
+            { label: "'Bundle size matters a lot, I'd use code splitting and lazy loading.'", explanation: "True but generic. The interviewer asked for a number; you didn't give one. They're testing whether you actually know the budget, not whether you know the technique names." },
             { label: "'Modern bundlers tree-shake aggressively, so it's hard to put a fixed number on it.'", explanation: "Dodge. Even if there's variance, candidates who can ballpark and explain the math get the points. Refusing to commit to a number signals you don't actually know it." },
-            { label: "'Around 1 MB — that's typical for a React app.'", explanation: "1 MB on 3G is ~20 seconds of download. The whole point of the question is that the typical bundle is too big for the constraint. Naming the typical without flagging the gap is missing the point." },
+            { label: "'Around 1 MB, that's typical for a React app.'", explanation: "1 MB on 3G is ~20 seconds of download. The whole point of the question is that the typical bundle is too big for the constraint. Naming the typical without flagging the gap is missing the point." },
           ]}
           hint="3G ≈ 400 Kbps. Convert to bytes/sec, multiply by the time budget."
           xp={7}
         />
 
         <Callout variant="insight" title="Mapping backend muscle to frontend questions">
-          <p className="m-0">A lot of your backend prep transfers if you remap the axes. &quot;Sharding&quot; on the backend is &quot;code splitting&quot; on the frontend — both partition work to fit a constraint. &quot;Cache invalidation&quot; is the same hard problem in both worlds, just with different invalidators (TTL + write-through on the backend; mutation-driven query invalidation on the frontend). &quot;Hot key&quot; on the backend has an analogue in &quot;most-rendered component&quot; on the frontend. Don&apos;t learn frontend as a separate skill — learn it as the same skill applied to a stateful client over a hostile network.</p>
+          <p className="m-0">A lot of your backend prep transfers if you remap the axes. &quot;Sharding&quot; on the backend is &quot;code splitting&quot; on the frontend, both partition work to fit a constraint. &quot;Cache invalidation&quot; is the same hard problem in both worlds, just with different invalidators (TTL + write-through on the backend; mutation-driven query invalidation on the frontend). &quot;Hot key&quot; on the backend has an analogue in &quot;most-rendered component&quot; on the frontend. Don&apos;t learn frontend as a separate skill, learn it as the same skill applied to a stateful client over a hostile network.</p>
         </Callout>
 
         <PartRecap
           title="Part 4 recap"
-          gist="The frontend round shares the 45-minute rhythm but tests different axes — components, state shape, network as hostile environment, perf budgets in bytes and frames."
+          gist="The frontend round shares the 45-minute rhythm but tests different axes, components, state shape, network as hostile environment, perf budgets in bytes and frames."
           points={[
-            { takeaway: "Network is hostile, not free", detail: "Every interaction has to assume the API might be slow or fail. Optimistic updates, retries, error states, loading states aren't edge cases — they're the main path." },
+            { takeaway: "Network is hostile, not free", detail: "Every interaction has to assume the API might be slow or fail. Optimistic updates, retries, error states, loading states aren't edge cases, they're the main path." },
             { takeaway: "Memorize the three budgets", detail: "~170 KB JS for 3s on 3G, 16ms per frame at 60fps, < 100 DOM nodes in a single list before virtualizing. Numbers anchor the design the same way QPS does on the backend." },
             { takeaway: "State shape, not state library", detail: "Sketch the JSON. Show normalized server cache vs ephemeral UI state. 'It's in Redux' isn't a design; the contents of the store are." },
             { takeaway: "Recognize the archetype, pre-load the deep-dive", detail: "Twitter feed → virtualization + optimistic. Autocomplete → debounce + abort + cache. Docs → WS + CRDT. The prompt tells you which deep-dive to plan for." },
@@ -776,9 +776,9 @@ What I'd verify:
       </Checkpoint>
 
       <section>
-        <h2>Now you have a framework — go practice it</h2>
+        <h2>Now you have a framework, go practice it</h2>
         <p>
-          The next four modules walk through this exact framework on real prompts: TinyURL, news feed, Twitter, chat. Each one is shaped like the framework you just learned — clarify, estimate, API, data, scale, deep-dive. Read them as worked examples, not reference docs. Cover the diagrams with your hand and try to predict what the next phase says before you read it.
+          The next four modules walk through this exact framework on real prompts: TinyURL, news feed, Twitter, chat. Each one is shaped like the framework you just learned, clarify, estimate, API, data, scale, deep-dive. Read them as worked examples, not reference docs. Cover the diagrams with your hand and try to predict what the next phase says before you read it.
         </p>
         <p>
           The framework gets tighter with reps. By the third case study you&apos;ll feel the rhythm without thinking about it. That&apos;s when you&apos;re ready for a real interview.
@@ -788,7 +788,7 @@ What I'd verify:
       <section className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-6 dark:border-cyan-900 dark:from-cyan-950/40 dark:to-blue-950/40">
         <h3 className="mt-0 mb-2">Next up</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Design TinyURL — the canonical warm-up. URL shortener at scale, where the read-heavy ratio and the key-generation tradeoff are the two things you&apos;ll deep-dive on.
+          Design TinyURL, the canonical warm-up. URL shortener at scale, where the read-heavy ratio and the key-generation tradeoff are the two things you&apos;ll deep-dive on.
         </p>
         <Link
           href="/courses/system-design/modules/design-tinyurl"

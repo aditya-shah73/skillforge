@@ -55,7 +55,7 @@ export default function ModuleBadges({
   const diff = difficulty ? DIFFICULTY_STYLE[difficulty] : null;
 
   return (
-    <div className="mb-2 flex flex-wrap items-center gap-1.5">
+    <div className="mt-0.5 mb-3.5 flex flex-wrap items-center gap-1.5">
       {diff && (
         <span
           className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold tracking-wide ${diff.className}`}

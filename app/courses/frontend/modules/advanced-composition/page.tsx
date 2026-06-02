@@ -32,11 +32,11 @@ export default function AdvancedCompositionModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Advanced composition — slots, polymorphism, and the patterns libraries use
+          Advanced composition, slots, polymorphism, and the patterns libraries use
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Ever wondered how Radix lets you write <code>&lt;Dialog.Trigger asChild&gt;&lt;button&gt;…&lt;/button&gt;&lt;/Dialog.Trigger&gt;</code>{" "}
-          and the trigger behavior just <em>lands on your own button</em> — no extra wrapper, no styling fight? That&apos;s not magic.
+          and the trigger behavior just <em>lands on your own button</em>, no extra wrapper, no styling fight? That&apos;s not magic.
           It&apos;s a handful of composition patterns you can learn in an afternoon and then see <em>everywhere</em>.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -48,16 +48,16 @@ export default function AdvancedCompositionModule() {
         <h2 className="mb-4 text-2xl font-bold">The power outlet, not the welded-on lamp</h2>
         <p className="mb-4">
           Imagine two ways a building could give you light. In the first, every room ships with a specific lamp bolted to the
-          wall — a particular shape, a particular bulb, a particular shade. If you want a different lamp, too bad; you get the
+          wall, a particular shape, a particular bulb, a particular shade. If you want a different lamp, too bad; you get the
           one the builder chose. In the second, the building gives you a <strong>power outlet</strong>: a clean, standardized
-          interface that delivers what you need (electricity) and lets <em>you</em> plug in whatever fixture you like — a lamp,
+          interface that delivers what you need (electricity) and lets <em>you</em> plug in whatever fixture you like, a lamp,
           a fan, a charger. The outlet supplies the <em>capability</em>. You supply the <em>thing</em>.
         </p>
         <p className="mb-4">
           That is the entire philosophy behind modern design-system libraries like <strong>Radix</strong> and{" "}
           <strong>Reach UI</strong>. The old way of building a reusable component is the welded-on lamp: a <code>&lt;Button&gt;</code>{" "}
-          with forty props baked in — <code>variant</code>, <code>size</code>, <code>icon</code>, <code>iconPosition</code>,
-          <code>loading</code>, <code>fullWidth</code> — and the moment you need the forty-first thing, you&apos;re stuck. The new way
+          with forty props baked in, <code>variant</code>, <code>size</code>, <code>icon</code>, <code>iconPosition</code>,
+          <code>loading</code>, <code>fullWidth</code>, and the moment you need the forty-first thing, you&apos;re stuck. The new way
           is the outlet: a component that supplies <em>behavior and accessibility</em> through a clean interface and lets you plug
           your own markup and styling into it.
         </p>
@@ -66,15 +66,15 @@ export default function AdvancedCompositionModule() {
           (how a component pushes its behavior onto <em>your</em> element instead of rendering its own wrapper), <strong>polymorphic
           components</strong> (the <code>as</code> prop), <strong>controlled vs uncontrolled</strong> component APIs (the same{" "}
           <code>value</code>/<code>defaultValue</code> split you already know from form inputs, now applied to your own components),
-          and <strong>headless components</strong> (all the logic and a11y, zero styling — you bring the markup).
+          and <strong>headless components</strong> (all the logic and a11y, zero styling, you bring the markup).
         </p>
         <Callout variant="info" title="This builds directly on Phase 3">
           <p>
             Back in the <Link href="/courses/frontend/modules/composition-patterns" className="text-cyan-600 hover:underline">composition
             patterns</Link> module you learned <code>children</code>, render props, and compound components
-            (<code>&lt;Tabs.List&gt;&lt;Tabs.Tab/&gt;</code>) — and why composition beats prop-drilling configuration. Everything here is
+            (<code>&lt;Tabs.List&gt;&lt;Tabs.Tab/&gt;</code>), and why composition beats prop-drilling configuration. Everything here is
             the <em>professional-grade</em> version of that same idea. If &quot;composition over a sea of boolean props&quot; didn&apos;t fully
-            click then, it will by the end of this module — because you&apos;ll see exactly how the libraries you use every day apply it.
+            click then, it will by the end of this module, because you&apos;ll see exactly how the libraries you use every day apply it.
           </p>
         </Callout>
       </section>
@@ -114,7 +114,7 @@ export default function AdvancedCompositionModule() {
           </li>
           <li>
             <strong>You can never anticipate everything.</strong> The day someone needs a button that&apos;s also a tooltip trigger,
-            or wraps a Next.js <code>&lt;Link&gt;</code>, or renders as a <code>&lt;label&gt;</code> for a file input — there&apos;s no prop
+            or wraps a Next.js <code>&lt;Link&gt;</code>, or renders as a <code>&lt;label&gt;</code> for a file input, there&apos;s no prop
             for that, and you&apos;re back to forking the component.
           </li>
           <li>
@@ -125,11 +125,11 @@ export default function AdvancedCompositionModule() {
         <p className="mb-4">
           Composition inverts this. Instead of the component trying to <em>be</em> everything via configuration, it supplies a
           <em> capability</em> and lets the caller compose the rest. The patterns below are the concrete techniques for doing that
-          cleanly — and they&apos;re exactly what Radix and Reach are built from.
+          cleanly, and they&apos;re exactly what Radix and Reach are built from.
         </p>
         <Callout variant="warn" title="Booleans are a smell, not a sin">
           <p>
-            A prop or two is fine — <code>disabled</code> on a real button is a genuine state. The smell is when props start
+            A prop or two is fine, <code>disabled</code> on a real button is a genuine state. The smell is when props start
             describing <em>what to render</em> (<code>as</code>, <code>icon</code>, <code>iconPosition</code>) rather than{" "}
             <em>how to behave</em>. Anything describing markup is a candidate for composition: hand that decision back to the caller
             via <code>children</code>, slots, or a polymorphic <code>as</code>.
@@ -151,7 +151,7 @@ export default function AdvancedCompositionModule() {
         <p className="mb-4">
           But what if you already have a styled <code>&lt;button&gt;</code>, or you want the trigger to be a Next.js{" "}
           <code>&lt;Link&gt;</code>, or your design-system <code>&lt;FancyButton&gt;</code>? With the naive version you get a{" "}
-          <em>wrapper</em> — a button inside a button, or a div you didn&apos;t want — and a styling fight. The slot pattern fixes this
+          <em>wrapper</em>, a button inside a button, or a div you didn&apos;t want, and a styling fight. The slot pattern fixes this
           with an <code>asChild</code> prop:
         </p>
         <pre><code>{`// asChild: DON'T render your own element — merge your behavior
@@ -164,7 +164,7 @@ export default function AdvancedCompositionModule() {
 //    </button>
 // ONE element. Your markup + the library's behavior, merged.`}</code></pre>
         <p className="mb-4">
-          The mental model: <strong><code>asChild</code> means &quot;I don&apos;t want your element — take all the props and behavior you
+          The mental model: <strong><code>asChild</code> means &quot;I don&apos;t want your element, take all the props and behavior you
           were going to put on your element and put them on <em>my</em> child instead.&quot;</strong> No wrapper, no double element. The
           component becomes a <em>behavior</em> you slot onto markup of your choosing.
         </p>
@@ -172,7 +172,7 @@ export default function AdvancedCompositionModule() {
         <h3 className="mt-6 mb-2 text-xl font-semibold">How it works under the hood: <code>cloneElement</code> and <code>Slot</code></h3>
         <p className="mb-4">
           The classic implementation uses <code>React.cloneElement</code>. The parent takes its single child element, clones it,
-          and <em>merges</em> its own props onto the clone — combining the two sets rather than overwriting:
+          and <em>merges</em> its own props onto the clone, combining the two sets rather than overwriting:
         </p>
         <pre><code>{`function Trigger({ asChild, children, ...triggerProps }) {
   if (asChild) {
@@ -194,22 +194,22 @@ export default function AdvancedCompositionModule() {
           A correct slot:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Composes event handlers</strong> — both the library&apos;s <code>onClick</code> and yours should fire, in order.</li>
-          <li><strong>Merges <code>className</code> and <code>style</code></strong> — concatenate, don&apos;t clobber.</li>
-          <li><strong>Forwards the ref</strong> — the library needs a ref to your element for focus/positioning, but if you also passed a ref it must reach you too (a merged ref).</li>
+          <li><strong>Composes event handlers</strong>, both the library&apos;s <code>onClick</code> and yours should fire, in order.</li>
+          <li><strong>Merges <code>className</code> and <code>style</code></strong>, concatenate, don&apos;t clobber.</li>
+          <li><strong>Forwards the ref</strong>, the library needs a ref to your element for focus/positioning, but if you also passed a ref it must reach you too (a merged ref).</li>
         </ul>
         <p className="mb-4">
           This is fiddly enough that Radix ships a primitive called <code>&lt;Slot&gt;</code> that does all of it correctly.{" "}
           <code>asChild</code> is implemented by rendering through <code>&lt;Slot&gt;</code> instead of a host element. You almost
-          never hand-roll the merge in production — but you absolutely should understand it, because it explains every &quot;why did my{" "}
+          never hand-roll the merge in production, but you absolutely should understand it, because it explains every &quot;why did my{" "}
           <code>onClick</code> stop firing&quot; or &quot;why is my <code>className</code> missing&quot; bug you&apos;ll hit with slotted components.
         </p>
         <Callout variant="insight" title="Say this in the interview, verbatim">
           <p>
             &quot;<code>asChild</code> (the slot pattern) tells a component to <em>not</em> render its own DOM element and instead merge
-            its props and behavior onto the single child element you pass it — typically via <code>cloneElement</code> or a{" "}
+            its props and behavior onto the single child element you pass it, typically via <code>cloneElement</code> or a{" "}
             <code>Slot</code> primitive. It eliminates wrapper elements and lets you bring your own markup while the library brings
-            the behavior and accessibility. The hard part is merging — event handlers must compose, <code>className</code>/
+            the behavior and accessibility. The hard part is merging, event handlers must compose, <code>className</code>/
             <code>style</code> must concatenate, and refs must be forwarded and merged.&quot;
           </p>
         </Callout>
@@ -217,7 +217,7 @@ export default function AdvancedCompositionModule() {
 
       {/* ───────────────────────── 4. POLYMORPHIC COMPONENTS ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Polymorphic components — the <code>as</code> prop</h2>
+        <h2 className="mb-4 text-2xl font-bold">Polymorphic components, the <code>as</code> prop</h2>
         <p className="mb-4">
           A close cousin of the slot pattern is the <strong>polymorphic component</strong>: one component that can render as
           different underlying elements, chosen by an <code>as</code> prop. You&apos;ve seen this in libraries like Chakra,
@@ -237,21 +237,21 @@ export default function AdvancedCompositionModule() {
 }`}</code></pre>
         <p className="mb-4">
           The <code>as</code> prop is renamed to <code>Component</code> (capitalized) on destructure, because JSX treats a
-          lowercase tag as a DOM element and a Capitalized identifier as a component/variable — so{" "}
+          lowercase tag as a DOM element and a Capitalized identifier as a component/variable, so{" "}
           <code>&lt;Component&gt;</code> renders whatever element or component string <code>as</code> held.
         </p>
         <p className="mb-4">
-          <strong><code>as</code> vs <code>asChild</code> — when does each fit?</strong> They solve overlapping problems from
+          <strong><code>as</code> vs <code>asChild</code>, when does each fit?</strong> They solve overlapping problems from
           opposite directions:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong><code>as</code></strong> — the component owns the children and styling; you only swap the <em>tag</em>. Great for
+            <strong><code>as</code></strong>, the component owns the children and styling; you only swap the <em>tag</em>. Great for
             primitives like <code>&lt;Text&gt;</code>/<code>&lt;Box&gt;</code> where the markup is trivial and you mainly care
             about semantics (<code>h1</code> vs <code>p</code>).
           </li>
           <li>
-            <strong><code>asChild</code></strong> — <em>you</em> own the child element entirely (your component, your props, your
+            <strong><code>asChild</code></strong>, <em>you</em> own the child element entirely (your component, your props, your
             children) and the parent merges behavior onto it. Great when the child is a rich, already-styled component you
             don&apos;t want the library to recreate.
           </li>
@@ -260,7 +260,7 @@ export default function AdvancedCompositionModule() {
           <p>
             Done right, a polymorphic component&apos;s props should change based on <code>as</code>: <code>as=&quot;a&quot;</code> should
             allow <code>href</code>; <code>as=&quot;button&quot;</code> should allow <code>type</code> but not <code>href</code>. Typing
-            this fully (with correct ref types per element) is genuinely hard — it&apos;s why libraries ship dedicated{" "}
+            this fully (with correct ref types per element) is genuinely hard, it&apos;s why libraries ship dedicated{" "}
             <code>PolymorphicComponentProps</code> helper types. If an interviewer asks &quot;what&apos;s the downside of the <code>as</code>{" "}
             prop,&quot; this is the answer: the runtime is trivial, the <em>types</em> are not.
           </p>
@@ -274,10 +274,10 @@ export default function AdvancedCompositionModule() {
           question="You write <Tooltip.Trigger asChild><MyButton /></Tooltip.Trigger>. What does asChild cause the library to do?"
           options={[
             {
-              label: "Skip rendering its own element and merge its trigger props/behavior onto MyButton — producing one element, not a wrapper",
+              label: "Skip rendering its own element and merge its trigger props/behavior onto MyButton, producing one element, not a wrapper",
               correct: true,
               explanation:
-                "Exactly. asChild means 'don't render your own element — take the props and behavior you'd have put on your element and merge them onto my single child.' The result is one element carrying both your markup and the library's behavior.",
+                "Exactly. asChild means 'don't render your own element, take the props and behavior you'd have put on your element and merge them onto my single child.' The result is one element carrying both your markup and the library's behavior.",
             },
             {
               label: "Render MyButton inside the library's own <button>, nesting two buttons",
@@ -287,7 +287,7 @@ export default function AdvancedCompositionModule() {
             {
               label: "Ignore MyButton and render the library's default trigger button styled like MyButton",
               explanation:
-                "No — asChild keeps YOUR element (MyButton). It doesn't recreate or restyle a default element; it merges behavior onto the one you passed.",
+                "No, asChild keeps YOUR element (MyButton). It doesn't recreate or restyle a default element; it merges behavior onto the one you passed.",
             },
             {
               label: "Throw, because asChild only accepts a string like a DOM tag name",
@@ -301,7 +301,7 @@ export default function AdvancedCompositionModule() {
           question="A correct Slot/asChild implementation must do something more than just spread its props onto the child. What is the critical extra step?"
           options={[
             {
-              label: "Merge overlapping props — compose both onClick handlers, concatenate className/style, and forward/merge refs — rather than letting one side clobber the other",
+              label: "Merge overlapping props, compose both onClick handlers, concatenate className/style, and forward/merge refs, rather than letting one side clobber the other",
               correct: true,
               explanation:
                 "Right. Both the library and the child may define onClick, className, style, and ref. A naive spread silently drops one side. Slot composes handlers, concatenates className/style, and merges refs so both the behavior and your markup survive.",
@@ -319,7 +319,7 @@ export default function AdvancedCompositionModule() {
             {
               label: "Call the child as a function instead of rendering it as JSX",
               explanation:
-                "That's the render-props pattern, not slotting. asChild clones/merges onto an element child via cloneElement or Slot — it doesn't call children as a function.",
+                "That's the render-props pattern, not slotting. asChild clones/merges onto an element child via cloneElement or Slot, it doesn't call children as a function.",
             },
           ]}
         />
@@ -331,8 +331,8 @@ export default function AdvancedCompositionModule() {
         <p className="mb-4">
           You already met this distinction for <em>form inputs</em> in Phase 5: a controlled input takes <code>value</code> +{" "}
           <code>onChange</code> (you own the state), while an uncontrolled input takes <code>defaultValue</code> (the DOM owns the
-          state). Well-designed components — Radix&apos;s <code>&lt;Tabs&gt;</code>, <code>&lt;Accordion&gt;</code>,{" "}
-          <code>&lt;Dialog&gt;</code> — expose the <em>exact same dual API</em> for their own state. This is a deliberate design
+          state). Well-designed components, Radix&apos;s <code>&lt;Tabs&gt;</code>, <code>&lt;Accordion&gt;</code>,{" "}
+          <code>&lt;Dialog&gt;</code>, expose the <em>exact same dual API</em> for their own state. This is a deliberate design
           convention, not an accident.
         </p>
         <pre><code>{`// UNCONTROLLED — the component owns its open state internally.
@@ -354,13 +354,13 @@ const [tab, setTab] = useState("account");
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>Uncontrolled:</strong> a <code>defaultValue</code> (or <code>defaultOpen</code>) prop — a <em>starting</em>{" "}
+            <strong>Uncontrolled:</strong> a <code>defaultValue</code> (or <code>defaultOpen</code>) prop, a <em>starting</em>{" "}
             value the component then manages itself. You read it once at mount; changing it later does nothing.
           </li>
           <li>
             <strong>Controlled:</strong> a <code>value</code> (or <code>open</code>) prop plus a change callback named{" "}
             <code>onValueChange</code> (or <code>onOpenChange</code>). The component is now a pure reflection of <em>your</em> state
-            and never updates on its own — it just <em>requests</em> changes through the callback.
+            and never updates on its own, it just <em>requests</em> changes through the callback.
           </li>
         </ul>
         <p className="mb-4">
@@ -387,21 +387,21 @@ const [tab, setTab] = useState("account");
         </p>
         <Callout variant="info" title="Why offer both at all?">
           <p>
-            <strong>Uncontrolled</strong> is the ergonomic default — most callers just want a working tabs widget and don&apos;t care
+            <strong>Uncontrolled</strong> is the ergonomic default, most callers just want a working tabs widget and don&apos;t care
             to own its state. <strong>Controlled</strong> is the escape hatch for when you <em>do</em> need to drive it: sync the
             active tab to the URL, open a dialog from a keyboard shortcut, or persist the selection. Offering both means the simple
-            case stays simple and the complex case stays <em>possible</em> — without two different components.
+            case stays simple and the complex case stays <em>possible</em>, without two different components.
           </p>
         </Callout>
       </section>
 
       {/* ───────────────────────── 6. HEADLESS COMPONENTS ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Headless components — all logic, zero styling</h2>
+        <h2 className="mb-4 text-2xl font-bold">Headless components, all logic, zero styling</h2>
         <p className="mb-4">
           Pull the previous patterns together and you arrive at the idea that defines this whole generation of libraries: the{" "}
-          <strong>headless component</strong>. A headless component provides <em>behavior, state, and accessibility</em> — keyboard
-          navigation, focus management, ARIA roles and attributes, the controlled/uncontrolled logic — and provides{" "}
+          <strong>headless component</strong>. A headless component provides <em>behavior, state, and accessibility</em>, keyboard
+          navigation, focus management, ARIA roles and attributes, the controlled/uncontrolled logic, and provides{" "}
           <strong>no styling and (often) no specific markup</strong>. You bring the look; it brings the brains.
         </p>
         <p className="mb-4">
@@ -435,23 +435,23 @@ function FilterMenu() {
           Look at what you did <em>not</em> write: <code>role=&quot;menu&quot;</code>, <code>role=&quot;menuitem&quot;</code>,{" "}
           <code>aria-expanded</code>, <code>aria-activedescendant</code>, the arrow-key handler that moves a roving{" "}
           <code>tabindex</code>, the <code>Escape</code>-to-close and click-outside logic, the focus return to the trigger on
-          close. That&apos;s <em>dozens</em> of WAI-ARIA details that are devastatingly easy to get subtly wrong — and the library
+          close. That&apos;s <em>dozens</em> of WAI-ARIA details that are devastatingly easy to get subtly wrong, and the library
           handles all of them. You wrote only <code>className</code>s.
         </p>
         <p className="mb-4">
           This is the natural endpoint of every pattern in this module. The headless component uses <strong>compound
-          components</strong> (<code>Menu.Trigger</code>, <code>Menu.Items</code>, <code>Menu.Item</code> sharing state via context
-          — straight from Phase 3), <strong><code>asChild</code> slots</strong> so its parts merge onto your markup, and the{" "}
+          components</strong> (<code>Menu.Trigger</code>, <code>Menu.Items</code>, <code>Menu.Item</code> sharing state via context,
+          straight from Phase 3), <strong><code>asChild</code> slots</strong> so its parts merge onto your markup, and the{" "}
           <strong>controlled/uncontrolled</strong> API so you can drive its open state when you need to. Composition is the thread
           that ties them together.
         </p>
         <Callout variant="insight" title="Headless vs styled component libraries">
           <p>
             This is why the ecosystem split in two. <strong>Styled</strong> libraries (Material UI, Ant Design) give you{" "}
-            <em>behavior + their look</em> — fast to start, but fighting their styles to match <em>your</em> brand is the
-            recurring pain. <strong>Headless</strong> libraries (Radix, Reach, Headless UI) give you <em>behavior only</em> — a bit
+            <em>behavior + their look</em>, fast to start, but fighting their styles to match <em>your</em> brand is the
+            recurring pain. <strong>Headless</strong> libraries (Radix, Reach, Headless UI) give you <em>behavior only</em>, a bit
             more work up front to style, but zero style-override battles and pixel-perfect fit to your design system. Tools like{" "}
-            shadcn/ui are literally &quot;headless Radix + pre-written Tailwind styles you copy into your repo&quot; — the best of both.
+            shadcn/ui are literally &quot;headless Radix + pre-written Tailwind styles you copy into your repo&quot;, the best of both.
           </p>
         </Callout>
       </section>
@@ -463,25 +463,25 @@ function FilterMenu() {
           question="You have a richly-styled <FancyButton> component and you want a library's dialog trigger to use it as the trigger, with no extra wrapper element. Which pattern fits, and why?"
           options={[
             {
-              label: "asChild — you own the whole child element (FancyButton, its props and children), and the trigger merges its behavior onto it",
+              label: "asChild, you own the whole child element (FancyButton, its props and children), and the trigger merges its behavior onto it",
               correct: true,
               explanation:
-                "Correct. asChild is for when YOU own a complete child element and want the parent to merge behavior onto it. The `as` prop is for swapping the tag of a component that owns its own children/styling — not for slotting your own rich component in.",
+                "Correct. asChild is for when YOU own a complete child element and want the parent to merge behavior onto it. The `as` prop is for swapping the tag of a component that owns its own children/styling, not for slotting your own rich component in.",
             },
             {
-              label: "The `as` prop — pass as={FancyButton} so the trigger renders FancyButton instead of a button",
+              label: "The `as` prop, pass as={FancyButton} so the trigger renders FancyButton instead of a button",
               explanation:
                 "`as` swaps the underlying tag/component a primitive renders, but the primitive still owns the children and props. For slotting in your own complete, styled element with its own children, asChild is the right tool.",
             },
             {
-              label: "Neither — you must fork the library to use a custom trigger element",
+              label: "Neither, you must fork the library to use a custom trigger element",
               explanation:
                 "No forking needed. asChild exists precisely to let you bring your own element while the library brings the behavior.",
             },
             {
               label: "Render FancyButton inside the trigger normally; the wrapper is unavoidable",
               explanation:
-                "The wrapper IS avoidable — that's the entire point of asChild. Rendering normally gives you the nested-element wrapper you're trying to eliminate.",
+                "The wrapper IS avoidable, that's the entire point of asChild. Rendering normally gives you the nested-element wrapper you're trying to eliminate.",
             },
           ]}
         />
@@ -547,15 +547,15 @@ function FilterMenu() {
   </Select.Content>
 </Select>`}</code></pre>
         <p className="mb-4">
-          The configuration API grows without bound and still can&apos;t cover the long tail. The compositional API stays small —
-          a handful of parts — yet covers cases the author never imagined, because <em>you</em> arrange the parts and bring your
+          The configuration API grows without bound and still can&apos;t cover the long tail. The compositional API stays small,
+          a handful of parts, yet covers cases the author never imagined, because <em>you</em> arrange the parts and bring your
           own elements. That&apos;s the payoff of <code>children</code>, compound components, slots, and polymorphism working
           together. It&apos;s the exact lesson from Phase 3, now operating at the scale of an entire design system.
         </p>
-        <Callout variant="warn" title="Composition isn't free — know the cost">
+        <Callout variant="warn" title="Composition isn't free, know the cost">
           <p>
             Compositional APIs ask more of the caller (you must assemble parts, not just set props) and are harder to <em>fully</em>{" "}
-            type. For a tiny internal widget used in one place, a couple of props is genuinely simpler — don&apos;t cargo-cult a
+            type. For a tiny internal widget used in one place, a couple of props is genuinely simpler, don&apos;t cargo-cult a
             compound/slot API onto something that doesn&apos;t need it. The pattern earns its keep when a component is <em>reused
             widely</em> with <em>varied</em> markup needs. That&apos;s exactly the situation a design-system library is in, and exactly
             why they all converged here.
@@ -570,12 +570,12 @@ function FilterMenu() {
           <ul className="list-disc space-y-2 pl-6">
             <li>
               <strong>Slot / <code>asChild</code>.</strong> A component renders <em>no</em> element of its own and merges its props
-              and behavior onto the single child you pass — via <code>cloneElement</code> or a <code>Slot</code> primitive. The hard
+              and behavior onto the single child you pass, via <code>cloneElement</code> or a <code>Slot</code> primitive. The hard
               part is the merge: compose <code>onClick</code> handlers, concatenate <code>className</code>/<code>style</code>,
               forward and merge refs.
             </li>
             <li>
-              <strong>Polymorphism (<code>as</code>).</strong> One component renders as different tags via an <code>as</code> prop —
+              <strong>Polymorphism (<code>as</code>).</strong> One component renders as different tags via an <code>as</code> prop,
               trivial at runtime, hard to type fully.
             </li>
             <li>
@@ -584,7 +584,7 @@ function FilterMenu() {
               <em>not</em> <code>undefined</code>; never switch modes.
             </li>
             <li>
-              <strong>Headless.</strong> Behavior + state + accessibility, zero styling — you bring the markup. Logic/a11y is hard
+              <strong>Headless.</strong> Behavior + state + accessibility, zero styling, you bring the markup. Logic/a11y is hard
               and universal; styling is easy and specific.
             </li>
             <li>
@@ -597,19 +597,19 @@ function FilterMenu() {
 
       {/* ───────────────────────── 9. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — build a headless <code>&lt;Menu&gt;</code></h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, build a headless <code>&lt;Menu&gt;</code></h2>
         <p className="mb-4">
           You&apos;ll build a headless <code>&lt;Menu&gt;</code> from scratch: a trigger plus a list of items, with keyboard
-          navigation, a controlled/uncontrolled open API, and an <code>asChild</code> slot so the trigger can be any element — and
+          navigation, a controlled/uncontrolled open API, and an <code>asChild</code> slot so the trigger can be any element, and
           <strong> no styling baked in</strong>. By building it yourself you&apos;ll understand what Radix is doing for you every day.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
             <strong>Set up the compound component + context.</strong> Create <code>&lt;Menu&gt;</code>,{" "}
             <code>&lt;Menu.Trigger&gt;</code>, <code>&lt;Menu.Items&gt;</code>, and <code>&lt;Menu.Item&gt;</code>. <code>Menu</code>{" "}
-            provides a context holding the open state and a way to set it; the parts read it via <code>useContext</code> — exactly
+            provides a context holding the open state and a way to set it; the parts read it via <code>useContext</code>, exactly
             the compound-component pattern from <Link href="/courses/frontend/modules/composition-patterns" className="text-cyan-600 hover:underline">Phase 3</Link>.
-            Render <em>no</em> styling — only structural elements and ARIA.
+            Render <em>no</em> styling, only structural elements and ARIA.
           </li>
           <li>
             <strong>Make the open state controllable.</strong> Write the <code>useControllableState</code> helper from the
@@ -633,11 +633,11 @@ function FilterMenu() {
           </li>
           <li>
             <strong>Prove the &quot;no styling&quot; claim.</strong> Render the same <code>&lt;Menu&gt;</code> twice with completely
-            different <code>className</code>s — once looking like a dropdown, once like a sidebar list. Same behavior, different
+            different <code>className</code>s, once looking like a dropdown, once like a sidebar list. Same behavior, different
             look, zero changes to the <code>Menu</code> internals. That&apos;s headless working as intended.
           </li>
           <li>
-            <strong>Stretch — add click-outside and a polymorphic item.</strong> Close the menu when the user clicks outside it
+            <strong>Stretch, add click-outside and a polymorphic item.</strong> Close the menu when the user clicks outside it
             (a <code>useEffect</code> with a document listener, cleaned up properly). Then give <code>&lt;Menu.Item&gt;</code> an{" "}
             <code>as</code> prop so an item can render as a <code>&lt;a&gt;</code> link or a <code>&lt;button&gt;</code> while
             keeping its menu behavior.
@@ -647,7 +647,7 @@ function FilterMenu() {
           <p>
             If you come from server work, headless components are the front-end version of a well-designed <em>library vs
             framework</em> split. A framework (styled component lib) calls your code and dictates the shape; a library (headless)
-            you call and assemble yourself. The slot/<code>asChild</code> merge is dependency-injection-flavored — you inject your
+            you call and assemble yourself. The slot/<code>asChild</code> merge is dependency-injection-flavored, you inject your
             element and the component decorates it with behavior, rather than the component constructing the element itself. Same
             inversion-of-control instinct, applied to UI.
           </p>
@@ -669,7 +669,7 @@ function FilterMenu() {
             {
               label: "It provides fully-styled components matching Material Design; you override CSS variables to theme them",
               explanation:
-                "That describes a STYLED library (like MUI). Headless libraries ship no styling at all — overriding their look isn't needed because there's nothing to override.",
+                "That describes a STYLED library (like MUI). Headless libraries ship no styling at all, overriding their look isn't needed because there's nothing to override.",
             },
             {
               label: "It provides the markup and styling; you provide the accessibility and keyboard handling",
@@ -696,17 +696,17 @@ function FilterMenu() {
             {
               label: "Compositional APIs are always simpler for every use case, including tiny one-off widgets",
               explanation:
-                "Not always — for a tiny single-use widget, a couple of props is genuinely simpler. Composition earns its keep when a component is reused widely with varied markup needs, which is exactly a design system's situation.",
+                "Not always, for a tiny single-use widget, a couple of props is genuinely simpler. Composition earns its keep when a component is reused widely with varied markup needs, which is exactly a design system's situation.",
             },
             {
               label: "Boolean props are impossible to type in TypeScript, so they must be avoided",
               explanation:
-                "Booleans type fine. The problem isn't typeability — it's combinatorial explosion and inability to anticipate every need. (Ironically, polymorphic/composition APIs are often HARDER to type fully.)",
+                "Booleans type fine. The problem isn't typeability, it's combinatorial explosion and inability to anticipate every need. (Ironically, polymorphic/composition APIs are often HARDER to type fully.)",
             },
             {
               label: "Composition removes the need for React context entirely",
               explanation:
-                "The opposite — compound components typically RELY on context to share state between the parts (Menu sharing open state with Menu.Trigger/Menu.Items). Composition uses context, it doesn't remove it.",
+                "The opposite, compound components typically RELY on context to share state between the parts (Menu sharing open state with Menu.Trigger/Menu.Items). Composition uses context, it doesn't remove it.",
             },
           ]}
         />

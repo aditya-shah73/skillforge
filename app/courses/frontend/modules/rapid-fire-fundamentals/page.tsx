@@ -35,11 +35,11 @@ export default function RapidFireFundamentalsModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Rapid-fire fundamentals — the 60-second answers
+          Rapid-fire fundamentals, the 60-second answers
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          The questions that get fired in the first ten minutes — closures, <code>this</code>, the event loop,
-          reconciliation, why keys, controlled vs uncontrolled, server cache vs state, Server vs Client Components —
+          The questions that get fired in the first ten minutes, closures, <code>this</code>, the event loop,
+          reconciliation, why keys, controlled vs uncontrolled, server cache vs state, Server vs Client Components,
           each with a tight, confident 60-second answer drawn straight from the course.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -50,27 +50,27 @@ export default function RapidFireFundamentalsModule() {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">Muscle memory, not knowledge</h2>
         <p className="mb-4">
-          A jazz musician doesn&apos;t <em>think</em> about which note comes next in a scale — their fingers already know.
+          A jazz musician doesn&apos;t <em>think</em> about which note comes next in a scale, their fingers already know.
           They drilled it slowly, a thousand times, until the knowledge dropped out of conscious thought and into reflex.
           When they improvise on stage, the scales are <em>free</em>; all their attention goes to the music.
         </p>
         <p className="mb-4">
           Rapid-fire fundamentals are the scales. &quot;What&apos;s a closure?&quot; &quot;Why does a Promise resolve before a
           <code> setTimeout(0)</code>?&quot; &quot;What&apos;s the difference between <code>==</code> and <code>===</code>?&quot; You
-          already <em>understand</em> these — you covered them across nine phases. But understanding and answering crisply
+          already <em>understand</em> these, you covered them across nine phases. But understanding and answering crisply
           under pressure are different skills. In the first ten minutes of an interview, a long, hedging, &quot;well, it
           depends&quot; answer reads as <em>uncertainty</em>, even when you know the material cold.
         </p>
         <p className="mb-4">
           This module is a drill, not a lecture. Every item below is framed the same way: <strong>they ask X → you say
           Y</strong>, followed by a one-line <em>why</em> that proves you understand the mechanism rather than memorized a
-          slogan. The goal is to make each answer <strong>reflexive</strong> — so that when it&apos;s fired at you, the right
+          slogan. The goal is to make each answer <strong>reflexive</strong>, so that when it&apos;s fired at you, the right
           first sentence is already on your lips and your real thinking goes to the follow-up.
         </p>
         <Callout variant="info" title="How to read this module">
           <p>
             Don&apos;t skim it like reference docs. Read each answer out loud, then close the page and say it again from
-            memory in one breath. The phrasing is deliberately tight — that&apos;s the &quot;load-bearing sentence&quot; you&apos;re
+            memory in one breath. The phrasing is deliberately tight, that&apos;s the &quot;load-bearing sentence&quot; you&apos;re
             drilling toward. If you can&apos;t reproduce the <em>why</em>, you don&apos;t own the answer yet.
           </p>
         </Callout>
@@ -84,7 +84,7 @@ export default function RapidFireFundamentalsModule() {
           gotcha. Here is the whole thing in one tight unit:
         </p>
         <p className="mb-4">
-          <strong>They ask:</strong> &quot;JavaScript is single-threaded — how does it do async?&quot;<br />
+          <strong>They ask:</strong> &quot;JavaScript is single-threaded, how does it do async?&quot;<br />
           <strong>You say:</strong> &quot;The engine runs one call stack. When it&apos;s empty, the event loop pulls work from
           queues. There are two: the <em>microtask</em> queue (Promise callbacks, <code>queueMicrotask</code>) and the
           <em> macrotask</em> queue (<code>setTimeout</code>, I/O, UI events). After every task, the loop drains the
@@ -108,7 +108,7 @@ console.log("4: sync");
         <Callout variant="insight" title="The one-line why">
           <p>
             &quot;Microtasks always run to exhaustion <em>between</em> macrotasks, so a Promise callback jumps ahead of an
-            already-queued <code>setTimeout(0)</code>. <code>setTimeout(0)</code> doesn&apos;t mean &apos;now&apos; — it means
+            already-queued <code>setTimeout(0)</code>. <code>setTimeout(0)</code> doesn&apos;t mean &apos;now&apos;, it means
             &apos;after the current task and all pending microtasks.&apos;&quot;
           </p>
         </Callout>
@@ -132,7 +132,7 @@ const next = counter();
 next(); // 1
 next(); // 2  -> \`count\` survived because the closure references it`}</code></pre>
         <p className="mb-4">
-          <strong>The classic gotcha</strong> — <code>var</code> in a loop — is really a closure question wearing a scope
+          <strong>The classic gotcha</strong>, <code>var</code> in a loop, is really a closure question wearing a scope
           costume:
         </p>
         <pre><code>{`// BROKEN: var has one shared binding; all three closures see the final i
@@ -154,17 +154,17 @@ for (let i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 0, 1, 2`}</code
         <h2 className="mb-4 text-2xl font-bold"><code>this</code> binding rules</h2>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;How is <code>this</code> determined?&quot;<br />
-          <strong>You say:</strong> &quot;By <em>how the function is called</em>, not where it&apos;s defined — with one exception.
+          <strong>You say:</strong> &quot;By <em>how the function is called</em>, not where it&apos;s defined, with one exception.
           There are four rules, checked in priority order:&quot;
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>new</strong> — <code>new Foo()</code> binds <code>this</code> to the freshly created object.</li>
-          <li><strong>Explicit</strong> — <code>call</code>, <code>apply</code>, <code>bind</code> set <code>this</code> to the object you pass.</li>
-          <li><strong>Implicit</strong> — <code>obj.method()</code> binds <code>this</code> to <code>obj</code> (the thing left of the dot).</li>
-          <li><strong>Default</strong> — a plain call is <code>undefined</code> in strict mode (the global object otherwise).</li>
+          <li><strong>new</strong>, <code>new Foo()</code> binds <code>this</code> to the freshly created object.</li>
+          <li><strong>Explicit</strong>, <code>call</code>, <code>apply</code>, <code>bind</code> set <code>this</code> to the object you pass.</li>
+          <li><strong>Implicit</strong>, <code>obj.method()</code> binds <code>this</code> to <code>obj</code> (the thing left of the dot).</li>
+          <li><strong>Default</strong>, a plain call is <code>undefined</code> in strict mode (the global object otherwise).</li>
         </ul>
         <p className="mb-4">
-          <strong>The exception that&apos;s really a follow-up:</strong> arrow functions. They have no own <code>this</code> —
+          <strong>The exception that&apos;s really a follow-up:</strong> arrow functions. They have no own <code>this</code>,
           they capture it lexically from the enclosing scope at definition time, which is exactly why they&apos;re the fix for
           &quot;I lost <code>this</code> inside a callback.&quot;
         </p>
@@ -201,7 +201,7 @@ for (let i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 0, 1, 2`}</code
         <p className="mb-4">
           <strong>You say:</strong> &quot;Declarations are processed before code runs. <code>var</code> is hoisted and
           initialized to <code>undefined</code>; function declarations are fully hoisted. <code>let</code> and
-          <code> const</code> are hoisted too, but <em>not initialized</em> — they sit in the Temporal Dead Zone, so
+          <code> const</code> are hoisted too, but <em>not initialized</em>, they sit in the Temporal Dead Zone, so
           touching them before the declaration line throws a <code>ReferenceError</code>.&quot; <em>Why:</em> the TDZ turns a
           silent <code>undefined</code> bug into a loud, fail-fast error.
         </p>
@@ -215,8 +215,8 @@ let b = 2;`}</code></pre>
         <p className="mb-4">
           <strong>You say:</strong> &quot;Every object has a hidden link (<code>[[Prototype]]</code>) to another object. When
           you read a property that isn&apos;t on the object, the engine walks up the prototype chain until it finds it or hits
-          <code> null</code>. <code>class</code> is sugar over this — methods live on the prototype, shared by all
-          instances, not copied onto each one.&quot; <em>Why:</em> it&apos;s delegation, not copying — one shared method object
+          <code> null</code>. <code>class</code> is sugar over this, methods live on the prototype, shared by all
+          instances, not copied onto each one.&quot; <em>Why:</em> it&apos;s delegation, not copying, one shared method object
           backs every instance.
         </p>
 
@@ -224,7 +224,7 @@ let b = 2;`}</code></pre>
         <p className="mb-4">
           <strong>You say:</strong> &quot;<code>var</code> is function-scoped and hoisted; <code>let</code> and
           <code> const</code> are block-scoped and TDZ-guarded. <code>const</code> blocks <em>reassignment</em>, not
-          mutation — a <code>const</code> object can still have its properties changed. Default to <code>const</code>,
+          mutation, a <code>const</code> object can still have its properties changed. Default to <code>const</code>,
           reach for <code>let</code> when you must reassign, and never use <code>var</code>.&quot; <em>Why:</em> block scope
           plus &quot;const by default&quot; eliminates a whole class of accidental-mutation and leaked-variable bugs.
         </p>
@@ -242,7 +242,7 @@ let b = 2;`}</code></pre>
         <h2 className="mb-4 text-2xl font-bold">Debounce vs throttle</h2>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;What&apos;s the difference between debounce and throttle?&quot;<br />
-          <strong>You say:</strong> &quot;Both limit how often a function runs. <em>Debounce</em> waits for a pause — it only
+          <strong>You say:</strong> &quot;Both limit how often a function runs. <em>Debounce</em> waits for a pause, it only
           fires after the events <em>stop</em> for N ms (great for a search box: run when the user stops typing).
           <em> Throttle</em> fires at most once per N ms <em>during</em> a stream of events (great for scroll or resize:
           run on a steady cadence while it&apos;s happening).&quot;
@@ -280,18 +280,18 @@ function throttle(fn, ms) {
           question="A resolved Promise's .then() and a setTimeout(fn, 0) are both pending. Which runs first, and why?"
           options={[
             {
-              label: "The Promise callback — microtasks are drained completely between macrotasks, so it jumps ahead of the timer",
+              label: "The Promise callback, microtasks are drained completely between macrotasks, so it jumps ahead of the timer",
               correct: true,
               explanation:
                 "Right. After the current task and once the stack is empty, the loop empties the ENTIRE microtask queue before pulling the next macrotask. setTimeout(0) is a macrotask, so the microtask wins.",
             },
             {
-              label: "The setTimeout callback — it was scheduled first, so it runs first (FIFO)",
+              label: "The setTimeout callback, it was scheduled first, so it runs first (FIFO)",
               explanation:
                 "Scheduling order across queues doesn't decide this. Microtasks always run between macrotasks regardless of when the macrotask was queued, so the Promise callback runs first.",
             },
             {
-              label: "Whichever the engine picks — ordering between the two queues is non-deterministic",
+              label: "Whichever the engine picks, ordering between the two queues is non-deterministic",
               explanation:
                 "It's fully deterministic: microtask queue drains to exhaustion before the next macrotask. There's no randomness here.",
             },
@@ -302,7 +302,7 @@ function throttle(fn, ms) {
           question="A for loop uses `var i` and schedules a setTimeout logging `i` each iteration; it prints the final value three times. What's the fix and why?"
           options={[
             {
-              label: "Use `let i` — it creates a fresh block-scoped binding per iteration, so each closure captures a different i",
+              label: "Use `let i`, it creates a fresh block-scoped binding per iteration, so each closure captures a different i",
               correct: true,
               explanation:
                 "Exactly. var has one function-scoped binding shared by all iterations, so every closure sees the final value. let rebinds per iteration, giving each closure its own i.",
@@ -310,7 +310,7 @@ function throttle(fn, ms) {
             {
               label: "Wrap the setTimeout in another setTimeout so the values are read later",
               explanation:
-                "Delaying further doesn't help — all the closures still reference the same single var binding, which holds the final value by the time any callback runs.",
+                "Delaying further doesn't help, all the closures still reference the same single var binding, which holds the final value by the time any callback runs.",
             },
             {
               label: "Closures don't capture loop variables at all; this behavior is a bug in the engine",
@@ -327,7 +327,7 @@ function throttle(fn, ms) {
         <p className="mb-4">
           <strong>They ask:</strong> &quot;Explain the box model.&quot;<br />
           <strong>You say:</strong> &quot;Every element is a box: content, then padding, then border, then margin. By
-          default <code>width</code> sizes only the content, so padding and border get <em>added</em> on top — which is
+          default <code>width</code> sizes only the content, so padding and border get <em>added</em> on top, which is
           why widths surprise people. <code>box-sizing: border-box</code> makes <code>width</code> include padding and
           border, so the box is exactly the size you asked for. Most resets set it globally.&quot;
         </p>
@@ -339,13 +339,13 @@ function throttle(fn, ms) {
           <strong>They ask:</strong> &quot;How does specificity work?&quot;<br />
           <strong>You say:</strong> &quot;It&apos;s a tuple compared left to right: inline styles, then IDs, then classes/
           attributes/pseudo-classes, then elements/pseudo-elements. Higher group wins regardless of source order; ties
-          break by who comes last. <code>!important</code> overrides the whole calculation — which is exactly why you
+          break by who comes last. <code>!important</code> overrides the whole calculation, which is exactly why you
           avoid it.&quot; <em>Why:</em> it&apos;s a weighted count per category, not a flat score, so one ID beats any number of
           classes.
         </p>
         <Callout variant="warn" title="The specificity trap">
           <p>
-            &quot;Does <code>#id</code> beat ten classes?&quot; Yes — specificity compares the ID column <em>before</em> the
+            &quot;Does <code>#id</code> beat ten classes?&quot; Yes, specificity compares the ID column <em>before</em> the
             class column, so a single ID outranks any number of classes. That&apos;s why ID selectors are hard to override
             and why component CSS leans on classes.
           </p>
@@ -357,10 +357,10 @@ function throttle(fn, ms) {
         <h2 className="mb-4 text-2xl font-bold">Flexbox vs grid &amp; the stacking context</h2>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;Flexbox or grid?&quot;<br />
-          <strong>You say:</strong> &quot;Flexbox is <em>one-dimensional</em> — lay items along a single axis (a nav bar, a
-          toolbar) and let them distribute space. Grid is <em>two-dimensional</em> — rows and columns at once (a page
+          <strong>You say:</strong> &quot;Flexbox is <em>one-dimensional</em>, lay items along a single axis (a nav bar, a
+          toolbar) and let them distribute space. Grid is <em>two-dimensional</em>, rows and columns at once (a page
           layout, a card gallery). Rule of thumb: content-driven distribution along one line → flex; a defined layout
-          across two axes → grid. They compose — grid for the page, flex inside a cell.&quot;
+          across two axes → grid. They compose, grid for the page, flex inside a cell.&quot;
         </p>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;Why isn&apos;t my <code>z-index: 9999</code> working?&quot;<br />
@@ -372,7 +372,7 @@ function throttle(fn, ms) {
         <Callout variant="insight" title="The one-line why">
           <p>
             &quot;<code>z-index</code> is relative, not global. A child can never escape its parent&apos;s stacking context, so
-            the fix is usually to move the element out of the trapping ancestor — or portal it to the body — not to crank
+            the fix is usually to move the element out of the trapping ancestor, or portal it to the body, not to crank
             the number higher.&quot;
           </p>
         </Callout>
@@ -383,8 +383,8 @@ function throttle(fn, ms) {
         <h2 className="mb-4 text-2xl font-bold">Event delegation, bubbling &amp; capturing</h2>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;Walk me through how a click event travels.&quot;<br />
-          <strong>You say:</strong> &quot;Three phases. <em>Capture</em> — the event travels from the document <em>down</em> to
-          the target. <em>Target</em> — it reaches the clicked element. <em>Bubble</em> — it travels back <em>up</em> to
+          <strong>You say:</strong> &quot;Three phases. <em>Capture</em>, the event travels from the document <em>down</em> to
+          the target. <em>Target</em>, it reaches the clicked element. <em>Bubble</em>, it travels back <em>up</em> to
           the document. By default handlers run on the bubble phase; pass <code>{`{ capture: true }`}</code> to run during
           capture instead.&quot;
         </p>
@@ -438,20 +438,20 @@ list.addEventListener("click", (e) => {
           question="You attach one click listener to a <ul> to handle clicks on its <li> children, including ones added later. Which phase makes this work?"
           options={[
             {
-              label: "Bubbling — the click on a child bubbles up to the <ul>, so one parent handler sees events from any child",
+              label: "Bubbling, the click on a child bubbles up to the <ul>, so one parent handler sees events from any child",
               correct: true,
               explanation:
                 "Exactly. Delegation relies on the bubble phase carrying the event up to the parent. Reading event.target tells you which child was clicked, and it works for children added after the listener was attached.",
             },
             {
-              label: "Capturing — the parent intercepts the event on the way down before it reaches the child",
+              label: "Capturing, the parent intercepts the event on the way down before it reaches the child",
               explanation:
                 "Delegation works on the default bubble phase. Capture travels downward and isn't what makes a single parent handler serve many children here.",
             },
             {
               label: "It only works if you call addEventListener on each <li> individually",
               explanation:
-                "That's the opposite of delegation — and it wouldn't cover children added later. The whole point is one listener on the parent via bubbling.",
+                "That's the opposite of delegation, and it wouldn't cover children added later. The whole point is one listener on the parent via bubbling.",
             },
           ]}
         />
@@ -467,10 +467,10 @@ list.addEventListener("click", (e) => {
           For lists it matches children by <code>key</code>.&quot;
         </p>
         <p className="mb-4">
-          <strong>They ask:</strong> &quot;Why do list items need a stable <code>key</code> — and why not the array index?&quot;<br />
+          <strong>They ask:</strong> &quot;Why do list items need a stable <code>key</code>, and why not the array index?&quot;<br />
           <strong>You say:</strong> &quot;The key tells React <em>which item is which</em> across renders, so it can move and
           reuse DOM and component state instead of rebuilding. An index key breaks the moment the list reorders or you
-          insert/remove in the middle: the key now points at a <em>different</em> item, so React reuses the wrong state —
+          insert/remove in the middle: the key now points at a <em>different</em> item, so React reuses the wrong state,
           inputs show the wrong values, the wrong row animates.&quot;
         </p>
         <pre><code>{`// BAD: index as key — reorders/inserts misattach state
@@ -493,14 +493,14 @@ list.addEventListener("click", (e) => {
         <p className="mb-4">
           <strong>They ask:</strong> &quot;Controlled or uncontrolled inputs?&quot;<br />
           <strong>You say:</strong> &quot;A <em>controlled</em> input&apos;s value is driven by React state (<code>value</code> +
-          <code> onChange</code>) — React is the single source of truth, which you want for validation, formatting, or
+          <code> onChange</code>), React is the single source of truth, which you want for validation, formatting, or
           reading the value as you type. An <em>uncontrolled</em> input keeps its own DOM state and you read it with a
-          <code> ref</code> when needed — simpler for plain forms. Default to controlled; reach for uncontrolled to avoid
+          <code> ref</code> when needed, simpler for plain forms. Default to controlled; reach for uncontrolled to avoid
           re-rendering on every keystroke.&quot;
         </p>
         <p className="mb-4">
           <strong>They ask:</strong> &quot;What are the rules for <code>useEffect</code> dependencies and cleanup?&quot;<br />
-          <strong>You say:</strong> &quot;The dependency array must list <em>every</em> reactive value the effect reads — props,
+          <strong>You say:</strong> &quot;The dependency array must list <em>every</em> reactive value the effect reads, props,
           state, anything from render. Empty array → run once after mount; omitted array → run after every render. Return
           a cleanup function to undo what the effect set up (subscriptions, timers, requests); React runs it before the
           next effect and on unmount.&quot;
@@ -527,14 +527,14 @@ list.addEventListener("click", (e) => {
           <strong>You say:</strong> &quot;CORS is a <em>browser</em> security rule: a page can&apos;t read responses from a
           different origin unless that server opts in with <code>Access-Control-Allow-Origin</code> headers. For unsafe
           methods/headers the browser first sends a <em>preflight</em> <code>OPTIONS</code> request to ask permission.
-          Crucially it&apos;s enforced by the browser, not the server — the request often reaches the server, the browser
+          Crucially it&apos;s enforced by the browser, not the server, the request often reaches the server, the browser
           just blocks the response from your JS.&quot; <em>Why:</em> it protects users from one site silently reading another
           site&apos;s authenticated data.
         </p>
 
         <h3 className="mt-6 mb-2 text-lg font-semibold">HTTP caching headers</h3>
         <p className="mb-4">
-          <strong>You say:</strong> &quot;<code>Cache-Control</code> drives it — <code>max-age</code> sets how long a response
+          <strong>You say:</strong> &quot;<code>Cache-Control</code> drives it, <code>max-age</code> sets how long a response
           is fresh; <code>no-cache</code> means &apos;store it but revalidate before use&apos;; <code>no-store</code> means
           &apos;never keep it.&apos; When freshness expires, the browser revalidates with <code>ETag</code>/
           <code> If-None-Match</code>, and the server can answer <code>304 Not Modified</code> to skip resending the
@@ -545,15 +545,15 @@ list.addEventListener("click", (e) => {
         <h3 className="mt-6 mb-2 text-lg font-semibold">REST status codes</h3>
         <p className="mb-4"><strong>You say:</strong> &quot;The first digit is the category, and a handful carry real meaning:&quot;</p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>2xx success</strong> — <code>200</code> OK, <code>201</code> Created, <code>204</code> No Content.</li>
-          <li><strong>3xx redirect</strong> — <code>301</code> permanent, <code>304</code> Not Modified (cache hit).</li>
-          <li><strong>4xx client error</strong> — <code>400</code> bad request, <code>401</code> unauthenticated, <code>403</code> forbidden, <code>404</code> not found, <code>429</code> rate-limited.</li>
-          <li><strong>5xx server error</strong> — <code>500</code> generic, <code>503</code> unavailable.</li>
+          <li><strong>2xx success</strong>, <code>200</code> OK, <code>201</code> Created, <code>204</code> No Content.</li>
+          <li><strong>3xx redirect</strong>, <code>301</code> permanent, <code>304</code> Not Modified (cache hit).</li>
+          <li><strong>4xx client error</strong>, <code>400</code> bad request, <code>401</code> unauthenticated, <code>403</code> forbidden, <code>404</code> not found, <code>429</code> rate-limited.</li>
+          <li><strong>5xx server error</strong>, <code>500</code> generic, <code>503</code> unavailable.</li>
         </ul>
         <Callout variant="insight" title="The 401 vs 403 follow-up">
           <p>
-            &quot;<code>401</code> means &apos;I don&apos;t know who you are&apos; — authenticate and retry. <code>403</code> means &apos;I
-            know who you are and you still can&apos;t&apos; — retrying won&apos;t help. Authentication vs authorization in two status
+            &quot;<code>401</code> means &apos;I don&apos;t know who you are&apos;, authenticate and retry. <code>403</code> means &apos;I
+            know who you are and you still can&apos;t&apos;, retrying won&apos;t help. Authentication vs authorization in two status
             codes.&quot;
           </p>
         </Callout>
@@ -574,12 +574,12 @@ list.addEventListener("click", (e) => {
             {
               label: "Index keys make React skip reconciliation entirely",
               explanation:
-                "Reconciliation still runs — the problem is it matches by the wrong identity. A stable, data-derived key (item.id) lets React move state to the correct item.",
+                "Reconciliation still runs, the problem is it matches by the wrong identity. A stable, data-derived key (item.id) lets React move state to the correct item.",
             },
             {
               label: "React forbids number keys; keys must be strings",
               explanation:
-                "Numbers are valid keys. The danger isn't the type — it's that an index isn't a stable identity when the list changes order or length.",
+                "Numbers are valid keys. The danger isn't the type, it's that an index isn't a stable identity when the list changes order or length.",
             },
           ]}
         />
@@ -591,7 +591,7 @@ list.addEventListener("click", (e) => {
               label: "401 means not authenticated (log in and retry); 403 means authenticated but not authorized (retrying won't help)",
               correct: true,
               explanation:
-                "Right. 401 is about identity — you haven't proven who you are. 403 is about permission — you're known but lack access. That's authentication vs authorization in two codes.",
+                "Right. 401 is about identity, you haven't proven who you are. 403 is about permission, you're known but lack access. That's authentication vs authorization in two codes.",
             },
             {
               label: "401 is a client error and 403 is a server error",
@@ -615,14 +615,14 @@ list.addEventListener("click", (e) => {
             <li><strong>Event loop.</strong> Microtasks (Promises) drain fully between macrotasks (<code>setTimeout</code>), so a Promise callback beats a <code>setTimeout(0)</code>.</li>
             <li><strong>Closure.</strong> A function plus the variables from its defining scope, kept alive by reference after the outer function returns.</li>
             <li><strong><code>this</code>.</strong> Decided by the call site (new &gt; explicit &gt; implicit &gt; default); arrows capture it lexically and can&apos;t be rebound.</li>
-            <li><strong><code>==</code> vs <code>===</code>.</strong> <code>===</code> compares value and type with no coercion — default to it.</li>
+            <li><strong><code>==</code> vs <code>===</code>.</strong> <code>===</code> compares value and type with no coercion, default to it.</li>
             <li><strong>Hoisting &amp; TDZ.</strong> <code>var</code> hoists to <code>undefined</code>; <code>let</code>/<code>const</code> hoist into the TDZ and throw if touched early.</li>
-            <li><strong>Prototypes.</strong> Property lookup walks the prototype chain; <code>class</code> is sugar — methods are shared on the prototype.</li>
+            <li><strong>Prototypes.</strong> Property lookup walks the prototype chain; <code>class</code> is sugar, methods are shared on the prototype.</li>
             <li><strong>Scope.</strong> <code>var</code> is function-scoped; <code>let</code>/<code>const</code> are block-scoped; <code>const</code> blocks reassignment, not mutation.</li>
             <li><strong>Debounce vs throttle.</strong> Debounce = act once after it goes quiet; throttle = act on a fixed cadence while it&apos;s busy.</li>
             <li><strong>Box model &amp; specificity.</strong> <code>border-box</code> folds padding/border into width; specificity is a per-category tuple where IDs beat classes.</li>
             <li><strong>Flex vs grid.</strong> Flex = one axis; grid = two. Stacking context: <code>z-index</code> is relative to its context, not global.</li>
-            <li><strong>Delegation.</strong> One parent listener handles many children via bubbling — fewer listeners, works for future elements.</li>
+            <li><strong>Delegation.</strong> One parent listener handles many children via bubbling, fewer listeners, works for future elements.</li>
             <li><strong>Keys &amp; reconciliation.</strong> A stable key is identity across renders; index keys misattach state on reorder.</li>
             <li><strong>Controlled vs uncontrolled.</strong> Controlled = React owns the value; uncontrolled = the DOM owns it, read via <code>ref</code>.</li>
             <li><strong><code>useEffect</code>.</strong> List every reactive dependency; clean up what you set up (runs before re-run and on unmount).</li>
@@ -633,17 +633,17 @@ list.addEventListener("click", (e) => {
 
       {/* ───────────────────────── 14. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — drill the bank against a timer</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, drill the bank against a timer</h2>
         <p className="mb-4">
-          Reading these answers isn&apos;t the drill — <em>saying</em> them is. The project is to{" "}
-          <strong>drill the rapid-fire bank out loud against a timer until each answer lands in 60 seconds — record
+          Reading these answers isn&apos;t the drill, <em>saying</em> them is. The project is to{" "}
+          <strong>drill the rapid-fire bank out loud against a timer until each answer lands in 60 seconds, record
           yourself, then cut every answer down to its load-bearing sentence.</strong> That last step is the whole point:
           the reflex you want isn&apos;t a paragraph, it&apos;s the one sentence everything else hangs off.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
             <strong>Build the bank.</strong> Write each question from this module on one side of a card and your tight
-            answer + one-line why on the other. Don&apos;t copy mine verbatim — phrase it the way <em>you&apos;d</em> say it
+            answer + one-line why on the other. Don&apos;t copy mine verbatim, phrase it the way <em>you&apos;d</em> say it
             out loud, so it sounds like you and not a textbook.
           </li>
           <li>
@@ -662,19 +662,19 @@ list.addEventListener("click", (e) => {
             first and reflexively; everything else is elaboration you offer only if they want more.
           </li>
           <li>
-            <strong>Run the &quot;why&quot; gauntlet.</strong> Have a friend ask only follow-up &quot;why&quot; questions — &quot;why does
+            <strong>Run the &quot;why&quot; gauntlet.</strong> Have a friend ask only follow-up &quot;why&quot; questions, &quot;why does
             the microtask win?&quot;, &quot;why does an index key break?&quot;, &quot;why <code>403</code> not <code>401</code>?&quot; If you
             can survive three layers of &quot;why&quot; on any card, you own it.
           </li>
           <li>
-            <strong>Stretch — mix in code-on-the-spot.</strong> For the cards that have a snippet (debounce, closure
+            <strong>Stretch, mix in code-on-the-spot.</strong> For the cards that have a snippet (debounce, closure
             counter, the event-loop ordering), write the code from memory <em>while narrating</em>. Saying it and typing
             it are different reflexes, and the next module is all about typing under pressure.
           </li>
         </ol>
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
-            If you came up on the backend, you&apos;ve done this drill before — it&apos;s the front-end version of being able to
+            If you came up on the backend, you&apos;ve done this drill before, it&apos;s the front-end version of being able to
             explain ACID, an index B-tree, or a deadlock without notes. The trick is the same: the interviewer isn&apos;t
             testing recall, they&apos;re testing whether the concept is <em>yours</em>. Drill until the why comes out before
             you&apos;ve consciously decided to say it.

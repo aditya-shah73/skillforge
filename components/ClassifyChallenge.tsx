@@ -150,7 +150,7 @@ export default function ClassifyChallenge({ title, prompt, buckets, items }: Cla
                       : "border border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200"
                   }`}
                 >
-                  {isCorrect ? "✓ Correct. " : `✗ Nope — it's ${correctBucket.label}. `}
+                  {isCorrect ? "✓ Correct. " : `✗ Nope, it's ${correctBucket.label}. `}
                   {item.explanation}
                   {!isCorrect && chosenBucket && (
                     <span className="mt-1 block opacity-75">

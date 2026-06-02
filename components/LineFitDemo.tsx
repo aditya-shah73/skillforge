@@ -239,7 +239,7 @@ export default function LineFitDemo() {
         </div>
 
         <div className="rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-950 dark:text-slate-400">
-          💡 <strong>Red dashed lines</strong> are the errors — each point&apos;s distance from your line. The loss
+          💡 <strong>Red dashed lines</strong> are the errors, each point&apos;s distance from your line. The loss
           squares &amp; averages those. Get under <span className="font-mono">{(BEST.mse * 1.05).toFixed(0)}</span> by hand for an easter egg.
         </div>
       </div>

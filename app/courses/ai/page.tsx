@@ -20,7 +20,7 @@ export default function Home() {
           Become an <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">AI full-stack</span> engineer
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-          A hands-on course for working full-stack engineers. Build real intuition for how LLMs, embeddings, RAG, and agents actually work — then ship production-quality AI features on top of your existing stack.
+          A hands-on course for working full-stack engineers. Build real intuition for how LLMs, embeddings, RAG, and agents actually work, then ship production-quality AI features on top of your existing stack.
         </p>
       </section>
 
@@ -32,7 +32,7 @@ export default function Home() {
           <ul className="m-0 list-none space-y-2 p-0 text-sm text-slate-700 dark:text-slate-300">
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Working knowledge of <strong>Java / Spring Boot</strong></span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>Comfortable with <strong>React</strong>{" "}and REST or GraphQL</span></li>
-            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>No prior ML experience required — we build up from zero</span></li>
+            <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>No prior ML experience required, we build up from zero</span></li>
             <li className="flex gap-2"><span className="text-slate-400 select-none">›</span><span>An <strong>Anthropic API key</strong> (from Phase 2 onward, ~$5–10 budget)</span></li>
           </ul>
         </div>
@@ -42,7 +42,7 @@ export default function Home() {
             <li className="flex gap-2"><span className="font-bold text-emerald-500 select-none dark:text-emerald-400">✓</span><span>Intuition for how LLMs &amp; transformers actually work</span></li>
             <li className="flex gap-2"><span className="font-bold text-emerald-500 select-none dark:text-emerald-400">✓</span><span>Linear regression + a tiny neural net, from scratch in Java</span></li>
             <li className="flex gap-2"><span className="font-bold text-emerald-500 select-none dark:text-emerald-400">✓</span><span>Production RAG pipeline with Spring AI + pgvector</span></li>
-            <li className="flex gap-2"><span className="font-bold text-emerald-500 select-none dark:text-emerald-400">✓</span><span>Agents, evals, guardrails — and a portfolio capstone</span></li>
+            <li className="flex gap-2"><span className="font-bold text-emerald-500 select-none dark:text-emerald-400">✓</span><span>Agents, evals, guardrails, and a portfolio capstone</span></li>
           </ul>
         </div>
       </section>
@@ -91,18 +91,15 @@ export default function Home() {
 function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
   return (
     <>
-      <div className="mb-2 flex items-start justify-between">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
-            {m.number}
-          </span>
-          {m.status === "available" ? (
-            <span className="text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Ready</span>
-          ) : (
-            <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
-          )}
-        </div>
-        <span className="text-xs text-slate-400">{m.duration}</span>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
+          {m.number}
+        </span>
+        {m.status === "available" ? (
+          <span className="text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Ready</span>
+        ) : (
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
+        )}
       </div>
       <h3 className="mb-1 text-base font-semibold">{m.title}</h3>
       <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">{m.subtitle}</p>

@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Skillforge — hands-on courses for engineers",
+  title: "Skillforge, hands-on courses for engineers",
   description: "Project-driven, pattern-first courses for working engineers. Currently shipping: AI Engineering Foundations. In planning: Data Structures and Algorithms.",
 };
 

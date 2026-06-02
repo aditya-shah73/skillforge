@@ -32,11 +32,11 @@ export default function BehavioralAndClosingModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Behavioral answers &amp; closing strong — tradeoffs, disagreement, and questions to ask
+          Behavioral answers &amp; closing strong, tradeoffs, disagreement, and questions to ask
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           You aced the coding round. Then they ask &quot;tell me about a time you disagreed with a teammate&quot; and your
-          mind goes blank — or worse, you ramble for four minutes and blame your old tech lead. The behavioral round
+          mind goes blank, or worse, you ramble for four minutes and blame your old tech lead. The behavioral round
           isn&apos;t a softball; it&apos;s where offers are won and lost. Let&apos;s make it the easiest part of your day.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -48,12 +48,12 @@ export default function BehavioralAndClosingModule() {
         <h2 className="mb-4 text-2xl font-bold">The interview is a job, and you&apos;re both interviewing</h2>
         <p className="mb-4">
           Picture two people on a first date who&apos;ve each decided, before they sit down, that the <em>other</em> person
-          is the one being judged. One performs — rehearsed anecdotes, laughing too hard, never asking a real question.
+          is the one being judged. One performs, rehearsed anecdotes, laughing too hard, never asking a real question.
           The other sits back and quietly evaluates. The performer leaves thinking it went great. The evaluator leaves
           knowing exactly whether there&apos;s a fit. Guess who has the power.
         </p>
         <p className="mb-4">
-          A behavioral round is the same dynamic. The candidate who treats it as a one-way exam — &quot;please like me&quot; —
+          A behavioral round is the same dynamic. The candidate who treats it as a one-way exam, &quot;please like me&quot;,
           rambles, over-explains, and accepts whatever they&apos;re told. The candidate who treats it as a <em>mutual
           evaluation</em> answers crisply, names tradeoffs without flinching, pushes back when something doesn&apos;t add up,
           and asks the interviewer questions that reveal how the team actually works. The second candidate reads as
@@ -70,7 +70,7 @@ export default function BehavioralAndClosingModule() {
           <p>
             The behavioral round measures things the coding round can&apos;t: can you communicate under mild pressure, do
             you own outcomes, do you handle disagreement like an adult, and would the team want you in the room at 4pm on
-            a Friday when something&apos;s on fire. None of that is improvised well. It&apos;s prepared — into a small bank of
+            a Friday when something&apos;s on fire. None of that is improvised well. It&apos;s prepared, into a small bank of
             reusable, structured stories you can recombine to answer almost any prompt.
           </p>
         </Callout>
@@ -78,7 +78,7 @@ export default function BehavioralAndClosingModule() {
 
       {/* ───────────────────────── 2. STAR ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">STAR — the structure that stops you rambling</h2>
+        <h2 className="mb-4 text-2xl font-bold">STAR, the structure that stops you rambling</h2>
         <p className="mb-4">
           The single most common behavioral failure is the shapeless answer: you start in the middle, backtrack to add
           context, jump to the outcome, circle back to a detail, and three minutes later the interviewer has no idea
@@ -89,8 +89,8 @@ T — TASK        what specifically was YOUR responsibility / the problem to sol
 A — ACTION      what YOU did. The bulk of the answer. "I", not "we".
 R — RESULT      how it turned out — ideally with a number — and what you learned.`}</code></pre>
         <p className="mb-4">
-          The proportions matter as much as the order. Situation and Task are setup — keep them tight, maybe 20% of the
-          answer. <strong>Action is the heart</strong> — 60% — and it must be in the first person, because the
+          The proportions matter as much as the order. Situation and Task are setup, keep them tight, maybe 20% of the
+          answer. <strong>Action is the heart</strong>, 60%, and it must be in the first person, because the
           interviewer is hiring <em>you</em>, not your old team. Result lands the plane: what changed, measured if you
           can, plus a sentence of reflection. Here&apos;s the shape filled in for a hard bug:
         </p>
@@ -115,13 +115,13 @@ R: "The wrong-total reports went to zero, and the regression test caught
     environment difference, so instrument production first instead of
     guessing."`}</code></pre>
         <p className="mb-4">
-          Notice that the Action is concrete and sequential — instrument, observe, reproduce, fix, prevent — and the
+          Notice that the Action is concrete and sequential, instrument, observe, reproduce, fix, prevent, and the
           Result has a measurable outcome (<em>reports went to zero</em>) plus a transferable lesson. That last sentence
           is what separates a war story from a sign of growth.
         </p>
         <Callout variant="insight" title="Say 'I', and quantify the Result">
           <p>
-            Two habits carry most STAR answers. First, narrate the <strong>Action in the first person</strong> — &quot;I
+            Two habits carry most STAR answers. First, narrate the <strong>Action in the first person</strong>, &quot;I
             added logging,&quot; not &quot;we looked into it.&quot; Interviewers can&apos;t give credit they can&apos;t attribute. Second,
             <strong> put a number on the Result</strong> whenever one exists: &quot;cut p95 load time from 4s to 1.2s,&quot;
             &quot;reduced bug reports by 90%,&quot; &quot;saved the team ~5 hours a week.&quot; A measured result is the difference between
@@ -132,7 +132,7 @@ R: "The wrong-total reports went to zero, and the regression test caught
 
       {/* ───────────────────────── 3. STORY BANK ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The story bank — prepare five, answer fifty</h2>
+        <h2 className="mb-4 text-2xl font-bold">The story bank, prepare five, answer fifty</h2>
         <p className="mb-4">
           You cannot prepare a unique story for every possible prompt, and you shouldn&apos;t try. The trick is that the
           dozens of behavioral questions out there map onto a handful of <em>themes</em>. Prepare one strong,
@@ -143,12 +143,12 @@ R: "The wrong-total reports went to zero, and the regression test caught
           <li><strong>A hard bug / technical challenge.</strong> Something genuinely tricky you debugged or built. Shows depth and persistence.</li>
           <li><strong>A conflict / disagreement.</strong> A time you disagreed with a teammate or manager and navigated it. Shows maturity.</li>
           <li><strong>A project you led / drove.</strong> Something you owned end to end, even informally. Shows initiative and ownership.</li>
-          <li><strong>A failure &amp; what you learned.</strong> A real miss — not a humblebrag — and the concrete change you made after. Shows self-awareness.</li>
+          <li><strong>A failure &amp; what you learned.</strong> A real miss, not a humblebrag, and the concrete change you made after. Shows self-awareness.</li>
           <li><strong>A measurable improvement.</strong> A time you made something faster, cleaner, or cheaper, with a number. Shows impact.</li>
         </ul>
         <p className="mb-4">
           The same project can serve multiple themes from different angles. The checkout-race story above is a &quot;hard
-          bug&quot; answer — but reframed around the Result, it&apos;s also a &quot;measurable improvement&quot; answer, and if you had to
+          bug&quot; answer, but reframed around the Result, it&apos;s also a &quot;measurable improvement&quot; answer, and if you had to
           convince a skeptical teammate the race was real, it becomes a &quot;disagreement&quot; answer too. One well-mined
           experience covers a lot of ground.
         </p>
@@ -166,8 +166,8 @@ R: "The wrong-total reports went to zero, and the regression test caught
         <Callout variant="warn" title="Don't pick the 'failure' that's secretly a brag">
           <p>
             &quot;My biggest failure is that I care too much&quot; or &quot;I worked too hard&quot; is a non-answer, and interviewers have
-            heard it a thousand times. Pick a <em>real</em> failure with a real cost — a bug you shipped, a deadline you
-            blew, a teammate you steamrolled — and spend most of the answer on what you <strong>changed</strong> as a
+            heard it a thousand times. Pick a <em>real</em> failure with a real cost, a bug you shipped, a deadline you
+            blew, a teammate you steamrolled, and spend most of the answer on what you <strong>changed</strong> as a
             result. The failure is the setup; the lesson and the behavior change are the point.
           </p>
         </Callout>
@@ -175,10 +175,10 @@ R: "The wrong-total reports went to zero, and the regression test caught
 
       {/* ───────────────────────── 4. TELL ME ABOUT YOURSELF ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">&quot;Tell me about yourself&quot; — the 90-second arc</h2>
+        <h2 className="mb-4 text-2xl font-bold">&quot;Tell me about yourself&quot;, the 90-second arc</h2>
         <p className="mb-4">
           This is almost always the opener, and almost everyone botches it by reciting their résumé chronologically from
-          birth. It&apos;s not a memory test — it&apos;s your chance to <em>frame</em> the rest of the conversation. Think of it
+          birth. It&apos;s not a memory test, it&apos;s your chance to <em>frame</em> the rest of the conversation. Think of it
           as a 90-second arc with three beats: present, past, future.
         </p>
         <pre><code>{`PRESENT  "I'm a front-end engineer focused on React and design systems —
@@ -192,7 +192,7 @@ PAST     "I got here by [one or two sentences of the throughline] — I
 FUTURE   "What I'm looking for next is [thing this role offers] — which is
           exactly why this role caught my eye."`}</code></pre>
         <p className="mb-4">
-          The whole thing is 60–90 seconds, not five minutes. It&apos;s <em>tailored</em> — you emphasize the parts of your
+          The whole thing is 60–90 seconds, not five minutes. It&apos;s <em>tailored</em>, you emphasize the parts of your
           background that line up with this job, and quietly skip the parts that don&apos;t. And it ends pointed at the
           future, which hands the interviewer an obvious follow-up (&quot;what about this role appeals to you?&quot;) and signals
           that you&apos;re here on purpose, not just shopping every posting.
@@ -214,18 +214,18 @@ FUTURE   "What I'm looking for next is [thing this role offers] — which is
           question="In a STAR answer, which section should be the longest, and in what voice?"
           options={[
             {
-              label: "Action — the bulk of the answer, told in the first person ('I did X'), because the interviewer is hiring you, not your team",
+              label: "Action, the bulk of the answer, told in the first person ('I did X'), because the interviewer is hiring you, not your team",
               correct: true,
               explanation:
                 "Right. Situation and Task are tight setup; Action is ~60% of the answer and must be 'I', not 'we', so the interviewer can attribute the work to you. Result lands the plane with a measured outcome.",
             },
             {
-              label: "Situation — you need lots of context up front so the story makes sense",
+              label: "Situation, you need lots of context up front so the story makes sense",
               explanation:
                 "Situation is setup, not substance. Spending most of your time on context is how answers ramble. Keep S and T to ~20% and put the weight on what YOU did.",
             },
             {
-              label: "Result — interviewers only care about the outcome, so lead with it and keep the rest brief",
+              label: "Result, interviewers only care about the outcome, so lead with it and keep the rest brief",
               explanation:
                 "The Result matters (and should be quantified), but it lands because of the Action that earned it. An outcome with no visible 'what I did' reads as luck, not skill.",
             },
@@ -244,12 +244,12 @@ FUTURE   "What I'm looking for next is [thing this role offers] — which is
             {
               label: "Because interviewers ask the exact same five questions everywhere",
               explanation:
-                "They don't — the wording varies enormously. The point isn't that questions are identical; it's that they cluster into a few themes you can prepare for.",
+                "They don't, the wording varies enormously. The point isn't that questions are identical; it's that they cluster into a few themes you can prepare for.",
             },
             {
               label: "So you can memorize each answer word-for-word and recite it verbatim",
               explanation:
-                "Verbatim recitation sounds robotic and breaks the moment they ask a follow-up. You prepare the structure and the beats, then deliver them conversationally — not from a script.",
+                "Verbatim recitation sounds robotic and breaks the moment they ask a follow-up. You prepare the structure and the beats, then deliver them conversationally, not from a script.",
             },
           ]}
         />
@@ -259,7 +259,7 @@ FUTURE   "What I'm looking for next is [thing this role offers] — which is
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">Talking about tradeoffs &amp; ownership</h2>
         <p className="mb-4">
-          The fastest way to sound senior in any answer — technical or behavioral — is to <strong>name the
+          The fastest way to sound senior in any answer, technical or behavioral, is to <strong>name the
           tradeoff</strong>. Juniors describe decisions as if there was one obvious right answer. Seniors describe them
           as choices between competing goods, made deliberately, with the cost acknowledged out loud:
         </p>
@@ -272,7 +272,7 @@ Senior:  "We chose the library over hand-rolling it. It cost us a
         <p className="mb-4">
           The senior version names the <em>cost</em> (dependency, bundle size), the <em>benefit</em> (free correctness,
           velocity), the <em>reason</em> the benefit won (a dozen endpoints), and the <em>boundary</em> where the call
-          would flip (just one endpoint). That last part — &quot;here&apos;s when I&apos;d decide differently&quot; — is the strongest
+          would flip (just one endpoint). That last part, &quot;here&apos;s when I&apos;d decide differently&quot;, is the strongest
           signal of all, because it proves you made a judgment rather than followed a habit.
         </p>
         <p className="mb-4">
@@ -291,16 +291,16 @@ Owning:      "The deadline slipped. Looking back, my part was that I didn't
             People fear that admitting fault makes them look weak. The opposite is true: owning a mistake cleanly signals
             confidence and makes everything else you say more credible. The deflector sounds like someone who&apos;ll blame
             <em> you</em> next time. The owner sounds like someone you can trust with hard things. Own your part, state
-            the lesson, move on — don&apos;t grovel, and don&apos;t over-explain.
+            the lesson, move on, don&apos;t grovel, and don&apos;t over-explain.
           </p>
         </Callout>
       </section>
 
       {/* ───────────────────────── 6. DISAGREEMENT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Handling &quot;you&apos;re wrong&quot; — disagreement without rigidity</h2>
+        <h2 className="mb-4 text-2xl font-bold">Handling &quot;you&apos;re wrong&quot;, disagreement without rigidity</h2>
         <p className="mb-4">
-          Some interviewers will push back on something you said — sometimes because they disagree, sometimes purely to
+          Some interviewers will push back on something you said, sometimes because they disagree, sometimes purely to
           see how you react. This is a test of <em>collaboration under tension</em>, and there are two ways to fail it:
           collapse instantly (&quot;oh, you&apos;re right, never mind&quot;) or dig in defensively (&quot;no, I&apos;m definitely right&quot;).
           Neither is what a good teammate does. The move that passes is a small, repeatable script:
@@ -314,19 +314,19 @@ Owning:      "The deadline slipped. Looking back, my part was that I didn't
         <p className="mb-4">
           The shape is: hear them, prove you heard them, offer your view as a view (not a verdict), and propose a way to
           <em> resolve it with evidence</em> rather than by who&apos;s more stubborn. If they make a genuinely better point,
-          updating is a strength: &quot;Actually, that changes my mind — I hadn&apos;t considered the mobile case.&quot; Changing your
+          updating is a strength: &quot;Actually, that changes my mind, I hadn&apos;t considered the mobile case.&quot; Changing your
           position <em>because of a good argument</em> is the opposite of weakness; it&apos;s exactly what you want on a team.
         </p>
         <p className="mb-4">
           When you tell a <em>past</em> disagreement story, use the same spine and end on the relationship, not the win:
           &quot;We disagreed about whether to rewrite or refactor. I laid out the risk of the rewrite, they laid out the
-          tech-debt cost of refactoring, we agreed to time-box a refactor spike and reassess. We went with the refactor
-          — and the teammate and I worked together fine afterward.&quot; The interviewer is checking whether you can disagree
+          tech-debt cost of refactoring, we agreed to time-box a refactor spike and reassess. We went with the refactor,
+          and the teammate and I worked together fine afterward.&quot; The interviewer is checking whether you can disagree
           and still have a working relationship the next morning.
         </p>
         <Callout variant="warn" title="Never win the story by making the other person dumb">
           <p>
-            The fastest way to fail a disagreement question is to make your counterpart sound foolish — &quot;they just
+            The fastest way to fail a disagreement question is to make your counterpart sound foolish, &quot;they just
             didn&apos;t understand how promises work, so I explained it to them.&quot; Even if true, it reads as someone hard to
             work with. Frame the other person as reasonable with a different priority, and frame the resolution as
             collaborative. You can be right <em>and</em> generous.
@@ -336,7 +336,7 @@ Owning:      "The deadline slipped. Looking back, my part was that I didn't
 
       {/* ───────────────────────── 7. WEAKNESS & I DON'T KNOW ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">&quot;What&apos;s your weakness&quot; — and &quot;I don&apos;t know&quot;</h2>
+        <h2 className="mb-4 text-2xl font-bold">&quot;What&apos;s your weakness&quot;, and &quot;I don&apos;t know&quot;</h2>
         <p className="mb-4">
           The weakness question is a sincerity test disguised as a trap. The wrong answers are the fake-weakness
           (&quot;perfectionism&quot;) and the disqualifying-weakness (&quot;I miss deadlines a lot&quot;). The right answer is a
@@ -355,11 +355,11 @@ Example:   "I tend to go too deep on polishing details before getting
             in check."`}</code></pre>
         <p className="mb-4">
           That answer is believable (it&apos;s a real tendency), non-disqualifying (it doesn&apos;t mean you can&apos;t do the job),
-          and — crucially — shows <em>self-awareness plus a system</em>. The weakness is the setup; the management
+          and, crucially, shows <em>self-awareness plus a system</em>. The weakness is the setup; the management
           strategy is the payoff. Same shape as the failure story.
         </p>
         <p className="mb-4">
-          Closely related is what to do when you simply <strong>don&apos;t know something</strong> they ask. Do not bluff —
+          Closely related is what to do when you simply <strong>don&apos;t know something</strong> they ask. Do not bluff,
           experienced interviewers smell it instantly and it&apos;s far more damaging than the gap itself. Instead, say what
           you do know, name the boundary honestly, and show how you&apos;d find out:
         </p>
@@ -371,7 +371,7 @@ Example:   "I tend to go too deep on polishing details before getting
           <p>
             Nobody knows everything, and the job is mostly figuring out things you didn&apos;t know yesterday. An honest
             &quot;I don&apos;t know that, but here&apos;s my approach to learning it&quot; demonstrates exactly the skill the job requires.
-            A confident bluff that falls apart under one follow-up demonstrates the opposite — and it poisons trust in
+            A confident bluff that falls apart under one follow-up demonstrates the opposite, and it poisons trust in
             everything else you said.
           </p>
         </Callout>
@@ -387,12 +387,12 @@ Example:   "I tend to go too deep on polishing details before getting
               label: "Acknowledge their point, restate it to show you heard it, offer your reasoning as a view (not a verdict), and propose a way to test or measure which way is right",
               correct: true,
               explanation:
-                "Yes — that's the collaboration-under-tension script. It proves you can disagree without either collapsing or digging in, and resolving via evidence rather than stubbornness is exactly what a good teammate does.",
+                "Yes, that's the collaboration-under-tension script. It proves you can disagree without either collapsing or digging in, and resolving via evidence rather than stubbornness is exactly what a good teammate does.",
             },
             {
               label: "Immediately concede that they're right so the conversation stays friendly",
               explanation:
-                "Instant collapse reads as having no real conviction. If they make a genuinely better point, update — but reflexively folding on every challenge signals you can't hold a position under mild pressure.",
+                "Instant collapse reads as having no real conviction. If they make a genuinely better point, update, but reflexively folding on every challenge signals you can't hold a position under mild pressure.",
             },
             {
               label: "Hold your ground firmly and explain why your original answer was correct",
@@ -409,17 +409,17 @@ Example:   "I tend to go too deep on polishing details before getting
               label: "A real, non-disqualifying weakness plus the specific habit or system you use to manage it",
               correct: true,
               explanation:
-                "Correct. The weakness is the setup; the management strategy is the payoff. It shows self-awareness plus a concrete system — believable and reassuring at the same time.",
+                "Correct. The weakness is the setup; the management strategy is the payoff. It shows self-awareness plus a concrete system, believable and reassuring at the same time.",
             },
             {
               label: "A strength disguised as a weakness, like 'I'm a perfectionist' or 'I work too hard'",
               explanation:
-                "Interviewers have heard the fake-weakness a thousand times and it reads as evasive. It signals you won't be honest about real gaps — the opposite of what the question is probing for.",
+                "Interviewers have heard the fake-weakness a thousand times and it reads as evasive. It signals you won't be honest about real gaps, the opposite of what the question is probing for.",
             },
             {
               label: "Whatever weakness is least relevant to the job, stated as briefly as possible",
               explanation:
-                "Dodging with an irrelevant throwaway misses the point. The answer that lands is a genuine tendency plus how you keep it in check — that's where the self-awareness shows.",
+                "Dodging with an irrelevant throwaway misses the point. The answer that lands is a genuine tendency plus how you keep it in check, that's where the self-awareness shows.",
             },
           ]}
         />
@@ -427,10 +427,10 @@ Example:   "I tend to go too deep on polishing details before getting
 
       {/* ───────────────────────── 8. QUESTIONS YOU ASK ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The questions YOU ask — your seniority signal</h2>
+        <h2 className="mb-4 text-2xl font-bold">The questions YOU ask, your seniority signal</h2>
         <p className="mb-4">
           At the end, they&apos;ll say &quot;do you have any questions for me?&quot; This is not a formality, and &quot;no, I think you
-          covered everything&quot; is a small disaster — it tells them you weren&apos;t evaluating <em>them</em>. Your questions
+          covered everything&quot; is a small disaster, it tells them you weren&apos;t evaluating <em>them</em>. Your questions
           are where you flip the date around and prove you&apos;re sizing up the team. Prepare three or four that reveal how
           the work actually happens:
         </p>
@@ -448,10 +448,10 @@ Example:   "I tend to go too deep on polishing details before getting
           muscle the design module is built on). Asking what surprised them gets you an honest answer instead of the
           recruiting brochure.
         </p>
-        <Callout variant="warn" title="Avoid questions you could have Googled — and avoid 'so... do I have it?'">
+        <Callout variant="warn" title="Avoid questions you could have Googled, and avoid 'so... do I have it?'">
           <p>
-            Don&apos;t ask things the company&apos;s homepage answers (&quot;so what does your product do?&quot;) — it signals you didn&apos;t
-            prepare. And don&apos;t fish for a verdict (&quot;how do you think I did?&quot;) — it puts the interviewer on the spot and
+            Don&apos;t ask things the company&apos;s homepage answers (&quot;so what does your product do?&quot;), it signals you didn&apos;t
+            prepare. And don&apos;t fish for a verdict (&quot;how do you think I did?&quot;), it puts the interviewer on the spot and
             reads as anxious. Ask questions that only an insider could answer and that you&apos;d actually want to know
             before saying yes.
           </p>
@@ -460,24 +460,24 @@ Example:   "I tend to go too deep on polishing details before getting
 
       {/* ───────────────────────── 9. LEVELING / SALARY & RED FLAGS ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Leveling &amp; salary (lightly) — and the red flags to avoid</h2>
+        <h2 className="mb-4 text-2xl font-bold">Leveling &amp; salary (lightly), and the red flags to avoid</h2>
         <p className="mb-4">
           Compensation and leveling usually live with the recruiter, not the technical interviewer, so you rarely
-          negotiate in a behavioral round. But a few principles hold. Try not to throw out the first number — &quot;I&apos;d like
+          negotiate in a behavioral round. But a few principles hold. Try not to throw out the first number, &quot;I&apos;d like
           to understand the role and level better first; what range is budgeted for this position?&quot; is a perfectly
           professional deflection. Anchor on the <em>level</em> (the scope and expectations) before the dollar figure,
-          because the level sets the band. And it&apos;s fine to say you&apos;re weighing a few factors — growth, the team, the
-          work — not just the offer size. None of this requires you to be a hardball negotiator; it just requires you to
+          because the level sets the band. And it&apos;s fine to say you&apos;re weighing a few factors, growth, the team, the
+          work, not just the offer size. None of this requires you to be a hardball negotiator; it just requires you to
           not blurt a number that caps your own upside.
         </p>
         <p className="mb-4">
-          Finally, the behavioral red flags — the things that quietly sink otherwise-strong candidates. Watch for these
+          Finally, the behavioral red flags, the things that quietly sink otherwise-strong candidates. Watch for these
           in <em>yourself</em>:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>Blaming others.</strong> &quot;My manager was useless, QA was slow, the codebase was a mess.&quot; Even if true, it reads as someone who won&apos;t own outcomes — and who&apos;ll blame the next team too.</li>
+          <li><strong>Blaming others.</strong> &quot;My manager was useless, QA was slow, the codebase was a mess.&quot; Even if true, it reads as someone who won&apos;t own outcomes, and who&apos;ll blame the next team too.</li>
           <li><strong>No metrics, no specifics.</strong> &quot;It went really well and everyone was happy&quot; is unfalsifiable. Vague results sound invented; specific ones sound real.</li>
-          <li><strong>Rambling.</strong> The four-minute answer with no structure. STAR exists precisely to prevent this — if you feel yourself drifting, jump to the Result.</li>
+          <li><strong>Rambling.</strong> The four-minute answer with no structure. STAR exists precisely to prevent this, if you feel yourself drifting, jump to the Result.</li>
           <li><strong>All &quot;we&quot;, no &quot;I&quot;.</strong> If the interviewer can&apos;t tell what <em>you</em> did, they can&apos;t hire you for it.</li>
           <li><strong>Trashing a past employer.</strong> Negativity about a previous team makes the interviewer wonder what you&apos;ll say about them. Be honest but gracious.</li>
         </ul>
@@ -485,7 +485,7 @@ Example:   "I tend to go too deep on polishing details before getting
           <p>
             Record yourself answering &quot;tell me about a conflict&quot; once and play it back. Count how many times you say
             &quot;we&quot; versus &quot;I&quot;, whether there&apos;s a single number in the Result, and whether anyone in the story comes off as
-            the villain. Most red flags are invisible from the inside and obvious on playback — which is exactly why
+            the villain. Most red flags are invisible from the inside and obvious on playback, which is exactly why
             rehearsal out loud, not in your head, is the highest-leverage prep you can do.
           </p>
         </Callout>
@@ -493,10 +493,10 @@ Example:   "I tend to go too deep on polishing details before getting
 
       {/* ───────────────────────── 10. CLOSING STRONG ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Closing strong — the last 90 seconds matter</h2>
+        <h2 className="mb-4 text-2xl font-bold">Closing strong, the last 90 seconds matter</h2>
         <p className="mb-4">
           The end of an interview is prime real estate that most candidates waste with a limp &quot;thanks, this was great.&quot;
-          You get to leave a final impression — use it. A strong close has three moves, in order:
+          You get to leave a final impression, use it. A strong close has three moves, in order:
         </p>
         <pre><code>{`1. SUMMARIZE FIT   "Based on what we discussed, this feels like a strong
                     match — the [specific thing about the role] lines up
@@ -509,7 +509,7 @@ Example:   "I tend to go too deep on polishing details before getting
                     anything I can clarify or send over that would help?"`}</code></pre>
         <p className="mb-4">
           Summarizing the fit shows you were synthesizing the whole time, not just answering. Expressing genuine,
-          specific interest matters more than people think — teams want to hire someone who <em>wants</em> them, and a
+          specific interest matters more than people think, teams want to hire someone who <em>wants</em> them, and a
           concrete reason (&quot;I&apos;m excited that you ship to real users weekly&quot;) beats generic enthusiasm every time. And
           asking about next steps is simply professional; it signals you&apos;re organized and that you expect this to move
           forward. Three sentences, thirty seconds, and you walk out memorable for the right reasons.
@@ -517,7 +517,7 @@ Example:   "I tend to go too deep on polishing details before getting
         <Callout variant="insight" title="Specific interest beats flattery">
           <p>
             &quot;This was a great conversation&quot; is filler. &quot;I&apos;m excited that the front-end team owns the whole path to
-            production and that you measure before optimizing — that&apos;s how I like to work&quot; is a close that proves you
+            production and that you measure before optimizing, that&apos;s how I like to work&quot; is a close that proves you
             listened, that you have taste, and that your interest is real. Tie your closing interest back to something
             specific they actually said.
           </p>
@@ -526,10 +526,10 @@ Example:   "I tend to go too deep on polishing details before getting
 
       {/* ───────────────────────── 11. TIE BACK ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Your technical phases ARE your stories — mine them</h2>
+        <h2 className="mb-4 text-2xl font-bold">Your technical phases ARE your stories, mine them</h2>
         <p className="mb-4">
           Here&apos;s the payoff of everything you&apos;ve built across this course. You don&apos;t need to invent behavioral stories
-          from scratch — the technical work you&apos;ve already done <em>is</em> the story bank. Each phase project is a
+          from scratch, the technical work you&apos;ve already done <em>is</em> the story bank. Each phase project is a
           ready-made STAR answer waiting to be framed:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
@@ -539,13 +539,13 @@ Example:   "I tend to go too deep on polishing details before getting
           <li><strong>Any time a teammate reviewed your code and you changed your approach</strong> → your &quot;disagreement&quot; or &quot;feedback&quot; story.</li>
         </ul>
         <p className="mb-4">
-          The behavioral round isn&apos;t a separate skill bolted onto the technical ones — it&apos;s the <em>narration layer</em>
+          The behavioral round isn&apos;t a separate skill bolted onto the technical ones, it&apos;s the <em>narration layer</em>
           on top of work you&apos;ve already done. Every hard thing you built or fixed is a story; STAR is just the structure
           you pour it into. Mine your own history before you reach for anything invented.
         </p>
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
-            If you came from backend, your old war stories transfer wholesale — a database race condition, a hot path you
+            If you came from backend, your old war stories transfer wholesale, a database race condition, a hot path you
             profiled and sped up, an on-call incident you led the postmortem on. The themes are identical; only the
             vocabulary changes. Don&apos;t leave those stories on the table just because the role is front-end. A
             cross-discipline debugging story is often <em>more</em> impressive, not less.
@@ -560,15 +560,15 @@ Example:   "I tend to go too deep on polishing details before getting
           question="At the end, the interviewer asks 'any questions for me?'. What's the best move?"
           options={[
             {
-              label: "Ask a prepared question only an insider could answer — about the path to production, the speed-vs-debt tradeoff, or what surprised them about working there",
+              label: "Ask a prepared question only an insider could answer, about the path to production, the speed-vs-debt tradeoff, or what surprised them about working there",
               correct: true,
               explanation:
-                "Yes. Good questions do double duty: they get you real information AND signal how you think (process, tradeoffs, honesty). They flip the dynamic so you're evaluating the team too — a clear seniority signal.",
+                "Yes. Good questions do double duty: they get you real information AND signal how you think (process, tradeoffs, honesty). They flip the dynamic so you're evaluating the team too, a clear seniority signal.",
             },
             {
               label: "Say 'no, I think you covered everything' to keep things efficient",
               explanation:
-                "This is a small disaster — it signals you weren't evaluating them and aren't genuinely interested. Always have three or four prepared questions ready.",
+                "This is a small disaster, it signals you weren't evaluating them and aren't genuinely interested. Always have three or four prepared questions ready.",
             },
             {
               label: "Ask how you did and whether you're getting an offer",
@@ -590,7 +590,7 @@ Example:   "I tend to go too deep on polishing details before getting
             {
               label: "Thank them politely and say it was a great conversation, then leave",
               explanation:
-                "That's filler and wastes prime real estate. A generic 'great conversation' leaves no impression — tie your interest to something concrete they said instead.",
+                "That's filler and wastes prime real estate. A generic 'great conversation' leaves no impression, tie your interest to something concrete they said instead.",
             },
             {
               label: "List every reason you're the best candidate to make sure they remember you",
@@ -611,12 +611,12 @@ Example:   "I tend to go too deep on polishing details before getting
               first person; Result quantified plus a lesson. It stops you rambling.
             </li>
             <li>
-              <strong>Prepare a small story bank.</strong> Five themes — hard bug, conflict, project I led, a failure,
-              a measurable win — recombined to answer almost any prompt.
+              <strong>Prepare a small story bank.</strong> Five themes, hard bug, conflict, project I led, a failure,
+              a measurable win, recombined to answer almost any prompt.
             </li>
             <li>
               <strong>Name tradeoffs and own outcomes.</strong> Cost, benefit, reason, and where I&apos;d decide
-              differently. Own my slice of any bad result plainly — ownership reads as confidence.
+              differently. Own my slice of any bad result plainly, ownership reads as confidence.
             </li>
             <li>
               <strong>Handle disagreement collaboratively.</strong> Acknowledge, restate, offer my view, propose a way
@@ -635,21 +635,21 @@ Example:   "I tend to go too deep on polishing details before getting
 
       {/* ───────────────────────── 13. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — build your behavioral kit on paper</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, build your behavioral kit on paper</h2>
         <p className="mb-4">
           Prepare STAR answers for the five most common behavioral prompts, script how you&apos;d handle a &quot;you&apos;re wrong&quot;
           moment gracefully, and write the three questions you&apos;ll ask the interviewer that show you think like a senior.
-          This is a writing-and-rehearsing exercise — the goal is a kit you can walk into any behavioral round with.
+          This is a writing-and-rehearsing exercise, the goal is a kit you can walk into any behavioral round with.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
           <li>
             <strong>Mine your history for five stories.</strong> One each for: a hard bug, a conflict/disagreement, a
             project you led, a failure you learned from, and a measurable improvement. Pull from your course projects if
-            you&apos;re short — the data-fetching race and the system-design mock are ready-made.
+            you&apos;re short, the data-fetching race and the system-design mock are ready-made.
           </li>
           <li>
             <strong>Write each one in STAR.</strong> One or two sentences of Situation and Task, a first-person Action
-            that&apos;s the bulk of it, and a Result with a number plus a one-line lesson. Read each aloud and time it —
+            that&apos;s the bulk of it, and a Result with a number plus a one-line lesson. Read each aloud and time it,
             aim for 90 seconds to two minutes.
           </li>
           <li>
@@ -671,16 +671,16 @@ Example:   "I tend to go too deep on polishing details before getting
             Re-record until the red flags are gone.
           </li>
           <li>
-            <strong>Stretch — run a full mock with a friend.</strong> Have them ask a curveball prompt you didn&apos;t
+            <strong>Stretch, run a full mock with a friend.</strong> Have them ask a curveball prompt you didn&apos;t
             prepare, then push back on one of your answers. Practice mapping the surprise question to a theme on the fly
             and handling the disagreement without collapsing or digging in.
           </li>
         </ol>
-        <Callout variant="spring" title="This is the last skill — and the one most people skip">
+        <Callout variant="spring" title="This is the last skill, and the one most people skip">
           <p>
             Candidates pour weeks into LeetCode and zero hours into behavioral prep, then lose the offer in the round
             they didn&apos;t practice. An hour spent writing and rehearsing this kit has a higher return than another hour of
-            algorithms, because almost no one does it. You&apos;ve built the technical foundation across ten phases — this
+            algorithms, because almost no one does it. You&apos;ve built the technical foundation across ten phases, this
             is how you make sure the room actually hears it.
           </p>
         </Callout>

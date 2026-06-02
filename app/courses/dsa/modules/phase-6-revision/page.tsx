@@ -62,7 +62,7 @@ flowchart TD
           Phase 6 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Eight algorithmic techniques — two pointers, sliding window, binary search, sorting, recursion, backtracking, greedy, bits — each with its tell, template, and classic example on a single dense card.
+          Eight algorithmic techniques, two pointers, sliding window, binary search, sorting, recursion, backtracking, greedy, bits, each with its tell, template, and classic example on a single dense card.
         </p>
         <BookmarkButton courseId="dsa" moduleSlug="phase-6-revision" />
         <ModuleProgress moduleSlug="phase-6-revision" checkpoints={CHECKPOINTS} />
@@ -71,7 +71,7 @@ flowchart TD
       {/* INTRO — set expectations + backlinks to all eight source modules */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It is a <strong>map of Phase 6</strong> — every pattern, every template, every gotcha from the eight previous modules, compressed into tables and reference cards. Phase 6 is the largest phase in the course (eight techniques, ~17 hours of source content) which is why this revision is the longest of the seven. Treat it as the page you re-read on the train before a phone screen, not as a tutorial.
+          This module is not new material. It is a <strong>map of Phase 6</strong>, every pattern, every template, every gotcha from the eight previous modules, compressed into tables and reference cards. Phase 6 is the largest phase in the course (eight techniques, ~17 hours of source content) which is why this revision is the longest of the seven. Treat it as the page you re-read on the train before a phone screen, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The eight modules you&apos;re consolidating:{" "}
@@ -100,7 +100,7 @@ flowchart TD
         </div>
 
         <Callout variant="insight" title="Reading the tree">
-          The tree is greedy left-to-right: take the <em>first</em>{" "}match. &quot;Sorted&quot; beats everything because two-pointer / binary-search collapse the problem instantly. &quot;Contiguous&quot; is the next strongest signal because it lets you drop from O(n²) to O(n) with a window. If nothing else fits, sorting the input is almost always a productive first move — it changes which sub-tree applies.
+          The tree is greedy left-to-right: take the <em>first</em>{" "}match. &quot;Sorted&quot; beats everything because two-pointer / binary-search collapse the problem instantly. &quot;Contiguous&quot; is the next strongest signal because it lets you drop from O(n²) to O(n) with a window. If nothing else fits, sorting the input is almost always a productive first move, it changes which sub-tree applies.
         </Callout>
       </section>
 
@@ -148,7 +148,7 @@ flowchart TD
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-amber-600">Sorting</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Merge intervals&quot;, &quot;k-th something&quot;, &quot;group by&quot; — sorting unlocks two-pointer / greedy on top</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Merge intervals&quot;, &quot;k-th something&quot;, &quot;group by&quot;, sorting unlocks two-pointer / greedy on top</td>
                 <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">Arrays.sort(a); /* then walk */</td>
                 <td className="px-4 py-3 font-mono text-amber-600">O(n log n)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 56 Merge Intervals, LC 215 Kth Largest</td>
@@ -162,7 +162,7 @@ flowchart TD
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold text-orange-600">Backtracking</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;All subsets&quot;, &quot;all permutations&quot;, &quot;all paths&quot;, &quot;N-queens&quot; — enumerate combinatorial space</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;All subsets&quot;, &quot;all permutations&quot;, &quot;all paths&quot;, &quot;N-queens&quot;, enumerate combinatorial space</td>
                 <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-400">choose → recurse → unchoose</td>
                 <td className="px-4 py-3 font-mono text-rose-600">O(2ⁿ) or O(n!)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">LC 78 Subsets, LC 46 Permutations, LC 51 N-Queens</td>
@@ -190,7 +190,7 @@ flowchart TD
       {/* SECTION 3 — Two pointers detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Two pointers — opposite-end vs same-direction</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">3. Two pointers, opposite-end vs same-direction</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Two flavors. They look similar in code but they answer different questions. The <strong>sorted-array tell</strong>{" "}is what tips you into opposite-end; partition / dedup / fast-slow is same-direction.
         </p>
@@ -201,7 +201,7 @@ flowchart TD
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               Pointers start at the two ends and walk toward each other. The array <strong>must be sorted</strong> (or have some monotone structure). Use for: Two Sum II, palindrome check, Container With Most Water.
             </p>
-            <CodeBlock lang="java" caption="Two Sum II — sorted input">{`int[] twoSum(int[] a, int target) {
+            <CodeBlock lang="java" caption="Two Sum II, sorted input">{`int[] twoSum(int[] a, int target) {
     int l = 0, r = a.length - 1;
     while (l < r) {
         int s = a[l] + a[r];
@@ -237,7 +237,7 @@ flowchart TD
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/two-pointers" className="text-indigo-600 hover:underline">Module 23 — Two pointers</Link>.
+          Source: <Link href="/courses/dsa/modules/two-pointers" className="text-indigo-600 hover:underline">Module 23, Two pointers</Link>.
         </p>
       </section>
 
@@ -245,13 +245,13 @@ flowchart TD
       {/* SECTION 4 — Sliding window detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Sliding window — fixed vs variable</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Sliding window, fixed vs variable</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A window is a same-direction two-pointer with state in the middle. Fixed-size windows are easy (one pointer effectively). Variable windows are the famous &quot;expand then contract&quot; pattern.
         </p>
 
-        <h3 className="mt-4 mb-2 text-base font-semibold">Fixed window — just slide</h3>
-        <CodeBlock lang="java" caption="LC 643 — Max average of a fixed k-sized window">{`double maxAverage(int[] a, int k) {
+        <h3 className="mt-4 mb-2 text-base font-semibold">Fixed window, just slide</h3>
+        <CodeBlock lang="java" caption="LC 643, Max average of a fixed k-sized window">{`double maxAverage(int[] a, int k) {
     long sum = 0;
     for (int i = 0; i < k; i++) sum += a[i];   // prime the window
     long best = sum;
@@ -262,7 +262,7 @@ flowchart TD
     return (double) best / k;
 }`}</CodeBlock>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Variable window — expand then contract</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Variable window, expand then contract</h3>
         <CodeBlock lang="java" caption="The canonical template">{`int variableWindow(int[] a) {
     int l = 0, best = 0;
     // any state you need: counts, sum, frequency map, etc.
@@ -285,7 +285,7 @@ flowchart TD
     return best;
 }`}</CodeBlock>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Window + frequency map — &quot;at most k distinct&quot;</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Window + frequency map, &quot;at most k distinct&quot;</h3>
         <CodeBlock lang="java" caption="Longest substring with at most k distinct characters">{`int longestKDistinct(String s, int k) {
     Map<Character, Integer> count = new HashMap<>();
     int l = 0, best = 0;
@@ -305,7 +305,7 @@ flowchart TD
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/sliding-window" className="text-indigo-600 hover:underline">Module 24 — Sliding window</Link>.
+          Source: <Link href="/courses/dsa/modules/sliding-window" className="text-indigo-600 hover:underline">Module 24, Sliding window</Link>.
         </p>
       </section>
 
@@ -313,9 +313,9 @@ flowchart TD
       {/* SECTION 5 — Binary search detail */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Binary search — the off-by-one minefield</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Binary search, the off-by-one minefield</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Pick <em>one</em>{" "}convention and stick to it. The convention rules below are for half-open <code>[l, r)</code> — the one that&apos;s easiest to extend to lower/upper bound.
+          Pick <em>one</em>{" "}convention and stick to it. The convention rules below are for half-open <code>[l, r)</code>, the one that&apos;s easiest to extend to lower/upper bound.
         </p>
 
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -362,7 +362,7 @@ flowchart TD
           </table>
         </div>
 
-        <h3 className="mt-4 mb-2 text-base font-semibold">Binary-search the answer (LC 875 — Koko Eating Bananas)</h3>
+        <h3 className="mt-4 mb-2 text-base font-semibold">Binary-search the answer (LC 875, Koko Eating Bananas)</h3>
         <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">
           When the array isn&apos;t sorted but the <em>answer</em>{" "}lives in a known range and there&apos;s a monotone predicate <code>feasible(x)</code>, you binary-search over the answer range. Total time is <code>O(n · log(max))</code>.
         </p>
@@ -387,11 +387,11 @@ boolean canFinish(int[] piles, int k, int h) {
 }`}</CodeBlock>
 
         <Callout variant="insight" title="The 5-question recipe for answer-search">
-          (1) What is the answer? (2) What range does it live in? (3) Is there a monotone predicate <code>feasible(x)</code> — i.e. if x works, does x+1 work? (4) Can you compute <code>feasible</code> in O(n)? (5) Do you want the smallest feasible or the largest? If you can answer all five, the binary search writes itself.
+          (1) What is the answer? (2) What range does it live in? (3) Is there a monotone predicate <code>feasible(x)</code>, i.e. if x works, does x+1 work? (4) Can you compute <code>feasible</code> in O(n)? (5) Do you want the smallest feasible or the largest? If you can answer all five, the binary search writes itself.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/binary-search" className="text-indigo-600 hover:underline">Module 25 — Binary search</Link>.
+          Source: <Link href="/courses/dsa/modules/binary-search" className="text-indigo-600 hover:underline">Module 25, Binary search</Link>.
         </p>
       </section>
 
@@ -399,9 +399,9 @@ boolean canFinish(int[] piles, int k, int h) {
       {/* SECTION 6 — Sorting algorithms table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Sorting algorithms — the comparison table</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Sorting algorithms, the comparison table</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Memorize this. The interview question is almost always &quot;tell me about merge sort&quot; or &quot;why is quicksort O(n²) in the worst case?&quot; — you need these numbers at the tip of your tongue.
+          Memorize this. The interview question is almost always &quot;tell me about merge sort&quot; or &quot;why is quicksort O(n²) in the worst case?&quot;, you need these numbers at the tip of your tongue.
         </p>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -434,7 +434,7 @@ boolean canFinish(int[] piles, int k, int h) {
                 <td className="px-4 py-3 text-rose-600">O(n²)</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)</td>
                 <td className="px-4 py-3 font-sans">No</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Always n² — no early exit possible. Useful when writes are expensive (only n swaps).</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Always n², no early exit possible. Useful when writes are expensive (only n swaps).</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">Insertion</td>
@@ -452,7 +452,7 @@ boolean canFinish(int[] piles, int k, int h) {
                 <td className="px-4 py-3 text-amber-600">O(n log n)</td>
                 <td className="px-4 py-3 text-amber-600">O(n)</td>
                 <td className="px-4 py-3 font-sans">Yes</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Guaranteed n log n. Not in-place — O(n) heap buffer. Stable.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Guaranteed n log n. Not in-place, O(n) heap buffer. Stable.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-sans font-semibold">Quick</td>
@@ -470,7 +470,7 @@ boolean canFinish(int[] piles, int k, int h) {
                 <td className="px-4 py-3 text-amber-600">O(n log n)</td>
                 <td className="px-4 py-3 text-emerald-600">O(1)</td>
                 <td className="px-4 py-3 font-sans">No</td>
-                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Worst-case guarantee AND in-place — but slower constants than quicksort in practice.</td>
+                <td className="px-4 py-3 font-sans text-xs text-slate-600 dark:text-slate-400">Worst-case guarantee AND in-place, but slower constants than quicksort in practice.</td>
               </tr>
             </tbody>
           </table>
@@ -478,14 +478,14 @@ boolean canFinish(int[] piles, int k, int h) {
 
         <Callout variant="info" title="What Arrays.sort actually uses in Java">
           <ul className="list-disc space-y-1 pl-5 text-sm">
-            <li><code>Arrays.sort(int[])</code> and other primitive overloads → <strong>dual-pivot Quicksort</strong> (Vladimir Yaroslavskiy). Fast, in-place, unstable — but primitives have no identity so stability doesn&apos;t matter.</li>
+            <li><code>Arrays.sort(int[])</code> and other primitive overloads → <strong>dual-pivot Quicksort</strong> (Vladimir Yaroslavskiy). Fast, in-place, unstable, but primitives have no identity so stability doesn&apos;t matter.</li>
             <li><code>Arrays.sort(Object[])</code> and <code>Collections.sort(List)</code> → <strong>TimSort</strong>. Stable, O(n log n) worst case, O(n) on nearly-sorted input. The cost is O(n) auxiliary space.</li>
-            <li>Two different algorithms because primitives don&apos;t need stability; objects often do (e.g. sorting people by name, then sorting by age — you want age-equal people to stay in name order).</li>
+            <li>Two different algorithms because primitives don&apos;t need stability; objects often do (e.g. sorting people by name, then sorting by age, you want age-equal people to stay in name order).</li>
           </ul>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/sorting" className="text-indigo-600 hover:underline">Module 26 — Sorting algorithms</Link>.
+          Source: <Link href="/courses/dsa/modules/sorting" className="text-indigo-600 hover:underline">Module 26, Sorting algorithms</Link>.
         </p>
       </section>
 
@@ -493,7 +493,7 @@ boolean canFinish(int[] piles, int k, int h) {
       {/* SECTION 7 — Recursion + backtracking template */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Recursion &amp; backtracking — the choose/explore/unchoose pattern</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. Recursion &amp; backtracking, the choose/explore/unchoose pattern</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Recursion is the <em>trust-the-recursive-call</em>{" "}contract. Backtracking is recursion plus mutation that you undo. The template is the same skeleton every time.
         </p>
@@ -513,7 +513,7 @@ boolean canFinish(int[] piles, int k, int h) {
 }`}</CodeBlock>
 
         <h3 className="mt-6 mb-2 text-base font-semibold">Real Java: LC 78 Subsets</h3>
-        <CodeBlock lang="java" caption="Enumerate all 2ⁿ subsets — the include-or-skip pattern">{`List<List<Integer>> subsets(int[] nums) {
+        <CodeBlock lang="java" caption="Enumerate all 2ⁿ subsets, the include-or-skip pattern">{`List<List<Integer>> subsets(int[] nums) {
     List<List<Integer>> out = new ArrayList<>();
     backtrack(nums, 0, new ArrayList<>(), out);
     return out;
@@ -534,7 +534,7 @@ void backtrack(int[] nums, int i, List<Integer> path, List<List<Integer>> out) {
 }`}</CodeBlock>
 
         <h3 className="mt-6 mb-2 text-base font-semibold">Real Java: LC 46 Permutations</h3>
-        <CodeBlock lang="java" caption="Permutations — visited[] tracks what's already in the path">{`List<List<Integer>> permute(int[] nums) {
+        <CodeBlock lang="java" caption="Permutations, visited[] tracks what's already in the path">{`List<List<Integer>> permute(int[] nums) {
     List<List<Integer>> out = new ArrayList<>();
     backtrack(nums, new boolean[nums.length], new ArrayList<>(), out);
     return out;
@@ -556,12 +556,12 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
 }`}</CodeBlock>
 
         <Callout variant="insight" title="The recursion contract (in one sentence)">
-          When you write the recursive call, <em>assume it works on the smaller input</em>. Don&apos;t trace through it — that&apos;s how you go insane. Just trust it, write the base case, and write what to do with its return value. The compiler / call stack handles the rest.
+          When you write the recursive call, <em>assume it works on the smaller input</em>. Don&apos;t trace through it, that&apos;s how you go insane. Just trust it, write the base case, and write what to do with its return value. The compiler / call stack handles the rest.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Sources: <Link href="/courses/dsa/modules/recursion" className="text-indigo-600 hover:underline">Module 27 — Recursion &amp; D&amp;C</Link>,{" "}
-          <Link href="/courses/dsa/modules/backtracking" className="text-indigo-600 hover:underline">Module 28 — Backtracking</Link>.
+          Sources: <Link href="/courses/dsa/modules/recursion" className="text-indigo-600 hover:underline">Module 27, Recursion &amp; D&amp;C</Link>,{" "}
+          <Link href="/courses/dsa/modules/backtracking" className="text-indigo-600 hover:underline">Module 28, Backtracking</Link>.
         </p>
       </section>
 
@@ -569,7 +569,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
       {/* SECTION 8 — Greedy decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">8. Greedy — when it works, when it fails</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">8. Greedy, when it works, when it fails</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Greedy is fast and clean when it works, and catastrophically wrong when it doesn&apos;t. The whole skill is knowing which side of the line you&apos;re on.
         </p>
@@ -582,14 +582,14 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
             </p>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li><strong>Interval scheduling</strong> (LC 435): sort by end time, take any interval that doesn&apos;t overlap.</li>
-              <li><strong>Jump Game</strong> (LC 55): track the furthest reachable index — local maximum is global.</li>
+              <li><strong>Jump Game</strong> (LC 55): track the furthest reachable index, local maximum is global.</li>
               <li><strong>Coin change with canonical denominations</strong> (USD: 1, 5, 10, 25): always take the largest coin that fits.</li>
               <li><strong>Huffman coding</strong>: greedily combine the two least-frequent symbols.</li>
             </ul>
           </div>
 
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">When greedy fails — use DP</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">When greedy fails, use DP</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
               The local choice has nonlocal consequences. The greedy answer differs from the optimum.
             </p>
@@ -597,7 +597,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
               <li><strong>Coin change with weird denominations</strong> (e.g. {`{1, 3, 4}`} to make 6): greedy says 4+1+1 (3 coins), but 3+3 (2 coins) is better. Needs DP.</li>
               <li><strong>0/1 Knapsack</strong>: taking the highest value-per-weight item first is wrong in general.</li>
               <li><strong>Longest path in a DAG</strong>: locally short edges can lead to globally long paths.</li>
-              <li><strong>Edit distance</strong>: there&apos;s no local rule that always works — you need to consider all three operations.</li>
+              <li><strong>Edit distance</strong>: there&apos;s no local rule that always works, you need to consider all three operations.</li>
             </ul>
           </div>
         </div>
@@ -607,7 +607,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/greedy" className="text-indigo-600 hover:underline">Module 29 — Greedy algorithms</Link>.
+          Source: <Link href="/courses/dsa/modules/greedy" className="text-indigo-600 hover:underline">Module 29, Greedy algorithms</Link>.
         </p>
       </section>
 
@@ -615,7 +615,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
       {/* SECTION 9 — Bit manipulation reference */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">9. Bit manipulation — operators reference</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">9. Bit manipulation, operators reference</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Java has seven bitwise operators. Three you use every day (<code>&amp;</code>, <code>|</code>, <code>^</code>), three you confuse (<code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>&gt;&gt;&gt;</code>), and one you forget exists (<code>~</code>).
         </p>
@@ -678,7 +678,7 @@ void backtrack(int[] nums, boolean[] used, List<Integer> path, List<List<Integer
         </div>
 
         <Callout variant="insight" title="XOR&apos;s three superpowers">
-          (1) <strong>Self-inverse:</strong> <code>a ^ a == 0</code>. XOR every element of a list where one number appears once and the rest appear twice — you get the singleton. (LC 136). (2) <strong>Identity:</strong> <code>a ^ 0 == a</code>. (3) <strong>Swap without temp:</strong>
+          (1) <strong>Self-inverse:</strong> <code>a ^ a == 0</code>. XOR every element of a list where one number appears once and the rest appear twice, you get the singleton. (LC 136). (2) <strong>Identity:</strong> <code>a ^ 0 == a</code>. (3) <strong>Swap without temp:</strong>
           <CodeBlock lang="java">{`a ^= b;
 b ^= a;   // now b holds original a
 a ^= b;   // now a holds original b`}</CodeBlock>
@@ -686,7 +686,7 @@ a ^= b;   // now a holds original b`}</CodeBlock>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/dsa/modules/bit-manipulation" className="text-indigo-600 hover:underline">Module 30 — Bit manipulation</Link>.
+          Source: <Link href="/courses/dsa/modules/bit-manipulation" className="text-indigo-600 hover:underline">Module 30, Bit manipulation</Link>.
         </p>
       </section>
 
@@ -845,16 +845,16 @@ int partition(int[] a, int lo, int hi) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">11. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Six quick recall checks (one extra because this phase has eight modules). No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Six quick recall checks (one extra because this phase has eight modules). No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You see: 'Given a sorted array, find two numbers that sum to target.' Which technique is the first thing you reach for?"
           options={[
-            { label: "HashMap of complements — one pass, O(n) time, O(n) space.", explanation: "Correct for the unsorted version (LC 1 Two Sum). For a sorted array you can do strictly better on space: O(1) with two pointers." },
-            { label: "Opposite-end two pointers — converge l and r based on the sum.", correct: true, explanation: "Right. The sorted-array tell is the canonical opposite-end two-pointer signal. O(n) time, O(1) space. The HashMap solution works but wastes the sortedness." },
-            { label: "Binary search for each element's complement — O(n log n).", explanation: "Works, but strictly worse than two pointers. If the input is sorted, two pointers is O(n) versus O(n log n) for repeated binary search." },
+            { label: "HashMap of complements, one pass, O(n) time, O(n) space.", explanation: "Correct for the unsorted version (LC 1 Two Sum). For a sorted array you can do strictly better on space: O(1) with two pointers." },
+            { label: "Opposite-end two pointers, converge l and r based on the sum.", correct: true, explanation: "Right. The sorted-array tell is the canonical opposite-end two-pointer signal. O(n) time, O(1) space. The HashMap solution works but wastes the sortedness." },
+            { label: "Binary search for each element's complement, O(n log n).", explanation: "Works, but strictly worse than two pointers. If the input is sorted, two pointers is O(n) versus O(n log n) for repeated binary search." },
             { label: "Sliding window over pairs.", explanation: "Sliding window is for contiguous subarrays/substrings with a property. Two Sum is about a pair, not a window." },
           ]}
         />
@@ -864,7 +864,7 @@ int partition(int[] a, int lo, int hi) {
           question="In a sliding window, when does the contraction (l++) happen?"
           options={[
             { label: "On every iteration of r, regardless of state.", explanation: "That would be a fixed-size window. Variable windows contract conditionally." },
-            { label: "Only at the end, after the loop finishes.", explanation: "Then l never actually moves during the loop — you'd record invalid windows." },
+            { label: "Only at the end, after the loop finishes.", explanation: "Then l never actually moves during the loop, you'd record invalid windows." },
             { label: "After expanding with a[r], while the window invariant is violated.", correct: true, explanation: "Right. Expand → contract-until-valid → record. That ordering is what makes the invariant hold every time you read out a window size." },
             { label: "Before expanding, to make room for the new element.", explanation: "Pre-shrinking starves the window. Expand first; only contract if the new element broke the invariant." },
           ]}
@@ -874,20 +874,20 @@ int partition(int[] a, int lo, int hi) {
           kind="Recall check"
           question="What's the safe midpoint formula in binary search, and why?"
           options={[
-            { label: "(lo + hi) / 2 — it's mathematically equivalent and clearer.", explanation: "Mathematically equivalent, but it overflows when lo + hi > Integer.MAX_VALUE. This bug lived in the JDK's own Arrays.binarySearch for a decade." },
+            { label: "(lo + hi) / 2, it's mathematically equivalent and clearer.", explanation: "Mathematically equivalent, but it overflows when lo + hi > Integer.MAX_VALUE. This bug lived in the JDK's own Arrays.binarySearch for a decade." },
             { label: "lo + (hi - lo) / 2, because (hi - lo) is non-negative and fits in an int.", correct: true, explanation: "Right. Subtraction first guarantees no overflow even at INT_MAX. Equivalent: (lo + hi) >>> 1, the unsigned-shift form." },
-            { label: "Math.floorDiv(lo + hi, 2) — Java has a built-in.", explanation: "Math.floorDiv doesn't prevent the overflow; the int sum (lo + hi) overflows before floorDiv ever sees it." },
-            { label: "(lo + hi) >> 1 — arithmetic shift divides by 2.", explanation: "Same overflow problem — the sum is computed first. Worse: >> sign-extends, so an overflowed negative midpoint stays negative. Use >>> instead." },
+            { label: "Math.floorDiv(lo + hi, 2), Java has a built-in.", explanation: "Math.floorDiv doesn't prevent the overflow; the int sum (lo + hi) overflows before floorDiv ever sees it." },
+            { label: "(lo + hi) >> 1, arithmetic shift divides by 2.", explanation: "Same overflow problem, the sum is computed first. Worse: >> sign-extends, so an overflowed negative midpoint stays negative. Use >>> instead." },
           ]}
         />
 
         <Quiz
           kind="Recall check"
-          question="Java's Arrays.sort(Object[]) uses which algorithm — and why isn't it the same as Arrays.sort(int[])?"
+          question="Java's Arrays.sort(Object[]) uses which algorithm, and why isn't it the same as Arrays.sort(int[])?"
           options={[
             { label: "Both use dual-pivot Quicksort because it's the fastest in practice.", explanation: "Half right. Primitives use dual-pivot Quicksort, but objects use TimSort. The reason: stability." },
-            { label: "TimSort for objects, dual-pivot Quicksort for primitives — because objects often need stable sort and primitives don't have identity.", correct: true, explanation: "Right. Stability matters for objects (sort-by-name then sort-by-age expects age-equal people to stay in name order). Primitives have no identity so stability is meaningless — and dual-pivot Quicksort is faster." },
-            { label: "Both use TimSort to guarantee O(n log n) worst case.", explanation: "Wrong on primitives — they use dual-pivot Quicksort, which is O(n²) worst case (but very fast on average)." },
+            { label: "TimSort for objects, dual-pivot Quicksort for primitives, because objects often need stable sort and primitives don't have identity.", correct: true, explanation: "Right. Stability matters for objects (sort-by-name then sort-by-age expects age-equal people to stay in name order). Primitives have no identity so stability is meaningless, and dual-pivot Quicksort is faster." },
+            { label: "Both use TimSort to guarantee O(n log n) worst case.", explanation: "Wrong on primitives, they use dual-pivot Quicksort, which is O(n²) worst case (but very fast on average)." },
             { label: "Heapsort for both because it's the only in-place O(n log n) algorithm.", explanation: "Heapsort isn't used by either default. Quicksort wins on primitives despite the worst case; TimSort wins on objects despite the O(n) extra memory." },
           ]}
         />
@@ -896,10 +896,10 @@ int partition(int[] a, int lo, int hi) {
           kind="Recall check"
           question="In the backtracking template, the line 'path.remove(path.size() - 1)' is missing. What's the visible symptom?"
           options={[
-            { label: "Compile error — Java requires symmetric mutation.", explanation: "Java doesn't enforce this; the symptom shows at runtime via wrong output." },
+            { label: "Compile error, Java requires symmetric mutation.", explanation: "Java doesn't enforce this; the symptom shows at runtime via wrong output." },
             { label: "Stack overflow because the recursion never terminates.", explanation: "Recursion still terminates on the base case. The symptom is corrupted output, not infinite depth." },
-            { label: "The results list contains paths that grow monotonically — each one longer than the last, with all prior choices still attached.", correct: true, explanation: "Right. Without unchoose, sibling recursive calls inherit the polluted state. You'd see [[1], [1,2], [1,2,3], ...] instead of [[1], [2], [3], [1,2], ...]. The whole shared-mutable-state model collapses." },
-            { label: "The function still works because Java passes lists by value.", explanation: "Java passes object references by value — meaning the list is shared across all recursive frames. That's exactly why the unchoose is non-negotiable." },
+            { label: "The results list contains paths that grow monotonically, each one longer than the last, with all prior choices still attached.", correct: true, explanation: "Right. Without unchoose, sibling recursive calls inherit the polluted state. You'd see [[1], [1,2], [1,2,3], ...] instead of [[1], [2], [3], [1,2], ...]. The whole shared-mutable-state model collapses." },
+            { label: "The function still works because Java passes lists by value.", explanation: "Java passes object references by value, meaning the list is shared across all recursive frames. That's exactly why the unchoose is non-negotiable." },
           ]}
         />
 
@@ -907,8 +907,8 @@ int partition(int[] a, int lo, int hi) {
           kind="Recall check"
           question="You XOR every element of an array. What property must the array have for the result to be 'the unique element'?"
           options={[
-            { label: "The array must be sorted.", explanation: "Sortedness is irrelevant — XOR is commutative and associative, so order doesn't matter." },
-            { label: "Every element except one appears exactly twice; the singleton appears once.", correct: true, explanation: "Right. a ^ a = 0, so all pairs cancel. a ^ 0 = a, so the singleton survives. This is LC 136 Single Number — O(n) time, O(1) space." },
+            { label: "The array must be sorted.", explanation: "Sortedness is irrelevant, XOR is commutative and associative, so order doesn't matter." },
+            { label: "Every element except one appears exactly twice; the singleton appears once.", correct: true, explanation: "Right. a ^ a = 0, so all pairs cancel. a ^ 0 = a, so the singleton survives. This is LC 136 Single Number, O(n) time, O(1) space." },
             { label: "All elements are positive.", explanation: "XOR works on the bit pattern; sign doesn't matter. Negative numbers cancel just the same." },
             { label: "The array length must be a power of 2.", explanation: "No size constraint. Pairs cancel regardless of total length, as long as the structure is 'pairs plus one singleton'." },
           ]}
@@ -920,14 +920,14 @@ int partition(int[] a, int lo, int hi) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 via-white to-pink-50 p-6 dark:border-fuchsia-900 dark:from-fuchsia-950/30 dark:via-slate-900 dark:to-pink-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-fuchsia-700 uppercase dark:text-fuchsia-300">
-          Phase 6 — locked in
+          Phase 6, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can now name the technique on sight</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Two pointers (sorted-array tell), sliding window (contiguous tell), binary search (sorted OR monotone-predicate tell), sorting (the unlock), recursion &amp; D&amp;C (self-similar tell), backtracking (combinatorial-enumeration tell), greedy (local-is-global tell), and bit manipulation (the small-state / XOR tell). That&apos;s the whole pattern vocabulary you&apos;ll need to discuss approaches in 90% of interview problems.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 7 — Dynamic Programming.</strong>{" "}The pattern that subsumes recursion, backtracking, AND greedy when those don&apos;t cut it. Memoization, tabulation, 1D and 2D state, and the &quot;overlapping subproblems&quot; tell.
+          <strong>Up next: Phase 7, Dynamic Programming.</strong>{" "}The pattern that subsumes recursion, backtracking, AND greedy when those don&apos;t cut it. Memoization, tabulation, 1D and 2D state, and the &quot;overlapping subproblems&quot; tell.
         </p>
         <Link
           href="/courses/dsa/modules/dp-intro"

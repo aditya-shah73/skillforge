@@ -12,12 +12,12 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "template", title: "The 1D template — 'decision at index i'" },
-  { id: "coin-change", title: "Coin Change — unbounded choice" },
-  { id: "word-break", title: "Word Break — segmentation DP" },
-  { id: "lis", title: "Longest Increasing Subsequence — the 'ending at i' anchor" },
-  { id: "decode-ways", title: "Decode Ways — Climbing Stairs with validation" },
-  { id: "cheatsheet", title: "Recognizing 1D DP — the cheat sheet" },
+  { id: "template", title: "The 1D template, 'decision at index i'" },
+  { id: "coin-change", title: "Coin Change, unbounded choice" },
+  { id: "word-break", title: "Word Break, segmentation DP" },
+  { id: "lis", title: "Longest Increasing Subsequence, the 'ending at i' anchor" },
+  { id: "decode-ways", title: "Decode Ways, Climbing Stairs with validation" },
+  { id: "cheatsheet", title: "Recognizing 1D DP, the cheat sheet" },
 ];
 
 export default function Dp1dModule() {
@@ -150,15 +150,15 @@ flowchart TB
       {/* ───────────────── Part 1 · Template ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="template" title="I see the 'decision at index i' shape" xp={20}>
       <section>
-        <h2 id="template">The 1D template — &quot;decision at index i&quot;</h2>
+        <h2 id="template">The 1D template, &quot;decision at index i&quot;</h2>
 
         <p>
           Every 1D DP problem you&apos;ll see in this module fits one mental shape. You&apos;re scanning
-          left to right through a sequence — an array, a string, a list of choices. At each index{" "}
+          left to right through a sequence, an array, a string, a list of choices. At each index{" "}
           <code>i</code>, you make <em>one local decision</em>: take or skip, include in a run, match a
           dictionary word ending here, pair with the previous character. The key claim of dynamic
           programming: <strong>everything you need from the past is already summarized in{" "}
-          <code>dp[0..i-1]</code></strong> — you don&apos;t have to look at the original input again,
+          <code>dp[0..i-1]</code></strong>, you don&apos;t have to look at the original input again,
           just the table.
         </p>
 
@@ -171,8 +171,8 @@ flowchart TB
         </p>
 
         <ul>
-          <li><strong>&quot;First i elements&quot;</strong> — <code>dp[i]</code> is the answer for the prefix <code>a[0..i)</code>. Coin Change (with amount as the &quot;index&quot;), Word Break, Decode Ways. The recurrence asks: &quot;given that I&apos;ve solved every smaller prefix, how do I extend?&quot;</li>
-          <li><strong>&quot;Ending at i&quot;</strong> — <code>dp[i]</code> is the answer for sub-solutions that <em>must include</em> <code>a[i]</code>. LIS, Maximum Subarray, House Robber (with a small twist). This anchor is what makes the recurrence decompose; you&apos;ll see why in the LIS section.</li>
+          <li><strong>&quot;First i elements&quot;</strong>, <code>dp[i]</code> is the answer for the prefix <code>a[0..i)</code>. Coin Change (with amount as the &quot;index&quot;), Word Break, Decode Ways. The recurrence asks: &quot;given that I&apos;ve solved every smaller prefix, how do I extend?&quot;</li>
+          <li><strong>&quot;Ending at i&quot;</strong>, <code>dp[i]</code> is the answer for sub-solutions that <em>must include</em> <code>a[i]</code>. LIS, Maximum Subarray, House Robber (with a small twist). This anchor is what makes the recurrence decompose; you&apos;ll see why in the LIS section.</li>
         </ul>
 
         <p>
@@ -187,8 +187,8 @@ where f is one of:
     OR/AND   — boolean (reachability) problems`}</CodeBlock>
 
         <p>
-          The <em>look-back distance</em> — whether you peek at <code>dp[i-1]</code> only, or back
-          through every <code>dp[j]</code> for <code>j &lt; i</code> — is what determines time
+          The <em>look-back distance</em>, whether you peek at <code>dp[i-1]</code> only, or back
+          through every <code>dp[j]</code> for <code>j &lt; i</code>, is what determines time
           complexity. Climbing Stairs looks at <code>dp[i-1]</code> and <code>dp[i-2]</code>: O(n). LIS
           looks at all <code>dp[j]</code> for <code>j &lt; i</code>: O(n²). Knowing which one a problem
           is ahead of time is most of the skill.
@@ -225,7 +225,7 @@ where f is one of:
           <p>
             Notice the <code>n + 1</code>. When <code>dp[i]</code> means &quot;answer for the first i
             elements,&quot; the index <code>i</code> ranges from <code>0</code> (empty) to <code>n</code>{" "}
-            (full array) — that&apos;s n+1 distinct states. <code>dp[0]</code> is the &quot;empty
+            (full array), that&apos;s n+1 distinct states. <code>dp[0]</code> is the &quot;empty
             input&quot; base case, which is almost always a clean value (0 ways, 0 coins, true
             reachability for empty prefix).
           </p>
@@ -236,13 +236,13 @@ where f is one of:
           </p>
         </Callout>
 
-        <h3>Top-down vs bottom-up — same recurrence</h3>
+        <h3>Top-down vs bottom-up, same recurrence</h3>
 
         <p>
           You learned both styles in dp-intro. For 1D problems, <strong>bottom-up tabulation is
           almost always cleaner</strong>: the dependency graph is a clean line (each <code>dp[i]</code>{" "}
           needs only smaller indices), so you can fill the array in order with no recursion overhead and
-          no stack risk. Reach for memoization only when the state space is sparse — i.e., when many
+          no stack risk. Reach for memoization only when the state space is sparse, i.e., when many
           indices are never visited and you want to skip the work.
         </p>
 
@@ -256,9 +256,9 @@ where f is one of:
           question="A problem asks: 'how many ways to climb n stairs taking 1 or 2 at a time?' What is dp[i]?"
           options={[
             { label: "dp[i] = the i-th step's height.", explanation: "Heights aren't a thing here. dp[i] is the count of ways to reach step i." },
-            { label: "dp[i] = number of ways to reach step i.", correct: true, explanation: "Right. The classic 'first i elements' framing — dp[i] is the answer to the subproblem 'reach exactly step i.' Recurrence: dp[i] = dp[i-1] + dp[i-2] (one step from i-1 or two steps from i-2). Base: dp[0] = 1, dp[1] = 1." },
-            { label: "dp[i] = the size of the i-th step.", explanation: "Same misread as A — 'i' is an index into the count of ways to arrive, not a physical attribute." },
-            { label: "dp[i] = whether step i is reachable (true/false).", explanation: "Reachability would be boolean — the question asks for COUNT, not whether it's possible. Counting problems use sum recurrences, not OR." },
+            { label: "dp[i] = number of ways to reach step i.", correct: true, explanation: "Right. The classic 'first i elements' framing, dp[i] is the answer to the subproblem 'reach exactly step i.' Recurrence: dp[i] = dp[i-1] + dp[i-2] (one step from i-1 or two steps from i-2). Base: dp[0] = 1, dp[1] = 1." },
+            { label: "dp[i] = the size of the i-th step.", explanation: "Same misread as A, 'i' is an index into the count of ways to arrive, not a physical attribute." },
+            { label: "dp[i] = whether step i is reachable (true/false).", explanation: "Reachability would be boolean, the question asks for COUNT, not whether it's possible. Counting problems use sum recurrences, not OR." },
           ]}
         />
 
@@ -267,7 +267,7 @@ where f is one of:
           question="Why does this recurrence template look at only a few previous dp[] values rather than all of them?"
           options={[
             { label: "Java arrays are too slow for full lookbacks.", explanation: "Java arrays are O(1) access. The look-back distance is dictated by the problem, not the language." },
-            { label: "It depends on the problem. Climbing Stairs needs dp[i-1] and dp[i-2]; LIS needs every dp[j] for j < i. The recurrence dictates the lookback distance, which dictates time complexity.", correct: true, explanation: "Right. The number of dp[] values you reference per step is exactly the recurrence's branching factor. Constant lookback → O(n). Linear lookback (LIS) → O(n²). Recognizing the lookback distance from the problem statement is the key skill — it's what tells you the expected complexity." },
+            { label: "It depends on the problem. Climbing Stairs needs dp[i-1] and dp[i-2]; LIS needs every dp[j] for j < i. The recurrence dictates the lookback distance, which dictates time complexity.", correct: true, explanation: "Right. The number of dp[] values you reference per step is exactly the recurrence's branching factor. Constant lookback → O(n). Linear lookback (LIS) → O(n²). Recognizing the lookback distance from the problem statement is the key skill, it's what tells you the expected complexity." },
             { label: "Memory limits.", explanation: "DP tables are typically tiny (kilobytes). Memory isn't the constraint." },
             { label: "Cache locality.", explanation: "Cache effects are real but secondary. The main reason is the structure of the problem itself." },
           ]}
@@ -278,7 +278,7 @@ where f is one of:
       {/* ───────────────── Part 2 · Coin Change ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="coin-change" title="I can write Coin Change without notes" xp={25}>
       <section>
-        <h2 id="coin-change">Coin Change — unbounded choice</h2>
+        <h2 id="coin-change">Coin Change, unbounded choice</h2>
 
         <p>
           <strong>LC 322 · Coin Change.</strong>{" "}Given an array <code>coins</code> (each coin
@@ -289,7 +289,7 @@ where f is one of:
         <p>
           The first instinct most people have is greedy: at each step, take the largest coin that
           fits. This <em>fails</em>. Counterexample: coins = {`{1, 3, 4}`}, target = 6. Greedy takes 4,
-          then needs 2 more — that&apos;s 4+1+1, three coins. The optimal is 3+3, two coins. Greedy
+          then needs 2 more, that&apos;s 4+1+1, three coins. The optimal is 3+3, two coins. Greedy
           misses it because committing to the largest coin can leave a remainder that&apos;s expensive
           to fill.
         </p>
@@ -298,7 +298,7 @@ where f is one of:
 
         <Callout variant="warn" title="Why greedy fails for general coin sets">
           <p>
-            Greedy <em>does</em>{" "}work for some special sets — US currency {`{1, 5, 10, 25}`} is the
+            Greedy <em>does</em>{" "}work for some special sets, US currency {`{1, 5, 10, 25}`} is the
             classic example, where any change can be made greedily. These are called &quot;canonical
             coin systems,&quot; and proving a coin set is canonical is non-trivial.
           </p>
@@ -324,7 +324,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
           Each amount <code>a</code> is the index <code>i</code> in our generic template. The
           &quot;decision at amount a&quot; is: which coin do I place last? Whichever coin we pick,
           the subproblem <code>dp[a - c]</code> is already solved by the time we&apos;re computing{" "}
-          <code>dp[a]</code> — that&apos;s the bottom-up order.
+          <code>dp[a]</code>, that&apos;s the bottom-up order.
         </p>
 
         <h3>Java implementation</h3>
@@ -351,14 +351,14 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
           <p>
             If <code>dp[a - c]</code> is unreachable, we want any addition of 1 to still leave
             <code>dp[a]</code> &quot;unreachable.&quot; <code>Integer.MAX_VALUE + 1</code>{" "}
-            <em>overflows</em>{" "}to <code>Integer.MIN_VALUE</code> — silently wrong, and the bug only
+            <em>overflows</em>{" "}to <code>Integer.MIN_VALUE</code>, silently wrong, and the bug only
             shows up on certain inputs.
           </p>
           <p>
             <code>amount + 1</code> is large enough to be strictly bigger than any valid answer (the
             worst valid answer is <code>amount</code> coins of denomination 1), but small enough that
             adding 1 to it never overflows. Final check: if <code>dp[amount]</code> is still &gt;{" "}
-            <code>amount</code>, no coin combination reaches the target — return -1.
+            <code>amount</code>, no coin combination reaches the target, return -1.
           </p>
         </Callout>
 
@@ -370,7 +370,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
         </ul>
 
         <p>
-          Notice this is not O(n) where n is array size — the table is keyed on <em>amount</em>, the
+          Notice this is not O(n) where n is array size, the table is keyed on <em>amount</em>, the
           target value, not on any input length. This is a recurring twist in DP: the &quot;index&quot;
           isn&apos;t always an array position. Sometimes it&apos;s a target value, a string length, a
           remaining capacity. Whatever you can use to index the subproblems.
@@ -379,9 +379,9 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
         <h3>Variations to know exist</h3>
 
         <ul>
-          <li><strong>LC 518 · Coin Change 2.</strong>{" "}Counts the <em>number of ways</em>{" "}to make the amount, not the minimum coin count. Same shape (<code>dp[a] = sum over coins of dp[a - c]</code>), but the loop order matters: outer over coins, inner over amounts — to avoid double-counting permutations as separate combinations.</li>
+          <li><strong>LC 518 · Coin Change 2.</strong>{" "}Counts the <em>number of ways</em>{" "}to make the amount, not the minimum coin count. Same shape (<code>dp[a] = sum over coins of dp[a - c]</code>), but the loop order matters: outer over coins, inner over amounts, to avoid double-counting permutations as separate combinations.</li>
           <li><strong>Bounded Coin Change.</strong>{" "}Each coin has a finite supply. Add another dimension to the state: <code>dp[a][i]</code> = min coins using only first i types. (Phase 7&apos;s next module.)</li>
-          <li><strong>Combination Sum (LC 39).</strong>{" "}All distinct combinations summing to target, each combination listed. Backtracking, not DP — but the recurrence shape rhymes.</li>
+          <li><strong>Combination Sum (LC 39).</strong>{" "}All distinct combinations summing to target, each combination listed. Backtracking, not DP, but the recurrence shape rhymes.</li>
         </ul>
 
         <Quiz
@@ -389,7 +389,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
           question="In the standard min-coins solution, why do we initialize dp[] with `amount + 1` instead of `Integer.MAX_VALUE`?"
           options={[
             { label: "Style preference; both work.", explanation: "They don't both work. MAX_VALUE breaks. The choice of sentinel is correctness, not style." },
-            { label: "amount + 1 is larger than any valid answer (since worst-case is all-1s = amount coins), but adding 1 never overflows; MAX_VALUE + 1 wraps around to MIN_VALUE silently.", correct: true, explanation: "Right. The recurrence does dp[a-c] + 1; if dp[a-c] is the sentinel, that addition must NOT produce a smaller number. MAX_VALUE + 1 wraps in two's complement and you get a 'min coins = -2147483648' bug. amount + 1 is the standard fix — large enough to mean 'unreachable,' small enough to be safe." },
+            { label: "amount + 1 is larger than any valid answer (since worst-case is all-1s = amount coins), but adding 1 never overflows; MAX_VALUE + 1 wraps around to MIN_VALUE silently.", correct: true, explanation: "Right. The recurrence does dp[a-c] + 1; if dp[a-c] is the sentinel, that addition must NOT produce a smaller number. MAX_VALUE + 1 wraps in two's complement and you get a 'min coins = -2147483648' bug. amount + 1 is the standard fix, large enough to mean 'unreachable,' small enough to be safe." },
             { label: "amount + 1 is faster to write.", explanation: "Speed of writing isn't the reason. Correctness is." },
             { label: "Java doesn't allow MAX_VALUE in array initialization.", explanation: "It absolutely does. The bug is arithmetic overflow, not language restriction." },
           ]}
@@ -399,10 +399,10 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
           kind="Coin Change check"
           question="What's the time complexity of the bottom-up solution in terms of `amount` (call it M) and the number of coin denominations K?"
           options={[
-            { label: "O(M + K).", explanation: "Each amount tries every coin — that's M*K, not M+K." },
-            { label: "O(M log K).", explanation: "No log factor — we just linearly scan the K coins for each of the M amounts." },
-            { label: "O(M * K).", correct: true, explanation: "Right. M iterations of the outer loop, K iterations of the inner loop, constant work inside. Total M*K. Note: this is NOT polynomial in the input size — M is the numeric VALUE of the amount, which can be exponentially large in its bit-length. (This is the classic 'pseudopolynomial' twist for knapsack-family problems.)" },
-            { label: "O(K^M).", explanation: "K^M would be brute-force enumeration of all coin sequences. DP shares work across subproblems — that's the whole point." },
+            { label: "O(M + K).", explanation: "Each amount tries every coin, that's M*K, not M+K." },
+            { label: "O(M log K).", explanation: "No log factor, we just linearly scan the K coins for each of the M amounts." },
+            { label: "O(M * K).", correct: true, explanation: "Right. M iterations of the outer loop, K iterations of the inner loop, constant work inside. Total M*K. Note: this is NOT polynomial in the input size, M is the numeric VALUE of the amount, which can be exponentially large in its bit-length. (This is the classic 'pseudopolynomial' twist for knapsack-family problems.)" },
+            { label: "O(K^M).", explanation: "K^M would be brute-force enumeration of all coin sequences. DP shares work across subproblems, that's the whole point." },
           ]}
         />
       </section>
@@ -411,7 +411,7 @@ dp[0] = 0   (zero coins to make amount zero)`}</CodeBlock>
       {/* ───────────────── Part 3 · Word Break ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="word-break" title="I can solve Word Break and tell it apart from look-alikes" xp={25}>
       <section>
-        <h2 id="word-break">Word Break — segmentation DP</h2>
+        <h2 id="word-break">Word Break, segmentation DP</h2>
 
         <p>
           <strong>LC 139 · Word Break.</strong>{" "}Given a string <code>s</code> and a dictionary of
@@ -441,7 +441,7 @@ dp[0] = true   (empty prefix is trivially segmentable)
 answer = dp[n]`}</CodeBlock>
 
         <p>
-          The recurrence is a boolean OR — we&apos;re doing reachability, not optimization. Once
+          The recurrence is a boolean OR, we&apos;re doing reachability, not optimization. Once
           we&apos;ve found <em>one</em>{" "}way to segment the prefix, we&apos;re done with that prefix;
           set <code>dp[i] = true</code> and short-circuit.
         </p>
@@ -468,15 +468,15 @@ answer = dp[n]`}</CodeBlock>
 
         <Callout variant="info" title="The substring is the costly part">
           <p>
-            <code>s.substring(j, i)</code> is O(i - j) in Java — a fresh string allocation each call.
+            <code>s.substring(j, i)</code> is O(i - j) in Java, a fresh string allocation each call.
             And <code>dict.contains</code> on the new string costs O(i - j) hashing too. So a strict
             analysis gives O(n³) in the worst case, dropping to O(n² · L) where L is
             max-word-length if you cap the inner loop by L.
           </p>
           <p>
             For LeetCode constraints (n ≤ 300, dictionary of small words), the simple version flies.
-            Optimizations exist — bound the inner loop by max-word-length, or use a Trie to skip
-            impossible word-end positions — but the textbook two-nested-loop version with substring
+            Optimizations exist, bound the inner loop by max-word-length, or use a Trie to skip
+            impossible word-end positions, but the textbook two-nested-loop version with substring
             lookups is what you write under interview pressure.
           </p>
         </Callout>
@@ -496,7 +496,7 @@ dp[8] = dp[4] && "code" in dict → true
 answer = dp[8] = true`}</CodeBlock>
 
         <p>
-          The walk through dp[4] is the moment of truth — once we know &quot;leet&quot; is reachable,
+          The walk through dp[4] is the moment of truth, once we know &quot;leet&quot; is reachable,
           we can build on it. The whole DP is a chain of these moments.
         </p>
 
@@ -505,7 +505,7 @@ answer = dp[8] = true`}</CodeBlock>
         <p>
           Word Break <em>looks</em>{" "}like a string-scan problem and learners sometimes try a sliding
           window. It doesn&apos;t fit. The reason: <strong>the &quot;decision&quot; at each position
-          isn&apos;t a single local choice that monotonically grows or shrinks something</strong> —
+          isn&apos;t a single local choice that monotonically grows or shrinks something</strong>,
           it&apos;s &quot;does there exist <em>any</em>{" "}split of this prefix?&quot;, which requires
           information from <em>all</em>{" "}earlier positions, not just an expanding-then-contracting
           window. Sliding window has no way to express &quot;OR over many j&apos;s.&quot;
@@ -525,13 +525,13 @@ answer = dp[8] = true`}</CodeBlock>
             { id: "other", label: "Different technique", color: "indigo" },
           ]}
           items={[
-            { id: "1", label: "Longest substring with at most 3 distinct characters.", answer: "other", explanation: "Sliding window. Local invariant (distinct count <= 3), monotonic in window size — the textbook variable-window setup." },
+            { id: "1", label: "Longest substring with at most 3 distinct characters.", answer: "other", explanation: "Sliding window. Local invariant (distinct count <= 3), monotonic in window size, the textbook variable-window setup." },
             { id: "2", label: "Given coins {1, 5, 10, 21, 25}, minimum coins to make 63.", answer: "dp", explanation: "Coin Change with a non-canonical set. Greedy fails (try it: 25+25+10+1+1+1 = 6 coins, but 21+21+21 = 3). DP fills dp[a] for every amount 0..63." },
             { id: "3", label: "Number of ways to climb n stairs taking 1 or 2 steps.", answer: "dp", explanation: "Classic Fibonacci-shaped DP. dp[i] = dp[i-1] + dp[i-2], the prototypical 1D recurrence." },
-            { id: "4", label: "Find any two indices in an array whose values sum to K.", answer: "other", explanation: "HashMap (Two Sum). DP doesn't help — there's no overlapping subproblem structure." },
-            { id: "5", label: "Can a string s be segmented into dictionary words?", answer: "dp", explanation: "Word Break — the canonical 1D segmentation DP. dp[i] depends on an OR over many earlier j's, which is exactly what DP expresses cleanly." },
-            { id: "6", label: "Smallest contiguous subarray summing >= target (positive numbers).", answer: "other", explanation: "Sliding window. Positive numbers give monotonicity in window sum — expand to grow, contract while still valid." },
-            { id: "7", label: "Number of decodings of '226' (1=A, 26=Z).", answer: "dp", explanation: "Decode Ways — 1D DP with two-step lookback (dp[i-1] and dp[i-2] depending on validity)." },
+            { id: "4", label: "Find any two indices in an array whose values sum to K.", answer: "other", explanation: "HashMap (Two Sum). DP doesn't help, there's no overlapping subproblem structure." },
+            { id: "5", label: "Can a string s be segmented into dictionary words?", answer: "dp", explanation: "Word Break, the canonical 1D segmentation DP. dp[i] depends on an OR over many earlier j's, which is exactly what DP expresses cleanly." },
+            { id: "6", label: "Smallest contiguous subarray summing >= target (positive numbers).", answer: "other", explanation: "Sliding window. Positive numbers give monotonicity in window sum, expand to grow, contract while still valid." },
+            { id: "7", label: "Number of decodings of '226' (1=A, 26=Z).", answer: "dp", explanation: "Decode Ways, 1D DP with two-step lookback (dp[i-1] and dp[i-2] depending on validity)." },
             { id: "8", label: "Detect a cycle in a directed graph.", answer: "other", explanation: "Three-color DFS. Graph traversal, not a sequence problem; no 'i-th index' structure to anchor a DP table on." },
           ]}
         />
@@ -552,7 +552,7 @@ answer = dp[8] = true`}</CodeBlock>
       {/* ───────────────── Part 4 · LIS ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="lis" title="I understand why 'ending at i' is the right anchor for LIS" xp={25}>
       <section>
-        <h2 id="lis">Longest Increasing Subsequence — the &quot;ending at i&quot; anchor</h2>
+        <h2 id="lis">Longest Increasing Subsequence, the &quot;ending at i&quot; anchor</h2>
 
         <p>
           <strong>LC 300 · Longest Increasing Subsequence.</strong>{" "}Given an integer array{" "}
@@ -571,7 +571,7 @@ answer = dp[8] = true`}</CodeBlock>
         <p>
           You might try defining <code>dp[i]</code> = LIS of the prefix <code>nums[0..i]</code>. But
           this doesn&apos;t decompose. Knowing &quot;the LIS of the first 5 elements is 3&quot; tells
-          you nothing about whether <code>nums[5]</code> can extend it — you don&apos;t know what the
+          you nothing about whether <code>nums[5]</code> can extend it, you don&apos;t know what the
           last element of <em>that</em>{" "}LIS was. The recurrence has no clean way to chain.
         </p>
 
@@ -599,7 +599,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
           </p>
           <p>
             By contrast, &quot;LIS in first i elements&quot; tracks a length but loses the identity of
-            what comes last — so when we get to <code>nums[i+1]</code>, we can&apos;t tell whether to
+            what comes last, so when we get to <code>nums[i+1]</code>, we can&apos;t tell whether to
             extend it. The lesson generalizes: when a problem asks &quot;longest something that
             satisfies a constraint involving consecutive picked elements,&quot; anchor the dp at the
             <em> last</em>{" "}picked element. Maximum Subarray uses the same trick (Kadane&apos;s
@@ -607,7 +607,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>Java implementation — O(n²)</h3>
+        <h3>Java implementation, O(n²)</h3>
 
         <CodeBlock lang="java">{`public int lengthOfLIS(int[] nums) {
     int n = nums.length;
@@ -634,7 +634,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         <Callout variant="warn" title="Don't forget the final max">
           <p>
             Unlike Coin Change or Word Break, the answer for LIS is <em>not</em>{" "}at <code>dp[n-1]</code>{" "}
-            — that&apos;s only the LIS ending exactly at the last element, which may be small if the
+, that&apos;s only the LIS ending exactly at the last element, which may be small if the
             last element is small.
           </p>
           <p>
@@ -644,7 +644,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>The O(n log n) approach exists — but later</h3>
+        <h3>The O(n log n) approach exists, but later</h3>
 
         <p>
           There&apos;s a beautiful O(n log n) solution using <em>patience sorting</em>: maintain a
@@ -655,7 +655,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         </p>
 
         <p>
-          The patience-sort solution is short to write but takes serious thought to prove correct —
+          The patience-sort solution is short to write but takes serious thought to prove correct,
           and it doesn&apos;t generalize to variations as cleanly as the O(n²) DP. We cover it
           properly in the binary-search-the-answer module; for now, the O(n²) DP is what you write in
           interviews. It&apos;s O(n²) on n ≤ 2500 (LeetCode&apos;s LIS constraint), which fits the
@@ -667,7 +667,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         <ul>
           <li><strong>LC 53 · Maximum Subarray.</strong>{" "}dp[i] = max sum of subarray ending at i. Recurrence: <code>dp[i] = max(nums[i], dp[i-1] + nums[i])</code>. This is Kadane&apos;s algorithm and is one of the cleanest 1D DPs ever written.</li>
           <li><strong>LC 152 · Maximum Product Subarray.</strong>{" "}Same anchor, but you have to track <em>two</em>{" "}dp values per index (max-product-ending-here AND min-product-ending-here) because a negative number can flip min into max.</li>
-          <li><strong>LC 198 · House Robber.</strong>{" "}Mixed flavor: dp[i] = max money robbing the first i houses, with the constraint that adjacent houses can&apos;t both be robbed. Recurrence: <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code>. This is &quot;first i&quot; framing but the recurrence still asks &quot;include i-th or skip&quot; — same decision template.</li>
+          <li><strong>LC 198 · House Robber.</strong>{" "}Mixed flavor: dp[i] = max money robbing the first i houses, with the constraint that adjacent houses can&apos;t both be robbed. Recurrence: <code>dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])</code>. This is &quot;first i&quot; framing but the recurrence still asks &quot;include i-th or skip&quot;, same decision template.</li>
         </ul>
 
         <Quiz
@@ -686,16 +686,16 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
       {/* ───────────────── Part 5 · Decode Ways ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="decode-ways" title="I can write Decode Ways with all base cases right" xp={30}>
       <section>
-        <h2 id="decode-ways">Decode Ways — Climbing Stairs with validation</h2>
+        <h2 id="decode-ways">Decode Ways, Climbing Stairs with validation</h2>
 
         <p>
           <strong>LC 91 · Decode Ways.</strong>{" "}A string of digits is encoded with the rule
           A=1, B=2, …, Z=26. Given a digit string <code>s</code>, return the number of ways to decode
           it. Example: <code>&quot;226&quot;</code> can be decoded as &quot;BBF&quot; (2-2-6),
-          &quot;BZ&quot; (2-26), or &quot;VF&quot; (22-6) — three ways.
+          &quot;BZ&quot; (2-26), or &quot;VF&quot; (22-6), three ways.
         </p>
 
-        <h3>The recurrence — almost Climbing Stairs</h3>
+        <h3>The recurrence, almost Climbing Stairs</h3>
 
         <p>
           The shape is identical to Climbing Stairs: at each position you either took 1 step (decoded
@@ -705,7 +705,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         <CodeBlock lang="plain">{`dp[i] = dp[i-1] + dp[i-2]`}</CodeBlock>
 
         <p>
-          And that&apos;s almost right — but with a twist. Each step is only valid if the corresponding
+          And that&apos;s almost right, but with a twist. Each step is only valid if the corresponding
           digit(s) form a legal letter code. Specifically:
         </p>
 
@@ -719,7 +719,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
 
         <Mermaid chart={decodeTrace} />
 
-        <h3>The base cases — extra-tricky</h3>
+        <h3>The base cases, extra-tricky</h3>
 
         <p>
           We use length n+1 because the dp value &quot;at i&quot; means &quot;ways to decode the first
@@ -727,7 +727,7 @@ answer = max(dp[0..n-1])    // the LIS could end anywhere`}</CodeBlock>
         </p>
 
         <ul>
-          <li><code>dp[0] = 1</code> — empty prefix has exactly one decoding (the empty one). This isn&apos;t arbitrary; it&apos;s the multiplicative identity that makes the recurrence work for i=2.</li>
+          <li><code>dp[0] = 1</code>, empty prefix has exactly one decoding (the empty one). This isn&apos;t arbitrary; it&apos;s the multiplicative identity that makes the recurrence work for i=2.</li>
           <li><code>dp[1] = 1</code> if <code>s[0] != &apos;0&apos;</code>, else 0. A leading zero means the entire string has no valid decoding (since &apos;0&apos; isn&apos;t a letter and can&apos;t start a two-digit code by itself).</li>
         </ul>
 
@@ -804,7 +804,7 @@ s = "226"    →  dp = [1, 1, 2, 3] →  "BBF", "BZ", "VF"`}</CodeBlock>
           Decode Ways: <code>dp[i] = (validate1 ? dp[i-1] : 0) + (validate2 ? dp[i-2] : 0)</code>. The
           structure is identical; the only difference is the conditional admission of each term. If
           you can write Climbing Stairs in your sleep, Decode Ways is &quot;Climbing Stairs with
-          validation gates&quot; — and that mental link is genuinely the way to remember the recurrence
+          validation gates&quot;, and that mental link is genuinely the way to remember the recurrence
           shape under interview pressure.
         </p>
 
@@ -825,8 +825,8 @@ for (int i = 2; i <= n; i++) {
 }
 return prev1;`}</CodeBlock>
           <p>
-            Same algorithm, O(1) space. The pattern — &quot;dp[i] only depends on dp[i-1] and
-            dp[i-2], collapse to two rolling vars&quot; — applies to every recurrence in this
+            Same algorithm, O(1) space. The pattern, &quot;dp[i] only depends on dp[i-1] and
+            dp[i-2], collapse to two rolling vars&quot;, applies to every recurrence in this
             module&apos;s &quot;step / position&quot; family. Climbing Stairs, House Robber, Decode
             Ways, Fibonacci. All space-collapsible.
           </p>
@@ -836,7 +836,7 @@ return prev1;`}</CodeBlock>
           kind="Decode Ways check"
           question="For s = '10', the answer is 1. Why?"
           options={[
-            { label: "Because '1' is 'A' and '0' has no letter.", explanation: "Almost — but the question is what the algorithm computes, not the language semantics. The algorithm rejects single '0' and accepts '10' as a two-digit code 'J'." },
+            { label: "Because '1' is 'A' and '0' has no letter.", explanation: "Almost, but the question is what the algorithm computes, not the language semantics. The algorithm rejects single '0' and accepts '10' as a two-digit code 'J'." },
             { label: "Because dp[2] = (s[1]=='0' so don't add dp[1]) + (s[0..2]='10' is in [10,26] so add dp[0]=1) = 1.", correct: true, explanation: "Right. At i=2, single-digit option fails (curr='0' is not 1..9). Two-digit option succeeds (10 is in [10,26]), adding dp[0]=1. dp[2] = 0 + 1 = 1, corresponding to the single decoding 'J'." },
             { label: "Because dp[2] = dp[1] + dp[0] = 2.", explanation: "That's Climbing Stairs without validation. With validation, the single-digit option fails because s[1]='0' is invalid alone. Only the two-digit option contributes." },
             { label: "Because we always pick the lexicographically smallest decoding.", explanation: "The problem asks for COUNT of ways to decode, not which decoding to pick. Lexicographic order isn't relevant." },
@@ -848,7 +848,7 @@ return prev1;`}</CodeBlock>
           question="What's the difference in code between Climbing Stairs and Decode Ways at the i-th step?"
           options={[
             { label: "Decode Ways uses memoization, Climbing Stairs uses tabulation.", explanation: "Both can be written either way. The difference is the recurrence body, not the implementation strategy." },
-            { label: "Decode Ways is recursive, Climbing Stairs is iterative.", explanation: "Both can be either. Same answer as A — the strategy choice is independent of the problem." },
+            { label: "Decode Ways is recursive, Climbing Stairs is iterative.", explanation: "Both can be either. Same answer as A, the strategy choice is independent of the problem." },
             { label: "Decode Ways adds dp[i-1] only if s[i-1] is 1..9, and adds dp[i-2] only if s[i-2..i] is in [10..26]. Climbing Stairs adds both unconditionally.", correct: true, explanation: "Right. Same recurrence skeleton (dp[i] = dp[i-1] + dp[i-2]); Decode Ways gates each term on whether the corresponding 'step' is a valid letter code. The structural similarity is what makes Decode Ways tractable; the validation is what makes it gnarly." },
             { label: "They're entirely different recurrences.", explanation: "They share the exact same skeleton. The only difference is conditional admission of each term in Decode Ways." },
           ]}
@@ -859,12 +859,12 @@ return prev1;`}</CodeBlock>
       {/* ───────────────── Part 6 · Cheat sheet ───────────────── */}
       <Checkpoint moduleSlug="dp-1d" id="cheatsheet" title="I can recognize 1D DP shapes by sight" xp={30}>
       <section>
-        <h2 id="cheatsheet">Recognizing 1D DP — the cheat sheet</h2>
+        <h2 id="cheatsheet">Recognizing 1D DP, the cheat sheet</h2>
 
         <p>
           Five problems in, the family resemblances should be coming into focus. Three sub-shapes of
           1D DP cover almost everything you&apos;ll see in interviews. Knowing which shape a new
-          problem fits is most of the battle — once you have the shape, the code follows.
+          problem fits is most of the battle, once you have the shape, the code follows.
         </p>
 
         <h3>Shape 1 · &quot;Ends at i&quot;</h3>
@@ -877,9 +877,9 @@ return prev1;`}</CodeBlock>
         </p>
 
         <ul>
-          <li><strong>LIS</strong> — extend by any j with nums[j] &lt; nums[i]. O(n²).</li>
-          <li><strong>Maximum Subarray (Kadane)</strong> — extend with dp[i-1] or restart fresh. O(n).</li>
-          <li><strong>Longest Arithmetic Subsequence (LC 1027)</strong> — dp[i][diff] for two-anchor cases. (Phase 7&apos;s next module.)</li>
+          <li><strong>LIS</strong>, extend by any j with nums[j] &lt; nums[i]. O(n²).</li>
+          <li><strong>Maximum Subarray (Kadane)</strong>, extend with dp[i-1] or restart fresh. O(n).</li>
+          <li><strong>Longest Arithmetic Subsequence (LC 1027)</strong>, dp[i][diff] for two-anchor cases. (Phase 7&apos;s next module.)</li>
         </ul>
 
         <h3>Shape 2 · &quot;First i elements&quot;</h3>
@@ -891,30 +891,30 @@ return prev1;`}</CodeBlock>
         </p>
 
         <ul>
-          <li><strong>Coin Change</strong> — dp[a] = min coins for amount a; the &quot;index&quot; is the target value, not an array position.</li>
-          <li><strong>Word Break</strong> — dp[i] = is prefix segmentable; OR over many j&apos;s.</li>
-          <li><strong>Perfect Squares (LC 279)</strong> — dp[n] = min number of perfect-square integers summing to n. Same shape as Coin Change with coins = {`{1, 4, 9, 16, ...}`}.</li>
+          <li><strong>Coin Change</strong>, dp[a] = min coins for amount a; the &quot;index&quot; is the target value, not an array position.</li>
+          <li><strong>Word Break</strong>, dp[i] = is prefix segmentable; OR over many j&apos;s.</li>
+          <li><strong>Perfect Squares (LC 279)</strong>, dp[n] = min number of perfect-square integers summing to n. Same shape as Coin Change with coins = {`{1, 4, 9, 16, ...}`}.</li>
         </ul>
 
         <h3>Shape 3 · &quot;i-th step / position&quot;</h3>
 
         <p>
-          <code>dp[i]</code> = answer for the position i. The recurrence has constant lookback —
+          <code>dp[i]</code> = answer for the position i. The recurrence has constant lookback,
           typically just <code>dp[i-1]</code> and <code>dp[i-2]</code>. These are the simplest 1D DPs
           and the ones that collapse to O(1) space cleanly.
         </p>
 
         <ul>
-          <li><strong>Climbing Stairs</strong> — dp[i] = dp[i-1] + dp[i-2]. Pure Fibonacci.</li>
-          <li><strong>House Robber</strong> — dp[i] = max(dp[i-1], dp[i-2] + nums[i-1]). Take or skip.</li>
-          <li><strong>Decode Ways</strong> — Climbing Stairs with validation gates on each term.</li>
-          <li><strong>Min Cost Climbing Stairs (LC 746)</strong> — dp[i] = min(dp[i-1], dp[i-2]) + cost[i]. Same lookback, different combine.</li>
+          <li><strong>Climbing Stairs</strong>, dp[i] = dp[i-1] + dp[i-2]. Pure Fibonacci.</li>
+          <li><strong>House Robber</strong>, dp[i] = max(dp[i-1], dp[i-2] + nums[i-1]). Take or skip.</li>
+          <li><strong>Decode Ways</strong>, Climbing Stairs with validation gates on each term.</li>
+          <li><strong>Min Cost Climbing Stairs (LC 746)</strong>, dp[i] = min(dp[i-1], dp[i-2]) + cost[i]. Same lookback, different combine.</li>
         </ul>
 
         <h3>The space-collapse trick</h3>
 
         <p>
-          For Shape 3 (constant lookback), the DP table is wasteful — you only need the last few
+          For Shape 3 (constant lookback), the DP table is wasteful, you only need the last few
           values. Replace the array with rolling variables:
         </p>
 
@@ -963,7 +963,7 @@ return prev1;`}</CodeBlock>
               <li>Lookback is just <em>the last 1–2 values</em>? Shape 3 (&quot;i-th step&quot;).</li>
             </ul>
           </li>
-          <li><strong>Does the state need two indices to be expressive?</strong> 2D DP — next module.</li>
+          <li><strong>Does the state need two indices to be expressive?</strong> 2D DP, next module.</li>
         </ol>
 
         <ClassifyChallenge
@@ -984,7 +984,7 @@ return prev1;`}</CodeBlock>
             { id: "6", label: "House Robber: max money, no two adjacent.", answer: "step", explanation: "Shape 3. dp[i] = max(dp[i-1], dp[i-2] + nums[i-1]). Two-step lookback, collapsible to O(1)." },
             { id: "7", label: "Word Break: can s be segmented into dict words?", answer: "first", explanation: "Shape 2. dp[i] = OR over j of (dp[j] AND s[j..i) in dict). The 'first i characters' framing of segmentation." },
             { id: "8", label: "Decode Ways: number of decodings of digit string.", answer: "step", explanation: "Shape 3. dp[i] = (gated) dp[i-1] + (gated) dp[i-2]. Same skeleton as Climbing Stairs with validation on each term." },
-            { id: "9", label: "Longest substring with at most K distinct characters.", answer: "not", explanation: "Sliding window. Local invariant + monotonic window expansion — DP is overkill." },
+            { id: "9", label: "Longest substring with at most K distinct characters.", answer: "not", explanation: "Sliding window. Local invariant + monotonic window expansion, DP is overkill." },
             { id: "10", label: "Perfect Squares: min number of squares summing to n.", answer: "first", explanation: "Shape 2. dp[n] = 1 + min(dp[n - k*k]) over valid k. Same shape as Coin Change, with coins = {1, 4, 9, 16, ...}." },
           ]}
         />
@@ -994,7 +994,7 @@ return prev1;`}</CodeBlock>
           question="When can you safely collapse a 1D DP from O(n) space to O(1) rolling variables?"
           options={[
             { label: "Always.", explanation: "Not always. If dp[i] depends on a non-constant set of earlier values (LIS depends on all dp[j] for j<i), you can't collapse." },
-            { label: "When dp[i] depends only on a constant number of recent values like dp[i-1] and dp[i-2].", correct: true, explanation: "Right. Constant lookback means you only need to keep that many rolling variables alive. Climbing Stairs, House Robber, Decode Ways, Min Cost Stairs — all collapsible. LIS is NOT collapsible (depends on every dp[j]). Coin Change is NOT collapsible (depends on dp[a-c] for every coin c, which is non-recent)." },
+            { label: "When dp[i] depends only on a constant number of recent values like dp[i-1] and dp[i-2].", correct: true, explanation: "Right. Constant lookback means you only need to keep that many rolling variables alive. Climbing Stairs, House Robber, Decode Ways, Min Cost Stairs, all collapsible. LIS is NOT collapsible (depends on every dp[j]). Coin Change is NOT collapsible (depends on dp[a-c] for every coin c, which is non-recent)." },
             { label: "When n is small.", explanation: "Smaller n makes both versions cheap; the question is whether collapse is correct, which depends on the recurrence." },
             { label: "When you don't need to reconstruct the path.", explanation: "True but secondary. Even if you don't need the path, you can only collapse if the recurrence's lookback is constant." },
           ]}
@@ -1004,10 +1004,10 @@ return prev1;`}</CodeBlock>
           kind="Cheat-sheet check"
           question="A new problem: 'Given an array, find the length of the longest subarray where every adjacent pair has |a[j+1] - a[j]| <= 3.' Which 1D shape does this fit best?"
           options={[
-            { label: "Shape 2 ('first i') because it talks about 'longest.'", explanation: "'First i' captures prefixes, but here the answer is a SUBARRAY (contiguous) where the constraint is between adjacent elements — the shape we want anchors at the last included element." },
-            { label: "Shape 1 ('ends at i') — dp[i] = length of longest valid subarray ending at i. Either extend dp[i-1] (if |a[i]-a[i-1]|<=3) or restart at length 1.", correct: true, explanation: "Right. The constraint is local to adjacent elements, but it's about CONTIGUOUS subarrays — perfect fit for 'ends at i.' Recurrence: dp[i] = (|a[i]-a[i-1]| <= 3) ? dp[i-1] + 1 : 1. Answer is max(dp). Same shape as Maximum Subarray — recognizing the family is the win." },
-            { label: "Shape 3 ('i-th step') — like Climbing Stairs.", explanation: "Climbing Stairs has unconditional dp[i-1] + dp[i-2]. This problem's recurrence is a CONDITIONAL extend-or-restart — Shape 1, not Shape 3." },
-            { label: "Sliding window, not DP.", explanation: "You could also solve it with a sliding window (the constraint is monotonic in window starts). DP is the more universally-applicable framing — and matches the 'longest sub-something ending at i' family." },
+            { label: "Shape 2 ('first i') because it talks about 'longest.'", explanation: "'First i' captures prefixes, but here the answer is a SUBARRAY (contiguous) where the constraint is between adjacent elements, the shape we want anchors at the last included element." },
+            { label: "Shape 1 ('ends at i'), dp[i] = length of longest valid subarray ending at i. Either extend dp[i-1] (if |a[i]-a[i-1]|<=3) or restart at length 1.", correct: true, explanation: "Right. The constraint is local to adjacent elements, but it's about CONTIGUOUS subarrays, perfect fit for 'ends at i.' Recurrence: dp[i] = (|a[i]-a[i-1]| <= 3) ? dp[i-1] + 1 : 1. Answer is max(dp). Same shape as Maximum Subarray, recognizing the family is the win." },
+            { label: "Shape 3 ('i-th step'), like Climbing Stairs.", explanation: "Climbing Stairs has unconditional dp[i-1] + dp[i-2]. This problem's recurrence is a CONDITIONAL extend-or-restart, Shape 1, not Shape 3." },
+            { label: "Sliding window, not DP.", explanation: "You could also solve it with a sliding window (the constraint is monotonic in window starts). DP is the more universally-applicable framing, and matches the 'longest sub-something ending at i' family." },
           ]}
         />
 
@@ -1015,12 +1015,12 @@ return prev1;`}</CodeBlock>
           title="What you can now do that you couldn't 2 hours ago"
           gist="One template, three flavors. Decision at index i, look back at the table, fill left-to-right. Coin Change, Word Break, LIS, and Decode Ways are all the same idea wearing different costumes."
           points={[
-            { takeaway: "Recognize 1D DP from the problem statement: 'first i', 'ending at i', or 'i-th step'.", detail: "If a problem talks about a sequence, with a local decision per element and a recurrence that looks back at smaller indices — it's 1D DP. The exact shape depends on what 'state' the problem cares about." },
+            { takeaway: "Recognize 1D DP from the problem statement: 'first i', 'ending at i', or 'i-th step'.", detail: "If a problem talks about a sequence, with a local decision per element and a recurrence that looks back at smaller indices, it's 1D DP. The exact shape depends on what 'state' the problem cares about." },
             { takeaway: "Coin Change is the canonical Shape 2: dp[amount] = min(dp[amount-c]+1) over coins.", detail: "Greedy fails on non-canonical coin sets ({1,3,4} target 6 → greedy=3, optimal=2). The amount+1 sentinel avoids overflow. Time O(amount × coins.length); pseudopolynomial in amount." },
             { takeaway: "Word Break is Shape 2 with boolean OR.", detail: "dp[i] = OR over j of (dp[j] AND s[j..i) in dict). The 'OR over many j's' is exactly what sliding window can't express, which is why it requires DP." },
             { takeaway: "LIS demands the 'ending at i' anchor.", detail: "Without anchoring at the last element of the subsequence, the recurrence has no way to compare 'extend with nums[i]?' with the previous endpoint. dp[i] = 1 + max(dp[j]) for j<i with nums[j]<nums[i]; answer is max(dp), not dp[n-1]." },
-            { takeaway: "Decode Ways is Climbing Stairs with validation gates — and an off-by-one minefield.", detail: "Same recurrence skeleton dp[i] = dp[i-1] + dp[i-2], but each term is conditional on whether the corresponding 1- or 2-digit slice forms a valid letter code. dp[i] uses chars s[i-1] (single) and s[i-2..i) (pair) — write the comment, save your sanity." },
-            { takeaway: "Shape 3 collapses to O(1) space; Shapes 1 and 2 don't.", detail: "If only dp[i-1] and dp[i-2] are needed, replace the array with two rolling variables. LIS depends on all dp[j], Coin Change on dp[a-c] for every c — both keep the table." },
+            { takeaway: "Decode Ways is Climbing Stairs with validation gates, and an off-by-one minefield.", detail: "Same recurrence skeleton dp[i] = dp[i-1] + dp[i-2], but each term is conditional on whether the corresponding 1- or 2-digit slice forms a valid letter code. dp[i] uses chars s[i-1] (single) and s[i-2..i) (pair), write the comment, save your sanity." },
+            { takeaway: "Shape 3 collapses to O(1) space; Shapes 1 and 2 don't.", detail: "If only dp[i-1] and dp[i-2] are needed, replace the array with two rolling variables. LIS depends on all dp[j], Coin Change on dp[a-c] for every c, both keep the table." },
           ]}
         />
 
@@ -1033,7 +1033,7 @@ return prev1;`}</CodeBlock>
             2D DP &amp; grid DP →
           </Link>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            When one index isn&apos;t enough — two-pointer state, the edit-distance family, and grid path-counting. Unique Paths, Longest Common Subsequence, Edit Distance, 0/1 Knapsack.
+            When one index isn&apos;t enough, two-pointer state, the edit-distance family, and grid path-counting. Unique Paths, Longest Common Subsequence, Edit Distance, 0/1 Knapsack.
           </p>
         </div>
       </section>

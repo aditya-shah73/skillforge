@@ -87,7 +87,7 @@ export default function Page() {
           ask &quot;who&apos;s near me?&quot; and want an answer before they get bored. Both sides are mobile, flaky, and unforgiving.
         </p>
         <p>
-          The naive answer — &quot;query a Postgres table by lat/lng range&quot; — fails at the first city. You need a spatial index that
+          The naive answer, &quot;query a Postgres table by lat/lng range&quot;, fails at the first city. You need a spatial index that
           handles tens of thousands of writes per second per region and serves radius queries in milliseconds. That&apos;s the spine
           of the system. Everything else (pricing, dispatch, payments) hangs off of it.
         </p>
@@ -100,7 +100,7 @@ export default function Page() {
       <Checkpoint moduleSlug="design-rideshare" id="reqs" title="Part 1 · Requirements & estimation" xp={25}>
         <h3>Functional scope</h3>
         <ul>
-          <li>Rider opens app, sees nearby drivers (visual only — not a commitment).</li>
+          <li>Rider opens app, sees nearby drivers (visual only, not a commitment).</li>
           <li>Rider requests a ride at a pickup location with a destination.</li>
           <li>System matches a driver within seconds; driver gets an offer; can accept or pass.</li>
           <li>Trip lifecycle: en-route → arrived → in-trip → completed.</li>
@@ -108,14 +108,14 @@ export default function Page() {
         </ul>
         <h3>What we&apos;ll defer</h3>
         <ul>
-          <li>Pool/shared rides (different matching problem — multi-rider knapsack).</li>
+          <li>Pool/shared rides (different matching problem, multi-rider knapsack).</li>
           <li>Driver onboarding, KYC, background checks.</li>
           <li>Maps/routing internals (assume an OSRM-style service exists).</li>
         </ul>
         <h3>Non-functional targets</h3>
         <ul>
           <li><strong>Match latency:</strong>{" "}p95 under 1s from request to first offer.</li>
-          <li><strong>Location update throughput:</strong>{" "}a single dense city (say SF) has ~30k drivers online at peak, pinging every 4s — 7.5k writes/sec for one city.</li>
+          <li><strong>Location update throughput:</strong>{" "}a single dense city (say SF) has ~30k drivers online at peak, pinging every 4s, 7.5k writes/sec for one city.</li>
           <li><strong>Availability:</strong>{" "}ride-request path is 99.99%. Location pings can drop a few; a missed match is a customer-visible failure.</li>
           <li><strong>Geo-distribution:</strong>{" "}regional sharding. A rider in Berlin doesn&apos;t need to know about drivers in Tokyo.</li>
         </ul>
@@ -150,7 +150,7 @@ export default function Page() {
         </ul>
 
         <h3>API surface</h3>
-        <CodeBlock lang="plain" caption="HTTP API — driver and rider clients">{`# Driver client
+        <CodeBlock lang="plain" caption="HTTP API, driver and rider clients">{`# Driver client
 POST /v1/driver/location              { lat, lng, heading, status }   -> 204
 PUT  /v1/driver/status                { status: "ONLINE" | "OFFLINE" } -> 204
 POST /v1/driver/offers/{offerId}/accept                                 -> 200 trip
@@ -173,24 +173,24 @@ trip.matched | trip.en_route | trip.arrived | trip.completed | trip.cancelled`}<
           path needs to fan out to a multi-region database.
         </p>
 
-        <h3>Geo indexing — pick one and own it</h3>
+        <h3>Geo indexing, pick one and own it</h3>
         <ul>
           <li><strong>Geohash:</strong>{" "}string prefix encoding of (lat, lng). Easy to shard. Prefix length controls cell size. Fine for &quot;within radius R&quot; if you query the cell plus its 8 neighbors.</li>
-          <li><strong>S2 cells (Google):</strong>{" "}hierarchical, projection-distortion-free. Uber uses H3 (hex grid) which is a sibling — same idea, hexagons play nicer for radius queries.</li>
-          <li><strong>Redis GEO:</strong>{" "}ZSET-backed, sorted by 52-bit geohash. <code>GEOADD</code>, <code>GEORADIUS</code>. Excellent for the hot index. Not durable storage — you back it with Cassandra or DynamoDB for replay.</li>
+          <li><strong>S2 cells (Google):</strong>{" "}hierarchical, projection-distortion-free. Uber uses H3 (hex grid) which is a sibling, same idea, hexagons play nicer for radius queries.</li>
+          <li><strong>Redis GEO:</strong>{" "}ZSET-backed, sorted by 52-bit geohash. <code>GEOADD</code>, <code>GEORADIUS</code>. Excellent for the hot index. Not durable storage, you back it with Cassandra or DynamoDB for replay.</li>
         </ul>
 
         <Callout variant="spring" title="Why Redis GEO and not a database">
-          Geo queries on Postgres or MySQL with a spatial index work — until you&apos;re writing 100k/sec at one shard. Redis is in
+          Geo queries on Postgres or MySQL with a spatial index work, until you&apos;re writing 100k/sec at one shard. Redis is in
           memory, single-threaded per shard, and serves <code>GEORADIUS</code> in microseconds. You will lose the index on a crash;
           rebuild from the durable store. The trade is correctness for speed, and it&apos;s the right trade here.
         </Callout>
 
         <h3>Sharding the geo index</h3>
         <p>
-          Shard by geohash prefix. A 4-character geohash is ~20km on a side — coarse enough to keep cities together, fine enough that
+          Shard by geohash prefix. A 4-character geohash is ~20km on a side, coarse enough to keep cities together, fine enough that
           one shard isn&apos;t the whole world. SF is one shard; NYC is another. A driver crossing a boundary writes to both during a
-          transition window so reads don&apos;t miss anyone. Boundaries are edge cases — test them.
+          transition window so reads don&apos;t miss anyone. Boundaries are edge cases, test them.
         </p>
 
         <PartRecap
@@ -207,12 +207,12 @@ trip.matched | trip.en_route | trip.arrived | trip.completed | trip.cancelled`}<
       <Checkpoint moduleSlug="design-rideshare" id="deep" title="Part 3 · Deep dives" xp={30}>
         <h3>The matching algorithm</h3>
         <p>
-          A radius query gives you a candidate set. You don&apos;t want the closest driver — you want the <em>best</em>{" "}driver. Score
+          A radius query gives you a candidate set. You don&apos;t want the closest driver, you want the <em>best</em>{" "}driver. Score
           candidates on: ETA to pickup (not straight-line distance, real driving time), driver rating, time online without a fare
           (fairness), and a small randomization tiebreaker. Ship the offer to one driver at a time with a 15-second TTL. If they
           decline or don&apos;t respond, fall through to the next.
         </p>
-        <CodeBlock lang="java" caption="MatchingService.java — Redis GEO query + scorer">{`@Service
+        <CodeBlock lang="java" caption="MatchingService.java, Redis GEO query + scorer">{`@Service
 public class MatchingService {
     private final RedisTemplate<String, String> redis;
     private final RoutingClient routing;
@@ -268,14 +268,14 @@ public class MatchingService {
         <Mermaid chart={stateMachineChart} />
         <p>
           Every transition is a single-row write to the trip store plus an event to Kafka. Make the row write idempotent on
-          (trip_id, target_state) — a retry of &quot;mark MATCHED&quot; should not advance to the next state, just no-op. The event
+          (trip_id, target_state), a retry of &quot;mark MATCHED&quot; should not advance to the next state, just no-op. The event
           stream is what powers analytics, surge pricing inputs, and replay during incidents.
         </p>
 
         <h3>Surge pricing</h3>
         <p>
           Compute supply/demand per geohash cell on a rolling 60-second window: requests vs. online drivers. Multiplier is a clamped
-          function of the ratio (1.0x to 5.0x). Apply at quote time and lock it for the trip — never resurge a rider mid-acceptance.
+          function of the ratio (1.0x to 5.0x). Apply at quote time and lock it for the trip, never resurge a rider mid-acceptance.
           The hard part isn&apos;t the math; it&apos;s the <strong>signal</strong>: bot detection, neutralizing brief spikes, smoothing
           across cells so a one-block move doesn&apos;t change your fare.
         </p>
@@ -284,7 +284,7 @@ public class MatchingService {
         <p>
           Drivers POST to the Location Service over HTTP/2 or QUIC (one connection, lots of small writes). The service writes to
           Redis GEO synchronously and to a Kafka topic asynchronously. The Kafka topic feeds the durable store (Cassandra,
-          partitioned by driver_id) and any analytics consumers. If Redis is down, you fail open — accept the write to Kafka, log
+          partitioned by driver_id) and any analytics consumers. If Redis is down, you fail open, accept the write to Kafka, log
           a metric, page someone. Drivers don&apos;t care about your cache; they care that their app didn&apos;t freeze.
         </p>
 
@@ -305,7 +305,7 @@ public class MatchingService {
           Buffer location pings on-device. When the connection comes back, replay them with their original timestamps. The trip
           service reconciles: if the driver&apos;s last known position plus elapsed time matches the dropoff, mark COMPLETED. If
           it&apos;s ambiguous, fall back to the rider&apos;s &quot;I&apos;m out&quot; tap or a manual ops review. Don&apos;t auto-cancel
-          a trip on a 90-second outage — that&apos;s 30% of trips in dense urban areas.
+          a trip on a 90-second outage, that&apos;s 30% of trips in dense urban areas.
         </p>
 
         <h3>Multi-region failover</h3>
@@ -326,13 +326,13 @@ public class MatchingService {
         <h3>What I&apos;d skip in a 45-minute interview</h3>
         <p>
           The map UI on the rider side, the actual routing service internals, real-time pool matching, and the rating system. If
-          asked, name them and move on — they&apos;re lower-leverage than getting the geo index, dispatch, and state machine right.
+          asked, name them and move on, they&apos;re lower-leverage than getting the geo index, dispatch, and state machine right.
         </p>
 
         <Quiz
           question="A driver's phone goes offline 90 seconds before pickup. What's the right behavior?"
           options={[
-            { label: "Auto-cancel the trip and rematch immediately", correct: false, explanation: "90s offline is normal — tunnels, parking garages, weak coverage. Auto-cancel destroys completion rate." },
+            { label: "Auto-cancel the trip and rematch immediately", correct: false, explanation: "90s offline is normal, tunnels, parking garages, weak coverage. Auto-cancel destroys completion rate." },
             { label: "Hold the trip in current state, surface a 'trying to reach driver' banner, and rematch only after a 3-5 minute timeout with no resumed pings", correct: true, explanation: "Riders tolerate a banner; they don't tolerate cancellations. Buffered pings often replay seconds later and the trip resumes cleanly." },
             { label: "Charge a no-show fee to the rider after 60 seconds", correct: false, explanation: "Punishing the rider for the driver's connectivity is exactly the kind of policy that lands in the press." },
             { label: "Switch the trip to a different driver in the background and let the original driver discover it on reconnect", correct: false, explanation: "Two drivers arriving at one pickup is worse than a delay. State must remain authoritative." },
@@ -353,7 +353,7 @@ public class MatchingService {
       <section className="my-12 border-t border-slate-200 pt-8 dark:border-slate-800">
         <h2>Next up</h2>
         <p>
-          Module 40 — <Link href="/courses/system-design/modules/design-payments" className="text-cyan-600 hover:underline">Design a payments system</Link>.
+          Module 40, <Link href="/courses/system-design/modules/design-payments" className="text-cyan-600 hover:underline">Design a payments system</Link>.
           The trip ends with COMPLETED; payments turn that into PAID. We&apos;ll build a double-entry ledger, idempotency keys, and a webhook
           handler that survives Stripe retrying you eight times.
         </p>

@@ -33,7 +33,7 @@ export default function FineTuningModule() {
       <div className="mb-2 text-xs text-slate-500 dark:text-slate-400">~1.5h · Production &amp; Capstone</div>
       <h1 className="mb-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Fine-tuning &amp; RLHF (when to bother)</h1>
       <p className="mb-6 text-lg text-slate-600 italic dark:text-slate-300">
-        How model training actually works — and why RAG usually wins.
+        How model training actually works, and why RAG usually wins.
       </p>
 
       <BookmarkButton courseId="ai" moduleSlug="fine-tuning" />
@@ -44,10 +44,10 @@ export default function FineTuningModule() {
           What you&apos;ll walk out with
         </h3>
         <ul className="mb-0 space-y-1 text-sm text-pink-900/90 dark:text-pink-200/90">
-          <li>A working mental model of <strong>pre-training, SFT, and RLHF</strong> — what each stage does and what it costs.</li>
-          <li>The math intuition behind gradient updates on a 70B-parameter model — without doing the math.</li>
+          <li>A working mental model of <strong>pre-training, SFT, and RLHF</strong>, what each stage does and what it costs.</li>
+          <li>The math intuition behind gradient updates on a 70B-parameter model, without doing the math.</li>
           <li>A concrete <strong>decision framework</strong>: prompt vs RAG vs fine-tune, with the questions to ask before you spend a dollar.</li>
-          <li>The five honest reasons teams reach for fine-tuning prematurely — and how to spot them in your own thinking.</li>
+          <li>The five honest reasons teams reach for fine-tuning prematurely, and how to spot them in your own thinking.</li>
           <li>A delivered <strong>decision document</strong>{" "}for a real-world scenario: prompt, RAG, or fine-tune?</li>
         </ul>
       </div>
@@ -66,12 +66,12 @@ export default function FineTuningModule() {
       </p>
       <p>
         This module isn&apos;t anti-fine-tuning. It&apos;s pro-honesty. There <em>are</em>{" "}situations where fine-tuning
-        is the right answer. They&apos;re rarer than people think, and the way to find out is a checklist — not a vibe.
+        is the right answer. They&apos;re rarer than people think, and the way to find out is a checklist, not a vibe.
       </p>
 
       <Callout variant="insight" title="The thesis">
         For 95% of production use cases in 2026, the right order is: <strong>prompt → RAG → tools → eval-driven prompt iteration</strong>.
-        Fine-tuning sits below all of those. If you haven&apos;t exhausted prompt and RAG, fine-tuning won&apos;t save you —
+        Fine-tuning sits below all of those. If you haven&apos;t exhausted prompt and RAG, fine-tuning won&apos;t save you,
         you&apos;ll just have an expensive copy of your prompt&apos;s problems baked into weights.
       </Callout>
 
@@ -79,7 +79,7 @@ export default function FineTuningModule() {
       <p>
         We covered the mechanics in <Link href="/courses/ai/modules/ml-training">Module 3</Link> and{" "}
         <Link href="/courses/ai/modules/neural-networks">Module 4</Link>: forward pass, loss, backward pass, gradient update, repeat.
-        Fine-tuning a frontier LLM is the <em>same algorithm</em>{" "}you wrote by hand in Java — just at a scale that bends
+        Fine-tuning a frontier LLM is the <em>same algorithm</em>{" "}you wrote by hand in Java, just at a scale that bends
         your intuition about cost.
       </p>
 
@@ -134,7 +134,7 @@ export default function FineTuningModule() {
       </div>
 
       <p>
-        When somebody at your company says &quot;let&apos;s fine-tune,&quot; they almost always mean the last row —
+        When somebody at your company says &quot;let&apos;s fine-tune,&quot; they almost always mean the last row,
         customer-side SFT, often with LoRA adapters to make it cheap. They are <em>not</em>{" "}talking about pre-training,
         and they are almost never talking about RLHF (which requires a reward model and infrastructure most teams don&apos;t have).
       </p>
@@ -143,7 +143,7 @@ export default function FineTuningModule() {
       <p>
         Full fine-tuning a 70B-parameter model means computing gradients for 70 billion weights and storing optimizer state
         for each. The memory alone is hundreds of gigabytes. <strong>LoRA</strong> (Low-Rank Adaptation) sidesteps this
-        by freezing the base model and learning a small <em>delta</em>{" "}in low-rank decomposed matrices — typically less
+        by freezing the base model and learning a small <em>delta</em>{" "}in low-rank decomposed matrices, typically less
         than 1% of the original parameter count.
       </p>
 
@@ -161,7 +161,7 @@ Real numbers for a 70B model with rank r=16:
 
       <p>
         LoRA is why Claude, GPT-4, and Gemini all offer fine-tuning APIs at customer-affordable prices. But cheap doesn&apos;t
-        mean <em>good</em>. The constraint that makes LoRA cheap (low rank) also limits what behaviors it can learn —
+        mean <em>good</em>. The constraint that makes LoRA cheap (low rank) also limits what behaviors it can learn,
         you&apos;re nudging the model, not retraining it.
       </p>
 
@@ -185,8 +185,8 @@ Real numbers for a 70B model with rank r=16:
         <Quiz
           question="Your manager says: 'Let's fine-tune Claude on our product docs so it stops getting product details wrong.' What's the most accurate critique?"
           options={[
-            { label: "Fine-tuning will work but is expensive — RAG is just cheaper.", explanation: "Cost isn't the main issue. It's that customer fine-tuning (LoRA) is bad at teaching new facts." },
-            { label: "Fine-tuning teaches style and format, not facts. New facts belong in retrieval. The model will still hallucinate the doc contents — just in a more confident voice.", correct: true, explanation: "Exactly. This is the single most expensive misconception in industry fine-tuning." },
+            { label: "Fine-tuning will work but is expensive, RAG is just cheaper.", explanation: "Cost isn't the main issue. It's that customer fine-tuning (LoRA) is bad at teaching new facts." },
+            { label: "Fine-tuning teaches style and format, not facts. New facts belong in retrieval. The model will still hallucinate the doc contents, just in a more confident voice.", correct: true, explanation: "Exactly. This is the single most expensive misconception in industry fine-tuning." },
             { label: "Fine-tuning will work fine if you have at least 10,000 docs.", explanation: "More data doesn't change the underlying mechanism. Facts still don't reliably stick via LoRA." },
             { label: "Fine-tuning is identical to RAG, just packaged differently.", explanation: "They're fundamentally different: RAG injects facts at inference, fine-tuning adjusts weights." },
           ]}
@@ -195,9 +195,9 @@ Real numbers for a 70B model with rank r=16:
           question="What does LoRA do that makes customer fine-tuning affordable?"
           options={[
             { label: "It compresses the model down to a smaller number of parameters.", explanation: "The base model stays full-size. LoRA only adds small adapters." },
-            { label: "It freezes the base model and trains low-rank adapter matrices that have ~0.1% of the original parameter count.", correct: true, explanation: "Right — full FT trains every weight; LoRA trains a tiny delta." },
+            { label: "It freezes the base model and trains low-rank adapter matrices that have ~0.1% of the original parameter count.", correct: true, explanation: "Right, full FT trains every weight; LoRA trains a tiny delta." },
             { label: "It runs the training on cheaper hardware by quantizing gradients.", explanation: "Quantization is a separate optimization. LoRA's win is parameter count." },
-            { label: "It uses RLHF instead of SFT, which converges faster.", explanation: "LoRA is orthogonal to RLHF vs SFT — it's a parameter-efficiency technique." },
+            { label: "It uses RLHF instead of SFT, which converges faster.", explanation: "LoRA is orthogonal to RLHF vs SFT, it's a parameter-efficiency technique." },
           ]}
         />
       </Checkpoint>
@@ -270,7 +270,7 @@ Real numbers for a 70B model with rank r=16:
 
       <h3 id="not-prompt-failure">&quot;The prompt isn&apos;t working&quot;</h3>
       <p>
-        Fine-tuning won&apos;t fix a broken prompt — it&apos;ll just bake the broken behavior into the weights.
+        Fine-tuning won&apos;t fix a broken prompt, it&apos;ll just bake the broken behavior into the weights.
         If you can&apos;t describe what you want clearly enough to prompt for it, you can&apos;t describe what you want
         clearly enough to label thousands of training examples for it either.
       </p>
@@ -298,7 +298,7 @@ Real numbers for a 70B model with rank r=16:
         title="Part 2/3 takeaways"
         gist="Fine-tune for style, latency, narrow classification, or distillation. Do not fine-tune for facts, broken prompts, tool use, or knowledge cutoff."
         points={[
-          { takeaway: "Fine-tuning shapes behavior, not knowledge", detail: "Style, format, tone, structure — yes. Facts, news, your API — no." },
+          { takeaway: "Fine-tuning shapes behavior, not knowledge", detail: "Style, format, tone, structure, yes. Facts, news, your API, no." },
           { takeaway: "Distillation is real", detail: "Use a frontier model to teach a smaller model your task." },
           { takeaway: "Prompt failures don't become training successes", detail: "If you can't prompt it, you can't label it either." },
         ]}
@@ -309,7 +309,7 @@ Real numbers for a 70B model with rank r=16:
           question="Which of these is a defensible fine-tuning use case?"
           options={[
             { label: "We want Claude to stop hallucinating about our company's pricing.", explanation: "Pricing is a fact. RAG with a pricing source-of-truth is the right fix." },
-            { label: "We need every legal summary to follow a strict 3-paragraph rubric and few-shot prompting still drifts.", correct: true, explanation: "Right — structural style that resists prompting is the textbook SFT case." },
+            { label: "We need every legal summary to follow a strict 3-paragraph rubric and few-shot prompting still drifts.", correct: true, explanation: "Right, structural style that resists prompting is the textbook SFT case." },
             { label: "We need the model to know about news from this morning.", explanation: "That's a tool-use problem, not a training problem." },
             { label: "We want better reasoning on math problems.", explanation: "Reasoning improvements come from better prompting (chain of thought) or better base models, not from LoRA." },
           ]}
@@ -318,7 +318,7 @@ Real numbers for a 70B model with rank r=16:
           question="Your team has been iterating on a system prompt for 4 weeks. Performance has plateaued at 78% on your eval set. What should you try BEFORE fine-tuning?"
           options={[
             { label: "Add more examples to the prompt and train a bigger LoRA.", explanation: "Adding examples is fine, but jumping to LoRA skips the cheaper next steps." },
-            { label: "Run an eval-driven prompt iteration: failure-class analysis, targeted prompt edits per class, plus retrieval if facts are involved. Only consider fine-tuning if all of that plateaus.", correct: true, explanation: "This is the right ladder — fine-tuning is the floor, not the next rung." },
+            { label: "Run an eval-driven prompt iteration: failure-class analysis, targeted prompt edits per class, plus retrieval if facts are involved. Only consider fine-tuning if all of that plateaus.", correct: true, explanation: "This is the right ladder, fine-tuning is the floor, not the next rung." },
             { label: "Switch to a larger model and call it done.", explanation: "Sometimes works, but that's a band-aid, not diagnosis." },
             { label: "Skip directly to fine-tuning since prompting has plateaued.", explanation: "Plateau on what set? Random failures? Specific failure classes? Diagnose first." },
           ]}
@@ -363,7 +363,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
 
       <p>
         If you reach the bottom you&apos;re probably in the 5%. Most projects stop at Q1 (it&apos;s a knowledge problem)
-        or Q2 (no evals). Both of those stops are the framework working — they&apos;re saving you weeks.
+        or Q2 (no evals). Both of those stops are the framework working, they&apos;re saving you weeks.
       </p>
 
       <WorkedExample
@@ -419,7 +419,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
               <>
                 <p>
                   You&apos;re at 91%. Product wants 95%. The remaining gap is partly knowledge (3%) and partly
-                  tone (6%). Tone is a structural behavior — that&apos;s candidate territory for fine-tuning.
+                  tone (6%). Tone is a structural behavior, that&apos;s candidate territory for fine-tuning.
                   Walk the rest of the framework on the tone problem only.
                 </p>
               </>
@@ -479,9 +479,9 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
         <Quiz
           question="In the worked example, what fraction of the original 25-percentage-point gap was actually solved by fine-tuning?"
           options={[
-            { label: "The whole 20 points (75% → 95%) — fine-tuning was the silver bullet.", explanation: "Most of the gap closed before fine-tuning entered the picture." },
-            { label: "About 3 points (91% → 94%) of polish at the end. The rest came from RAG and prompt iteration.", correct: true, explanation: "Yes — fine-tuning was a small final touch, not the main driver." },
-            { label: "Fine-tuning didn't help; it broke even.", explanation: "Tone improved measurably and cost dropped — that's net positive." },
+            { label: "The whole 20 points (75% → 95%), fine-tuning was the silver bullet.", explanation: "Most of the gap closed before fine-tuning entered the picture." },
+            { label: "About 3 points (91% → 94%) of polish at the end. The rest came from RAG and prompt iteration.", correct: true, explanation: "Yes, fine-tuning was a small final touch, not the main driver." },
+            { label: "Fine-tuning didn't help; it broke even.", explanation: "Tone improved measurably and cost dropped, that's net positive." },
             { label: "Fine-tuning made things worse and the team rolled back.", explanation: "It was a measured win, just smaller than people typically imagine." },
           ]}
         />
@@ -489,7 +489,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
           question="What does Q1 of the framework actually filter out?"
           options={[
             { label: "Teams that don't have enough budget.", explanation: "Budget isn't part of Q1. The filter is whether the problem is behavior vs knowledge." },
-            { label: "Teams whose real problem is missing or stale information — which is RAG's job, not fine-tuning's.", correct: true, explanation: "Right — and this filter alone redirects most projects correctly." },
+            { label: "Teams whose real problem is missing or stale information, which is RAG's job, not fine-tuning's.", correct: true, explanation: "Right, and this filter alone redirects most projects correctly." },
             { label: "Teams that lack enough labeled data.", explanation: "That's Q6, not Q1." },
             { label: "Teams using closed-source models.", explanation: "Open vs closed isn't a fine-tuning gate; it's an availability question." },
           ]}
@@ -511,7 +511,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
 
       <h3 id="cost-eval">Eval set cost is a permanent tax</h3>
       <p>
-        You can&apos;t tell if a fine-tune worked without an eval set held out from training data — and that eval set
+        You can&apos;t tell if a fine-tune worked without an eval set held out from training data, and that eval set
         has to be expert-labeled too. And every time you change the model, the prompt, or the data pipeline, you
         re-run the eval. (See <Link href="/courses/ai/modules/evals">Module 28</Link>.) Eval cost is not a one-time investment.
       </p>
@@ -527,12 +527,12 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
       <Callout variant="insight" title="The hidden discount on prompt + RAG">
         Prompt + RAG transfers across model versions almost for free. Most prompts that work on Claude 3 work on
         Claude 4 with minor adjustments. Your retrieval layer is model-agnostic. Every time the frontier improves,
-        you get the gain &quot;for free&quot; — your fine-tuned competitor pays a re-training tax to keep up.
+        you get the gain &quot;for free&quot;, your fine-tuned competitor pays a re-training tax to keep up.
       </Callout>
 
       <h2 id="rlhf-realtalk">6. RLHF: real talk for engineers</h2>
       <p>
-        You&apos;ll see RLHF (Reinforcement Learning from Human Feedback) and its variants — DPO, KTO, RLAIF — show
+        You&apos;ll see RLHF (Reinforcement Learning from Human Feedback) and its variants, DPO, KTO, RLAIF, show
         up in marketing copy and conference talks. Here&apos;s the engineer&apos;s honest summary.
       </p>
 
@@ -557,7 +557,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
       <Callout variant="info" title="When DPO actually fits">
         You have side-by-side outputs and humans who can rank them, but defining a single &quot;correct&quot; answer
         is impossible. Tone, summary quality, and creative writing fit. Classification, extraction, and structured
-        output do not — for those, just use SFT.
+        output do not, for those, just use SFT.
       </Callout>
 
       <PartRecap
@@ -576,17 +576,17 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
           question="Which cost typically dominates a customer fine-tuning project's budget?"
           options={[
             { label: "GPU/compute for the training run.", explanation: "Compute is usually the smallest line item." },
-            { label: "Hyperparameter sweeps.", explanation: "These are bounded — usually a small fraction of total." },
-            { label: "Expert labeler time to produce high-quality (prompt, response) pairs and eval cases.", correct: true, explanation: "Right — labeling is consistently the dominant cost." },
+            { label: "Hyperparameter sweeps.", explanation: "These are bounded, usually a small fraction of total." },
+            { label: "Expert labeler time to produce high-quality (prompt, response) pairs and eval cases.", correct: true, explanation: "Right, labeling is consistently the dominant cost." },
             { label: "Model registry storage fees.", explanation: "Negligible at any reasonable scale." },
           ]}
         />
         <Quiz
           question="Why does prompt + RAG have a 'hidden discount' over fine-tuning?"
           options={[
-            { label: "Prompts have unlimited token budgets.", explanation: "They don't — pricing scales with tokens." },
-            { label: "RAG has no embedding cost.", explanation: "It does — see Module 15." },
-            { label: "When the base model improves, prompts and retrieval transfer for free; fine-tunes have to be re-trained.", correct: true, explanation: "Yes — this is a real and large effect over multi-year projects." },
+            { label: "Prompts have unlimited token budgets.", explanation: "They don't, pricing scales with tokens." },
+            { label: "RAG has no embedding cost.", explanation: "It does, see Module 15." },
+            { label: "When the base model improves, prompts and retrieval transfer for free; fine-tunes have to be re-trained.", correct: true, explanation: "Yes, this is a real and large effect over multi-year projects." },
             { label: "RAG outputs are cached at the platform level by default.", explanation: "Caching is opt-in (Module 13), not free or default." },
           ]}
         />
@@ -594,7 +594,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
 
       <h2 id="project">7. Project: the decision document</h2>
       <p>
-        No code this module. The deliverable is a written decision document — the artifact you&apos;d hand to your
+        No code this module. The deliverable is a written decision document, the artifact you&apos;d hand to your
         manager to defend a fine-tune-or-not call. Production AI engineering is as much about <em>not</em>{" "}building
         things as it is about building them. This is the muscle.
       </p>
@@ -611,7 +611,7 @@ Q7. Do I have an eval set distinct from training data, with measurable success c
 
       <h3 id="project-template">The template</h3>
       <p>
-        Use this structure. It mirrors what production AI teams actually write. Aim for ~600–1000 words total —
+        Use this structure. It mirrors what production AI teams actually write. Aim for ~600–1000 words total,
         long enough to be substantive, short enough that your stakeholders will read it.
       </p>
 
@@ -671,7 +671,7 @@ mid-project. Decide these BEFORE you start.]
       <ul>
         <li><strong>Names the failure classes.</strong> &quot;18% wrong&quot; isn&apos;t a problem statement; &quot;12% are billing-related but routed to tier-1 because of jargon&quot; is.</li>
         <li><strong>Does the cheap diagnosis before recommending the expensive fix.</strong>{" "}Failure-class analysis costs a day. A fine-tune costs months.</li>
-        <li><strong>Has explicit kill criteria.</strong> &quot;If we don&apos;t hit 92% accuracy by week 8, we stop&quot; — written before you start.</li>
+        <li><strong>Has explicit kill criteria.</strong> &quot;If we don&apos;t hit 92% accuracy by week 8, we stop&quot;, written before you start.</li>
         <li><strong>Quotes a real cost.</strong>{" "}Including labeler time. Including the re-training tax.</li>
         <li><strong>Considers the &quot;just accept it&quot; option.</strong>{" "}Sometimes 18% wrong is fine and the budget is better spent elsewhere. A good doc names this.</li>
         <li><strong>Picks a path and commits.</strong>{" "}A doc that says &quot;maybe fine-tune, maybe not&quot; isn&apos;t a decision.</li>
@@ -690,11 +690,11 @@ mid-project. Decide these BEFORE you start.]
         xp={40}
         manual
         manualLabel="I&apos;ve written the decision doc"
-        celebration="Production thinking — write the doc, save the company months."
+        celebration="Production thinking, write the doc, save the company months."
       >
         <p>
           Write the decision doc for the ticket triage scenario above. Aim for 600–1000 words. Don&apos;t skip the
-          investigation section — that&apos;s the whole point.
+          investigation section, that&apos;s the whole point.
         </p>
         <p>
           When you&apos;re done, mark this complete. Bonus: bring the doc to your next 1:1 and pretend it&apos;s a
@@ -708,7 +708,7 @@ mid-project. Decide these BEFORE you start.]
           question="Which statement most accurately describes what customer LoRA fine-tuning is good for?"
           options={[
             { label: "Teaching the model new factual information about your product.", explanation: "LoRA is bad at facts. Use RAG." },
-            { label: "Adjusting style, format, and which existing capabilities the model deploys — without teaching new knowledge.", correct: true, explanation: "Yes — that's the precise scope of what low-rank adaptation can achieve." },
+            { label: "Adjusting style, format, and which existing capabilities the model deploys, without teaching new knowledge.", correct: true, explanation: "Yes, that's the precise scope of what low-rank adaptation can achieve." },
             { label: "Making the model reason better on math problems.", explanation: "Reasoning gains come from base model selection or chain-of-thought prompting." },
             { label: "Reducing the model's tendency to refuse legitimate queries.", explanation: "Refusal behavior comes from the lab's RLHF/safety training, not customer LoRA." },
           ]}
@@ -717,7 +717,7 @@ mid-project. Decide these BEFORE you start.]
           question="What's the first question you should ask before considering fine-tuning?"
           options={[
             { label: "How much budget do we have?", explanation: "Budget matters but isn't the framework's first filter." },
-            { label: "Is this a behavior problem or a knowledge problem?", correct: true, explanation: "Right — Q1 redirects most projects to RAG correctly." },
+            { label: "Is this a behavior problem or a knowledge problem?", correct: true, explanation: "Right, Q1 redirects most projects to RAG correctly." },
             { label: "Do we have a GPU cluster?", explanation: "Modern fine-tuning APIs make this irrelevant for most teams." },
             { label: "What model should we fine-tune?", explanation: "Picking a model before defining the problem is putting the cart before the horse." },
           ]}
@@ -725,8 +725,8 @@ mid-project. Decide these BEFORE you start.]
         <Quiz
           question="A team fine-tuned Claude 3.5 Sonnet six months ago. Anthropic just released Claude 4. What's the typical 'dependency rotation tax'?"
           options={[
-            { label: "Zero — fine-tunes auto-upgrade to new base models.", explanation: "They don't. The fine-tune is bound to the specific base." },
-            { label: "Re-running training: another labeling pass (often), another eval pass (always), and another compute spend. Or staying on the old base and missing new capabilities.", correct: true, explanation: "Exactly — and this happens every time the base improves, which is currently every 6-12 months." },
+            { label: "Zero, fine-tunes auto-upgrade to new base models.", explanation: "They don't. The fine-tune is bound to the specific base." },
+            { label: "Re-running training: another labeling pass (often), another eval pass (always), and another compute spend. Or staying on the old base and missing new capabilities.", correct: true, explanation: "Exactly, and this happens every time the base improves, which is currently every 6-12 months." },
             { label: "Roughly the storage cost of the LoRA adapter.", explanation: "Storage is negligible. The cost is re-training and re-evaluation work." },
             { label: "Anthropic provides automated migration scripts.", explanation: "Vendors don't migrate fine-tunes across major versions." },
           ]}
@@ -734,8 +734,8 @@ mid-project. Decide these BEFORE you start.]
         <Quiz
           question="When does DPO (Direct Preference Optimization) make more sense than SFT?"
           options={[
-            { label: "Always — DPO is strictly better than SFT.", explanation: "They solve different problems." },
-            { label: "When you have preference rankings (A is better than B) but defining a single correct answer is impossible — typically tone, summary quality, creative work.", correct: true, explanation: "Yes — DPO learns from comparisons, SFT learns from labeled targets." },
+            { label: "Always, DPO is strictly better than SFT.", explanation: "They solve different problems." },
+            { label: "When you have preference rankings (A is better than B) but defining a single correct answer is impossible, typically tone, summary quality, creative work.", correct: true, explanation: "Yes, DPO learns from comparisons, SFT learns from labeled targets." },
             { label: "When you have less than 50 training examples.", explanation: "Both methods need real data; small N hurts both." },
             { label: "When your model needs to use tools more reliably.", explanation: "Tool reliability is a prompt and tool-description problem, not a DPO problem." },
           ]}
@@ -744,8 +744,8 @@ mid-project. Decide these BEFORE you start.]
           question="Why is the cost of an eval set described as a 'permanent tax' rather than a one-time investment?"
           options={[
             { label: "Eval frameworks charge a monthly subscription.", explanation: "Open-source eval harnesses are free. The cost isn't software." },
-            { label: "Every time you change the model, prompt, retrieval, or data pipeline, you re-run the eval — and quality eval cases need expert labeling that has to be refreshed as production drifts.", correct: true, explanation: "Right — evals only stay useful if they reflect current production reality, which keeps changing." },
-            { label: "Evals lose accuracy unless retrained on every API call.", explanation: "Evals aren't models — they don't 'retrain'." },
+            { label: "Every time you change the model, prompt, retrieval, or data pipeline, you re-run the eval, and quality eval cases need expert labeling that has to be refreshed as production drifts.", correct: true, explanation: "Right, evals only stay useful if they reflect current production reality, which keeps changing." },
+            { label: "Evals lose accuracy unless retrained on every API call.", explanation: "Evals aren't models, they don't 'retrain'." },
             { label: "Cloud providers expire eval datasets after 90 days.", explanation: "They don't. The tax is engineering effort, not storage policy." },
           ]}
         />
@@ -754,12 +754,12 @@ mid-project. Decide these BEFORE you start.]
       <div className="my-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 p-8 text-white">
         <h3 className="mt-0 mb-3 text-xl font-bold text-white">Next up: the capstone</h3>
         <p className="mb-3 text-white/95">
-          You&apos;ve done the whole arc — tokenization, training, transformers, embeddings, prompts, the API, tool use,
+          You&apos;ve done the whole arc, tokenization, training, transformers, embeddings, prompts, the API, tool use,
           streaming, caching, RAG, frontend integration, agents, evals, security, and now training discipline. One
           module left.
         </p>
         <p className="mb-0 text-white/95">
-          <strong>Module 32 — Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
+          <strong>Module 32, Capstone:</strong>{" "}a single end-to-end AI engineering assistant that uses everything you&apos;ve
           built. Streaming chat, tool use, RAG over a real codebase, agent loops, evals, security guards. The portfolio
           piece. The thing you point at when somebody asks &quot;can you actually ship AI?&quot;
         </p>

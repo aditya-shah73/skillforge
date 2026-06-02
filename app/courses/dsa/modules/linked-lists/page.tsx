@@ -96,7 +96,7 @@ flowchart LR
         <h2 id="setup">Why linked lists exist</h2>
 
         <p>
-          Arrays are wonderful — until you need to insert into the middle. Then every element to the right has to slide
+          Arrays are wonderful, until you need to insert into the middle. Then every element to the right has to slide
           over by one slot, and you pay <strong>O(n)</strong>{" "}on every poke. If your workload is mostly{" "}
           <em>insert here, delete there, splice this in front</em>, the array's contiguous memory becomes a tax.
         </p>
@@ -127,9 +127,9 @@ flowchart LR
           kind="Gut check"
           question="Your code does 10 million 'insert at the very front' operations and almost no random reads. ArrayList or LinkedList?"
           options={[
-            { label: "ArrayList — it's the default for a reason.", explanation: "ArrayList.add(0, x) is O(n) — every insertion shifts the entire array. 10 million of those is catastrophic." },
-            { label: "LinkedList — front insertion is O(1).", correct: true, explanation: "Right. LinkedList.addFirst is O(1). This is exactly the workload it's designed for. (In practice, an ArrayDeque is even better, but you'll meet that next module.)" },
-            { label: "Neither — use a HashMap.", explanation: "HashMap doesn't preserve insertion order naturally and can't model 'list of things'." },
+            { label: "ArrayList, it's the default for a reason.", explanation: "ArrayList.add(0, x) is O(n), every insertion shifts the entire array. 10 million of those is catastrophic." },
+            { label: "LinkedList, front insertion is O(1).", correct: true, explanation: "Right. LinkedList.addFirst is O(1). This is exactly the workload it's designed for. (In practice, an ArrayDeque is even better, but you'll meet that next module.)" },
+            { label: "Neither, use a HashMap.", explanation: "HashMap doesn't preserve insertion order naturally and can't model 'list of things'." },
             { label: "It doesn't matter.", explanation: "It really does. We're talking the difference between seconds and hours." },
           ]}
         />
@@ -193,7 +193,7 @@ class MyLinkedList<E> {
           <p className="m-0">
             <code>java.util.LinkedList&lt;E&gt;</code> is the doubly-linked one we're modelling. It also implements{" "}
             <code>Deque</code>, so you can use it as a queue or stack. (Spoiler: <code>ArrayDeque</code> is faster for
-            almost every real workload — Module 9.)
+            almost every real workload, Module 9.)
           </p>
         </Callout>
 
@@ -228,7 +228,7 @@ class MyLinkedList<E> {
           <tbody>
             <tr><td><code>addFirst(x)</code></td><td>O(1)</td><td>O(1)</td><td>Wire two pointers; no traversal.</td></tr>
             <tr><td><code>addLast(x)</code></td><td>O(n) <em>(or O(1) if we keep a tail)</em></td><td>O(1)</td><td>Singly without a tail must walk to the end.</td></tr>
-            <tr><td><code>get(i)</code></td><td>O(n)</td><td>O(n)</td><td>No address arithmetic — must walk i steps.</td></tr>
+            <tr><td><code>get(i)</code></td><td>O(n)</td><td>O(n)</td><td>No address arithmetic, must walk i steps.</td></tr>
             <tr><td><code>add(i, x)</code></td><td>O(n)</td><td>O(n)</td><td>Walking to index i dominates the wiring.</td></tr>
             <tr><td><code>remove(node)</code> <em>given the node</em></td><td>O(n) <em>(must find prev)</em></td><td>O(1)</td><td>Singly can't go backwards from <code>node</code>.</td></tr>
             <tr><td><code>removeFirst()</code></td><td>O(1)</td><td>O(1)</td><td>Bump the head pointer.</td></tr>
@@ -244,7 +244,7 @@ class MyLinkedList<E> {
     process(list.get(i));   // O(n) every iteration → O(n²) total
 }`}</CodeBlock>
           <p className="m-0">
-            is quadratic on a LinkedList. Always iterate with an enhanced-for or an Iterator — those walk one step at a time and stay O(n).
+            is quadratic on a LinkedList. Always iterate with an enhanced-for or an Iterator, those walk one step at a time and stay O(n).
           </p>
         </Callout>
 
@@ -253,7 +253,7 @@ class MyLinkedList<E> {
         <WorkedExample
           title="addAtIndex(2, 99) in [A → B → C → D]"
           steps={[
-            { title: "Walk to index 1", body: "Start at head (A). Take 1 step forward. We're now at B (index 1) — the node before our insertion point." },
+            { title: "Walk to index 1", body: "Start at head (A). Take 1 step forward. We're now at B (index 1), the node before our insertion point." },
             { title: "Build the new node", body: "Node<E> fresh = new Node<>(99); fresh.next is null." },
             { title: "Wire fresh.next first", body: "fresh.next = B.next;  // fresh now points to C. The new node is partly attached." },
             { title: "Wire B.next last", body: "B.next = fresh;  // B now points to fresh, fresh points to C. Insertion done." },
@@ -261,7 +261,7 @@ class MyLinkedList<E> {
           ]}
         />
 
-        <p>The classic trap is wiring in the wrong order. If you do <code>B.next = fresh</code> first, you've lost the reference to C — fresh.next is still null and the rest of the list is detached.</p>
+        <p>The classic trap is wiring in the wrong order. If you do <code>B.next = fresh</code> first, you've lost the reference to C, fresh.next is still null and the rest of the list is detached.</p>
 
         <h3>Classify the operation</h3>
         <ClassifyChallenge
@@ -295,7 +295,7 @@ class MyLinkedList<E> {
         <p>
           Naive linked-list code is full of <em>"if I'm inserting at the front, special-case it"</em> branches, because
           the head pointer lives on the list, not on a node. The <strong>dummy-head</strong>{" "}trick removes the
-          asymmetry by introducing a fake first node that never holds real data — every real node is now the{" "}
+          asymmetry by introducing a fake first node that never holds real data, every real node is now the{" "}
           <code>next</code> of <em>some</em>{" "}node, including the actual head.
         </p>
 
@@ -344,13 +344,13 @@ public void addAt(int i, E v) {
         </p>
         <ul>
           <li>When <code>fast</code> hits null, <code>slow</code> is at the <strong>middle</strong>. (LC 876.)</li>
-          <li>If there's a <strong>cycle</strong>, <code>fast</code> will eventually catch up to <code>slow</code> from behind. (LC 141 — Floyd's algorithm.)</li>
+          <li>If there's a <strong>cycle</strong>, <code>fast</code> will eventually catch up to <code>slow</code> from behind. (LC 141, Floyd's algorithm.)</li>
           <li>If you need the kᵗʰ-from-end node, advance <code>fast</code> k steps first, then walk both together until <code>fast</code> hits null. (LC 19.)</li>
         </ul>
 
         <Mermaid chart={fastSlow} />
         <p className="-mt-2 mb-6 text-center text-xs text-slate-500 italic">
-          After 2 iterations on a 5-node list: <code>slow</code> is at the middle (C), <code>fast</code> is at E. One more step and <code>fast</code> falls off the end — return <code>slow</code>.
+          After 2 iterations on a 5-node list: <code>slow</code> is at the middle (C), <code>fast</code> is at E. One more step and <code>fast</code> falls off the end, return <code>slow</code>.
         </p>
 
         <CodeBlock lang="java">{`// LC 876 — middle of a linked list. Returns the second middle for even lengths.
@@ -378,7 +378,7 @@ public boolean hasCycle(Node<Integer> head) {
           <p className="m-0">
             On an acyclic list, <code>fast</code> always hits null first because it moves twice as quickly. On a cyclic
             list, <code>fast</code> can never escape, and the gap between fast and slow shrinks by one node per iteration
-            inside the cycle — so they must collide. There is no third option.
+            inside the cycle, so they must collide. There is no third option.
           </p>
         </Callout>
 
@@ -386,7 +386,7 @@ public boolean hasCycle(Node<Integer> head) {
 
         <p>
           Reversing a singly-linked list in place is a three-pointer dance. Hold the previous node, the current node,
-          and the next node — at each step, flip <code>curr.next</code> to point at <code>prev</code>, then advance.
+          and the next node, at each step, flip <code>curr.next</code> to point at <code>prev</code>, then advance.
         </p>
 
         <CodeBlock lang="java">{`// LC 206 — reverse a singly-linked list, iterative.
@@ -405,9 +405,9 @@ public Node<E> reverse(Node<E> head) {
           title="Tricks recap"
           gist="Two tricks remove most of the pain from linked-list code: a dummy sentinel that makes the head look like every other node, and a pair of pointers walking at different speeds."
           points={[
-            { takeaway: "Dummy head removes the 'is this the first node?' branch.", detail: "Add a sentinel node before head. Now every real node is the .next of some node — even the first. Insert and delete at index 0 use the same code as anywhere else." },
+            { takeaway: "Dummy head removes the 'is this the first node?' branch.", detail: "Add a sentinel node before head. Now every real node is the .next of some node, even the first. Insert and delete at index 0 use the same code as anywhere else." },
             { takeaway: "Fast/slow pointers solve middle, cycle, and kᵗʰ-from-end with one loop.", detail: "slow advances by 1, fast by 2. When fast hits null, slow is at the middle. If they collide, there's a cycle. Decoupling fast first by k gives you the kᵗʰ-from-end node." },
-            { takeaway: "In-place reversal is a three-pointer dance.", detail: "prev / curr / next. At each step: save curr.next, flip curr.next to prev, advance. Memorise it — it appears in dozens of derived problems." },
+            { takeaway: "In-place reversal is a three-pointer dance.", detail: "prev / curr / next. At each step: save curr.next, flip curr.next to prev, advance. Memorise it, it appears in dozens of derived problems." },
           ]}
         />
 
@@ -420,7 +420,7 @@ public Node<E> reverse(Node<E> head) {
         <h2 id="project">Project: build a linked list, then crush three LeetCode problems</h2>
 
         <p>
-          You'll write <code>MyLinkedList&lt;E&gt;</code> from scratch — singly-linked, with a dummy head and a tail
+          You'll write <code>MyLinkedList&lt;E&gt;</code> from scratch, singly-linked, with a dummy head and a tail
           pointer so addLast is O(1). Then apply it to the three canonical interview problems.
         </p>
 
@@ -510,7 +510,7 @@ public Node<E> reverse(Node<E> head) {
           </p>
         </Callout>
 
-        <h3>Step 2 · LeetCode 206 — Reverse a Linked List</h3>
+        <h3>Step 2 · LeetCode 206, Reverse a Linked List</h3>
 
         <CodeBlock lang="java">{`// You're given the head node directly (not a list wrapper) — that's typical for LC.
 public Node<Integer> reverseList(Node<Integer> head) {
@@ -524,7 +524,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
     return prev;   // new head
 }`}</CodeBlock>
 
-        <h3>Step 3 · LeetCode 876 — Middle of the Linked List</h3>
+        <h3>Step 3 · LeetCode 876, Middle of the Linked List</h3>
 
         <CodeBlock lang="java">{`public Node<Integer> middleNode(Node<Integer> head) {
     Node<Integer> slow = head, fast = head;
@@ -535,7 +535,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
     return slow;
 }`}</CodeBlock>
 
-        <h3>Step 4 · LeetCode 141 — Linked List Cycle</h3>
+        <h3>Step 4 · LeetCode 141, Linked List Cycle</h3>
 
         <CodeBlock lang="java">{`public boolean hasCycle(Node<Integer> head) {
     Node<Integer> slow = head, fast = head;
@@ -547,7 +547,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
     return false;
 }`}</CodeBlock>
 
-        <Callout variant="spring" title="Stretch goal — LC 142, finding where the cycle starts">
+        <Callout variant="spring" title="Stretch goal, LC 142, finding where the cycle starts">
           <p className="m-0">
             Once <code>slow</code> and <code>fast</code> meet inside the cycle, reset <code>fast</code> to <code>head</code>
             and walk both one step at a time. They meet at the cycle entrance. Number-theoretic, beautiful, and worth
@@ -559,7 +559,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="linked-lists" id="final" title="I've completed Module 7" xp={25} celebration="Linked lists are now muscle memory. Stacks and queues are next — and they're built on top of what you just learned.">
+      <Checkpoint moduleSlug="linked-lists" id="final" title="I've completed Module 7" xp={25} celebration="Linked lists are now muscle memory. Stacks and queues are next, and they're built on top of what you just learned.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -567,10 +567,10 @@ public Node<Integer> reverseList(Node<Integer> head) {
           kind="Final check"
           question="You're maintaining a playlist where the most common operations are 'add to end', 'remove the song that's playing right now', and 'jump to next song'. Which structure?"
           options={[
-            { label: "ArrayList — O(1) random access wins.", explanation: "Random access isn't what you need. The bottleneck is 'remove the current song' — that's O(n) on an ArrayList because everything after shifts left." },
+            { label: "ArrayList, O(1) random access wins.", explanation: "Random access isn't what you need. The bottleneck is 'remove the current song', that's O(n) on an ArrayList because everything after shifts left." },
             { label: "Singly-linked list with head and tail pointers.", explanation: "Close, but 'remove current song' is O(n) on a singly-linked list because you can't walk backward from the current node to fix prev.next." },
             { label: "Doubly-linked list.", correct: true, explanation: "All three ops are O(1): addLast via tail, removeCurrent via current.prev/next splice, advance via current = current.next. Java's LinkedList literally is this." },
-            { label: "HashMap.", explanation: "HashMap doesn't preserve order natively. You'd need a LinkedHashMap, which is itself implemented on top of a doubly-linked list — so the underlying answer is still doubly-linked." },
+            { label: "HashMap.", explanation: "HashMap doesn't preserve order natively. You'd need a LinkedHashMap, which is itself implemented on top of a doubly-linked list, so the underlying answer is still doubly-linked." },
           ]}
         />
 
@@ -580,7 +580,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
           options={[
             { label: "Because fast is twice as fast, it eventually wraps around.", explanation: "Closer, but the precise reason matters: inside a cycle the gap between fast and slow shrinks by 1 every iteration, so they must collide in finite time." },
             { label: "Because if there's a cycle, fast can never reach null, and inside the cycle the gap fast - slow shrinks by one each step until they meet.", correct: true, explanation: "Exactly. fast can't escape an acyclic suffix because there isn't one in a cyclic list, and the relative speed of 1 inside the cycle guarantees collision within at most cycle-length steps." },
-            { label: "Because fast and slow start at the same place, they're always equal.", explanation: "After the first iteration they're at different nodes — they only re-meet inside a cycle." },
+            { label: "Because fast and slow start at the same place, they're always equal.", explanation: "After the first iteration they're at different nodes, they only re-meet inside a cycle." },
             { label: "It only works for cycles of even length.", explanation: "False. The proof works for any cycle length." },
           ]}
         />
@@ -591,7 +591,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
           options={[
             { label: "Counts the nodes.", explanation: "It doesn't increment any counter. The variables tracked are pointers, not numbers." },
             { label: "Detects a cycle.", explanation: "There's no fast pointer and no equality check between two pointers." },
-            { label: "Reverses the list in place and returns the new head.", correct: true, explanation: "Right — the canonical iterative reversal. After the loop, prev is the last node we processed, which is now the new head." },
+            { label: "Reverses the list in place and returns the new head.", correct: true, explanation: "Right, the canonical iterative reversal. After the loop, prev is the last node we processed, which is now the new head." },
             { label: "Removes duplicates.", explanation: "No equality checks against neighbour values; this is purely structural pointer manipulation." },
           ]}
         />
@@ -602,14 +602,14 @@ public Node<Integer> reverseList(Node<Integer> head) {
           points={[
             { takeaway: "Pick array vs linked list from the workload, not from habit.", detail: "Random access? Array. Splicing in the middle once you have a pointer? Linked list. Both? Probably a different structure (tree, skip list, deque)." },
             { takeaway: "Implement singly, doubly, and circular variants and reason about when each pays off.", detail: "Doubly costs an extra pointer per node but earns O(1) deletion-given-node and O(1) addLast/removeLast. Circular suits round-robin scheduling." },
-            { takeaway: "Use the dummy-head trick to flatten the special-case-the-head bug class.", detail: "A two-line setup that pays off every time the algorithm might modify the head — remove-by-value, dedupe, reverse-first-k, you name it." },
+            { takeaway: "Use the dummy-head trick to flatten the special-case-the-head bug class.", detail: "A two-line setup that pays off every time the algorithm might modify the head, remove-by-value, dedupe, reverse-first-k, you name it." },
             { takeaway: "Reach for fast/slow pointers when a problem mentions 'middle', 'cycle', or 'kᵗʰ from end'.", detail: "All three collapse to a single loop. That's the recognition cue." },
-            { takeaway: "Reverse a list in place with the three-pointer dance — and spot it disguised in other problems.", detail: "It shows up inside reorder-list, palindrome-linked-list, and reverse-nodes-in-k-group. Once it's muscle memory, those problems get easier." },
+            { takeaway: "Reverse a list in place with the three-pointer dance, and spot it disguised in other problems.", detail: "It shows up inside reorder-list, palindrome-linked-list, and reverse-nodes-in-k-group. Once it's muscle memory, those problems get easier." },
           ]}
         />
 
         <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-800/40 dark:from-amber-950/30 dark:to-yellow-950/30">
-          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 8 — Stacks</h3>
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 8, Stacks</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             LIFO. The call stack is a stack. Bracket matching is a stack. Reverse Polish notation is a stack. And monotonic
             stacks unlock a class of problems (next-greater-element, daily temperatures) that look impossible until you
@@ -619,7 +619,7 @@ public Node<Integer> reverseList(Node<Integer> head) {
             href="/courses/dsa/modules/stacks"
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
-            Continue to Module 8 — Stacks →
+            Continue to Module 8, Stacks →
           </Link>
         </div>
       </section>

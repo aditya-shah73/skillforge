@@ -41,7 +41,7 @@ export default function MLTrainingModule() {
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">How models actually learn</h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          Gradient descent, learning rate, overfitting, evaluation — the loop that turns data into weights.
+          Gradient descent, learning rate, overfitting, evaluation, the loop that turns data into weights.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="ml-training" />
         <ModuleProgress moduleSlug="ml-training" checkpoints={CHECKPOINTS} />
@@ -62,7 +62,7 @@ export default function MLTrainingModule() {
           <li>Diagnose a <strong>learning-rate</strong>{" "}disaster from a loss curve alone.</li>
           <li>Tell <strong>overfitting</strong>{" "}apart from <strong>underfitting</strong>{" "}on sight.</li>
           <li>Pick the right <strong>metric</strong> (RMSE vs accuracy vs F1) for a problem you&apos;ve never seen.</li>
-          <li>Finish your Java linear-regression project — now it <em>trains itself</em>.</li>
+          <li>Finish your Java linear-regression project, now it <em>trains itself</em>.</li>
         </ol>
         <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           Same deal as before: orange &quot;Confidence check&quot; boxes appear where implementing-from-scratch
@@ -75,11 +75,11 @@ export default function MLTrainingModule() {
       {/* ================================================================= */}
       <Checkpoint moduleSlug="ml-training" id="gradient-descent" title="Gradient descent" xp={25} celebration="You understand the core algorithm of all modern ML. Seriously.">
       <section>
-        <h2>Part 1: Gradient descent — how models actually learn</h2>
+        <h2>Part 1: Gradient descent, how models actually learn</h2>
 
         <Callout variant="info" title="Picking up exactly where Module 2 left off">
           <p className="m-0">
-            Module 2 ended with a model that can <em>predict</em> (linear regression), a loss that can <em>score</em>{" "}the predictions (MSE), and a metric that can <em>tell us how good those predictions are</em>{" "}on held-out data. What we never answered: <strong>where do the weights actually come from?</strong>{" "}In Module 2 we hand-eyeballed slope and intercept off the LineFitDemo. That obviously doesn&apos;t scale. This module is the missing middle — the algorithm that takes <em>any</em>{" "}initial guess at the weights and walks them downhill on the loss surface until they&apos;re good. It&apos;s the same loop whether you&apos;re fitting 2 weights for house prices or hundreds of billions for a frontier LLM.
+            Module 2 ended with a model that can <em>predict</em> (linear regression), a loss that can <em>score</em>{" "}the predictions (MSE), and a metric that can <em>tell us how good those predictions are</em>{" "}on held-out data. What we never answered: <strong>where do the weights actually come from?</strong>{" "}In Module 2 we hand-eyeballed slope and intercept off the LineFitDemo. That obviously doesn&apos;t scale. This module is the missing middle, the algorithm that takes <em>any</em>{" "}initial guess at the weights and walks them downhill on the loss surface until they&apos;re good. It&apos;s the same loop whether you&apos;re fitting 2 weights for house prices or hundreds of billions for a frontier LLM.
           </p>
         </Callout>
 
@@ -89,16 +89,16 @@ export default function MLTrainingModule() {
           What do you do? You feel around with your feet, find the direction where the ground drops the steepest, take a small step, and repeat.
         </p>
         <p>
-          Eventually — assuming the mountain is well-behaved — you end up at the bottom. You never had a map. You just kept going downhill.
+          Eventually, assuming the mountain is well-behaved, you end up at the bottom. You never had a map. You just kept going downhill.
         </p>
         <p>
           <strong>That&apos;s gradient descent.</strong>{" "}The &quot;mountain&quot; is the loss function. Your &quot;position&quot; is the current set of weights.
-          The &quot;steepest downhill direction&quot; is the negative of the gradient. And the training loop just walks — one small step at a time — until the loss stops dropping.
+          The &quot;steepest downhill direction&quot; is the negative of the gradient. And the training loop just walks, one small step at a time, until the loss stops dropping.
         </p>
 
         <Callout variant="insight" title="The whole module in one paragraph">
           <p className="m-0">
-            Every &quot;training&quot; algorithm — from a 1960s linear regression to GPT-5 — is some flavor of: <em>compute the gradient of the loss with respect
+            Every &quot;training&quot; algorithm, from a 1960s linear regression to GPT-5, is some flavor of: <em>compute the gradient of the loss with respect
             to the weights, nudge the weights in the opposite direction, repeat</em>. The rest of the module is refinements, diagnostics, and gotchas on this one idea.
           </p>
         </Callout>
@@ -110,7 +110,7 @@ export default function MLTrainingModule() {
         </p>
 
         <p className="text-xs text-slate-600 italic dark:text-slate-400">
-          Don&apos;t panic at the symbols. <code>∂L / ∂w</code> just means &quot;how does the loss change if I nudge this one weight a tiny bit?&quot; — a slope. The funny <code>∂</code> is the same idea as a derivative <code>d/dx</code>, except we have many weights so we use partials.
+          Don&apos;t panic at the symbols. <code>∂L / ∂w</code> just means &quot;how does the loss change if I nudge this one weight a tiny bit?&quot;, a slope. The funny <code>∂</code> is the same idea as a derivative <code>d/dx</code>, except we have many weights so we use partials.
         </p>
 
         <CodeBlock lang="plain">
@@ -126,17 +126,17 @@ where:
         </p>
 
         <p>
-          Why minus? Because the gradient points <strong>uphill</strong> — in the direction of <em>fastest increase</em>{" "}of the loss. We want to decrease the loss,
+          Why minus? Because the gradient points <strong>uphill</strong>, in the direction of <em>fastest increase</em>{" "}of the loss. We want to decrease the loss,
           so we go the opposite way. Subtracting the gradient is how we do that.
         </p>
 
         <Callout variant="info" title="Gradient = slope, generalized">
           <p className="mb-2">
-            For a one-variable function <code>L(w)</code>, the &quot;gradient&quot; is just the derivative <code>dL/dw</code> — the slope at a point.
+            For a one-variable function <code>L(w)</code>, the &quot;gradient&quot; is just the derivative <code>dL/dw</code>, the slope at a point.
             If the slope is +3 at your current <code>w</code>, the loss is going up as <code>w</code> goes up, so you&apos;d subtract (3 · η) to move the other way.
           </p>
           <p className="m-0">
-            When there are many weights, the gradient is a <em>vector</em> — one partial derivative per weight. Each weight gets its own update using its own partial.
+            When there are many weights, the gradient is a <em>vector</em>, one partial derivative per weight. Each weight gets its own update using its own partial.
           </p>
         </Callout>
 
@@ -158,7 +158,7 @@ where:
 
         <WorkedExample
           title="One step of gradient descent on a linear model"
-          subtitle="One feature, one weight, one data point — smallest case that still shows the idea."
+          subtitle="One feature, one weight, one data point, smallest case that still shows the idea."
           steps={[
             {
               title: "Set up the problem",
@@ -191,7 +191,7 @@ L = (−1.0)²  =  1.0`}
               body: (
                 <>
                   <p className="m-0 mb-2">
-                    We need <code>∂L/∂w</code> — &quot;how much does the loss change when I nudge w?&quot; The shape of <code>L = (w·x − y)²</code> is a parabola (you squared something). For a parabola <code>(stuff)²</code>, calculus says the slope is <code>2 · stuff · (slope of stuff)</code>. The &quot;stuff&quot; is <code>w·x − y</code>, whose slope with respect to <code>w</code> is just <code>x</code>. Multiply them together:
+                    We need <code>∂L/∂w</code>, &quot;how much does the loss change when I nudge w?&quot; The shape of <code>L = (w·x − y)²</code> is a parabola (you squared something). For a parabola <code>(stuff)²</code>, calculus says the slope is <code>2 · stuff · (slope of stuff)</code>. The &quot;stuff&quot; is <code>w·x − y</code>, whose slope with respect to <code>w</code> is just <code>x</code>. Multiply them together:
                   </p>
                   <CodeBlock lang="plain">
 {`∂L/∂w = 2 · (w·x − y) · x
@@ -199,10 +199,10 @@ L = (−1.0)²  =  1.0`}
        = −8.0`}
                   </CodeBlock>
                   <p className="m-0 mb-2 text-xs text-slate-600 italic dark:text-slate-400">
-                    That was the chain rule in action — the trick of breaking a derivative into &quot;outer × inner&quot;. You don&apos;t need to derive this by hand in real code; PyTorch and TensorFlow do it for you automatically (it&apos;s called <strong>autograd</strong>). But seeing it once helps the rest stop feeling like magic.
+                    That was the chain rule in action, the trick of breaking a derivative into &quot;outer × inner&quot;. You don&apos;t need to derive this by hand in real code; PyTorch and TensorFlow do it for you automatically (it&apos;s called <strong>autograd</strong>). But seeing it once helps the rest stop feeling like magic.
                   </p>
                   <p className="m-0 text-xs italic">
-                    The gradient is negative — meaning &quot;if you increase w, the loss goes down.&quot; Good sign, since we picked <code>w = 0.5</code> and the truth is closer to <code>0.75</code>.
+                    The gradient is negative, meaning &quot;if you increase w, the loss goes down.&quot; Good sign, since we picked <code>w = 0.5</code> and the truth is closer to <code>0.75</code>.
                   </p>
                 </>
               ),
@@ -233,7 +233,7 @@ L = (−1.0)²  =  1.0`}
           ]}
         />
 
-        <h3>Batch, stochastic, mini-batch — the three dials</h3>
+        <h3>Batch, stochastic, mini-batch, the three dials</h3>
         <p>
           In the worked example we used <em>one</em>{" "}data point to compute the gradient. In real training, you have a choice:
         </p>
@@ -254,7 +254,7 @@ L = (−1.0)²  =  1.0`}
               One example at a time. Step after every single one.
             </p>
             <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
-              Very fast per step, but noisy — path zig-zags down the hill.
+              Very fast per step, but noisy, path zig-zags down the hill.
             </p>
           </div>
           <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
@@ -278,9 +278,9 @@ L = (−1.0)²  =  1.0`}
         <Quiz
           question="You run batch GD for 1000 steps on a 1,000,000-row dataset. How many times did your code look at each individual training example?"
           options={[
-            { label: "1,000,000 times — once per row, total.", explanation: "No — batch GD uses every row on every step." },
-            { label: "1,000 times each — every step touches every row.", correct: true, explanation: "Right. Batch GD computes the gradient across all rows each step. That's why it's slow on big data — 1 billion row-visits total." },
-            { label: "Once each — one pass per step, split across rows.", explanation: "No — that describes one step of stochastic/mini-batch, not batch GD." },
+            { label: "1,000,000 times, once per row, total.", explanation: "No, batch GD uses every row on every step." },
+            { label: "1,000 times each, every step touches every row.", correct: true, explanation: "Right. Batch GD computes the gradient across all rows each step. That's why it's slow on big data, 1 billion row-visits total." },
+            { label: "Once each, one pass per step, split across rows.", explanation: "No, that describes one step of stochastic/mini-batch, not batch GD." },
             { label: "It depends on the learning rate.", explanation: "Learning rate controls step size, not how much data each step sees." },
           ]}
         />
@@ -289,9 +289,9 @@ L = (−1.0)²  =  1.0`}
           question="Your loss is going UP during training. The most likely single cause, before anything exotic, is:"
           options={[
             { label: "You need more data.", explanation: "More data helps generalization, but won't make loss go up on a functioning optimizer." },
-            { label: "The model is too simple.", explanation: "Too-simple models plateau high — they don't diverge upward." },
-            { label: "Your learning rate is too large — you're overshooting the minimum and climbing the far side.", correct: true, explanation: "Exactly. Lowering η by 10× is the first thing to try when loss goes up or oscillates wildly." },
-            { label: "You forgot the minus sign in the update and are doing gradient ASCENT.", explanation: "That'd also make loss go up, but it's a bug, not a cause. The canonical first-suspect is LR too high. (Still — always check that minus sign.)" },
+            { label: "The model is too simple.", explanation: "Too-simple models plateau high, they don't diverge upward." },
+            { label: "Your learning rate is too large, you're overshooting the minimum and climbing the far side.", correct: true, explanation: "Exactly. Lowering η by 10× is the first thing to try when loss goes up or oscillates wildly." },
+            { label: "You forgot the minus sign in the update and are doing gradient ASCENT.", explanation: "That'd also make loss go up, but it's a bug, not a cause. The canonical first-suspect is LR too high. (Still, always check that minus sign.)" },
           ]}
           hint="What does a too-big step do on a curved surface?"
         />
@@ -300,11 +300,11 @@ L = (−1.0)²  =  1.0`}
           title="Part 1 recap"
           gist="Training = walking downhill on the loss surface, one small step at a time."
           points={[
-            { takeaway: "Gradient descent: w ← w − η · ∂L/∂w", detail: <>The minus sign is because the gradient points <em>uphill</em>; we want to go down. η is the learning rate — the step size.</> },
-            { takeaway: "The gradient is a slope — it tells you which way loss increases fastest.", detail: <>For each weight individually, it&apos;s a partial derivative. The collection of them is a vector pointing in the steepest-uphill direction.</> },
+            { takeaway: "Gradient descent: w ← w − η · ∂L/∂w", detail: <>The minus sign is because the gradient points <em>uphill</em>; we want to go down. η is the learning rate, the step size.</> },
+            { takeaway: "The gradient is a slope, it tells you which way loss increases fastest.", detail: <>For each weight individually, it&apos;s a partial derivative. The collection of them is a vector pointing in the steepest-uphill direction.</> },
             { takeaway: "Steps self-scale: big gradient → big step, small gradient → small step.", detail: <>You don&apos;t have to slow down manually near the minimum; the gradient shrinks and the algorithm shrinks with it.</> },
             { takeaway: "Three flavors: batch (all rows per step), stochastic (one row), mini-batch (32–256).", detail: <>Mini-batch is what everyone actually uses. Batch is too slow on big data; pure stochastic is too noisy.</> },
-            { takeaway: "If loss is going up, suspect learning rate first.", detail: <>You&apos;re overshooting the minimum. Drop η by 10× and try again — that fixes 80% of &quot;my model won&apos;t train&quot; bugs.</> },
+            { takeaway: "If loss is going up, suspect learning rate first.", detail: <>You&apos;re overshooting the minimum. Drop η by 10× and try again, that fixes 80% of &quot;my model won&apos;t train&quot; bugs.</> },
           ]}
         />
       </section>
@@ -315,10 +315,10 @@ L = (−1.0)²  =  1.0`}
       {/* ================================================================= */}
       <Checkpoint moduleSlug="ml-training" id="learning-rate" title="Learning rate" xp={20} celebration="The one hyperparameter you'll tune in every ML project ever. Nailed.">
       <section>
-        <h2>Part 2: Learning rate — the one knob you&apos;ll actually tune</h2>
+        <h2>Part 2: Learning rate, the one knob you&apos;ll actually tune</h2>
 
         <p>
-          If you only tune one hyperparameter in your entire career, it&apos;ll be the learning rate. Everything else — model size, batch size, regularization —
+          If you only tune one hyperparameter in your entire career, it&apos;ll be the learning rate. Everything else, model size, batch size, regularization,
           matters <em>less often</em>{" "}than picking the right η. Good news: you can tune it just by looking at the loss curve.
         </p>
 
@@ -328,7 +328,7 @@ L = (−1.0)²  =  1.0`}
           <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
             <div className="mb-1 font-bold text-sky-900 dark:text-sky-200">Too small (e.g. 0.0001)</div>
             <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
-              Loss drops — but painfully slowly. Hours of training to reach what a better η gets in minutes.
+              Loss drops, but painfully slowly. Hours of training to reach what a better η gets in minutes.
             </p>
             <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Curve: a gentle, almost-flat glide downward that never seems to stop dropping.
@@ -340,13 +340,13 @@ L = (−1.0)²  =  1.0`}
               Loss drops sharply at first, then plateaus as the model converges.
             </p>
             <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
-              Curve: classic &quot;elbow&quot; shape — steep early, flat later. This is what you want.
+              Curve: classic &quot;elbow&quot; shape, steep early, flat later. This is what you want.
             </p>
           </div>
           <div className="rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/40">
             <div className="mb-1 font-bold text-rose-900 dark:text-rose-200">Too big (e.g. 1.0)</div>
             <p className="m-0 mb-2 text-xs text-slate-700 dark:text-slate-300">
-              Loss oscillates or explodes. You overshoot the minimum every step — or worse, each step lands further uphill than the last.
+              Loss oscillates or explodes. You overshoot the minimum every step, or worse, each step lands further uphill than the last.
             </p>
             <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
               Curve: bouncing up and down, or marching upward to NaN.
@@ -354,7 +354,7 @@ L = (−1.0)²  =  1.0`}
           </div>
         </div>
 
-        <Callout variant="insight" title="Read the loss curve first — tune from there">
+        <Callout variant="insight" title="Read the loss curve first, tune from there">
           <p className="m-0">
             You don&apos;t guess the learning rate from theory. You run for a few hundred steps, plot the loss, and read it:
             &quot;did it drop fast enough?&quot; → try 3× larger. &quot;did it wiggle or explode?&quot; → try 3× smaller.
@@ -364,8 +364,8 @@ L = (−1.0)²  =  1.0`}
 
         <h3>Try it yourself</h3>
         <p>
-          Reset the bowl below. Set the LR slider to <strong>0.001</strong>{" "}and step — see how painfully slow it is.
-          Then reset and try <strong>1.05</strong> — watch it oscillate and diverge. Then try <strong>0.5</strong> — it works, but bounces. <strong>0.2</strong>{" "}is about perfect for this bowl.
+          Reset the bowl below. Set the LR slider to <strong>0.001</strong>{" "}and step, see how painfully slow it is.
+          Then reset and try <strong>1.05</strong>, watch it oscillate and diverge. Then try <strong>0.5</strong>, it works, but bounces. <strong>0.2</strong>{" "}is about perfect for this bowl.
         </p>
 
         <GradientBowl />
@@ -379,13 +379,13 @@ L = (−1.0)²  =  1.0`}
         <ul>
           <li><strong>Linear / logistic regression:</strong>{" "}start at <code>0.01</code>. Almost always works.</li>
           <li><strong>Small neural networks (toy MLPs):</strong> <code>0.01</code> to <code>0.001</code>.</li>
-          <li><strong>Transformers / deep nets:</strong> <code>1e-4</code> or <code>3e-4</code> (with Adam — covered later).</li>
+          <li><strong>Transformers / deep nets:</strong> <code>1e-4</code> or <code>3e-4</code> (with Adam, covered later).</li>
           <li><strong>Fine-tuning a pre-trained model:</strong> <code>1e-5</code>. Smaller, because you don&apos;t want to destroy what&apos;s already there.</li>
         </ul>
 
-        <Callout variant="info" title="LR schedules — a preview">
+        <Callout variant="info" title="LR schedules, a preview">
           <p className="mb-2">
-            In real training runs, people don&apos;t use a single fixed η for the whole run. They use a <strong>schedule</strong> — big at the start (cover ground fast),
+            In real training runs, people don&apos;t use a single fixed η for the whole run. They use a <strong>schedule</strong>, big at the start (cover ground fast),
             then decay it over time (fine-tune the minimum).
           </p>
           <p className="m-0">
@@ -403,20 +403,20 @@ L = (−1.0)²  =  1.0`}
             { id: "big", label: "LR too big", color: "rose" },
           ]}
           items={[
-            { id: "a", label: "Drops from 8.0 → 0.5 in the first 50 steps, then flattens at 0.48 for the rest of training.", answer: "good", explanation: "Classic elbow. Fast early progress, then convergence to a plateau — textbook healthy curve." },
+            { id: "a", label: "Drops from 8.0 → 0.5 in the first 50 steps, then flattens at 0.48 for the rest of training.", answer: "good", explanation: "Classic elbow. Fast early progress, then convergence to a plateau, textbook healthy curve." },
             { id: "b", label: "Oscillates between 3.2 and 4.8 from step 1 onward, never really drops.", answer: "big", explanation: "Bouncing across the minimum. You're stepping so far each iteration that you overshoot. Cut LR." },
             { id: "c", label: "Starts at 8.0, after 500 steps it's at 7.2.", answer: "small", explanation: "Drop is real but glacial. At this rate you'd need 50,000 steps. Bump LR 10×." },
-            { id: "d", label: "Drops nicely to 1.2, then jumps to 4.5, then 18, then NaN.", answer: "big", explanation: "Classic divergence. Loss was fine until a steep region — the step size that worked on gentle terrain threw you off a cliff. Cut LR (or use a schedule that decays it)." },
+            { id: "d", label: "Drops nicely to 1.2, then jumps to 4.5, then 18, then NaN.", answer: "big", explanation: "Classic divergence. Loss was fine until a steep region, the step size that worked on gentle terrain threw you off a cliff. Cut LR (or use a schedule that decays it)." },
           ]}
         />
 
         <Quiz
-          question="You finish training. Loss dropped to 0.42. You double the learning rate and retrain from scratch — loss now drops to 0.28. What's the takeaway?"
+          question="You finish training. Loss dropped to 0.42. You double the learning rate and retrain from scratch, loss now drops to 0.28. What's the takeaway?"
           options={[
-            { label: "Doubling LR always helps.", explanation: "No — had you doubled from Goldilocks upward, you'd have diverged." },
-            { label: "Your original LR was too small — you were stopping in a shallow dip before finding a lower one.", correct: true, explanation: "Right. A slightly bigger step can 'hop over' local flat spots that trap a too-cautious optimizer. Good sign to push LR further and see where it breaks." },
+            { label: "Doubling LR always helps.", explanation: "No, had you doubled from Goldilocks upward, you'd have diverged." },
+            { label: "Your original LR was too small, you were stopping in a shallow dip before finding a lower one.", correct: true, explanation: "Right. A slightly bigger step can 'hop over' local flat spots that trap a too-cautious optimizer. Good sign to push LR further and see where it breaks." },
             { label: "Both runs are fine, the difference is random.", explanation: "A consistent 0.14 improvement on the same data/init is signal, not noise." },
-            { label: "You should reduce LR next time — 0.28 means you converged, so the model is done.", explanation: "Converging to a lower loss is better. You don't 'undo' the improvement by reducing LR next time." },
+            { label: "You should reduce LR next time, 0.28 means you converged, so the model is done.", explanation: "Converging to a lower loss is better. You don't 'undo' the improvement by reducing LR next time." },
           ]}
         />
 
@@ -424,10 +424,10 @@ L = (−1.0)²  =  1.0`}
           title="Part 2 recap"
           gist="Learning rate is THE hyperparameter. Read the loss curve, tune from there."
           points={[
-            { takeaway: "Too small η → slow, almost-flat loss curve. Too big η → oscillation or divergence.", detail: <>The Goldilocks zone shows a sharp drop followed by a plateau — the classic elbow shape. That&apos;s the only curve shape you want to see.</> },
-            { takeaway: "Default starting points: 0.01 for linear/logistic, 3e-4 for neural nets, 1e-5 for fine-tuning.", detail: <>These are not laws — just sane starting points that work 80% of the time. Binary-search from there.</> },
+            { takeaway: "Too small η → slow, almost-flat loss curve. Too big η → oscillation or divergence.", detail: <>The Goldilocks zone shows a sharp drop followed by a plateau, the classic elbow shape. That&apos;s the only curve shape you want to see.</> },
+            { takeaway: "Default starting points: 0.01 for linear/logistic, 3e-4 for neural nets, 1e-5 for fine-tuning.", detail: <>These are not laws, just sane starting points that work 80% of the time. Binary-search from there.</> },
             { takeaway: "To tune: run a short job, look at the curve, adjust by 3–10×. Iterate.", detail: <>You almost never read papers to pick an LR; you read your own loss curve. It&apos;s a visual skill, not a theoretical one.</> },
-            { takeaway: "In production training, people use schedules — LR decays over time.", detail: <>Step decay and cosine decay are the two common flavors. Both reflect the same intuition: cover ground early, fine-tune late.</> },
+            { takeaway: "In production training, people use schedules, LR decays over time.", detail: <>Step decay and cosine decay are the two common flavors. Both reflect the same intuition: cover ground early, fine-tune late.</> },
             { takeaway: "A too-small LR can trap you in a worse minimum than a slightly bigger one would find.", detail: <>Tiny steps can get stuck in shallow dips that a larger-step walker would hop right over. Err slightly on the side of &quot;bigger than you think.&quot;</> },
           ]}
         />
@@ -444,22 +444,22 @@ L = (−1.0)²  =  1.0`}
         <h3>Start with an analogy: the student who memorizes the answer key</h3>
 
         <p>
-          Imagine two students preparing for a math exam. Student A studies the concepts — they can solve problems they&apos;ve never seen before.
-          Student B memorizes the practice tests word-for-word — they&apos;ll ace any question on the practice tests, and completely bomb the real one.
+          Imagine two students preparing for a math exam. Student A studies the concepts, they can solve problems they&apos;ve never seen before.
+          Student B memorizes the practice tests word-for-word, they&apos;ll ace any question on the practice tests, and completely bomb the real one.
         </p>
         <p>
           Student B <strong>overfit</strong>. They learned the training data so well that they failed to learn the <em>pattern</em>{" "}underneath it.
-          Real ML systems do this all the time — they&apos;ll get 99% accuracy on data they&apos;ve seen, 65% on data they haven&apos;t, and announce themselves cured.
+          Real ML systems do this all the time, they&apos;ll get 99% accuracy on data they&apos;ve seen, 65% on data they haven&apos;t, and announce themselves cured.
         </p>
 
         <Callout variant="insight" title="The single most important slogan in ML">
           <p className="m-0">
-            <strong>Training loss is not what you care about.</strong>{" "}You care about <em>test loss</em> — performance on data the model has never seen.
-            Every serious ML practice — validation splits, regularization, early stopping, cross-validation — exists to close the gap between them.
+            <strong>Training loss is not what you care about.</strong>{" "}You care about <em>test loss</em>, performance on data the model has never seen.
+            Every serious ML practice, validation splits, regularization, early stopping, cross-validation, exists to close the gap between them.
           </p>
         </Callout>
 
-        <h3>Underfitting, good fit, overfitting — a visual</h3>
+        <h3>Underfitting, good fit, overfitting, a visual</h3>
 
         <div className="not-prose my-4 grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-sky-300 bg-sky-50 p-4 text-sm dark:border-sky-800 dark:bg-sky-950/40">
@@ -477,7 +477,7 @@ L = (−1.0)²  =  1.0`}
               Model captures the real signal but ignores the noise. Generalizes.
             </p>
             <p className="m-0 text-xs text-slate-600 italic dark:text-slate-400">
-              Symptom: train loss is LOW and test loss is LOW — and they&apos;re close to each other.
+              Symptom: train loss is LOW and test loss is LOW, and they&apos;re close to each other.
             </p>
           </div>
           <div className="rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/40">
@@ -500,7 +500,7 @@ L = (−1.0)²  =  1.0`}
         <ul>
           <li>
             <strong>Bias:</strong>{" "}error from the model being <em>too simple</em>{" "}to capture the true pattern.
-            Think: trying to predict house price with only square footage — the model is systematically wrong about fancy kitchens. It has a built-in blind spot.
+            Think: trying to predict house price with only square footage, the model is systematically wrong about fancy kitchens. It has a built-in blind spot.
           </li>
           <li>
             <strong>Variance:</strong>{" "}error from the model being <em>too sensitive</em>{" "}to the particular training examples you showed it.
@@ -521,7 +521,7 @@ L = (−1.0)²  =  1.0`}
         </Callout>
 
         <p>
-          The &quot;trade-off&quot; part: pushing a model toward <em>lower bias</em> (making it more expressive — more weights, more layers, higher degree polynomial)
+          The &quot;trade-off&quot; part: pushing a model toward <em>lower bias</em> (making it more expressive, more weights, more layers, higher degree polynomial)
           usually <em>raises its variance</em> (makes it more sensitive to the training set). Every ML practitioner is fighting this tension.
         </p>
 
@@ -544,7 +544,7 @@ L = (−1.0)²  =  1.0`}
                 <>
                   <p className="m-0 mb-2">
                     Train loss: 0.8. Test loss on 100 new points: 0.85.
-                    The two numbers are close, and neither is zero — the model is slightly underfit (it can&apos;t hit exactly because of the noise), but the gap is tiny.
+                    The two numbers are close, and neither is zero, the model is slightly underfit (it can&apos;t hit exactly because of the noise), but the gap is tiny.
                   </p>
                   <p className="m-0 text-xs italic">This is the healthy case.</p>
                 </>
@@ -556,7 +556,7 @@ L = (−1.0)²  =  1.0`}
                 <>
                   <p className="m-0 mb-2">
                     Train loss: 0.01. Test loss: 47.3.
-                    The wiggly curve wraps through every training point exactly — that&apos;s why train loss is near zero. But on new data, it predicts wildly — the wiggles match <em>noise</em>, not signal.
+                    The wiggly curve wraps through every training point exactly, that&apos;s why train loss is near zero. But on new data, it predicts wildly, the wiggles match <em>noise</em>, not signal.
                   </p>
                   <p className="m-0 text-xs italic">This is overfitting. The low train loss lied to you.</p>
                 </>
@@ -568,7 +568,7 @@ L = (−1.0)²  =  1.0`}
                 <>
                   <p className="m-0 mb-2">
                     Train loss: 24. Test loss: 25.
-                    The model just predicts the mean of y — it can&apos;t capture any slope at all.
+                    The model just predicts the mean of y, it can&apos;t capture any slope at all.
                   </p>
                   <p className="m-0 text-xs italic">This is underfitting. Both losses are high, and close.</p>
                 </>
@@ -578,7 +578,7 @@ L = (−1.0)²  =  1.0`}
               title: "Pick the winner",
               body: (
                 <p className="m-0">
-                  Degree 1. It has the lowest <em>test</em>{" "}loss. Degree 9 had lower train loss, but we don&apos;t ship models based on train loss —
+                  Degree 1. It has the lowest <em>test</em>{" "}loss. Degree 9 had lower train loss, but we don&apos;t ship models based on train loss,
                   we ship based on how well they perform on data they haven&apos;t seen. The straight line wins because it matched the true pattern
                   without chasing the noise.
                 </p>
@@ -595,7 +595,7 @@ L = (−1.0)²  =  1.0`}
 
         <ol>
           <li>
-            <strong>More training data.</strong>{" "}The single best anti-overfitting move. A wiggly model has less &quot;room&quot; to fit noise when there&apos;s more data forcing it to be consistent. Often impossible in practice — which is why we have the other four.
+            <strong>More training data.</strong>{" "}The single best anti-overfitting move. A wiggly model has less &quot;room&quot; to fit noise when there&apos;s more data forcing it to be consistent. Often impossible in practice, which is why we have the other four.
           </li>
           <li>
             <strong>Simpler model.</strong>{" "}Fewer features, fewer parameters, lower-degree polynomial. Reducing capacity directly reduces how much noise a model can chase. Start simple, <em>add</em>{" "}complexity only when you need it.
@@ -604,7 +604,7 @@ L = (−1.0)²  =  1.0`}
             <strong>Regularization.</strong>{" "}Add a penalty to the loss that punishes big weights. L2 (ridge) pulls all weights toward zero smoothly; L1 (lasso) pushes some all the way to zero, zeroing out features. You&apos;ll see <code>lambda * sum(w²)</code> added to the loss everywhere.
           </li>
           <li>
-            <strong>Early stopping.</strong>{" "}Watch validation loss during training. The moment it starts going up while training loss still goes down — stop. You&apos;ve just entered the overfitting zone.
+            <strong>Early stopping.</strong>{" "}Watch validation loss during training. The moment it starts going up while training loss still goes down, stop. You&apos;ve just entered the overfitting zone.
           </li>
           <li>
             <strong>Dropout / data augmentation.</strong>{" "}Neural-net-specific. Dropout randomly zeroes some activations during training, forcing the network to not over-rely on any one neuron. Data augmentation synthesizes new examples (rotate / crop images, paraphrase text) to effectively enlarge the dataset.
@@ -614,7 +614,7 @@ L = (−1.0)²  =  1.0`}
         <Callout variant="warn" title="The data leakage trap, again">
           <p className="m-0">
             If you tune your &quot;hyperparameters&quot; (LR, model size, regularization strength) by checking <em>test</em>{" "}loss, you&apos;ve just overfit to the test set.
-            That&apos;s why serious pipelines have <strong>three</strong>{" "}splits: train, <em>validation</em> (for tuning), test (only touched at the end). You saw this in Module 2 — now you know why it matters so much.
+            That&apos;s why serious pipelines have <strong>three</strong>{" "}splits: train, <em>validation</em> (for tuning), test (only touched at the end). You saw this in Module 2, now you know why it matters so much.
           </p>
         </Callout>
 
@@ -622,7 +622,7 @@ L = (−1.0)²  =  1.0`}
           question="A colleague reports: 'My image classifier gets 99.8% accuracy.' First thing you ask, before you congratulate them:"
           options={[
             { label: "On what size of model?", explanation: "Nice to know, but doesn't tell you if the number means anything." },
-            { label: "Was that on the training set or the test set?", correct: true, explanation: "Exactly. 99.8% on train is almost meaningless — any big-enough model can memorize. 99.8% on test is a genuinely impressive number. This is the ML engineer's instinctive first question." },
+            { label: "Was that on the training set or the test set?", correct: true, explanation: "Exactly. 99.8% on train is almost meaningless, any big-enough model can memorize. 99.8% on test is a genuinely impressive number. This is the ML engineer's instinctive first question." },
             { label: "How many GPUs did you train on?", explanation: "Irrelevant to whether the result is real." },
             { label: "What was the learning rate?", explanation: "Doesn't bear on whether the accuracy number is honest." },
           ]}
@@ -631,10 +631,10 @@ L = (−1.0)²  =  1.0`}
         <Quiz
           question="Train loss: 0.02. Test loss: 4.8. Which is the best single move?"
           options={[
-            { label: "Train longer — maybe the test loss will come down.", explanation: "Training longer at this point almost always INCREASES the train-test gap, not closes it." },
-            { label: "Bump up the learning rate — convergence is the problem.", explanation: "Loss converged fine — train loss is already near zero. The problem is overfitting, not optimization." },
-            { label: "Reduce model capacity or add regularization — the model is overfit.", correct: true, explanation: "Right. Big train-vs-test gap is the textbook overfitting signal. Smaller model, or add L2 / dropout / early stopping. More data if you can get it." },
-            { label: "Nothing — 0.02 train loss is great, ship it.", explanation: "You ship on test performance, not train. 4.8 test loss means users will see a model that's 240× worse than you think." },
+            { label: "Train longer, maybe the test loss will come down.", explanation: "Training longer at this point almost always INCREASES the train-test gap, not closes it." },
+            { label: "Bump up the learning rate, convergence is the problem.", explanation: "Loss converged fine, train loss is already near zero. The problem is overfitting, not optimization." },
+            { label: "Reduce model capacity or add regularization, the model is overfit.", correct: true, explanation: "Right. Big train-vs-test gap is the textbook overfitting signal. Smaller model, or add L2 / dropout / early stopping. More data if you can get it." },
+            { label: "Nothing, 0.02 train loss is great, ship it.", explanation: "You ship on test performance, not train. 4.8 test loss means users will see a model that's 240× worse than you think." },
           ]}
           hint="What does a huge gap between train and test loss tell you?"
         />
@@ -647,8 +647,8 @@ L = (−1.0)²  =  1.0`}
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
                 <p className="mt-2 text-xs">
-                  A model <em>underfits</em>{" "}when it&apos;s too simple to capture the real pattern — both train and test loss are bad, and about equal.
-                  It <em>overfits</em>{" "}when it&apos;s so flexible it memorizes the training data including noise — train loss is near zero but test loss is high. The telltale signal is the <em>gap</em>: underfit has no gap, overfit has a huge one.
+                  A model <em>underfits</em>{" "}when it&apos;s too simple to capture the real pattern, both train and test loss are bad, and about equal.
+                  It <em>overfits</em>{" "}when it&apos;s so flexible it memorizes the training data including noise, train loss is near zero but test loss is high. The telltale signal is the <em>gap</em>: underfit has no gap, overfit has a huge one.
                   Bias is error from being too simple; variance is error from being too sensitive to which training examples you happened to get. The trade-off is that lowering one usually raises the other.
                 </p>
               </details>
@@ -668,7 +668,7 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
                 <p className="mt-2 text-xs">
-                  Overfitting — badly. Train and val tracked together through epoch 10, then train kept dropping while val <em>rose</em>.
+                  Overfitting, badly. Train and val tracked together through epoch 10, then train kept dropping while val <em>rose</em>.
                   By epoch 50 there&apos;s a 4× gap. Early stopping around epoch 10–15 would have shipped the best model. You&apos;d also consider reducing model capacity or adding regularization.
                 </p>
               </details>
@@ -694,7 +694,7 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
 }`}
                 </CodeBlock>
                 <p className="mt-2 text-xs italic">
-                  The thresholds are judgment calls — &quot;high&quot; and &quot;big&quot; depend on your problem&apos;s scale. In practice you&apos;d compare <em>relative</em>{" "}gap
+                  The thresholds are judgment calls, &quot;high&quot; and &quot;big&quot; depend on your problem&apos;s scale. In practice you&apos;d compare <em>relative</em>{" "}gap
                   (gap / trainLoss) and set thresholds from a baseline, not hardcoded numbers.
                 </p>
               </details>
@@ -704,13 +704,13 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
 
         <PartRecap
           title="Part 3 recap"
-          gist="Train loss isn't what you care about. You care about the gap — and what it tells you."
+          gist="Train loss isn't what you care about. You care about the gap, and what it tells you."
           points={[
             { takeaway: "Underfit = both losses bad. Overfit = train low, test high, big gap.", detail: <>No gap = the model is as good at unseen data as training data (could be good or bad). Big gap = memorization.</> },
             { takeaway: "Bias is error from being too simple. Variance is error from being too sensitive.", detail: <>You reduce bias by making the model more expressive (more features, more layers). You reduce variance with regularization, more data, or a simpler model.</> },
             { takeaway: "Five anti-overfitting tools: more data, simpler model, regularization, early stopping, dropout/augmentation.", detail: <>In roughly that order of effectiveness, and inversely in order of what most people reach for first.</> },
             { takeaway: "Tune hyperparameters on VALIDATION data, not test data.", detail: <>If you use test loss to pick which LR worked best, you&apos;ve overfit to the test set. Three splits: train, validation, test. Test is only touched at the end.</> },
-            { takeaway: "A 99% train accuracy means nothing alone.", detail: <>The first question when anyone quotes an accuracy number is always &quot;on train or test?&quot; If they don&apos;t know — they haven&apos;t shown you anything yet.</> },
+            { takeaway: "A 99% train accuracy means nothing alone.", detail: <>The first question when anyone quotes an accuracy number is always &quot;on train or test?&quot; If they don&apos;t know, they haven&apos;t shown you anything yet.</> },
           ]}
         />
       </section>
@@ -721,11 +721,11 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
       {/* ================================================================= */}
       <Checkpoint moduleSlug="ml-training" id="metrics" title="Evaluation metrics" xp={25} celebration="You can pick the right metric for any problem. That's the engineering skill.">
       <section>
-        <h2>Part 4: Evaluation metrics — are we actually any good?</h2>
+        <h2>Part 4: Evaluation metrics, are we actually any good?</h2>
 
         <p>
           Loss is what the model optimizes. <strong>Metrics are what humans use to decide if the model is useful.</strong>{" "}They&apos;re often different.
-          MSE is a fine loss for regression, but a product manager isn&apos;t going to understand &quot;our MSE is 1421&quot; — they want to hear &quot;on average we&apos;re off by $38K.&quot;
+          MSE is a fine loss for regression, but a product manager isn&apos;t going to understand &quot;our MSE is 1421&quot;, they want to hear &quot;on average we&apos;re off by $38K.&quot;
         </p>
 
         <h3>Regression metrics</h3>
@@ -746,7 +746,7 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
               mean(|y − ŷ|)
             </p>
             <p className="m-0 text-xs text-slate-600 dark:text-slate-400">
-              Same units as y. Treats all errors linearly — a 1000-off is exactly 1000× worse than a 1-off.
+              Same units as y. Treats all errors linearly, a 1000-off is exactly 1000× worse than a 1-off.
             </p>
           </div>
           <div className="rounded-xl border border-violet-300 bg-violet-50 p-4 text-sm dark:border-violet-800 dark:bg-violet-950/40">
@@ -760,10 +760,10 @@ Epoch 50 — train_loss: 0.001  val_loss: 4.12`}
           </div>
         </div>
 
-        <Callout variant="info" title="RMSE vs MAE — which when?">
+        <Callout variant="info" title="RMSE vs MAE, which when?">
           <p className="mb-2">
             Use <strong>RMSE</strong>{" "}when big errors are especially bad (house price estimates where being $200K off is 4× worse than being $100K off twice).
-            It&apos;s what you report most often, because it&apos;s the square root of MSE — the thing you trained on.
+            It&apos;s what you report most often, because it&apos;s the square root of MSE, the thing you trained on.
           </p>
           <p className="m-0">
             Use <strong>MAE</strong>{" "}when you have outliers you don&apos;t want to dominate the score (sensor readings with occasional glitches).
@@ -836,7 +836,7 @@ R² = 1 − SS_res/SS_tot
         <Quiz
           question="Your model has RMSE = 120 and MAE = 35. What does that tell you?"
           options={[
-            { label: "The model is broken — MAE can't be smaller than RMSE.", explanation: "MAE ≤ RMSE is always true (by math). The gap is informative, not a bug." },
+            { label: "The model is broken, MAE can't be smaller than RMSE.", explanation: "MAE ≤ RMSE is always true (by math). The gap is informative, not a bug." },
             { label: "Typical errors are ~35, but you have a few outliers that are much worse.", correct: true, explanation: "Exactly. RMSE >> MAE means a few big errors are pulling the squared-error average way up. Time to look at the worst predictions and find out what's going wrong on them." },
             { label: "The model is overfit.", explanation: "RMSE vs MAE tells you about error distribution, not train-vs-test gap." },
             { label: "You should use RMSE loss, not MAE loss.", explanation: "This is about metrics for REPORTING, not which loss to train with." },
@@ -847,7 +847,7 @@ R² = 1 − SS_res/SS_tot
         <h3>Classification metrics</h3>
 
         <p>
-          For classification, &quot;how close were you&quot; doesn&apos;t make sense — the answer is either &quot;spam&quot; or &quot;not spam,&quot; not $47K. Accuracy is the obvious first metric:
+          For classification, &quot;how close were you&quot; doesn&apos;t make sense, the answer is either &quot;spam&quot; or &quot;not spam,&quot; not $47K. Accuracy is the obvious first metric:
         </p>
 
         <CodeBlock lang="plain">
@@ -875,19 +875,19 @@ R² = 1 − SS_res/SS_tot
 
         <div className="not-prose my-4 grid max-w-md grid-cols-2 gap-2">
           <div className="rounded border border-emerald-300 bg-emerald-50 p-3 text-xs dark:bg-emerald-950/40">
-            <div className="font-bold">TP — True Positive</div>
+            <div className="font-bold">TP, True Positive</div>
             <div>Predicted fraud, actually fraud. ✓</div>
           </div>
           <div className="rounded border border-rose-300 bg-rose-50 p-3 text-xs dark:bg-rose-950/40">
-            <div className="font-bold">FP — False Positive</div>
+            <div className="font-bold">FP, False Positive</div>
             <div>Predicted fraud, actually legit. False alarm.</div>
           </div>
           <div className="rounded border border-rose-300 bg-rose-50 p-3 text-xs dark:bg-rose-950/40">
-            <div className="font-bold">FN — False Negative</div>
+            <div className="font-bold">FN, False Negative</div>
             <div>Predicted legit, actually fraud. The miss.</div>
           </div>
           <div className="rounded border border-emerald-300 bg-emerald-50 p-3 text-xs dark:bg-emerald-950/40">
-            <div className="font-bold">TN — True Negative</div>
+            <div className="font-bold">TN, True Negative</div>
             <div>Predicted legit, actually legit. ✓</div>
           </div>
         </div>
@@ -926,7 +926,7 @@ R² = 1 − SS_res/SS_tot
           </div>
         </div>
 
-        <Callout variant="insight" title="Precision–recall trade-off — pick your poison">
+        <Callout variant="insight" title="Precision–recall trade-off, pick your poison">
           <p className="mb-2">
             Most classifiers output a probability, and you pick a threshold (e.g. &quot;call it fraud if p &gt; 0.5&quot;).
             <strong> Raise the threshold → precision goes up, recall goes down.</strong>{" "}Lower it → the opposite.
@@ -1026,20 +1026,20 @@ is the expensive part.`}
             { id: "mae", label: "MAE", color: "violet" },
           ]}
           items={[
-            { id: "a", label: "Cancer screening — missing a real case is catastrophic; false alarms trigger a second test.", answer: "recall", explanation: "Missing cancer is the expensive error. Optimize to catch every real case, even if you flag some healthy patients for follow-up." },
-            { id: "b", label: "Spam filter — auto-delete. Users go ballistic if their boss's email gets eaten.", answer: "precision", explanation: "A missed spam is a mild annoyance; a deleted real email is a disaster. Only delete when you're sure." },
-            { id: "c", label: "Estimating customer lifetime value — 99th-percentile whales are the whole business.", answer: "rmse", explanation: "Big errors on the whales would be devastating. RMSE punishes them quadratically, which is what you want." },
-            { id: "d", label: "Sensor reading of room temperature — occasional bad readings from electrical interference.", answer: "mae", explanation: "The occasional spike is noise, not signal. MAE treats it linearly so one glitchy reading can't dominate your score." },
+            { id: "a", label: "Cancer screening, missing a real case is catastrophic; false alarms trigger a second test.", answer: "recall", explanation: "Missing cancer is the expensive error. Optimize to catch every real case, even if you flag some healthy patients for follow-up." },
+            { id: "b", label: "Spam filter, auto-delete. Users go ballistic if their boss's email gets eaten.", answer: "precision", explanation: "A missed spam is a mild annoyance; a deleted real email is a disaster. Only delete when you're sure." },
+            { id: "c", label: "Estimating customer lifetime value, 99th-percentile whales are the whole business.", answer: "rmse", explanation: "Big errors on the whales would be devastating. RMSE punishes them quadratically, which is what you want." },
+            { id: "d", label: "Sensor reading of room temperature, occasional bad readings from electrical interference.", answer: "mae", explanation: "The occasional spike is noise, not signal. MAE treats it linearly so one glitchy reading can't dominate your score." },
           ]}
         />
 
         <Quiz
           question="Your model's precision is 0.95, recall is 0.20, F1 is 0.33. In plain English, that means:"
           options={[
-            { label: "When the model makes a prediction, it's almost always right — but it only bothers to predict on a small fraction of cases.", correct: true, explanation: "Exactly. High precision + low recall = 'cautious but accurate.' It mostly abstains, and when it does commit, it's right. Whether this is good depends on whether false negatives (missed positives) are cheap or expensive in your setting." },
+            { label: "When the model makes a prediction, it's almost always right, but it only bothers to predict on a small fraction of cases.", correct: true, explanation: "Exactly. High precision + low recall = 'cautious but accurate.' It mostly abstains, and when it does commit, it's right. Whether this is good depends on whether false negatives (missed positives) are cheap or expensive in your setting." },
             { label: "The model is 95% accurate but doesn't remember 80% of the training data.", explanation: "'Recall' here is a classification metric, not about memory." },
-            { label: "The model is overfit — high precision but low recall always means overfitting.", explanation: "Not at all. A threshold-tuning choice, or a fundamental model limitation, can produce this pattern without any overfitting." },
-            { label: "F1 of 0.33 means the model fails 67% of the time.", explanation: "F1 is a harmonic mean of precision and recall — it doesn't have a simple 'fails X% of the time' interpretation." },
+            { label: "The model is overfit, high precision but low recall always means overfitting.", explanation: "Not at all. A threshold-tuning choice, or a fundamental model limitation, can produce this pattern without any overfitting." },
+            { label: "F1 of 0.33 means the model fails 67% of the time.", explanation: "F1 is a harmonic mean of precision and recall, it doesn't have a simple 'fails X% of the time' interpretation." },
           ]}
         />
 
@@ -1052,13 +1052,13 @@ is the expensive part.`}
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
                 <div className="mt-2 space-y-2 text-xs">
                   <p>
-                    First: is the dataset balanced? If yes (~50/50), accuracy is fine as a rough read. If no, accuracy is dangerous — a model that always predicts the majority class will score high.
+                    First: is the dataset balanced? If yes (~50/50), accuracy is fine as a rough read. If no, accuracy is dangerous, a model that always predicts the majority class will score high.
                   </p>
                   <p>
                     Second: is one error way more costly than the other? If missing a positive is catastrophic (medical screening) → recall. If false alarms are costly (auto-deleting email) → precision.
                   </p>
                   <p>
-                    Third: if both matter and you can&apos;t pick between them, use F1 — it punishes you for letting either collapse.
+                    Third: if both matter and you can&apos;t pick between them, use F1, it punishes you for letting either collapse.
                   </p>
                   <p>
                     In practice you report all of them on a held-out set, then pick the one the product decision hinges on as the &quot;number we optimize for.&quot;
@@ -1083,7 +1083,7 @@ is the expensive part.`}
               <details>
                 <summary className="cursor-pointer text-xs font-semibold text-amber-800 dark:text-amber-300">Show reference answer</summary>
                 <p className="mt-2 text-xs">
-                  Precision. TP over (TP + FP) — &quot;of the ones I flagged as positive, how many were actually positive?&quot;
+                  Precision. TP over (TP + FP), &quot;of the ones I flagged as positive, how many were actually positive?&quot;
                   It never looks at FN, so it doesn&apos;t care about misses. That&apos;s the signature of precision vs recall.
                 </p>
               </details>
@@ -1122,10 +1122,10 @@ is the expensive part.`}
           gist="Loss is what the model optimizes. Metrics are how you (and the PM) judge it."
           points={[
             { takeaway: "RMSE is in the same units as y and punishes big errors. MAE is linear and robust to outliers.", detail: <>For most regression, lead with RMSE (report it in whatever unit y is in). Use MAE when outliers are noise you want to downweight.</> },
-            { takeaway: "R² tells you how much variance the model explains. 1 = perfect, 0 = no better than the mean.", detail: <>Negative R² is possible — it means your model is literally worse than always predicting the average. That&apos;s a flashing red light.</> },
+            { takeaway: "R² tells you how much variance the model explains. 1 = perfect, 0 = no better than the mean.", detail: <>Negative R² is possible, it means your model is literally worse than always predicting the average. That&apos;s a flashing red light.</> },
             { takeaway: "For classification, accuracy lies on imbalanced data. Use precision, recall, F1.", detail: <>If 99.9% of your data is one class, a model predicting that class always scores 99.9% accuracy. Imbalanced data is the norm in production, not the exception.</> },
             { takeaway: "Precision = 'am I right when I say yes.' Recall = 'did I find all the yeses.'", detail: <>They trade off against each other via the threshold. Which one you pick depends entirely on which error is more expensive in your business.</> },
-            { takeaway: "F1 is their harmonic mean — one number, when both matter equally.", detail: <>Harmonic mean (not arithmetic!) means if either is near zero, F1 is near zero. You can&apos;t hide a bad precision behind a great recall.</> },
+            { takeaway: "F1 is their harmonic mean, one number, when both matter equally.", detail: <>Harmonic mean (not arithmetic!) means if either is near zero, F1 is near zero. You can&apos;t hide a bad precision behind a great recall.</> },
           ]}
         />
       </section>
@@ -1134,13 +1134,13 @@ is the expensive part.`}
       {/* ================================================================= */}
       {/* PART 5: JAVA PROJECT — TRAINING LOOP                               */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="ml-training" id="java-project" title="Java project: training loop" xp={40} celebration="Your Java code just TRAINED ITSELF. You are now an ML engineer." manual manualLabel="I built it — mark done">
+      <Checkpoint moduleSlug="ml-training" id="java-project" title="Java project: training loop" xp={40} celebration="Your Java code just TRAINED ITSELF. You are now an ML engineer." manual manualLabel="I built it, mark done">
       <section>
-        <h2>Part 5: Project — your Java linear regression actually trains now</h2>
+        <h2>Part 5: Project, your Java linear regression actually trains now</h2>
 
         <p>
           In Module 2 you built a <code>LinearRegression</code> that could <em>predict</em>, and a <code>mse()</code> function that could <em>score</em>.
-          What was missing was the part that takes bad weights and makes them good — the training loop. Now you have the theory. Time to write it.
+          What was missing was the part that takes bad weights and makes them good, the training loop. Now you have the theory. Time to write it.
         </p>
 
         <Callout variant="info" title="What we're building">
@@ -1150,7 +1150,7 @@ is the expensive part.`}
           </p>
         </Callout>
 
-        <h3>Step 1 — run the working code first, understand it, then rebuild the tricky bits from scratch</h3>
+        <h3>Step 1, run the working code first, understand it, then rebuild the tricky bits from scratch</h3>
 
         <p>
           Same pedagogy as Module 2: I give you the complete, runnable code up front. You run it, see it work, read it line by line.
@@ -1166,13 +1166,13 @@ touch Metrics.java
 touch TrainingRunner.java`}
         </CodeBlock>
 
-        <h3>Step 2 — the code (three files)</h3>
+        <h3>Step 2, the code (three files)</h3>
 
         <p className="text-xs text-slate-500 italic dark:text-slate-400">
           Paste these in. Compile with <code>javac *.java</code>, run with <code>java TrainingRunner</code>. You should see the loss drop over ~500 iterations and a final RMSE and R² printed at the end.
         </p>
 
-        <CodeBlock lang="java" caption="File 1 of 3: LinearRegressionTrainer.java — the training loop">
+        <CodeBlock lang="java" caption="File 1 of 3: LinearRegressionTrainer.java, the training loop">
 {`import java.util.Random;
 
 /**
@@ -1247,7 +1247,7 @@ public class LinearRegressionTrainer {
 }`}
         </CodeBlock>
 
-        <CodeBlock lang="java" caption="File 2 of 3: Metrics.java — the evaluation helpers">
+        <CodeBlock lang="java" caption="File 2 of 3: Metrics.java, the evaluation helpers">
 {`/**
  * Evaluation metrics for regression. Static, no state.
  * Kept separate from the trainer so we can reuse them anywhere.
@@ -1293,7 +1293,7 @@ public class Metrics {
 }`}
         </CodeBlock>
 
-        <CodeBlock lang="java" caption="File 3 of 3: TrainingRunner.java — the main() that ties it together">
+        <CodeBlock lang="java" caption="File 3 of 3: TrainingRunner.java, the main() that ties it together">
 {`import java.util.Random;
 
 public class TrainingRunner {
@@ -1359,7 +1359,7 @@ public class TrainingRunner {
 
         <Callout variant="warn" title="Your LinearRegression needs getters">
           <p className="mb-2">
-            The runner calls <code>model.weights()</code> and <code>model.bias()</code> — if your Module 2 model doesn&apos;t expose those, add two tiny getters:
+            The runner calls <code>model.weights()</code> and <code>model.bias()</code>, if your Module 2 model doesn&apos;t expose those, add two tiny getters:
           </p>
           <CodeBlock lang="java">
 {`public double[] weights() { return weights; }
@@ -1370,7 +1370,7 @@ public double bias()       { return bias; }`}
           </p>
         </Callout>
 
-        <h3>Step 3 — what you should see</h3>
+        <h3>Step 3, what you should see</h3>
 
         <p>
           When you run <code>java TrainingRunner</code>, expect output like this:
@@ -1398,22 +1398,22 @@ iter  499   loss =  0.2571
         </CodeBlock>
 
         <p>
-          That R² of 0.99 is telling you the model is near-perfect — it explains 99% of the variance in y. The learned weights nearly match the true ones.
-          The MSE doesn&apos;t go to zero because of the noise we injected — <code>0.25</code> ≈ <code>0.5²</code>, which is the variance of our noise. The model has extracted <em>all</em>{" "}the signal and accepted the noise as residual error.
+          That R² of 0.99 is telling you the model is near-perfect, it explains 99% of the variance in y. The learned weights nearly match the true ones.
+          The MSE doesn&apos;t go to zero because of the noise we injected, <code>0.25</code> ≈ <code>0.5²</code>, which is the variance of our noise. The model has extracted <em>all</em>{" "}the signal and accepted the noise as residual error.
         </p>
 
         <Callout variant="insight" title="This is what 'converged' looks like">
           <p className="m-0">
-            Loss drops fast for the first 100 iterations, then plateaus at ~0.26. That&apos;s the classic elbow curve from Part 2 — healthy convergence.
+            Loss drops fast for the first 100 iterations, then plateaus at ~0.26. That&apos;s the classic elbow curve from Part 2, healthy convergence.
             If yours explodes upward, cut the learning rate. If it&apos;s still dropping at iteration 499, raise iterations or the learning rate.
           </p>
         </Callout>
 
-        <h3>Step 4 — now rebuild the three tricky bits yourself</h3>
+        <h3>Step 4, now rebuild the three tricky bits yourself</h3>
 
         <p>
           Having read the code, you&apos;ve seen the shape of the solution. Now delete the bodies of these three methods and rewrite them from a blank slate.
-          Don&apos;t peek — use the stubs, hints, and the concepts from Parts 1 &amp; 4.
+          Don&apos;t peek, use the stubs, hints, and the concepts from Parts 1 &amp; 4.
         </p>
 
         <CodeExercise
@@ -1427,7 +1427,7 @@ iter  499   loss =  0.2571
           hints={[
             "The loss is MSE = (1/n) Σ (ŷ - y)². So ∂L/∂w_j = (2/n) Σ (ŷ_i - y_i) · X_i_j.",
             "You already have the errors as (yHat[i] - y[i]). Multiply each error by the corresponding feature X[i][j] and accumulate into gradW[j].",
-            "Don't forget the (2/n) scaling factor at the end. Also: gradB uses no X — it's just (2/n) · sum of errors, because ∂(w·x+b)/∂b = 1.",
+            "Don't forget the (2/n) scaling factor at the end. Also: gradB uses no X, it's just (2/n) · sum of errors, because ∂(w·x+b)/∂b = 1.",
           ]}
           stub={`double[] gradW = new double[d];
 double gradB = 0.0;
@@ -1453,7 +1453,7 @@ gradB = (2.0 / n) * gradB;`}
           title="Exercise 2: implement the weight update"
           prompt={
             <>
-              After you&apos;ve computed <code>gradW</code> and <code>gradB</code>, apply them to <code>w</code> and <code>b</code>. One line of math per element — but get the sign right.
+              After you&apos;ve computed <code>gradW</code> and <code>gradB</code>, apply them to <code>w</code> and <code>b</code>. One line of math per element, but get the sign right.
             </>
           }
           hints={[
@@ -1472,13 +1472,13 @@ b -= learningRate * gradB;`}
           title="Exercise 3: implement R²"
           prompt={
             <>
-              In <code>Metrics.java</code>, implement <code>r2(y, yHat)</code> from the formula. This is the one regression metric that takes two passes over the data — once to compute the mean, once to compute the sums of squares.
+              In <code>Metrics.java</code>, implement <code>r2(y, yHat)</code> from the formula. This is the one regression metric that takes two passes over the data, once to compute the mean, once to compute the sums of squares.
             </>
           }
           hints={[
             "R² = 1 − (SS_res / SS_tot). SS_res = Σ (y_i − ŷ_i)². SS_tot = Σ (y_i − mean(y))².",
             "First pass: compute mean(y). Second pass: compute both sums in one loop.",
-            "Edge case: if SS_tot is 0 (all y identical), R² is undefined — return 0.0 to keep callers happy.",
+            "Edge case: if SS_tot is 0 (all y identical), R² is undefined, return 0.0 to keep callers happy.",
           ]}
           stub={`public static double r2(double[] y, double[] yHat) {
     // TODO: compute mean(y)
@@ -1507,16 +1507,16 @@ b -= learningRate * gradB;`}
 
         <Callout variant="insight" title="You just wrote the core of every ML library on earth">
           <p className="m-0">
-            That gradient computation, the weight update, the loss-and-metrics loop — it&apos;s the same shape PyTorch and TensorFlow use, just with
+            That gradient computation, the weight update, the loss-and-metrics loop, it&apos;s the same shape PyTorch and TensorFlow use, just with
             autograd (automatic differentiation) doing the gradient math for you, and GPUs doing the matrix multiplies. But the skeleton is identical. You now understand
             what <code>optimizer.step()</code> actually does when you see it in Python.
           </p>
         </Callout>
 
-        <h3>Step 5 — extensions (optional, but recommended)</h3>
+        <h3>Step 5, extensions (optional, but recommended)</h3>
 
         <p>
-          If you want to push further — try any of these. Each takes ~30 min and will teach you something concrete:
+          If you want to push further, try any of these. Each takes ~30 min and will teach you something concrete:
         </p>
 
         <ol>
@@ -1540,9 +1540,9 @@ b -= learningRate * gradB;`}
           points={[
             { takeaway: "Training loop structure: forward pass → gradient → update → repeat.", detail: <>Those four steps in a <code>for</code> loop are the entirety of the algorithm. Everything else is implementation details.</> },
             { takeaway: "MSE gradient: ∂L/∂w_j = (2/n) Σ (ŷ_i - y_i) · X_i_j. Bias gradient: (2/n) Σ (ŷ_i - y_i).", detail: <>The derivation falls straight out of the chain rule on (w·x + b − y)². You now know it in your hands.</> },
-            { takeaway: "Metrics live separate from the trainer, so you can call them anywhere.", detail: <>Good engineering habit — never tangle &quot;how to train&quot; with &quot;how to score.&quot; You&apos;ll want to call metrics on any dataset, not just during fit().</> },
+            { takeaway: "Metrics live separate from the trainer, so you can call them anywhere.", detail: <>Good engineering habit, never tangle &quot;how to train&quot; with &quot;how to score.&quot; You&apos;ll want to call metrics on any dataset, not just during fit().</> },
             { takeaway: "Test metrics close to train loss = healthy. Big gap = overfit.", detail: <>In this toy problem there&apos;s no overfitting because the model capacity matches the true relationship. On real data, that matching is a constant struggle.</> },
-            { takeaway: "You wrote the core of PyTorch in 90 lines of Java.", detail: <>The production ML libraries add autograd, GPU kernels, and a thousand tricks for stability — but the loop you wrote is the same loop.</> },
+            { takeaway: "You wrote the core of PyTorch in 90 lines of Java.", detail: <>The production ML libraries add autograd, GPU kernels, and a thousand tricks for stability, but the loop you wrote is the same loop.</> },
           ]}
         />
       </section>
@@ -1551,19 +1551,19 @@ b -= learningRate * gradB;`}
       {/* ================================================================= */}
       {/* FINAL QUIZ                                                         */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="ml-training" id="final" title="Final quiz" xp={30} celebration="🎓 Module 3 done. You understand how ML actually works now — no hand-waving needed.">
+      <Checkpoint moduleSlug="ml-training" id="final" title="Final quiz" xp={30} celebration="🎓 Module 3 done. You understand how ML actually works now, no hand-waving needed.">
       <section>
         <h2>Final: pull it all together</h2>
 
         <p>
-          Five questions that span the module. If you can nail these, you&apos;re ready for Module 4 (neural networks — same ideas, just <em>layered</em>).
+          Five questions that span the module. If you can nail these, you&apos;re ready for Module 4 (neural networks, same ideas, just <em>layered</em>).
         </p>
 
         <Quiz
           question="Your training loss is stuck at 3.2 and won't drop no matter how long you train. Train loss and val loss are both ~3.2. The model is…"
           options={[
             { label: "Overfitting.", explanation: "Overfitting would mean train loss is low and val is high. Here they're tied and both bad." },
-            { label: "Underfitting — probably needs more capacity or more features.", correct: true, explanation: "Right. Both losses plateaued together at a bad value — classic underfit. The model isn't expressive enough to capture the pattern, OR you're missing useful features." },
+            { label: "Underfitting, probably needs more capacity or more features.", correct: true, explanation: "Right. Both losses plateaued together at a bad value, classic underfit. The model isn't expressive enough to capture the pattern, OR you're missing useful features." },
             { label: "Converged. Just ship it.", explanation: "Converged to a BAD value. A plateau at 3.2 isn't success unless 3.2 is actually good for your problem." },
             { label: "Suffering from a too-high learning rate.", explanation: "Too-high LR produces oscillation or divergence, not a smooth plateau." },
           ]}
@@ -1576,7 +1576,7 @@ b -= learningRate * gradB;`}
             { label: "What learning rate did you use?", explanation: "Doesn't affect whether the 94% is real." },
             { label: "What's the class balance in the test set?", correct: true, explanation: "Exactly. If 94% of the test set is the majority class, predicting that class always gives 94% accuracy with zero intelligence. Balance determines whether accuracy is meaningful or meaningless." },
             { label: "How many epochs did you train for?", explanation: "Irrelevant to whether the number is honest." },
-            { label: "Did you use cross-validation?", explanation: "Useful, but 'class balance' is the deeper question — CV on imbalanced data still lies." },
+            { label: "Did you use cross-validation?", explanation: "Useful, but 'class balance' is the deeper question, CV on imbalanced data still lies." },
           ]}
           xp={15}
         />
@@ -1584,9 +1584,9 @@ b -= learningRate * gradB;`}
         <Quiz
           question="The update rule w ← w − η · ∂L/∂w has a minus sign. What happens if you flip it to +?"
           options={[
-            { label: "Nothing — the sign of η cancels out.", explanation: "It doesn't. η is positive by convention, and the sign in front of it matters." },
-            { label: "The model trains in half the time.", explanation: "Nope — it does the opposite of training." },
-            { label: "Loss goes UP over time — you're doing gradient ascent, maximizing the loss.", correct: true, explanation: "Right. The minus sign is what makes it descent. Flipped, you climb the loss surface instead of descending it. (Occasionally useful — e.g., adversarial attacks maximize loss on purpose.)" },
+            { label: "Nothing, the sign of η cancels out.", explanation: "It doesn't. η is positive by convention, and the sign in front of it matters." },
+            { label: "The model trains in half the time.", explanation: "Nope, it does the opposite of training." },
+            { label: "Loss goes UP over time, you're doing gradient ascent, maximizing the loss.", correct: true, explanation: "Right. The minus sign is what makes it descent. Flipped, you climb the loss surface instead of descending it. (Occasionally useful, e.g., adversarial attacks maximize loss on purpose.)" },
             { label: "The weights oscillate but eventually converge.", explanation: "They diverge, not oscillate around a fixed point." },
           ]}
           xp={15}
@@ -1596,9 +1596,9 @@ b -= learningRate * gradB;`}
           question="You're building a model to detect credit-card fraud. 0.1% of transactions are fraudulent. False positives (flagging legit transactions) cost ~$5 each in support tickets. False negatives (missing fraud) cost ~$500 each. You should optimize for:"
           options={[
             { label: "Accuracy.", explanation: "On 0.1% imbalance, accuracy is almost useless. Always-predict-negative scores 99.9%." },
-            { label: "Precision.", explanation: "Precision optimizes to reduce false positives — but FPs cost $5 each, while FNs cost $500. Wrong direction." },
+            { label: "Precision.", explanation: "Precision optimizes to reduce false positives, but FPs cost $5 each, while FNs cost $500. Wrong direction." },
             { label: "Recall.", correct: true, explanation: "Yes. FNs are 100× more expensive than FPs, so you want to catch as many real frauds as possible even at the cost of more false alarms. Recall = 'of all real fraud, how much did I catch.'" },
-            { label: "F1.", explanation: "F1 weights precision and recall equally — but here they're NOT equal, because the costs are wildly different. Cost-weighted recall is the right answer." },
+            { label: "F1.", explanation: "F1 weights precision and recall equally, but here they're NOT equal, because the costs are wildly different. Cost-weighted recall is the right answer." },
           ]}
           xp={15}
         />
@@ -1606,9 +1606,9 @@ b -= learningRate * gradB;`}
         <Quiz
           question="Final boss: from Module 2, a trained 'model' is just a pile of floats. Which of the following is NOT something gradient descent ever does to those floats?"
           options={[
-            { label: "Reads them to compute ŷ.", explanation: "Yes it does — that's the forward pass." },
-            { label: "Updates them by subtracting η·gradient.", explanation: "Yes — that's the update step. The whole point." },
-            { label: "Uses their values to decide how big the next step should be.", explanation: "It does — bigger gradient (which depends on weight values via ŷ) → bigger step. Self-scaling." },
+            { label: "Reads them to compute ŷ.", explanation: "Yes it does, that's the forward pass." },
+            { label: "Updates them by subtracting η·gradient.", explanation: "Yes, that's the update step. The whole point." },
+            { label: "Uses their values to decide how big the next step should be.", explanation: "It does, bigger gradient (which depends on weight values via ŷ) → bigger step. Self-scaling." },
             { label: "Re-reads the original training data and re-labels it.", correct: true, explanation: "Correct answer. Gradient descent never modifies the training data. X and y are inputs, weights are outputs. Data stays fixed; weights change. (If your training code is mutating inputs, that's a bug.)" },
           ]}
           xp={15}
@@ -1620,11 +1620,11 @@ b -= learningRate * gradB;`}
             <h3 className="m-0 text-lg font-bold">Module 3 done.</h3>
           </div>
           <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-            You can now describe <em>everything</em>{" "}that happens when a linear model trains — the data, the forward pass, the loss, the gradient, the update, the evaluation.
+            You can now describe <em>everything</em>{" "}that happens when a linear model trains, the data, the forward pass, the loss, the gradient, the update, the evaluation.
             You have a working Java implementation of all of it. When you see &quot;training&quot; in any ML library from this point on, you&apos;ll recognize the moving parts.
           </p>
           <p className="m-0 text-sm text-slate-700 dark:text-slate-300">
-            Next up: <strong>neural networks</strong>. The twist is that there are more weights, arranged in <em>layers</em>, with nonlinear activations between them — and the gradient has to be
+            Next up: <strong>neural networks</strong>. The twist is that there are more weights, arranged in <em>layers</em>, with nonlinear activations between them, and the gradient has to be
             propagated backward through all of them. But the outer loop is the same loop you just wrote.
           </p>
         </div>
@@ -1635,7 +1635,7 @@ b -= learningRate * gradB;`}
         <div className="mb-1 text-xs tracking-wider uppercase opacity-80">Up next</div>
         <h3 className="mb-2 text-xl font-bold">Module 4: Neural networks</h3>
         <p className="mb-4 text-sm opacity-90">
-          More weights, arranged in layers, with nonlinearities in between. Same outer training loop you just wrote — backprop just routes the gradient through every layer.
+          More weights, arranged in layers, with nonlinearities in between. Same outer training loop you just wrote, backprop just routes the gradient through every layer.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link href="/courses/ai/modules/neural-networks" className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-50">

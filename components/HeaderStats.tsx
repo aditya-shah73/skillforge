@@ -43,6 +43,7 @@ export default function HeaderStats() {
     <div className="flex shrink-0 flex-nowrap items-center gap-1 text-sm sm:gap-2">
       {combo >= 2 && (
         <Tooltip
+          align="start"
           label={
             <>
               <span className="font-semibold text-orange-600 dark:text-orange-300">Combo ×{combo}</span>
@@ -59,11 +60,12 @@ export default function HeaderStats() {
       )}
       {streak > 0 && (
         <Tooltip
+          align="start"
           label={
             <>
               <span className="font-semibold text-amber-700 dark:text-amber-300">Day streak</span>
               <span className="mt-1 block">
-                {streak} day{streak === 1 ? "" : "s"} in a row. Clear at least one quiz checkpoint each day to keep it alive — miss a day and it resets.
+                {streak} day{streak === 1 ? "" : "s"} in a row. Clear at least one quiz checkpoint each day to keep it alive. Miss a day and it resets.
               </span>
             </>
           }
@@ -76,6 +78,7 @@ export default function HeaderStats() {
         </Tooltip>
       )}
       <Tooltip
+        align="start"
         label={
           <>
             <span className="font-semibold text-indigo-700 dark:text-indigo-300">XP</span>
@@ -98,7 +101,7 @@ export default function HeaderStats() {
             </span>
             <span className="mt-1 block">
               {hardcoreMode
-                ? "Wrong quiz answers lock in — no retries. Click to disable."
+                ? "Wrong quiz answers lock in, no retries. Click to disable."
                 : "You can retry quiz questions until you get them right. Click to enable hardcore."}
             </span>
           </>
@@ -126,7 +129,7 @@ export default function HeaderStats() {
             </span>
             <span className="mt-1 block">
               {soundEnabled
-                ? "Quiz feedback chimes — correct, wrong, combo, level-up — will play. Click to mute."
+                ? "Quiz feedback chimes (correct, wrong, combo, level-up) will play. Click to mute."
                 : "Quiz feedback chimes are muted. Click to unmute."}
             </span>
           </>

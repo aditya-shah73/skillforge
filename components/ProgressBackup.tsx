@@ -35,7 +35,7 @@ export default function ProgressBackup() {
       setStatus({ kind: "ok", text: "Progress exported." });
     } catch {
       // Blob/URL APIs can throw in locked-down environments — fail soft.
-      setStatus({ kind: "error", text: "Couldn't export — try a different browser." });
+      setStatus({ kind: "error", text: "Couldn't export, try a different browser." });
     }
   };
 

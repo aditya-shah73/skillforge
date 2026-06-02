@@ -105,7 +105,7 @@ flowchart TB
         <p>
           Java&apos;s collections framework splits into two trees: <strong>Collection</strong> (things you iterate
           one element at a time) and <strong>Map</strong> (key→value associations). Map is technically <em>not</em>{" "}
-          a Collection — you can&apos;t just iterate a Map directly without first asking for <code>.entrySet()</code>{" "}
+          a Collection, you can&apos;t just iterate a Map directly without first asking for <code>.entrySet()</code>{" "}
           or <code>.keySet()</code>.
         </p>
 
@@ -134,7 +134,7 @@ Queue<Integer> q  = new ArrayDeque<>();          // FIFO (Deque is a Queue)`}</C
 
         <Callout variant="insight" title="Why interface-typed locals matter even in a small method">
           When the variable is typed <code>HashMap&lt;K,V&gt;</code> instead of <code>Map&lt;K,V&gt;</code>, you can
-          accidentally call <code>HashMap</code>-only methods like <code>clone()</code> with a covariant return —
+          accidentally call <code>HashMap</code>-only methods like <code>clone()</code> with a covariant return,
           tying your code to that exact class. Future-you swapping to a TreeMap discovers the lock-in only at compile
           time. Type to the interface, instantiate the concrete, and the swap is one line.
         </Callout>
@@ -166,7 +166,7 @@ PriorityQueue          O(log n) O(1) peek   O(log n) O(n)      compact
           kind="Quick check"
           question="Why does the idiom `List<Integer> list = new ArrayList<>();` declare with the interface?"
           options={[
-            { label: "It's faster at runtime.", explanation: "Performance is identical — the JIT inlines through the interface call. The benefit is at design/refactor time, not runtime." },
+            { label: "It's faster at runtime.", explanation: "Performance is identical, the JIT inlines through the interface call. The benefit is at design/refactor time, not runtime." },
             { label: "It decouples the calling code from the concrete class, so you can swap implementations without ripple-edits.", correct: true, explanation: "Right. If a method takes List<T>, you can pass ArrayList today and LinkedList tomorrow with zero code changes elsewhere. Typing to the interface keeps the contract narrow and the implementation swappable." },
             { label: "It's required by Java to use generics.", explanation: "Java accepts both. The diamond <> works on either side. The idiom is convention, not language requirement." },
             { label: "Only ArrayList implements List.", explanation: "Many classes implement List: ArrayList, LinkedList, Vector, CopyOnWriteArrayList, Collections.unmodifiableList wrappers, etc." },
@@ -185,11 +185,11 @@ PriorityQueue          O(log n) O(1) peek   O(log n) O(n)      compact
           differently. Knowing when to reach for each is core literacy.
         </p>
 
-        <h3>ArrayList — the default</h3>
+        <h3>ArrayList, the default</h3>
 
         <p>
           A resizable array under the hood. <code>get(i)</code> and <code>set(i, x)</code> are O(1).
-          <code>add(x)</code> is amortized O(1) — when capacity fills, the underlying array doubles, which is O(n) but
+          <code>add(x)</code> is amortized O(1), when capacity fills, the underlying array doubles, which is O(n) but
           rare. Insertion or removal in the middle is O(n) because everything after the gap has to shift.
         </p>
 
@@ -202,11 +202,11 @@ arr.add(0, 42);          // O(n) — shifts everything right
 arr.remove(0);           // O(n) — shifts everything left
 arr.size();              // O(1)`}</CodeBlock>
 
-        <h3>LinkedList — almost never the right answer</h3>
+        <h3>LinkedList, almost never the right answer</h3>
 
         <p>
           A doubly-linked list of nodes. <code>add</code> at the ends is O(1). Indexed access is O(n) because there&apos;s
-          no random access — you walk the chain. Each node allocates a separate object with prev/next pointers, which
+          no random access, you walk the chain. Each node allocates a separate object with prev/next pointers, which
           murders cache locality. In benchmarks, <code>ArrayList</code> beats <code>LinkedList</code> on most
           operations even when LinkedList has the better Big-O on paper, because cache misses dominate.
         </p>
@@ -217,13 +217,13 @@ ll.get(500_000);         // O(n) — walks 500,000 nodes
 ll.remove(500_000);      // O(n) — same walk`}</CodeBlock>
 
         <Callout variant="warn" title="LinkedList's one legitimate use case (and why you still skip it)">
-          The classic argument is &quot;O(1) insertion in the middle&quot;. True — but only if you already have an
+          The classic argument is &quot;O(1) insertion in the middle&quot;. True, but only if you already have an
           <code>Iterator</code> pointed at the spot. To get the iterator you walked O(n) to reach. Unless you&apos;re
           iterating and inserting/removing in a single pass, ArrayList wins. And for queue/deque needs, ArrayDeque
           beats LinkedList anyway. Modern Java code uses LinkedList essentially never.
         </Callout>
 
-        <h3>ArrayDeque — the queue and stack</h3>
+        <h3>ArrayDeque, the queue and stack</h3>
 
         <p>
           A circular array supporting O(1) operations at both ends. Implements <code>Deque</code>, which extends{" "}
@@ -241,7 +241,7 @@ queue.offer(1);          // O(1) — adds to tail
 queue.poll();            // O(1) — removes from head`}</CodeBlock>
 
         <Callout variant="insight" title="Don't use the legacy Stack class">
-          <code>java.util.Stack</code> extends <code>Vector</code> and is synchronized — slow and obsolete.
+          <code>java.util.Stack</code> extends <code>Vector</code> and is synchronized, slow and obsolete.
           <code>ArrayDeque</code> is the modern stack: faster, unsynchronized, same API ({" "}
           <code>push</code>/<code>pop</code>/<code>peek</code>). The Java Collections Framework specifically
           recommends ArrayDeque over Stack in its Javadoc. Same advice for queues: ArrayDeque, not LinkedList.
@@ -250,7 +250,7 @@ queue.poll();            // O(1) — removes from head`}</CodeBlock>
         <h3>The &quot;array vs ArrayList&quot; question</h3>
 
         <p>
-          Native arrays (<code>int[]</code>, <code>String[]</code>) are faster than ArrayList for primitives — no
+          Native arrays (<code>int[]</code>, <code>String[]</code>) are faster than ArrayList for primitives, no
           autoboxing, contiguous memory, simple indexing. The cost: fixed size and no built-in operations.
         </p>
 
@@ -286,11 +286,11 @@ Use IntStream → toArray()    when you need the array but built it via streams/
 LinkedHashMap   O(1) ops        insertion order (or access order, opt-in)
 TreeMap         O(log n) ops    sorted by key (natural or Comparator)`}</CodeBlock>
 
-        <h3>HashMap — the default</h3>
+        <h3>HashMap, the default</h3>
 
         <p>
           A hash table. Put, get, containsKey, remove are all O(1) on average. The order of iteration is
-          unspecified — and Java explicitly reserves the right to change it across versions. Don&apos;t rely on it.
+          unspecified, and Java explicitly reserves the right to change it across versions. Don&apos;t rely on it.
         </p>
 
         <CodeBlock lang="java">{`Map<String, Integer> counts = new HashMap<>();
@@ -300,14 +300,14 @@ counts.merge("apple", 1, Integer::sum);   // counts.put("apple", 3+1)
 counts.computeIfAbsent("banana", k -> new ArrayList<>());`}</CodeBlock>
 
         <Callout variant="info" title="Three HashMap idioms worth memorizing">
-          <p><code>getOrDefault(k, def)</code> — read with fallback, no null risk.</p>
-          <p><code>merge(k, val, BiFunction)</code> — &quot;put if absent, otherwise combine.&quot; Perfect for frequency
+          <p><code>getOrDefault(k, def)</code>, read with fallback, no null risk.</p>
+          <p><code>merge(k, val, BiFunction)</code>, &quot;put if absent, otherwise combine.&quot; Perfect for frequency
           counts: <code>map.merge(k, 1, Integer::sum)</code>.</p>
-          <p><code>computeIfAbsent(k, k -&gt; new...)</code> — &quot;get the value, creating it if missing.&quot; Perfect
+          <p><code>computeIfAbsent(k, k -&gt; new...)</code>, &quot;get the value, creating it if missing.&quot; Perfect
           for Map-of-Lists: <code>adj.computeIfAbsent(u, k -&gt; new ArrayList&lt;&gt;()).add(v)</code>.</p>
         </Callout>
 
-        <h3>LinkedHashMap — preserves insertion order (for free, almost)</h3>
+        <h3>LinkedHashMap, preserves insertion order (for free, almost)</h3>
 
         <p>
           Same as HashMap, but maintains a doubly-linked list threading through entries in insertion order. Iteration
@@ -333,11 +333,11 @@ counts.computeIfAbsent("banana", k -> new ArrayList<>());`}</CodeBlock>
 
         <p>
           Get/put both bump the entry to the &quot;most recently used&quot; end. When size exceeds capacity, the
-          eldest (least-recently-used) entry is evicted automatically. This is the complete LRU implementation —
+          eldest (least-recently-used) entry is evicted automatically. This is the complete LRU implementation,
           no separate doubly-linked-list bookkeeping needed.
         </p>
 
-        <h3>TreeMap — sorted by key</h3>
+        <h3>TreeMap, sorted by key</h3>
 
         <p>
           A red-black tree. Every operation is O(log n), but you get keys in sorted order plus
@@ -357,9 +357,9 @@ events.subMap(150, 300);        // {180=auth, 250=request}`}</CodeBlock>
 
         <Callout variant="insight" title="When TreeMap is the right answer">
           Anytime the question contains the words &quot;just less than,&quot; &quot;just greater than,&quot;
-          &quot;next event after time t,&quot; or &quot;range from a to b&quot; — TreeMap. The O(log n) cost buys
+          &quot;next event after time t,&quot; or &quot;range from a to b&quot;, TreeMap. The O(log n) cost buys
           you constant-time range navigation that HashMap can&apos;t give you at any price. Calendar booking
-          conflicts, time-series queries, leaderboards by score — all TreeMap territory.
+          conflicts, time-series queries, leaderboards by score, all TreeMap territory.
         </Callout>
 
         <h3>The Map decision tree</h3>
@@ -375,9 +375,9 @@ events.subMap(150, 300);        // {180=auth, 250=request}`}</CodeBlock>
           kind="Map check"
           question="You're building a 'next bus arriving after time T' lookup. What's the right Map?"
           options={[
-            { label: "HashMap.", explanation: "HashMap has no notion of 'next key after T' — you'd have to scan all entries every query, defeating the point of a Map." },
+            { label: "HashMap.", explanation: "HashMap has no notion of 'next key after T', you'd have to scan all entries every query, defeating the point of a Map." },
             { label: "LinkedHashMap.", explanation: "LinkedHashMap keeps insertion order, not key order. 'Next time after T' would still need a scan." },
-            { label: "TreeMap with ceilingKey(T) — O(log n) per query.", correct: true, explanation: "Right. TreeMap orders by key (the bus arrival time). ceilingKey(T) finds the smallest arrival time ≥ T in O(log n). This is the textbook use case for sorted-map range navigation." },
+            { label: "TreeMap with ceilingKey(T), O(log n) per query.", correct: true, explanation: "Right. TreeMap orders by key (the bus arrival time). ceilingKey(T) finds the smallest arrival time ≥ T in O(log n). This is the textbook use case for sorted-map range navigation." },
             { label: "PriorityQueue.", explanation: "PriorityQueue gives O(1) peek at the minimum, but you can't query 'min ≥ T' without draining and re-inserting. Wrong tool for arbitrary range queries." },
           ]}
         />
@@ -400,7 +400,7 @@ events.subMap(150, 300);        // {180=auth, 250=request}`}</CodeBlock>
 LinkedHashSet   O(1) add/contains/remove    insertion order
 TreeSet         O(log n) ops                sorted, with range queries`}</CodeBlock>
 
-        <h3>HashSet — the default deduplicator</h3>
+        <h3>HashSet, the default deduplicator</h3>
 
         <CodeBlock lang="java">{`Set<Integer> seen = new HashSet<>();
 seen.add(5);              // returns true (was new)
@@ -414,11 +414,11 @@ seen.size();              // 1`}</CodeBlock>
           <code>if (!seen.add(node)) continue;</code>. Saves a redundant <code>contains</code> + <code>add</code> pair.
         </Callout>
 
-        <h3>LinkedHashSet — predictable iteration</h3>
+        <h3>LinkedHashSet, predictable iteration</h3>
 
         <p>
           Same operations as HashSet, plus iteration in insertion order. When you need both deduplication and a stable
-          output ordering — &quot;keep the first occurrence of each word in input order&quot; — this is the one tool
+          output ordering, &quot;keep the first occurrence of each word in input order&quot;, this is the one tool
           that does both in one pass.
         </p>
 
@@ -426,7 +426,7 @@ seen.size();              // 1`}</CodeBlock>
 for (String w : words) uniqueOrdered.add(w);
 // Iterating uniqueOrdered now yields each unique word in first-seen order.`}</CodeBlock>
 
-        <h3>TreeSet — sorted unique elements with range queries</h3>
+        <h3>TreeSet, sorted unique elements with range queries</h3>
 
         <CodeBlock lang="java">{`TreeSet<Integer> scores = new TreeSet<>();
 scores.add(80);
@@ -439,7 +439,7 @@ scores.floor(85);            // 80
 scores.subSet(60, 90);       // {80}`}</CodeBlock>
 
         <Callout variant="insight" title="TreeSet for the 'closest value' pattern">
-          Many problems reduce to &quot;is there a value within K of x?&quot; — Contains Duplicate III, sliding
+          Many problems reduce to &quot;is there a value within K of x?&quot;, Contains Duplicate III, sliding
           window with tolerance, etc. TreeSet gives you <code>ceiling(x - k)</code> and <code>floor(x + k)</code>,
           each O(log n), so the whole problem becomes a sliding window of TreeSet inserts and range checks.
         </Callout>
@@ -459,17 +459,17 @@ scores.subSet(60, 90);       // {80}`}</CodeBlock>
           ]}
           items={[
             { id: "1", label: "Frequency count of words in a string.", answer: "hashmap", explanation: "Key→count, no order needed. HashMap with merge(word, 1, Integer::sum)." },
-            { id: "2", label: "BFS frontier on a graph.", answer: "arraydeque", explanation: "FIFO queue with O(1) ends. ArrayDeque is the canonical choice — beats LinkedList on cache locality." },
+            { id: "2", label: "BFS frontier on a graph.", answer: "arraydeque", explanation: "FIFO queue with O(1) ends. ArrayDeque is the canonical choice, beats LinkedList on cache locality." },
             { id: "3", label: "LRU cache, capacity 100.", answer: "linkedhashmap", explanation: "LinkedHashMap with accessOrder=true and removeEldestEntry → 10-line LRU." },
             { id: "4", label: "Find the closest element to a target value among a dynamic set of numbers.", answer: "treeset", explanation: "ceiling(x) and floor(x), each O(log n). TreeSet is the textbook closest-value structure." },
-            { id: "5", label: "DFS stack of grid coordinates.", answer: "arraydeque", explanation: "ArrayDeque as a stack — push/pop/peek all O(1). Faster than legacy Stack class." },
+            { id: "5", label: "DFS stack of grid coordinates.", answer: "arraydeque", explanation: "ArrayDeque as a stack, push/pop/peek all O(1). Faster than legacy Stack class." },
             { id: "6", label: "List of search results to render in order, where order is determined by an external ranker.", answer: "arraylist", explanation: "Indexable, ordered by insertion (the rank order). Standard List use case." },
-            { id: "7", label: "'Next event after time T' lookup on a stream of timestamped events.", answer: "treemap", explanation: "TreeMap of timestamp→event. ceilingKey(T) returns the smallest timestamp ≥ T in O(log n) — the canonical sorted-map navigation query." },
-            { id: "8", label: "Visited-page tracker that remembers, for each URL, the timestamp of first visit, iterated in first-visit order.", answer: "linkedhashmap", explanation: "Key→value (URL→timestamp), and you want iteration in insertion order — LinkedHashMap. If you only needed the URLs (no timestamp) the answer would be LinkedHashSet, but here the value matters." },
+            { id: "7", label: "'Next event after time T' lookup on a stream of timestamped events.", answer: "treemap", explanation: "TreeMap of timestamp→event. ceilingKey(T) returns the smallest timestamp ≥ T in O(log n), the canonical sorted-map navigation query." },
+            { id: "8", label: "Visited-page tracker that remembers, for each URL, the timestamp of first visit, iterated in first-visit order.", answer: "linkedhashmap", explanation: "Key→value (URL→timestamp), and you want iteration in insertion order, LinkedHashMap. If you only needed the URLs (no timestamp) the answer would be LinkedHashSet, but here the value matters." },
           ]}
         />
 
-        <Callout variant="warn" title="The hashCode/equals contract — you must override both, together">
+        <Callout variant="warn" title="The hashCode/equals contract, you must override both, together">
           <p>
             When you put a custom class into a HashSet/HashMap, you must override BOTH <code>equals</code> and{" "}
             <code>hashCode</code>. The contract: if two objects are equal by <code>equals</code>, they must have
@@ -495,11 +495,11 @@ scores.subSet(60, 90);       // {80}`}</CodeBlock>
           Java provides two mechanisms.
         </p>
 
-        <h3>Comparable — natural order, defined by the class itself</h3>
+        <h3>Comparable, natural order, defined by the class itself</h3>
 
         <p>
           Implement <code>Comparable&lt;T&gt;</code> on your class and define <code>compareTo</code>. This is the
-          class&apos;s <em>natural ordering</em> — what a sort gives you when no other rule is provided.
+          class&apos;s <em>natural ordering</em>, what a sort gives you when no other rule is provided.
         </p>
 
         <CodeBlock lang="java">{`record Player(String name, int score) implements Comparable<Player> {
@@ -514,11 +514,11 @@ scores.subSet(60, 90);       // {80}`}</CodeBlock>
           works out of the box.
         </p>
 
-        <h3>Comparator — external order, decided by the caller</h3>
+        <h3>Comparator, external order, decided by the caller</h3>
 
         <p>
-          When you want a different ordering than the natural one — or when the class doesn&apos;t implement
-          Comparable — pass a <code>Comparator&lt;T&gt;</code>. Modern Java has lambda and method-reference forms
+          When you want a different ordering than the natural one, or when the class doesn&apos;t implement
+          Comparable, pass a <code>Comparator&lt;T&gt;</code>. Modern Java has lambda and method-reference forms
           that make these one-liners.
         </p>
 
@@ -548,7 +548,7 @@ PriorityQueue<Player> maxByScore = new PriorityQueue<>(
 
         <Callout variant="warn" title="Don't write `(a, b) -> a.score - b.score` for ints">
           The subtract trick fails on overflow: when <code>a.score = Integer.MAX_VALUE</code> and
-          <code>b.score = -1</code>, the subtraction overflows to a negative number — wrong order. Use
+          <code>b.score = -1</code>, the subtraction overflows to a negative number, wrong order. Use
           <code>Integer.compare(a, b)</code> or <code>Comparator.comparingInt</code>; both are overflow-safe.
           This is one of the classic Java interview gotchas.
         </Callout>
@@ -570,13 +570,13 @@ Comparator.reverseOrder()              // class's compareTo, flipped
 .nullsFirst(...) / .nullsLast(...)     // null handling`}</CodeBlock>
 
         <Callout variant="info" title="comparingInt vs comparing(::score)">
-          <code>Comparator.comparing(Player::score)</code> autoboxes each int into Integer for the comparison —
+          <code>Comparator.comparing(Player::score)</code> autoboxes each int into Integer for the comparison,
           unnecessary allocation in a hot loop. <code>Comparator.comparingInt(Player::score)</code> uses a primitive
           int comparator, no boxing. On a tight sort loop, this is a measurable speedup. Habit: reach for the
           primitive variant when the key is <code>int</code>/<code>long</code>/<code>double</code>.
         </Callout>
 
-        <h3>Reading the contract — the three return values</h3>
+        <h3>Reading the contract, the three return values</h3>
 
         <p>
           Both <code>Comparable.compareTo</code> and <code>Comparator.compare</code> return an int. The sign carries
@@ -590,7 +590,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
         <p>
           The contract requires the comparator to be <strong>antisymmetric</strong> (compare(a,b) and compare(b,a)
           have opposite signs) and <strong>transitive</strong> (if a&lt;b and b&lt;c then a&lt;c). Violating these
-          can corrupt sort algorithms in subtle ways — always derive from <code>Integer.compare</code>,{" "}
+          can corrupt sort algorithms in subtle ways, always derive from <code>Integer.compare</code>,{" "}
           <code>Long.compare</code>, etc., and chain with the standard combinators.
         </p>
 
@@ -599,9 +599,9 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
           question="Why is `(a, b) -> a.value - b.value` an unsafe comparator for ints?"
           options={[
             { label: "It doesn't compile.", explanation: "It compiles fine. The bug is at runtime, on edge inputs." },
-            { label: "It overflows when a.value and b.value are far apart in opposite signs — e.g., MAX_VALUE - (-1) wraps to a negative int.", correct: true, explanation: "Right. Subtraction can overflow. Integer.compare(a, b) is the safe equivalent and the combinator Comparator.comparingInt(...) is what you actually want — it produces an overflow-safe comparator with one method call." },
+            { label: "It overflows when a.value and b.value are far apart in opposite signs, e.g., MAX_VALUE - (-1) wraps to a negative int.", correct: true, explanation: "Right. Subtraction can overflow. Integer.compare(a, b) is the safe equivalent and the combinator Comparator.comparingInt(...) is what you actually want, it produces an overflow-safe comparator with one method call." },
             { label: "Lambdas can't be comparators.", explanation: "Lambdas can absolutely implement Comparator (it's a functional interface). The bug is the subtraction, not the lambda." },
-            { label: "It's slow due to autoboxing.", explanation: "There's no boxing here — both operands are int. The bug is correctness, not speed." },
+            { label: "It's slow due to autoboxing.", explanation: "There's no boxing here, both operands are int. The bug is correctness, not speed." },
           ]}
         />
 
@@ -610,7 +610,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
           question="You want a max-heap of Player objects, ordered by score (highest first). What's the right one-liner?"
           options={[
             { label: "new PriorityQueue<>(Comparator.comparingInt(Player::score));", explanation: "That's a min-heap by score (smallest first). PriorityQueue is naturally a min-heap; you need to reverse the comparator for max-heap behavior." },
-            { label: "new PriorityQueue<>(Comparator.comparingInt(Player::score).reversed());", correct: true, explanation: "Right. Java's PriorityQueue is a min-heap. To make it a max-heap, give it a comparator that says 'higher comes first' — i.e., the reverse of natural ascending order. The .reversed() call does this in one method call." },
+            { label: "new PriorityQueue<>(Comparator.comparingInt(Player::score).reversed());", correct: true, explanation: "Right. Java's PriorityQueue is a min-heap. To make it a max-heap, give it a comparator that says 'higher comes first', i.e., the reverse of natural ascending order. The .reversed() call does this in one method call." },
             { label: "new PriorityQueue<>((a, b) -> b.score - a.score);", explanation: "Subtraction-based comparators overflow on extreme inputs. The .reversed() form is overflow-safe and reads more clearly." },
             { label: "Collections.reverse(new PriorityQueue<>());", explanation: "Collections.reverse mutates the order of a List; it doesn't change a PriorityQueue's comparator. PriorityQueue ordering is fixed at construction." },
           ]}
@@ -619,7 +619,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="java-collections" id="final" title="I've completed Module 21 — and Phase 5!" xp={40} celebration="The Java Collections framework is no longer a forest of class names. You can pick the right tool, instantly. Phase 6 — algorithmic techniques — is the next stop.">
+      <Checkpoint moduleSlug="java-collections" id="final" title="I've completed Module 21, and Phase 5!" xp={40} celebration="The Java Collections framework is no longer a forest of class names. You can pick the right tool, instantly. Phase 6, algorithmic techniques, is the next stop.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -627,7 +627,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
           kind="Final check"
           question="You're solving a problem that asks: 'For each query (lo, hi), return the count of stored numbers in [lo, hi].' Numbers are inserted dynamically. Pick the data structure."
           options={[
-            { label: "HashMap<Integer, Integer> mapping number to count.", explanation: "HashMap can store the counts but can't answer 'how many keys are in [lo, hi]' without scanning every key — defeats the point." },
+            { label: "HashMap<Integer, Integer> mapping number to count.", explanation: "HashMap can store the counts but can't answer 'how many keys are in [lo, hi]' without scanning every key, defeats the point." },
             { label: "ArrayList<Integer> with binary search per query.", explanation: "Workable if numbers were sorted... but ArrayList isn't kept sorted on insertion. You'd pay O(n) per insert to keep it sorted, then O(log n) per query." },
             { label: "TreeMap<Integer, Integer> with subMap(lo, hi+1) per query.", correct: true, explanation: "Right. TreeMap keeps keys sorted; subMap returns a view in O(log n) and you can sum the counts (or use a separate Fenwick tree for true O(log n) total). Insertion is O(log n). This is the canonical 'range queries on dynamic data' answer for an interview." },
             { label: "ArrayDeque<Integer>, scanning per query.", explanation: "ArrayDeque has no ordering or search. Linear scan per query and per insert is the worst possible answer." },
@@ -640,7 +640,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
           options={[
             { label: "It's been removed in recent JDKs.", explanation: "It's still in the JDK for backwards compatibility. The reason to avoid it is technical, not availability." },
             { label: "It extends Vector (synchronized) and ArrayDeque is faster, unsynchronized, and recommended by the Collections framework Javadoc itself.", correct: true, explanation: "Right. Stack pays the synchronization cost of Vector with no benefit in single-threaded code. ArrayDeque has the same push/pop/peek API, no synchronization, better performance. The official Java docs explicitly recommend ArrayDeque over Stack." },
-            { label: "Stack doesn't support generics.", explanation: "Stack<T> has been generic since Java 5 — that's not the problem." },
+            { label: "Stack doesn't support generics.", explanation: "Stack<T> has been generic since Java 5, that's not the problem." },
             { label: "Stack lacks a peek operation.", explanation: "Stack has peek(); the issue is that Stack inherits Vector's synchronization tax for no good reason." },
           ]}
         />
@@ -650,22 +650,22 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
           question="You override `equals` on a custom Point class to compare by (x, y). You put Points into a HashSet and find that two equal Points are both stored. Why?"
           options={[
             { label: "HashSet doesn't dedupe.", explanation: "It does. The bug is in your contract." },
-            { label: "You forgot to override hashCode. Equal objects MUST have equal hash codes — without that, HashSet maps them to different buckets and never compares them.", correct: true, explanation: "Right. The Object contract: a.equals(b) → a.hashCode() == b.hashCode(). HashSet looks up by hashCode first; if two equal objects hash to different buckets, the equals comparison is never even attempted. Override both, together. IDE-generated implementations are the safe path." },
-            { label: "HashSet uses reference equality (==), not equals().", explanation: "HashSet calls equals() — but only after hashCode() places the lookup in the right bucket. Mismatched hashCode is what skips the equals comparison." },
+            { label: "You forgot to override hashCode. Equal objects MUST have equal hash codes, without that, HashSet maps them to different buckets and never compares them.", correct: true, explanation: "Right. The Object contract: a.equals(b) → a.hashCode() == b.hashCode(). HashSet looks up by hashCode first; if two equal objects hash to different buckets, the equals comparison is never even attempted. Override both, together. IDE-generated implementations are the safe path." },
+            { label: "HashSet uses reference equality (==), not equals().", explanation: "HashSet calls equals(), but only after hashCode() places the lookup in the right bucket. Mismatched hashCode is what skips the equals comparison." },
             { label: "Point objects need to implement Comparable.", explanation: "Comparable is for sorted structures (TreeSet/TreeMap). HashSet uses hashCode and equals, not compareTo." },
           ]}
         />
 
         <PartRecap
           title="The decision framework you can now apply in 5 seconds"
-          gist="Read the question, ask three questions: (1) am I storing pairs (Map) or values (List/Set/Queue)? (2) do I need order — insertion, sorted, or none? (3) do I need range queries? The answer pinpoints the right concrete class."
+          gist="Read the question, ask three questions: (1) am I storing pairs (Map) or values (List/Set/Queue)? (2) do I need order, insertion, sorted, or none? (3) do I need range queries? The answer pinpoints the right concrete class."
           points={[
             { takeaway: "Default: ArrayList, HashMap, HashSet, ArrayDeque.", detail: "These four cover ~70% of real code. Reach for them first; only deviate when you hit a specific feature gap." },
             { takeaway: "Need predictable iteration order? LinkedHashMap or LinkedHashSet.", detail: "Insertion order for free, with a few % memory overhead. Plus access-order mode for one-class LRU." },
             { takeaway: "Need keys sorted, or 'closest value' / 'next event after T'? TreeMap or TreeSet.", detail: "O(log n) ops with ceiling/floor/subMap. The right answer for any range or proximity query on dynamic data." },
             { takeaway: "Always declare with the interface, instantiate with the concrete.", detail: "Map<K,V> m = new HashMap<>();. Swap implementations with a one-line edit. Don't program against HashMap-specific methods unless you have to." },
             { takeaway: "Override equals AND hashCode together.", detail: "HashSet/HashMap break silently if you override only one. IDE-generated implementations are fine; just generate both." },
-            { takeaway: "Comparator.comparingInt + .reversed() + .thenComparing() solve every sort question.", detail: "Avoid (a,b) -> a-b — it overflows. Use the chainable factory methods; they're overflow-safe and read declaratively." },
+            { takeaway: "Comparator.comparingInt + .reversed() + .thenComparing() solve every sort question.", detail: "Avoid (a,b) -> a-b, it overflows. Use the chainable factory methods; they're overflow-safe and read declaratively." },
           ]}
         />
 
@@ -675,7 +675,7 @@ positive   →  this/a is AFTER other/b    (a sorts later)`}</CodeBlock>
             One synthesis module ties Phases 2–4 together: every data structure you&apos;ve built (lists,
             stacks, queues, hashmaps, trees, heaps) maps to a concrete Collections class with known Big-O and
             specific use cases. You now have a 5-second decision framework for &quot;which container.&quot;
-            Phase 6 — algorithmic techniques — is the next leap: two-pointers, sliding window, binary search,
+            Phase 6, algorithmic techniques, is the next leap: two-pointers, sliding window, binary search,
             sorting, recursion, backtracking. The patterns that turn the data structures from Phases 1-5 into
             actual problem-solving moves.
           </p>

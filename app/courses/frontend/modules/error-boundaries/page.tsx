@@ -32,11 +32,11 @@ export default function ErrorBoundariesModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Error boundaries — catching render-time failures
+          Error boundaries, catching render-time failures
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           One component deep in your tree throws while rendering, and the <em>entire</em> page goes
-          white. No header, no nav, nothing. React did that on purpose — and an error boundary is the
+          white. No header, no nav, nothing. React did that on purpose, and an error boundary is the
           one tool that turns &quot;blank screen&quot; into &quot;something went wrong, here&apos;s a retry button.&quot;
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -48,7 +48,7 @@ export default function ErrorBoundariesModule() {
         <h2 className="mb-4 text-2xl font-bold">The circuit breaker in your house</h2>
         <p className="mb-4">
           Picture the electrical panel in a house. When one appliance shorts out, you don&apos;t want
-          the whole house to catch fire — and you don&apos;t want every light in every room to go dark
+          the whole house to catch fire, and you don&apos;t want every light in every room to go dark
           either. So the wiring is divided into <strong>circuits</strong>, each with its own breaker.
           A fault in the kitchen trips the kitchen breaker; the bedroom lights stay on. The breaker
           <em> contains</em> the fault to the smallest area it can, and gives you a switch to flip
@@ -56,21 +56,21 @@ export default function ErrorBoundariesModule() {
         </p>
         <p className="mb-4">
           An error boundary is that breaker, for your component tree. When a component throws while
-          rendering, the error propagates <em>up</em> the tree looking for the nearest boundary —
+          rendering, the error propagates <em>up</em> the tree looking for the nearest boundary,
           exactly like a fault travels back to the panel. That boundary &quot;trips&quot;: it stops rendering
           its broken subtree and shows a fallback UI instead. Everything <em>outside</em> the boundary
           keeps working. And just like flipping a breaker back on, a good boundary gives the user a way
           to <strong>reset</strong> and try again.
         </p>
         <p className="mb-4">
-          The key design decision — the one this whole module circles back to — is the same one an
+          The key design decision, the one this whole module circles back to, is the same one an
           electrician makes: <strong>how many circuits do you want?</strong> One giant breaker for the
           whole house means any fault kills everything. One breaker per outlet is overkill. The art is
           drawing the boundaries around the things that should fail <em>independently</em>.
         </p>
         <Callout variant="info" title="What this module is really about">
           <p>
-            The mechanics of an error boundary are tiny — two lifecycle methods on a class component.
+            The mechanics of an error boundary are tiny, two lifecycle methods on a class component.
             The hard part is knowing <em>what it catches</em> (render-time errors only), <em>what it
             silently misses</em> (events, async, SSR), and <em>where to place boundaries</em> so a
             single crash degrades gracefully instead of blanking the app. Everything below follows from
@@ -84,14 +84,14 @@ export default function ErrorBoundariesModule() {
         <h2 className="mb-4 text-2xl font-bold">Why one throw unmounts the whole tree</h2>
         <p className="mb-4">
           Since React 16, an error thrown during rendering that is <em>not</em> caught by a boundary
-          doesn&apos;t just log a warning — React <strong>unmounts the entire component tree.</strong>
+          doesn&apos;t just log a warning, React <strong>unmounts the entire component tree.</strong>
           That sounds drastic, and it is, but it&apos;s a deliberate choice. Here&apos;s the reasoning the
           React team gave:
         </p>
         <Callout variant="insight" title="The rationale, in their words">
           <p>
             A corrupted UI is worse than no UI. If a banking app fails to render the <em>new</em>
-            balance, showing the <em>stale</em> one — silently, with no error — could lead a user to
+            balance, showing the <em>stale</em> one, silently, with no error, could lead a user to
             transfer money they don&apos;t have. React decided that leaving a broken, half-rendered,
             internally-inconsistent tree on screen is more dangerous than removing it entirely. So the
             default for an <em>uncaught</em> render error is: tear it all down.
@@ -99,7 +99,7 @@ export default function ErrorBoundariesModule() {
         </Callout>
         <p className="mb-4">
           That default is the problem an error boundary solves. A boundary says: &quot;don&apos;t tear down
-          the whole tree — tear down <em>my</em> subtree and show this fallback instead.&quot; Without a
+          the whole tree, tear down <em>my</em> subtree and show this fallback instead.&quot; Without a
           boundary, this is what your users see when any descendant throws in render:
         </p>
         <pre><code>{`function PriceWidget({ product }) {
@@ -129,36 +129,36 @@ function Dashboard() {
 
       {/* ───────────────────────── 3. WHAT IT CATCHES / WHAT IT DOESN'T ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">What a boundary catches — and the four things it can&apos;t</h2>
+        <h2 className="mb-4 text-2xl font-bold">What a boundary catches, and the four things it can&apos;t</h2>
         <p className="mb-4">
           This is the part interviewers probe, because it&apos;s the part everyone gets wrong. An error
           boundary catches errors thrown in the <strong>render phase</strong> of the tree below it:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
-          <li><strong>During rendering</strong> — a throw in a component&apos;s render/return, in the JSX itself.</li>
-          <li><strong>In lifecycle methods</strong> — <code>componentDidMount</code>, <code>componentDidUpdate</code>, etc. of descendants.</li>
-          <li><strong>In constructors</strong> — when a descendant class component is being constructed.</li>
+          <li><strong>During rendering</strong>, a throw in a component&apos;s render/return, in the JSX itself.</li>
+          <li><strong>In lifecycle methods</strong>, <code>componentDidMount</code>, <code>componentDidUpdate</code>, etc. of descendants.</li>
+          <li><strong>In constructors</strong>, when a descendant class component is being constructed.</li>
         </ul>
         <p className="mb-4">
           That list is the <em>whole</em> story of what it catches. Here is what it does{" "}
-          <strong>NOT</strong> catch — memorize these four, because each has a different reason:
+          <strong>NOT</strong> catch, memorize these four, because each has a different reason:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong>Event handlers.</strong> A throw inside <code>onClick</code> happens <em>after</em>
-            render, during a user interaction — outside React&apos;s render flow. React can&apos;t recover
+            render, during a user interaction, outside React&apos;s render flow. React can&apos;t recover
             the UI for it because nothing is mid-render. Use a normal <code>try/catch</code> in the
             handler instead.
           </li>
           <li>
             <strong>Asynchronous code.</strong> <code>setTimeout</code>, <code>Promise</code> callbacks,
-            <code>fetch().then(...)</code> — these run on a later tick, long after the render that
+            <code>fetch().then(...)</code>, these run on a later tick, long after the render that
             scheduled them returned. The boundary isn&apos;t &quot;wrapped around&quot; them in any call-stack
             sense, so it never sees the throw.
           </li>
           <li>
             <strong>Server-side rendering.</strong> Boundaries are a client-render mechanism. An error
-            thrown during SSR isn&apos;t caught by a client error boundary — your server framework handles
+            thrown during SSR isn&apos;t caught by a client error boundary, your server framework handles
             SSR errors separately.
           </li>
           <li>
@@ -211,7 +211,7 @@ function Dashboard() {
           question="A button's onClick handler calls JSON.parse on malformed data and throws. There's an error boundary wrapping the whole page. What happens?"
           options={[
             {
-              label: "The boundary does NOT catch it — the error is thrown in an event handler, outside React's render flow, so it propagates as a normal uncaught exception",
+              label: "The boundary does NOT catch it, the error is thrown in an event handler, outside React's render flow, so it propagates as a normal uncaught exception",
               correct: true,
               explanation:
                 "Right. Error boundaries only catch errors thrown during render, in lifecycle methods, or in constructors. An onClick runs after render, during interaction, so the boundary never sees it. Use try/catch in the handler.",
@@ -219,7 +219,7 @@ function Dashboard() {
             {
               label: "The boundary catches it and shows the fallback, because the button is inside the boundary",
               explanation:
-                "Being inside the boundary isn't enough — the error must be thrown while React is rendering. An event handler runs outside the render flow, so the boundary can't catch it.",
+                "Being inside the boundary isn't enough, the error must be thrown while React is rendering. An event handler runs outside the render flow, so the boundary can't catch it.",
             },
             {
               label: "React automatically wraps every event handler in the nearest boundary's catch",
@@ -229,7 +229,7 @@ function Dashboard() {
             {
               label: "The whole tree unmounts, because any uncaught error always unmounts the app",
               explanation:
-                "Render-phase errors that go uncaught unmount the tree, but an event-handler throw is not a render error — it behaves like any other uncaught JS exception, it doesn't unmount the React tree.",
+                "Render-phase errors that go uncaught unmount the tree, but an event-handler throw is not a render error, it behaves like any other uncaught JS exception, it doesn't unmount the React tree.",
             },
           ]}
         />
@@ -241,7 +241,7 @@ function Dashboard() {
               label: "A child component reads `user.name` during render where `user` is null, throwing a TypeError mid-render",
               correct: true,
               explanation:
-                "Yes — this throws during the render phase of a descendant, which is exactly what boundaries catch (render, lifecycle methods, and constructors).",
+                "Yes, this throws during the render phase of a descendant, which is exactly what boundaries catch (render, lifecycle methods, and constructors).",
             },
             {
               label: "A setTimeout callback throws 500ms after the component mounted",
@@ -256,7 +256,7 @@ function Dashboard() {
             {
               label: "A fetch().then() rejects with a network error after the page rendered",
               explanation:
-                "A rejected promise is async — it resolves on a later tick, not during render. Boundaries don't see it. Handle it with .catch and put the error into state if you want a boundary to show it.",
+                "A rejected promise is async, it resolves on a later tick, not during render. Boundaries don't see it. Handle it with .catch and put the error into state if you want a boundary to show it.",
             },
           ]}
         />
@@ -269,15 +269,15 @@ function Dashboard() {
           Here is the surprise: even in a hooks-everywhere codebase, an error boundary{" "}
           <strong>must be a class component.</strong> There is no <code>useErrorBoundary</code> hook in
           React itself. The reason is mechanical: boundaries are powered by two <em>lifecycle methods</em>{" "}
-          that have no hook equivalent yet —
+          that have no hook equivalent yet,
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <code>static getDerivedStateFromError(error)</code> — a <em>static</em> method React calls
+            <code>static getDerivedStateFromError(error)</code>, a <em>static</em> method React calls
             when a descendant throws, to compute the new state that renders the fallback.
           </li>
           <li>
-            <code>componentDidCatch(error, info)</code> — an instance method React calls so you can run
+            <code>componentDidCatch(error, info)</code>, an instance method React calls so you can run
             side effects (log to your error service).
           </li>
         </ul>
@@ -285,7 +285,7 @@ function Dashboard() {
           React has never shipped hook versions of these, so the official answer to &quot;write an error
           boundary&quot; is &quot;write one class.&quot; The standard move is to write{" "}
           <strong>one reusable <code>ErrorBoundary</code> class</strong> and then never write another
-          class again — you wrap function components with it everywhere.
+          class again, you wrap function components with it everywhere.
         </p>
         <pre><code>{`import { Component } from "react";
 
@@ -321,7 +321,7 @@ class ErrorBoundary extends Component {
             an exception filter that decides the <em>response</em> (which error page to render), and{" "}
             <code>componentDidCatch</code> as the part that <em>logs</em> the exception to your
             observability stack. React deliberately split &quot;decide what to show&quot; (pure, render-phase,
-            static) from &quot;perform side effects&quot; (impure, commit-phase, instance) — the same separation
+            static) from &quot;perform side effects&quot; (impure, commit-phase, instance), the same separation
             a well-built middleware pipeline makes.
           </p>
         </Callout>
@@ -337,7 +337,7 @@ class ErrorBoundary extends Component {
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
             <strong><code>static getDerivedStateFromError(error)</code></strong> runs during the{" "}
-            <em>render phase</em>. It must be <strong>pure</strong> — no logging, no side effects, no{" "}
+            <em>render phase</em>. It must be <strong>pure</strong>, no logging, no side effects, no{" "}
             <code>fetch</code>. Its only job is to return the next state so React can render the
             fallback. Because the render phase can be re-run, React forbids side effects here.
           </li>
@@ -345,29 +345,29 @@ class ErrorBoundary extends Component {
             <strong><code>componentDidCatch(error, info)</code></strong> runs during the{" "}
             <em>commit phase</em>, after the DOM has been updated to show the fallback. This is where{" "}
             <em>side effects belong</em>: log the error, report to Sentry, increment a metric. It also
-            receives <code>info.componentStack</code> — the chain of components leading to the throw,
+            receives <code>info.componentStack</code>, the chain of components leading to the throw,
             which is gold for debugging.
           </li>
         </ul>
         <Callout variant="insight" title="The one-liner to say out loud">
           <p>
-            &quot;<code>getDerivedStateFromError</code> decides <em>what to render</em> — it&apos;s pure and
-            sets the state for the fallback. <code>componentDidCatch</code> handles <em>side effects</em>{" "}
-            — it&apos;s where you log the error and its component stack. One is for the UI, one is for
+            &quot;<code>getDerivedStateFromError</code> decides <em>what to render</em>, it&apos;s pure and
+            sets the state for the fallback. <code>componentDidCatch</code> handles <em>side effects</em>,{" "}
+            it&apos;s where you log the error and its component stack. One is for the UI, one is for
             telemetry.&quot;
           </p>
         </Callout>
         <p className="mb-4">
           In practice you usually implement both: <code>getDerivedStateFromError</code> to flip into the
           fallback, and <code>componentDidCatch</code> so the failure doesn&apos;t vanish silently. A
-          boundary that shows a fallback but never logs is a boundary that hides bugs from you — the
+          boundary that shows a fallback but never logs is a boundary that hides bugs from you, the
           user sees &quot;something went wrong&quot; and you never find out it happened.
         </p>
         <Callout variant="warn" title="Don't put logging in getDerivedStateFromError">
           <p>
             It&apos;s tempting, because that&apos;s where you first &quot;have&quot; the error. Resist it. The render
             phase can run multiple times (React may discard and retry work), so a side effect there can
-            fire repeatedly — you&apos;d log the same crash several times. <code>componentDidCatch</code>{" "}
+            fire repeatedly, you&apos;d log the same crash several times. <code>componentDidCatch</code>{" "}
             runs once, at commit, which is why it&apos;s the right home for logging.
           </p>
         </Callout>
@@ -383,7 +383,7 @@ class ErrorBoundary extends Component {
               label: "getDerivedStateFromError returns the state that renders the fallback (pure); componentDidCatch logs to Sentry (side effect)",
               correct: true,
               explanation:
-                "Exactly. getDerivedStateFromError runs in the render phase and must be pure — it just returns next state. componentDidCatch runs in the commit phase and is where side effects like logging belong.",
+                "Exactly. getDerivedStateFromError runs in the render phase and must be pure, it just returns next state. componentDidCatch runs in the commit phase and is where side effects like logging belong.",
             },
             {
               label: "componentDidCatch returns the fallback state; getDerivedStateFromError logs to Sentry",
@@ -415,7 +415,7 @@ class ErrorBoundary extends Component {
             {
               label: "Function components can't render fallback UI",
               explanation:
-                "Function components render UI just fine. The blocker is specifically the catching mechanism — getDerivedStateFromError and componentDidCatch have no hook form.",
+                "Function components render UI just fine. The blocker is specifically the catching mechanism, getDerivedStateFromError and componentDidCatch have no hook form.",
             },
             {
               label: "Class components render faster, so React requires them for error handling",
@@ -433,7 +433,7 @@ class ErrorBoundary extends Component {
 
       {/* ───────────────────────── 6. GRANULAR PLACEMENT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Granular boundaries — isolate failures, don&apos;t blank the page</h2>
+        <h2 className="mb-4 text-2xl font-bold">Granular boundaries, isolate failures, don&apos;t blank the page</h2>
         <p className="mb-4">
           Back to the circuit-panel decision. A boundary unmounts <em>everything below it</em> down to
           the fallback. So <strong>where you place the boundary decides how much of the UI a single
@@ -446,13 +446,13 @@ class ErrorBoundary extends Component {
             widget shouldn&apos;t kill the whole dashboard.
           </li>
           <li>
-            <strong>A boundary around every element.</strong> Noisy, pointless overhead — most elements
+            <strong>A boundary around every element.</strong> Noisy, pointless overhead, most elements
             can&apos;t fail in interesting ways, and you lose the readability of your tree.
           </li>
         </ul>
         <p className="mb-4">
-          The right answer is to wrap the <em>independent, riskier regions</em> — the parts that fetch
-          data, render third-party content, or do non-trivial computation — each in its own boundary so
+          The right answer is to wrap the <em>independent, riskier regions</em>, the parts that fetch
+          data, render third-party content, or do non-trivial computation, each in its own boundary so
           one failing region degrades to a small fallback while its neighbors stay fully alive:
         </p>
         <pre><code>{`function Dashboard() {
@@ -485,7 +485,7 @@ class ErrorBoundary extends Component {
         <Callout variant="insight" title="Placement heuristic">
           <p>
             Draw a boundary wherever you&apos;d be willing to show a small &quot;this part failed&quot; box{" "}
-            <em>instead</em> of that region — and where the surrounding UI is still useful without it.
+            <em>instead</em> of that region, and where the surrounding UI is still useful without it.
             Independent data widgets, embedded third-party components, and route-level sections are the
             usual spots. The grain matches the grain of <em>what can fail independently</em>.
           </p>
@@ -494,10 +494,10 @@ class ErrorBoundary extends Component {
 
       {/* ───────────────────────── 7. THE RESET MECHANISM ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Resetting — let the user recover without a full reload</h2>
+        <h2 className="mb-4 text-2xl font-bold">Resetting, let the user recover without a full reload</h2>
         <p className="mb-4">
           Once a boundary trips, <code>hasError</code> stays <code>true</code> and it keeps showing the
-          fallback forever — even if whatever caused the error has since gone away. The breaker is
+          fallback forever, even if whatever caused the error has since gone away. The breaker is
           flipped off; someone has to flip it back on. That &quot;flip back on&quot; is a <strong>reset</strong>:
           set <code>hasError</code> back to <code>false</code> so the boundary attempts to render its
           children again.
@@ -545,7 +545,7 @@ class ErrorBoundary extends Component {
         <Callout variant="warn" title="Reset alone can loop">
           <p>
             If the underlying condition hasn&apos;t changed, clicking &quot;Try again&quot; just re-renders the
-            same broken child, which throws again, and you&apos;re back in the fallback — an infinite
+            same broken child, which throws again, and you&apos;re back in the fallback, an infinite
             error→reset→error loop. A real reset usually pairs with <em>changing the input</em>: refetch
             the data, clear the bad state, or re-key the subtree. Reset clears the boundary; you still
             have to fix the thing that threw.
@@ -556,7 +556,7 @@ class ErrorBoundary extends Component {
           values and automatically clears <code>hasError</code> when any of them changes (e.g. the
           route, or a query param). That way navigating away from the broken state recovers
           automatically, with no button click required. (This is exactly what the{" "}
-          <code>react-error-boundary</code> library provides out of the box — see below.)
+          <code>react-error-boundary</code> library provides out of the box, see below.)
         </p>
       </section>
 
@@ -564,21 +564,21 @@ class ErrorBoundary extends Component {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">You rarely hand-roll this: <code>react-error-boundary</code> and Next.js <code>error.tsx</code></h2>
         <p className="mb-4">
-          Knowing how to write the class is the point of this module — it&apos;s what makes you able to
+          Knowing how to write the class is the point of this module, it&apos;s what makes you able to
           explain it. But in production you usually reach for one of two things that wrap that class for
           you.
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong><code>react-error-boundary</code></strong> — the de-facto community library. It gives
+            <strong><code>react-error-boundary</code></strong>, the de-facto community library. It gives
             you an <code>{`<ErrorBoundary>`}</code> with a <code>FallbackComponent</code> prop, an{" "}
             <code>onError</code> hook for logging, automatic <code>resetKeys</code>, an{" "}
             <code>onReset</code> callback, and a <code>useErrorBoundary()</code> hook for imperatively
-            throwing async/event errors into the nearest boundary. It&apos;s still a class under the hood —
+            throwing async/event errors into the nearest boundary. It&apos;s still a class under the hood,
             it just hides the boilerplate.
           </li>
           <li>
-            <strong>Next.js <code>error.tsx</code></strong> — in the App Router, dropping an{" "}
+            <strong>Next.js <code>error.tsx</code></strong>, in the App Router, dropping an{" "}
             <code>error.tsx</code> file in a route segment <em>wires an error boundary for that route
             automatically.</em> Next.js wraps the segment in a boundary and renders your{" "}
             <code>error.tsx</code> (which receives <code>error</code> and a <code>reset</code> function)
@@ -605,7 +605,7 @@ export default function Error({
 }`}</code></pre>
         <Callout variant="info" title="Same idea, different altitude">
           <p>
-            The framework didn&apos;t invent a new mechanism — <code>error.tsx</code> is a class error
+            The framework didn&apos;t invent a new mechanism, <code>error.tsx</code> is a class error
             boundary that Next.js places around the route segment for you, with <code>reset</code> wired
             to re-attempt the render. Everything you learned about <em>what it catches</em> (render-time
             only) and <em>resetting</em> applies directly. Knowing the underlying class is what lets you
@@ -625,7 +625,7 @@ export default function Error({
               whole app. It&apos;s React&apos;s circuit breaker.
             </li>
             <li>
-              <strong>What it catches.</strong> Render-phase errors only — in rendering, lifecycle
+              <strong>What it catches.</strong> Render-phase errors only, in rendering, lifecycle
               methods, and constructors of descendants.
             </li>
             <li>
@@ -635,18 +635,18 @@ export default function Error({
             </li>
             <li>
               <strong>How you write it.</strong> A class component with{" "}
-              <code>static getDerivedStateFromError</code> (pure — sets state to render the fallback)
-              and <code>componentDidCatch</code> (side effects — log the error + component stack). No
+              <code>static getDerivedStateFromError</code> (pure, sets state to render the fallback)
+              and <code>componentDidCatch</code> (side effects, log the error + component stack). No
               hook equivalent yet.
             </li>
             <li>
               <strong>Where to put it.</strong> Granularly, around independent regions, so one crash
-              degrades that region instead of blanking the page — and give it a <code>reset</code> so the
+              degrades that region instead of blanking the page, and give it a <code>reset</code> so the
               user can recover.
             </li>
             <li>
               <strong>In practice.</strong> Use <code>react-error-boundary</code>, or in Next.js drop an{" "}
-              <code>error.tsx</code> per route — both wrap the class for you.
+              <code>error.tsx</code> per route, both wrap the class for you.
             </li>
           </ul>
         </Callout>
@@ -654,7 +654,7 @@ export default function Error({
 
       {/* ───────────────────────── 10. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — one crash shouldn&apos;t blank the page</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, one crash shouldn&apos;t blank the page</h2>
         <p className="mb-4">
           You&apos;ll build a reusable <code>{`<ErrorBoundary fallback>`}</code> component, wrap three
           independent widgets so a single crash is contained, and add a reset that lets the user recover
@@ -680,7 +680,7 @@ export default function Error({
           <li>
             <strong>Wrap three independent widgets, each in its own boundary.</strong> Render three{" "}
             <code>Widget</code>s side by side, each inside a separate <code>{`<ErrorBoundary>`}</code> with
-            its own fallback. Crash one. Confirm the other two keep rendering normally — this is the
+            its own fallback. Crash one. Confirm the other two keep rendering normally, this is the
             granular-isolation payoff. Then wrap all three in <em>one</em> boundary instead and crash one:
             watch all three disappear. Feel the difference.
           </li>
@@ -690,18 +690,18 @@ export default function Error({
             <code>fallback</code> a function: <code>fallback=&#123;(&#123; error, reset &#125;) =&gt; ...&#125;</code>).
             Render a &quot;Try again&quot; button in the fallback that calls <code>reset</code>. Also flip the
             widget&apos;s <code>shouldCrash</code> back to false <em>before</em> resetting, and confirm the
-            widget comes back — then try resetting <em>without</em> fixing the cause and watch it loop
+            widget comes back, then try resetting <em>without</em> fixing the cause and watch it loop
             straight back into the fallback. That loop is the lesson.
           </li>
           <li>
             <strong>Prove the exclusions.</strong> Add a button <em>inside</em> a widget whose{" "}
             <code>onClick</code> throws. Confirm the boundary does <strong>not</strong> catch it (it
             surfaces as an uncaught error in the console, the fallback never shows). Then catch it in the
-            handler, stash it in state, and <code>throw error</code> during render — now the boundary{" "}
+            handler, stash it in state, and <code>throw error</code> during render, now the boundary{" "}
             <em>does</em> catch it. Same for a <code>setTimeout</code> that throws.
           </li>
           <li>
-            <strong>Stretch — swap in <code>react-error-boundary</code>.</strong> Replace your hand-rolled
+            <strong>Stretch, swap in <code>react-error-boundary</code>.</strong> Replace your hand-rolled
             class with the library&apos;s <code>{`<ErrorBoundary>`}</code> using <code>FallbackComponent</code>,{" "}
             <code>onError</code> for logging, and <code>resetKeys</code> so changing a key auto-resets.
             Confirm your behavior is identical with far less code.
@@ -733,7 +733,7 @@ export default function Error({
             {
               label: "Put a single ErrorBoundary at the root wrapping the whole dashboard",
               explanation:
-                "A root-only boundary catches the crash but replaces the ENTIRE dashboard — Header and RevenueChart included — with one fallback. That's better than a blank page but not the isolation you wanted.",
+                "A root-only boundary catches the crash but replaces the ENTIRE dashboard, Header and RevenueChart included, with one fallback. That's better than a blank page but not the isolation you wanted.",
             },
             {
               label: "No boundary at all; React isolates each component's errors by default",
@@ -743,7 +743,7 @@ export default function Error({
             {
               label: "Wrap only the Header in a boundary, since it's the most important part",
               explanation:
-                "The boundary protects what's INSIDE it, not what's outside. Wrapping the Header does nothing for a crash in ActivityFeed — that error propagates up past the unwrapped widgets and unmounts the tree.",
+                "The boundary protects what's INSIDE it, not what's outside. Wrapping the Header does nothing for a crash in ActivityFeed, that error propagates up past the unwrapped widgets and unmounts the tree.",
             },
           ]}
         />
@@ -752,7 +752,7 @@ export default function Error({
           question="Your boundary trips, shows a fallback with a 'Try again' button that sets hasError back to false. The user clicks it but the same fallback immediately reappears. Why?"
           options={[
             {
-              label: "The underlying cause is still present, so re-rendering the child throws again — reset clears the boundary but doesn't fix what threw",
+              label: "The underlying cause is still present, so re-rendering the child throws again, reset clears the boundary but doesn't fix what threw",
               correct: true,
               explanation:
                 "Exactly. Reset just flips hasError to false and re-attempts the children. If the bad state/data that caused the throw hasn't changed, the child throws again and you loop. Reset must pair with changing the input (refetch, clear state, re-key).",
@@ -765,7 +765,7 @@ export default function Error({
             {
               label: "You can't reset an error boundary once getDerivedStateFromError has run",
               explanation:
-                "You can reset — setting hasError back to false re-attempts the children. The loop here is because the child still throws, not because reset is impossible.",
+                "You can reset, setting hasError back to false re-attempts the children. The loop here is because the child still throws, not because reset is impossible.",
             },
             {
               label: "React caches the fallback and ignores subsequent state changes",

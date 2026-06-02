@@ -51,15 +51,15 @@ export default function RecapModule() {
           <h3 className="m-0 text-lg font-bold">What you&apos;ll walk out with</h3>
         </div>
         <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-          By the end of this module you should be able to walk a teammate through <em>what actually happens</em>{" "}between pressing Enter on a Claude query and the first token streaming back — grounded in every concept you&apos;ve seen so far:
+          By the end of this module you should be able to walk a teammate through <em>what actually happens</em>{" "}between pressing Enter on a Claude query and the first token streaming back, grounded in every concept you&apos;ve seen so far:
         </p>
         <ol className="ml-5 list-decimal space-y-1 text-sm text-slate-700 dark:text-slate-300">
-          <li><strong>Module 1</strong> — tokenization, BPE, context windows</li>
-          <li><strong>Module 2–3</strong> — features, loss, gradient descent, training</li>
-          <li><strong>Module 4</strong> — neural networks, layers, activations, backprop</li>
-          <li><strong>Module 5</strong> — attention, Q/K/V, multi-head, transformer blocks</li>
-          <li><strong>Module 6</strong> — embeddings, vector space, cosine similarity</li>
-          <li><strong>Module 7</strong> — prompts as context assembly</li>
+          <li><strong>Module 1</strong>, tokenization, BPE, context windows</li>
+          <li><strong>Module 2–3</strong>, features, loss, gradient descent, training</li>
+          <li><strong>Module 4</strong>, neural networks, layers, activations, backprop</li>
+          <li><strong>Module 5</strong>, attention, Q/K/V, multi-head, transformer blocks</li>
+          <li><strong>Module 6</strong>, embeddings, vector space, cosine similarity</li>
+          <li><strong>Module 7</strong>, prompts as context assembly</li>
         </ol>
         <p className="mt-3 text-xs text-slate-500 italic dark:text-slate-400">
           No new concepts here. No new project. Just the map that makes all the existing pieces fit.
@@ -113,7 +113,7 @@ export default function RecapModule() {
       {/* ================================================================= */}
       {/* STAGE 1: TOKENIZE                                                  */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="recap" id="stage-tokenize" title="Stage 1: tokenize" xp={15} celebration="Module 1 closes the loop — you now see exactly where tokenization sits in the pipeline.">
+      <Checkpoint moduleSlug="recap" id="stage-tokenize" title="Stage 1: tokenize" xp={15} celebration="Module 1 closes the loop, you now see exactly where tokenization sits in the pipeline.">
       <section>
         <h2>Stage 1: prompt assembly + tokenization (Module 1)</h2>
 
@@ -126,7 +126,7 @@ Why is String immutable in Java?
 <|assistant|>`}</CodeBlock>
         <p>
           That last <code>&lt;|assistant|&gt;</code> is the cue: the model&apos;s job is to continue from there.
-          Module 7&apos;s core insight — <em>a prompt is a document-prefix whose continuation is the answer</em> — lives here concretely.
+          Module 7&apos;s core insight, <em>a prompt is a document-prefix whose continuation is the answer</em>, lives here concretely.
         </p>
 
         <h3>BPE turns that into integers</h3>
@@ -147,12 +147,12 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         </Callout>
 
         <Quiz
-          question="Why does every model bother with integer token IDs in the middle — why not feed raw characters straight into the transformer?"
+          question="Why does every model bother with integer token IDs in the middle, why not feed raw characters straight into the transformer?"
           options={[
-            { label: "Transformers physically can't process characters.", explanation: "Technically a char-level transformer works — it just costs far more compute because attention is O(n²) and char sequences are ~4× longer." },
-            { label: "Characters would make sequences ~4× longer, and character-level attention is O(n²) — so compute explodes. BPE is the compromise between flexibility (covers any string) and cost (keeps n manageable).", correct: true, explanation: "Attention is O(n²) in sequence length. Character-level tokens inflate n roughly 4×, which blows up compute 16×. BPE picks sub-word units that keep n roughly 0.25× the character count while still handling unknown words. That tradeoff is the reason your bill is counted in tokens." },
-            { label: "The API vendor requires integer IDs for billing purposes.", explanation: "Billing is counted in tokens because tokens are the unit of compute — not the other way around." },
-            { label: "Characters can't be embedded.", explanation: "They can — char-level models exist. The reason they're rare is cost, not impossibility." },
+            { label: "Transformers physically can't process characters.", explanation: "Technically a char-level transformer works, it just costs far more compute because attention is O(n²) and char sequences are ~4× longer." },
+            { label: "Characters would make sequences ~4× longer, and character-level attention is O(n²), so compute explodes. BPE is the compromise between flexibility (covers any string) and cost (keeps n manageable).", correct: true, explanation: "Attention is O(n²) in sequence length. Character-level tokens inflate n roughly 4×, which blows up compute 16×. BPE picks sub-word units that keep n roughly 0.25× the character count while still handling unknown words. That tradeoff is the reason your bill is counted in tokens." },
+            { label: "The API vendor requires integer IDs for billing purposes.", explanation: "Billing is counted in tokens because tokens are the unit of compute, not the other way around." },
+            { label: "Characters can't be embedded.", explanation: "They can, char-level models exist. The reason they're rare is cost, not impossibility." },
           ]}
         />
       </section>
@@ -161,7 +161,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       {/* ================================================================= */}
       {/* STAGE 2: EMBED                                                     */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="recap" id="stage-embed" title="Stage 2: embed" xp={15} celebration="Module 6 closes — you now see that 'embedding API' and 'the first layer of Claude' are literally the same idea.">
+      <Checkpoint moduleSlug="recap" id="stage-embed" title="Stage 2: embed" xp={15} celebration="Module 6 closes, you now see that 'embedding API' and 'the first layer of Claude' are literally the same idea.">
       <section>
         <h2>Stage 2: token IDs become vectors (Module 6)</h2>
 
@@ -184,17 +184,17 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 
         <h3>Position has to be added back in</h3>
         <p>
-          One quirk of attention (Module 5): if you shuffle the tokens, the math gives the same output. Attention is <em>permutation-invariant</em>. But word order matters! So models add <strong>positional information</strong> — a per-position vector baked in so the model knows &quot;this token is at index 3&quot;.
+          One quirk of attention (Module 5): if you shuffle the tokens, the math gives the same output. Attention is <em>permutation-invariant</em>. But word order matters! So models add <strong>positional information</strong>, a per-position vector baked in so the model knows &quot;this token is at index 3&quot;.
         </p>
         <p>
-          Modern models (including Claude) use <strong>RoPE</strong> (Rotary Position Embedding), which rotates query and key vectors by a position-dependent angle inside each attention head. You don&apos;t need the math — just the intuition: after this step, every token embedding knows both <em>what</em>{" "}it is and <em>where</em>{" "}it is.
+          Modern models (including Claude) use <strong>RoPE</strong> (Rotary Position Embedding), which rotates query and key vectors by a position-dependent angle inside each attention head. You don&apos;t need the math, just the intuition: after this step, every token embedding knows both <em>what</em>{" "}it is and <em>where</em>{" "}it is.
         </p>
 
         <Quiz
           question="Claude's embedding table has shape [vocab_size, d_model]. For your 45-token prompt, what comes out of the lookup?"
           options={[
             { label: "A single d_model-dimensional vector summarizing the whole prompt.", explanation: "That's sentence embedding (pooling at the end). Stage 2 is per-token lookup." },
-            { label: "A 45 × d_model matrix — one vector per token.", correct: true, explanation: "Embedding is a per-token lookup: each ID grabs a row of E. The transformer then transforms those 45 vectors together. Pooling to one vector only happens at the very end for sentence-level embedding APIs — and Claude's internal stack isn't doing that." },
+            { label: "A 45 × d_model matrix, one vector per token.", correct: true, explanation: "Embedding is a per-token lookup: each ID grabs a row of E. The transformer then transforms those 45 vectors together. Pooling to one vector only happens at the very end for sentence-level embedding APIs, and Claude's internal stack isn't doing that." },
             { label: "A scalar score.", explanation: "A scalar is what the final sampler produces (per token); embedding is a matrix." },
             { label: "The model's next-token prediction.", explanation: "That's the output of the whole pipeline, not of stage 2." },
           ]}
@@ -205,7 +205,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       {/* ================================================================= */}
       {/* STAGE 3: ATTENTION                                                 */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="recap" id="stage-attend" title="Stage 3: attention" xp={20} celebration="Module 5 now sits in context — you see why it's the hinge of the whole pipeline.">
+      <Checkpoint moduleSlug="recap" id="stage-attend" title="Stage 3: attention" xp={20} celebration="Module 5 now sits in context, you see why it's the hinge of the whole pipeline.">
       <section>
         <h2>Stage 3: transformer blocks do the heavy lifting (Modules 4 &amp; 5)</h2>
         <p>
@@ -223,29 +223,29 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           Module 5&apos;s full worked example was 5 tokens by hand. Claude does the same math for 45 (your prompt) &times; dozens of heads per block &times; many dozens of blocks. Same formula, billions of multiplies.
         </p>
 
-        <h3>Causal masking — so the model can&apos;t cheat</h3>
+        <h3>Causal masking, so the model can&apos;t cheat</h3>
         <p>
           Because the model is going to be asked to <em>predict the next token</em>, training has to set up the game so position <code>i</code> never gets to peek at positions <code>i+1, i+2, ...</code>. That&apos;s the <strong>causal mask</strong>{" "}you saw: set attention scores to −∞ for future positions before softmax. You already wrote that one line in the Module 5 project.
         </p>
 
         <h3>Sub-layer 2: the feed-forward network (Module 4)</h3>
         <p>
-          After attention, each position&apos;s vector independently runs through a two-layer MLP — <em>the same kind of network you built in Module 4</em>. This is where non-linearity enters: attention mixes, FFN transforms. Roughly:
+          After attention, each position&apos;s vector independently runs through a two-layer MLP, <em>the same kind of network you built in Module 4</em>. This is where non-linearity enters: attention mixes, FFN transforms. Roughly:
         </p>
         <CodeBlock lang="plain">{`FFN(x) = W_out · GELU(W_in · x + b_in) + b_out
 // W_in:  [4 · d_model, d_model]    widen by 4×
 // W_out: [d_model,     4 · d_model] project back`}</CodeBlock>
         <p>This is literally <em>the MLP from Module 4</em>, applied in parallel at every token position, inside every block.</p>
 
-        <Callout variant="info" title="Wait — GELU? I built ReLU in Module 4">
+        <Callout variant="info" title="Wait, GELU? I built ReLU in Module 4">
           <p className="m-0">
-            Modern transformers use <strong>GELU</strong> (Gaussian Error Linear Unit) — think of it as a smooth ReLU with no kink at zero. Same dead-zone-for-negatives, dead-simple-for-positives shape; just differentiable everywhere. Every intuition you built around ReLU (sparsity, vanishing gradients in deep stacks, dying-neuron risk) carries over. Module 4&apos;s ReLU MLP <em>is</em>{" "}the FFN — the activation just got a smoother cousin in production.
+            Modern transformers use <strong>GELU</strong> (Gaussian Error Linear Unit), think of it as a smooth ReLU with no kink at zero. Same dead-zone-for-negatives, dead-simple-for-positives shape; just differentiable everywhere. Every intuition you built around ReLU (sparsity, vanishing gradients in deep stacks, dying-neuron risk) carries over. Module 4&apos;s ReLU MLP <em>is</em>{" "}the FFN, the activation just got a smoother cousin in production.
           </p>
         </Callout>
 
-        <h3>Residuals + LayerNorm — to keep training stable</h3>
+        <h3>Residuals + LayerNorm, to keep training stable</h3>
         <p>
-          Each sub-layer&apos;s output is <em>added</em>{" "}to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks — direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
+          Each sub-layer&apos;s output is <em>added</em>{" "}to its input (residual) and normalized. You saw this in Module 5; its purpose is to keep gradients from vanishing/exploding through 80 blocks, direct consequence of what you learned about gradient flow in Module 4&apos;s backprop.
         </p>
 
         <div className="not-prose my-6 rounded-xl border-2 border-indigo-200 bg-indigo-50/40 p-5 dark:border-indigo-800 dark:bg-indigo-950/20">
@@ -277,17 +277,17 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
           question="Why stack ~80 transformer blocks instead of making one block enormous?"
           options={[
             { label: "It's legally required for trademark reasons.", explanation: "No. Depth is a deliberate architectural choice for representational reasons." },
-            { label: "Depth (not width) is what lets the model build progressively richer representations — early blocks track local syntax, later ones track high-level meaning. The same kind of layer-by-layer abstraction you saw in the MLP in Module 4.", correct: true, explanation: "Just like the MLP in Module 4 built features at layer 1 that fed more abstract features at layer 2, transformer depth builds progressively more abstract representations. Width (d_model, head count) and depth (block count) are two different knobs — both matter, but depth is where compositional reasoning comes from." },
-            { label: "Memory constraints — a single huge block won't fit on a GPU.", explanation: "Memory is a factor, but the primary reason is representational. Very wide shallow models exist and are strictly worse at compositional reasoning." },
-            { label: "Each block handles a different language.", explanation: "Not how it works — all 80 blocks process the same multilingual hidden states." },
+            { label: "Depth (not width) is what lets the model build progressively richer representations, early blocks track local syntax, later ones track high-level meaning. The same kind of layer-by-layer abstraction you saw in the MLP in Module 4.", correct: true, explanation: "Just like the MLP in Module 4 built features at layer 1 that fed more abstract features at layer 2, transformer depth builds progressively more abstract representations. Width (d_model, head count) and depth (block count) are two different knobs, both matter, but depth is where compositional reasoning comes from." },
+            { label: "Memory constraints, a single huge block won't fit on a GPU.", explanation: "Memory is a factor, but the primary reason is representational. Very wide shallow models exist and are strictly worse at compositional reasoning." },
+            { label: "Each block handles a different language.", explanation: "Not how it works, all 80 blocks process the same multilingual hidden states." },
           ]}
         />
 
         <Quiz
           question="Inside every transformer block there's a two-layer MLP with a ReLU-family activation. Why should that feel familiar?"
           options={[
-            { label: "It's a new architecture invented for transformers.", explanation: "Nope — it predates transformers by decades." },
-            { label: "It's literally the same thing you built in Module 4 — one MLP per token position, widening then projecting back.", correct: true, explanation: "The FFN in every transformer block is the MLP from Module 4, applied per token in parallel. Attention mixes information across positions; the FFN does the per-position transformation. That's why the Module 4 project matters — you built the piece that lives inside every block of every modern LLM." },
+            { label: "It's a new architecture invented for transformers.", explanation: "Nope, it predates transformers by decades." },
+            { label: "It's literally the same thing you built in Module 4, one MLP per token position, widening then projecting back.", correct: true, explanation: "The FFN in every transformer block is the MLP from Module 4, applied per token in parallel. Attention mixes information across positions; the FFN does the per-position transformation. That's why the Module 4 project matters, you built the piece that lives inside every block of every modern LLM." },
             { label: "It's the embedding table.", explanation: "Embedding is a lookup, not an MLP; the FFN does per-position transformation." },
             { label: "It's the softmax at the end.", explanation: "The output softmax is a single layer at the very end, not a per-block per-position MLP." },
           ]}
@@ -299,7 +299,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         points={[
           { takeaway: "Attention mixes across positions; FFN transforms at each position.", detail: <>These are complementary. Attention alone can&apos;t compose concepts; FFN alone can&apos;t route information. You need both, which is why every block has both.</> },
           { takeaway: "The FFN inside each block is literally the Module 4 MLP.", detail: <>Same widening + projection + nonlinearity pattern. Applied per token, in parallel. Every one of Claude&apos;s ~80 blocks contains one.</> },
-          { takeaway: "Causal masking keeps the model honest during training.", detail: <>Without the −∞ mask on future positions, the model would cheat by looking ahead — and learn nothing about how to predict.</> },
+          { takeaway: "Causal masking keeps the model honest during training.", detail: <>Without the −∞ mask on future positions, the model would cheat by looking ahead, and learn nothing about how to predict.</> },
           { takeaway: "Residuals + LayerNorm are there so gradients survive 80 layers.", detail: <>Straight from Module 4&apos;s backprop intuition: gradient magnitudes compound multiplicatively through depth. Residual connections break that into additive paths.</> },
         ]}
       />
@@ -308,7 +308,7 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
       {/* ================================================================= */}
       {/* STAGE 4: DECODE + SAMPLE                                           */}
       {/* ================================================================= */}
-      <Checkpoint moduleSlug="recap" id="stage-decode" title="Decode & sample" xp={20} celebration="You now understand temperature, top-p, and streaming — three words most engineers use without knowing what they mean.">
+      <Checkpoint moduleSlug="recap" id="stage-decode" title="Decode & sample" xp={20} celebration="You now understand temperature, top-p, and streaming, three words most engineers use without knowing what they mean.">
       <section>
         <h2>Stage 4: from hidden state to one token (and then the next, and the next)</h2>
 
@@ -318,10 +318,10 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
         </p>
         <CodeBlock lang="plain">{`logits = h_last · E^T          // shape [1, vocab_size] ≈ [1, 200_000]`}</CodeBlock>
         <p>
-          You&apos;re left with one score per token in the vocabulary — <strong>logits</strong>. These aren&apos;t probabilities yet.
+          You&apos;re left with one score per token in the vocabulary, <strong>logits</strong>. These aren&apos;t probabilities yet.
         </p>
         <p className="text-sm opacity-80">
-          <em>Etymology aside:</em> &quot;logit&quot; comes from <em>log-odds</em> (the logarithm of an odds ratio) — a real-numbered score on (−∞, +∞). Softmax is what turns log-odds into probabilities on [0, 1]. So &quot;logits&quot; literally means &quot;the things that, when softmaxed, become probabilities.&quot;
+          <em>Etymology aside:</em> &quot;logit&quot; comes from <em>log-odds</em> (the logarithm of an odds ratio), a real-numbered score on (−∞, +∞). Softmax is what turns log-odds into probabilities on [0, 1]. So &quot;logits&quot; literally means &quot;the things that, when softmaxed, become probabilities.&quot;
         </p>
 
         <h3>Softmax turns logits into a probability distribution</h3>
@@ -337,13 +337,13 @@ Token IDs:       [17321, 310, 6990, 3957, 13174, 295, 7943, 33]`}</CodeBlock>
 " Java"            p = 0.05
 ... tail of 199,995 tokens ...`}</CodeBlock>
 
-        <h3>The sampler picks one — this is where &quot;temperature&quot; lives</h3>
+        <h3>The sampler picks one, this is where &quot;temperature&quot; lives</h3>
         <p>You have three realistic strategies:</p>
         <ul>
           <li><strong>Greedy (temperature = 0):</strong>{" "}always pick the argmax. Deterministic. Can be robotic.</li>
           <li><strong>Temperature sampling:</strong>{" "}divide logits by <code>T</code> before softmax. <code>T &lt; 1</code> sharpens (more predictable), <code>T &gt; 1</code> flattens (more creative, more risk of nonsense).</li>
           <li><strong>Top-p / nucleus:</strong>{" "}restrict to the smallest set of tokens whose total probability exceeds <code>p</code> (e.g. 0.9), then sample from just those. Cuts off the long tail of nonsense without being overly rigid.</li>
-          <li><strong>Beam search:</strong>{" "}instead of committing to one token at each step, keep the top-<code>k</code> partial sequences (&quot;beams&quot;) and expand each. At the end, return the highest-scoring full sequence. Common in translation and summarization, where a globally fluent output beats a locally greedy one. Rare in modern chat decoders — it tends to produce bland, repetitive text and doesn&apos;t mix well with sampling.</li>
+          <li><strong>Beam search:</strong>{" "}instead of committing to one token at each step, keep the top-<code>k</code> partial sequences (&quot;beams&quot;) and expand each. At the end, return the highest-scoring full sequence. Common in translation and summarization, where a globally fluent output beats a locally greedy one. Rare in modern chat decoders, it tends to produce bland, repetitive text and doesn&apos;t mix well with sampling.</li>
         </ul>
 
         <p>The math behind temperature is one line:</p>
@@ -355,7 +355,7 @@ T = 1:   plain softmax — the model's "natural" distribution
 T → ∞:   all logits get squashed toward equality
          → softmax becomes uniform → totally random tokens`}</CodeBlock>
         <p>
-          That&apos;s why <code>T = 0.7</code> is a popular middle ground for chat: sharper than the raw distribution (so the model commits) but not deterministic (so it has some range). The same softmax-of-logits formula you saw in Module 4&apos;s digit classifier — just with a knob to scale logits before the softmax.
+          That&apos;s why <code>T = 0.7</code> is a popular middle ground for chat: sharper than the raw distribution (so the model commits) but not deterministic (so it has some range). The same softmax-of-logits formula you saw in Module 4&apos;s digit classifier, just with a knob to scale logits before the softmax.
         </p>
         <p>
           In practice Claude&apos;s API exposes <code>temperature</code> and <code>top_p</code> as parameters. Picking them is a prompt-engineering concern (Module 7) with a statistical foundation (softmax of Module 4).
@@ -369,10 +369,10 @@ T → ∞:   all logits get squashed toward equality
           <li>Repeat until either <code>max_tokens</code> is hit or a stop token shows up.</li>
         </ol>
         <p>
-          This is why streaming works: each token appears as soon as it&apos;s sampled. And why long outputs cost more — each new token is another forward pass through all 80 blocks.
+          This is why streaming works: each token appears as soon as it&apos;s sampled. And why long outputs cost more, each new token is another forward pass through all 80 blocks.
         </p>
 
-        <Callout variant="warn" title="KV caching — the reason re-running isn't O(n²) per token">
+        <Callout variant="warn" title="KV caching, the reason re-running isn't O(n²) per token">
           <p className="m-0">
             Naively, generating token 46 means re-running all 45 previous positions through all 80 blocks again. In practice, the <strong>Key and Value</strong>{" "}tensors for previous positions are <em>cached</em>. Only the new token actually flows through. This turns a quadratic blow-up into linear. It&apos;s the engineering secret to making streaming fast.
           </p>
@@ -381,9 +381,9 @@ T → ∞:   all logits get squashed toward equality
         <Quiz
           question="What does setting temperature = 0 actually do?"
           options={[
-            { label: "Returns the same answer every time, because the sampler falls back to argmax over the probability distribution.", correct: true, explanation: "Temperature 0 is a conventional name for greedy decoding. Since argmax(softmax(logits)) = argmax(logits), the softmax is effectively bypassed — same token wins every time. It's deterministic (given the same inputs) and usually the right choice for structured-output prompts." },
-            { label: "Freezes the model's weights.", explanation: "Weights are always frozen at inference time — temperature has nothing to do with weights." },
-            { label: "Causes the model to return no output.", explanation: "It samples greedily — you get output, just fully deterministic." },
+            { label: "Returns the same answer every time, because the sampler falls back to argmax over the probability distribution.", correct: true, explanation: "Temperature 0 is a conventional name for greedy decoding. Since argmax(softmax(logits)) = argmax(logits), the softmax is effectively bypassed, same token wins every time. It's deterministic (given the same inputs) and usually the right choice for structured-output prompts." },
+            { label: "Freezes the model's weights.", explanation: "Weights are always frozen at inference time, temperature has nothing to do with weights." },
+            { label: "Causes the model to return no output.", explanation: "It samples greedily, you get output, just fully deterministic." },
             { label: "Bypasses the softmax layer.", explanation: "Conceptually yes (since argmax is invariant to the monotone softmax), but technically the sampler just picks argmax of the distribution." },
           ]}
         />
@@ -392,9 +392,9 @@ T → ∞:   all logits get squashed toward equality
           question="Why don't long Claude responses get dramatically slower per-token as they get longer?"
           options={[
             { label: "The model predicts multiple tokens per forward pass.", explanation: "Standard autoregressive decoding is one token per forward pass. Speculative decoding is an advanced trick, not the default reason." },
-            { label: "KV caching — Key and Value tensors for earlier positions are saved, so each new token reuses them instead of recomputing.", correct: true, explanation: "Without KV caching, generating token N would re-process N-1 previous tokens every time — quadratic. KV caches store the key/value tensors from the first pass, so subsequent tokens only do the new position's work. This is why streaming feels constant-rate even at long outputs." },
+            { label: "KV caching, Key and Value tensors for earlier positions are saved, so each new token reuses them instead of recomputing.", correct: true, explanation: "Without KV caching, generating token N would re-process N-1 previous tokens every time, quadratic. KV caches store the key/value tensors from the first pass, so subsequent tokens only do the new position's work. This is why streaming feels constant-rate even at long outputs." },
             { label: "Claude uses a non-transformer architecture for generation.", explanation: "It's a transformer. The trick is engineering (caching), not architecture." },
-            { label: "The network dynamically shrinks for long contexts.", explanation: "No — the same network runs every step. The saving comes from not recomputing older positions." },
+            { label: "The network dynamically shrinks for long contexts.", explanation: "No, the same network runs every step. The saving comes from not recomputing older positions." },
           ]}
         />
       </section>
@@ -407,7 +407,7 @@ T → ∞:   all logits get squashed toward equality
       <section>
         <h2>Where does Modules 2–3&apos;s training loop fit in?</h2>
         <p>
-          Everything we just walked through is <strong>inference</strong>. It happens in milliseconds on Anthropic&apos;s servers and does <em>not</em>{" "}change the weights. Those weights came from training — months of the process you learned in Modules 2 and 3, just at a mind-bending scale.
+          Everything we just walked through is <strong>inference</strong>. It happens in milliseconds on Anthropic&apos;s servers and does <em>not</em>{" "}change the weights. Those weights came from training, months of the process you learned in Modules 2 and 3, just at a mind-bending scale.
         </p>
 
         <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
@@ -438,17 +438,17 @@ T → ∞:   all logits get squashed toward equality
 
         <Callout variant="insight" title="This is why prompts can't teach the model new facts">
           <p className="m-0">
-            Training = weights get updated. Prompting = input tokens get different, weights stay frozen. When you show a few-shot example, the model pattern-matches in-context — it doesn&apos;t learn anything persistent. Close the API call, start a new one, and the model has no memory. This is a real limit, not a quirk. RAG (Phase 3) and fine-tuning (Module 30) are the two different ways to work around it.
+            Training = weights get updated. Prompting = input tokens get different, weights stay frozen. When you show a few-shot example, the model pattern-matches in-context, it doesn&apos;t learn anything persistent. Close the API call, start a new one, and the model has no memory. This is a real limit, not a quirk. RAG (Phase 3) and fine-tuning (Module 30) are the two different ways to work around it.
           </p>
         </Callout>
 
         <Quiz
           question="You show Claude 5 examples of how you want it to classify emails. Between request 1 and request 2, you change one example. What happens?"
           options={[
-            { label: "The model's weights adjust slightly between requests — the second call will behave measurably better.", explanation: "Inference does not change weights. Ever. That would be training." },
-            { label: "Nothing is remembered between requests. Each call is a fresh inference pass on the prompt you send; the model has no memory of the previous call.", correct: true, explanation: "Inference does not mutate weights. The only way examples affect behavior is because they're in the prompt you send right now. The next call starts fresh. This is why 'memory' in chatbots is always implemented as re-sending conversation history — not as the model actually remembering." },
+            { label: "The model's weights adjust slightly between requests, the second call will behave measurably better.", explanation: "Inference does not change weights. Ever. That would be training." },
+            { label: "Nothing is remembered between requests. Each call is a fresh inference pass on the prompt you send; the model has no memory of the previous call.", correct: true, explanation: "Inference does not mutate weights. The only way examples affect behavior is because they're in the prompt you send right now. The next call starts fresh. This is why 'memory' in chatbots is always implemented as re-sending conversation history, not as the model actually remembering." },
             { label: "The provider caches your prompt, and the next call uses the previous output as extra context.", explanation: "Prompt caching exists but it's a server-side latency optimization; it doesn't add previous outputs to the next prompt." },
-            { label: "The examples are permanently added to the model's training set.", explanation: "No — and that would be a massive privacy problem. Your prompts aren't folded into weights." },
+            { label: "The examples are permanently added to the model's training set.", explanation: "No, and that would be a massive privacy problem. Your prompts aren't folded into weights." },
           ]}
         />
       </section>
@@ -465,32 +465,32 @@ T → ∞:   all logits get squashed toward equality
         <div className="not-prose my-6 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/40 p-5 dark:bg-indigo-950/20">
           <p className="m-0 text-sm leading-relaxed">
             <em>
-              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it — byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to — that&apos;s the Q·Kᵀ/√d_k softmax I built by hand — and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm — added so gradients survived training — were still doing their job here at inference. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one — temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens — exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
+              &quot;I sent a JSON body with a system prompt and a user question. Anthropic&apos;s server glued those into one string with role markers and <strong>tokenized</strong>{" "}it, byte-pair encoding turned the text into integer IDs. Each ID grabbed a row from the <strong>embedding table</strong>, so I now had a matrix of vectors. Position information got baked in via RoPE. Those vectors ran through about 80 <strong>transformer blocks</strong>; inside each block, <strong>multi-head attention</strong>{" "}let each position decide which others to attend to, that&apos;s the Q·Kᵀ/√d_k softmax I built by hand, and then a two-layer <strong>MLP</strong> (the same kind of network I wrote in Module 4) transformed each position. Residuals and LayerNorm, added so gradients survived training, were still doing their job here at inference. The final vector got unembedded into <strong>logits</strong>, softmaxed into a <strong>probability distribution</strong>{" "}over the 200k-token vocabulary, and the <strong>sampler</strong>{" "}picked one, temperature controls how sharp that pick is. That token got appended, and the whole thing re-ran (KV cached, so it&apos;s fast) until the model emitted a stop token. The <strong>weights</strong>{" "}were frozen the entire time; they came from months of gradient descent on trillions of tokens, exactly the loop I learned in Modules 2 and 3, just at absurd scale.&quot;
             </em>
           </p>
         </div>
 
         <p>
-          If you can say that — smoothly, without notes, naming each module as you hit its concept — you&apos;re done with Phase 1. Anything still fuzzy? Scroll back up. That&apos;s the one skill this module is checkpointing.
+          If you can say that, smoothly, without notes, naming each module as you hit its concept, you&apos;re done with Phase 1. Anything still fuzzy? Scroll back up. That&apos;s the one skill this module is checkpointing.
         </p>
 
         <Quiz
           question="Put the stages in correct order: (A) multi-head attention, (B) softmax → probabilities, (C) tokenize input, (D) embed token IDs."
           options={[
             { label: "C → D → A → B", correct: true, explanation: "Text → tokens (C, Module 1) → vectors (D, Module 6) → attention stack (A, Module 5) → logits + softmax (B, Module 4). This is the pipeline you'll assume for the rest of the course." },
-            { label: "D → C → A → B", explanation: "You can't embed before you've tokenized — embedding is a lookup on integer IDs." },
+            { label: "D → C → A → B", explanation: "You can't embed before you've tokenized, embedding is a lookup on integer IDs." },
             { label: "C → A → D → B", explanation: "Attention runs on vectors, so embedding has to come first." },
-            { label: "A → B → C → D", explanation: "Completely reversed — the input pipeline runs the other way." },
+            { label: "A → B → C → D", explanation: "Completely reversed, the input pipeline runs the other way." },
           ]}
         />
 
         <Quiz
           question="The feed-forward network inside every transformer block was introduced in which Module?"
           options={[
-            { label: "Module 1 — Tokenization", explanation: "Module 1 covers how text becomes integer IDs — no MLP there." },
-            { label: "Module 4 — Neural networks (the MLP you built)", correct: true, explanation: "Every transformer block's FFN is literally a two-layer MLP — the architecture you implemented from scratch in Module 4's digit classifier. That's why Module 4 was a prerequisite for Module 5." },
-            { label: "Module 5 — Transformers", explanation: "Module 5 introduced the attention half of the block; the FFN half reuses Module 4's MLP." },
-            { label: "Module 6 — Embeddings", explanation: "Embeddings are the lookup layer, not the FFN." },
+            { label: "Module 1, Tokenization", explanation: "Module 1 covers how text becomes integer IDs, no MLP there." },
+            { label: "Module 4, Neural networks (the MLP you built)", correct: true, explanation: "Every transformer block's FFN is literally a two-layer MLP, the architecture you implemented from scratch in Module 4's digit classifier. That's why Module 4 was a prerequisite for Module 5." },
+            { label: "Module 5, Transformers", explanation: "Module 5 introduced the attention half of the block; the FFN half reuses Module 4's MLP." },
+            { label: "Module 6, Embeddings", explanation: "Embeddings are the lookup layer, not the FFN." },
           ]}
         />
       </section>
@@ -504,14 +504,14 @@ T → ∞:   all logits get squashed toward equality
         id="final"
         title="Phase 1 final quiz"
         xp={80}
-        celebration="Phase 1 mastered. 🏆 You've earned the 'Pipeline Whisperer' badge — you can read any LLM stack."
+        celebration="Phase 1 mastered. 🏆 You've earned the 'Pipeline Whisperer' badge, you can read any LLM stack."
       >
         <section>
           <h2 className="flex items-center gap-2">
-            <span>🏆</span> Phase 1 Final — progressive difficulty
+            <span>🏆</span> Phase 1 Final, progressive difficulty
           </h2>
           <p>
-            Eight questions. They get harder as you go. Each one is auto-graded — pick an answer and you&apos;ll see whether
+            Eight questions. They get harder as you go. Each one is auto-graded, pick an answer and you&apos;ll see whether
             you got it, plus an explanation of what every option meant (so you can also see what you would&apos;ve missed
             on the wrong ones). No outside notes. If you fly through all eight, you&apos;ve genuinely internalized Phase 1.
           </p>
@@ -519,7 +519,7 @@ T → ∞:   all logits get squashed toward equality
           <Callout variant="info" title="How this works">
             <p className="m-0 text-sm">
               The quiz widget reveals the explanation as soon as you click. Don&apos;t click an option you&apos;re not
-              committed to — once locked, that&apos;s your answer. Wrong answers reset your combo streak; correct
+              committed to, once locked, that&apos;s your answer. Wrong answers reset your combo streak; correct
               answers within 10 seconds grant a speed bonus. Aim for an 8-streak.
             </p>
           </Callout>
@@ -559,10 +559,10 @@ T → ∞:   all logits get squashed toward equality
             xp={15}
             question="Your training loss keeps going down but validation loss starts rising after epoch 8. Which fix is LEAST appropriate as a first move?"
             options={[
-              { label: "Add dropout or weight decay.", explanation: "Reasonable — both directly attack overfitting." },
-              { label: "Stop training earlier (early stopping at epoch 8).", explanation: "Reasonable — early stopping is the canonical fix for this exact curve." },
+              { label: "Add dropout or weight decay.", explanation: "Reasonable, both directly attack overfitting." },
+              { label: "Stop training earlier (early stopping at epoch 8).", explanation: "Reasonable, early stopping is the canonical fix for this exact curve." },
               { label: "Increase the learning rate so it converges faster.", correct: true, explanation: "Wrong move. Higher LR doesn't fix overfitting; it makes the model bounce around or diverge. Overfitting is a capacity/regularization problem, not a step-size problem." },
-              { label: "Get more training data or augment what you have.", explanation: "Reasonable — more data is the most reliable cure for overfitting." },
+              { label: "Get more training data or augment what you have.", explanation: "Reasonable, more data is the most reliable cure for overfitting." },
             ]}
           />
 
@@ -572,9 +572,9 @@ T → ∞:   all logits get squashed toward equality
             question="A 3-layer MLP with ReLU has 1024-dim hidden layers. You replace ReLU with sigmoid everywhere and training stalls. Most likely cause:"
             options={[
               { label: "Sigmoid is non-differentiable, so backprop fails.", explanation: "Sigmoid is perfectly differentiable. That's not the issue." },
-              { label: "Vanishing gradients — sigmoid's derivative maxes at 0.25, so 3 layers compress the gradient to ≤ 0.015× and weights barely update.", correct: true, explanation: "Right. Each sigmoid layer multiplies the gradient by ≤ 0.25 (and usually much less). Stack a few layers and the gradient that reaches early weights is essentially zero — this is the classic vanishing-gradient story that motivated ReLU." },
+              { label: "Vanishing gradients, sigmoid's derivative maxes at 0.25, so 3 layers compress the gradient to ≤ 0.015× and weights barely update.", correct: true, explanation: "Right. Each sigmoid layer multiplies the gradient by ≤ 0.25 (and usually much less). Stack a few layers and the gradient that reaches early weights is essentially zero, this is the classic vanishing-gradient story that motivated ReLU." },
               { label: "Sigmoid outputs are unbounded, causing exploding activations.", explanation: "Sigmoid outputs are bounded in (0,1). Exploding activations are the opposite problem and are not the issue here." },
-              { label: "Sigmoid requires a different loss function.", explanation: "Loss choice is independent of hidden activation — you'd still use cross-entropy or MSE on the output, not the hidden layer." },
+              { label: "Sigmoid requires a different loss function.", explanation: "Loss choice is independent of hidden activation, you'd still use cross-entropy or MSE on the output, not the hidden layer." },
             ]}
           />
 
@@ -586,10 +586,10 @@ T → ∞:   all logits get squashed toward equality
             xp={20}
             question="In scaled dot-product attention, why divide by √d_k before the softmax?"
             options={[
-              { label: "It's a normalization convention with no real effect — could be skipped.", explanation: "It has a very real effect on training stability. Skipping it breaks deep transformers." },
+              { label: "It's a normalization convention with no real effect, could be skipped.", explanation: "It has a very real effect on training stability. Skipping it breaks deep transformers." },
               { label: "It keeps the variance of q·k roughly constant as d_k grows, preventing softmax saturation where one logit dominates and gradients vanish.", correct: true, explanation: "Right. q·k is a sum of d_k products of unit-variance terms, so its variance is ~d_k. Without √d_k scaling, larger d_k makes the largest logit blow up, softmax becomes near one-hot, and gradients on all other positions vanish. Dividing by √d_k restores ~unit variance." },
               { label: "It accounts for the bias term in the linear projection.", explanation: "There's no bias term being corrected here. Q, K, V are typically projected without explicit per-head biases anyway." },
-              { label: "It's required for masking to work correctly.", explanation: "Masking adds −∞ to forbidden positions before softmax — totally orthogonal to the √d_k scaling." },
+              { label: "It's required for masking to work correctly.", explanation: "Masking adds −∞ to forbidden positions before softmax, totally orthogonal to the √d_k scaling." },
             ]}
           />
 
@@ -598,10 +598,10 @@ T → ∞:   all logits get squashed toward equality
             xp={20}
             question="You build a RAG system. Two chunks have cosine similarity 0.94 to the query, but only one is actually relevant. The other is a near-duplicate of the query phrasing on an unrelated topic. What's the principled fix?"
             options={[
-              { label: "Lower the similarity threshold so fewer false positives sneak in.", explanation: "Both chunks are at 0.94 — lowering the threshold doesn't separate them. You'd lose true positives at the same rate." },
-              { label: "Switch from cosine to Euclidean distance.", explanation: "On normalized embeddings, cosine and Euclidean are monotonically related — you'd get the same ranking." },
-              { label: "Use a stronger embedding model OR add a re-ranker (cross-encoder) over the top-k retrieved chunks.", correct: true, explanation: "Right. Bi-encoder cosine retrieval is fast but imprecise — it confuses surface phrasing with semantic relevance. A cross-encoder re-ranker scores (query, chunk) jointly and resolves exactly this case. Better embeddings is the other principled answer." },
-              { label: "Hash the chunks and dedupe by hash.", explanation: "These aren't literal duplicates — they're semantically similar in surface phrasing only. Hashing wouldn't catch it." },
+              { label: "Lower the similarity threshold so fewer false positives sneak in.", explanation: "Both chunks are at 0.94, lowering the threshold doesn't separate them. You'd lose true positives at the same rate." },
+              { label: "Switch from cosine to Euclidean distance.", explanation: "On normalized embeddings, cosine and Euclidean are monotonically related, you'd get the same ranking." },
+              { label: "Use a stronger embedding model OR add a re-ranker (cross-encoder) over the top-k retrieved chunks.", correct: true, explanation: "Right. Bi-encoder cosine retrieval is fast but imprecise, it confuses surface phrasing with semantic relevance. A cross-encoder re-ranker scores (query, chunk) jointly and resolves exactly this case. Better embeddings is the other principled answer." },
+              { label: "Hash the chunks and dedupe by hash.", explanation: "These aren't literal duplicates, they're semantically similar in surface phrasing only. Hashing wouldn't catch it." },
             ]}
           />
 
@@ -614,7 +614,7 @@ T → ∞:   all logits get squashed toward equality
             question="A user reports that a Claude prompt that worked yesterday now hits the context limit. Nothing in the prompt changed. What is the MOST LIKELY explanation, given everything you learned in Phase 1?"
             options={[
               { label: "The model silently switched its tokenizer to one with a smaller vocab.", explanation: "Tokenizers don't silently change between calls within the same model version. Possible across model upgrades but rare; not the most likely cause." },
-              { label: "Some tool result, retrieved chunk, or system prompt grew (e.g. larger RAG payload, longer history) — the prompt the USER wrote is the same, but the prompt the MODEL sees is bigger.", correct: true, explanation: "Right. From Module 7+8: 'the prompt' is the entire assembled context — system prompt + tools + retrieved docs + history + user message. When users say 'my prompt is the same,' what changed is almost always one of the other context pieces: a longer chat history, a bigger retrieved chunk, an expanded tool schema. The user message is just the visible tip." },
+              { label: "Some tool result, retrieved chunk, or system prompt grew (e.g. larger RAG payload, longer history), the prompt the USER wrote is the same, but the prompt the MODEL sees is bigger.", correct: true, explanation: "Right. From Module 7+8: 'the prompt' is the entire assembled context, system prompt + tools + retrieved docs + history + user message. When users say 'my prompt is the same,' what changed is almost always one of the other context pieces: a longer chat history, a bigger retrieved chunk, an expanded tool schema. The user message is just the visible tip." },
               { label: "Claude's context window shrank.", explanation: "Context windows don't shrink between calls. Possible across model versions but documented; not silent." },
               { label: "The temperature was raised, which makes prompts longer.", explanation: "Temperature affects sampling, not prompt length. They're unrelated." },
             ]}
@@ -625,10 +625,10 @@ T → ∞:   all logits get squashed toward equality
             xp={30}
             question="You're asked: 'why does Claude generate the second token faster than the first?' Pick the explanation that is CORRECT, COMPLETE, and uses Phase 1 vocabulary precisely."
             options={[
-              { label: "Because the model is smaller after the first token — Claude switches to a distilled model for follow-on tokens.", explanation: "False. Same model throughout. There's no model swap mid-generation." },
+              { label: "Because the model is smaller after the first token, Claude switches to a distilled model for follow-on tokens.", explanation: "False. Same model throughout. There's no model swap mid-generation." },
               { label: "Because the network already 'understands' the prompt after the first token, so it doesn't have to re-read it.", explanation: "Directionally true but vague. 'Understands' isn't a mechanism, and it misses the actual cache mechanic." },
-              { label: "Because of KV caching: during prefill, attention computes K and V projections for every prompt token (O(n²) work). During decode, those K/V tensors are reused from cache, so each new token only computes Q·K^T against the cache and one new K, V — O(n) work per token instead of O(n²).", correct: true, explanation: "This is the right answer with the right vocabulary: prefill vs decode, K/V projections, the cache, and the complexity drop from O(n²) per step to O(n). If you can articulate this from memory, you've genuinely earned the 'Phase 1 complete' badge." },
-              { label: "Because streaming returns a partial response while the rest still computes in the background.", explanation: "Streaming is the *transport* (SSE) — it doesn't change how fast tokens are generated. The speed-up comes from the KV cache, not from the wire protocol." },
+              { label: "Because of KV caching: during prefill, attention computes K and V projections for every prompt token (O(n²) work). During decode, those K/V tensors are reused from cache, so each new token only computes Q·K^T against the cache and one new K, V, O(n) work per token instead of O(n²).", correct: true, explanation: "This is the right answer with the right vocabulary: prefill vs decode, K/V projections, the cache, and the complexity drop from O(n²) per step to O(n). If you can articulate this from memory, you've genuinely earned the 'Phase 1 complete' badge." },
+              { label: "Because streaming returns a partial response while the rest still computes in the background.", explanation: "Streaming is the *transport* (SSE), it doesn't change how fast tokens are generated. The speed-up comes from the KV cache, not from the wire protocol." },
             ]}
           />
 
@@ -639,10 +639,10 @@ T → ∞:   all logits get squashed toward equality
               <h3 className="m-0 text-lg font-bold">If you got 7 or 8 right…</h3>
             </div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-              You can describe the entire Phase 1 stack — tokens, weights, training, neural networks, attention, embeddings, prompt assembly, decode loop — without notes. That&apos;s the bar for moving on.
+              You can describe the entire Phase 1 stack, tokens, weights, training, neural networks, attention, embeddings, prompt assembly, decode loop, without notes. That&apos;s the bar for moving on.
             </p>
             <p className="m-0 text-sm text-slate-700 dark:text-slate-300">
-              <strong>5–6 right?</strong>{" "}Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong>{" "}Don&apos;t skip — Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
+              <strong>5–6 right?</strong>{" "}Skim the explanations above, then re-read the part-recap callouts in whichever module each missed question came from. <strong>Below 5?</strong>{" "}Don&apos;t skip, Phase 2 assumes all of this. Replay the relevant module, then come back and re-take.
             </p>
           </div>
         </section>
@@ -654,14 +654,14 @@ T → ∞:   all logits get squashed toward equality
       <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/40 dark:to-purple-950/40">
         <h3 className="mt-0 mb-2">Phase 1 complete → Phase 2 incoming</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Everything from here on in assumes the pipeline you just traced. Phase 2 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking — but now you actually know what those tokens are.
+          Everything from here on in assumes the pipeline you just traced. Phase 2 opens the Anthropic API: auth, models, parameters, and your first real Claude call from Java. That&apos;s when the token meter starts ticking, but now you actually know what those tokens are.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/courses/ai/modules/api-fundamentals"
             className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
           >
-            Module 9 — Claude API fundamentals →
+            Module 9, Claude API fundamentals →
           </Link>
           <Link
             href="/courses/ai"

@@ -32,12 +32,12 @@ export default function FormsA11yUxModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Accessible, usable forms — labels, errors, and announcing failures
+          Accessible, usable forms, labels, errors, and announcing failures
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          A form is where users hand you their effort — their name, their card, their password. The naive form looks fine
+          A form is where users hand you their effort, their name, their card, their password. The naive form looks fine
           and quietly fails the people who need it most: it labels nothing the browser can read, ties an error to nothing,
-          and announces failure to no one. Let&apos;s build the version that actually works for everyone — and that an
+          and announces failure to no one. Let&apos;s build the version that actually works for everyone, and that an
           interviewer recognizes on sight.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -50,18 +50,18 @@ export default function FormsA11yUxModule() {
         <p className="mb-4">
           Imagine filling out a paper form, except you can only slide it under a closed door and a clerk on the other side
           fills it in for you by feel. You can&apos;t point. You can&apos;t say &quot;the box near the top.&quot; The only way the clerk knows
-          what a box is <em>for</em> is if the box is physically connected to its label — a printed caption stitched to that
+          what a box is <em>for</em> is if the box is physically connected to its label, a printed caption stitched to that
           exact field. If the form just has grey hint text <em>inside</em> each box, the clerk is lost: the moment they
           start writing, the hint disappears, and they&apos;ve no idea whether they&apos;re in &quot;email&quot; or &quot;phone.&quot;
         </p>
         <p className="mb-4">
           That clerk is a screen reader. It builds an understanding of your form from the <em>programmatic</em> connections
           in the markup, not from where things happen to sit on screen. A <code>&lt;label&gt;</code> tied to an input by
-          <code> id</code> is the stitched-on caption. A placeholder is the grey hint that vanishes — it is <strong>not a
+          <code> id</code> is the stitched-on caption. A placeholder is the grey hint that vanishes, it is <strong>not a
           label</strong>, no matter how much it looks like one.
         </p>
         <p className="mb-4">
-          And when something goes wrong — a rejected card, an email that&apos;s already taken — the sighted user sees the red
+          And when something goes wrong, a rejected card, an email that&apos;s already taken, the sighted user sees the red
           box instantly. The clerk behind the door notices nothing unless you <em>tell</em> them: announce it, point them at
           the offending field, and connect the error message to that field so it&apos;s read out together. A red border alone is
           a message slid under a door with the lights off.
@@ -69,7 +69,7 @@ export default function FormsA11yUxModule() {
         <Callout variant="info" title="What this module is really about">
           <p>
             Accessible forms aren&apos;t a separate &quot;a11y pass&quot; you bolt on. They&apos;re the difference between a form that{" "}
-            <em>looks</em> labeled and one that <em>is</em> labeled — between an error a screen-reader user can perceive and
+            <em>looks</em> labeled and one that <em>is</em> labeled, between an error a screen-reader user can perceive and
             one that exists only as a color. Everything below follows from one idea: the relationships in your markup
             (label↔input, error↔input, summary↔field) are the real UI for anyone not using their eyes and a mouse.
           </p>
@@ -100,7 +100,7 @@ export default function FormsA11yUxModule() {
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong>No real labels.</strong> The placeholder is doing the labeling — so the field has <em>no accessible
+            <strong>No real labels.</strong> The placeholder is doing the labeling, so the field has <em>no accessible
             name</em> the moment the user types and the hint disappears. A screen reader announces &quot;edit text, blank.&quot;
           </li>
           <li>
@@ -142,7 +142,7 @@ export default function FormsA11yUxModule() {
         <p className="mb-4">
           The single most important fact about a form control: it must have an <strong>accessible name</strong>, and the
           robust way to give it one is a real <code>&lt;label&gt;</code> associated with the input. Association is
-          programmatic — it&apos;s the <code>htmlFor</code>/<code>id</code> pairing, not visual proximity:
+          programmatic, it&apos;s the <code>htmlFor</code>/<code>id</code> pairing, not visual proximity:
         </p>
         <pre><code>{`// GOOD — label's htmlFor matches the input's id. Clicking the label
 // focuses the input, and screen readers announce "Email, edit text".
@@ -159,15 +159,15 @@ export default function FormsA11yUxModule() {
 // name once it's filled, and contrast is usually poor.
 <input type="email" placeholder="Email" />`}</code></pre>
         <p className="mb-4">
-          Two big wins come free with a real label. First, the accessible name is stable — it doesn&apos;t disappear when the
+          Two big wins come free with a real label. First, the accessible name is stable, it doesn&apos;t disappear when the
           user types. Second, the label becomes a <em>bigger click target</em>: clicking &quot;Email&quot; focuses the input, which
           matters enormously for small controls like checkboxes and radios. <code>aria-label</code> can name a control with
-          no visible text, but a <em>visible</em> label is better for everyone — sighted users included — so reach for the
+          no visible text, but a <em>visible</em> label is better for everyone, sighted users included, so reach for the
           real <code>&lt;label&gt;</code> first.
         </p>
         <p className="mb-4">
           Related controls need grouping too. A set of radio buttons, or address fields that belong together, should sit
-          inside a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> — the legend names the <em>group</em> the
+          inside a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, the legend names the <em>group</em> the
           way a label names a single field:
         </p>
         <pre><code>{`<fieldset>
@@ -187,7 +187,7 @@ export default function FormsA11yUxModule() {
         <Callout variant="insight" title="Say this in the interview, verbatim">
           <p>
             &quot;Every form control needs an accessible name, and the robust way is a real <code>&lt;label&gt;</code> associated
-            by <code>htmlFor</code>/<code>id</code> — a placeholder is hint text, not a label, because it vanishes on input
+            by <code>htmlFor</code>/<code>id</code>, a placeholder is hint text, not a label, because it vanishes on input
             and doesn&apos;t reliably name the field. Related controls get grouped in a <code>&lt;fieldset&gt;</code> with a{" "}
             <code>&lt;legend&gt;</code> so the group itself has a name.&quot;
           </p>
@@ -196,7 +196,7 @@ export default function FormsA11yUxModule() {
 
       {/* ───────────────────────── 4. INPUT AFFORDANCES ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Make the right input easy — type, inputMode, autocomplete, targets</h2>
+        <h2 className="mb-4 text-2xl font-bold">Make the right input easy, type, inputMode, autocomplete, targets</h2>
         <p className="mb-4">
           Accessibility and UX overlap heavily here. The same attributes that help assistive tech also make a form faster
           and less error-prone for <em>everyone</em>, especially on a phone:
@@ -214,23 +214,23 @@ export default function FormsA11yUxModule() {
 <input id="new-pass" type="password" autoComplete="new-password" />`}</code></pre>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong><code>type</code></strong> — <code>email</code>, <code>tel</code>, <code>url</code>, <code>number</code>{" "}
+            <strong><code>type</code></strong>, <code>email</code>, <code>tel</code>, <code>url</code>, <code>number</code>{" "}
             give you native validation hints and the right mobile keyboard (an <code>@</code> key for email, a number pad
             for tel).
           </li>
           <li>
-            <strong><code>inputMode</code></strong> — fine-tunes the on-screen keyboard <em>without</em> changing validation
+            <strong><code>inputMode</code></strong>, fine-tunes the on-screen keyboard <em>without</em> changing validation
             semantics (e.g. <code>inputMode=&quot;numeric&quot;</code> for a one-time code that&apos;s still a text field).
           </li>
           <li>
-            <strong><code>autocomplete</code> tokens</strong> — <code>email</code>, <code>name</code>, <code>tel</code>,{" "}
+            <strong><code>autocomplete</code> tokens</strong>, <code>email</code>, <code>name</code>, <code>tel</code>,{" "}
             <code>new-password</code>, <code>one-time-code</code> let browsers and password managers fill fields correctly.
-            This is a huge UX and accessibility win — less typing is less chance to err.
+            This is a huge UX and accessibility win, less typing is less chance to err.
           </li>
           <li>
             <strong>Touch target size.</strong> Tap targets should be comfortably large (think a fingertip, ~44px). Cramped
             checkboxes and tiny links are an accessibility failure for motor impairments and a daily annoyance for everyone
-            on a phone. Associating the label helps — the label area becomes part of the target.
+            on a phone. Associating the label helps, the label area becomes part of the target.
           </li>
         </ul>
         <Callout variant="info" title="UX and a11y are the same investment here">
@@ -249,7 +249,7 @@ export default function FormsA11yUxModule() {
           question="A teammate ships <input type='email' placeholder='Email' /> with no <label>. Why is the placeholder not an acceptable substitute for a label?"
           options={[
             {
-              label: "The placeholder is hint text that disappears on input and doesn't reliably give the control an accessible name — so once the user types, the field is effectively unlabeled to assistive tech",
+              label: "The placeholder is hint text that disappears on input and doesn't reliably give the control an accessible name, so once the user types, the field is effectively unlabeled to assistive tech",
               correct: true,
               explanation:
                 "Exactly. A placeholder vanishes when the user types (losing context mid-entry), usually fails contrast, and isn't a robust accessible name. A real <label> associated by htmlFor/id names the field stably and enlarges the click target.",
@@ -277,7 +277,7 @@ export default function FormsA11yUxModule() {
                 "Correct. The legend names the group the way a label names a single control, so a screen reader announces the option in the context of 'Notification preference' instead of an orphaned 'Email, radio button'.",
             },
             {
-              label: "Put a styled <div> heading above the radios — visual proximity is enough",
+              label: "Put a styled <div> heading above the radios, visual proximity is enough",
               explanation:
                 "Visual proximity isn't a programmatic relationship. A plain <div> heading isn't associated with the group, so assistive tech reads each radio without the shared context. fieldset/legend creates the actual association.",
             },
@@ -292,10 +292,10 @@ export default function FormsA11yUxModule() {
 
       {/* ───────────────────────── 5. NATIVE VALIDATION ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Native validation and the Constraint API — start here, don&apos;t fight it</h2>
+        <h2 className="mb-4 text-2xl font-bold">Native validation and the Constraint API, start here, don&apos;t fight it</h2>
         <p className="mb-4">
           The platform ships a validation engine. Attributes like <code>required</code>, <code>type=&quot;email&quot;</code>,{" "}
-          <code>minLength</code>, <code>max</code>, and <code>pattern</code> declare constraints the browser checks for free —
+          <code>minLength</code>, <code>max</code>, and <code>pattern</code> declare constraints the browser checks for free,
           and they integrate with assistive tech and submission for you:
         </p>
         <pre><code>{`<input id="email" type="email" name="email" required
@@ -324,7 +324,7 @@ export default function FormsA11yUxModule() {
         </p>
         <Callout variant="warn" title="Client validation is UX, not security">
           <p>
-            Native and JS validation make the form pleasant — instant feedback, the right keyboard, fewer wasted round-trips.
+            Native and JS validation make the form pleasant, instant feedback, the right keyboard, fewer wasted round-trips.
             None of it is a security boundary. The server must re-validate everything regardless, because the client can be
             bypassed entirely. Treat client validation as a fast, friendly first pass over the same rules.
           </p>
@@ -333,19 +333,19 @@ export default function FormsA11yUxModule() {
 
       {/* ───────────────────────── 6. TYING ERRORS TO FIELDS ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Tie the error to the field — <code>aria-describedby</code> + <code>aria-invalid</code></h2>
+        <h2 className="mb-4 text-2xl font-bold">Tie the error to the field, <code>aria-describedby</code> + <code>aria-invalid</code></h2>
         <p className="mb-4">
           A red border says &quot;something&apos;s wrong here&quot; only to a sighted user, and it doesn&apos;t even say <em>what</em>. The
           accessible pattern carries the meaning programmatically with two attributes working together:
         </p>
         <ul className="mb-4 list-disc space-y-2 pl-6">
           <li>
-            <strong><code>aria-invalid=&quot;true&quot;</code></strong> on the input marks it as in an error state — assistive tech
+            <strong><code>aria-invalid=&quot;true&quot;</code></strong> on the input marks it as in an error state, assistive tech
             announces &quot;invalid&quot; when the field is read. Set it only when the field is actually wrong, and clear it when fixed.
           </li>
           <li>
             <strong><code>aria-describedby</code></strong> on the input points at the <code>id</code> of the element holding
-            the error text. Now when the screen reader reads the field, it also reads the description — the error message and
+            the error text. Now when the screen reader reads the field, it also reads the description, the error message and
             the field are spoken together.
           </li>
         </ul>
@@ -366,7 +366,7 @@ export default function FormsA11yUxModule() {
           The connection is the whole point. A sighted user&apos;s eye links the red text under the box to the box. A
           screen-reader user gets that same link only because <code>aria-describedby</code> stitches the message&apos;s{" "}
           <code>id</code> to the input. Drop the attribute and the message becomes orphaned text floating on the page that
-          the user has to hunt for — if they even know it exists.
+          the user has to hunt for, if they even know it exists.
         </p>
         <p className="mb-4">
           One subtlety: <code>aria-describedby</code> can point at <em>hints</em> too, not just errors. A password field
@@ -375,7 +375,7 @@ export default function FormsA11yUxModule() {
         </p>
         <Callout variant="insight" title="The error is data, not decoration">
           <p>
-            Color and a border are <em>reinforcement</em> for users who can perceive them — never the sole signal. The real
+            Color and a border are <em>reinforcement</em> for users who can perceive them, never the sole signal. The real
             error is the <em>text</em>, programmatically tied to the field with <code>aria-describedby</code> and flagged with{" "}
             <code>aria-invalid</code>. If you removed all color from your form, every error should still be fully
             understandable. That&apos;s the test.
@@ -447,7 +447,7 @@ export default function FormsA11yUxModule() {
                 "Right. The red border and loose <p> aren't programmatically connected to the input. aria-invalid marks the error state and aria-describedby stitches the message's id to the field, so the screen reader reads the field and its reason together.",
             },
             {
-              label: "Nothing — the error <p> is right below the input, so the screen reader will read it next anyway",
+              label: "Nothing, the error <p> is right below the input, so the screen reader will read it next anyway",
               explanation:
                 "Reading order isn't an association. The message is orphaned text the user has to find; without aria-describedby it isn't announced as the field's description, and without aria-invalid the field isn't flagged as in error.",
             },
@@ -484,7 +484,7 @@ export default function FormsA11yUxModule() {
 
       {/* ───────────────────────── 8. TIMING ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Validation timing — validate on blur, re-validate on change once errored</h2>
+        <h2 className="mb-4 text-2xl font-bold">Validation timing, validate on blur, re-validate on change once errored</h2>
         <p className="mb-4">
           <em>When</em> you validate is a UX decision that becomes an accessibility one the moment errors get announced. Two
           anti-patterns sit at the extremes:
@@ -531,7 +531,7 @@ export default function FormsA11yUxModule() {
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-bold">Focus-on-error, and submit states that don&apos;t trap the user</h2>
         <p className="mb-4">
-          When submit fails validation, focus is still on the submit button — useless to a keyboard or screen-reader user who
+          When submit fails validation, focus is still on the submit button, useless to a keyboard or screen-reader user who
           now has to <em>find</em> the problem. The fix is to <strong>move focus deliberately</strong>: to the error summary
           (if you have one) or to the first invalid field.
         </p>
@@ -550,12 +550,12 @@ export default function FormsA11yUxModule() {
 }`}</code></pre>
         <p className="mb-4">
           Moving focus to a <code>role=&quot;alert&quot;</code> summary both announces &quot;there are problems&quot; and lands the user
-          where they can act — its links jump them to each field. If you skip the summary, <code>.focus()</code> the first
+          where they can act, its links jump them to each field. If you skip the summary, <code>.focus()</code> the first
           invalid input directly so the keyboard user is already on the field they need to fix.
         </p>
         <p className="mb-4">
           The submit button itself needs a loading state that&apos;s honest <em>and</em> non-trapping. While the request is in
-          flight, reflect it — but disabling a button removes it from the tab order and can strand a screen-reader user with
+          flight, reflect it, but disabling a button removes it from the tab order and can strand a screen-reader user with
           no feedback. The accessible approach announces the busy state without making the control vanish:
         </p>
         <pre><code>{`// Communicate busy without yanking the button out of the a11y tree.
@@ -571,13 +571,13 @@ export default function FormsA11yUxModule() {
           The pattern: keep the button focusable, use <code>aria-disabled</code> (and guard the handler so a second submit is
           ignored) rather than hard <code>disabled</code> when you want it to stay announceable, change the visible label so
           everyone sees progress, and narrate state changes in a polite live region. The user is never left wondering whether
-          their click registered — and never trapped on a control that silently went dead.
+          their click registered, and never trapped on a control that silently went dead.
         </p>
         <Callout variant="warn" title="Don't let the disabled trick hide failure">
           <p>
             A button disabled on submit and never re-enabled after an error is a classic dead end: the request failed, the
             spinner stopped, and the user can&apos;t retry because the control is inert and silent. Always re-enable (and
-            announce the failure) on error. A loading state must have an exit in every branch — success <em>and</em> failure.
+            announce the failure) on error. A loading state must have an exit in every branch, success <em>and</em> failure.
           </p>
         </Callout>
       </section>
@@ -589,7 +589,7 @@ export default function FormsA11yUxModule() {
           <ul className="list-disc space-y-2 pl-6">
             <li>
               <strong>Real labels, always.</strong> Associate a <code>&lt;label&gt;</code> by <code>htmlFor</code>/
-              <code>id</code> — a placeholder is not a label. Group related controls in{" "}
+              <code>id</code>, a placeholder is not a label. Group related controls in{" "}
               <code>&lt;fieldset&gt;</code>/<code>&lt;legend&gt;</code>.
             </li>
             <li>
@@ -598,7 +598,7 @@ export default function FormsA11yUxModule() {
             </li>
             <li>
               <strong>Lean on native validation.</strong> Constraint attributes plus the <code>validity</code> API decide
-              what&apos;s wrong; render the messaging yourself. Client validation is UX, not security — the server re-validates.
+              what&apos;s wrong; render the messaging yourself. Client validation is UX, not security, the server re-validates.
             </li>
             <li>
               <strong>Tie errors to fields.</strong> <code>aria-invalid</code> on the input, <code>aria-describedby</code>{" "}
@@ -618,7 +618,7 @@ export default function FormsA11yUxModule() {
 
       {/* ───────────────────────── 11. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — make a multi-field sign-up form fully accessible</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, make a multi-field sign-up form fully accessible</h2>
         <p className="mb-4">
           You&apos;ll start from the naive form at the top of this module and rebuild it into one a screen-reader user can
           complete confidently: associated labels, described-by hints and errors, a focus-moving summary, per-field{" "}
@@ -668,11 +668,11 @@ export default function FormsA11yUxModule() {
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
             Think of the accessible form as a well-designed API error response. A red border is an opaque <code>400</code>{" "}
-            with an empty body — the caller knows <em>something</em> failed but not what or where. <code>aria-invalid</code>{" "}
+            with an empty body, the caller knows <em>something</em> failed but not what or where. <code>aria-invalid</code>{" "}
             plus <code>aria-describedby</code> is the structured error payload: a per-field code (&quot;this field is invalid&quot;)
             tied to a human-readable message. The error summary is the top-level <code>errors[]</code> array with pointers
             into the request. And re-validating on the server is the same rule as never trusting client input on an
-            endpoint — the friendly client-side checks are a convenience, never the boundary.
+            endpoint, the friendly client-side checks are a convenience, never the boundary.
           </p>
         </Callout>
       </section>
@@ -692,7 +692,7 @@ export default function FormsA11yUxModule() {
             {
               label: "Validate on every keystroke from the very first character so feedback is always live",
               explanation:
-                "Validating from the first keystroke scolds the user before they've finished typing — hostile UX, and with announcements wired up it spams a screen-reader user with errors for an unfinished field.",
+                "Validating from the first keystroke scolds the user before they've finished typing, hostile UX, and with announcements wired up it spams a screen-reader user with errors for an unfinished field.",
             },
             {
               label: "Validate only on submit so the user is never interrupted while filling the form",
@@ -706,13 +706,13 @@ export default function FormsA11yUxModule() {
           question="On submit, the request is in flight. How do you reflect the busy state without trapping the user?"
           options={[
             {
-              label: "Keep the button focusable, signal busy with aria-disabled + a label change, narrate progress in a polite live region, and guard the handler against double-submit — and always re-enable on failure",
+              label: "Keep the button focusable, signal busy with aria-disabled + a label change, narrate progress in a polite live region, and guard the handler against double-submit, and always re-enable on failure",
               correct: true,
               explanation:
                 "Right. Hard-disabling removes the button from the a11y tree and can strand a screen-reader user; aria-disabled plus a label change and a polite announcement communicates progress while keeping the control announceable, with a guaranteed exit on both success and failure.",
             },
             {
-              label: "Set the button to disabled and leave it disabled — that prevents any further interaction",
+              label: "Set the button to disabled and leave it disabled, that prevents any further interaction",
               explanation:
                 "Hard-disabling pulls the button out of the tab order and goes silent, and leaving it disabled after an error strands the user with no way to retry. A loading state must have an exit in every branch, including failure.",
             },

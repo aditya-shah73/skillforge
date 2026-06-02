@@ -44,10 +44,10 @@ export default function EventLoopModule() {
       <section>
         <h2>The analogy</h2>
         <p>
-          Imagine you&apos;re a single barista (one thread) at a coffee shop. You can only do one thing at a time. People hand you tickets. Some tickets are <em>regular orders</em>{" "}from the back of the line (the macrotask queue) — they wait their turn. Some tickets are <em>express orders</em>{" "}from the manager, slipped right under your nose every time you finish a task (the microtask queue) — those jump ahead of everything else, including the next regular ticket.
+          Imagine you&apos;re a single barista (one thread) at a coffee shop. You can only do one thing at a time. People hand you tickets. Some tickets are <em>regular orders</em>{" "}from the back of the line (the macrotask queue), they wait their turn. Some tickets are <em>express orders</em>{" "}from the manager, slipped right under your nose every time you finish a task (the microtask queue), those jump ahead of everything else, including the next regular ticket.
         </p>
         <p>
-          The event loop is the simple rule the barista follows: <em>finish the current ticket completely; then drain every express ticket; then look at the next regular ticket; repeat forever</em>. That ordering is what gives JavaScript its characteristic behavior — and it&apos;s why <code>Promise.resolve().then</code>{" "}always runs before <code>setTimeout(fn, 0)</code>, no matter what.
+          The event loop is the simple rule the barista follows: <em>finish the current ticket completely; then drain every express ticket; then look at the next regular ticket; repeat forever</em>. That ordering is what gives JavaScript its characteristic behavior, and it&apos;s why <code>Promise.resolve().then</code>{" "}always runs before <code>setTimeout(fn, 0)</code>, no matter what.
         </p>
       </section>
 
@@ -55,11 +55,11 @@ export default function EventLoopModule() {
         <h2>The formula: the runtime pieces</h2>
         <p>JavaScript runtimes (browsers, Node) all share the same architecture:</p>
         <ol>
-          <li><strong>Call stack</strong>{" "}— the LIFO stack of function frames currently executing. When a function calls another, push. When a function returns, pop. JS runs whatever&apos;s on the top of the stack.</li>
-          <li><strong>Web APIs / host APIs</strong>{" "}— things like <code>setTimeout</code>, <code>fetch</code>, the DOM. These are not JS — they&apos;re provided by the host (the browser, Node) and run on separate threads. JS hands them work, then forgets about it; they hand a callback back when ready.</li>
-          <li><strong>Task queue (macrotask queue)</strong>{" "}— a FIFO queue of callbacks waiting to run. Sources: <code>setTimeout</code>, <code>setInterval</code>, I/O events, message events.</li>
-          <li><strong>Microtask queue</strong>{" "}— a separate, higher-priority FIFO queue. Sources: <code>Promise.then/catch/finally</code> callbacks, <code>queueMicrotask</code>, <code>MutationObserver</code>.</li>
-          <li><strong>The event loop</strong>{" "}— the rule that decides what to run next.</li>
+          <li><strong>Call stack</strong>,{" "}the LIFO stack of function frames currently executing. When a function calls another, push. When a function returns, pop. JS runs whatever&apos;s on the top of the stack.</li>
+          <li><strong>Web APIs / host APIs</strong>,{" "}things like <code>setTimeout</code>, <code>fetch</code>, the DOM. These are not JS, they&apos;re provided by the host (the browser, Node) and run on separate threads. JS hands them work, then forgets about it; they hand a callback back when ready.</li>
+          <li><strong>Task queue (macrotask queue)</strong>,{" "}a FIFO queue of callbacks waiting to run. Sources: <code>setTimeout</code>, <code>setInterval</code>, I/O events, message events.</li>
+          <li><strong>Microtask queue</strong>,{" "}a separate, higher-priority FIFO queue. Sources: <code>Promise.then/catch/finally</code> callbacks, <code>queueMicrotask</code>, <code>MutationObserver</code>.</li>
+          <li><strong>The event loop</strong>,{" "}the rule that decides what to run next.</li>
         </ol>
         <p>The rule, exactly:</p>
         <pre><code>{`while (true) {
@@ -101,9 +101,9 @@ console.log("D");
           kind="Predict the output"
           options={[
             { label: "1 2 3 4", explanation: "That ignores both that setTimeout is async and that promises run before macrotasks. Synchronous code (1, 4) finishes first." },
-            { label: "1 4 2 3", explanation: "Close — but microtasks (promise) drain before macrotasks (setTimeout)." },
+            { label: "1 4 2 3", explanation: "Close, but microtasks (promise) drain before macrotasks (setTimeout)." },
             { label: "1 4 3 2", correct: true, explanation: "Right. 1 and 4 are synchronous. Then microtasks drain → 3. Then one macrotask → 2." },
-            { label: "1 3 4 2", explanation: "3 can't print until synchronous code finishes — main has to run to completion before microtasks drain." },
+            { label: "1 3 4 2", explanation: "3 can't print until synchronous code finishes, main has to run to completion before microtasks drain." },
           ]}
         />
       </section>
@@ -120,7 +120,7 @@ Promise.resolve()
   .then(() => console.log("micro 3"));
 // Output: micro 1, micro 2, micro 3, macro`}</code></pre>
         <p>
-          Each <code>.then</code>{" "}callback runs, queues the next one as a microtask, returns. The event loop keeps draining microtasks until none remain. <em>Then</em>{" "}— and only then — it runs the macrotask. If you wrote an infinite <code>.then</code>{" "}chain, you&apos;d starve the macrotask queue forever (and freeze the page).
+          Each <code>.then</code>{" "}callback runs, queues the next one as a microtask, returns. The event loop keeps draining microtasks until none remain. <em>Then</em>,{" "}and only then, it runs the macrotask. If you wrote an infinite <code>.then</code>{" "}chain, you&apos;d starve the macrotask queue forever (and freeze the page).
         </p>
         <Callout variant="warn" title="Real-world consequence: don&apos;t do unbounded microtask work">
           <p className="m-0">In a tight microtask chain, the browser <em>cannot</em>{" "}repaint or run user events between the microtasks. If your microtask chain does heavy work, the page locks up just as if you wrote a synchronous infinite loop. The fix is to break work onto macrotasks (<code>setTimeout(fn, 0)</code>) or <code>requestIdleCallback</code>.</p>
@@ -155,10 +155,10 @@ console.log("script end");`}</code></pre>
           question="Predict: `setTimeout(() => console.log('a'), 0); Promise.resolve().then(() => { console.log('b'); setTimeout(() => console.log('c'), 0); }); console.log('d');`"
           kind="Predict the output"
           options={[
-            { label: "d b a c", correct: true, explanation: "Right. (1) Synchronous: d. (2) Drain microtasks: 'b' (which schedules 'c' as a new MACROtask — added AFTER 'a'). Queue empty. (3) Macrotasks: a, then c." },
-            { label: "a d b c", explanation: "a is queued as a macrotask — it can't run until microtasks drain." },
+            { label: "d b a c", correct: true, explanation: "Right. (1) Synchronous: d. (2) Drain microtasks: 'b' (which schedules 'c' as a new MACROtask, added AFTER 'a'). Queue empty. (3) Macrotasks: a, then c." },
+            { label: "a d b c", explanation: "a is queued as a macrotask, it can't run until microtasks drain." },
             { label: "d b c a", explanation: "c is scheduled INSIDE the promise.then, AFTER a was already queued. a runs first among macrotasks." },
-            { label: "b d a c", explanation: "Synchronous code (d) always runs before microtasks drain — the main script must finish first." },
+            { label: "b d a c", explanation: "Synchronous code (d) always runs before microtasks drain, the main script must finish first." },
           ]}
         />
       </section>
@@ -173,20 +173,20 @@ console.log("script end");`}</code></pre>
           question="Why does `setTimeout(fn, 0)` not actually fire immediately?"
           kind="Defend it"
           options={[
-            { label: "Browsers clamp the minimum to 4ms", explanation: "That's a real spec detail, but it isn't the main reason — even with 0ms exact, the callback would queue, not run immediately." },
+            { label: "Browsers clamp the minimum to 4ms", explanation: "That's a real spec detail, but it isn't the main reason, even with 0ms exact, the callback would queue, not run immediately." },
             { label: "It schedules `fn` as a macrotask, which runs only after the call stack empties AND all microtasks drain", correct: true, explanation: "Right. The '0' is the minimum delay, not the actual delay. The callback waits in the macrotask queue behind the entire microtask queue." },
             { label: "JS is multithreaded but timers run on a slower thread", explanation: "JS execution is single-threaded; timers run on a host thread, but the issue is queue ordering, not thread speed." },
-            { label: "0ms is treated as 'never' by the engine", explanation: "It really does fire — just after the current task and all microtasks finish." },
+            { label: "0ms is treated as 'never' by the engine", explanation: "It really does fire, just after the current task and all microtasks finish." },
           ]}
         />
         <Quiz
           question="A microtask scheduled during the draining of the microtask queue runs…"
           kind="Defend it"
           options={[
-            { label: "After the next macrotask", explanation: "It wouldn't wait that long — microtasks added during the drain run as part of the same drain." },
-            { label: "Before the next macrotask, in the same drain cycle as the microtasks already running", correct: true, explanation: "Right. The drain is exhaustive — it keeps running until the queue is empty, including ones added by other microtasks." },
-            { label: "After all other microtasks, but in a separate cycle", explanation: "There's no separate cycle for microtasks added during a drain — they're appended to the current drain." },
-            { label: "Never — once draining starts, no new microtasks can be added", explanation: "They can absolutely be added; that's how `.then` chains work." },
+            { label: "After the next macrotask", explanation: "It wouldn't wait that long, microtasks added during the drain run as part of the same drain." },
+            { label: "Before the next macrotask, in the same drain cycle as the microtasks already running", correct: true, explanation: "Right. The drain is exhaustive, it keeps running until the queue is empty, including ones added by other microtasks." },
+            { label: "After all other microtasks, but in a separate cycle", explanation: "There's no separate cycle for microtasks added during a drain, they're appended to the current drain." },
+            { label: "Never, once draining starts, no new microtasks can be added", explanation: "They can absolutely be added; that's how `.then` chains work." },
           ]}
         />
       </Checkpoint>
@@ -211,10 +211,10 @@ f();
 console.log("end");
 // Output: start, 1, end, 2`}</code></pre>
         <p>
-          <code>f()</code>{" "}runs synchronously up to the <code>await</code>{" "}— logs <code>&quot;1&quot;</code>. The <code>await</code>{" "}registers &quot;<code>console.log(&quot;2&quot;)</code>&quot; as a microtask, then returns from <code>f</code>. Main thread continues and logs <code>&quot;end&quot;</code>. Main script finishes. Microtask drains: logs <code>&quot;2&quot;</code>.
+          <code>f()</code>{" "}runs synchronously up to the <code>await</code>,{" "}logs <code>&quot;1&quot;</code>. The <code>await</code>{" "}registers &quot;<code>console.log(&quot;2&quot;)</code>&quot; as a microtask, then returns from <code>f</code>. Main thread continues and logs <code>&quot;end&quot;</code>. Main script finishes. Microtask drains: logs <code>&quot;2&quot;</code>.
         </p>
         <p>
-          Once you see <code>await</code>{" "}as &quot;split this function at every <code>await</code>{" "}and turn the rest into a microtask&quot;, async code becomes traceable. There&apos;s no magic — just promises with sugar.
+          Once you see <code>await</code>{" "}as &quot;split this function at every <code>await</code>{" "}and turn the rest into a microtask&quot;, async code becomes traceable. There&apos;s no magic, just promises with sugar.
         </p>
       </section>
 
@@ -222,13 +222,13 @@ console.log("end");
         <h2>Why this matters in React</h2>
         <ul>
           <li>
-            <strong>State batching</strong>{" "}— in React 18+, multiple <code>setState</code>{" "}calls in the same event handler (or inside <code>flushSync</code>) collapse into one render. The mechanism: React queues the update, then schedules a microtask to commit. All sync code in the handler runs first, all queued updates get batched, then the render happens. (Pre-18, batching only happened inside React event handlers; post-18, it&apos;s everywhere — promises, setTimeout, native events.)
+            <strong>State batching</strong>,{" "}in React 18+, multiple <code>setState</code>{" "}calls in the same event handler (or inside <code>flushSync</code>) collapse into one render. The mechanism: React queues the update, then schedules a microtask to commit. All sync code in the handler runs first, all queued updates get batched, then the render happens. (Pre-18, batching only happened inside React event handlers; post-18, it&apos;s everywhere, promises, setTimeout, native events.)
           </li>
           <li>
-            <strong><code>useEffect</code>{" "}timing</strong>{" "}— effects run after the browser paints, scheduled via the macrotask queue (more or less — React uses scheduler internals, but the practical effect is post-paint). <code>useLayoutEffect</code>{" "}runs synchronously before paint. This is why you put DOM measurements in <code>useLayoutEffect</code>{" "}(measure → set state → paint, all in one tick) and side-effects in <code>useEffect</code>{" "}(don&apos;t block paint).
+            <strong><code>useEffect</code>{" "}timing</strong>,{" "}effects run after the browser paints, scheduled via the macrotask queue (more or less, React uses scheduler internals, but the practical effect is post-paint). <code>useLayoutEffect</code>{" "}runs synchronously before paint. This is why you put DOM measurements in <code>useLayoutEffect</code>{" "}(measure → set state → paint, all in one tick) and side-effects in <code>useEffect</code>{" "}(don&apos;t block paint).
           </li>
           <li>
-            <strong>The act() warning</strong>{" "}— in tests, React warns you when state updates happen outside <code>act()</code>{" "}because the test runner finishes before the microtask that flushes the update runs. <code>await act(...)</code>{" "}gives React time to drain its microtasks before assertions fire.
+            <strong>The act() warning</strong>,{" "}in tests, React warns you when state updates happen outside <code>act()</code>{" "}because the test runner finishes before the microtask that flushes the update runs. <code>await act(...)</code>{" "}gives React time to drain its microtasks before assertions fire.
           </li>
         </ul>
       </section>
@@ -243,19 +243,19 @@ console.log("end");
           question="Predict: `async function f() { console.log('a'); await null; console.log('b'); } console.log('1'); f(); console.log('2');`"
           kind="Defend it"
           options={[
-            { label: "1 a 2 b", correct: true, explanation: "Right. (1) log '1'. (2) f() runs sync to await — logs 'a'. (3) await null pauses, queues continuation as microtask. (4) log '2'. (5) Drain microtasks: log 'b'." },
-            { label: "1 a b 2", explanation: "'b' can't run before '2' — the await yields control back to the main script first." },
+            { label: "1 a 2 b", correct: true, explanation: "Right. (1) log '1'. (2) f() runs sync to await, logs 'a'. (3) await null pauses, queues continuation as microtask. (4) log '2'. (5) Drain microtasks: log 'b'." },
+            { label: "1 a b 2", explanation: "'b' can't run before '2', the await yields control back to the main script first." },
             { label: "a 1 2 b", explanation: "Top-level synchronous '1' runs before f() is called." },
-            { label: "1 2 a b", explanation: "f() runs sync UP TO the await — 'a' logs before the await, which is before '2'." },
+            { label: "1 2 a b", explanation: "f() runs sync UP TO the await, 'a' logs before the await, which is before '2'." },
           ]}
         />
         <Quiz
           question="In React 18, what schedules the eventual re-render after `setCount(c + 1)`?"
           kind="Defend it"
           options={[
-            { label: "setCount synchronously renders the component", explanation: "It doesn't — it queues the update; render is async." },
-            { label: "React queues the update and schedules a microtask (via its scheduler) to commit; multiple updates in the same task batch into one render", correct: true, explanation: "Right. The microtask-style timing is what makes batching work — sync code finishes, then React flushes batched updates as one render." },
-            { label: "It's tied to setTimeout(0)", explanation: "It uses React's scheduler, which leans on microtasks (for high-priority) and message channels — not setTimeout." },
+            { label: "setCount synchronously renders the component", explanation: "It doesn't, it queues the update; render is async." },
+            { label: "React queues the update and schedules a microtask (via its scheduler) to commit; multiple updates in the same task batch into one render", correct: true, explanation: "Right. The microtask-style timing is what makes batching work, sync code finishes, then React flushes batched updates as one render." },
+            { label: "It's tied to setTimeout(0)", explanation: "It uses React's scheduler, which leans on microtasks (for high-priority) and message channels, not setTimeout." },
             { label: "It happens on the next animation frame", explanation: "Sometimes, for low-priority updates, but the basic batch flush is microtask-style." },
           ]}
         />
@@ -263,7 +263,7 @@ console.log("end");
 
       <section>
         <h2>The project: implement a tiny Promise + predict 15 snippets</h2>
-        <p>You&apos;re going to build a Promise class that handles three states, <code>.then</code>{" "}chaining, and resolves asynchronously. The goal isn&apos;t a spec-compliant Promises/A+ implementation (that&apos;s its own rabbit hole) — it&apos;s to feel how state and microtask scheduling fit together.</p>
+        <p>You&apos;re going to build a Promise class that handles three states, <code>.then</code>{" "}chaining, and resolves asynchronously. The goal isn&apos;t a spec-compliant Promises/A+ implementation (that&apos;s its own rabbit hole), it&apos;s to feel how state and microtask scheduling fit together.</p>
 
         <h3>Part 1: <code>MyPromise</code></h3>
         <p>Build a class with the following surface:</p>
@@ -287,7 +287,7 @@ new MyPromise((_, rej) => rej("oops"))
           <li>Three states: <code>pending</code>, <code>fulfilled</code>, <code>rejected</code>. State transitions are one-way.</li>
           <li>Keep arrays of pending <code>.then</code>{" "}callbacks. When state transitions, call them all.</li>
           <li><code>.then</code>{" "}must return a new promise that resolves with the callback&apos;s return value (or chains if the callback returns a promise).</li>
-          <li>Use <code>queueMicrotask</code>{" "}to schedule callbacks — they must run asynchronously, not synchronously.</li>
+          <li>Use <code>queueMicrotask</code>{" "}to schedule callbacks, they must run asynchronously, not synchronously.</li>
         </ul>
 
         <h3>Part 2: predict 15 snippets</h3>
@@ -310,7 +310,7 @@ new MyPromise((_, rej) => rej("oops"))
           <li><code>{`new Promise(res => { console.log(1); res(); }).then(() => console.log(2)); console.log(3);`}</code></li>
         </ol>
         <Callout variant="insight" title="How to score yourself">
-          <p className="m-0">If you get 12+/15 right on first try, you have an interview-ready model of the event loop. If you&apos;re below 10, redo the ones you missed by hand-tracing the call stack and both queues — write each step on paper. The bottleneck is almost always the &quot;microtasks drain exhaustively&quot; rule and how it interacts with <code>await</code>.</p>
+          <p className="m-0">If you get 12+/15 right on first try, you have an interview-ready model of the event loop. If you&apos;re below 10, redo the ones you missed by hand-tracing the call stack and both queues, write each step on paper. The bottleneck is almost always the &quot;microtasks drain exhaustively&quot; rule and how it interacts with <code>await</code>.</p>
         </Callout>
       </section>
 
@@ -326,7 +326,7 @@ new MyPromise((_, rej) => rej("oops"))
           options={[
             { label: "A way to delay code until something finishes", explanation: "That's what it ENABLES, but not what it IS. A promise is a state machine." },
             { label: "An object representing a future value, with three states (pending, fulfilled, rejected) and methods (.then) that schedule callbacks via the microtask queue when the state transitions", correct: true, explanation: "Right. Promise = state machine + observer pattern + microtask scheduling. Once you see those three parts, .then chaining and async/await stop being mysterious." },
-            { label: "A built-in syntactic sugar over setTimeout", explanation: "Promises are NOT built on setTimeout — they use the microtask queue, which is higher-priority and separate." },
+            { label: "A built-in syntactic sugar over setTimeout", explanation: "Promises are NOT built on setTimeout, they use the microtask queue, which is higher-priority and separate." },
             { label: "A thread-safe queue", explanation: "JS is single-threaded; there's no thread-safety to worry about. Promises are about scheduling on a single thread." },
           ]}
         />
@@ -334,10 +334,10 @@ new MyPromise((_, rej) => rej("oops"))
           question="Why does `Promise.resolve().then(fn)` run `fn` BEFORE `setTimeout(fn, 0)`?"
           kind="Defend it"
           options={[
-            { label: "setTimeout has a minimum delay of 4ms in browsers", explanation: "Even with 0ms, the cause is queue priority — not the timer minimum." },
-            { label: "Promises queue on the microtask queue, which drains entirely after the current task before any macrotask runs; setTimeout queues a macrotask", correct: true, explanation: "Right. Microtasks have higher priority by design — that's how `await` and React's batching work cleanly." },
-            { label: "Promises run synchronously", explanation: "They don't — `.then` callbacks always run asynchronously, just via a faster queue than setTimeout." },
-            { label: "setTimeout callbacks need to wait for the next animation frame", explanation: "Not by default — only requestAnimationFrame does that." },
+            { label: "setTimeout has a minimum delay of 4ms in browsers", explanation: "Even with 0ms, the cause is queue priority, not the timer minimum." },
+            { label: "Promises queue on the microtask queue, which drains entirely after the current task before any macrotask runs; setTimeout queues a macrotask", correct: true, explanation: "Right. Microtasks have higher priority by design, that's how `await` and React's batching work cleanly." },
+            { label: "Promises run synchronously", explanation: "They don't, `.then` callbacks always run asynchronously, just via a faster queue than setTimeout." },
+            { label: "setTimeout callbacks need to wait for the next animation frame", explanation: "Not by default, only requestAnimationFrame does that." },
           ]}
         />
       </Checkpoint>
@@ -346,7 +346,7 @@ new MyPromise((_, rej) => rej("oops"))
         <h2>The 60-second interview answer</h2>
         <Callout variant="insight" title="Say it out loud">
           <p className="m-0">
-            &quot;JavaScript is single-threaded. The event loop coordinates the call stack with two queues — a microtask queue (Promise callbacks, <code>queueMicrotask</code>) and a macrotask queue (<code>setTimeout</code>, I/O, message events). The rule: run the current task to completion, then drain the <em>entire</em>{" "}microtask queue including ones added during the drain, then take exactly one task from the macrotask queue, then drain microtasks again. That&apos;s why <code>Promise.resolve().then(cb)</code>{" "}runs before <code>setTimeout(cb, 0)</code>{" "}— even though setTimeout was scheduled first, microtasks have priority. <code>async</code>/<code>await</code>{" "}is sugar on top: <code>await</code>{" "}splits the function and registers the continuation as a microtask. This is the mechanism behind React 18&apos;s batching — multiple <code>setState</code>{" "}calls in the same task get queued, then a microtask flushes them into one render.&quot;
+            &quot;JavaScript is single-threaded. The event loop coordinates the call stack with two queues, a microtask queue (Promise callbacks, <code>queueMicrotask</code>) and a macrotask queue (<code>setTimeout</code>, I/O, message events). The rule: run the current task to completion, then drain the <em>entire</em>{" "}microtask queue including ones added during the drain, then take exactly one task from the macrotask queue, then drain microtasks again. That&apos;s why <code>Promise.resolve().then(cb)</code>{" "}runs before <code>setTimeout(cb, 0)</code>,{" "}even though setTimeout was scheduled first, microtasks have priority. <code>async</code>/<code>await</code>{" "}is sugar on top: <code>await</code>{" "}splits the function and registers the continuation as a microtask. This is the mechanism behind React 18&apos;s batching, multiple <code>setState</code>{" "}calls in the same task get queued, then a microtask flushes them into one render.&quot;
           </p>
         </Callout>
       </section>
@@ -354,7 +354,7 @@ new MyPromise((_, rej) => rej("oops"))
       <section>
         <h2>What&apos;s next</h2>
         <p>
-          Module 6 is <strong>async patterns</strong>{" "}— the practical layer on top of the event loop. Now that you know <em>how</em>{" "}promises work, you&apos;ll learn the standard library (<code>Promise.all</code>, <code>race</code>, <code>allSettled</code>), the error-propagation rules every interviewer asks about, and the <code>AbortController</code>{" "}pattern every real React app needs for cancellable fetches.
+          Module 6 is <strong>async patterns</strong>,{" "}the practical layer on top of the event loop. Now that you know <em>how</em>{" "}promises work, you&apos;ll learn the standard library (<code>Promise.all</code>, <code>race</code>, <code>allSettled</code>), the error-propagation rules every interviewer asks about, and the <code>AbortController</code>{" "}pattern every real React app needs for cancellable fetches.
         </p>
       </section>
 

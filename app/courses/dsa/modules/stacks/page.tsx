@@ -112,7 +112,7 @@ flowchart TB
         <p>
           A <strong>stack</strong>{" "}is the simplest non-trivial data structure: a pile where you can only ever touch the
           top. You push something on top. You pop the top off. You peek at what's on top. That's it. It's so restricted
-          it sounds useless — and yet entire categories of problems collapse to a stack the moment you see the trick.
+          it sounds useless, and yet entire categories of problems collapse to a stack the moment you see the trick.
         </p>
 
         <Mermaid chart={stackModel} />
@@ -123,7 +123,7 @@ flowchart TB
         <h3>The analogy: a stack of plates</h3>
         <p>
           A stack of plates in a cafeteria. You add a clean plate to the top. The next person grabs from the top. The
-          plate you washed first is the one taken last — that's the defining property. Computer scientists call this
+          plate you washed first is the one taken last, that's the defining property. Computer scientists call this
           <strong> LIFO</strong> (last in, first out), to contrast with <strong>FIFO</strong>{" "}queues (next module).
         </p>
 
@@ -146,7 +146,7 @@ flowchart TB
           options={[
             { label: "1", explanation: "1 is at the bottom and stays there until everything above it is popped." },
             { label: "2", correct: true, explanation: "Right. Stack after pushes: [1, 2, 3, 4] (4 on top). Pop → 4 gone, top is 3. Pop → 3 gone, top is 2. Peek returns 2 without removing it." },
-            { label: "3", explanation: "Off by one — you popped twice (4 then 3), so peek shows what's now on top: 2." },
+            { label: "3", explanation: "Off by one, you popped twice (4 then 3), so peek shows what's now on top: 2." },
             { label: "4", explanation: "4 was the first thing popped." },
           ]}
         />
@@ -232,7 +232,7 @@ flowchart TB
             that extends Vector (synchronized, slow).
           </p>
           <p>
-            Use <code>ArrayDeque&lt;E&gt;</code> as a stack — call <code>push</code>, <code>pop</code>, and{" "}
+            Use <code>ArrayDeque&lt;E&gt;</code> as a stack, call <code>push</code>, <code>pop</code>, and{" "}
             <code>peek</code> on it. It's an array-backed deque, faster, and correct. Module 9 explains why.
           </p>
         </Callout>
@@ -241,7 +241,7 @@ flowchart TB
 
         <ClassifyChallenge
           title="Classify each operation by its cost on each backing"
-          prompt="Drag each operation into the right bucket — costs are the same, the differences are subtler."
+          prompt="Drag each operation into the right bucket, costs are the same, the differences are subtler."
           buckets={[
             { id: "constant", label: "O(1) on both", color: "emerald" },
             { id: "memory", label: "Differs in memory overhead", color: "amber" },
@@ -265,8 +265,8 @@ flowchart TB
         <h3>Pattern 1 · Bracket / nesting matching</h3>
 
         <p>
-          Whenever you have <em>open-something then close-something</em>{" "}rules — parens, HTML tags, function calls,
-          XML — you almost certainly want a stack. The rule is mechanical:
+          Whenever you have <em>open-something then close-something</em>{" "}rules, parens, HTML tags, function calls,
+          XML, you almost certainly want a stack. The rule is mechanical:
         </p>
         <ol>
           <li>On an opener: <code>push</code> it.</li>
@@ -294,8 +294,8 @@ public boolean isValid(String s) {
 
         <Callout variant="insight" title="The recognition cue">
           <p>
-            If the problem mentions matching, balancing, or nesting — and especially if it gives you a string with
-            symbols that pair up — reach for a stack before you reach for anything else.
+            If the problem mentions matching, balancing, or nesting, and especially if it gives you a string with
+            symbols that pair up, reach for a stack before you reach for anything else.
           </p>
           <p>You will almost never regret it.</p>
         </Callout>
@@ -305,7 +305,7 @@ public boolean isValid(String s) {
         <p>
           Reverse Polish Notation writes <code>3 4 +</code> instead of <code>3 + 4</code>. RPN evaluators are stack
           machines: numbers push, operators pop two operands and push the result. No precedence, no parentheses, no
-          ambiguity — that's the appeal.
+          ambiguity, that's the appeal.
         </p>
 
         <CodeBlock lang="java">{`// LeetCode 150 — Evaluate Reverse Polish Notation.
@@ -334,7 +334,7 @@ public int evalRPN(String[] tokens) {
         <h3>Pattern 3 · Monotonic stack (the unlock pattern)</h3>
 
         <p>
-          A <strong>monotonic stack</strong>{" "}is just a stack that you maintain in sorted order — when something
+          A <strong>monotonic stack</strong>{" "}is just a stack that you maintain in sorted order, when something
           arrives that would break the order, you pop until it fits. It sounds too simple to matter, but it solves a
           surprisingly large class of problems in O(n) total: <em>next greater element</em>, <em>daily temperatures</em>,
           <em>largest rectangle in histogram</em>, <em>trapping rain water</em>.
@@ -369,7 +369,7 @@ public int[] dailyTemperatures(int[] T) {
             O(n), even though the inner <code>while</code> can pop many indices in a single iteration.
           </p>
           <p>
-            This amortized argument is the same shape as ArrayList's doubling — different mechanism, same idea.
+            This amortized argument is the same shape as ArrayList's doubling, different mechanism, same idea.
           </p>
         </Callout>
 
@@ -377,7 +377,7 @@ public int[] dailyTemperatures(int[] T) {
           kind="Pattern recognition"
           question="You're asked to compute, for each element, the index of the next element strictly greater than it. What's your reflex?"
           options={[
-            { label: "Nested loop — O(n²) is fine for now.", explanation: "It works but it's the brute-force baseline. The interviewer is asking exactly because they want better." },
+            { label: "Nested loop, O(n²) is fine for now.", explanation: "It works but it's the brute-force baseline. The interviewer is asking exactly because they want better." },
             { label: "Monotonic decreasing stack of indices.", correct: true, explanation: "Right. Walk left-to-right, push indices, and whenever the new element is greater than the top of the stack, pop and record. Each index is pushed and popped at most once → O(n)." },
             { label: "Sort the array.", explanation: "Sorting destroys the original positions, which is exactly what the question asks about. No good." },
             { label: "Hash map of value → index.", explanation: "There can be duplicates and you care about positional 'next greater', not 'this exact value'. Hash map doesn't capture position." },
@@ -387,12 +387,12 @@ public int[] dailyTemperatures(int[] T) {
       </Checkpoint>
 
       {/* ───────────────── Part 4 · The call stack ───────────────── */}
-      <Checkpoint moduleSlug="stacks" id="callstack" title="I see why every function call uses a stack" xp={15} celebration="Recursion and stack structures aren't separate ideas — they're the same machine seen from two angles.">
+      <Checkpoint moduleSlug="stacks" id="callstack" title="I see why every function call uses a stack" xp={15} celebration="Recursion and stack structures aren't separate ideas, they're the same machine seen from two angles.">
       <section>
         <h2 id="callstack">The call stack: every program is already using one</h2>
 
         <p>
-          Every time you call a function, the runtime pushes a <strong>stack frame</strong>{" "}onto a stack — that's the
+          Every time you call a function, the runtime pushes a <strong>stack frame</strong>{" "}onto a stack, that's the
           one named <em>call stack</em>. The frame holds local variables, the arguments, and the return address. When
           the function returns, its frame is popped. The current function is always whatever's on top.
         </p>
@@ -425,12 +425,12 @@ public int[] dailyTemperatures(int[] T) {
             { title: "The recursive version", body: "void dfs(Node n) { if (n == null) return; visit(n); dfs(n.left); dfs(n.right); }" },
             { title: "Spot the stack: it's the call stack", body: "Each recursive call pushes a frame holding 'n'. The function body is just 'visit n, descend left, descend right'. Replicate that with a Deque<Node>." },
             { title: "The iterative rewrite", body: "Deque<Node> st = new ArrayDeque<>(); st.push(root); while (!st.isEmpty()) { Node n = st.pop(); if (n == null) continue; visit(n); st.push(n.right); st.push(n.left); }" },
-            { title: "Order subtle: push right first", body: "We pushed right before left so that left pops first — preserving the left-then-right pre-order traversal of the recursive version." },
+            { title: "Order subtle: push right first", body: "We pushed right before left so that left pops first, preserving the left-then-right pre-order traversal of the recursive version." },
             { title: "The win", body: "No StackOverflowError on deep trees. You control the stack size, you can pause and resume, and you can pickle state. This is the same trick used to make recursion safe on user-supplied data." },
           ]}
         />
 
-        <Callout variant="warn" title="Recursion vs explicit stack — pick consciously">
+        <Callout variant="warn" title="Recursion vs explicit stack, pick consciously">
           <p>For small, balanced inputs: recursion reads more clearly.</p>
           <p>
             For deep inputs you don't trust (parser on user input, tree from the network, graph with adversarial
@@ -447,7 +447,7 @@ public int[] dailyTemperatures(int[] T) {
 
         <p>
           You'll build two complete programs and solve three classic LeetCode problems. The point isn't the lines of
-          code — it's that by the end, the three patterns are reflexive.
+          code, it's that by the end, the three patterns are reflexive.
         </p>
 
         <h3>Step 1 · A real bracket matcher</h3>
@@ -514,10 +514,10 @@ public class Rpn {
     }
 }`}</CodeBlock>
 
-        <h3>Step 3 · LeetCode 20 — Valid Parentheses</h3>
+        <h3>Step 3 · LeetCode 20, Valid Parentheses</h3>
         <p>Already shown above. Submit it; verify all three test categories pass (matched, mismatched, leftover openers, lone closers).</p>
 
-        <h3>Step 4 · LeetCode 155 — Min Stack</h3>
+        <h3>Step 4 · LeetCode 155, Min Stack</h3>
 
         <CodeBlock lang="java">{`// Trick: keep a parallel "min so far" stack so getMin() is O(1).
 public class MinStack {
@@ -535,19 +535,19 @@ public class MinStack {
 
         <Callout variant="insight" title="Why the parallel min stack works">
           <p>
-            Whatever was the min when you pushed x is still the min after you pop x — because you popped the same
+            Whatever was the min when you pushed x is still the min after you pop x, because you popped the same
             epoch of the stack on both.
           </p>
           <p>So the two stacks march in lockstep, and getMin is just a peek.</p>
         </Callout>
 
-        <h3>Step 5 · LeetCode 739 — Daily Temperatures</h3>
-        <p>The monotonic stack solution above. Trace it on <code>[73, 74, 75, 71, 69, 72, 76, 73]</code> by hand once before you submit — you will catch the off-by-one in the answer-index calculation.</p>
+        <h3>Step 5 · LeetCode 739, Daily Temperatures</h3>
+        <p>The monotonic stack solution above. Trace it on <code>[73, 74, 75, 71, 69, 72, 76, 73]</code> by hand once before you submit, you will catch the off-by-one in the answer-index calculation.</p>
       </section>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="stacks" id="final" title="I've completed Module 8" xp={25} celebration="Stacks are now reflex. Queues — the FIFO mirror image — are next.">
+      <Checkpoint moduleSlug="stacks" id="final" title="I've completed Module 8" xp={25} celebration="Stacks are now reflex. Queues, the FIFO mirror image, are next.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -556,7 +556,7 @@ public class MinStack {
           question="Why should you use ArrayDeque instead of java.util.Stack as a stack?"
           options={[
             { label: "Stack is broken; ArrayDeque has different semantics.", explanation: "Both implement the LIFO contract correctly. The reason isn't correctness." },
-            { label: "Stack extends Vector, which is synchronized — every operation pays for thread-safety you almost never need; ArrayDeque is a faster, modern, unsynchronized array-backed deque.", correct: true, explanation: "Right. Stack is a legacy JDK 1.0 class that bolted itself onto the synchronized Vector. ArrayDeque is the modern replacement: array-backed, unsynchronized, faster in single-threaded code, and recommended in the JDK docs." },
+            { label: "Stack extends Vector, which is synchronized, every operation pays for thread-safety you almost never need; ArrayDeque is a faster, modern, unsynchronized array-backed deque.", correct: true, explanation: "Right. Stack is a legacy JDK 1.0 class that bolted itself onto the synchronized Vector. ArrayDeque is the modern replacement: array-backed, unsynchronized, faster in single-threaded code, and recommended in the JDK docs." },
             { label: "ArrayDeque has more features.", explanation: "True but not the main reason. Even for plain stack use, ArrayDeque is preferable for performance." },
             { label: "Stack only stores integers.", explanation: "Both are generic. That's not the issue." },
           ]}
@@ -568,7 +568,7 @@ public class MinStack {
           options={[
             { label: "O(n²)", explanation: "That's the brute-force nested-loop baseline. The monotonic-stack approach is strictly better." },
             { label: "O(n log n)", explanation: "There's no sorting or balanced-tree structure here. The bound is tighter." },
-            { label: "O(n)", correct: true, explanation: "Right. Each index is pushed exactly once and popped at most once across the entire scan, so total work is linear — even though any single iteration can pop many indices." },
+            { label: "O(n)", correct: true, explanation: "Right. Each index is pushed exactly once and popped at most once across the entire scan, so total work is linear, even though any single iteration can pop many indices." },
             { label: "O(n × max_value)", explanation: "Total work is independent of the values, only the count of indices." },
           ]}
         />
@@ -577,7 +577,7 @@ public class MinStack {
           kind="Final check"
           question="You're parsing a deeply-nested user-supplied JSON document recursively and getting StackOverflowError on adversarial input. What's the standard fix?"
           options={[
-            { label: "Increase the JVM thread stack size with -Xss.", explanation: "It buys you a constant factor but doesn't fix the underlying issue — adversarial input can always exceed any fixed depth. Don't ship that defence to users." },
+            { label: "Increase the JVM thread stack size with -Xss.", explanation: "It buys you a constant factor but doesn't fix the underlying issue, adversarial input can always exceed any fixed depth. Don't ship that defence to users." },
             { label: "Convert the recursive parser to an iterative one with an explicit ArrayDeque.", correct: true, explanation: "Right. The call stack is finite; the heap (where ArrayDeque lives) is much larger. Same algorithm, different storage. This is the production fix for any user-input-driven recursion." },
             { label: "Catch StackOverflowError and retry.", explanation: "You can't reliably recover from StackOverflowError; the JVM's invariants around it are weak. Don't build on this." },
             { label: "Sort the input first.", explanation: "Sorting doesn't change the depth of the structure. Irrelevant." },
@@ -588,16 +588,16 @@ public class MinStack {
           title="What you can now do that you couldn't an hour ago"
           gist="A stack is the most restricted useful data structure ever, and that restriction is exactly what makes it the right tool for an entire family of problems."
           points={[
-            { takeaway: "Recognise nesting/matching problems on sight and reach for a stack first.", detail: "Brackets, HTML tags, function calls, XML — any open-then-close grammar collapses to push-on-open, pop-and-check-on-close." },
-            { takeaway: "Evaluate postfix expressions with a stack — and know operand order matters.", detail: "RPN is the textbook stack-machine evaluator. The second pop is always the left operand. Get this once, never forget it." },
-            { takeaway: "Reach for a monotonic stack when the problem says 'next greater', 'next smaller', or 'span'.", detail: "Total cost is O(n) by the amortized argument — each index is pushed once and popped at most once. This unlocks LC 739, 496, 901, 84, 42." },
+            { takeaway: "Recognise nesting/matching problems on sight and reach for a stack first.", detail: "Brackets, HTML tags, function calls, XML, any open-then-close grammar collapses to push-on-open, pop-and-check-on-close." },
+            { takeaway: "Evaluate postfix expressions with a stack, and know operand order matters.", detail: "RPN is the textbook stack-machine evaluator. The second pop is always the left operand. Get this once, never forget it." },
+            { takeaway: "Reach for a monotonic stack when the problem says 'next greater', 'next smaller', or 'span'.", detail: "Total cost is O(n) by the amortized argument, each index is pushed once and popped at most once. This unlocks LC 739, 496, 901, 84, 42." },
             { takeaway: "See recursion and stacks as the same machine.", detail: "Any recursive algorithm rewrites mechanically as an iterative one with an explicit Deque. Use the explicit form when input depth might overflow the call stack." },
             { takeaway: "Use ArrayDeque, never java.util.Stack.", detail: "Stack inherits from synchronized Vector; ArrayDeque is the modern array-backed replacement and is the recommended idiom in the JDK docs." },
           ]}
         />
 
         <div className="not-prose mt-12 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 dark:border-amber-800/40 dark:from-amber-950/30 dark:to-yellow-950/30">
-          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 9 — Queues &amp; deques</h3>
+          <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">Up next: Module 9, Queues &amp; deques</h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             FIFO (the inverse of LIFO). Ring buffers and ArrayDeque under the hood. The data structure that powers
             BFS, task queues, and sliding-window algorithms.
@@ -606,7 +606,7 @@ public class MinStack {
             href="/courses/dsa/modules/queues"
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
           >
-            Continue to Module 9 — Queues &amp; deques →
+            Continue to Module 9, Queues &amp; deques →
           </Link>
         </div>
       </section>

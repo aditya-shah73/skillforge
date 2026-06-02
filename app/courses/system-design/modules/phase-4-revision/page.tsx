@@ -80,7 +80,7 @@ stateDiagram-v2
       {/* INTRO — set expectations, this is a map not a tutorial */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 4</strong> — the reliability toolkit you build around a service, compressed into tables, diagrams, and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before going on-call, not as a tutorial.
+          This module is not new material. It&apos;s a <strong>map of Phase 4</strong>, the reliability toolkit you build around a service, compressed into tables, diagrams, and cards. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep reading. Treat this as the page you re-read before going on-call, not as a tutorial.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The six modules you&apos;re consolidating: <Link href="/courses/system-design/modules/load-balancing" className="text-sky-600 hover:underline">Load balancing</Link>, <Link href="/courses/system-design/modules/rate-limiting" className="text-sky-600 hover:underline">Rate limiting</Link>, <Link href="/courses/system-design/modules/resilience4j-deep" className="text-sky-600 hover:underline">Resilience4j deep dive</Link>, <Link href="/courses/system-design/modules/idempotency" className="text-sky-600 hover:underline">Idempotency</Link>, <Link href="/courses/system-design/modules/observability" className="text-sky-600 hover:underline">Observability</Link>, and <Link href="/courses/system-design/modules/on-call-incident" className="text-sky-600 hover:underline">On-call &amp; incident response</Link>.
@@ -91,7 +91,7 @@ stateDiagram-v2
       {/* SECTION 1 — Load balancing */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Load balancing — the four decisions</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. Load balancing, the four decisions</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Layer, algorithm, health checks, stickiness. Get these four right and the LB stops being a source of mystery outages.
         </p>
@@ -130,7 +130,7 @@ stateDiagram-v2
           </table>
         </div>
 
-        <h3 className="mt-6 mb-2 text-base font-semibold">Algorithms — when each one earns its keep</h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold">Algorithms, when each one earns its keep</h3>
         <div className="mb-4 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-slate-500 uppercase">Round robin</div>
@@ -146,20 +146,20 @@ stateDiagram-v2
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Power of two choices</div>
-            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Pick 2 random backends, send to the less-loaded. Stateless across LBs — the right answer when multiple LBs can&apos;t coordinate (Envoy, Linkerd default).</p>
+            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Pick 2 random backends, send to the less-loaded. Stateless across LBs, the right answer when multiple LBs can&apos;t coordinate (Envoy, Linkerd default).</p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4 sm:col-span-2 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-violet-600 uppercase">Consistent hashing</div>
-            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Same key always lands on the same backend — for cache locality, session affinity, or sharded data. Add/remove a node only remaps ~1/N of keys.</p>
+            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Same key always lands on the same backend, for cache locality, session affinity, or sharded data. Add/remove a node only remaps ~1/N of keys.</p>
           </div>
         </div>
 
         <Callout variant="warn">
-          <strong>The cascading health check failure:</strong>{" "}if <code>/healthz</code> hits the database, then when the DB flaps, <em>every</em>{" "}backend fails health checks at once and the LB removes them all. Liveness checks must be shallow (&quot;is the JVM up?&quot;). Readiness checks can be deep — but only gate startup, not ongoing rotation.
+          <strong>The cascading health check failure:</strong>{" "}if <code>/healthz</code> hits the database, then when the DB flaps, <em>every</em>{" "}backend fails health checks at once and the LB removes them all. Liveness checks must be shallow (&quot;is the JVM up?&quot;). Readiness checks can be deep, but only gate startup, not ongoing rotation.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/load-balancing" className="text-sky-600 hover:underline">Module 20 — Load balancing</Link>.
+          Source: <Link href="/courses/system-design/modules/load-balancing" className="text-sky-600 hover:underline">Module 20, Load balancing</Link>.
         </p>
       </section>
 
@@ -167,7 +167,7 @@ stateDiagram-v2
       {/* SECTION 2 — Rate limiting cheat sheet */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Rate limiting — algorithm cheat sheet</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Rate limiting, algorithm cheat sheet</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Five algorithms, four real tradeoffs. The single most useful axis is &quot;does it allow bursts?&quot;
         </p>
@@ -188,7 +188,7 @@ stateDiagram-v2
                 <td className="px-4 py-3 font-semibold">Token bucket</td>
                 <td className="px-4 py-3 text-emerald-600">Burst-friendly</td>
                 <td className="px-4 py-3 font-mono text-xs">O(1) per key</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Public APIs — users get bursts then settle</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Public APIs, users get bursts then settle</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">A full bucket lets bursts thunder downstream</td>
               </tr>
               <tr>
@@ -203,14 +203,14 @@ stateDiagram-v2
                 <td className="px-4 py-3 text-rose-600">Cliff at boundary</td>
                 <td className="px-4 py-3 font-mono text-xs">O(1) per key</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cheap counters where precision doesn&apos;t matter</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">2× allowed traffic at the boundary — every minute</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">2× allowed traffic at the boundary, every minute</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Sliding window log</td>
                 <td className="px-4 py-3 text-emerald-600">Precise</td>
                 <td className="px-4 py-3 font-mono text-xs">O(N requests/key)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Low-traffic APIs where precision matters</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Memory blows up at high RPS — don&apos;t use at scale</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Memory blows up at high RPS, don&apos;t use at scale</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Sliding window counter</td>
@@ -228,7 +228,7 @@ stateDiagram-v2
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/rate-limiting" className="text-sky-600 hover:underline">Module 21 — Rate limiting</Link>.
+          Source: <Link href="/courses/system-design/modules/rate-limiting" className="text-sky-600 hover:underline">Module 21, Rate limiting</Link>.
         </p>
       </section>
 
@@ -263,7 +263,7 @@ stateDiagram-v2
       {/* SECTION 4 — Resilience4j decision card */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Resilience4j — pick the right pattern</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Resilience4j, pick the right pattern</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Four decorators, one composition rule. The temptation is to stack them all on everything; the discipline is to know which one each failure mode actually needs.
         </p>
@@ -271,14 +271,14 @@ stateDiagram-v2
         <div className="mb-6 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Retry</div>
-            <p className="m-0 mb-2 text-sm text-slate-700 dark:text-slate-300"><strong>Helps when:</strong>{" "}the failure is transient — a brief network blip, a quick DB failover.</p>
+            <p className="m-0 mb-2 text-sm text-slate-700 dark:text-slate-300"><strong>Helps when:</strong>{" "}the failure is transient, a brief network blip, a quick DB failover.</p>
             <p className="m-0 text-sm text-slate-700 dark:text-slate-300"><strong>Hurts when:</strong>{" "}the downstream is already overloaded. Retries amplify load and turn a brownout into an outage. Always pair with <em>exponential backoff + jitter</em>{" "}and a small max-attempts (3, not 10).</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-rose-50/40 p-5 dark:border-slate-800 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Circuit breaker</div>
             <p className="m-0 mb-2 text-sm text-slate-700 dark:text-slate-300"><strong>Helps when:</strong>{" "}the downstream is broken and you want to fail fast instead of piling up threads.</p>
-            <p className="m-0 text-sm text-slate-700 dark:text-slate-300"><strong>Without a fallback,</strong>{" "}opening the breaker just trades one error for another (now you 5xx faster). Pair with a degraded-mode fallback — cached response, default value, queued for retry — whenever a real one exists.</p>
+            <p className="m-0 text-sm text-slate-700 dark:text-slate-300"><strong>Without a fallback,</strong>{" "}opening the breaker just trades one error for another (now you 5xx faster). Pair with a degraded-mode fallback, cached response, default value, queued for retry, whenever a real one exists.</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-amber-50/40 p-5 dark:border-slate-800 dark:bg-amber-950/20">
@@ -299,7 +299,7 @@ stateDiagram-v2
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/resilience4j-deep" className="text-sky-600 hover:underline">Module 22 — Resilience4j deep dive</Link>.
+          Source: <Link href="/courses/system-design/modules/resilience4j-deep" className="text-sky-600 hover:underline">Module 22, Resilience4j deep dive</Link>.
         </p>
       </section>
 
@@ -307,16 +307,16 @@ stateDiagram-v2
       {/* SECTION 5 — Idempotency */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Idempotency — making retries safe</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. Idempotency, making retries safe</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Every distributed system is at-least-once. If your write endpoint can&apos;t handle a duplicate, you don&apos;t have an endpoint — you have a future incident.
+          Every distributed system is at-least-once. If your write endpoint can&apos;t handle a duplicate, you don&apos;t have an endpoint, you have a future incident.
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
           <h3 className="mt-0 mb-3 text-base font-semibold">The standard pattern</h3>
           <ol className="mb-0 list-decimal space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
             <li>Client sends <code>Idempotency-Key: &lt;uuid&gt;</code> header (and re-sends the same key on retry).</li>
-            <li>Server checks a <strong>dedupe table</strong>{" "}keyed by <code>(account_id, idempotency_key)</code>. Per-account scoping is non-negotiable — never global.</li>
+            <li>Server checks a <strong>dedupe table</strong>{" "}keyed by <code>(account_id, idempotency_key)</code>. Per-account scoping is non-negotiable, never global.</li>
             <li>If key is new: process the request, cache the full response (status + body) in the dedupe row.</li>
             <li>If key exists: skip processing, replay the cached response. Same status, same body, same headers.</li>
             <li>TTL the row (24h–7d is typical). Long enough to cover all reasonable client retries; short enough to not bloat the table forever.</li>
@@ -330,12 +330,12 @@ stateDiagram-v2
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-amber-600 uppercase">The deeper truth</div>
-            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Idempotency keys handle the HTTP layer. You also need idempotency inside the system — at every async hop, every queue consumer, every webhook. A keyed dedupe at the edge does not save you from a Kafka consumer processing the same offset twice. Design every write as if it might run twice.</p>
+            <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Idempotency keys handle the HTTP layer. You also need idempotency inside the system, at every async hop, every queue consumer, every webhook. A keyed dedupe at the edge does not save you from a Kafka consumer processing the same offset twice. Design every write as if it might run twice.</p>
           </div>
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/idempotency" className="text-sky-600 hover:underline">Module 23 — Idempotency</Link>.
+          Source: <Link href="/courses/system-design/modules/idempotency" className="text-sky-600 hover:underline">Module 23, Idempotency</Link>.
         </p>
       </section>
 
@@ -343,7 +343,7 @@ stateDiagram-v2
       {/* SECTION 6 — Observability */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Observability — the three pillars</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Observability, the three pillars</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Metrics, logs, traces. Each answers a different question. The trace ID is the thread that stitches them together.
         </p>
@@ -361,19 +361,19 @@ stateDiagram-v2
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-semibold">Metrics</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Is anything wrong?&quot; — counters &amp; histograms over time</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Is anything wrong?&quot;, counters &amp; histograms over time</td>
                 <td className="px-4 py-3 text-emerald-600">Low (bounded labels)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Micrometer → Prometheus → Grafana</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Logs</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;What happened to this specific request?&quot; — structured events</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;What happened to this specific request?&quot;, structured events</td>
                 <td className="px-4 py-3 text-amber-600">High (one per event)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">SLF4J + MDC → ELK / Loki / Splunk</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Traces</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Where did the time go across services?&quot; — distributed spans</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">&quot;Where did the time go across services?&quot;, distributed spans</td>
                 <td className="px-4 py-3 text-amber-600">High (sampled)</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">OpenTelemetry → Tempo / Jaeger</td>
               </tr>
@@ -383,31 +383,31 @@ stateDiagram-v2
 
         <div className="mb-4 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-emerald-50/40 p-5 dark:border-slate-800 dark:bg-emerald-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">RED — for services</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">RED, for services</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>R</strong>ate — requests/second</li>
-              <li><strong>E</strong>rrors — error rate</li>
-              <li><strong>D</strong>uration — p50/p95/p99 latency</li>
+              <li><strong>R</strong>ate, requests/second</li>
+              <li><strong>E</strong>rrors, error rate</li>
+              <li><strong>D</strong>uration, p50/p95/p99 latency</li>
             </ul>
             <p className="m-0 mt-2 text-xs text-slate-600 dark:text-slate-400">If your service dashboard doesn&apos;t show these three at the top, it&apos;s the wrong dashboard.</p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-sky-50/40 p-5 dark:border-slate-800 dark:bg-sky-950/20">
-            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">USE — for resources</div>
+            <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">USE, for resources</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>U</strong>tilization — % of time busy</li>
-              <li><strong>S</strong>aturation — backlog (queue depth)</li>
-              <li><strong>E</strong>rrors — failure count</li>
+              <li><strong>U</strong>tilization, % of time busy</li>
+              <li><strong>S</strong>aturation, backlog (queue depth)</li>
+              <li><strong>E</strong>rrors, failure count</li>
             </ul>
             <p className="m-0 mt-2 text-xs text-slate-600 dark:text-slate-400">For CPU, memory, disk, thread pools, connection pools. USE is what tells you the host is sick before RED tells you the users are.</p>
           </div>
         </div>
 
         <Callout variant="insight">
-          <strong>Alert on SLO burn-rate, not on raw spikes.</strong> &quot;CPU is at 90%&quot; is a cause, not a symptom — and at 3am you don&apos;t care about causes, you care about whether users are being harmed. Define an SLO (e.g. 99.9% of requests under 500ms over 30 days), measure burn rate (how fast you&apos;re eating the error budget), and alert when burn rate is high enough that you&apos;ll exhaust the budget before someone fixes it. Symptoms page humans; causes go on dashboards.
+          <strong>Alert on SLO burn-rate, not on raw spikes.</strong> &quot;CPU is at 90%&quot; is a cause, not a symptom, and at 3am you don&apos;t care about causes, you care about whether users are being harmed. Define an SLO (e.g. 99.9% of requests under 500ms over 30 days), measure burn rate (how fast you&apos;re eating the error budget), and alert when burn rate is high enough that you&apos;ll exhaust the budget before someone fixes it. Symptoms page humans; causes go on dashboards.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/observability" className="text-sky-600 hover:underline">Module 24 — Observability</Link>.
+          Source: <Link href="/courses/system-design/modules/observability" className="text-sky-600 hover:underline">Module 24, Observability</Link>.
         </p>
       </section>
 
@@ -415,7 +415,7 @@ stateDiagram-v2
       {/* SECTION 7 — On-call & incident response */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. On-call &amp; incident response — the human side</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">7. On-call &amp; incident response, the human side</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           A reliable service is not a service that never breaks. It&apos;s a service whose breakage is short, well-communicated, and learned from.
         </p>
@@ -459,24 +459,24 @@ stateDiagram-v2
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-600 uppercase">Blameless postmortem</div>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>Focus on systems, not people. &quot;Deploy script let a bad config through&quot; — not &quot;Alex pushed a bad config.&quot;</li>
+              <li>Focus on systems, not people. &quot;Deploy script let a bad config through&quot;, not &quot;Alex pushed a bad config.&quot;</li>
               <li>Timeline first (what happened, with timestamps), then root cause, then action items with owners + dates.</li>
               <li>Action items must be <em>tracked to ship</em>. A postmortem that produces no shipped change is theater.</li>
             </ul>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-600 uppercase">The 5 whys (used carefully)</div>
-            <p className="m-0 mb-2 text-sm text-slate-700 dark:text-slate-300">Ask &quot;why?&quot; five times to push past the surface cause. But the trap: 5-whys can fixate on a single causal chain. Real incidents are usually <em>multi-causal</em> — a bad deploy AND missing alerting AND an unclear runbook all combined.</p>
+            <p className="m-0 mb-2 text-sm text-slate-700 dark:text-slate-300">Ask &quot;why?&quot; five times to push past the surface cause. But the trap: 5-whys can fixate on a single causal chain. Real incidents are usually <em>multi-causal</em>, a bad deploy AND missing alerting AND an unclear runbook all combined.</p>
             <p className="m-0 text-sm text-slate-700 dark:text-slate-300">Treat 5-whys as one lens, not the framework. And never let &quot;why&quot; become &quot;who.&quot;</p>
           </div>
         </div>
 
         <Callout variant="warn">
-          <strong>Runbooks are written when nothing&apos;s on fire, used when everything is.</strong>{" "}Every page-able alert should link to a runbook with: what this alert means, what to check first, common causes, who to escalate to. If you&apos;re writing the runbook at 3am, the alert was misconfigured. And error budgets — the inverse of your SLO — are how you decide between &quot;ship faster&quot; and &quot;invest in reliability&quot; without it becoming a feelings debate.
+          <strong>Runbooks are written when nothing&apos;s on fire, used when everything is.</strong>{" "}Every page-able alert should link to a runbook with: what this alert means, what to check first, common causes, who to escalate to. If you&apos;re writing the runbook at 3am, the alert was misconfigured. And error budgets, the inverse of your SLO, are how you decide between &quot;ship faster&quot; and &quot;invest in reliability&quot; without it becoming a feelings debate.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/on-call-incident" className="text-sky-600 hover:underline">Module 25 — On-call &amp; incident response</Link>.
+          Source: <Link href="/courses/system-design/modules/on-call-incident" className="text-sky-600 hover:underline">Module 25, On-call &amp; incident response</Link>.
         </p>
       </section>
 
@@ -514,7 +514,7 @@ RetryConfig good = RetryConfig.custom()
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · Circuit breaker without a fallback</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              Opening the breaker just trades a slow error for a fast error. If you have a meaningful degraded mode — cached value, default, queued for async retry — wire it as a fallback.
+              Opening the breaker just trades a slow error for a fast error. If you have a meaningful degraded mode, cached value, default, queued for async retry, wire it as a fallback.
             </p>
             <CodeBlock lang="java">{`// BAD — breaker opens, user gets 503 anyway
 @CircuitBreaker(name = "payments")
@@ -560,7 +560,7 @@ if (cached.isPresent()) {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 4 · Alerting on CPU instead of SLO</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              &quot;CPU &gt; 80%&quot; pages the on-call at 2am every Tuesday during the batch job — which is fine. Meanwhile a real user-facing latency spike at 50% CPU goes unnoticed. Symptom-based alerts (the user is harmed) page humans; cause-based metrics (CPU, queue depth) belong on dashboards.
+              &quot;CPU &gt; 80%&quot; pages the on-call at 2am every Tuesday during the batch job, which is fine. Meanwhile a real user-facing latency spike at 50% CPU goes unnoticed. Symptom-based alerts (the user is harmed) page humans; cause-based metrics (CPU, queue depth) belong on dashboards.
             </p>
             <CodeBlock lang="plain" caption="Prometheus alerting rules">{`# BAD — pages on a cause, not a symptom. Wakes you up for benign load.
 - alert: HighCPU
@@ -589,17 +589,17 @@ if (cached.isPresent()) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">9. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You're running five Envoy sidecars routing to a backend pool, and the sidecars cannot coordinate state with each other. Which LB algorithm is the best fit?"
           options={[
-            { label: "Round robin — it's the simplest.", explanation: "RR across uncoordinated LBs is biased — each LB cycles independently, and one backend can end up disproportionately loaded. Worse than the right answer here." },
-            { label: "Least connections — always the safest default.", explanation: "Least-conn is fine for a single LB, but multiple uncoordinated LBs each see their own connection count, so the global view is wrong. P2C is what was designed for exactly this case." },
-            { label: "Power of two choices — provably near-optimal and stateless across LBs.", correct: true, explanation: "Right. P2C is what Envoy and Linkerd default to for this exact reason: each LB picks 2 random backends and sends to the less-loaded one. No coordination needed, no bias, queueing-theory-near-optimal." },
-            { label: "Consistent hashing — distributes work evenly.", explanation: "Consistent hashing is for stickiness (cache locality, shard routing), not for load distribution. Without a hash key tied to the request, you don't get even distribution." },
+            { label: "Round robin, it's the simplest.", explanation: "RR across uncoordinated LBs is biased, each LB cycles independently, and one backend can end up disproportionately loaded. Worse than the right answer here." },
+            { label: "Least connections, always the safest default.", explanation: "Least-conn is fine for a single LB, but multiple uncoordinated LBs each see their own connection count, so the global view is wrong. P2C is what was designed for exactly this case." },
+            { label: "Power of two choices, provably near-optimal and stateless across LBs.", correct: true, explanation: "Right. P2C is what Envoy and Linkerd default to for this exact reason: each LB picks 2 random backends and sends to the less-loaded one. No coordination needed, no bias, queueing-theory-near-optimal." },
+            { label: "Consistent hashing, distributes work evenly.", explanation: "Consistent hashing is for stickiness (cache locality, shard routing), not for load distribution. Without a hash key tied to the request, you don't get even distribution." },
           ]}
         />
 
@@ -607,10 +607,10 @@ if (cached.isPresent()) {
           kind="Recall check"
           question="You need to rate-limit a public API. Users should be able to burst up to 100 requests, then settle to 10 RPS. Which algorithm fits?"
           options={[
-            { label: "Fixed window counter — simplest implementation.", explanation: "Fixed window has a 2x burst right at the boundary (clients can spend their budget at the end of one window and at the start of the next). Not what you want, and not what the question is asking about." },
-            { label: "Token bucket — capacity 100, refill rate 10/s.", correct: true, explanation: "Right. Token bucket is the burst-friendly algorithm: bucket fills to capacity 100 at 10 tokens/sec, request consumes 1 token. A user who's been idle can burst 100 requests, then settle to 10 RPS as the bucket refills. This is exactly the AWS / Stripe API shape." },
-            { label: "Leaky bucket — same effect.", explanation: "Leaky bucket smooths output — a burst of 100 doesn't go through fast; it goes through at 10/s. That's different from what was asked." },
-            { label: "Sliding window log — most precise.", explanation: "Sliding window log gives you a precise sliding-window count, but doesn't naturally express 'burst capacity vs steady rate.' It's also memory-heavy at scale. Wrong tool for the question." },
+            { label: "Fixed window counter, simplest implementation.", explanation: "Fixed window has a 2x burst right at the boundary (clients can spend their budget at the end of one window and at the start of the next). Not what you want, and not what the question is asking about." },
+            { label: "Token bucket, capacity 100, refill rate 10/s.", correct: true, explanation: "Right. Token bucket is the burst-friendly algorithm: bucket fills to capacity 100 at 10 tokens/sec, request consumes 1 token. A user who's been idle can burst 100 requests, then settle to 10 RPS as the bucket refills. This is exactly the AWS / Stripe API shape." },
+            { label: "Leaky bucket, same effect.", explanation: "Leaky bucket smooths output, a burst of 100 doesn't go through fast; it goes through at 10/s. That's different from what was asked." },
+            { label: "Sliding window log, most precise.", explanation: "Sliding window log gives you a precise sliding-window count, but doesn't naturally express 'burst capacity vs steady rate.' It's also memory-heavy at scale. Wrong tool for the question." },
           ]}
         />
 
@@ -618,10 +618,10 @@ if (cached.isPresent()) {
           kind="Recall check"
           question="A downstream payments service is returning 5xx for ~40% of requests. Your service is now slow because every request is waiting for the timeout. What's the right primary mitigation?"
           options={[
-            { label: "Add a retry with backoff — most failures are transient.", explanation: "Retry into a downstream that's already at 40% error rate amplifies its load — you'll make it worse. Retry is for transient failures; a 40% sustained failure rate is not transient." },
+            { label: "Add a retry with backoff, most failures are transient.", explanation: "Retry into a downstream that's already at 40% error rate amplifies its load, you'll make it worse. Retry is for transient failures; a 40% sustained failure rate is not transient." },
             { label: "Open a circuit breaker so calls fail fast without waiting for the timeout, ideally with a fallback.", correct: true, explanation: "Right. The breaker shorts out the failing dependency: fail fast (free up your threads), give the downstream room to recover, and serve a fallback (queued retry, cached value, default) if you have one. Retry on top makes it worse here; the breaker is the primary tool." },
-            { label: "Add a bulkhead.", explanation: "A bulkhead caps concurrent calls and would help prevent the failure from saturating your thread pool — useful, but it doesn't fix the user-visible problem. The breaker is the primary tool; bulkhead is a complementary defense." },
-            { label: "Increase the timeout so calls have more time to succeed.", explanation: "Longer timeouts make this worse — your threads sit blocked longer, you process less throughput, the queue grows. The fix is to fail faster, not slower." },
+            { label: "Add a bulkhead.", explanation: "A bulkhead caps concurrent calls and would help prevent the failure from saturating your thread pool, useful, but it doesn't fix the user-visible problem. The breaker is the primary tool; bulkhead is a complementary defense." },
+            { label: "Increase the timeout so calls have more time to succeed.", explanation: "Longer timeouts make this worse, your threads sit blocked longer, you process less throughput, the queue grows. The fix is to fail faster, not slower." },
           ]}
         />
 
@@ -629,10 +629,10 @@ if (cached.isPresent()) {
           kind="Recall check"
           question="What's the right scope for an idempotency key in a payment API?"
           options={[
-            { label: "Globally unique across all accounts — keys must never collide.", explanation: "Global scope leaks information across tenants (one account's key collision affects another's request) and forces clients to coordinate across all their users. The standard is per-account." },
-            { label: "Per account — the key (account_id, idempotency_key) is what's unique.", correct: true, explanation: "Right. Per-account scoping means each account's keys are independent: account A and account B can both use the key 'abc-123' for unrelated requests, and there's no collision. This is the standard pattern (Stripe, AWS, GCP all do this) and what every well-built dedupe table is keyed on." },
-            { label: "Per request — generate it server-side and return it.", explanation: "If the server generates the key, the client doesn't have the same key to send on retry — which defeats the entire purpose. The client must own the key." },
-            { label: "Per IP address — easier to scope.", explanation: "Mobile users behind carrier NAT all share an IP. You'd cross-contaminate completely unrelated users. IP is never the right scoping for application-level dedup." },
+            { label: "Globally unique across all accounts, keys must never collide.", explanation: "Global scope leaks information across tenants (one account's key collision affects another's request) and forces clients to coordinate across all their users. The standard is per-account." },
+            { label: "Per account, the key (account_id, idempotency_key) is what's unique.", correct: true, explanation: "Right. Per-account scoping means each account's keys are independent: account A and account B can both use the key 'abc-123' for unrelated requests, and there's no collision. This is the standard pattern (Stripe, AWS, GCP all do this) and what every well-built dedupe table is keyed on." },
+            { label: "Per request, generate it server-side and return it.", explanation: "If the server generates the key, the client doesn't have the same key to send on retry, which defeats the entire purpose. The client must own the key." },
+            { label: "Per IP address, easier to scope.", explanation: "Mobile users behind carrier NAT all share an IP. You'd cross-contaminate completely unrelated users. IP is never the right scoping for application-level dedup." },
           ]}
         />
 
@@ -640,10 +640,10 @@ if (cached.isPresent()) {
           kind="Recall check"
           question="Your dashboard shows: CPU 85%, p99 latency 200ms (SLO is 500ms), error rate 0.1%, queue depth growing. Which observability pillar is telling you the most useful thing right now?"
           options={[
-            { label: "RED metrics — but they look fine (latency and errors are within SLO), so nothing's wrong yet.", correct: true, explanation: "Right. RED says users are not being harmed yet — error rate and latency are within SLO. The user-facing service is healthy. CPU and queue depth are USE metrics (resource health), which are early-warning signals: something's stressed, investigate, but don't page anyone. Symptom-based alerting (SLO-based) wouldn't fire here, and that's correct." },
-            { label: "USE metrics say CPU is hot — page on-call immediately.", explanation: "CPU 85% with users still served within SLO is not an outage — it's a hint that you might want to investigate before it becomes one. Paging on causes (CPU) wakes people for benign load; pages should fire on symptoms (SLO burn)." },
-            { label: "Traces — they'll tell you where the slowness is.", explanation: "Traces are great for diagnosis after you know something's wrong. The dashboard says users aren't slow yet, so traces aren't the primary signal here." },
-            { label: "Logs — search for errors.", explanation: "Logs are great for explaining a specific failure. With 0.1% error rate (within SLO), there's no fire to investigate yet — and logs aren't where you check overall service health anyway." },
+            { label: "RED metrics, but they look fine (latency and errors are within SLO), so nothing's wrong yet.", correct: true, explanation: "Right. RED says users are not being harmed yet, error rate and latency are within SLO. The user-facing service is healthy. CPU and queue depth are USE metrics (resource health), which are early-warning signals: something's stressed, investigate, but don't page anyone. Symptom-based alerting (SLO-based) wouldn't fire here, and that's correct." },
+            { label: "USE metrics say CPU is hot, page on-call immediately.", explanation: "CPU 85% with users still served within SLO is not an outage, it's a hint that you might want to investigate before it becomes one. Paging on causes (CPU) wakes people for benign load; pages should fire on symptoms (SLO burn)." },
+            { label: "Traces, they'll tell you where the slowness is.", explanation: "Traces are great for diagnosis after you know something's wrong. The dashboard says users aren't slow yet, so traces aren't the primary signal here." },
+            { label: "Logs, search for errors.", explanation: "Logs are great for explaining a specific failure. With 0.1% error rate (within SLO), there's no fire to investigate yet, and logs aren't where you check overall service health anyway." },
           ]}
         />
       </section>
@@ -670,20 +670,20 @@ if (cached.isPresent()) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6 dark:border-indigo-900 dark:from-indigo-950/30 dark:via-slate-900 dark:to-purple-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-indigo-700 uppercase dark:text-indigo-300">
-          Phase 4 — locked in
+          Phase 4, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can build a service that survives Tuesday</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Load balancing, rate limiting, the Resilience4j patterns, idempotency, the three pillars of observability, and the human side of on-call. That&apos;s the reliability toolkit. The patterns from here on out will assume you reach for them automatically.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Distributed Systems Deep.</strong>{" "}Consensus, Raft &amp; Paxos, when you actually need them, leader election. The theory under the systems you&apos;ve been building.
+          <strong>Up next: Phase 5, Distributed Systems Deep.</strong>{" "}Consensus, Raft &amp; Paxos, when you actually need them, leader election. The theory under the systems you&apos;ve been building.
         </p>
         <Link
           href="/courses/system-design/modules/consensus"
           className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md transition hover:shadow-lg"
         >
-          Next phase: Consensus — Raft &amp; Paxos →
+          Next phase: Consensus, Raft &amp; Paxos →
         </Link>
       </section>
         <ModuleNav courseId="system-design" currentSlug="phase-4-revision" />

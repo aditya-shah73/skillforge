@@ -12,7 +12,7 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "what", title: "What a graph is — beyond the textbook" },
+  { id: "what", title: "What a graph is, beyond the textbook" },
   { id: "vocab", title: "The vocabulary you can't get away from" },
   { id: "represent", title: "Adjacency list vs adjacency matrix" },
   { id: "build", title: "Building a graph in Java" },
@@ -94,12 +94,12 @@ D   0 0 0 0"]
       {/* ───────────────── Part 1 · What ───────────────── */}
       <Checkpoint moduleSlug="graphs-intro" id="what" title="I can name three things in my codebase that are graphs" xp={20}>
       <section>
-        <h2 id="what">What a graph is — beyond the textbook</h2>
+        <h2 id="what">What a graph is, beyond the textbook</h2>
 
         <p>
           A <strong>graph</strong>{" "}is a set of <em>nodes</em> (or <em>vertices</em>) and <em>edges</em>{" "}connecting them.
-          That definition is so general it sounds useless. The reason graphs matter — and the reason every interview
-          loop has 3-5 graph problems — is that <em>most non-trivial relationships in software are graphs</em>, and
+          That definition is so general it sounds useless. The reason graphs matter, and the reason every interview
+          loop has 3-5 graph problems, is that <em>most non-trivial relationships in software are graphs</em>, and
           the same handful of algorithms solve them all.
         </p>
 
@@ -108,7 +108,7 @@ D   0 0 0 0"]
         <p>Some examples that don&apos;t look like graphs but are:</p>
 
         <ul>
-          <li><strong>Build dependencies.</strong>{" "}Maven modules, Gradle subprojects — each module points to its dependencies. Topological sort tells you the build order.</li>
+          <li><strong>Build dependencies.</strong>{" "}Maven modules, Gradle subprojects, each module points to its dependencies. Topological sort tells you the build order.</li>
           <li><strong>Function call graphs.</strong>{" "}Methods call other methods. Cycle detection finds infinite recursion; SCC analysis finds tightly coupled clusters.</li>
           <li><strong>Spreadsheet formulas.</strong>{" "}Each cell points to the cells its formula reads. Re-evaluation order is a topo sort. Circular references are cycles.</li>
           <li><strong>Permission inheritance.</strong>{" "}Roles inherit from roles, groups belong to groups. &quot;Does Alice have permission X?&quot; is reachability.</li>
@@ -119,7 +119,7 @@ D   0 0 0 0"]
 
         <Callout variant="insight" title="Trees and linked lists are graphs too">
           A linked list is a graph where every node has exactly one outgoing edge. A tree is a graph that&apos;s
-          connected and acyclic, with a designated root. Phase 3 was secretly preparing you for this — every tree
+          connected and acyclic, with a designated root. Phase 3 was secretly preparing you for this, every tree
           algorithm is a graph algorithm with extra structure. Once you internalize the graph view, the BFS you wrote
           for binary trees is the <em>same BFS</em>{" "}that does shortest-path, word ladders, and rotting oranges.
         </Callout>
@@ -134,7 +134,7 @@ D   0 0 0 0"]
         <ol>
           <li><strong>The shape isn&apos;t obvious from the input.</strong>{" "}An array is &quot;here are some numbers in order.&quot; A graph might be given as a list of edges, an adjacency matrix, a 2D grid, an implicit neighbor function, or just a problem statement. Step zero is always &quot;what&apos;s the graph?&quot;</li>
           <li><strong>You can revisit nodes.</strong>{" "}Trees have no cycles, so DFS just works. Graphs need a <code>visited</code> set or you loop forever.</li>
-          <li><strong>The same algorithm solves wildly different-looking problems.</strong> &quot;Shortest path,&quot; &quot;word ladder,&quot; and &quot;rotting oranges&quot; are all BFS — but the surface details mask it. Recognizing the graph in disguise is half the skill.</li>
+          <li><strong>The same algorithm solves wildly different-looking problems.</strong> &quot;Shortest path,&quot; &quot;word ladder,&quot; and &quot;rotting oranges&quot; are all BFS, but the surface details mask it. Recognizing the graph in disguise is half the skill.</li>
         </ol>
 
         <Quiz
@@ -142,7 +142,7 @@ D   0 0 0 0"]
           question="A directed graph has a path from A to B and a path from B to A. What's the technical name for that situation?"
           options={[
             { label: "A cycle.", correct: true, explanation: "Right. A directed cycle is exactly a path from a node back to itself, which is what 'A→...→B→...→A' means. (More specifically, A and B are in the same strongly connected component.)" },
-            { label: "An undirected edge.", explanation: "Undirected means the edge itself goes both ways. Here we have two separate directed paths — that's a cycle." },
+            { label: "An undirected edge.", explanation: "Undirected means the edge itself goes both ways. Here we have two separate directed paths, that's a cycle." },
             { label: "A bipartite graph.", explanation: "Bipartite means nodes split into two groups with no edges within a group. Different concept entirely." },
             { label: "A self-loop.", explanation: "A self-loop is an edge from a node to itself, like A→A. We're talking about a multi-step round trip." },
           ]}
@@ -156,7 +156,7 @@ D   0 0 0 0"]
         <h2 id="vocab">The vocabulary you can&apos;t get away from</h2>
 
         <p>
-          Graph problems are written in graph vocabulary. There&apos;s no avoiding it. Here&apos;s the working set —
+          Graph problems are written in graph vocabulary. There&apos;s no avoiding it. Here&apos;s the working set,
           the words you&apos;ll see in every problem statement.
         </p>
 
@@ -187,13 +187,13 @@ Connected  ←→ Disconnected   can you reach every node from every other?`}</C
 
         <ul>
           <li><strong>Cycle:</strong>{" "}a path that starts and ends at the same node (with no repeats in between). Detecting cycles is one of the canonical graph problems.</li>
-          <li><strong>Connected component:</strong>{" "}a maximal set of nodes that can all reach each other. An undirected graph might split into several components — &quot;islands&quot;.</li>
+          <li><strong>Connected component:</strong>{" "}a maximal set of nodes that can all reach each other. An undirected graph might split into several components, &quot;islands&quot;.</li>
           <li><strong>Strongly connected component (SCC):</strong>{" "}in a directed graph, a maximal set where every node can reach every other. A weaker version, &quot;weakly connected,&quot; treats edges as undirected.</li>
           <li><strong>Bipartite:</strong>{" "}nodes split into two groups with edges only going <em>between</em>{" "}groups, never within. Job-applicant ↔ job, student ↔ class.</li>
           <li><strong>Dense vs sparse:</strong>{" "}rough labels for &quot;edges close to V²&quot; vs &quot;edges close to V&quot;. The choice between adjacency list and matrix turns on this.</li>
         </ul>
 
-        <Callout variant="info" title="V and E — the two variables in every graph Big-O">
+        <Callout variant="info" title="V and E, the two variables in every graph Big-O">
           When you see <code>O(V + E)</code>, that&apos;s &quot;linear in the graph size.&quot; <code>V</code> is
           vertex count, <code>E</code> is edge count. BFS and DFS are O(V + E). Dijkstra with a binary heap is{" "}
           <code>O((V + E) log V)</code>. You will see these expressions everywhere; treat V and E like the &quot;n&quot;
@@ -205,7 +205,7 @@ Connected  ←→ Disconnected   can you reach every node from every other?`}</C
         <p>
           A <strong>self-loop</strong>{" "}is an edge from a node to itself (<code>A → A</code>). A <strong>multi-edge</strong>{" "}
           (or parallel edge) is two distinct edges between the same pair of nodes. Most problems forbid both
-          implicitly — a clean graph has neither — but it&apos;s worth asking. They show up in real systems (a graph
+          implicitly, a clean graph has neither, but it&apos;s worth asking. They show up in real systems (a graph
           of money transfers can have multiple A→B edges) and they break some algorithms (Eulerian path counts edges,
           so multi-edges matter).
         </p>
@@ -227,7 +227,8 @@ Connected  ←→ Disconnected   can you reach every node from every other?`}</C
           options={[
             { label: "{A→B, B→A}.", explanation: "That's a 2-cycle. Cyclic, not acyclic." },
             { label: "{A→B, B→C, C→A}.", explanation: "Triangle cycle. Cyclic." },
-            { label: "{A→B, A→C, B→D, C→D}.", correct: true, explanation: "Right. Directed, and you can't get from any node back to itself. The shape is the classic 'diamond' DAG — A is a source, D is a sink." },
+            { label: "{A→B, A→C, B→D, C→D}.", correct: true, explanation: "Right. Directed, and you can't get from any node back to itself. The shape is the classic 'diamond' DAG, A is a source, D is a sink." },
+            // content-lint-disable em-dash: the em dashes below are undirected-edge notation, not prose, and the explanation references them by name.
             { label: "{A—B, B—C}.", explanation: "Those are undirected edges (note the em-dashes). A DAG needs directed edges by definition." },
           ]}
         />
@@ -265,9 +266,9 @@ for (int neighbor : adj.get(0)) {
 }`}</CodeBlock>
 
         <p>
-          <strong>Space:</strong> <code>O(V + E)</code> — one slot per node, one entry per edge.{" "}
+          <strong>Space:</strong> <code>O(V + E)</code>, one slot per node, one entry per edge.{" "}
           <strong>Iterate neighbors of v:</strong> <code>O(degree(v))</code>, exactly the work you need.{" "}
-          <strong>Has-edge(u, v) check:</strong> <code>O(degree(u))</code> — you scan u&apos;s list.
+          <strong>Has-edge(u, v) check:</strong> <code>O(degree(u))</code>, you scan u&apos;s list.
         </p>
 
         <h3>Adjacency matrix</h3>
@@ -288,7 +289,7 @@ for (int v = 0; v < n; v++) {
 
         <p>
           <strong>Space:</strong> <code>O(V²)</code> regardless of edge count. <strong>Has-edge(u, v):</strong>{" "}
-          <code>O(1)</code>. <strong>Iterate neighbors of v:</strong> <code>O(V)</code> — you have to scan a whole row,
+          <code>O(1)</code>. <strong>Iterate neighbors of v:</strong> <code>O(V)</code>, you have to scan a whole row,
           even if v has only 2 neighbors out of 10,000 nodes.
         </p>
 
@@ -314,7 +315,7 @@ Iterate ALL edges      O(V + E)         O(V²)`}</CodeBlock>
         <ul>
           <li><strong>Dense graphs:</strong>{" "}if E ≈ V², the matrix wastes no space and is cache-friendlier.</li>
           <li><strong>Frequent has-edge queries:</strong>{" "}Floyd-Warshall (all-pairs shortest path) needs O(1) edge lookup. List would make it O(V³ · log V) or worse.</li>
-          <li><strong>Tiny V:</strong>{" "}if V ≤ 100, V² ≤ 10,000 — trivial. Matrix is simpler and the constant factors are usually faster.</li>
+          <li><strong>Tiny V:</strong>{" "}if V ≤ 100, V² ≤ 10,000, trivial. Matrix is simpler and the constant factors are usually faster.</li>
           <li><strong>Implicit grids:</strong>{" "}a 2D grid problem (like &quot;number of islands&quot;) is essentially using the grid <em>as</em>{" "}the adjacency representation. Each cell&apos;s neighbors are computed on the fly with <code>(dr, dc)</code> deltas.</li>
         </ul>
 
@@ -326,11 +327,11 @@ Iterate ALL edges      O(V + E)         O(V²)`}</CodeBlock>
             { id: "matrix", label: "Adjacency matrix", color: "indigo" },
           ]}
           items={[
-            { id: "1", label: "Twitter follow graph: 500M users, ~200 follows each.", answer: "list", explanation: "Wildly sparse. List is O(V + E) ≈ 10¹¹ entries; matrix would be V² = 2.5×10¹⁷ — about 2.5 million times bigger." },
+            { id: "1", label: "Twitter follow graph: 500M users, ~200 follows each.", answer: "list", explanation: "Wildly sparse. List is O(V + E) ≈ 10¹¹ entries; matrix would be V² = 2.5×10¹⁷, about 2.5 million times bigger." },
             { id: "2", label: "Floyd-Warshall on a 50-node road network.", answer: "matrix", explanation: "All-pairs shortest path needs O(1) edge lookup, and 50² = 2500 cells is trivial. Matrix is the natural fit." },
             { id: "3", label: "BFS over a 10×10 grid maze.", answer: "matrix", explanation: "The grid is already a 2D matrix; you compute neighbors via (dr, dc) deltas. There's no separate adjacency structure to build." },
             { id: "4", label: "Web crawl: pages link to a few others, billions of pages total.", answer: "list", explanation: "V² is astronomical for the web. List is the only option that fits in memory." },
-            { id: "5", label: "Course prerequisite graph, ~50 courses, ~3 prereqs each.", answer: "list", explanation: "Sparse, and you'll be doing topological sort which iterates neighbors — list is the textbook choice. (Matrix would also work; both are tiny.)" },
+            { id: "5", label: "Course prerequisite graph, ~50 courses, ~3 prereqs each.", answer: "list", explanation: "Sparse, and you'll be doing topological sort which iterates neighbors, list is the textbook choice. (Matrix would also work; both are tiny.)" },
             { id: "6", label: "Dense connectivity matrix among ~30 services for a microservice impact analysis.", answer: "matrix", explanation: "30 services with most pairs connected → near-V² edges. Matrix is small and the has-edge queries are O(1)." },
             { id: "7", label: "Friend-of-friend recommendations on a billion-node social graph.", answer: "list", explanation: "BFS at depth 2 over a sparse graph. List is mandatory at this scale." },
           ]}
@@ -345,7 +346,7 @@ Iterate ALL edges      O(V + E)         O(V²)`}</CodeBlock>
 
         <p>
           LeetCode usually hands you a graph in one of three shapes. Recognize each and convert to an adjacency list as
-          your first step — it removes friction for everything that follows.
+          your first step, it removes friction for everything that follows.
         </p>
 
         <h3>Shape 1 · Edge list</h3>
@@ -376,7 +377,7 @@ List<List<Integer>> buildDirected(int n, int[][] edges) {
         <Callout variant="warn" title="The single most common graph bug">
           Forgetting that &quot;undirected&quot; means you have to add the edge <em>twice</em>. If the problem says
           &quot;the graph is undirected&quot; and your traversal can only walk one way, this is the first thing to check.
-          The reverse mistake — adding both directions on a directed problem — silently turns DAG problems into
+          The reverse mistake, adding both directions on a directed problem, silently turns DAG problems into
           cyclic-graph problems.
         </Callout>
 
@@ -384,7 +385,7 @@ List<List<Integer>> buildDirected(int n, int[][] edges) {
 
         <p>
           A 2D grid where each cell&apos;s neighbors are the four (or eight) adjacent cells. There&apos;s no graph
-          object — you compute neighbors on the fly with deltas.
+          object, you compute neighbors on the fly with deltas.
         </p>
 
         <CodeBlock lang="java">{`// 4-directional neighbors (up, right, down, left)
@@ -409,7 +410,7 @@ void forEachNeighbor(int r, int c, int rows, int cols) {
 
         <p>
           When the problem hands you a <code>Node</code> class with a <code>List&lt;Node&gt; neighbors</code> field
-          directly. &quot;Clone Graph&quot; (LC 133) is the canonical example. No conversion needed — just traverse.
+          directly. &quot;Clone Graph&quot; (LC 133) is the canonical example. No conversion needed, just traverse.
         </p>
 
         <CodeBlock lang="java">{`class Node {
@@ -430,10 +431,10 @@ void dfs(Node start) {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Why ArrayDeque, not Stack">
-          The legacy <code>java.util.Stack</code> class extends <code>Vector</code> and is synchronized — it&apos;s
+          The legacy <code>java.util.Stack</code> class extends <code>Vector</code> and is synchronized, it&apos;s
           slow and discouraged. <code>ArrayDeque</code> is the modern stack: <code>push</code>, <code>pop</code>,{" "}
           <code>peek</code>, all O(1), no synchronization tax. Same advice for queues:{" "}
-          <code>ArrayDeque</code> beats <code>LinkedList</code> as a queue. (Phase 2 covered this — it shows up
+          <code>ArrayDeque</code> beats <code>LinkedList</code> as a queue. (Phase 2 covered this, it shows up
           everywhere from here on.)
         </Callout>
 
@@ -523,7 +524,7 @@ public class Graph<T> {
 }`}</CodeBlock>
 
         <Callout variant="info" title="Why putIfAbsent, not just put">
-          <code>put</code> would overwrite the existing neighbor list with a fresh empty one — a silent bug if you
+          <code>put</code> would overwrite the existing neighbor list with a fresh empty one, a silent bug if you
           ever <code>addNode</code> twice for the same key. <code>putIfAbsent</code> is the idempotent version: insert
           only if missing.
         </Callout>
@@ -580,7 +581,7 @@ System.out.println(g.neighbors("Z"));   // [] (not throwing — getOrDefault)`}<
 
         <p>
           That&apos;s the entire pattern: build the graph, traverse, check. We&apos;ll do this dozens of times in the
-          next two modules — it should start feeling mechanical.
+          next two modules, it should start feeling mechanical.
         </p>
 
         <Callout variant="insight" title="visited[source] = true is not optional">
@@ -622,14 +623,14 @@ return false;`}</CodeBlock>
             { takeaway: "Adjacency list is the default representation.", detail: "O(V + E) space, O(degree) neighbor iteration, fits real-world sparse graphs. Reach for adjacency matrix only when E ≈ V² or you need O(1) has-edge queries." },
             { takeaway: "Undirected = add the edge twice.", detail: "adj.get(u).add(v); adj.get(v).add(u);. Forgetting the second line is the most common graph bug and breaks everything downstream." },
             { takeaway: "ArrayDeque is your stack and queue.", detail: "Skip Stack and LinkedList. ArrayDeque is faster, unsynchronized, and works for both DFS (push/pop) and BFS (offer/poll)." },
-            { takeaway: "Mark visited on enqueue, not on dequeue.", detail: "Otherwise the same node can land in the queue multiple times before any of them are processed — wasted work and sometimes wrong answers." },
+            { takeaway: "Mark visited on enqueue, not on dequeue.", detail: "Otherwise the same node can land in the queue multiple times before any of them are processed, wasted work and sometimes wrong answers." },
           ]}
         />
       </section>
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="graphs-intro" id="final" title="I'm ready for BFS and DFS" xp={25} celebration="The graph foundation is set. BFS and DFS — the two traversals that solve most graph problems — are next.">
+      <Checkpoint moduleSlug="graphs-intro" id="final" title="I'm ready for BFS and DFS" xp={25} celebration="The graph foundation is set. BFS and DFS, the two traversals that solve most graph problems, are next.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -638,8 +639,8 @@ return false;`}</CodeBlock>
           question="What's the space complexity of an adjacency list for a graph with V nodes and E edges?"
           options={[
             { label: "O(V).", explanation: "That's just the outer array. You also pay for every neighbor entry." },
-            { label: "O(E).", explanation: "Close — but you also need V slots, one per node, even for nodes with no edges." },
-            { label: "O(V + E).", correct: true, explanation: "Right. V slots for the outer structure (one per node, even isolated ones), plus E entries across all the inner lists. That's why list beats matrix on sparse graphs — when E is much less than V², (V + E) is much less than V²." },
+            { label: "O(E).", explanation: "Close, but you also need V slots, one per node, even for nodes with no edges." },
+            { label: "O(V + E).", correct: true, explanation: "Right. V slots for the outer structure (one per node, even isolated ones), plus E entries across all the inner lists. That's why list beats matrix on sparse graphs, when E is much less than V², (V + E) is much less than V²." },
             { label: "O(V²).", explanation: "That's the matrix. The whole point of the list is to avoid V² when E is small." },
           ]}
         />
@@ -648,9 +649,9 @@ return false;`}</CodeBlock>
           kind="Final check"
           question="A graph problem says: 'cells of a 100×100 grid are connected to their 4-directional neighbors.' What's V, what's E, and what representation should you use?"
           options={[
-            { label: "V=10,000, E≈20,000, adjacency list.", explanation: "V and E are right (≈99×100 horizontal + 99×100 vertical undirected edges ≈ 19,800). But you wouldn't build an explicit list — the grid IS the representation." },
+            { label: "V=10,000, E≈20,000, adjacency list.", explanation: "V and E are right (≈99×100 horizontal + 99×100 vertical undirected edges ≈ 19,800). But you wouldn't build an explicit list, the grid IS the representation." },
             { label: "V=10,000, E≈20,000, adjacency matrix.", explanation: "10,000² = 100,000,000 cells in the matrix. You'd never build it. The grid serves as an implicit representation." },
-            { label: "V=10,000, E≈20,000, the grid itself is the implicit representation — compute neighbors with (dr, dc) deltas.", correct: true, explanation: "Right. V = 10,000 cells. Undirected E ≈ 99×100 horizontal edges + 100×99 vertical ≈ 19,800. Building a separate adjacency structure is wasted work — the grid layout already encodes adjacency. Just iterate {(-1,0),(0,1),(1,0),(0,-1)} from each cell, with bounds checks." },
+            { label: "V=10,000, E≈20,000, the grid itself is the implicit representation, compute neighbors with (dr, dc) deltas.", correct: true, explanation: "Right. V = 10,000 cells. Undirected E ≈ 99×100 horizontal edges + 100×99 vertical ≈ 19,800. Building a separate adjacency structure is wasted work, the grid layout already encodes adjacency. Just iterate {(-1,0),(0,1),(1,0),(0,-1)} from each cell, with bounds checks." },
             { label: "V=100, E=100. Just a small graph.", explanation: "There are 100×100=10,000 cells, not 100. Each cell is a node." },
           ]}
         />
@@ -659,10 +660,10 @@ return false;`}</CodeBlock>
           kind="Final check"
           question="You wrote `adj.get(u).add(v);` but forgot `adj.get(v).add(u);` in an undirected graph. What's the first symptom you'd notice?"
           options={[
-            { label: "A NullPointerException.", explanation: "No — adj.get(v) is a non-null empty list (you initialized them all). The bug is silent." },
+            { label: "A NullPointerException.", explanation: "No, adj.get(v) is a non-null empty list (you initialized them all). The bug is silent." },
             { label: "BFS from u finds v, but BFS from v doesn't find u.", correct: true, explanation: "Right. You created a directed edge u→v instead of an undirected one. From u you can reach v (the edge points that way), but from v there's no way back. Every BFS/DFS from the 'wrong side' silently returns the wrong answer." },
-            { label: "An infinite loop.", explanation: "Backwards — undirected graphs are MORE prone to infinite loops because edges go both ways. Missing one direction makes things terminate faster, not slower." },
-            { label: "A compile error.", explanation: "Java has no way to know your intent. The bug is logical, not syntactic — caught only by a failing test." },
+            { label: "An infinite loop.", explanation: "Backwards, undirected graphs are MORE prone to infinite loops because edges go both ways. Missing one direction makes things terminate faster, not slower." },
+            { label: "A compile error.", explanation: "Java has no way to know your intent. The bug is logical, not syntactic, caught only by a failing test." },
           ]}
         />
 

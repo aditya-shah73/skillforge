@@ -58,7 +58,7 @@ flowchart LR
           Phase 4 revision notes
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
-          SSE consumption, chat UI patterns, multimodal — the frontend AI playbook on one card you can re-read in 15 minutes.
+          SSE consumption, chat UI patterns, multimodal, the frontend AI playbook on one card you can re-read in 15 minutes.
         </p>
         <BookmarkButton courseId="ai" moduleSlug="phase-4-revision" />
         <ModuleProgress moduleSlug="phase-4-revision" checkpoints={CHECKPOINTS} />
@@ -67,14 +67,14 @@ flowchart LR
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This module is not new material. It&apos;s a <strong>map of Phase 4</strong> — every transport choice, every render-loop trick, every multimodal gotcha from the three previous modules, compressed into cards and BAD/GOOD pairs. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep moving. Treat this as the page you re-open when you sit down to actually wire a chat UI to a Spring backend.
+          This module is not new material. It&apos;s a <strong>map of Phase 4</strong>, every transport choice, every render-loop trick, every multimodal gotcha from the three previous modules, compressed into cards and BAD/GOOD pairs. If something here is unfamiliar, jump back to the source module; if it&apos;s familiar, keep moving. Treat this as the page you re-open when you sit down to actually wire a chat UI to a Spring backend.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The three modules you&apos;re consolidating: <Link href="/courses/ai/modules/react-streaming" className="text-sky-600 hover:underline">React streaming patterns</Link>, <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Full chat interface</Link>, and <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline">Multimodal inputs</Link>.
         </p>
 
         <Callout variant="insight">
-          <strong>What this card covers:</strong>{" "}the four transport/UI/state/multimodal decisions you make every time you put an LLM on a screen — SSE vs fetch-stream, token-batched rendering, optimistic reconcile, image payload shape — plus the four mistakes that bite you in production. Quizzes at the end are non-gating recall checks.
+          <strong>What this card covers:</strong>{" "}the four transport/UI/state/multimodal decisions you make every time you put an LLM on a screen, SSE vs fetch-stream, token-batched rendering, optimistic reconcile, image payload shape, plus the four mistakes that bite you in production. Quizzes at the end are non-gating recall checks.
         </Callout>
       </section>
 
@@ -82,7 +82,7 @@ flowchart LR
       {/* SECTION 2 — SSE consumption */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. SSE consumption — <code>EventSource</code> vs <code>fetch</code> stream</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">1. SSE consumption, <code>EventSource</code> vs <code>fetch</code> stream</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Two ways to consume a server-sent token stream in the browser. They are not interchangeable. Pick the wrong one and you&apos;ll fight it for hours.
         </p>
@@ -100,7 +100,7 @@ flowchart LR
               <tr>
                 <td className="px-4 py-3 font-semibold">HTTP method</td>
                 <td className="px-4 py-3 text-amber-600">GET only</td>
-                <td className="px-4 py-3 text-emerald-600">Any — usually POST with JSON body</td>
+                <td className="px-4 py-3 text-emerald-600">Any, usually POST with JSON body</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Custom headers</td>
@@ -109,13 +109,13 @@ flowchart LR
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Request body</td>
-                <td className="px-4 py-3 text-rose-600">None — only query string</td>
+                <td className="px-4 py-3 text-rose-600">None, only query string</td>
                 <td className="px-4 py-3 text-emerald-600">Any payload (messages, attachments, settings)</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Auto-reconnect</td>
                 <td className="px-4 py-3 text-emerald-600">Yes, with <code>Last-Event-ID</code></td>
-                <td className="px-4 py-3 text-amber-600">Manual — you write the backoff loop</td>
+                <td className="px-4 py-3 text-amber-600">Manual, you write the backoff loop</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Cancellation</td>
@@ -208,7 +208,7 @@ flowchart LR
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/react-streaming" className="text-sky-600 hover:underline">Module 20 — React streaming patterns</Link>.
+          Source: <Link href="/courses/ai/modules/react-streaming" className="text-sky-600 hover:underline">Module 20, React streaming patterns</Link>.
         </p>
       </section>
 
@@ -259,7 +259,7 @@ flowchart LR
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Partial markdown</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Use a markdown parser that <em>tolerates</em>{" "}unclosed fences and half-tokens (<code>react-markdown</code> with <code>remark-gfm</code> is fine). Never use one that throws on incomplete input — you&apos;ll crash on every other token.
+              Use a markdown parser that <em>tolerates</em>{" "}unclosed fences and half-tokens (<code>react-markdown</code> with <code>remark-gfm</code> is fine). Never use one that throws on incomplete input, you&apos;ll crash on every other token.
             </p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -271,7 +271,7 @@ flowchart LR
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/react-streaming" className="text-sky-600 hover:underline">Module 20 — React streaming patterns</Link>.
+          Source: <Link href="/courses/ai/modules/react-streaming" className="text-sky-600 hover:underline">Module 20, React streaming patterns</Link>.
         </p>
       </section>
 
@@ -281,7 +281,7 @@ flowchart LR
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">3. End-to-end chat flow in one diagram</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          From composer keystroke to UI rerender. The whole phase fits on one diagram — if you can describe what each box does, you understand Phase 4.
+          From composer keystroke to UI rerender. The whole phase fits on one diagram, if you can describe what each box does, you understand Phase 4.
         </p>
 
         <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -304,7 +304,7 @@ flowchart LR
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21 — Full chat interface</Link>.
+          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21, Full chat interface</Link>.
         </p>
       </section>
 
@@ -312,12 +312,12 @@ flowchart LR
       {/* SECTION 5 — Chat UI patterns */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Chat UI patterns — the message-list playbook</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Chat UI patterns, the message-list playbook</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The decisions you make in the first hour of building a chat UI lock you in for weeks. Get these right up front.
         </p>
 
-        <CodeBlock lang="ts" caption="Message shape — assistant / user / tool turns in one discriminated union">{`type Message =
+        <CodeBlock lang="ts" caption="Message shape, assistant / user / tool turns in one discriminated union">{`type Message =
   | { id: string; role: "user"; content: string; createdAt: number }
   | {
       id: string;
@@ -342,21 +342,21 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Optimistic + reconcile</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Append the user message and an empty assistant message <em>before</em>{" "}the request leaves. On the first token, the assistant message&apos;s status flips from <code>streaming</code> to populated content. On error, swap to <code>status: &quot;error&quot;</code> and expose a Retry. <strong>Never delete the optimistic message on error</strong> — leave it so the user can see what they sent.
+              Append the user message and an empty assistant message <em>before</em>{" "}the request leaves. On the first token, the assistant message&apos;s status flips from <code>streaming</code> to populated content. On error, swap to <code>status: &quot;error&quot;</code> and expose a Retry. <strong>Never delete the optimistic message on error</strong>, leave it so the user can see what they sent.
             </p>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Tool-use rendering</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Render <code>toolUses</code> as collapsible blocks inside the assistant turn — name + input + output + status pill. Default to collapsed; let the user expand to inspect. This is the single biggest debugging affordance you can give yourself in dev.
+              Render <code>toolUses</code> as collapsible blocks inside the assistant turn, name + input + output + status pill. Default to collapsed; let the user expand to inspect. This is the single biggest debugging affordance you can give yourself in dev.
             </p>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Per-message affordances</div>
             <p className="text-sm text-slate-700 dark:text-slate-300">
-              Copy (always), Retry (last assistant turn only), Edit (user turn — truncate history and replay), Delete (admin / dev only). Hover-only on desktop, always-visible on mobile. Keep the action surface small or it becomes noise.
+              Copy (always), Retry (last assistant turn only), Edit (user turn, truncate history and replay), Delete (admin / dev only). Hover-only on desktop, always-visible on mobile. Keep the action surface small or it becomes noise.
             </p>
           </div>
 
@@ -369,7 +369,7 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21 — Full chat interface</Link>.
+          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21, Full chat interface</Link>.
         </p>
       </section>
 
@@ -377,7 +377,7 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
       {/* SECTION 6 — State management */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. State management — the three kinds of state</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">5. State management, the three kinds of state</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           The #1 source of chat-UI bugs is conflating these. Server state and client state behave differently; treat them the same and you&apos;ll lose the composer text every time a token arrives.
         </p>
@@ -416,11 +416,11 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
         </div>
 
         <Callout variant="insight">
-          <strong>Decision rule:</strong> <em>colocate by default, lift only when needed.</em>{" "}The composer text should live in the composer component — never in a global store. The messages array, however, is consumed by the message list AND the send hook AND the &quot;new chat&quot; button, so lift it to a chat-scope store (Zustand, Context). Don&apos;t reach for Redux for one conversation&apos;s state.
+          <strong>Decision rule:</strong> <em>colocate by default, lift only when needed.</em>{" "}The composer text should live in the composer component, never in a global store. The messages array, however, is consumed by the message list AND the send hook AND the &quot;new chat&quot; button, so lift it to a chat-scope store (Zustand, Context). Don&apos;t reach for Redux for one conversation&apos;s state.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21 — Full chat interface</Link>.
+          Source: <Link href="/courses/ai/modules/chat-interface" className="text-sky-600 hover:underline">Module 21, Full chat interface</Link>.
         </p>
       </section>
 
@@ -428,12 +428,12 @@ type ToolUse = { id: string; name: string; input: unknown; output?: unknown; sta
       {/* SECTION 7 — Multimodal */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Multimodal inputs — images, files, the cost gotcha</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">6. Multimodal inputs, images, files, the cost gotcha</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Image input changes everything about your payload, your cost model, and your client-side validation. Get the shape right once and it&apos;s easy; get it wrong and you&apos;ll be debugging 4xx&apos;s for a day.
         </p>
 
-        <CodeBlock lang="ts" caption="Image payload shape — base64 inline vs URL reference">{`// Option A — inline base64 (works for small images, simple, no extra hop)
+        <CodeBlock lang="ts" caption="Image payload shape, base64 inline vs URL reference">{`// Option A — inline base64 (works for small images, simple, no extra hop)
 const inlineMessage = {
   role: "user",
   content: [
@@ -462,7 +462,7 @@ const urlMessage = {
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Inline base64 vs upload-first</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li><strong>Inline base64</strong>{" "}for &lt; ~1MB images — one request, no orphan files, simpler error paths.</li>
+              <li><strong>Inline base64</strong>{" "}for &lt; ~1MB images, one request, no orphan files, simpler error paths.</li>
               <li><strong>Upload-first (URL)</strong>{" "}for larger files, multi-turn reuse, or any image you want to show again later.</li>
               <li>Inline payloads bloat by ~33% (base64 overhead). Watch your request size limits.</li>
             </ul>
@@ -471,7 +471,7 @@ const urlMessage = {
           <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">Client-side validation</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-              <li>MIME check by sniffing magic bytes — never trust the file extension or <code>File.type</code>.</li>
+              <li>MIME check by sniffing magic bytes, never trust the file extension or <code>File.type</code>.</li>
               <li>Hard cap dimensions (e.g. 8000×8000) and bytes (e.g. 20MB) <em>before</em>{" "}sending.</li>
               <li>Down-scale on the client (canvas → <code>toBlob</code>) when the model only needs ~1024px.</li>
               <li>Show a preview thumbnail + filename + size; let the user remove before send.</li>
@@ -480,7 +480,7 @@ const urlMessage = {
         </div>
 
         <Callout variant="warn">
-          <strong>The cost-per-image gotcha:</strong>{" "}vision models charge by image as a (usually large) token count — often equivalent to ~1500 tokens for a single 1024px image. A multi-turn chat that re-sends the image on every turn pays for it every turn. Either send the image once and reference it by id on subsequent turns, or strip it from the history after the first response if the conversation no longer needs to look at it.
+          <strong>The cost-per-image gotcha:</strong>{" "}vision models charge by image as a (usually large) token count, often equivalent to ~1500 tokens for a single 1024px image. A multi-turn chat that re-sends the image on every turn pays for it every turn. Either send the image once and reference it by id on subsequent turns, or strip it from the history after the first response if the conversation no longer needs to look at it.
         </Callout>
 
         <CodeBlock lang="tsx" caption="Client-side downscale before send">{`async function downscale(file: File, maxDim = 1568): Promise<Blob> {
@@ -495,7 +495,7 @@ const urlMessage = {
 }`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline">Module 22 — Multimodal inputs</Link>.
+          Source: <Link href="/courses/ai/modules/multimodal" className="text-sky-600 hover:underline">Module 22, Multimodal inputs</Link>.
         </p>
       </section>
 
@@ -591,16 +591,16 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="You're building a chat UI that needs to POST a messages array and an Authorization header. Which transport do you reach for?"
           options={[
-            { label: "Native EventSource — it's purpose-built for SSE.", explanation: "EventSource is GET-only with no custom headers. You can't POST a body and you can't set Authorization. Wrong tool for chat." },
-            { label: "fetch + ReadableStream — POST, headers, AbortController.", correct: true, explanation: "Right. fetch streaming is what you want for chat: full HTTP control, easy cancellation via AbortController, and you parse the SSE frames yourself in ~10 lines." },
-            { label: "WebSockets — full-duplex is always better.", explanation: "Overkill and a different programming model. Chat is one-shot request → token stream → done; SSE-over-fetch is the right primitive." },
+            { label: "Native EventSource, it's purpose-built for SSE.", explanation: "EventSource is GET-only with no custom headers. You can't POST a body and you can't set Authorization. Wrong tool for chat." },
+            { label: "fetch + ReadableStream, POST, headers, AbortController.", correct: true, explanation: "Right. fetch streaming is what you want for chat: full HTTP control, easy cancellation via AbortController, and you parse the SSE frames yourself in ~10 lines." },
+            { label: "WebSockets, full-duplex is always better.", explanation: "Overkill and a different programming model. Chat is one-shot request → token stream → done; SSE-over-fetch is the right primitive." },
             { label: "Long-polling.", explanation: "You give up the streaming UX entirely. Long-polling means waiting for the full response per request, then resubscribing." },
           ]}
         />
@@ -610,7 +610,7 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
           question="Why do you append an empty assistant message before the network call returns?"
           options={[
             { label: "It's required by the SSE spec.", explanation: "Nothing in SSE requires this. It's a UI pattern, not a protocol detail." },
-            { label: "So the message list rerenders even when there's no data — gives the user instant feedback and a stable target to stream tokens into.", correct: true, explanation: "Right. Optimistic add → reconcile-on-token is the universal chat pattern. The composer clears immediately, the assistant message shows a streaming cursor, and tokens flow into the same message object as they arrive. No layout jump on first token." },
+            { label: "So the message list rerenders even when there's no data, gives the user instant feedback and a stable target to stream tokens into.", correct: true, explanation: "Right. Optimistic add → reconcile-on-token is the universal chat pattern. The composer clears immediately, the assistant message shows a streaming cursor, and tokens flow into the same message object as they arrive. No layout jump on first token." },
             { label: "To prevent React from unmounting the chat panel.", explanation: "Unrelated. React unmounts based on the component tree, not on message contents." },
             { label: "Because the backend can't accept the request until the placeholder exists.", explanation: "The backend doesn't know or care about your local state. This is a pure client-side UX choice." },
           ]}
@@ -631,9 +631,9 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
           kind="Recall check"
           question="You want to send an image plus a question to a vision model. The image is 3MB. What's the most production-sensible payload shape?"
           options={[
-            { label: "Inline base64 of the original 3MB JPEG in the message content array.", explanation: "Works but wasteful. Base64 inflates by ~33% (so ~4MB on the wire), and the model doesn't need 3MB of detail — it samples down internally anyway." },
+            { label: "Inline base64 of the original 3MB JPEG in the message content array.", explanation: "Works but wasteful. Base64 inflates by ~33% (so ~4MB on the wire), and the model doesn't need 3MB of detail, it samples down internally anyway." },
             { label: "Downscale client-side to ~1568px max dimension, encode as JPEG ~0.85 quality, then send as inline base64 (or upload-and-reference for reuse).", correct: true, explanation: "Right. Vision models don't gain accuracy past ~1024–1568px on the long edge. Downscaling on the client cuts bytes, cuts token cost, and cuts latency. Inline if single-turn; upload-and-reference if you'll re-send across turns." },
-            { label: "Upload the raw 3MB file to your server first, then send a server file path string to the model.", explanation: "The model needs the bytes or a URL it can fetch — not your private file path. And you still haven't solved the size problem." },
+            { label: "Upload the raw 3MB file to your server first, then send a server file path string to the model.", explanation: "The model needs the bytes or a URL it can fetch, not your private file path. And you still haven't solved the size problem." },
             { label: "Send the image as a separate WebSocket frame after the text message.", explanation: "Not how the messages API works. Image and text are parts of a single content array on one message." },
           ]}
         />
@@ -642,8 +642,8 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
           kind="Recall check"
           question="The user clicks 'Stop' mid-stream. What's the cancellation chain that has to fire correctly?"
           options={[
-            { label: "Just stop calling setState — the stream will eventually time out on its own.", explanation: "The fetch keeps running, the server keeps generating, and you keep getting billed. 'Stopped' in the UI is not 'stopped' on the wire." },
-            { label: "AbortController.abort() on the fetch signal, which closes the ReadableStream, which lets the server-side subscription cancel, which stops further token generation — and your useEffect cleanup ALSO calls abort() so unmounts don't leak.", correct: true, explanation: "Right. One AbortController, two trigger points (user stop + unmount cleanup), one cascade that tears down the fetch → stream → server subscription → model call. AbortError gets swallowed; everything else surfaces as an error." },
+            { label: "Just stop calling setState, the stream will eventually time out on its own.", explanation: "The fetch keeps running, the server keeps generating, and you keep getting billed. 'Stopped' in the UI is not 'stopped' on the wire." },
+            { label: "AbortController.abort() on the fetch signal, which closes the ReadableStream, which lets the server-side subscription cancel, which stops further token generation, and your useEffect cleanup ALSO calls abort() so unmounts don't leak.", correct: true, explanation: "Right. One AbortController, two trigger points (user stop + unmount cleanup), one cascade that tears down the fetch → stream → server subscription → model call. AbortError gets swallowed; everything else surfaces as an error." },
             { label: "Set a 'stopped' boolean in state and ignore further tokens in the render path.", explanation: "Tokens stop appearing in the UI but the network and server keep running. You've hidden the symptom, not stopped the work." },
             { label: "Reload the page.", explanation: "Nuclear option that loses the entire conversation. Not a real answer." },
           ]}
@@ -655,19 +655,19 @@ return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;`}</Cod
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
-          Phase 4 — locked in
+          Phase 4, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You&apos;re ready for Phase 5 when…</h3>
         <ul className="mb-4 list-disc space-y-1 pl-5 text-slate-700 dark:text-slate-300">
           <li>You can defend the choice between <code>EventSource</code> and <code>fetch</code> streaming in one sentence per side.</li>
           <li>You instinctively reach for a rAF-batched ref before you reach for <code>setState</code> in a token loop.</li>
           <li>The phrase &quot;optimistic add, reconcile on first token&quot; means something concrete to you, not a buzzword.</li>
-          <li>You know which of server / client / persisted state each piece of your chat panel belongs in — and you don&apos;t lift things to a store by default.</li>
+          <li>You know which of server / client / persisted state each piece of your chat panel belongs in, and you don&apos;t lift things to a store by default.</li>
           <li>You can explain the cost-per-image gotcha, and you&apos;ve seen the client-side downscale snippet at least once.</li>
           <li>You always wire an <code>AbortController</code> with cleanup, no exceptions.</li>
         </ul>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 5 — Agents &amp; Advanced Patterns.</strong>{" "}The ReAct loop, multi-turn tool use, when an agent is the right call and when it&apos;s wildly overkill, multi-agent orchestration patterns.
+          <strong>Up next: Phase 5, Agents &amp; Advanced Patterns.</strong>{" "}The ReAct loop, multi-turn tool use, when an agent is the right call and when it&apos;s wildly overkill, multi-agent orchestration patterns.
         </p>
         <Link
           href="/courses/ai/modules/agents-intro"

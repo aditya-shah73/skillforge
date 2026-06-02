@@ -77,7 +77,7 @@ export default function Phase3RevisionModule() {
       {/* INTRO */}
       <section className="not-prose mb-10">
         <p className="leading-relaxed text-slate-700 dark:text-slate-300">
-          This is not new material. It&apos;s a <strong>map of Phase 3</strong> — every decision, every operator, every gotcha from embeddings, pgvector, RAG architecture, and the Spring AI pipeline, compressed onto one page. If something here is unfamiliar, jump back to the source module. If it&apos;s familiar, keep reading. Treat this as the page you re-read on the plane the morning you ship the RAG feature.
+          This is not new material. It&apos;s a <strong>map of Phase 3</strong>, every decision, every operator, every gotcha from embeddings, pgvector, RAG architecture, and the Spring AI pipeline, compressed onto one page. If something here is unfamiliar, jump back to the source module. If it&apos;s familiar, keep reading. Treat this as the page you re-read on the plane the morning you ship the RAG feature.
         </p>
         <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">
           The four modules you&apos;re consolidating: <Link href="/courses/ai/modules/embeddings-deep" className="text-emerald-600 hover:underline">Embeddings deep dive</Link>, <Link href="/courses/ai/modules/pgvector" className="text-emerald-600 hover:underline">Vector DBs &amp; pgvector</Link>, <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">RAG architecture</Link>, and <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline">RAG in Spring Boot end-to-end</Link>.
@@ -99,7 +99,7 @@ export default function Phase3RevisionModule() {
           An embedding is a <strong>fixed-length vector of floats</strong>{" "}that places a piece of text at a coordinate in a learned semantic space. Two texts that mean similar things land near each other; the distance metric is how you measure &quot;near&quot;.
         </p>
 
-        <h3 className="mb-2 text-base font-semibold">Pick a model — dimensions vs quality vs cost</h3>
+        <h3 className="mb-2 text-base font-semibold">Pick a model, dimensions vs quality vs cost</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -145,7 +145,7 @@ export default function Phase3RevisionModule() {
           </table>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Distance metrics — and why most of the time it doesn&apos;t matter</h3>
+        <h3 className="mb-2 text-base font-semibold">Distance metrics, and why most of the time it doesn&apos;t matter</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -159,13 +159,13 @@ export default function Phase3RevisionModule() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-semibold">Cosine</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Angle between vectors — ignores magnitude</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Angle between vectors, ignores magnitude</td>
                 <td className="px-4 py-3 font-mono text-xs">{`<=>`}</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Default for text. Robust to length differences.</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Inner product (dot)</td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cosine × magnitudes — magnitude carries signal</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Cosine × magnitudes, magnitude carries signal</td>
                 <td className="px-4 py-3 font-mono text-xs">{`<#>`}</td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-400">Faster than cosine <em>when vectors are L2-normalized</em>. Identical results if normalized.</td>
               </tr>
@@ -180,11 +180,11 @@ export default function Phase3RevisionModule() {
         </div>
 
         <Callout variant="insight">
-          <strong>The L2-normalization trick:</strong>{" "}OpenAI, Voyage, Cohere, BGE all return L2-normalized vectors (length 1). On normalized vectors, <em>cosine and inner product give the same ranking</em>, but inner product is ~30% faster because there&apos;s no division. Use <code>{`<#>`}</code> over <code>{`<=>`}</code> when you know your vectors are normalized — and remember to <em>negate</em>{" "}the result if your code expects &quot;smaller is closer&quot;, since pgvector returns negative inner product.
+          <strong>The L2-normalization trick:</strong>{" "}OpenAI, Voyage, Cohere, BGE all return L2-normalized vectors (length 1). On normalized vectors, <em>cosine and inner product give the same ranking</em>, but inner product is ~30% faster because there&apos;s no division. Use <code>{`<#>`}</code> over <code>{`<=>`}</code> when you know your vectors are normalized, and remember to <em>negate</em>{" "}the result if your code expects &quot;smaller is closer&quot;, since pgvector returns negative inner product.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/embeddings-deep" className="text-emerald-600 hover:underline">Module 15 — Embeddings deep dive</Link>.
+          Source: <Link href="/courses/ai/modules/embeddings-deep" className="text-emerald-600 hover:underline">Module 15, Embeddings deep dive</Link>.
         </p>
       </section>
 
@@ -192,7 +192,7 @@ export default function Phase3RevisionModule() {
       {/* SECTION 2 — Vector DBs & pgvector */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Vector DBs &amp; pgvector — HNSW vs IVFFlat</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">2. Vector DBs &amp; pgvector, HNSW vs IVFFlat</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Below ~50k rows, brute-force kNN over a sequential scan is fine. Past that, you need an Approximate Nearest Neighbor index. pgvector ships two: HNSW and IVFFlat. Pick HNSW.
         </p>
@@ -229,7 +229,7 @@ export default function Phase3RevisionModule() {
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Incremental inserts</td>
-                <td className="px-4 py-3 text-emerald-600">Cheap — append to graph</td>
+                <td className="px-4 py-3 text-emerald-600">Cheap, append to graph</td>
                 <td className="px-4 py-3 text-amber-600">Cheap but recall degrades; rebuild periodically</td>
               </tr>
               <tr>
@@ -246,8 +246,8 @@ export default function Phase3RevisionModule() {
           </table>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Index creation — what you actually type</h3>
-        <CodeBlock lang="plain" caption="HNSW index — the default you should reach for">{`-- enable the extension once per database
+        <h3 className="mb-2 text-base font-semibold">Index creation, what you actually type</h3>
+        <CodeBlock lang="plain" caption="HNSW index, the default you should reach for">{`-- enable the extension once per database
 CREATE EXTENSION IF NOT EXISTS vector;
 
 -- table with a 1536-dim embedding column
@@ -266,7 +266,7 @@ CREATE INDEX docs_embedding_hnsw
 -- per-session: turn up recall at query time (costs latency)
 SET hnsw.ef_search = 100;`}</CodeBlock>
 
-        <CodeBlock lang="plain" caption="IVFFlat — only when build time / memory matter more than recall">{`-- IVFFlat: pick lists ≈ sqrt(row_count) for &lt; 1M rows, row_count / 1000 above that
+        <CodeBlock lang="plain" caption="IVFFlat, only when build time / memory matter more than recall">{`-- IVFFlat: pick lists ≈ sqrt(row_count) for &lt; 1M rows, row_count / 1000 above that
 CREATE INDEX docs_embedding_ivf
     ON docs USING ivfflat (embedding vector_cosine_ops)
     WITH (lists = 100);
@@ -274,7 +274,7 @@ CREATE INDEX docs_embedding_ivf
 -- probe more partitions for higher recall (trades latency)
 SET ivfflat.probes = 10;`}</CodeBlock>
 
-        <CodeBlock lang="plain" caption="The three distance operators — pick the one matching your operator class">{`-- operator class       operator   meaning
+        <CodeBlock lang="plain" caption="The three distance operators, pick the one matching your operator class">{`-- operator class       operator   meaning
 -- vector_cosine_ops     <=>        cosine distance (1 - cosine_similarity)
 -- vector_ip_ops         <#>        negative inner product (use ORDER BY ASC)
 -- vector_l2_ops         <->        L2 distance
@@ -286,11 +286,11 @@ ORDER  BY embedding <=> $1::vector
 LIMIT  10;`}</CodeBlock>
 
         <Callout variant="warn">
-          <strong>The metadata-filter gotcha:</strong>{" "}a <code>WHERE tenant_id = ?</code> on top of an ANN index can blow up recall — pgvector applies the ANN search first, then filters, so you can lose most of your candidates. Fix: <strong>partial indexes per tenant</strong>{" "}if you have few tenants, or use the iterative-scan feature (pgvector 0.8+) to keep scanning until you have enough post-filter results. Always pre-filter on cheap columns; never trust top-K to survive an aggressive WHERE clause.
+          <strong>The metadata-filter gotcha:</strong>{" "}a <code>WHERE tenant_id = ?</code> on top of an ANN index can blow up recall, pgvector applies the ANN search first, then filters, so you can lose most of your candidates. Fix: <strong>partial indexes per tenant</strong>{" "}if you have few tenants, or use the iterative-scan feature (pgvector 0.8+) to keep scanning until you have enough post-filter results. Always pre-filter on cheap columns; never trust top-K to survive an aggressive WHERE clause.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/pgvector" className="text-emerald-600 hover:underline">Module 16 — Vector DBs &amp; pgvector</Link>.
+          Source: <Link href="/courses/ai/modules/pgvector" className="text-emerald-600 hover:underline">Module 16, Vector DBs &amp; pgvector</Link>.
         </p>
       </section>
 
@@ -310,12 +310,12 @@ LIMIT  10;`}</CodeBlock>
         <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
           <li><strong>Ingest is offline</strong>: load documents, split into chunks, embed (batched!), write to the vector store with metadata.</li>
           <li><strong>Query is online</strong>: embed the user&apos;s question with the <em>same model</em>, retrieve top-K by similarity, optionally re-rank with a cross-encoder, assemble a grounded prompt, generate.</li>
-          <li><strong>Citations close the loop</strong>: every chunk that made it into the prompt should round-trip back to the user as a source link — both for trust and for debugging your retrieval.</li>
-          <li><strong>The two failure modes you should always be debugging:</strong>{" "}the right chunk didn&apos;t make it into top-K (retrieval bug — fix chunking, top-K, or the embedding model), or it did and the LLM ignored it (generation bug — fix the prompt template or re-rank harder).</li>
+          <li><strong>Citations close the loop</strong>: every chunk that made it into the prompt should round-trip back to the user as a source link, both for trust and for debugging your retrieval.</li>
+          <li><strong>The two failure modes you should always be debugging:</strong>{" "}the right chunk didn&apos;t make it into top-K (retrieval bug, fix chunking, top-K, or the embedding model), or it did and the LLM ignored it (generation bug, fix the prompt template or re-rank harder).</li>
         </ul>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
+          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17, RAG architecture</Link>.
         </p>
       </section>
 
@@ -323,7 +323,7 @@ LIMIT  10;`}</CodeBlock>
       {/* SECTION 4 — Chunking strategies */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Chunking — the lever that matters most</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Chunking, the lever that matters most</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           Bad chunking is the single most common reason a RAG system feels stupid. Each strategy has a regime where it wins.
         </p>
@@ -349,7 +349,7 @@ LIMIT  10;`}</CodeBlock>
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mb-2 text-xs font-bold tracking-wider text-emerald-700 uppercase">Structural (markdown-aware)</div>
-            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Split on headings — H1/H2/H3. Each chunk is one logical section.</p>
+            <p className="mb-2 text-xs text-slate-700 dark:text-slate-300">Split on headings, H1/H2/H3. Each chunk is one logical section.</p>
             <div className="text-xs font-semibold text-slate-500">Wins when: technical docs, runbooks, anything with a TOC. Usually the best.</div>
           </div>
 
@@ -366,7 +366,7 @@ LIMIT  10;`}</CodeBlock>
           </div>
         </div>
 
-        <h3 className="mb-2 text-base font-semibold">Chunk size vs recall — the curve</h3>
+        <h3 className="mb-2 text-base font-semibold">Chunk size vs recall, the curve</h3>
         <div className="mb-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-left text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/50">
@@ -401,7 +401,7 @@ LIMIT  10;`}</CodeBlock>
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
+          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17, RAG architecture</Link>.
         </p>
       </section>
 
@@ -439,9 +439,9 @@ LIMIT  10;`}</CodeBlock>
             <div className="mb-2 text-xs font-bold tracking-wider text-violet-700 uppercase dark:text-violet-300">Re-ranking with a cross-encoder</div>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Bi-encoder (the embedding model): one tower per side, cheap, used for retrieval.</li>
-              <li>Cross-encoder: query + chunk go through the same model — much more accurate, much slower.</li>
+              <li>Cross-encoder: query + chunk go through the same model, much more accurate, much slower.</li>
               <li>Retrieve K = 50 with embeddings, re-rank to top 5–8 with a cross-encoder. Standard pattern.</li>
-              <li>Cohere Rerank, BGE-Reranker, Voyage Rerank — pick one, plug it in, recall@5 jumps 10–30%.</li>
+              <li>Cohere Rerank, BGE-Reranker, Voyage Rerank, pick one, plug it in, recall@5 jumps 10–30%.</li>
             </ul>
           </div>
 
@@ -450,7 +450,7 @@ LIMIT  10;`}</CodeBlock>
             <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>Budget by tokens, not chunk count. Reserve room for: system prompt, history, citations, response.</li>
               <li>Rule of thumb: retrieved chunks ≤ 40–60% of the input budget.</li>
-              <li>Past ~50K tokens, attention quality degrades and cost spikes — don&apos;t cram &quot;in case&quot;.</li>
+              <li>Past ~50K tokens, attention quality degrades and cost spikes, don&apos;t cram &quot;in case&quot;.</li>
               <li><strong>Lost in the middle</strong>: LLMs over-weight the first and last chunks. Put the highest-ranked chunk <em>last</em>, weakest in the middle.</li>
             </ul>
           </div>
@@ -469,7 +469,7 @@ Question: {user_question}
 Answer:`}</CodeBlock>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17 — RAG architecture</Link>.
+          Source: <Link href="/courses/ai/modules/rag-architecture" className="text-emerald-600 hover:underline">Module 17, RAG architecture</Link>.
         </p>
       </section>
 
@@ -482,7 +482,7 @@ Answer:`}</CodeBlock>
           The three primitives you actually use in Spring AI for RAG: <code>EmbeddingModel</code>, <code>VectorStore</code>, and <code>QuestionAnswerAdvisor</code>. Everything else is plumbing.
         </p>
 
-        <h3 className="mt-6 mb-2 text-lg font-semibold">Embedding service — one call per batch, always</h3>
+        <h3 className="mt-6 mb-2 text-lg font-semibold">Embedding service, one call per batch, always</h3>
         <CodeBlock lang="java" caption="Batched embedding via Spring AI's EmbeddingModel">{`@Service
 public class EmbeddingService {
     private final EmbeddingModel model;
@@ -498,7 +498,7 @@ public class EmbeddingService {
     }
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-2 text-lg font-semibold">VectorStore — the abstraction over pgvector</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">VectorStore, the abstraction over pgvector</h3>
         <CodeBlock lang="java" caption="Ingest: Document → VectorStore.add() with metadata">{`@Service
 public class DocsService {
     private final VectorStore store;
@@ -520,7 +520,7 @@ public class DocsService {
     }
 }`}</CodeBlock>
 
-        <CodeBlock lang="java" caption="Retrieve with a metadata filter — tenant-scoped, top-K">{`public List<Document> retrieve(String query, long tenantId) {
+        <CodeBlock lang="java" caption="Retrieve with a metadata filter, tenant-scoped, top-K">{`public List<Document> retrieve(String query, long tenantId) {
     SearchRequest req = SearchRequest.query(query)
         .withTopK(8)
         .withSimilarityThreshold(0.7)
@@ -528,7 +528,7 @@ public class DocsService {
     return store.similaritySearch(req);
 }`}</CodeBlock>
 
-        <h3 className="mt-8 mb-2 text-lg font-semibold">QuestionAnswerAdvisor — RAG in 10 lines</h3>
+        <h3 className="mt-8 mb-2 text-lg font-semibold">QuestionAnswerAdvisor, RAG in 10 lines</h3>
         <CodeBlock lang="java" caption="Advisor: retrieve + assemble + generate, wired into ChatClient">{`@Service
 public class AnswerService {
     private final ChatClient chat;
@@ -549,7 +549,7 @@ public class AnswerService {
 
         <h3 className="mt-8 mb-2 text-lg font-semibold">When to use the advisor vs roll your own</h3>
         <ul className="not-prose list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
-          <li><strong>Advisor:</strong>{" "}internal tools, chatbots, prototypes — anywhere you don&apos;t need explicit citation control or custom prompt assembly.</li>
+          <li><strong>Advisor:</strong>{" "}internal tools, chatbots, prototypes, anywhere you don&apos;t need explicit citation control or custom prompt assembly.</li>
           <li><strong>Hand-rolled (retrieve + prompt yourself):</strong>{" "}when you need numbered citations, structured output, a custom rerank step, or hybrid (BM25 + vector) retrieval. Drop to <code>JdbcTemplate</code> for the hybrid query; keep <code>VectorStore</code> for ingest.</li>
           <li><strong>The 80/20 split:</strong>{" "}advisor handles the easy 80%; the hard 20% always wants direct control.</li>
         </ul>
@@ -559,7 +559,7 @@ public class AnswerService {
         </Callout>
 
         <p className="not-prose mt-6 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline">Module 18 — RAG in Spring Boot end-to-end</Link>.
+          Source: <Link href="/courses/ai/modules/rag-spring" className="text-emerald-600 hover:underline">Module 18, RAG in Spring Boot end-to-end</Link>.
         </p>
       </section>
 
@@ -576,12 +576,12 @@ public class AnswerService {
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Chunks too small lose context</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              50-token chunks have noisy embeddings — there&apos;s not enough text to define a stable point in semantic space. You retrieve near-misses for everything.
+              50-token chunks have noisy embeddings, there&apos;s not enough text to define a stable point in semantic space. You retrieve near-misses for everything.
             </p>
-            <CodeBlock lang="java" caption="BAD — 50-token chunks, mid-sentence breaks">{`// 50 token chunks — too small, mid-sentence
+            <CodeBlock lang="java" caption="BAD, 50-token chunks, mid-sentence breaks">{`// 50 token chunks — too small, mid-sentence
 TextSplitter splitter = new TokenTextSplitter(50, 0, 5, 10000, true);
 List<Document> chunks = splitter.apply(docs);`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — ~300 tokens, sentence-aware, 50-token overlap">{`// ~300 tokens, paragraph-first with sentence fallback, 50-token overlap
+            <CodeBlock lang="java" caption="GOOD, ~300 tokens, sentence-aware, 50-token overlap">{`// ~300 tokens, paragraph-first with sentence fallback, 50-token overlap
 TextSplitter splitter = new TokenTextSplitter(300, 50, 50, 10000, true);
 List<Document> chunks = splitter.apply(docs);`}</CodeBlock>
           </div>
@@ -589,12 +589,12 @@ List<Document> chunks = splitter.apply(docs);`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 2 · top-K=1 with no diversity</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              K=1 means one bad nearest neighbor = wrong answer. And without MMR or re-ranking, top-K often returns near-duplicates from the same document — wasting the window.
+              K=1 means one bad nearest neighbor = wrong answer. And without MMR or re-ranking, top-K often returns near-duplicates from the same document, wasting the window.
             </p>
-            <CodeBlock lang="java" caption="BAD — single chunk, no diversity">{`List<Document> ctx = store.similaritySearch(
+            <CodeBlock lang="java" caption="BAD, single chunk, no diversity">{`List<Document> ctx = store.similaritySearch(
     SearchRequest.query(q).withTopK(1)
 );`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — over-fetch, re-rank, return diverse top 5">{`// Over-fetch K=30, re-rank with a cross-encoder to top 5
+            <CodeBlock lang="java" caption="GOOD, over-fetch, re-rank, return diverse top 5">{`// Over-fetch K=30, re-rank with a cross-encoder to top 5
 List<Document> candidates = store.similaritySearch(
     SearchRequest.query(q).withTopK(30)
 );
@@ -606,10 +606,10 @@ List<Document> top = reranker.rerank(q, candidates, 5);  // cohere/bge/voyage`}<
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               In any multi-user system, an unfiltered similarity search will happily return Tenant B&apos;s chunks to Tenant A. This is a data-leak bug, not a relevance bug.
             </p>
-            <CodeBlock lang="java" caption="BAD — global similarity search, no scope">{`List<Document> ctx = store.similaritySearch(
+            <CodeBlock lang="java" caption="BAD, global similarity search, no scope">{`List<Document> ctx = store.similaritySearch(
     SearchRequest.query(q).withTopK(6)
 );  // returns chunks from EVERY tenant`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — always scope by tenant in the filter expression">{`List<Document> ctx = store.similaritySearch(
+            <CodeBlock lang="java" caption="GOOD, always scope by tenant in the filter expression">{`List<Document> ctx = store.similaritySearch(
     SearchRequest.query(q)
         .withTopK(6)
         .withFilterExpression("tenant == " + tenantId)
@@ -621,14 +621,14 @@ List<Document> top = reranker.rerank(q, candidates, 5);  // cohere/bge/voyage`}<
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
               Embed corpus chunks <strong>once</strong>{" "}at ingest, store the vectors, reuse forever. Re-embedding the corpus per query torches your embedding budget and turns p99 latency into seconds.
             </p>
-            <CodeBlock lang="java" caption="BAD — embeds all docs on every query">{`public List<Document> search(String q, List<String> allDocs) {
+            <CodeBlock lang="java" caption="BAD, embeds all docs on every query">{`public List<Document> search(String q, List<String> allDocs) {
     float[] qVec = model.embed(q);
     return allDocs.stream()
         .map(d -> new Scored(d, cosine(qVec, model.embed(d))))  // re-embed!
         .sorted(...).limit(6).map(...)
         .toList();
 }`}</CodeBlock>
-            <CodeBlock lang="java" caption="GOOD — corpus embedded once, persisted, queried via index">{`// Ingest path (offline) — embed once, write to VectorStore
+            <CodeBlock lang="java" caption="GOOD, corpus embedded once, persisted, queried via index">{`// Ingest path (offline) — embed once, write to VectorStore
 public void ingestOnce(List<Document> docs) {
     store.add(docs);  // VectorStore embeds + writes
 }
@@ -649,15 +649,15 @@ public List<Document> search(String q) {
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">8. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Five quick recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Five quick recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="Your Spring app indexes 80k support tickets in pgvector. Recall@10 sits at 0.72 with text-embedding-3-small. You've already tuned chunking. What's the highest-leverage single change?"
           options={[
-            { label: "Switch to text-embedding-3-large and re-embed the entire corpus.", correct: true, explanation: "Right. Once chunking is tuned, the embedder is the next biggest lever — large jumps MTEB by ~3 points, which on a hard domain usually moves recall@10 from 0.72 toward 0.85+. The 6.5× cost is fine at 80k docs. The trap is doing this before tuning chunking; the order matters." },
-            { label: "Switch from HNSW to IVFFlat to query more partitions.", explanation: "Wrong direction. HNSW has higher recall than IVFFlat at default params. If you suspect index recall, raise ef_search on HNSW — don't switch to a less accurate index." },
+            { label: "Switch to text-embedding-3-large and re-embed the entire corpus.", correct: true, explanation: "Right. Once chunking is tuned, the embedder is the next biggest lever, large jumps MTEB by ~3 points, which on a hard domain usually moves recall@10 from 0.72 toward 0.85+. The 6.5× cost is fine at 80k docs. The trap is doing this before tuning chunking; the order matters." },
+            { label: "Switch from HNSW to IVFFlat to query more partitions.", explanation: "Wrong direction. HNSW has higher recall than IVFFlat at default params. If you suspect index recall, raise ef_search on HNSW, don't switch to a less accurate index." },
             { label: "Increase top-K from 10 to 100 without re-ranking.", explanation: "You'd dilute the prompt with mostly-irrelevant chunks and hit lost-in-the-middle. K=100 only helps if you re-rank back down to 5–8." },
             { label: "Switch the distance operator from cosine to L2.", explanation: "On L2-normalized embeddings (which OpenAI returns), cosine and L2 give the same ranking. Won't move recall." },
           ]}
@@ -667,9 +667,9 @@ public List<Document> search(String q) {
           kind="Recall check"
           question="You're building a vector index over 5M product descriptions. New products are added all day; recall has to stay above 0.95. Which index and why?"
           options={[
-            { label: "HNSW with m=16, ef_construction=64 — and tune ef_search at query time.", correct: true, explanation: "Right. HNSW gives the recall you need at default params, accepts incremental inserts cheaply, and ef_search lets you trade latency for recall per query. The slow build time is a one-time cost." },
-            { label: "IVFFlat with lists=√N — it's faster to build.", explanation: "IVFFlat is faster to build but tops out at ~0.85–0.90 recall and degrades as you insert new rows without rebuilding. Doesn't meet the 0.95 bar." },
-            { label: "Brute-force sequential scan — pgvector can handle 5M.", explanation: "5M × 1536 floats = ~30GB of vector math per query. At ANN scale you need an index. Brute force is fine under ~50k rows." },
+            { label: "HNSW with m=16, ef_construction=64, and tune ef_search at query time.", correct: true, explanation: "Right. HNSW gives the recall you need at default params, accepts incremental inserts cheaply, and ef_search lets you trade latency for recall per query. The slow build time is a one-time cost." },
+            { label: "IVFFlat with lists=√N, it's faster to build.", explanation: "IVFFlat is faster to build but tops out at ~0.85–0.90 recall and degrades as you insert new rows without rebuilding. Doesn't meet the 0.95 bar." },
+            { label: "Brute-force sequential scan, pgvector can handle 5M.", explanation: "5M × 1536 floats = ~30GB of vector math per query. At ANN scale you need an index. Brute force is fine under ~50k rows." },
             { label: "Drop pgvector for Pinecone before benchmarking.", explanation: "Premature. HNSW in pgvector handles 5M rows comfortably for most workloads. Switch DBs when you've actually measured a bottleneck." },
           ]}
         />
@@ -679,9 +679,9 @@ public List<Document> search(String q) {
           question="Your corpus is technical Markdown docs with H1/H2 headings. Each doc is ~3000 words. Which chunking strategy is the most defensible default?"
           options={[
             { label: "Fixed 256-token chunks with no overlap.", explanation: "Throws away the structure your docs already provide. Mid-section cuts hurt embedding quality." },
-            { label: "Structural splitter on H2 headings, with a 50-token sliding overlap between adjacent chunks.", correct: true, explanation: "Right. Markdown headings give you free semantic boundaries — each H2 section is one coherent idea. The overlap covers questions that span the boundary. This is the strategy that wins on technical docs and the one Spring AI's structural transformers are designed for." },
-            { label: "Semantic chunking — embed every sentence and cut on embedding drift.", explanation: "Works but is expensive at ingest (you embed everything twice) and overkill when the docs already have headings. Reach for it when there's no structure to exploit." },
-            { label: "Whole-document chunks — let the LLM's context window handle it.", explanation: "3000 words × N docs blows your context budget and exposes you to lost-in-the-middle. Top-K over chunks is what makes RAG efficient." },
+            { label: "Structural splitter on H2 headings, with a 50-token sliding overlap between adjacent chunks.", correct: true, explanation: "Right. Markdown headings give you free semantic boundaries, each H2 section is one coherent idea. The overlap covers questions that span the boundary. This is the strategy that wins on technical docs and the one Spring AI's structural transformers are designed for." },
+            { label: "Semantic chunking, embed every sentence and cut on embedding drift.", explanation: "Works but is expensive at ingest (you embed everything twice) and overkill when the docs already have headings. Reach for it when there's no structure to exploit." },
+            { label: "Whole-document chunks, let the LLM's context window handle it.", explanation: "3000 words × N docs blows your context budget and exposes you to lost-in-the-middle. Top-K over chunks is what makes RAG efficient." },
           ]}
         />
 
@@ -689,10 +689,10 @@ public List<Document> search(String q) {
           kind="Recall check"
           question="You're tuning top-K. You can retrieve K candidates from the vector store and then re-rank to N before prompting. What's the canonical pattern?"
           options={[
-            { label: "K=1, N=1 — fastest path.", explanation: "Zero headroom. A single bad nearest neighbor sinks the answer. K=1 only works on toy data." },
-            { label: "K=8 with no re-rank, send all 8 to the LLM.", explanation: "Decent but leaves accuracy on the table — and risks duplicates eating your window. Re-ranking is the cheapest accuracy lever you can add." },
+            { label: "K=1, N=1, fastest path.", explanation: "Zero headroom. A single bad nearest neighbor sinks the answer. K=1 only works on toy data." },
+            { label: "K=8 with no re-rank, send all 8 to the LLM.", explanation: "Decent but leaves accuracy on the table, and risks duplicates eating your window. Re-ranking is the cheapest accuracy lever you can add." },
             { label: "K=30–50 from the vector store, re-rank with a cross-encoder, send top N=5–8 to the LLM.", correct: true, explanation: "Right. The bi-encoder gives you cheap recall; the cross-encoder gives you precision. Over-fetching + re-ranking is how every production RAG system over a certain quality bar is built." },
-            { label: "K=200, send all 200 to the LLM — the model can sort it out.", explanation: "Burns context, costs more, hurts answer quality because of lost-in-the-middle. The LLM is not your re-ranker." },
+            { label: "K=200, send all 200 to the LLM, the model can sort it out.", explanation: "Burns context, costs more, hurts answer quality because of lost-in-the-middle. The LLM is not your re-ranker." },
           ]}
         />
 
@@ -700,10 +700,10 @@ public List<Document> search(String q) {
           kind="Recall check"
           question="An eval flags that your RAG system retrieves the correct chunk into top-5 but the final answer ignores it. Where do you look first?"
           options={[
-            { label: "Swap embedding models.", explanation: "Retrieval is already working — the right chunk made it into top-5. The bug is downstream of retrieval." },
+            { label: "Swap embedding models.", explanation: "Retrieval is already working, the right chunk made it into top-5. The bug is downstream of retrieval." },
             { label: "Rebuild the HNSW index with higher ef_construction.", explanation: "Same reason. The index is doing its job; the chunk is reaching the prompt." },
             { label: "Re-order the prompt so the highest-ranked chunk is last, not in the middle, and tighten the system prompt to say 'answer ONLY using the sources below'.", correct: true, explanation: "Right. This is the lost-in-the-middle pattern: LLMs over-weight the start and end of the context. Putting the strongest chunk last, plus a strict system prompt, moves the needle when retrieval is healthy but generation isn't using what you gave it." },
-            { label: "Lower top-K to 1.", explanation: "Brittle and doesn't address the bug. The right chunk is already in there — you need the model to actually use it." },
+            { label: "Lower top-K to 1.", explanation: "Brittle and doesn't address the bug. The right chunk is already in there, you need the model to actually use it." },
           ]}
         />
       </section>
@@ -716,12 +716,12 @@ public List<Document> search(String q) {
 
         <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-green-50 p-6 dark:border-emerald-900 dark:from-emerald-950/30 dark:via-slate-900 dark:to-green-950/30">
           <ul className="list-none space-y-2 pl-0 text-sm text-slate-700 dark:text-slate-300">
-            <li>✓ You can pick an embedding model on the cost / dimensions / recall axes without thinking twice — and you know why text-embedding-3-small with matryoshka truncation is the sane default.</li>
+            <li>✓ You can pick an embedding model on the cost / dimensions / recall axes without thinking twice, and you know why text-embedding-3-small with matryoshka truncation is the sane default.</li>
             <li>✓ You reach for <strong>HNSW</strong>{" "}by default, know how to tune <code>ef_search</code> at query time, and know which pgvector operator (<code>{`<=>`}</code>, <code>{`<#>`}</code>, <code>{`<->`}</code>) matches your operator class.</li>
             <li>✓ You can draw the full RAG pipeline on a whiteboard: <strong>load → split → embed → store → embed-query → retrieve → re-rank → assemble → generate</strong>, and explain which stage owns which failure mode.</li>
             <li>✓ You can defend a chunking choice: which strategy, what size, how much overlap, what metadata.</li>
             <li>✓ You know the over-fetch + re-rank pattern (K=30–50, re-rank to 5–8), can fuse vector + BM25 with RRF, and understand lost-in-the-middle ordering.</li>
-            <li>✓ You can wire <code>EmbeddingModel</code> + <code>VectorStore</code> + <code>QuestionAnswerAdvisor</code> in Spring AI in your sleep — and know when to bypass the advisor for a hand-rolled prompt with numbered citations.</li>
+            <li>✓ You can wire <code>EmbeddingModel</code> + <code>VectorStore</code> + <code>QuestionAnswerAdvisor</code> in Spring AI in your sleep, and know when to bypass the advisor for a hand-rolled prompt with numbered citations.</li>
             <li>✓ You always scope by <code>tenant_id</code> in the filter expression, you batch embeddings at ingest, and you&apos;d catch the &quot;re-embedding the corpus per query&quot; bug in code review on sight.</li>
           </ul>
         </div>
@@ -732,14 +732,14 @@ public List<Document> search(String q) {
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 dark:border-sky-900 dark:from-sky-950/30 dark:via-slate-900 dark:to-blue-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-sky-700 uppercase dark:text-sky-300">
-          Phase 3 — locked in
+          Phase 3, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can ship a production RAG feature</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          Embeddings as geometry, HNSW vs IVFFlat as a trade-off, the four chunking strategies, hybrid retrieval, re-ranking, lost-in-the-middle, and the Spring AI primitives. That&apos;s the retrieval stack — every &quot;chat with my docs&quot; product you&apos;ll see is some specialization of what you just consolidated.
+          Embeddings as geometry, HNSW vs IVFFlat as a trade-off, the four chunking strategies, hybrid retrieval, re-ranking, lost-in-the-middle, and the Spring AI primitives. That&apos;s the retrieval stack, every &quot;chat with my docs&quot; product you&apos;ll see is some specialization of what you just consolidated.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 4 — Frontend AI Integration.</strong>{" "}Streaming SSE into React, optimistic updates, rendering tool calls, and the UX patterns that make AI features feel responsive instead of laggy.
+          <strong>Up next: Phase 4, Frontend AI Integration.</strong>{" "}Streaming SSE into React, optimistic updates, rendering tool calls, and the UX patterns that make AI features feel responsive instead of laggy.
         </p>
         <Link
           href="/courses/ai/modules/react-streaming"

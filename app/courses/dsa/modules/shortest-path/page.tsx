@@ -12,10 +12,10 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "weighted", title: "Weighted graphs — and why BFS isn't enough" },
+  { id: "weighted", title: "Weighted graphs, and why BFS isn't enough" },
   { id: "dijkstra", title: "Dijkstra's algorithm" },
-  { id: "topo", title: "Topological sort — Kahn's algorithm" },
-  { id: "limits", title: "Where Dijkstra fails — negative weights" },
+  { id: "topo", title: "Topological sort, Kahn's algorithm" },
+  { id: "limits", title: "Where Dijkstra fails, negative weights" },
   { id: "project", title: "Project: Course Schedule I & II + Network Delay Time" },
   { id: "final", title: "Final quiz" },
 ];
@@ -98,13 +98,13 @@ flowchart LR
       {/* ───────────────── Part 1 · Weighted ───────────────── */}
       <Checkpoint moduleSlug="shortest-path" id="weighted" title="I know why BFS breaks on weighted graphs" xp={20}>
       <section>
-        <h2 id="weighted">Weighted graphs — and why BFS isn&apos;t enough</h2>
+        <h2 id="weighted">Weighted graphs, and why BFS isn&apos;t enough</h2>
 
         <p>
           Until now, every edge has had the same cost. Find the path with the fewest edges? BFS, done. But real graphs
           have <strong>weights</strong>: distances between cities, latencies between servers, costs between currency
           pairs. The right answer minimizes the <em>sum of weights</em>, not the count of edges. BFS doesn&apos;t
-          care about weights — and that&apos;s exactly why it fails.
+          care about weights, and that&apos;s exactly why it fails.
         </p>
 
         <h3>The counterexample</h3>
@@ -116,12 +116,12 @@ Bottom path: A ───────── 100 ────────── B 
 
         <p>
           BFS reaches B via the bottom edge in <em>one</em>{" "}step and reports &quot;distance 1.&quot; In edge count
-          that&apos;s correct — but the actual path cost is 100, while the 4-edge top path costs only 4. BFS counts
+          that&apos;s correct, but the actual path cost is 100, while the 4-edge top path costs only 4. BFS counts
           edges; the question wants total weight. Different optimization, different answer.
         </p>
 
         <Callout variant="insight" title="When BFS still works on weighted graphs">
-          If <em>all weights are equal</em> (every edge costs 5, say), BFS gives the right answer scaled — fewest
+          If <em>all weights are equal</em> (every edge costs 5, say), BFS gives the right answer scaled, fewest
           edges times 5. If weights are 0 or 1 only, a variant called <em>0-1 BFS</em> (using a deque, pushing 0-edges
           to the front and 1-edges to the back) works in O(V + E). For arbitrary positive weights, you need Dijkstra.
         </Callout>
@@ -131,7 +131,7 @@ Bottom path: A ───────── 100 ────────── B 
         <p>
           BFS processes nodes in FIFO order, which corresponds to breadth in unweighted graphs. The fix is to process
           them in order of <em>accumulated distance from the source</em>. The data structure that gives you &quot;always
-          extract the smallest&quot; is a min-heap — which you saw in Module 15. Plug a min-heap into the BFS template,
+          extract the smallest&quot; is a min-heap, which you saw in Module 15. Plug a min-heap into the BFS template,
           ordering by distance, and you have <strong>Dijkstra&apos;s algorithm</strong>.
         </p>
 
@@ -147,9 +147,9 @@ Dijkstra:  min-heap          →   process by accumulated weight`}</CodeBlock>
           question="Why doesn't plain BFS give correct shortest paths on a weighted graph?"
           options={[
             { label: "BFS only works on directed graphs.", explanation: "BFS works on both directed and undirected graphs. The issue is weighted vs unweighted." },
-            { label: "BFS counts edges, not weights — so a 1-edge path of weight 100 looks shorter than a 4-edge path of weight 4.", correct: true, explanation: "Right. BFS's ordering invariant is 'fewest edges from start.' On weighted graphs, that's a different question from 'minimum total weight,' and the two answers can disagree wildly. Dijkstra orders by weight instead." },
+            { label: "BFS counts edges, not weights, so a 1-edge path of weight 100 looks shorter than a 4-edge path of weight 4.", correct: true, explanation: "Right. BFS's ordering invariant is 'fewest edges from start.' On weighted graphs, that's a different question from 'minimum total weight,' and the two answers can disagree wildly. Dijkstra orders by weight instead." },
             { label: "BFS doesn't terminate on cycles.", explanation: "Marked BFS terminates fine on cycles. The issue is not termination, it's correctness on weighted edges." },
-            { label: "BFS only finds paths, not distances.", explanation: "BFS naturally tracks distances (in edge count). The issue is the question being asked has changed — weight vs edge count." },
+            { label: "BFS only finds paths, not distances.", explanation: "BFS naturally tracks distances (in edge count). The issue is the question being asked has changed, weight vs edge count." },
           ]}
         />
       </section>
@@ -161,7 +161,7 @@ Dijkstra:  min-heap          →   process by accumulated weight`}</CodeBlock>
         <h2 id="dijkstra">Dijkstra&apos;s algorithm</h2>
 
         <p>
-          Dijkstra (1959, by Edsger Dijkstra — designed in about 20 minutes over coffee, by his own account) finds
+          Dijkstra (1959, by Edsger Dijkstra, designed in about 20 minutes over coffee, by his own account) finds
           shortest paths from a single source to every other node in a weighted graph with <em>non-negative</em>{" "}
           weights. It&apos;s BFS with a heap.
         </p>
@@ -172,7 +172,7 @@ Dijkstra:  min-heap          →   process by accumulated weight`}</CodeBlock>
 
         <p>
           At every step, Dijkstra picks the unvisited node with the smallest <em>tentative distance</em>{" "}from the
-          source and &quot;finalizes&quot; it — that distance is now known to be optimal. Then it relaxes all of that
+          source and &quot;finalizes&quot; it, that distance is now known to be optimal. Then it relaxes all of that
           node&apos;s outgoing edges: for each neighbor, check whether going through the just-finalized node gives a
           shorter route, and if so, update the neighbor&apos;s tentative distance.
         </p>
@@ -210,8 +210,8 @@ Dijkstra:  min-heap          →   process by accumulated weight`}</CodeBlock>
         <Callout variant="insight" title="Lazy deletion is the trick that makes this fast">
           Java&apos;s PriorityQueue has no decrease-key operation. When we find a shorter path to v, we&apos;d like to
           update v&apos;s priority in the heap. Instead, we just <code>offer</code> a new entry with the better
-          distance. The heap now contains v twice — old and new. The <code>if (d &gt; dist[u]) continue;</code> at
-          poll time silently discards the stale copy. Total heap operations: O(E log V) — that extra log V is the
+          distance. The heap now contains v twice, old and new. The <code>if (d &gt; dist[u]) continue;</code> at
+          poll time silently discards the stale copy. Total heap operations: O(E log V), that extra log V is the
           tradeoff for not having a real decrease-key.
         </Callout>
 
@@ -233,7 +233,7 @@ Step 6:  pop (6,D). Stale.
 Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
 
         <p>
-          Note the stale entries at steps 4 and 6 — those are the &quot;extra&quot; copies created when we found
+          Note the stale entries at steps 4 and 6, those are the &quot;extra&quot; copies created when we found
           shorter paths to B and D. The lazy-deletion check skips them in O(1).
         </p>
 
@@ -247,7 +247,7 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
         <Callout variant="warn" title="Dijkstra requires non-negative edge weights">
           With negative edges, the invariant breaks: a finalized node&apos;s distance might still be reduced by a
           later negative edge. The algorithm silently produces wrong answers. For graphs with negative edges (but no
-          negative cycles), use <strong>Bellman-Ford</strong> — slower at <code>O(V·E)</code> but correct. We&apos;ll
+          negative cycles), use <strong>Bellman-Ford</strong>, slower at <code>O(V·E)</code> but correct. We&apos;ll
           touch on it in the next section.
         </Callout>
 
@@ -255,10 +255,10 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
           kind="Dijkstra check"
           question="Why does the line `if (d > dist[u]) continue;` matter for correctness AND performance?"
           options={[
-            { label: "Correctness only — performance is unaffected.", explanation: "It matters for both. Without it, you'd re-relax edges from u multiple times, doing wasted work." },
-            { label: "Performance only — without it, you'd still get the right answer eventually.", explanation: "You'd get the right answer, but you'd waste time re-relaxing. The check skips work that's already been done correctly." },
-            { label: "It skips stale heap entries — copies of u with a worse distance than the current best, left over from before u's distance was lowered.", correct: true, explanation: "Right. Lazy deletion creates duplicates in the heap. Without this skip, you'd process u again at the worse distance, then relax all its edges — wasted work, and in some implementations a correctness bug. The skip restores BOTH correctness (no spurious updates) AND performance." },
-            { label: "It guards against negative weights.", explanation: "It doesn't — negative weights break Dijkstra regardless. The skip handles a different concern: stale heap entries from lazy deletion." },
+            { label: "Correctness only, performance is unaffected.", explanation: "It matters for both. Without it, you'd re-relax edges from u multiple times, doing wasted work." },
+            { label: "Performance only, without it, you'd still get the right answer eventually.", explanation: "You'd get the right answer, but you'd waste time re-relaxing. The check skips work that's already been done correctly." },
+            { label: "It skips stale heap entries, copies of u with a worse distance than the current best, left over from before u's distance was lowered.", correct: true, explanation: "Right. Lazy deletion creates duplicates in the heap. Without this skip, you'd process u again at the worse distance, then relax all its edges, wasted work, and in some implementations a correctness bug. The skip restores BOTH correctness (no spurious updates) AND performance." },
+            { label: "It guards against negative weights.", explanation: "It doesn't, negative weights break Dijkstra regardless. The skip handles a different concern: stale heap entries from lazy deletion." },
           ]}
         />
       </section>
@@ -267,15 +267,15 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
       {/* ───────────────── Part 3 · Topological sort ───────────────── */}
       <Checkpoint moduleSlug="shortest-path" id="topo" title="I can topo-sort with Kahn's, and detect cycles for free" xp={25}>
       <section>
-        <h2 id="topo">Topological sort — Kahn&apos;s algorithm</h2>
+        <h2 id="topo">Topological sort, Kahn&apos;s algorithm</h2>
 
         <p>
           A <strong>topological sort</strong>{" "}is a linear ordering of a DAG&apos;s nodes such that every edge u→v has
           u before v in the ordering. Concretely: build order, course prerequisites, task dependencies, spreadsheet
-          recalculation order. If the graph has a cycle, no topo order exists — and a good algorithm tells you so.
+          recalculation order. If the graph has a cycle, no topo order exists, and a good algorithm tells you so.
         </p>
 
-        <h3>Kahn&apos;s algorithm — BFS over in-degrees</h3>
+        <h3>Kahn&apos;s algorithm, BFS over in-degrees</h3>
 
         <p>
           The DFS post-order version exists (you saw it last module), but <strong>Kahn&apos;s algorithm</strong>{" "}is
@@ -285,7 +285,7 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
 
         <ol>
           <li>Compute the in-degree of every node.</li>
-          <li>Enqueue every node with in-degree 0 (no dependencies — these can come first).</li>
+          <li>Enqueue every node with in-degree 0 (no dependencies, these can come first).</li>
           <li>Pop a node, append it to the output. For each of its neighbors, decrement their in-degree; if a neighbor&apos;s in-degree drops to 0, enqueue it.</li>
           <li>Repeat. If the output has fewer than V nodes when done, there&apos;s a cycle.</li>
         </ol>
@@ -321,14 +321,14 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
           A node never has its in-degree reach 0 if it&apos;s part of a cycle (the cycle itself contributes incoming
           edges that never decrement to 0). So the &quot;processed fewer than V&quot; check is a perfect cycle
           detector. No extra bookkeeping. Compare with DFS-based detection, which needs the WHITE/GRAY/BLACK
-          machinery — Kahn does the same job with one counter.
+          machinery, Kahn does the same job with one counter.
         </Callout>
 
         <h3>Why it&apos;s BFS, not DFS</h3>
 
         <p>
           Kahn processes nodes in &quot;layers&quot; of the dependency graph: first everything with no prerequisites,
-          then everything whose prerequisites are now satisfied, etc. That&apos;s the BFS shape — the queue holds the
+          then everything whose prerequisites are now satisfied, etc. That&apos;s the BFS shape, the queue holds the
           frontier of newly-ready nodes. The choice of FIFO vs LIFO doesn&apos;t affect correctness (any valid topo
           order is fine), but FIFO gives a predictable left-to-right level expansion that matches how humans think
           about &quot;what can I do now.&quot;
@@ -345,8 +345,8 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
           kind="Topo check"
           question="If Kahn's algorithm finishes with `idx == 5` on a graph with 8 nodes, what does that mean?"
           options={[
-            { label: "Bug — Kahn's should always output all V nodes.", explanation: "It would, on a DAG. Outputting fewer than V is the algorithm's intended way to flag a problem." },
-            { label: "Three nodes were unreachable from the source.", explanation: "Kahn's doesn't take a single source — it processes the whole graph. 'Unreachable' isn't the right framing here." },
+            { label: "Bug, Kahn's should always output all V nodes.", explanation: "It would, on a DAG. Outputting fewer than V is the algorithm's intended way to flag a problem." },
+            { label: "Three nodes were unreachable from the source.", explanation: "Kahn's doesn't take a single source, it processes the whole graph. 'Unreachable' isn't the right framing here." },
             { label: "Three nodes are stuck in a cycle (or downstream of one), so their in-degree never reached 0.", correct: true, explanation: "Right. A cycle's nodes contribute in-edges to each other that prevent any of them from reaching in-degree 0. So they're never enqueued, never processed, never output. The 'processed < V' check is the algorithm's cycle detector." },
             { label: "The graph is undirected.", explanation: "Topological sort only applies to directed graphs. On undirected, in-degree isn't even defined." },
           ]}
@@ -357,11 +357,11 @@ Step 7:  pop (6,E). Done. Final: [0, 3, 1, 4, 6]`}</CodeBlock>
       {/* ───────────────── Part 4 · Limits ───────────────── */}
       <Checkpoint moduleSlug="shortest-path" id="limits" title="I know when Dijkstra fails and what to reach for instead" xp={20}>
       <section>
-        <h2 id="limits">Where Dijkstra fails — negative weights</h2>
+        <h2 id="limits">Where Dijkstra fails, negative weights</h2>
 
         <p>
           Dijkstra is fast and elegant, but it has one hard requirement: <strong>no negative-weight edges</strong>.
-          Violate it and you get silently wrong answers — not crashes, not warnings, just incorrect distances. This
+          Violate it and you get silently wrong answers, not crashes, not warnings, just incorrect distances. This
           is worth understanding before you ever write Dijkstra in production code that could see negative numbers.
         </p>
 
@@ -378,7 +378,7 @@ The B→C=-10 edge would have improved C's distance, but B is already finalized.
         <p>
           The bug is structural: Dijkstra trusts that once a node is finalized at its current tentative distance, no
           better route exists. With negative edges, a route through a not-yet-finalized node could improve a
-          just-finalized one — and Dijkstra refuses to look back.
+          just-finalized one, and Dijkstra refuses to look back.
         </p>
 
         <h3>The remedy: Bellman-Ford</h3>
@@ -386,7 +386,7 @@ The B→C=-10 edge would have improved C's distance, but B is already finalized.
         <p>
           <strong>Bellman-Ford</strong>{" "}handles negative weights by being more pessimistic: it relaxes <em>every
           edge</em>, V−1 times. Each pass might improve some distances; after V−1 passes, all simple-path improvements
-          are accounted for. A V-th pass that still finds an improvement signals a <strong>negative cycle</strong> —
+          are accounted for. A V-th pass that still finds an improvement signals a <strong>negative cycle</strong>,
           a cycle whose total weight is negative, which makes &quot;shortest path&quot; meaningless (you can keep
           going around to drive the distance lower).
         </p>
@@ -416,7 +416,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
 
         <Callout variant="info" title="Cost of correctness">
           Bellman-Ford is <code>O(V·E)</code>, vs Dijkstra&apos;s <code>O((V+E) log V)</code>. On dense graphs that&apos;s
-          O(V³) vs O(V² log V) — substantially slower. Use Dijkstra when you can; reach for Bellman-Ford only when
+          O(V³) vs O(V² log V), substantially slower. Use Dijkstra when you can; reach for Bellman-Ford only when
           negative weights are real (currency arbitrage, certain physics simulations) or required by the problem.
         </Callout>
 
@@ -439,9 +439,9 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
             { id: "kahn", label: "Kahn's (topo sort)", color: "emerald" },
           ]}
           items={[
-            { id: "1", label: "Shortest path between two cells in a 4-directional grid maze.", answer: "bfs", explanation: "Unweighted (or uniformly weighted). BFS — simpler and faster than Dijkstra." },
+            { id: "1", label: "Shortest path between two cells in a 4-directional grid maze.", answer: "bfs", explanation: "Unweighted (or uniformly weighted). BFS, simpler and faster than Dijkstra." },
             { id: "2", label: "Lowest-latency path between data centers, latencies in [1, 1000] ms.", answer: "dijkstra", explanation: "Weighted, all weights non-negative. Textbook Dijkstra." },
-            { id: "3", label: "Order to take courses given prerequisite pairs.", answer: "kahn", explanation: "Dependency ordering — topological sort. Kahn's also flags cycles (impossible course schedule) for free." },
+            { id: "3", label: "Order to take courses given prerequisite pairs.", answer: "kahn", explanation: "Dependency ordering, topological sort. Kahn's also flags cycles (impossible course schedule) for free." },
             { id: "4", label: "Cheapest currency-conversion path through an FX market where some 'fees' could be negative (rebates).", answer: "bellman", explanation: "Negative weights possible. Dijkstra would silently produce wrong answers. Bellman-Ford handles negatives and detects negative cycles (= arbitrage)." },
             { id: "5", label: "Number of moves in a chess-knight reachability problem on an 8×8 board.", answer: "bfs", explanation: "Each knight move costs '1 step.' Unweighted shortest path → BFS." },
             { id: "6", label: "Build a dependency-aware task runner: run task X only after its prereqs.", answer: "kahn", explanation: "Topological sort. Kahn's BFS gives a clean execution order, and detects circular dependencies as a bonus." },
@@ -496,7 +496,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
 }`}</CodeBlock>
 
         <Callout variant="warn" title="The edge direction trap">
-          The input <code>[a, b]</code> means &quot;a depends on b&quot; — to take a you need b. The edge in the
+          The input <code>[a, b]</code> means &quot;a depends on b&quot;, to take a you need b. The edge in the
           dependency graph goes <em>from b to a</em>, not the other way. Get this backwards and the in-degrees are
           inverted; the algorithm runs and reports nonsense. Read the problem statement twice when edges have
           asymmetric meaning.
@@ -541,7 +541,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
 
         <p>
           A network of <code>n</code> nodes; <code>times[i] = [u, v, w]</code> means a signal from u takes w time to
-          reach v. From source <code>k</code>, return the minimum time for all nodes to receive the signal — or -1 if
+          reach v. From source <code>k</code>, return the minimum time for all nodes to receive the signal, or -1 if
           some node is unreachable.
         </p>
 
@@ -587,12 +587,12 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
 
         <Callout variant="info" title="Why the +1 in `new int[n + 1]`">
           LC 743 uses 1-indexed nodes (1..n), not 0-indexed. The arrays need n+1 slots so index n is valid. Read the
-          problem&apos;s indexing convention before sizing arrays — this is a frequent off-by-one source.
+          problem&apos;s indexing convention before sizing arrays, this is a frequent off-by-one source.
         </Callout>
 
         <PartRecap
           title="Three problems, three algorithms"
-          gist="Course Schedule I/II = Kahn's. Network Delay Time = Dijkstra. Together they cover the standard interview surface for Phase 4 — and make the algorithm choice transparent from the problem statement."
+          gist="Course Schedule I/II = Kahn's. Network Delay Time = Dijkstra. Together they cover the standard interview surface for Phase 4, and make the algorithm choice transparent from the problem statement."
           points={[
             { takeaway: "When the problem is about ordering with dependencies, reach for Kahn's.", detail: "'Can you finish?' = is there a cycle? 'In what order?' = the topo order itself. Kahn's gives both with the same code." },
             { takeaway: "When the problem is about minimum cost on a non-negative weighted graph, reach for Dijkstra.", detail: "'Earliest signal arrival,' 'cheapest path,' 'minimum delay.' Min-heap of (dist, node), lazy deletion via the staleness check, relax outgoing edges." },
@@ -605,7 +605,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="shortest-path" id="final" title="I've completed Module 19 — and Phase 4!" xp={40} celebration="Graphs are no longer mysterious. Phase 5 — Java Collections in depth — sets up the rest of your interview toolkit.">
+      <Checkpoint moduleSlug="shortest-path" id="final" title="I've completed Module 19, and Phase 4!" xp={40} celebration="Graphs are no longer mysterious. Phase 5, Java Collections in depth, sets up the rest of your interview toolkit.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -613,8 +613,8 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
           kind="Final check"
           question="Why is Dijkstra's `if (d > dist[u]) continue;` line both correct AND fast?"
           options={[
-            { label: "It implements lazy deletion of stale heap entries — when a shorter path to u was found later, the old entry is discarded in O(1) on pop.", correct: true, explanation: "Right. PriorityQueue has no decrease-key, so we offer a new (smaller-distance) entry instead of updating in place. The old entry sticks around in the heap and gets filtered out at pop time. The check is O(1), the alternative (real decrease-key) requires an indexed heap." },
-            { label: "It detects negative cycles.", explanation: "It does not. Dijkstra doesn't detect or handle negative cycles — that's Bellman-Ford's job." },
+            { label: "It implements lazy deletion of stale heap entries, when a shorter path to u was found later, the old entry is discarded in O(1) on pop.", correct: true, explanation: "Right. PriorityQueue has no decrease-key, so we offer a new (smaller-distance) entry instead of updating in place. The old entry sticks around in the heap and gets filtered out at pop time. The check is O(1), the alternative (real decrease-key) requires an indexed heap." },
+            { label: "It detects negative cycles.", explanation: "It does not. Dijkstra doesn't detect or handle negative cycles, that's Bellman-Ford's job." },
             { label: "It's a Java optimization specific to PriorityQueue.", explanation: "It's an algorithmic technique that applies to any heap without decrease-key. Not Java-specific." },
             { label: "It guarantees termination.", explanation: "Termination is guaranteed because each node finalizes at most once. The check is about correctness and efficiency, not termination." },
           ]}
@@ -636,9 +636,9 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
           question="Your colleague's currency-arbitrage graph has edges with both positive and negative weights. They're using Dijkstra. What's the failure mode?"
           options={[
             { label: "It throws an exception when it sees a negative weight.", explanation: "It does not. Java's PriorityQueue happily accepts any int. The bug is silent." },
-            { label: "It silently returns wrong distances — once a node is finalized, Dijkstra never reconsiders it, but a later negative edge could have lowered its distance.", correct: true, explanation: "Right. This is the failure mode that bites people in production. No crash, no warning — just incorrect numbers. The fix is to use Bellman-Ford (handles negatives, O(V·E)). For arbitrage detection specifically, you also want negative-cycle detection — Bellman-Ford gives that for free with one extra pass." },
+            { label: "It silently returns wrong distances, once a node is finalized, Dijkstra never reconsiders it, but a later negative edge could have lowered its distance.", correct: true, explanation: "Right. This is the failure mode that bites people in production. No crash, no warning, just incorrect numbers. The fix is to use Bellman-Ford (handles negatives, O(V·E)). For arbitrage detection specifically, you also want negative-cycle detection, Bellman-Ford gives that for free with one extra pass." },
             { label: "It runs forever on the negative cycle.", explanation: "Dijkstra terminates regardless because each node is finalized at most once. It just gives wrong answers. Bellman-Ford is the algorithm that detects negative cycles." },
-            { label: "It works correctly — Dijkstra handles negatives fine.", explanation: "It does not. The non-negative-weights precondition is hard. Negative edges can route around finalized nodes that Dijkstra refuses to revisit." },
+            { label: "It works correctly, Dijkstra handles negatives fine.", explanation: "It does not. The non-negative-weights precondition is hard. Negative edges can route around finalized nodes that Dijkstra refuses to revisit." },
           ]}
         />
 
@@ -648,8 +648,8 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
           points={[
             { takeaway: "Match algorithm to graph in one read of the problem.", detail: "Unweighted shortest path → BFS. Weighted (non-negative) → Dijkstra. Negative weights or arbitrage → Bellman-Ford. 'Order' or 'sequence' words → topological sort." },
             { takeaway: "Dijkstra = BFS + min-heap, ordered by distance.", detail: "Same template as BFS, just with a PriorityQueue ordered by tentative distance. Lazy deletion (`if (d > dist[u]) continue;`) is the trick that makes it fast without a true decrease-key." },
-            { takeaway: "Kahn's = BFS over in-degrees.", detail: "Enqueue in-degree-0 nodes, decrement neighbors' in-degrees on pop, enqueue when they hit 0. Cycle detection = 'processed fewer than V' — free." },
-            { takeaway: "Negative weights silently break Dijkstra.", detail: "No exception, just wrong answers. Bellman-Ford is the safe alternative — slower at O(V·E), but correct. The V-th pass detects negative cycles." },
+            { takeaway: "Kahn's = BFS over in-degrees.", detail: "Enqueue in-degree-0 nodes, decrement neighbors' in-degrees on pop, enqueue when they hit 0. Cycle detection = 'processed fewer than V', free." },
+            { takeaway: "Negative weights silently break Dijkstra.", detail: "No exception, just wrong answers. Bellman-Ford is the safe alternative, slower at O(V·E), but correct. The V-th pass detects negative cycles." },
             { takeaway: "Edge direction matters more than you think.", detail: "'a depends on b' is an edge b→a, not a→b. Mistakes here pass empty test cases and fail real ones with no obvious symptom. Re-read the problem statement before building the graph." },
           ]}
         />
@@ -660,7 +660,7 @@ public int[] bellmanFord(int n, int[][] edges, int source) {
             Three modules of the algorithms that solve most graph questions: representations, BFS/DFS,
             shortest path, topological sort. You can now spot a graph problem in disguise, pick the right
             traversal, and avoid the silent bugs (undirected double-add, mark-on-enqueue, edge-direction inversion,
-            negative-weight Dijkstra). Phase 5 — Java Collections in depth — is the next stop:
+            negative-weight Dijkstra). Phase 5, Java Collections in depth, is the next stop:
             tying everything from Phases 2–4 together into a single decision framework for &quot;which container
             do I reach for?&quot;
           </p>

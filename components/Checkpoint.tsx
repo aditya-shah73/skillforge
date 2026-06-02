@@ -179,7 +179,7 @@ export default function Checkpoint({ moduleSlug, id, title, xp = 20, children, c
         </CheckpointContext.Provider>
         {completed && (
           <div className="mt-4 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-            ✓ Completed — nice work.
+            ✓ Completed, nice work.
           </div>
         )}
         {!completed && !effectiveManual && total > 0 && done < total && (

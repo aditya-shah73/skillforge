@@ -13,7 +13,7 @@ import ModuleNav from "@/components/ModuleNav";
 import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
-  { id: "setup", title: "What a set is — and why it's a HashMap in disguise" },
+  { id: "setup", title: "What a set is, and why it's a HashMap in disguise" },
   { id: "variants", title: "HashSet vs LinkedHashSet vs TreeSet" },
   { id: "frequency", title: "Frequency counting: the universal pattern" },
   { id: "window", title: "Sliding-window with frequency maps" },
@@ -97,8 +97,8 @@ flowchart LR
           Look at the API of <code>HashSet</code> and you&apos;ll notice it&apos;s exactly <code>HashMap</code> with the
           value half snipped off. In fact, the JDK source <em>literally</em>{" "}backs <code>HashSet</code> with a{" "}
           <code>HashMap&lt;E, Object&gt;</code>, where every key maps to the same dummy <code>PRESENT</code>{" "}
-          sentinel. Everything you learned in Module 11 — hashing, chaining, load factor, treeification, the{" "}
-          <code>equals</code>/<code>hashCode</code> contract — applies here, full stop.
+          sentinel. Everything you learned in Module 11, hashing, chaining, load factor, treeification, the{" "}
+          <code>equals</code>/<code>hashCode</code> contract, applies here, full stop.
         </p>
 
         <Mermaid chart={setModel} />
@@ -117,7 +117,7 @@ seen.remove("dog");       // false — wasn't there
 seen.size();              // 1`}</CodeBlock>
 
         <p>
-          The trick that makes sets useful isn&apos;t the API — it&apos;s the <em>question shape</em>. Whenever you
+          The trick that makes sets useful isn&apos;t the API, it&apos;s the <em>question shape</em>. Whenever you
           catch yourself asking &quot;have I seen X before?&quot; or &quot;does the input contain a pair that sums
           to T?&quot; or &quot;is this string an anagram of that one?&quot;, a set (or its cousin, a frequency map)
           collapses what would be O(n²) brute force into O(n).
@@ -149,16 +149,16 @@ Set<Integer> difference = new HashSet<>(a);
 difference.removeAll(b);          // {1, 2}`}</CodeBlock>
 
         <p>
-          All three are O(n + m) average — n and m being the two set sizes. Each element is hashed and looked up
+          All three are O(n + m) average, n and m being the two set sizes. Each element is hashed and looked up
           once. (LeetCode &quot;Intersection of Two Arrays&quot; is literally this.)
         </p>
 
         <Quiz
           question="What's the time complexity of `set.contains(x)` for `HashSet<String>` with n entries, assuming a sane hashCode?"
           options={[
-            { label: "O(n) — Java has to scan every element.", explanation: "That would be `List.contains`. HashSet is hash-based; it's not a scan." },
-            { label: "O(log n) — sets are tree-structured.", explanation: "TreeSet is O(log n). HashSet is a hash table." },
-            { label: "O(1) average, O(log n) worst case (after treeification).", correct: true, explanation: "Right. Same numbers as HashMap, because that's literally what backs HashSet. The hashCode is computed (O(k) for a key of size k, but treated as constant), the bucket is found in O(1), and the chain walk is expected O(1) under sane load factor — worst case O(log n) once the bucket is treeified." },
+            { label: "O(n), Java has to scan every element.", explanation: "That would be `List.contains`. HashSet is hash-based; it's not a scan." },
+            { label: "O(log n), sets are tree-structured.", explanation: "TreeSet is O(log n). HashSet is a hash table." },
+            { label: "O(1) average, O(log n) worst case (after treeification).", correct: true, explanation: "Right. Same numbers as HashMap, because that's literally what backs HashSet. The hashCode is computed (O(k) for a key of size k, but treated as constant), the bucket is found in O(1), and the chain walk is expected O(1) under sane load factor, worst case O(log n) once the bucket is treeified." },
             { label: "O(k) where k is the string length.", explanation: "True if you count the cost of hashing the string itself, but conventionally we treat the hash as O(1) for asymptotic analysis." },
           ]}
         />
@@ -175,7 +175,7 @@ difference.removeAll(b);          // {1, 2}`}</CodeBlock>
           interface; the difference is what they cost and what order they iterate in.
         </p>
 
-        <h3>HashSet — the default</h3>
+        <h3>HashSet, the default</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>HashMap</code>.</li>
           <li><strong>Order:</strong>{" "}none. Iteration order is bucket order, basically random, and changes after a resize.</li>
@@ -183,11 +183,11 @@ difference.removeAll(b);          // {1, 2}`}</CodeBlock>
           <li><strong>Use when:</strong>{" "}you only care about presence. The 95% case.</li>
         </ul>
 
-        <h3>LinkedHashSet — insertion order, same speed</h3>
+        <h3>LinkedHashSet, insertion order, same speed</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>HashMap</code> + a doubly-linked list threading insertion order through the entries.</li>
           <li><strong>Order:</strong>{" "}insertion order. Iterating gives you the elements in the order you added them.</li>
-          <li><strong>add / contains / remove:</strong>{" "}still O(1) average — the linked list adds two pointer updates per add, not a search.</li>
+          <li><strong>add / contains / remove:</strong>{" "}still O(1) average, the linked list adds two pointer updates per add, not a search.</li>
           <li><strong>Use when:</strong>{" "}you want to dedupe a stream while preserving the order things appeared.</li>
         </ul>
 
@@ -196,12 +196,12 @@ List<String> input = List.of("a", "b", "a", "c", "b", "d");
 List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
 // deduped == [a, b, c, d]`}</CodeBlock>
 
-        <h3>TreeSet — sorted order, log time</h3>
+        <h3>TreeSet, sorted order, log time</h3>
         <ul>
           <li><strong>Backed by:</strong> <code>TreeMap</code>, which is a red-black tree (Module 14).</li>
           <li><strong>Order:</strong>{" "}sorted, by natural order or by a <code>Comparator</code> you supply.</li>
           <li><strong>add / contains / remove:</strong>{" "}O(log n). Always. No hashing involved.</li>
-          <li><strong>Bonus:</strong> <code>first</code>, <code>last</code>, <code>floor</code>, <code>ceiling</code>, <code>headSet</code>, <code>tailSet</code> — range queries, all O(log n).</li>
+          <li><strong>Bonus:</strong> <code>first</code>, <code>last</code>, <code>floor</code>, <code>ceiling</code>, <code>headSet</code>, <code>tailSet</code>, range queries, all O(log n).</li>
           <li><strong>Use when:</strong>{" "}you need sorted iteration, or &quot;largest element ≤ x&quot; queries, or range scans.</li>
         </ul>
 
@@ -209,7 +209,7 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
           <p>
             If your element type doesn&apos;t implement <code>Comparable</code>, you must pass a{" "}
             <code>Comparator</code> to the <code>TreeSet</code> constructor. Forget that and you get{" "}
-            <code>ClassCastException</code> at the first <code>add</code> — a runtime, not compile-time, failure.
+            <code>ClassCastException</code> at the first <code>add</code>, a runtime, not compile-time, failure.
           </p>
           <p>
             (Records implement <code>Comparable</code> only if you write it; built-in <code>Integer</code>/
@@ -228,10 +228,10 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
           items={[
             { id: "dedupe", label: "Dedupe a stream of user IDs, order doesn't matter, just want the count of distinct.", answer: "hash", explanation: "No order requirement → cheapest option. HashSet wins on raw constant factor." },
             { id: "logorder", label: "Dedupe but preserve the order things first appeared in a log.", answer: "linked", explanation: "Insertion order matters. LinkedHashSet keeps it without sacrificing O(1)." },
-            { id: "ceiling", label: "Find the smallest event timestamp ≥ a given query timestamp.", answer: "tree", explanation: "That's `ceiling(t)` — a TreeSet operation, O(log n). HashSet has no order; LinkedHashSet's order is insertion, not sorted." },
+            { id: "ceiling", label: "Find the smallest event timestamp ≥ a given query timestamp.", answer: "tree", explanation: "That's `ceiling(t)`, a TreeSet operation, O(log n). HashSet has no order; LinkedHashSet's order is insertion, not sorted." },
             { id: "membership", label: "Cache of seen URLs, just `contains` checks at high QPS.", answer: "hash", explanation: "Pure membership at high speed → HashSet. The other two pay extra for ordering you don't need." },
             { id: "alphabetical", label: "Display a deduplicated list of country names alphabetically.", answer: "tree", explanation: "TreeSet gives sorted iteration for free. The alternative is HashSet + sort at display time, which is also fine but more code." },
-            { id: "lru", label: "Track the 100 most-recently-used items with eviction in access order.", answer: "linked", explanation: "LinkedHashMap supports access-order via its (capacity, load, accessOrder) constructor — that's the LRU primitive. LinkedHashSet only supports insertion-order, so for a true LRU you'd build it on LinkedHashMap directly. Of the three set choices here, LinkedHashSet is the closest cousin; HashSet has no notion of order, and TreeSet orders by element value, not access time." },
+            { id: "lru", label: "Track the 100 most-recently-used items with eviction in access order.", answer: "linked", explanation: "LinkedHashMap supports access-order via its (capacity, load, accessOrder) constructor, that's the LRU primitive. LinkedHashSet only supports insertion-order, so for a true LRU you'd build it on LinkedHashMap directly. Of the three set choices here, LinkedHashSet is the closest cousin; HashSet has no notion of order, and TreeSet orders by element value, not access time." },
             { id: "rangeQuery", label: "All event IDs between [10000, 20000].", answer: "tree", explanation: "TreeSet's `subSet` returns a range view in O(log n + k). HashSet would force a full scan." },
           ]}
         />
@@ -239,10 +239,10 @@ List<String> deduped = new ArrayList<>(new LinkedHashSet<>(input));
         <Quiz
           question={'`new TreeSet<>(List.of("banana", "apple", "cherry"))` and you call `.first()`. Result?'}
           options={[
-            { label: '"banana" — first added.', explanation: "TreeSet doesn't track insertion order. That'd be LinkedHashSet." },
-            { label: '"apple" — first in natural (alphabetical) order.', correct: true, explanation: "Right. TreeSet sorts by Comparable. String's natural order is lexicographic, so 'apple' < 'banana' < 'cherry'. `first()` returns the smallest." },
-            { label: '"cherry" — first in some bucket.', explanation: "TreeSet has no buckets; it's a tree." },
-            { label: "Throws — TreeSet doesn't support first().", explanation: "`first()` is a core SortedSet method, in the API since Java 1.2." },
+            { label: '"banana", first added.', explanation: "TreeSet doesn't track insertion order. That'd be LinkedHashSet." },
+            { label: '"apple", first in natural (alphabetical) order.', correct: true, explanation: "Right. TreeSet sorts by Comparable. String's natural order is lexicographic, so 'apple' < 'banana' < 'cherry'. `first()` returns the smallest." },
+            { label: '"cherry", first in some bucket.', explanation: "TreeSet has no buckets; it's a tree." },
+            { label: "Throws, TreeSet doesn't support first().", explanation: "`first()` is a core SortedSet method, in the API since Java 1.2." },
           ]}
         />
       </section>
@@ -290,7 +290,7 @@ for (char c : s.toCharArray()) {
         <p>
           When keys are characters in a known alphabet (lowercase letters, ASCII), skip the <code>HashMap</code>{" "}
           entirely and use an <code>int[26]</code> or <code>int[128]</code>. Same algorithm, but with cache-friendly
-          array indexing instead of hashing — typically 5-10× faster in practice and zero GC pressure.
+          array indexing instead of hashing, typically 5-10× faster in practice and zero GC pressure.
         </p>
 
         <CodeBlock lang="java">{`// Anagram check, two ways:
@@ -306,8 +306,8 @@ boolean isAnagram(String s, String t) {
 }`}</CodeBlock>
 
         <p>
-          That&apos;s LeetCode 242 in 8 lines. The trick — increment for s, decrement for t in the same loop, then
-          check all zeros — turns a two-counter compare into a one-counter check. The array <em>is</em>{" "}a
+          That&apos;s LeetCode 242 in 8 lines. The trick, increment for s, decrement for t in the same loop, then
+          check all zeros, turns a two-counter compare into a one-counter check. The array <em>is</em>{" "}a
           frequency map; it just happens to live on the stack.
         </p>
 
@@ -317,7 +317,7 @@ boolean isAnagram(String s, String t) {
             { title: "Has a duplicate? (LC 217)", body: "Walk the array; bail when freq[x] becomes 2. Or use a HashSet and bail when add returns false. O(n)." },
             { title: "Anagram / permutation match? (LC 242)", body: "Build freq for s, decrement for t, check all-zero. Or compare two freq maps with .equals." },
             { title: "Most common element? (LC 1, 49 group anagrams, 169 majority element)", body: "Build the full freq map, then scan its entries for the max. Two passes total." },
-            { title: "Top K most common? (LC 347)", body: "Build freq, then push entries into a min-heap of size K. O(n log K). Heaps are Module 15 — the punchline lands soon." },
+            { title: "Top K most common? (LC 347)", body: "Build freq, then push entries into a min-heap of size K. O(n log K). Heaps are Module 15, the punchline lands soon." },
           ]}
         />
 
@@ -326,8 +326,8 @@ boolean isAnagram(String s, String t) {
           options={[
             { label: "Sort first, then walk pairs of neighbors. O(n log n).", explanation: "Correct in complexity but worse than the hash approach. And it mutates input." },
             { label: "Build a HashSet; bail the moment add returns false. O(n) average.", correct: true, explanation: "Right. One pass, O(n) time, O(n) space, and you can short-circuit on the first duplicate. This is exactly LC 217." },
-            { label: "Use a TreeSet for guaranteed log-time inserts.", explanation: "TreeSet's O(log n) per insert is strictly worse than HashSet's O(1) average for this — there's no need for ordering." },
-            { label: "Bloom filter — constant space and probabilistic.", explanation: "Bloom filters give false positives, so 'yes there's a duplicate' would need verification. Fine when memory is the bottleneck (URL dedup at scale), overkill for 10M ints." },
+            { label: "Use a TreeSet for guaranteed log-time inserts.", explanation: "TreeSet's O(log n) per insert is strictly worse than HashSet's O(1) average for this, there's no need for ordering." },
+            { label: "Bloom filter, constant space and probabilistic.", explanation: "Bloom filters give false positives, so 'yes there's a duplicate' would need verification. Fine when memory is the bottleneck (URL dedup at scale), overkill for 10M ints." },
           ]}
         />
       </section>
@@ -356,7 +356,7 @@ boolean isAnagram(String s, String t) {
           map is the bookkeeping.
         </p>
 
-        <h3>Canonical example: LC 3 — longest substring without repeating characters</h3>
+        <h3>Canonical example: LC 3, longest substring without repeating characters</h3>
 
         <CodeBlock lang="java">{`int lengthOfLongestSubstring(String s) {
     Map<Character, Integer> freq = new HashMap<>();
@@ -382,7 +382,7 @@ boolean isAnagram(String s, String t) {
         <p>
           The thing that makes this O(n) and not O(n²): each character is added to the window once (right pointer)
           and removed at most once (left pointer). Total work across the whole loop is bounded by 2n map operations
-          — amortized O(n).
+, amortized O(n).
         </p>
 
         <h3>The pattern, abstracted</h3>
@@ -397,7 +397,7 @@ boolean isAnagram(String s, String t) {
         <Callout variant="insight" title="Why a Set isn't enough here">
           <p>
             You might wonder: if we just want &quot;no repeats&quot;, can&apos;t we use a <code>HashSet</code>{" "}
-            instead of a <code>HashMap</code>? Yes — <code>add</code> returns false on duplicate.
+            instead of a <code>HashMap</code>? Yes, <code>add</code> returns false on duplicate.
           </p>
           <p>
             But once the window has to shrink, you need to know <em>how many copies</em>{" "}of the left character
@@ -424,7 +424,7 @@ boolean isAnagram(String s, String t) {
       <section>
         <h2 id="project">Project: sliding-window character counter + LeetCode warm-ups</h2>
 
-        <h3>Part A — Distinct-char counter for a streaming window</h3>
+        <h3>Part A, Distinct-char counter for a streaming window</h3>
 
         <p>
           Build a small class that maintains a fixed-size sliding window over an incoming character stream and
@@ -465,10 +465,10 @@ boolean isAnagram(String s, String t) {
         <p>
           Test it: offer the chars of <code>&quot;abacaba&quot;</code> with a window of 4 and watch{" "}
           <code>distinct()</code> climb and stabilize. The whole class is one frequency map (the int array) plus a
-          ring buffer (Module 9) for the eviction order. Notice how each <code>offer</code> is O(1) — no scanning.
+          ring buffer (Module 9) for the eviction order. Notice how each <code>offer</code> is O(1), no scanning.
         </p>
 
-        <h3>Part B — LeetCode warm-ups</h3>
+        <h3>Part B, LeetCode warm-ups</h3>
 
         <ol>
           <li>
@@ -499,26 +499,26 @@ boolean isAnagram(String s, String t) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final quiz ───────────────── */}
-      <Checkpoint moduleSlug="sets" id="final" title="I've completed Module 12" xp={15} celebration="Sets and frequency counting unlocked. Trees are next — recursion's natural home.">
+      <Checkpoint moduleSlug="sets" id="final" title="I've completed Module 12" xp={15} celebration="Sets and frequency counting unlocked. Trees are next, recursion's natural home.">
       <section>
         <h2 id="final">Final check</h2>
 
         <Quiz
           question="You need to dedupe a list of 1M strings, preserving the order strings first appeared. Which is correct AND fastest?"
           options={[
-            { label: "TreeSet — log-time inserts give a guarantee.", explanation: "TreeSet would order alphabetically, not by first appearance. Wrong order, and slower." },
-            { label: "new ArrayList<>(new HashSet<>(input)) — wrap and unwrap.", explanation: "HashSet doesn't preserve insertion order. The output list order is essentially random." },
-            { label: "new ArrayList<>(new LinkedHashSet<>(input)) — wrap and unwrap.", correct: true, explanation: "Right. LinkedHashSet keeps insertion order at HashSet speed (O(1) avg per add). The roundtrip through ArrayList just gives you a List for downstream code. ~O(n) total." },
-            { label: "Stream.distinct() — built-in dedupe.", explanation: "Stream.distinct() does preserve encounter order and is correct, but it's effectively a LinkedHashSet under the hood with extra streaming overhead. Also fine, just slower in a tight loop." },
+            { label: "TreeSet, log-time inserts give a guarantee.", explanation: "TreeSet would order alphabetically, not by first appearance. Wrong order, and slower." },
+            { label: "new ArrayList<>(new HashSet<>(input)), wrap and unwrap.", explanation: "HashSet doesn't preserve insertion order. The output list order is essentially random." },
+            { label: "new ArrayList<>(new LinkedHashSet<>(input)), wrap and unwrap.", correct: true, explanation: "Right. LinkedHashSet keeps insertion order at HashSet speed (O(1) avg per add). The roundtrip through ArrayList just gives you a List for downstream code. ~O(n) total." },
+            { label: "Stream.distinct(), built-in dedupe.", explanation: "Stream.distinct() does preserve encounter order and is correct, but it's effectively a LinkedHashSet under the hood with extra streaming overhead. Also fine, just slower in a tight loop." },
           ]}
         />
 
         <Quiz
           question="`Map.merge(key, 1, Integer::sum)` is preferred over `map.put(key, map.getOrDefault(key, 0) + 1)` because…"
           options={[
-            { label: "merge is faster — it does only one map lookup instead of two.", correct: true, explanation: "Right. getOrDefault + put hashes and walks the bucket twice. merge does it once. Same correctness, half the map operations. (It's also less typing and harder to get wrong.)" },
+            { label: "merge is faster, it does only one map lookup instead of two.", correct: true, explanation: "Right. getOrDefault + put hashes and walks the bucket twice. merge does it once. Same correctness, half the map operations. (It's also less typing and harder to get wrong.)" },
             { label: "merge handles concurrency.", explanation: "Plain HashMap.merge is not thread-safe. ConcurrentHashMap.merge is, but the reason to prefer merge here is performance/clarity, not concurrency." },
-            { label: "merge avoids autoboxing.", explanation: "Both versions box the count to Integer either way. merge isn't magic — it just bundles the lookup-and-update." },
+            { label: "merge avoids autoboxing.", explanation: "Both versions box the count to Integer either way. merge isn't magic, it just bundles the lookup-and-update." },
             { label: "merge throws on null keys.", explanation: "merge throws on null *value* (and on null result from the remap), but neither version handles null keys differently." },
           ]}
         />
@@ -526,9 +526,9 @@ boolean isAnagram(String s, String t) {
         <Quiz
           question="A frequency map of a sliding window currently holds {a: 2, b: 1}. The left pointer moves past an 'a'. What's the right update?"
           options={[
-            { label: "Decrement freq['a']. The map becomes {a: 1, b: 1}.", explanation: "Half right. You did decrement, but you also need the zero-handling rule: if a count hits zero, remove the key. Otherwise `freq.size()` overcounts distinct chars in the window — which silently breaks problems like 'longest substring with K distinct characters'." },
+            { label: "Decrement freq['a']. The map becomes {a: 1, b: 1}.", explanation: "Half right. You did decrement, but you also need the zero-handling rule: if a count hits zero, remove the key. Otherwise `freq.size()` overcounts distinct chars in the window, which silently breaks problems like 'longest substring with K distinct characters'." },
             { label: "Remove 'a' from the map entirely.", explanation: "Premature. There are two 'a's in the window; only one was evicted." },
-            { label: "Decrement freq['a'], then check if it hit zero — if so, remove the entry.", correct: true, explanation: "Right — this is the canonical sliding-window pattern. Keeping a zero-count entry around makes `freq.size()` lie about distinct chars in the window. Always remove on zero." },
+            { label: "Decrement freq['a'], then check if it hit zero, if so, remove the entry.", correct: true, explanation: "Right, this is the canonical sliding-window pattern. Keeping a zero-count entry around makes `freq.size()` lie about distinct chars in the window. Always remove on zero." },
             { label: "Set freq['a'] to 0.", explanation: "Same problem as above: a zero-count entry pollutes `size()`. If you're going to drop to zero, just remove the key." },
           ]}
         />
@@ -536,7 +536,7 @@ boolean isAnagram(String s, String t) {
         <div className="my-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 p-8 text-white shadow-xl">
           <h3 className="mt-0 mb-2 text-2xl font-bold text-white">Module 12 complete</h3>
           <p className="mb-4 text-emerald-50">
-            Sets and frequency counting put a lot of medium-difficulty problems within reach. Next up: trees —
+            Sets and frequency counting put a lot of medium-difficulty problems within reach. Next up: trees,
             the recursive shape that powers traversal, search trees, heaps, and basically all of Phase 4&apos;s
             graphs.
           </p>

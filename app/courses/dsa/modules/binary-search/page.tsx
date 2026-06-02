@@ -14,7 +14,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 const CHECKPOINTS = [
   { id: "setup", title: "Binary search and the contract you must keep" },
   { id: "off-by-one", title: "The off-by-one minefield: <= vs <, mid math, l = mid+1" },
-  { id: "bounds", title: "Lower bound, upper bound — the Java idiom" },
+  { id: "bounds", title: "Lower bound, upper bound, the Java idiom" },
   { id: "answer-search", title: "Binary-searching the answer" },
   { id: "project", title: "Project: Koko Eating Bananas + rotated array" },
   { id: "final", title: "Final quiz" },
@@ -127,7 +127,7 @@ flowchart LR
         <p>
           Binary search is the algorithm everyone &quot;knows&quot; and almost nobody writes correctly on the first
           try. There&apos;s a famous Jon Bentley result: when he asked professional programmers to implement it from
-          scratch, ~90% of submissions had bugs — overflow, off-by-one, infinite loops. The mechanics are <em>simple</em>;
+          scratch, ~90% of submissions had bugs, overflow, off-by-one, infinite loops. The mechanics are <em>simple</em>;
           the discipline of getting the boundaries right is what trips people up. This module&apos;s entire purpose is
           to make that discipline reflexive.
         </p>
@@ -140,23 +140,23 @@ flowchart LR
 
         <ul>
           <li>The input is a <strong>sorted array</strong>, and you&apos;re looking for a target value, OR</li>
-          <li>There&apos;s a <strong>monotonic predicate</strong>{" "}over the answer space — a function <code>P(x)</code> such that <code>P</code> goes from <code>false</code> to <code>true</code> exactly once (or stays one or the other) as <code>x</code> increases.</li>
+          <li>There&apos;s a <strong>monotonic predicate</strong>{" "}over the answer space, a function <code>P(x)</code> such that <code>P</code> goes from <code>false</code> to <code>true</code> exactly once (or stays one or the other) as <code>x</code> increases.</li>
         </ul>
 
         <p>
-          Without one of those, you&apos;re not in binary-search territory. The whole magic — &quot;throw away half
-          the search space at every step&quot; — depends on knowing which half can&apos;t contain the answer. If the
+          Without one of those, you&apos;re not in binary-search territory. The whole magic, &quot;throw away half
+          the search space at every step&quot;, depends on knowing which half can&apos;t contain the answer. If the
           input isn&apos;t monotonic, halving is meaningless.
         </p>
 
         <Callout variant="insight" title="The mental model: shrinking an interval">
           <p>
-            Think of binary search as maintaining an interval <code>[l, r)</code> (or <code>[l, r]</code> — pick one
+            Think of binary search as maintaining an interval <code>[l, r)</code> (or <code>[l, r]</code>, pick one
             convention) that always contains the answer. Each iteration computes a midpoint, decides which half the
             answer lies in, and shrinks the interval. When the interval has size 0 or 1, you&apos;re done.
           </p>
           <p>
-            That invariant — <em>&quot;the answer is in [l, r)&quot;</em> — is the single most useful thing to keep in
+            That invariant, <em>&quot;the answer is in [l, r)&quot;</em>, is the single most useful thing to keep in
             your head while writing the loop. Every line of code should be asking: &quot;does this preserve the
             invariant?&quot;
           </p>
@@ -173,7 +173,7 @@ flowchart LR
 
         <p>
           Three iterations to find <code>7</code> among 8 elements. In general, ⌈log₂(n)⌉ iterations to either find the
-          target or rule it out — that&apos;s the entire performance argument. 30 iterations cover a billion elements.
+          target or rule it out, that&apos;s the entire performance argument. 30 iterations cover a billion elements.
           Linear scan would need a billion comparisons; binary search needs 30. The asymmetry is staggering, and
           it&apos;s the reason this algorithm matters.
         </p>
@@ -201,12 +201,12 @@ Convention B · Half-open interval [l, r)
 
         <p>
           Convention A is the textbook version most people learn first. Convention B is what you&apos;ll write for{" "}
-          lower-bound / upper-bound style problems and answer-search — the &quot;find the boundary&quot; flavor that
+          lower-bound / upper-bound style problems and answer-search, the &quot;find the boundary&quot; flavor that
           dominates real interview questions. Both are correct; both have their place. We&apos;ll cover both, but if
           you&apos;re going to memorize one, memorize Convention B.
         </p>
 
-        <h3>The plain version — Convention A</h3>
+        <h3>The plain version, Convention A</h3>
 
         <CodeBlock lang="java">{`public int binarySearch(int[] a, int target) {
     int l = 0, r = a.length - 1;     // closed interval [l, r]
@@ -222,15 +222,15 @@ Convention B · Half-open interval [l, r)
         <Callout variant="warn" title="Why l + (r - l) / 2 instead of (l + r) / 2">
           <p>
             They&apos;re mathematically identical for non-negative <code>l, r</code>. They&apos;re <em>not</em>{" "}identical
-            in fixed-width integer arithmetic. <code>(l + r)</code> can overflow when the array is huge —{" "}
+            in fixed-width integer arithmetic. <code>(l + r)</code> can overflow when the array is huge,{" "}
             <code>l + r &gt; Integer.MAX_VALUE</code> wraps to a negative number, and you index into negative
             territory. <code>l + (r - l) / 2</code> never overflows because <code>r - l</code> is bounded by the
             array length.
           </p>
           <p>
             This bug went unnoticed in <code>java.util.Arrays.binarySearch</code> for over a decade. Joshua Bloch
-            wrote a famous blog post about it (&quot;Extra, Extra — Read All About It: Nearly All Binary Searches and
-            Mergesorts are Broken&quot;). It bites in production, not in your textbook examples — but if you write
+            wrote a famous blog post about it (&quot;Extra, Extra, Read All About It: Nearly All Binary Searches and
+            Mergesorts are Broken&quot;). It bites in production, not in your textbook examples, but if you write
             <code> (l + r) / 2 </code>in an interview, you should expect to be asked about it.
           </p>
         </Callout>
@@ -240,7 +240,7 @@ Convention B · Half-open interval [l, r)
           question="What's the precondition that makes binary search applicable?"
           options={[
             { label: "The array must be sorted, OR there must be a monotonic predicate over the search space.", correct: true, explanation: "Right. Sorted-and-search-for-target is the textbook case; monotonic predicate is the answer-search generalization. Both reduce to: 'I can rule out half the search space based on one comparison at the midpoint.'" },
-            { label: "The array must be sorted.", explanation: "Too narrow. Binary search also applies to answer-search problems where there's no array at all — just a monotonic yes/no predicate over an integer range (Koko Eating Bananas, capacity-to-ship, square root)." },
+            { label: "The array must be sorted.", explanation: "Too narrow. Binary search also applies to answer-search problems where there's no array at all, just a monotonic yes/no predicate over an integer range (Koko Eating Bananas, capacity-to-ship, square root)." },
             { label: "The array must contain the target.", explanation: "The classic version returns -1 when the target isn't present. You don't need the target to exist." },
             { label: "Array length must be a power of 2.", explanation: "Not required. The l + (r - l) / 2 midpoint handles odd lengths fine; the algorithm is O(log n) for any size." },
           ]}
@@ -251,7 +251,7 @@ Convention B · Half-open interval [l, r)
           question="Why is `int mid = l + (r - l) / 2` preferred over `int mid = (l + r) / 2`?"
           options={[
             { label: "It's faster.", explanation: "Both compile to similar instructions; speed isn't the reason. Correctness is." },
-            { label: "It avoids integer overflow when l and r are both large. (l + r) can wrap to a negative number, then divided by 2 gives a wildly wrong midpoint.", correct: true, explanation: "Right. For very large arrays (l + r) can exceed Integer.MAX_VALUE and wrap. (r - l) is bounded by array length, so (r - l) / 2 is safe. This is the famous Bloch bug — lurked in java.util.Arrays.binarySearch for over a decade." },
+            { label: "It avoids integer overflow when l and r are both large. (l + r) can wrap to a negative number, then divided by 2 gives a wildly wrong midpoint.", correct: true, explanation: "Right. For very large arrays (l + r) can exceed Integer.MAX_VALUE and wrap. (r - l) is bounded by array length, so (r - l) / 2 is safe. This is the famous Bloch bug, lurked in java.util.Arrays.binarySearch for over a decade." },
             { label: "It handles negative numbers.", explanation: "Array indices are non-negative, so this isn't the issue. The issue is overflow at the high end." },
             { label: "It's required by the Java spec.", explanation: "Nothing requires it; it's a defensive idiom. The spec doesn't care which expression you use, only that the result is correct." },
           ]}
@@ -323,7 +323,7 @@ Loop ends, return -1. Insertion point is l = 4 (between a[3]=7 and a[4]=9).`}</C
             if we inserted it to keep the array sorted.
           </p>
           <p>
-            That&apos;s why <code>java.util.Arrays.binarySearch</code> returns <code>-(l + 1)</code> on a miss — it
+            That&apos;s why <code>java.util.Arrays.binarySearch</code> returns <code>-(l + 1)</code> on a miss, it
             encodes the insertion point in the negative return value. We&apos;ll see this pattern again in the next
             section.
           </p>
@@ -354,7 +354,7 @@ while (l <= r) {
           <p>
             The midpoint is computed by integer division, which <strong>rounds down</strong>. So when the interval has
             two elements (<code>l, l+1</code>), <code>mid = l</code>. If you set <code>l = mid</code>, the interval
-            doesn&apos;t shrink — same two elements, same midpoint, same decision. Infinite loop.
+            doesn&apos;t shrink, same two elements, same midpoint, same decision. Infinite loop.
           </p>
           <p>
             <strong>The rule:</strong>{" "}if you might compute <code>mid = l</code>, you must use{" "}
@@ -370,7 +370,7 @@ while (l <= r) {
 
         <p>
           Half-open is the convention you&apos;ll use most for boundary-finding problems. The interval is{" "}
-          <code>[l, r)</code> — <code>r</code> is one past the last element you care about. Length is exactly{" "}
+          <code>[l, r)</code>, <code>r</code> is one past the last element you care about. Length is exactly{" "}
           <code>r - l</code>. The loop runs while length is positive: <code>while (l &lt; r)</code>.
         </p>
 
@@ -392,7 +392,7 @@ while (l <= r) {
             <code>r = mid</code> does exactly that, because <code>r</code> is exclusive.
           </p>
           <p>
-            If you wrote <code>r = mid - 1</code>, you&apos;d also exclude <code>mid - 1</code> — losing a potential
+            If you wrote <code>r = mid - 1</code>, you&apos;d also exclude <code>mid - 1</code>, losing a potential
             candidate. The convention determines the arithmetic; pick one and stay loyal.
           </p>
         </Callout>
@@ -425,8 +425,8 @@ while (l <= r) {
           question="In the half-open convention `[l, r)` with `while (l < r)`, on the 'go left' branch (a[mid] > target), what's the update?"
           options={[
             { label: "r = mid - 1", explanation: "That excludes mid AND mid - 1. Half-open already excludes r, so just setting r = mid excludes mid. Subtracting 1 loses a candidate." },
-            { label: "r = mid", correct: true, explanation: "Right. In [l, r), r is exclusive — so r = mid means the new interval is [l, mid), which is exactly 'everything before mid.' That's the correct shrink." },
-            { label: "r = mid + 1", explanation: "Backwards — that would include mid in the new interval, but we just ruled mid out as too big." },
+            { label: "r = mid", correct: true, explanation: "Right. In [l, r), r is exclusive, so r = mid means the new interval is [l, mid), which is exactly 'everything before mid.' That's the correct shrink." },
+            { label: "r = mid + 1", explanation: "Backwards, that would include mid in the new interval, but we just ruled mid out as too big." },
             { label: "Same as closed-interval: r = mid - 1", explanation: "Conventions diverge here. Closed: r = mid - 1. Half-open: r = mid. Pick one and stay consistent." },
           ]}
         />
@@ -436,11 +436,11 @@ while (l <= r) {
       {/* ───────────────── Part 3 · Bounds ───────────────── */}
       <Checkpoint moduleSlug="binary-search" id="bounds" title="I can write lower_bound and upper_bound from memory" xp={25}>
       <section>
-        <h2 id="bounds">Lower bound, upper bound — the Java idiom</h2>
+        <h2 id="bounds">Lower bound, upper bound, the Java idiom</h2>
 
         <p>
           Most production binary search isn&apos;t &quot;does this exact value exist.&quot; It&apos;s &quot;where does
-          this value <em>belong</em>?&quot; — the boundary question. Two flavors dominate: <strong>lower bound</strong>{" "}
+          this value <em>belong</em>?&quot;, the boundary question. Two flavors dominate: <strong>lower bound</strong>{" "}
           (first index with <code>a[i] ≥ target</code>) and <strong>upper bound</strong> (first index with{" "}
           <code>a[i] &gt; target</code>). Once you have these, you can solve a startling range of problems with one or
           two well-placed calls.
@@ -502,7 +502,7 @@ public static int upperBound(int[] a, int target) {
           <li><strong>Range query [lo, hi]:</strong> <code>upperBound(a, hi) - lowerBound(a, lo)</code>.</li>
         </ul>
 
-        <h3>Java&apos;s Arrays.binarySearch — the gotcha</h3>
+        <h3>Java&apos;s Arrays.binarySearch, the gotcha</h3>
 
         <p>
           Java ships <code>java.util.Arrays.binarySearch</code> and <code>Collections.binarySearch</code>. They&apos;re
@@ -563,7 +563,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
         <Callout variant="info" title="In C++ this is the standard library">
           <p>
             C++&apos;s <code>std::lower_bound</code> and <code>std::upper_bound</code> are first-class STL algorithms
-            — competitive programmers use them constantly. Java&apos;s standard library is missing the equivalents,
+, competitive programmers use them constantly. Java&apos;s standard library is missing the equivalents,
             which is part of why Java binary-search code is messier in the wild. Internalize these two helpers and
             keep them in your head as a cheat code.
           </p>
@@ -581,7 +581,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
             { label: "0", explanation: "0 is the index of value 1, which is < 3. Lower bound is the first index where a[i] >= 3." },
             { label: "1", correct: true, explanation: "Right. Index 1 is the first position where a[i] >= 3 (it's the first 3 itself). Lower bound = first index NOT less than target." },
             { label: "3", explanation: "3 is the index of the LAST 3, not the first. That's where upperBound(a, 3) - 1 would land." },
-            { label: "4", explanation: "4 is upperBound(a, 3) — the first index with a[i] > 3, not >= 3. The two differ by one comparator." },
+            { label: "4", explanation: "4 is upperBound(a, 3), the first index with a[i] > 3, not >= 3. The two differ by one comparator." },
           ]}
         />
 
@@ -607,7 +607,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
           This is the pattern that promotes binary search from &quot;sorted-array helper&quot; to &quot;Swiss army
           knife.&quot; The setup: instead of searching an array for a value, you&apos;re searching an{" "}
           <strong>integer range</strong>{" "}for the smallest (or largest) value that satisfies a predicate. The trick:
-          if the predicate is monotonic, binary search applies — and the search reduces to <em>O(log(range))</em>{" "}
+          if the predicate is monotonic, binary search applies, and the search reduces to <em>O(log(range))</em>{" "}
           calls of the predicate, regardless of how complicated the predicate is.
         </p>
 
@@ -624,7 +624,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
 
         <p>
           The picture: the predicate flips from F to T exactly once across the answer space. Lower-bound on the
-          predicate gives you that flip point — the smallest feasible answer.
+          predicate gives you that flip point, the smallest feasible answer.
         </p>
 
         <h3>The killer example: Koko Eating Bananas (LC 875)</h3>
@@ -646,7 +646,7 @@ int countZero  = upperBound(a, 0) - lowerBound(a, 0);
         <ul>
           <li><strong>Answer space:</strong> <code>K ∈ [1, max(piles)]</code>. K = 1 is the slowest possible; K = max(piles) means each pile takes exactly one hour, so total time = piles.length, which is always ≤ H (problem guarantees).</li>
           <li><strong>Predicate:</strong> <code>canFinish(K)</code> = &quot;at speed K, total hours needed ≤ H&quot;.</li>
-          <li><strong>Monotonicity:</strong>{" "}if she can finish at speed K, she can certainly finish at any faster speed. So <code>canFinish</code> is false-then-true as K increases — exactly the lower-bound shape.</li>
+          <li><strong>Monotonicity:</strong>{" "}if she can finish at speed K, she can certainly finish at any faster speed. So <code>canFinish</code> is false-then-true as K increases, exactly the lower-bound shape.</li>
           <li><strong>Goal:</strong>{" "}smallest K with <code>canFinish(K) = true</code>.</li>
         </ul>
 
@@ -681,7 +681,7 @@ private boolean canFinish(int[] piles, int K, int H) {
             round up.
           </p>
           <p>
-            This is the standard idiom for &quot;hours to consume a pile of size p at K bananas/hour&quot; — and it
+            This is the standard idiom for &quot;hours to consume a pile of size p at K bananas/hour&quot;, and it
             shows up everywhere in answer-search problems.
           </p>
         </Callout>
@@ -693,7 +693,7 @@ private boolean canFinish(int[] piles, int K, int H) {
           </p>
           <p>
             A plain <code>int</code> accumulator silently overflows on the worst-case inputs and gives wrong answers.
-            Same lesson as the midpoint overflow — different incarnation.
+            Same lesson as the midpoint overflow, different incarnation.
           </p>
         </Callout>
 
@@ -701,9 +701,9 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <p>
           Look at what the predicate hides: a full simulation. <code>canFinish</code> walks every pile, does division,
-          and checks a sum — it&apos;s O(piles.length). That&apos;s the work for <em>one</em>{" "}midpoint check. We do
+          and checks a sum, it&apos;s O(piles.length). That&apos;s the work for <em>one</em>{" "}midpoint check. We do
           that O(log(max(piles))) ≈ 30 times. Total work: O(n log m) where n = piles.length, m = max pile size. The
-          predicate can be arbitrarily complex — it just has to be monotonic — and the binary-search wrapper
+          predicate can be arbitrarily complex, it just has to be monotonic, and the binary-search wrapper
           slashes the search to logarithmic.
         </p>
 
@@ -731,7 +731,7 @@ private boolean canFinish(int[] piles, int K, int H) {
 
         <Callout variant="insight" title="Recognition: 'minimize the maximum,' 'maximize the minimum,' 'fewest X such that Y'">
           <p>
-            These three phrasings are dead giveaways for answer-search. You almost never solve them directly — instead
+            These three phrasings are dead giveaways for answer-search. You almost never solve them directly, instead
             you guess the answer with binary search and verify with a predicate.
           </p>
           <p>
@@ -745,7 +745,7 @@ private boolean canFinish(int[] piles, int K, int H) {
           kind="Pattern check"
           question="A problem asks: 'find the smallest pizza diameter D such that at least M people get a slice of size >= S given N pizzas.' Why does answer-search apply?"
           options={[
-            { label: "It doesn't — there's no sorted array.", explanation: "The 'array' isn't the input; it's the candidate answer space. Answer-search doesn't need a sorted input array — just a monotonic predicate over the integer/real-valued answer." },
+            { label: "It doesn't, there's no sorted array.", explanation: "The 'array' isn't the input; it's the candidate answer space. Answer-search doesn't need a sorted input array, just a monotonic predicate over the integer/real-valued answer." },
             { label: "Because the predicate 'feasible at diameter D' is monotonic: if diameter D works, all larger diameters also work. So binary-search D over [0, max_possible].", correct: true, explanation: "Right. Larger pizzas can always be cut into more or larger slices, so feasibility is non-decreasing in D. That monotonicity is exactly what licenses binary search over the answer." },
             { label: "Because pizza diameters are sorted.", explanation: "Pizza inputs aren't sorted; you don't search them. You search the answer space [0, max_diameter], which is sorted by definition (it's a range of numbers)." },
             { label: "Because M and N are integers.", explanation: "Integer bounds help, but the real reason is monotonicity of the feasibility predicate. Without that, no binary search." },
@@ -756,10 +756,10 @@ private boolean canFinish(int[] piles, int K, int H) {
           kind="Pattern check"
           question="In Koko Eating Bananas, the search range is [1, max(piles)]. Why not [1, sum(piles)]?"
           options={[
-            { label: "sum(piles) would also work.", explanation: "It would work but it's wasteful. max(piles) is a tighter upper bound — eating speeds higher than max(piles) finish each pile in one hour, so they don't help, just waste log iterations." },
-            { label: "K = max(piles) means each pile fits in one hour, so total hours ≤ piles.length ≤ H. Anything faster is wasted speed; max(piles) is the tightest upper bound.", correct: true, explanation: "Right. Tightening the bounds saves a few iterations — log scales gently but every halving counts. More importantly, it shows you understand why the problem caps at this value: eating faster than max(piles) doesn't reduce hour count, because hours are computed per-pile with a ceiling." },
-            { label: "sum(piles) would overflow Integer.MAX_VALUE.", explanation: "It can, with 10^4 piles of 10^9. But the real reason for max(piles) is tightness — sum(piles) is feasible by any speed >= max anyway." },
-            { label: "K = sum(piles) is invalid because it's larger than any pile.", explanation: "It's perfectly valid — just unnecessary. You'd correctly conclude she finishes in piles.length hours and the search would still terminate, just a bit slower." },
+            { label: "sum(piles) would also work.", explanation: "It would work but it's wasteful. max(piles) is a tighter upper bound, eating speeds higher than max(piles) finish each pile in one hour, so they don't help, just waste log iterations." },
+            { label: "K = max(piles) means each pile fits in one hour, so total hours ≤ piles.length ≤ H. Anything faster is wasted speed; max(piles) is the tightest upper bound.", correct: true, explanation: "Right. Tightening the bounds saves a few iterations, log scales gently but every halving counts. More importantly, it shows you understand why the problem caps at this value: eating faster than max(piles) doesn't reduce hour count, because hours are computed per-pile with a ceiling." },
+            { label: "sum(piles) would overflow Integer.MAX_VALUE.", explanation: "It can, with 10^4 piles of 10^9. But the real reason for max(piles) is tightness, sum(piles) is feasible by any speed >= max anyway." },
+            { label: "K = sum(piles) is invalid because it's larger than any pile.", explanation: "It's perfectly valid, just unnecessary. You'd correctly conclude she finishes in piles.length hours and the search would still terminate, just a bit slower." },
           ]}
         />
       </section>
@@ -776,7 +776,7 @@ private boolean canFinish(int[] piles, int K, int H) {
           way). Solve both, write the code, submit on LeetCode, verify the green check.
         </p>
 
-        <h3>LC 875 · Koko Eating Bananas — full solution</h3>
+        <h3>LC 875 · Koko Eating Bananas, full solution</h3>
 
         <p>
           We sketched this in the previous section; here&apos;s the polished version with input handling, edge cases,
@@ -824,10 +824,10 @@ private boolean canFinish(int[] piles, int K, int H) {
           </p>
         </Callout>
 
-        <h3>LC 33 · Search in Rotated Sorted Array — the harder one</h3>
+        <h3>LC 33 · Search in Rotated Sorted Array, the harder one</h3>
 
         <p>
-          You&apos;re given a sorted array that&apos;s been rotated at some unknown pivot — e.g.,{" "}
+          You&apos;re given a sorted array that&apos;s been rotated at some unknown pivot, e.g.,{" "}
           <code>[4, 5, 6, 7, 0, 1, 2]</code>. Find a target in O(log n).
         </p>
 
@@ -866,7 +866,7 @@ private boolean canFinish(int[] piles, int K, int H) {
     }
 }`}</CodeBlock>
 
-        <Callout variant="warn" title="The boundary comparators are precise — get them wrong and you'll search in circles">
+        <Callout variant="warn" title="The boundary comparators are precise, get them wrong and you'll search in circles">
           <p>
             <code>nums[lo] &lt;= nums[mid]</code> with the <strong>≤</strong>{" "}matters: when <code>lo == mid</code>{" "}
             (interval of size 1), we want to call the left half &quot;sorted&quot; (it trivially is). Using strict{" "}
@@ -927,7 +927,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
           <p>
             <code>findPivot</code> is doing a lower-bound on the predicate &quot;is this element ≤ the last
             element?&quot; In a non-rotated sorted array, that&apos;s true for everything (pivot = 0). In a rotated
-            array, it&apos;s false for the rotated-up-front part and true for the wrapped-around part — the boundary
+            array, it&apos;s false for the rotated-up-front part and true for the wrapped-around part, the boundary
             is the pivot. Same shape as Koko: F-F-F-T-T-T over an integer index, lower bound finds the flip.
           </p>
           <p>
@@ -945,7 +945,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
         </p>
 
         <p>
-          Counterintuitive at first — the array isn&apos;t sorted, so how can binary search apply? Because the
+          Counterintuitive at first, the array isn&apos;t sorted, so how can binary search apply? Because the
           predicate &quot;<code>a[mid] &lt; a[mid+1]</code>&quot; <em>is</em>{" "}monotonic in a useful sense: if it&apos;s
           true, a peak must lie strictly to the right of <code>mid</code> (you&apos;re climbing). If it&apos;s false,
           a peak must lie at <code>mid</code> or to its left (you&apos;re descending or at the top). One comparison,
@@ -967,10 +967,10 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
 
         <PartRecap
           title="Three problems, three flavors of the same trick"
-          gist="Once you internalize 'monotonic predicate over a search space,' binary search stops being about sorted arrays. It's about turning O(n) decision problems into O(log n) ones — and the search space can be array indices, integer ranges, or even floats."
+          gist="Once you internalize 'monotonic predicate over a search space,' binary search stops being about sorted arrays. It's about turning O(n) decision problems into O(log n) ones, and the search space can be array indices, integer ranges, or even floats."
           points={[
             { takeaway: "Koko: classic answer-search.", detail: "Search the integer answer space [1, max]. Predicate canFinish(K) is monotonic. Lower-bound finds the smallest feasible K. Watch for long-arithmetic overflow inside the predicate." },
-            { takeaway: "Search in Rotated Sorted Array: precondition is broken, but recoverable.", detail: "At any midpoint, one half is still sorted. Decide which, then check whether the target falls in that sorted range. The boundary comparators (<= vs <) are subtle — write them once, lock them in." },
+            { takeaway: "Search in Rotated Sorted Array: precondition is broken, but recoverable.", detail: "At any midpoint, one half is still sorted. Decide which, then check whether the target falls in that sorted range. The boundary comparators (<= vs <) are subtle, write them once, lock them in." },
             { takeaway: "Find-pivot is just lower-bound on a clever predicate.", detail: "'Smallest index whose value is <= the last element.' False before the pivot, true after. Same FFFTTT shape as every other answer-search; the answer is the flip point." },
             { takeaway: "Find Peak: binary search WITHOUT a sorted array.", detail: "The predicate 'a[mid] < a[mid+1]' partitions the search space cleanly even though the array isn't sorted. The lesson: binary search needs A monotonic predicate, not necessarily a globally-sorted input." },
             { takeaway: "Always promote to long when the predicate does arithmetic on input values.", detail: "Sums, products, and ceiling-divisions can overflow int even when the inputs fit. The cost of a long accumulator is nothing; the cost of silent overflow is a wrong-answer submission." },
@@ -980,7 +980,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
       </Checkpoint>
 
       {/* ───────────────── Part 6 · Final ───────────────── */}
-      <Checkpoint moduleSlug="binary-search" id="final" title="Binary search is reflexive" xp={25} celebration="Binary search and the answer-search pattern are now muscle memory. Up next: sorting — how the array gets sorted in the first place.">
+      <Checkpoint moduleSlug="binary-search" id="final" title="Binary search is reflexive" xp={25} celebration="Binary search and the answer-search pattern are now muscle memory. Up next: sorting, how the array gets sorted in the first place.">
       <section>
         <h2 id="final">Final quiz</h2>
 
@@ -993,12 +993,12 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
             { id: "neither", label: "Neither", color: "rose" },
           ]}
           items={[
-            { id: "1", label: "Find target in a sorted array.", answer: "plain", explanation: "Textbook case. Sorted input, look for a value — classic binary search." },
+            { id: "1", label: "Find target in a sorted array.", answer: "plain", explanation: "Textbook case. Sorted input, look for a value, classic binary search." },
             { id: "2", label: "Find the minimum number of days to make M bouquets, given a bloomDay[] array.", answer: "answer", explanation: "Answer-search. Search range [min(bloomDay), max(bloomDay)]. Predicate: at day d, can we form M bouquets of k adjacent bloomed flowers? Monotonic: if day d works, so does any d' > d." },
-            { id: "3", label: "Two-sum on an unsorted array (return any pair summing to target).", answer: "neither", explanation: "Unsorted input rules out plain. There's no monotonic answer-space predicate either — you can't ask 'is K feasible?' for an integer K. Use a HashMap (O(n)) or sort first then two-pointer (O(n log n))." },
-            { id: "4", label: "First and last position of element x in a sorted array.", answer: "plain", explanation: "lowerBound and upperBound — two plain binary searches. Pure boundary-finding on a sorted input." },
-            { id: "5", label: "Smallest divisor d such that sum of ceil(nums[i]/d) <= threshold.", answer: "answer", explanation: "Answer-search. Range [1, max(nums)]. Predicate: feasible(d). Larger d means smaller ceilings, smaller sum, more likely to satisfy threshold — monotonic in d." },
-            { id: "6", label: "Find the longest substring without repeating characters.", answer: "neither", explanation: "Sliding window territory, not binary search. The 'longest valid substring' answer can be found by binary searching the length, but the predicate (does some substring of length L exist?) requires O(n) check per L, giving O(n log n) — strictly worse than the O(n) sliding-window solution. Don't binary-search when you don't need to." },
+            { id: "3", label: "Two-sum on an unsorted array (return any pair summing to target).", answer: "neither", explanation: "Unsorted input rules out plain. There's no monotonic answer-space predicate either, you can't ask 'is K feasible?' for an integer K. Use a HashMap (O(n)) or sort first then two-pointer (O(n log n))." },
+            { id: "4", label: "First and last position of element x in a sorted array.", answer: "plain", explanation: "lowerBound and upperBound, two plain binary searches. Pure boundary-finding on a sorted input." },
+            { id: "5", label: "Smallest divisor d such that sum of ceil(nums[i]/d) <= threshold.", answer: "answer", explanation: "Answer-search. Range [1, max(nums)]. Predicate: feasible(d). Larger d means smaller ceilings, smaller sum, more likely to satisfy threshold, monotonic in d." },
+            { id: "6", label: "Find the longest substring without repeating characters.", answer: "neither", explanation: "Sliding window territory, not binary search. The 'longest valid substring' answer can be found by binary searching the length, but the predicate (does some substring of length L exist?) requires O(n) check per L, giving O(n log n), strictly worse than the O(n) sliding-window solution. Don't binary-search when you don't need to." },
             { id: "7", label: "Detect whether an undirected graph has a cycle.", answer: "neither", explanation: "Pure DFS/Union-Find territory. No sorted structure, no monotonic answer space, no use for binary search." },
             { id: "8", label: "Capacity to ship packages within D days (weights given, ship daily in order).", answer: "answer", explanation: "Classic answer-search. Range [max(weights), sum(weights)]. Predicate: canShip(capacity). Monotonic: bigger ship can always do what a smaller ship can." },
           ]}
@@ -1008,8 +1008,8 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
           kind="Final check"
           question="Why doesn't binary search apply to 'find an element in an unsorted array'?"
           options={[
-            { label: "It does — binary search is universal.", explanation: "Universal it is not. Without monotonicity, the comparison at the midpoint tells you nothing about which half contains the target." },
-            { label: "Because without sorted-or-monotonic structure, the comparison at the midpoint can't rule out either half. Linear scan O(n) is the best you can do.", correct: true, explanation: "Right. Binary search's whole power comes from 'one comparison eliminates half.' With no monotonicity, a comparison at the midpoint tells you whether THAT element matches but says nothing about the rest. You'd still have to check every other index — that's just linear scan, dressed up." },
+            { label: "It does, binary search is universal.", explanation: "Universal it is not. Without monotonicity, the comparison at the midpoint tells you nothing about which half contains the target." },
+            { label: "Because without sorted-or-monotonic structure, the comparison at the midpoint can't rule out either half. Linear scan O(n) is the best you can do.", correct: true, explanation: "Right. Binary search's whole power comes from 'one comparison eliminates half.' With no monotonicity, a comparison at the midpoint tells you whether THAT element matches but says nothing about the rest. You'd still have to check every other index, that's just linear scan, dressed up." },
             { label: "Because hash lookup is O(1).", explanation: "True but tangential. The question is why binary search itself fails here, not whether something else is faster. The reason is monotonicity, not hashing." },
             { label: "Java's Arrays.binarySearch returns wrong values on unsorted input.", explanation: "It does (the JavaDoc warns you), but the deeper reason is mathematical: without monotonicity, no algorithm halving the space at every step can be correct." },
           ]}
@@ -1021,7 +1021,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
           options={[
             { label: "l = mid", explanation: "Infinite loop on size-2 intervals. mid = l (floor), so l = mid is a no-op. Always l = mid + 1 on go-right, regardless of convention." },
             { label: "l = mid + 1", correct: true, explanation: "Right. Even in half-open form, the +1 is essential because the floor-division midpoint can equal l. The asymmetry between the two updates (mid+1 going right, just mid going left) is exactly what the [l, r) convention buys you." },
-            { label: "l = mid - 1", explanation: "Backwards — that retreats. Go-right means the answer is strictly above mid, so l should advance past mid." },
+            { label: "l = mid - 1", explanation: "Backwards, that retreats. Go-right means the answer is strictly above mid, so l should advance past mid." },
             { label: "It depends on the input array.", explanation: "It depends on the convention, not the input. With [l, r) and r = mid on go-left, the correct go-right is always l = mid + 1." },
           ]}
         />
@@ -1031,7 +1031,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
           question="You suspect a problem is answer-search. What's the SINGLE most important property to verify before you write a binary-search loop?"
           options={[
             { label: "The input array is sorted.", explanation: "There may not BE an input array (e.g., 'square root of x'). The answer space is what you search, and it's an integer range by construction. Sortedness of the input isn't the criterion for answer-search." },
-            { label: "The predicate over the answer space is monotonic — it changes at most once from false to true (or true to false) as the answer increases.", correct: true, explanation: "Right. Monotonicity is THE precondition. Without it, binary search will silently skip over the answer or land somewhere wrong. With it, even an O(n) predicate becomes O(n log m) total — the entire trick." },
+            { label: "The predicate over the answer space is monotonic, it changes at most once from false to true (or true to false) as the answer increases.", correct: true, explanation: "Right. Monotonicity is THE precondition. Without it, binary search will silently skip over the answer or land somewhere wrong. With it, even an O(n) predicate becomes O(n log m) total, the entire trick." },
             { label: "The answer is positive.", explanation: "The sign doesn't matter; you can binary-search over any integer range, including negatives." },
             { label: "The predicate is fast.", explanation: "Speed affects total runtime but not correctness. A slow but monotonic predicate gives a correct (slow) binary search; a fast non-monotonic predicate gives a wrong fast answer. Monotonicity is the load-bearing property." },
           ]}
@@ -1046,7 +1046,7 @@ private int binarySearchRange(int[] nums, int target, int lo, int hi) {
             { takeaway: "Use l + (r - l) / 2 for the midpoint.", detail: "(l + r) / 2 silently overflows on huge arrays. The defensive form is free; the bug is brutal. Joshua Bloch and the JDK both got bitten. Don't be them." },
             { takeaway: "Lower bound and upper bound are your real binary searches.", detail: "Most problems are 'where does this value belong' or 'first index satisfying P,' not 'is X in the array.' Internalize lowerBound and upperBound; you'll write 80% of binary searches as one or the other." },
             { takeaway: "Answer-search: when the answer itself is the search variable.", detail: "Range = [lo, hi] integer interval. Predicate = feasibility check, must be monotonic. Lower-bound finds the smallest feasible answer. Recognize from phrases like 'minimize the maximum,' 'smallest such that,' 'fewest days/ships/operations.'" },
-            { takeaway: "Promote to long inside predicates.", detail: "Sums and products of array values overflow int even when individual values fit. long accumulators cost nothing and prevent silent wrong answers. Same lesson as overflow-safe midpoint — different incarnation." },
+            { takeaway: "Promote to long inside predicates.", detail: "Sums and products of array values overflow int even when individual values fit. long accumulators cost nothing and prevent silent wrong answers. Same lesson as overflow-safe midpoint, different incarnation." },
           ]}
         />
 

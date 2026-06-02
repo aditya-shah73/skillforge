@@ -32,11 +32,11 @@ export default function MemoizationDeepModule() {
           <span className="text-xs text-slate-400">· {mod.duration}</span>
         </div>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-          Memoization done right — <code>memo</code>, <code>useMemo</code>, <code>useCallback</code>, and when not to
+          Memoization done right, <code>memo</code>, <code>useMemo</code>, <code>useCallback</code>, and when not to
         </h1>
         <p className="text-lg text-slate-600 italic dark:text-slate-400">
           Someone told you React is slow, so you sprinkled <code>useMemo</code> and <code>useCallback</code> on everything.
-          The app got <em>slower</em> and the code got unreadable. Let&apos;s figure out what these three actually do — and the
+          The app got <em>slower</em> and the code got unreadable. Let&apos;s figure out what these three actually do, and the
           senior instinct for when reaching for them is the wrong move.
         </p>
         <BookmarkButton courseId="frontend" moduleSlug={MODULE_SLUG} />
@@ -49,21 +49,21 @@ export default function MemoizationDeepModule() {
         <p className="mb-4">
           Picture a barista who hates re-doing work. Every time you order, she writes down the <em>exact</em> order on a
           receipt and tapes it to the cup she just made. Next customer walks up: she compares their order to the last
-          receipt. <strong>Same order?</strong> She hands them the cup she already made — no second pour. <strong>Different
+          receipt. <strong>Same order?</strong> She hands them the cup she already made, no second pour. <strong>Different
           order?</strong> She makes a fresh one and tapes a new receipt.
         </p>
         <p className="mb-4">
           That is memoization in one sentence: <strong>remember the last result, and skip the work if the inputs
-          haven&apos;t changed.</strong> The whole game is the comparison step — &quot;is this the same order as last time?&quot; If
-          the comparison is reliable and cheap, you save real work. If it&apos;s <em>wrong</em> — if she can&apos;t actually tell
-          two identical orders apart — she remakes the drink every single time, and the receipts were pure overhead.
+          haven&apos;t changed.</strong> The whole game is the comparison step, &quot;is this the same order as last time?&quot; If
+          the comparison is reliable and cheap, you save real work. If it&apos;s <em>wrong</em>, if she can&apos;t actually tell
+          two identical orders apart, she remakes the drink every single time, and the receipts were pure overhead.
         </p>
         <p className="mb-4">
           React&apos;s three memoization tools are all the same barista with different cups. <code>memo</code> tapes a receipt
           to a <em>component</em> (skip the re-render if props match). <code>useMemo</code> tapes a receipt to a
           <em> computed value</em> (skip the recalculation if deps match). <code>useCallback</code> tapes a receipt to a
           <em> function</em> (hand back the same function if deps match). And the thing that breaks all three is the
-          barista comparing orders the wrong way — which, in React, is <strong>referential equality</strong>, the single
+          barista comparing orders the wrong way, which, in React, is <strong>referential equality</strong>, the single
           idea this whole module turns on.
         </p>
         <Callout variant="info" title="What this module is really about">
@@ -84,7 +84,7 @@ export default function MemoizationDeepModule() {
           using them correctly.
         </p>
 
-        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>React.memo</code> — memoizes a <em>component&apos;s render</em></h3>
+        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>React.memo</code>, memoizes a <em>component&apos;s render</em></h3>
         <p className="mb-4">
           <code>memo</code> wraps a component. Before re-rendering it, React shallow-compares the new props to the previous
           props. If they&apos;re all referentially equal, React <strong>skips the render entirely</strong> and reuses the last
@@ -95,10 +95,10 @@ export default function MemoizationDeepModule() {
   return <ul>{items.map((i) => <li key={i.id}>{i.label}</li>)}</ul>;
 });`}</code></pre>
 
-        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useMemo</code> — memoizes a <em>computed value</em></h3>
+        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useMemo</code>, memoizes a <em>computed value</em></h3>
         <p className="mb-4">
           <code>useMemo</code> caches the <em>result</em> of a calculation across renders. React re-runs the function only
-          when a dependency changes; otherwise it hands back the value it computed last time — the same reference.
+          when a dependency changes; otherwise it hands back the value it computed last time, the same reference.
         </p>
         <pre><code>{`// recompute the sorted list ONLY when \`items\` or \`sortKey\` changes
 const sorted = useMemo(
@@ -106,11 +106,11 @@ const sorted = useMemo(
   [items, sortKey],
 );`}</code></pre>
 
-        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useCallback</code> — memoizes a <em>function reference</em></h3>
+        <h3 className="mt-6 mb-2 text-xl font-semibold"><code>useCallback</code>, memoizes a <em>function reference</em></h3>
         <p className="mb-4">
           <code>useCallback</code> is just <code>useMemo</code> for a function. <code>useCallback(fn, deps)</code> is exactly{" "}
           <code>useMemo(() =&gt; fn, deps)</code>. It returns the <em>same function reference</em> across renders until a
-          dependency changes. It does not make the function faster — it keeps its identity stable.
+          dependency changes. It does not make the function faster, it keeps its identity stable.
         </p>
         <pre><code>{`// same function reference every render until \`onSelect\` or \`id\` changes
 const handleClick = useCallback(() => onSelect(id), [onSelect, id]);`}</code></pre>
@@ -132,13 +132,13 @@ const handleClick = useCallback(() => onSelect(id), [onSelect, id]);`}</code></p
           question="A teammate says 'wrap this component in useMemo so it stops re-rendering.' What's wrong with that sentence?"
           options={[
             {
-              label: "useMemo memoizes a computed value, not a component's render — React.memo is the one that can skip a component's re-render",
+              label: "useMemo memoizes a computed value, not a component's render, React.memo is the one that can skip a component's re-render",
               correct: true,
               explanation:
                 "Right. useMemo caches the result of a calculation between renders. The tool that compares props and skips a component's render is React.memo. They're easy to confuse because both 'remember', but they remember different things.",
             },
             {
-              label: "Nothing — useMemo and React.memo are aliases for the same API",
+              label: "Nothing, useMemo and React.memo are aliases for the same API",
               explanation:
                 "They are not aliases. useMemo caches a value inside a render; React.memo wraps a component to skip its render when props are referentially equal.",
             },
@@ -150,7 +150,7 @@ const handleClick = useCallback(() => onSelect(id), [onSelect, id]);`}</code></p
             {
               label: "useMemo is deprecated; you should use useCallback to stop re-renders",
               explanation:
-                "useMemo isn't deprecated, and useCallback memoizes a function reference — it doesn't stop a component re-rendering either. React.memo is the render-skipping tool.",
+                "useMemo isn't deprecated, and useCallback memoizes a function reference, it doesn't stop a component re-rendering either. React.memo is the render-skipping tool.",
             },
           ]}
         />
@@ -159,10 +159,10 @@ const handleClick = useCallback(() => onSelect(id), [onSelect, id]);`}</code></p
           question="What is useCallback(fn, deps) equivalent to, and what does it actually give you?"
           options={[
             {
-              label: "It's useMemo(() => fn, deps) — it returns the same function reference across renders until a dep changes; it does not make the function run faster",
+              label: "It's useMemo(() => fn, deps), it returns the same function reference across renders until a dep changes; it does not make the function run faster",
               correct: true,
               explanation:
-                "Exactly. useCallback is sugar for memoizing a function. Its only product is a stable identity — useful when that function is a dependency or a prop to a memo'd child. It never speeds up the function's execution.",
+                "Exactly. useCallback is sugar for memoizing a function. Its only product is a stable identity, useful when that function is a dependency or a prop to a memo'd child. It never speeds up the function's execution.",
             },
             {
               label: "It caches the function's return value, so calling it twice with the same args is instant",
@@ -180,19 +180,19 @@ const handleClick = useCallback(() => onSelect(id), [onSelect, id]);`}</code></p
 
       {/* ───────────────────────── 3. REFERENTIAL EQUALITY ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Referential equality — the idea everything hinges on</h2>
+        <h2 className="mb-4 text-2xl font-bold">Referential equality, the idea everything hinges on</h2>
         <p className="mb-4">
-          <code>memo</code> compares props with a <strong>shallow</strong> equality check — essentially <code>Object.is</code>{" "}
+          <code>memo</code> compares props with a <strong>shallow</strong> equality check, essentially <code>Object.is</code>{" "}
           per prop. For primitives (<code>number</code>, <code>string</code>, <code>boolean</code>) that&apos;s value equality,
           and it behaves how you&apos;d hope: <code>5 === 5</code>, <code>&quot;hi&quot; === &quot;hi&quot;</code>. But for objects, arrays, and
-          functions, it compares by <strong>reference</strong> — the memory identity, not the contents.
+          functions, it compares by <strong>reference</strong>, the memory identity, not the contents.
         </p>
         <pre><code>{`{ a: 1 } === { a: 1 }     // false — two different objects, same contents
 [1, 2] === [1, 2]         // false — two different arrays
 (() => {}) === (() => {}) // false — two different function objects`}</code></pre>
         <p className="mb-4">
           Now connect that to how React works: <strong>every render runs the component function from the top.</strong> Every
-          object literal, array literal, and inline arrow function in the body is <em>created fresh</em> on each render — a
+          object literal, array literal, and inline arrow function in the body is <em>created fresh</em> on each render, a
           brand-new reference, even if the contents are byte-identical to last time. That fresh reference is exactly what
           defeats a child&apos;s <code>memo</code>.
         </p>
@@ -211,7 +211,7 @@ function Parent() {
 }`}</code></pre>
         <p className="mb-4">
           Click the button. <code>Parent</code> re-renders. The <code>{"{ theme: \"dark\" }"}</code> literal and the inline
-          arrow are recreated — new references. <code>memo</code> shallow-compares: <code>oldConfig !== newConfig</code>,{" "}
+          arrow are recreated, new references. <code>memo</code> shallow-compares: <code>oldConfig !== newConfig</code>,{" "}
           <code>oldOnClick !== newOnClick</code>. The comparison fails, <code>Child</code> re-renders anyway, and the{" "}
           <code>memo</code> wrapper did nothing but add a useless comparison. This is the <strong>single most common
           memoization bug</strong>: a memo&apos;d child that never actually skips, because its props are freshly created
@@ -236,12 +236,12 @@ function Parent() {
           <p>
             &quot;<code>memo</code> compares props by reference. A new object, array, or inline function created in the parent&apos;s
             render is a new reference every time, so the comparison fails and the memo&apos;d child re-renders anyway. To make
-            <code> memo</code> work, the props it receives must be referentially stable — that&apos;s what <code>useMemo</code>{" "}
+            <code> memo</code> work, the props it receives must be referentially stable, that&apos;s what <code>useMemo</code>{" "}
             and <code>useCallback</code> are for. <code>memo</code> on the child and stable props from the parent are a
             package deal; one without the other is wasted.&quot;
           </p>
         </Callout>
-        <Callout variant="warn" title="children is a prop too — and it's almost never stable">
+        <Callout variant="warn" title="children is a prop too, and it's almost never stable">
           <p>
             JSX passed as <code>children</code> is a freshly-created element object on every parent render. So a memo&apos;d
             component that takes <code>children</code> rendered inline by the parent will usually re-render regardless,
@@ -270,7 +270,7 @@ function Parent() {
           </li>
           <li>
             <strong>Readability.</strong> <code>useMemo</code>/<code>useCallback</code> wrappers add noise, force you to
-            maintain dependency arrays, and create a new class of bugs — stale closures from a <em>wrong</em> dependency
+            maintain dependency arrays, and create a new class of bugs, stale closures from a <em>wrong</em> dependency
             list. Every memoization is a small maintenance liability.
           </li>
           <li>
@@ -282,13 +282,13 @@ function Parent() {
         <p className="mb-4">
           So the equation is: memoization wins only when <strong>(cost of the work you skip) &gt; (cost of remembering and
           comparing).</strong> For an expensive sort over 10,000 rows, or a memo&apos;d child whose subtree is genuinely big,
-          that math is easy. For <code>useMemo(() =&gt; a + b, [a, b])</code> — adding two numbers — you are paying the
+          that math is easy. For <code>useMemo(() =&gt; a + b, [a, b])</code>, adding two numbers, you are paying the
           remembering cost to skip an addition. That is a net loss, always.
         </p>
         <Callout variant="warn" title="The most-recommended useMemo on the internet is wrong">
           <p>
             <code>useMemo(() =&gt; a + b, [a, b])</code> and <code>useCallback</code> wrapping a handler that isn&apos;t a
-            dependency or a prop to a memo&apos;d child are pure overhead — they memoize something that was already cheap and
+            dependency or a prop to a memo&apos;d child are pure overhead, they memoize something that was already cheap and
             whose identity nobody cared about. Reaching for them &quot;just in case&quot; makes the code slower and harder to read,
             not faster.
           </p>
@@ -296,7 +296,7 @@ function Parent() {
         <p className="mb-4">
           There&apos;s also a structural point most people miss: <strong>moving state down or composing with children often
           beats memoization entirely.</strong> If a fast-changing piece of state (like our <code>count</code>) lives in a
-          smaller component, only that component re-renders — and the expensive sibling never needed <code>memo</code> at
+          smaller component, only that component re-renders, and the expensive sibling never needed <code>memo</code> at
           all. Composition is the optimization that doesn&apos;t cost you a dependency array.
         </p>
         <pre><code>{`// Instead of memoizing ExpensiveTree to survive Counter's re-renders...
@@ -318,25 +318,25 @@ function Page() {
           question="Child is wrapped in React.memo. The parent renders <Child config={{ theme: 'dark' }} />. The parent re-renders for an unrelated reason. Does Child re-render?"
           options={[
             {
-              label: "Yes — the object literal is a new reference every render, so memo's shallow comparison fails and Child re-renders anyway",
+              label: "Yes, the object literal is a new reference every render, so memo's shallow comparison fails and Child re-renders anyway",
               correct: true,
               explanation:
-                "Correct. { theme: 'dark' } is created fresh on each parent render — a new reference with identical contents. memo compares by reference, the comparison fails, and the memo does nothing. Stabilize it with useMemo to make the memo actually skip.",
+                "Correct. { theme: 'dark' } is created fresh on each parent render, a new reference with identical contents. memo compares by reference, the comparison fails, and the memo does nothing. Stabilize it with useMemo to make the memo actually skip.",
             },
             {
-              label: "No — memo deep-compares the object, sees the same contents, and skips the render",
+              label: "No, memo deep-compares the object, sees the same contents, and skips the render",
               explanation:
                 "memo does a shallow (reference) comparison, not a deep one. Same contents in a new object are still a different reference, so the comparison fails.",
             },
             {
-              label: "No — React caches object literals automatically so the reference is stable",
+              label: "No, React caches object literals automatically so the reference is stable",
               explanation:
                 "React does not cache object literals. Every render creates a brand-new object. You stabilize it yourself with useMemo.",
             },
             {
               label: "It throws, because you can't pass an object literal to a memo'd component",
               explanation:
-                "It's perfectly legal to pass an object literal — it just defeats the memo, silently. No error is thrown.",
+                "It's perfectly legal to pass an object literal, it just defeats the memo, silently. No error is thrown.",
             },
           ]}
         />
@@ -353,7 +353,7 @@ function Page() {
             {
               label: "memo only works on class components; convert the child to a class",
               explanation:
-                "memo works on function components — that's its whole purpose. The real issue is unstable props defeating the shallow comparison.",
+                "memo works on function components, that's its whole purpose. The real issue is unstable props defeating the shallow comparison.",
             },
             {
               label: "You need to also wrap the parent in memo for the child's memo to take effect",
@@ -404,15 +404,15 @@ function Page() {
           <p>
             Memoization is not &quot;making React faster.&quot; It&apos;s <em>trading memory and comparison work for skipped work.</em>{" "}
             That trade is only worth it when the skipped work is large and the comparison is cheap. So the question is never
-            &quot;should I memoize this?&quot; — it&apos;s &quot;have I <strong>measured</strong> that this is expensive, and is the work I&apos;d
+            &quot;should I memoize this?&quot;, it&apos;s &quot;have I <strong>measured</strong> that this is expensive, and is the work I&apos;d
             skip bigger than the cost of remembering it?&quot; If you haven&apos;t profiled, you don&apos;t know, and the honest answer
             is usually &quot;leave it alone.&quot;
           </p>
         </Callout>
-        <Callout variant="info" title="The compiler is changing the default — but the model still matters">
+        <Callout variant="info" title="The compiler is changing the default, but the model still matters">
           <p>
             The React Compiler (React 19+) auto-memoizes components and values at build time, aiming to make manual{" "}
-            <code>useMemo</code>/<code>useCallback</code> largely unnecessary. That doesn&apos;t make this knowledge obsolete —
+            <code>useMemo</code>/<code>useCallback</code> largely unnecessary. That doesn&apos;t make this knowledge obsolete,
             it makes it <em>more</em> important: you still need to understand referential equality to debug what the compiler
             did, to write code it can optimize, and to answer the interview question. The compiler automates the mechanics;
             it does not replace the mental model.
@@ -422,7 +422,7 @@ function Page() {
 
       {/* ───────────────────────── 6. PROFILER WORKFLOW ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">Reading the Profiler — finding the real cause</h2>
+        <h2 className="mb-4 text-2xl font-bold">Reading the Profiler, finding the real cause</h2>
         <p className="mb-4">
           The React DevTools Profiler records a commit and shows you, per component, how long it took to render and{" "}
           <em>why</em> it rendered. The workflow for a laggy UI is always the same:
@@ -430,7 +430,7 @@ function Page() {
         <ol className="mb-4 list-decimal space-y-2 pl-6">
           <li><strong>Record</strong> the interaction that feels slow (a keystroke, a click, a hover).</li>
           <li>
-            <strong>Find the wide, dark bars</strong> in the flamegraph — components that took the most time. Don&apos;t guess;
+            <strong>Find the wide, dark bars</strong> in the flamegraph, components that took the most time. Don&apos;t guess;
             the slow component is rarely the one you suspect.
           </li>
           <li>
@@ -438,8 +438,8 @@ function Page() {
             tells you whether it was state, a parent re-render, or a changed prop.
           </li>
           <li>
-            <strong>Fix the one biggest offender</strong> — often a single memo on a heavy subtree, or a single
-            stabilized prop — then <strong>re-record</strong> and confirm the bar shrank.
+            <strong>Fix the one biggest offender</strong>, often a single memo on a heavy subtree, or a single
+            stabilized prop, then <strong>re-record</strong> and confirm the bar shrank.
           </li>
         </ol>
         <p className="mb-4">
@@ -449,7 +449,7 @@ function Page() {
         <Callout variant="warn" title="Re-renders are not the same as slow renders">
           <p>
             A component re-rendering is not automatically a problem. A re-render that produces the same virtual DOM and
-            takes 0.1ms is free for all practical purposes. The Profiler measures <em>time</em>, not <em>count</em> — chase
+            takes 0.1ms is free for all practical purposes. The Profiler measures <em>time</em>, not <em>count</em>, chase
             the expensive renders, not the frequent ones. Optimizing a cheap-but-frequent render with memoization usually
             costs more than it saves.
           </p>
@@ -469,7 +469,7 @@ function Page() {
             <li>
               <strong>Referential equality is the catch.</strong> A fresh object/array/inline function created in the parent
               is a new reference every render, so it defeats a child&apos;s <code>memo</code>. <code>useMemo</code>/
-              <code>useCallback</code> exist mostly to stabilize those props so <code>memo</code> can work — they&apos;re a team.
+              <code>useCallback</code> exist mostly to stabilize those props so <code>memo</code> can work, they&apos;re a team.
             </li>
             <li>
               <strong>Memoization is never free.</strong> It costs memory and comparison on every render. It only wins when
@@ -489,10 +489,10 @@ function Page() {
 
       {/* ───────────────────────── 8. THE PROJECT ───────────────────────── */}
       <section className="mb-10">
-        <h2 className="mb-4 text-2xl font-bold">The project — profile, fix the real cause, then delete the rest</h2>
+        <h2 className="mb-4 text-2xl font-bold">The project, profile, fix the real cause, then delete the rest</h2>
         <p className="mb-4">
           You&apos;ll take a laggy list, find the <em>actual</em> bottleneck with the Profiler, fix it with targeted{" "}
-          <code>memo</code>/<code>useCallback</code> — and then delete the memoization that was doing nothing, justifying
+          <code>memo</code>/<code>useCallback</code>, and then delete the memoization that was doing nothing, justifying
           every call you keep. The deletions matter as much as the additions.
         </p>
         <ol className="mb-4 list-decimal space-y-3 pl-6">
@@ -502,13 +502,13 @@ function Page() {
             somewhere on the page. Type in the search box and feel the jank on each keystroke.
           </li>
           <li>
-            <strong>Profile it — don&apos;t guess.</strong> Open the React DevTools Profiler, enable &quot;record why each component
+            <strong>Profile it, don&apos;t guess.</strong> Open the React DevTools Profiler, enable &quot;record why each component
             rendered,&quot; and record a few keystrokes. Identify the widest bar and read <em>why</em> it rendered. Confirm with
             your own eyes which component is actually expensive (it&apos;s usually the rows, re-rendering on every keystroke).
           </li>
           <li>
             <strong>Fix the proven cause with <code>memo</code>.</strong> Wrap the <code>Row</code> component in{" "}
-            <code>React.memo</code>. Re-profile. If the rows still re-render, the culprit is an unstable prop — find it.
+            <code>React.memo</code>. Re-profile. If the rows still re-render, the culprit is an unstable prop, find it.
           </li>
           <li>
             <strong>Stabilize the prop that&apos;s defeating the memo.</strong> The row almost certainly receives an inline{" "}
@@ -524,11 +524,11 @@ function Page() {
           <li>
             <strong>Now delete the dead memoization.</strong> Go find a <code>useMemo</code>/<code>useCallback</code> that
             wraps something trivial (a simple sum, a handler that isn&apos;t a dep or a memo&apos;d-child prop) and delete it.
-            Re-profile to prove nothing got slower — because it was buying nothing. Write a one-line comment next to each
+            Re-profile to prove nothing got slower, because it was buying nothing. Write a one-line comment next to each
             memo you <em>kept</em> explaining the specific cost it&apos;s skipping.
           </li>
           <li>
-            <strong>Stretch — solve it with structure instead.</strong> Move the counter into its own component so its
+            <strong>Stretch, solve it with structure instead.</strong> Move the counter into its own component so its
             state no longer re-renders the list&apos;s parent at all. Notice how the list never needed <code>memo</code> to
             survive the counter once the state lived elsewhere.
           </li>
@@ -536,7 +536,7 @@ function Page() {
         <Callout variant="spring" title="Backend-engineer footnote">
           <p>
             If you come from server work: <code>useMemo</code> is a per-render-cache with a dependency-array cache key, and{" "}
-            <code>memo</code> is conditional GET / ETag for a component — &quot;same inputs as last time? serve the cached
+            <code>memo</code> is conditional GET / ETag for a component, &quot;same inputs as last time? serve the cached
             result.&quot; And just like a cache on the server, the danger isn&apos;t the hit, it&apos;s the <em>cost of the cache that
             never hits</em>: memory, invalidation logic (your dependency arrays), and the false sense that something is
             optimized. Profile your cache hit rate before you add the cache.
@@ -554,12 +554,12 @@ function Page() {
               label: "Each memoization costs memory plus a dependency comparison on every render; for cheap work the cost exceeds the work skipped, so it's a net loss",
               correct: true,
               explanation:
-                "Exactly. Memoization trades memory and comparison work for skipped work. When the skipped work is trivial (a sum, a tiny handler that isn't a dep), you pay the overhead and save nothing — a net loss, plus worse readability and stale-closure risk.",
+                "Exactly. Memoization trades memory and comparison work for skipped work. When the skipped work is trivial (a sum, a tiny handler that isn't a dep), you pay the overhead and save nothing, a net loss, plus worse readability and stale-closure risk.",
             },
             {
               label: "useMemo and useCallback leak memory and crash the tab over time",
               explanation:
-                "They don't leak — React releases caches normally. The cost is the per-render memory and comparison overhead, which simply isn't worth it for cheap work.",
+                "They don't leak, React releases caches normally. The cost is the per-render memory and comparison overhead, which simply isn't worth it for cheap work.",
             },
             {
               label: "They force every component to re-render twice to populate the cache",
@@ -581,7 +581,7 @@ function Page() {
               label: "Open the React DevTools Profiler, find the component that's actually expensive and why it rendered, fix that one cause, then re-measure",
               correct: true,
               explanation:
-                "Right. Measure before optimizing. The Profiler shows the real bottleneck (often re-rendering rows) and why. Fix the one proven offender, re-record to confirm it helped — don't shotgun memoization across the tree.",
+                "Right. Measure before optimizing. The Profiler shows the real bottleneck (often re-rendering rows) and why. Fix the one proven offender, re-record to confirm it helped, don't shotgun memoization across the tree.",
             },
             {
               label: "Wrap every component and value in memo/useMemo/useCallback and ship it",
@@ -596,7 +596,7 @@ function Page() {
             {
               label: "Assume any re-render is the problem and eliminate all re-renders",
               explanation:
-                "Re-renders aren't inherently bad — a cheap re-render is effectively free. The Profiler measures time, not count; chase the expensive renders, not the frequent ones.",
+                "Re-renders aren't inherently bad, a cheap re-render is effectively free. The Profiler measures time, not count; chase the expensive renders, not the frequent ones.",
             },
           ]}
         />

@@ -82,7 +82,7 @@ flowchart TB
       {/* INTRO */}
       <section className="not-prose mb-10">
         <Callout variant="insight">
-          <strong>How to use this card.</strong>{" "}This is not new material — it&apos;s a map of the eight Phase 6 modules compressed into reference cards. Read it once cold to test recall. Re-read it on the train to a phone screen. If an archetype card feels unfamiliar, the source module is one click away.
+          <strong>How to use this card.</strong>{" "}This is not new material, it&apos;s a map of the eight Phase 6 modules compressed into reference cards. Read it once cold to test recall. Re-read it on the train to a phone screen. If an archetype card feels unfamiliar, the source module is one click away.
         </Callout>
         <p className="mt-4 leading-relaxed text-slate-700 dark:text-slate-300">
           The eight modules you&apos;re consolidating: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">the 6-step framework</Link>, <Link href="/courses/system-design/modules/design-tinyurl" className="text-fuchsia-600 hover:underline">TinyURL</Link>, <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">news feed</Link>, <Link href="/courses/system-design/modules/design-twitter" className="text-fuchsia-600 hover:underline">Twitter</Link>, <Link href="/courses/system-design/modules/design-chat" className="text-fuchsia-600 hover:underline">chat</Link>, <Link href="/courses/system-design/modules/design-rate-limiter" className="text-fuchsia-600 hover:underline">rate limiter</Link>, <Link href="/courses/system-design/modules/design-rideshare" className="text-fuchsia-600 hover:underline">rideshare</Link>, and <Link href="/courses/system-design/modules/design-payments" className="text-fuchsia-600 hover:underline">payments</Link>.
@@ -95,7 +95,7 @@ flowchart TB
       <section className="not-prose mb-12">
         <h2 className="mb-1 text-2xl font-bold tracking-tight">1. The 6-step interview framework</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Same order every time. The minute hand on the clock moves whether you&apos;re ready or not — having a script means you spend zero seconds deciding what to do next.
+          Same order every time. The minute hand on the clock moves whether you&apos;re ready or not, having a script means you spend zero seconds deciding what to do next.
         </p>
 
         <div className="mb-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/40">
@@ -153,11 +153,11 @@ flowchart TB
         </div>
 
         <Callout variant="warn">
-          <strong>The single most common failure mode</strong>{" "}is skipping step 1 and jumping straight to boxes-and-arrows. The interviewer will let you do it — and then ding you for missing requirements they never had to state aloud.
+          <strong>The single most common failure mode</strong>{" "}is skipping step 1 and jumping straight to boxes-and-arrows. The interviewer will let you do it, and then ding you for missing requirements they never had to state aloud.
         </Callout>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">Module 33 — The interview framework</Link>.
+          Source: <Link href="/courses/system-design/modules/interview-framework" className="text-fuchsia-600 hover:underline">Module 33, The interview framework</Link>.
         </p>
       </section>
 
@@ -187,14 +187,14 @@ flowchart TB
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               <tr>
                 <td className="px-4 py-3 font-semibold">Read cost</td>
-                <td className="px-4 py-3 text-emerald-600">O(1) — pre-materialized</td>
-                <td className="px-4 py-3 text-rose-600">O(followees) — merge at read</td>
+                <td className="px-4 py-3 text-emerald-600">O(1), pre-materialized</td>
+                <td className="px-4 py-3 text-rose-600">O(followees), merge at read</td>
                 <td className="px-4 py-3 text-amber-600">O(celebrities) merge at read</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Write cost</td>
-                <td className="px-4 py-3 text-rose-600">O(followers) — fan out to each</td>
-                <td className="px-4 py-3 text-emerald-600">O(1) — append once</td>
+                <td className="px-4 py-3 text-rose-600">O(followers), fan out to each</td>
+                <td className="px-4 py-3 text-emerald-600">O(1), append once</td>
                 <td className="px-4 py-3 text-emerald-600">O(1) for celebs, O(followers) for normals</td>
               </tr>
               <tr>
@@ -220,7 +220,7 @@ flowchart TB
         </div>
 
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Source: <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">Module 35 — Design a news feed</Link>.
+          Source: <Link href="/courses/system-design/modules/design-newsfeed" className="text-fuchsia-600 hover:underline">Module 35, Design a news feed</Link>.
         </p>
       </section>
 
@@ -244,7 +244,7 @@ flowchart TB
 counters(host_id PK, next_id)   -- range-allocated, avoids hot key
 custom_aliases(alias PK, short_code FK)  -- optional reservations`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              The encoding question is base62 (a-z, A-Z, 0-9 = 62 chars; 7 chars = 3.5 trillion URLs). Generate IDs from a shared counter that hands out ranges to each host (so each host gets 1000 IDs at a time, no per-request roundtrip). Custom aliases are just a uniqueness check against the same table. The redirect path must be sub-10ms — pin the cache in front of the DB and accept eventual consistency on expiration. <Link href="/courses/system-design/modules/design-tinyurl" className="text-emerald-600 hover:underline">Source →</Link>
+              The encoding question is base62 (a-z, A-Z, 0-9 = 62 chars; 7 chars = 3.5 trillion URLs). Generate IDs from a shared counter that hands out ranges to each host (so each host gets 1000 IDs at a time, no per-request roundtrip). Custom aliases are just a uniqueness check against the same table. The redirect path must be sub-10ms, pin the cache in front of the DB and accept eventual consistency on expiration. <Link href="/courses/system-design/modules/design-tinyurl" className="text-emerald-600 hover:underline">Source →</Link>
             </p>
           </div>
 
@@ -272,7 +272,7 @@ feed_cache(user_id, post_id, score, PK(user_id, score DESC))  -- materialized fo
 es_tweets_index                                  -- Elasticsearch sidecar populated via CDC
 trending(hashtag, window_start, count, PK(hashtag, window_start))`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Newsfeed reuses the hybrid fanout from above. Search is a sidecar Elasticsearch cluster populated by Change Data Capture from the tweet store — never query the primary for full-text. Trending is a sliding-window count over hashtag events: bucket counts in 1-min windows, sum the last N windows, top-K via a heap. Each subsystem can be scaled independently, and that&apos;s the whole point. <Link href="/courses/system-design/modules/design-twitter" className="text-sky-600 hover:underline">Source →</Link>
+              Newsfeed reuses the hybrid fanout from above. Search is a sidecar Elasticsearch cluster populated by Change Data Capture from the tweet store, never query the primary for full-text. Trending is a sliding-window count over hashtag events: bucket counts in 1-min windows, sum the last N windows, top-K via a heap. Each subsystem can be scaled independently, and that&apos;s the whole point. <Link href="/courses/system-design/modules/design-twitter" className="text-sky-600 hover:underline">Source →</Link>
             </p>
           </div>
 
@@ -286,7 +286,7 @@ trending(hashtag, window_start, count, PK(hashtag, window_start))`}</CodeBlock>
 messages(conv_id, msg_id, sender_id, body, ts, PK(conv_id, msg_id))  -- partitioned by conv_id
 presence_cache(user_id → connection_server, ttl 30s in Redis)`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Connection layer is stateful WebSocket servers behind a sticky LB (consistent-hash on user_id). Message ordering is per-conversation: partition the messages table by conv_id, assign monotonic msg_id from a per-conversation sequencer (or hybrid logical clock). Group fanout = look up each member&apos;s connection-server in the presence cache and publish via Redis pub/sub or Kafka; offline users get a push notification through APNs/FCM. The hard part isn&apos;t the schema — it&apos;s the reconnection/backfill story when a user&apos;s connection drops mid-conversation. <Link href="/courses/system-design/modules/design-chat" className="text-violet-600 hover:underline">Source →</Link>
+              Connection layer is stateful WebSocket servers behind a sticky LB (consistent-hash on user_id). Message ordering is per-conversation: partition the messages table by conv_id, assign monotonic msg_id from a per-conversation sequencer (or hybrid logical clock). Group fanout = look up each member&apos;s connection-server in the presence cache and publish via Redis pub/sub or Kafka; offline users get a push notification through APNs/FCM. The hard part isn&apos;t the schema, it&apos;s the reconnection/backfill story when a user&apos;s connection drops mid-conversation. <Link href="/courses/system-design/modules/design-chat" className="text-violet-600 hover:underline">Source →</Link>
             </p>
           </div>
 
@@ -300,7 +300,7 @@ presence_cache(user_id → connection_server, ttl 30s in Redis)`}</CodeBlock>
   → value = (tokens, last_refill_ts)
 Lua script (EVAL): refill, decrement, return allow/deny  -- atomic, one RTT`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Token bucket parameters: capacity (burst) and refill rate (sustained). Key is per-user OR per-IP OR per-endpoint — usually all three layered. The atomic update is done in a Lua script via <code>EVAL</code>, which makes the refill + check + decrement a single Redis op. Degradation strategy is the interview gotcha: <strong>fail open</strong> (allow through on Redis outage — preserves availability, accepts abuse risk) or <strong>fail closed</strong> (reject everything — preserves backend, kills user trust). Pick based on whether the protected resource is more sensitive to overload or to outage. <Link href="/courses/system-design/modules/design-rate-limiter" className="text-orange-600 hover:underline">Source →</Link>
+              Token bucket parameters: capacity (burst) and refill rate (sustained). Key is per-user OR per-IP OR per-endpoint, usually all three layered. The atomic update is done in a Lua script via <code>EVAL</code>, which makes the refill + check + decrement a single Redis op. Degradation strategy is the interview gotcha: <strong>fail open</strong> (allow through on Redis outage, preserves availability, accepts abuse risk) or <strong>fail closed</strong> (reject everything, preserves backend, kills user trust). Pick based on whether the protected resource is more sensitive to overload or to outage. <Link href="/courses/system-design/modules/design-rate-limiter" className="text-orange-600 hover:underline">Source →</Link>
             </p>
           </div>
 
@@ -308,13 +308,13 @@ Lua script (EVAL): refill, decrement, return allow/deny  -- atomic, one RTT`}</C
           <div className="rounded-xl border border-teal-200 bg-teal-50/40 p-5 dark:border-teal-900 dark:bg-teal-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-teal-700 uppercase dark:text-teal-300">Archetype 6 · Rideshare</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-              <strong>Key insight:</strong>{" "}five subsystems (geo-index, dispatch, ETA, surge, payment). The matching round-trip — driver candidate → offer → accept/reject → fall back to next candidate — is the hard part because it&apos;s low-latency and stateful.
+              <strong>Key insight:</strong>{" "}five subsystems (geo-index, dispatch, ETA, surge, payment). The matching round-trip, driver candidate → offer → accept/reject → fall back to next candidate, is the hard part because it&apos;s low-latency and stateful.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`drivers(driver_id PK, status, last_geohash, last_seen)  -- updated every 4s via WebSocket
 geo_index(geohash → set of driver_ids)                  -- Redis ZSET or S2 cells
 trips(trip_id PK, rider_id, driver_id, state, route, fare)`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Drivers stream GPS over WebSocket every few seconds; their location lives in a geo-index (geohash prefix or S2 cells) for O(log n) k-NN queries. Dispatch = look up candidates in the geo-index, rank by ETA × surge × driver-rating, offer to top candidate, wait 10s, fall back to next. ETA uses a road-graph router (OSRM/Valhalla) plus historical traffic. Surge is a feedback loop over unmet demand per cell. Payment is a separate service (see archetype 7). The hardest tradeoff is consistency of driver state vs latency of the match — short-pessimistic-locks per offer is the usual answer. <Link href="/courses/system-design/modules/design-rideshare" className="text-teal-600 hover:underline">Source →</Link>
+              Drivers stream GPS over WebSocket every few seconds; their location lives in a geo-index (geohash prefix or S2 cells) for O(log n) k-NN queries. Dispatch = look up candidates in the geo-index, rank by ETA × surge × driver-rating, offer to top candidate, wait 10s, fall back to next. ETA uses a road-graph router (OSRM/Valhalla) plus historical traffic. Surge is a feedback loop over unmet demand per cell. Payment is a separate service (see archetype 7). The hardest tradeoff is consistency of driver state vs latency of the match, short-pessimistic-locks per offer is the usual answer. <Link href="/courses/system-design/modules/design-rideshare" className="text-teal-600 hover:underline">Source →</Link>
             </p>
           </div>
 
@@ -322,13 +322,13 @@ trips(trip_id PK, rider_id, driver_id, state, route, fare)`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Archetype 7 · Payments</div>
             <p className="mb-2 text-sm text-slate-700 dark:text-slate-300">
-              <strong>Key insight:</strong>{" "}money is different. Idempotency keys are mandatory, the ledger is append-only, and reconciliation against the gateway is the source of truth. Boring is the goal — cleverness in payments is a code smell.
+              <strong>Key insight:</strong>{" "}money is different. Idempotency keys are mandatory, the ledger is append-only, and reconciliation against the gateway is the source of truth. Boring is the goal, cleverness in payments is a code smell.
             </p>
             <CodeBlock lang="plain" caption="Data model (3 lines)">{`ledger(entry_id PK, txn_id, account, amount_cents, currency, type, ts)  -- append-only, double-entry
 idempotency(idem_key PK, body_hash, status, response_blob, ts)
 reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-              Every financial event becomes two or more ledger entries that sum to zero (double-entry). The client owns the idempotency key; the server stores the response blob and replays it on retry. <strong>Never modify a posted ledger entry</strong> — corrections are <em>reversing entries</em>{" "}appended to the log so the audit trail is intact. Every night, fetch the gateway&apos;s settlement report and match each line to a ledger entry; mismatches go to a queue for human review. The interviewer wants to hear &quot;append&quot;, &quot;balanced&quot;, &quot;idempotent&quot;, and &quot;reversing entry&quot; — in that order. <Link href="/courses/system-design/modules/design-payments" className="text-rose-600 hover:underline">Source →</Link>
+              Every financial event becomes two or more ledger entries that sum to zero (double-entry). The client owns the idempotency key; the server stores the response blob and replays it on retry. <strong>Never modify a posted ledger entry</strong>, corrections are <em>reversing entries</em>{" "}appended to the log so the audit trail is intact. Every night, fetch the gateway&apos;s settlement report and match each line to a ledger entry; mismatches go to a queue for human review. The interviewer wants to hear &quot;append&quot;, &quot;balanced&quot;, &quot;idempotent&quot;, and &quot;reversing entry&quot;, in that order. <Link href="/courses/system-design/modules/design-payments" className="text-rose-600 hover:underline">Source →</Link>
             </p>
           </div>
         </div>
@@ -338,7 +338,7 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
       {/* SECTION 4 — Cross-cutting infra table */}
       {/* ============================================================ */}
       <section className="not-prose mb-12">
-        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Cross-cutting infra — which archetype needs which</h2>
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">4. Cross-cutting infra, which archetype needs which</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
           If you can fill in this grid from memory, you can pattern-match any new design prompt onto the right combination of components.
         </p>
@@ -360,53 +360,53 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
               <tr>
                 <td className="px-4 py-3 font-semibold">TinyURL</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">News feed</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Twitter</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
                 <td className="px-4 py-3 text-center text-amber-600">●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Chat</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Rate limiter</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-semibold">Rideshare</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
                 <td className="px-4 py-3 text-center text-amber-600">●</td>
@@ -415,9 +415,9 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
                 <td className="px-4 py-3 font-semibold">Payments</td>
                 <td className="px-4 py-3 text-center text-amber-600">●</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
-                <td className="px-4 py-3 text-center text-slate-400">—</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
+                <td className="px-4 py-3 text-center text-slate-400">,</td>
                 <td className="px-4 py-3 text-center text-emerald-600">●●●</td>
               </tr>
             </tbody>
@@ -425,7 +425,7 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
         </div>
 
         <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          ●●● = central to the design · ●● = important but not the headline · ● = supporting · — = not required.
+          ●●● = central to the design · ●● = important but not the headline · ● = supporting ·, = not required.
         </p>
       </section>
 
@@ -442,7 +442,7 @@ reconciliation(date, gateway_ref, ledger_entry_id, matched_at)`}</CodeBlock>
           <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 dark:border-rose-900 dark:bg-rose-950/20">
             <div className="mb-2 text-xs font-bold tracking-wider text-rose-700 uppercase dark:text-rose-300">Gotcha 1 · Jumping into HLD without clarifying</div>
             <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">
-              The interviewer says &quot;design Twitter&quot; — and you start drawing boxes 30 seconds later. You will miss the scale numbers, miss the read:write ratio, and design for the wrong tradeoffs.
+              The interviewer says &quot;design Twitter&quot;, and you start drawing boxes 30 seconds later. You will miss the scale numbers, miss the read:write ratio, and design for the wrong tradeoffs.
             </p>
             <CodeBlock lang="plain">{`# BAD — straight to boxes
 Candidate: "OK so we have a load balancer, then an API server, then a DB..."
@@ -522,16 +522,16 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       <section className="mb-12">
         <h2 className="not-prose mb-1 text-2xl font-bold tracking-tight">6. Optional self-assessment</h2>
         <p className="not-prose mb-6 text-sm text-slate-500 dark:text-slate-400">
-          Six recall checks. No XP, no gating — just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
+          Six recall checks. No XP, no gating, just &quot;do I actually remember this?&quot; If you miss one, jump back to the source module.
         </p>
 
         <Quiz
           kind="Recall check"
           question="In the 6-step framework, what is the actual purpose of step 2 (estimate)?"
           options={[
-            { label: "To show off mental math", explanation: "The interviewer doesn't care about the math itself — they care about what it lets you justify." },
+            { label: "To show off mental math", explanation: "The interviewer doesn't care about the math itself, they care about what it lets you justify." },
             { label: "To pick numbers that justify the architectural choices in steps 4–6 (sharding, caching, queueing)", correct: true, explanation: "Right. If your QPS estimate is 100/s, you don't need sharding. If it's 1M/s, you do. The estimate is the warrant for every scaling decision that follows." },
-            { label: "To pad the interview time", explanation: "Step 2 takes ~5 min. It's not padding — it's the foundation for everything after." },
+            { label: "To pad the interview time", explanation: "Step 2 takes ~5 min. It's not padding, it's the foundation for everything after." },
             { label: "Because the interviewer will grade your arithmetic", explanation: "Order of magnitude is what matters. Nobody is checking that you got 86,400 right to the last digit." },
           ]}
         />
@@ -540,8 +540,8 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           kind="Recall check"
           question="A celebrity user on your platform has 50M followers. Which fanout strategy should they use?"
           options={[
-            { label: "Push (fanout-on-write) — pre-materialize for fast reads", explanation: "Pushing to 50M follower feeds per tweet would saturate your fanout workers within minutes. This is exactly the celebrity problem." },
-            { label: "Pull (fanout-on-read) for celebrity posts, with push for normal users — the hybrid model", correct: true, explanation: "Right. Above the celebrity threshold (e.g. 10K followers), don't fan out. Readers merge a celebrity-pull layer with their pre-materialized normal feed at read time. Bounds the worst-case write cost." },
+            { label: "Push (fanout-on-write), pre-materialize for fast reads", explanation: "Pushing to 50M follower feeds per tweet would saturate your fanout workers within minutes. This is exactly the celebrity problem." },
+            { label: "Pull (fanout-on-read) for celebrity posts, with push for normal users, the hybrid model", correct: true, explanation: "Right. Above the celebrity threshold (e.g. 10K followers), don't fan out. Readers merge a celebrity-pull layer with their pre-materialized normal feed at read time. Bounds the worst-case write cost." },
             { label: "Push, but use 1000 fanout workers", explanation: "Throwing workers at the problem just moves the bottleneck. The fundamental write amplification is still 50M per tweet." },
             { label: "Pull for all users", explanation: "That works for the celebrity but kills read latency for normal users following 200 accounts. Hybrid wins." },
           ]}
@@ -551,10 +551,10 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           kind="Recall check"
           question="What ordering guarantee does a well-designed chat system provide?"
           options={[
-            { label: "Global total ordering across all conversations", explanation: "Way too strong — requires a single global sequencer, kills horizontal scaling. Nobody needs this; users only see their own conversations." },
+            { label: "Global total ordering across all conversations", explanation: "Way too strong, requires a single global sequencer, kills horizontal scaling. Nobody needs this; users only see their own conversations." },
             { label: "Per-conversation FIFO ordering, achieved by partitioning the messages table by conv_id and using a per-conversation sequencer or HLC", correct: true, explanation: "Right. Users only ever see messages in conversations they're in, so per-conversation ordering is all you need. Partition by conv_id, sequence within, scale out across conv_ids." },
-            { label: "Best-effort — messages may arrive in any order, client sorts by timestamp", explanation: "Wall-clock timestamps from different servers drift. You'd get reordering visible to users. Use a logical sequencer per conversation." },
-            { label: "Eventual consistency only — order doesn't matter", explanation: "Order absolutely matters in chat. 'I hate you / just kidding' delivered in the wrong order is a serious bug." },
+            { label: "Best-effort, messages may arrive in any order, client sorts by timestamp", explanation: "Wall-clock timestamps from different servers drift. You'd get reordering visible to users. Use a logical sequencer per conversation." },
+            { label: "Eventual consistency only, order doesn't matter", explanation: "Order absolutely matters in chat. 'I hate you / just kidding' delivered in the wrong order is a serious bug." },
           ]}
         />
 
@@ -562,8 +562,8 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           kind="Recall check"
           question="Why does the distributed rate limiter use a Lua script in Redis instead of multiple commands?"
           options={[
-            { label: "Lua is faster than Redis commands", explanation: "Lua runs inside Redis, so it's no faster per op — the advantage is atomicity." },
-            { label: "To make the refill + check + decrement atomic in a single round-trip, eliminating the race condition between read and write under high concurrency", correct: true, explanation: "Right. Without atomicity, two concurrent requests could both read 1 token remaining, both decrement, and both succeed — leaking past the limit. EVAL gives you a single atomic op." },
+            { label: "Lua is faster than Redis commands", explanation: "Lua runs inside Redis, so it's no faster per op, the advantage is atomicity." },
+            { label: "To make the refill + check + decrement atomic in a single round-trip, eliminating the race condition between read and write under high concurrency", correct: true, explanation: "Right. Without atomicity, two concurrent requests could both read 1 token remaining, both decrement, and both succeed, leaking past the limit. EVAL gives you a single atomic op." },
             { label: "Because Redis doesn't support transactions", explanation: "Redis does support MULTI/EXEC, but it's clunkier and doesn't let you do conditional logic on intermediate values. Lua is the standard idiom." },
             { label: "It reduces Redis memory usage", explanation: "Lua scripts have nothing to do with memory usage; they're about transactional execution." },
           ]}
@@ -573,9 +573,9 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           kind="Recall check"
           question="For a rideshare 'nearest 10 drivers within 2km' query, which spatial index is the right pick?"
           options={[
-            { label: "A regular B-tree on (latitude, longitude)", explanation: "B-trees are 1D. A composite (lat, lon) index won't efficiently answer 2D nearest-neighbor — you'd scan an entire latitude band." },
-            { label: "Geohash or S2 cells indexed in a sorted-set (Redis ZSET) — gives O(log n) lookup by prefix and natural geographic locality", correct: true, explanation: "Right. Geohash and S2 both encode 2D positions into 1D keys that preserve locality. Looking up neighbors = prefix match + a few adjacent cells. This is exactly what Uber and Lyft use." },
-            { label: "Full table scan — drivers are small enough", explanation: "Maybe at 100 drivers. At a million active drivers in a metro at peak, you cannot scan per request." },
+            { label: "A regular B-tree on (latitude, longitude)", explanation: "B-trees are 1D. A composite (lat, lon) index won't efficiently answer 2D nearest-neighbor, you'd scan an entire latitude band." },
+            { label: "Geohash or S2 cells indexed in a sorted-set (Redis ZSET), gives O(log n) lookup by prefix and natural geographic locality", correct: true, explanation: "Right. Geohash and S2 both encode 2D positions into 1D keys that preserve locality. Looking up neighbors = prefix match + a few adjacent cells. This is exactly what Uber and Lyft use." },
+            { label: "Full table scan, drivers are small enough", explanation: "Maybe at 100 drivers. At a million active drivers in a metro at peak, you cannot scan per request." },
             { label: "Hash index on city", explanation: "Way too coarse. Within a city you still need to find the 10 closest, not all drivers in the city." },
           ]}
         />
@@ -584,10 +584,10 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
           kind="Recall check"
           question="At what level should the idempotency key live in a payments API?"
           options={[
-            { label: "Generated server-side per request", explanation: "If the server generates it, retries get a new key — defeats the whole point of idempotency. The client must own the key so that retried requests share it." },
+            { label: "Generated server-side per request", explanation: "If the server generates it, retries get a new key, defeats the whole point of idempotency. The client must own the key so that retried requests share it." },
             { label: "Client-provided in a header, stored server-side keyed by (idempotency_key, body_hash); same key + same body returns the cached response, same key + different body is a 422", correct: true, explanation: "Right. The client owns the key (so retries share it), the server owns the response (so it's stable), and matching the body hash prevents accidental reuse of a key for a different request. This is the Stripe pattern, codified." },
             { label: "Per database connection", explanation: "Connections are pooled and reused; this gives no useful guarantee." },
-            { label: "It's optional — most payments work fine without one", explanation: "Without idempotency keys, every network blip is a double-charge waiting to happen. They are mandatory in production payments." },
+            { label: "It's optional, most payments work fine without one", explanation: "Without idempotency keys, every network blip is a double-charge waiting to happen. They are mandatory in production payments." },
           ]}
         />
       </section>
@@ -597,7 +597,7 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       {/* ============================================================ */}
       <section className="not-prose mb-12">
         <Callout variant="spring">
-          <strong>You&apos;re ready for Phase 7 when…</strong>{" "}you can pick any one of the seven archetypes, walk the 6-step framework end-to-end without stopping to think about the order, and name the headline tradeoff before drawing a single box. When the interviewer says &quot;OK, now let&apos;s zoom in on the bottleneck&quot;, you already know which two boxes they&apos;re going to point at — and you have a 5-minute deep dive ready for each.
+          <strong>You&apos;re ready for Phase 7 when…</strong>{" "}you can pick any one of the seven archetypes, walk the 6-step framework end-to-end without stopping to think about the order, and name the headline tradeoff before drawing a single box. When the interviewer says &quot;OK, now let&apos;s zoom in on the bottleneck&quot;, you already know which two boxes they&apos;re going to point at, and you have a 5-minute deep dive ready for each.
         </Callout>
       </section>
 
@@ -606,14 +606,14 @@ INSERT INTO ledger (entry_id, txn_id, account, amount_cents, type, ts)
       {/* ============================================================ */}
       <section className="mt-12 rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-rose-50 p-6 dark:border-pink-900 dark:from-pink-950/30 dark:via-slate-900 dark:to-rose-950/30">
         <div className="mb-2 text-xs font-bold tracking-wider text-pink-700 uppercase dark:text-pink-300">
-          Phase 6 — locked in
+          Phase 6, locked in
         </div>
         <h3 className="mt-0 mb-2 text-xl font-bold">You can run a 45-minute design loop end-to-end</h3>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          The 6-step framework, the fanout decision, seven archetypes, the cross-cutting infra map, and four gotchas. That&apos;s the playbook every senior engineer carries into a system-design interview — and the patterns are the same ones you&apos;ll reach for when you&apos;re actually building production systems.
+          The 6-step framework, the fanout decision, seven archetypes, the cross-cutting infra map, and four gotchas. That&apos;s the playbook every senior engineer carries into a system-design interview, and the patterns are the same ones you&apos;ll reach for when you&apos;re actually building production systems.
         </p>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
-          <strong>Up next: Phase 7 — Production &amp; Capstone.</strong>{" "}Migrating off legacy monoliths, security at scale, the full course recap, and a capstone design exercise that ties everything together.
+          <strong>Up next: Phase 7, Production &amp; Capstone.</strong>{" "}Migrating off legacy monoliths, security at scale, the full course recap, and a capstone design exercise that ties everything together.
         </p>
         <Link
           href="/courses/system-design/modules/migration-patterns"

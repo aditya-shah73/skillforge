@@ -13,7 +13,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 
 const CHECKPOINTS = [
   { id: "two-dims", title: "When state needs two dimensions" },
-  { id: "unique-paths", title: "Unique Paths — grid DP" },
+  { id: "unique-paths", title: "Unique Paths, grid DP" },
   { id: "lcs", title: "Longest Common Subsequence" },
   { id: "edit-distance", title: "Edit Distance" },
   { id: "knapsack", title: "0/1 Knapsack" },
@@ -106,7 +106,7 @@ flowchart LR
         <p>
           By now you&apos;ve internalized the 1D DP shape: <code>dp[i]</code> answers a question about the prefix
           ending at index <code>i</code>, and the recurrence wires <code>dp[i]</code> to a few earlier{" "}
-          <code>dp[j]</code> values. That works beautifully when the problem has a single sweeping axis — usually
+          <code>dp[j]</code> values. That works beautifully when the problem has a single sweeping axis, usually
           &quot;position in a sequence.&quot; But there&apos;s a whole family of problems where 1D{" "}
           <em>cannot</em>{" "}capture the answer, and trying to force it in produces a recurrence that needs information
           you didn&apos;t save.
@@ -133,7 +133,7 @@ flowchart LR
           </li>
           <li>
             <strong>A subarray interval.</strong> &quot;Best answer over the subarray <code>[i..j]</code>.&quot;
-            (Burst balloons, matrix chain multiplication — full coverage in the next module.)
+            (Burst balloons, matrix chain multiplication, full coverage in the next module.)
           </li>
         </ul>
 
@@ -152,7 +152,7 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
 
         <p>
           The recurrence almost always reaches into one of three neighbors: <code>dp[i-1][j]</code>,{" "}
-          <code>dp[i][j-1]</code>, or <code>dp[i-1][j-1]</code> — and sometimes all three. That dependency pattern
+          <code>dp[i][j-1]</code>, or <code>dp[i-1][j-1]</code>, and sometimes all three. That dependency pattern
           is what makes the table fillable in a single bottom-up sweep, and what tells you the time complexity is{" "}
           <code>O(m·n)</code> in the typical case.
         </p>
@@ -167,7 +167,7 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
           <p>
             <strong>Grid family:</strong>{" "}the indices are literal <code>(row, col)</code> coordinates and you walk
             from <code>(0,0)</code> to <code>(m-1,n-1)</code>. Unique paths and minimum path sum are the canonical
-            members. The recurrence is whatever the &quot;allowed moves&quot; rule says — usually right and down.
+            members. The recurrence is whatever the &quot;allowed moves&quot; rule says, usually right and down.
           </p>
         </Callout>
 
@@ -176,13 +176,13 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
         <p>
           Suppose we tried to solve LCS with 1D state. We&apos;d need <code>dp[i]</code> = &quot;LCS of{" "}
           <code>A[0..i)</code> against B&quot;. But to extend that to <code>i+1</code>, we&apos;d need to know the
-          alignment we used so far against B — which is exactly the <code>j</code> we left out. There&apos;s no
+          alignment we used so far against B, which is exactly the <code>j</code> we left out. There&apos;s no
           way to summarize &quot;how much of B has been consumed&quot; without it. So we add the second axis, and
           the recurrence falls out cleanly.
         </p>
 
         <p>
-          Ironically, several 2D DPs <em>can</em>{" "}be space-optimized back down to 1D — because in the recurrence,
+          Ironically, several 2D DPs <em>can</em>{" "}be space-optimized back down to 1D, because in the recurrence,
           <code>dp[i][j]</code> only depends on row <code>i-1</code>, so you only need to keep one previous row.
           We&apos;ll do this twice in this module: once for unique paths, once for knapsack. But the{" "}
           <em>conceptual</em>{" "}state is still 2D, and getting the 2D version right comes first.
@@ -192,9 +192,9 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
           kind="Quick check"
           question="You&apos;re asked to count the number of ways to climb a staircase where each step costs a varying amount of energy and you also have a daily energy budget. What's the natural state shape?"
           options={[
-            { label: "1D: dp[i] = ways to reach step i.", explanation: "Misses the budget axis — two paths reaching step i with different remaining energy aren't equivalent for future moves." },
-            { label: "2D: dp[i][e] = ways to reach step i with exactly e energy remaining.", correct: true, explanation: "Right. The decision at each step depends on both 'where am I' and 'how much energy do I have left' — the second axis is the resource budget. This is the same shape as knapsack: dp[item][capacity]." },
-            { label: "1D: dp[e] = max steps reachable with energy e.", explanation: "We were asked to count ways, not maximize. Also, this collapses position into a derived quantity, which loses information — different positions with the same e are different states." },
+            { label: "1D: dp[i] = ways to reach step i.", explanation: "Misses the budget axis, two paths reaching step i with different remaining energy aren't equivalent for future moves." },
+            { label: "2D: dp[i][e] = ways to reach step i with exactly e energy remaining.", correct: true, explanation: "Right. The decision at each step depends on both 'where am I' and 'how much energy do I have left', the second axis is the resource budget. This is the same shape as knapsack: dp[item][capacity]." },
+            { label: "1D: dp[e] = max steps reachable with energy e.", explanation: "We were asked to count ways, not maximize. Also, this collapses position into a derived quantity, which loses information, different positions with the same e are different states." },
             { label: "0D: just a running total.", explanation: "0D works only when the problem has no state at all (e.g., simple constant-time formulas). Counting paths with constraints needs structured state." },
           ]}
         />
@@ -215,7 +215,7 @@ final:       read off dp[m][n] (or sometimes the max over the whole table)`}</Co
       {/* ───────────────── Part 2 · Unique Paths ───────────────── */}
       <Checkpoint moduleSlug="dp-2d" id="unique-paths" title="I can solve grid DP and space-optimize the row" xp={25}>
       <section>
-        <h2 id="unique-paths">Unique Paths — the cleanest grid DP there is</h2>
+        <h2 id="unique-paths">Unique Paths, the cleanest grid DP there is</h2>
 
         <p>
           <strong>LC 62 · Unique Paths.</strong>{" "}A robot stands on the top-left of an <code>m × n</code> grid. It can
@@ -241,11 +241,11 @@ answer: dp[m-1][n-1]`}</CodeBlock>
         <Mermaid chart={uniquePathsFill} />
 
         <p>
-          The diagram fills a 3×4 grid — top row and left column are all 1s, then each interior cell is the sum of
+          The diagram fills a 3×4 grid, top row and left column are all 1s, then each interior cell is the sum of
           its top and left neighbors. Cell <code>(2, 3)</code> ends up as 10, and that&apos;s the answer.
         </p>
 
-        <h3>Java — the straightforward 2D version</h3>
+        <h3>Java, the straightforward 2D version</h3>
 
         <CodeBlock lang="java">{`public int uniquePaths(int m, int n) {
     int[][] dp = new int[m][n];
@@ -263,10 +263,10 @@ answer: dp[m-1][n-1]`}</CodeBlock>
 
         <p>
           Time: <code>O(m·n)</code>. Space: <code>O(m·n)</code>. That&apos;s a perfect baseline for a coding
-          interview — write this first, get it right, then talk about optimizing.
+          interview, write this first, get it right, then talk about optimizing.
         </p>
 
-        <h3>Space optimization — one rolling row</h3>
+        <h3>Space optimization, one rolling row</h3>
 
         <p>
           Notice that <code>dp[i][j]</code> only reads from row <code>i-1</code> (the cell directly above) and the
@@ -291,8 +291,8 @@ answer: dp[m-1][n-1]`}</CodeBlock>
 }`}</CodeBlock>
 
         <p>
-          Time stays <code>O(m·n)</code>. Space drops to <code>O(min(m, n))</code>. The trick — and the part that
-          often confuses people — is that <strong>the same array slot plays two roles depending on whether
+          Time stays <code>O(m·n)</code>. Space drops to <code>O(min(m, n))</code>. The trick, and the part that
+          often confuses people, is that <strong>the same array slot plays two roles depending on whether
           you&apos;ve hit it yet in the current row sweep</strong>. Before the update, <code>dp[j]</code> still holds
           last row&apos;s value (the &quot;up&quot; neighbor). After the update, it holds this row&apos;s value
           (which the next iteration&apos;s <code>dp[j-1]</code> will read).
@@ -304,7 +304,7 @@ answer: dp[m-1][n-1]`}</CodeBlock>
             must already be the new row&apos;s value when we read it (we want the &quot;left&quot; neighbor in the
             current row), and <code>dp[j]</code> must still be the old row&apos;s value (the &quot;up&quot;
             neighbor). Reverse the sweep and you&apos;d break one of those invariants. We&apos;ll see the same
-            ordering question pop up — with the <em>opposite</em>{" "}answer — in 0/1 knapsack.
+            ordering question pop up, with the <em>opposite</em>{" "}answer, in 0/1 knapsack.
           </p>
         </Callout>
 
@@ -313,7 +313,7 @@ answer: dp[m-1][n-1]`}</CodeBlock>
         <p>
           Unique Paths actually has a beautiful closed form. Each path from <code>(0,0)</code> to{" "}
           <code>(m-1, n-1)</code> consists of exactly <code>m-1</code> down moves and <code>n-1</code> right moves
-          in some order — so the count is the number of ways to choose which <code>m-1</code> of the{" "}
+          in some order, so the count is the number of ways to choose which <code>m-1</code> of the{" "}
           <code>m+n-2</code> moves are &quot;down&quot;:
         </p>
 
@@ -324,14 +324,14 @@ answer: dp[m-1][n-1]`}</CodeBlock>
           That&apos;s <code>O(min(m, n))</code> time, beats the DP, and is a neat thing to mention. But here&apos;s
           why we still cover the DP version: <strong>the DP generalizes; the closed form doesn&apos;t</strong>.
           Add an obstacle (LC 63), let cell weights vary (LC 64 minimum path sum), allow diagonal moves, count paths
-          that visit a checkpoint — every variation breaks the binomial coefficient but barely changes the DP. The
+          that visit a checkpoint, every variation breaks the binomial coefficient but barely changes the DP. The
           DP is the robust tool; the closed form is a one-shot trophy for this specific problem.
         </p>
 
         <h3>One-line variant: with obstacles (LC 63)</h3>
 
         <p>
-          If a cell is blocked, the number of paths into it is 0 — independent of its neighbors. Same recurrence,
+          If a cell is blocked, the number of paths into it is 0, independent of its neighbors. Same recurrence,
           guarded by an obstacle check:
         </p>
 
@@ -356,8 +356,8 @@ answer: dp[m-1][n-1]`}</CodeBlock>
           question="In the rolling-row implementation above, on the line `dp[j] = dp[j] + dp[j-1]`, what does the right-hand `dp[j]` refer to at the moment the line executes?"
           options={[
             { label: "The cell directly to the left in the current row.", explanation: "That's dp[j-1], not dp[j]." },
-            { label: "The cell directly above (row i-1, column j).", correct: true, explanation: "Right. We haven't overwritten dp[j] yet on this row, so it still holds the value computed during the previous row's sweep — that's the cell directly above. After the assignment, dp[j] becomes the current row's value." },
-            { label: "The diagonal neighbor (row i-1, column j-1).", explanation: "That's not on the grid path for unique paths — the recurrence only uses up and left, not diagonal." },
+            { label: "The cell directly above (row i-1, column j).", correct: true, explanation: "Right. We haven't overwritten dp[j] yet on this row, so it still holds the value computed during the previous row's sweep, that's the cell directly above. After the assignment, dp[j] becomes the current row's value." },
+            { label: "The diagonal neighbor (row i-1, column j-1).", explanation: "That's not on the grid path for unique paths, the recurrence only uses up and left, not diagonal." },
             { label: "Always 1.", explanation: "Only the top row is all 1s. Once we're on row 1+, dp[j] holds whatever the previous row's sweep deposited there." },
           ]}
         />
@@ -366,9 +366,9 @@ answer: dp[m-1][n-1]`}</CodeBlock>
           kind="Variant check"
           question="A different problem: same right/down grid, but you want the MINIMUM weighted path sum where each cell has a cost. What's the recurrence?"
           options={[
-            { label: "dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]).", correct: true, explanation: "Right. To minimize total cost, take the cheaper of the two ways into the cell and add this cell's cost. Same shape as Unique Paths but min-of-two replaces sum-of-two — that's the classic transition from 'count paths' to 'min-cost path'." },
+            { label: "dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]).", correct: true, explanation: "Right. To minimize total cost, take the cheaper of the two ways into the cell and add this cell's cost. Same shape as Unique Paths but min-of-two replaces sum-of-two, that's the classic transition from 'count paths' to 'min-cost path'." },
             { label: "dp[i][j] = grid[i][j] + dp[i-1][j] + dp[i][j-1].", explanation: "That sums both predecessor costs, which double-counts the path. We pick one of the two ways in, not both." },
-            { label: "dp[i][j] = min(grid[i][j], dp[i-1][j], dp[i][j-1]).", explanation: "Mixes a cell value with accumulated path sums — the units don't match. We need to add this cell's cost, not min against it." },
+            { label: "dp[i][j] = min(grid[i][j], dp[i-1][j], dp[i][j-1]).", explanation: "Mixes a cell value with accumulated path sums, the units don't match. We need to add this cell's cost, not min against it." },
             { label: "dp[i][j] = grid[i][j] · max(dp[i-1][j], dp[i][j-1]).", explanation: "Multiplication doesn't fit; we want sum of costs along a chosen path, not products." },
           ]}
         />
@@ -378,13 +378,13 @@ answer: dp[m-1][n-1]`}</CodeBlock>
       {/* ───────────────── Part 3 · LCS ───────────────── */}
       <Checkpoint moduleSlug="dp-2d" id="lcs" title="I can write LCS from memory" xp={25}>
       <section>
-        <h2 id="lcs">Longest Common Subsequence — the 2D template</h2>
+        <h2 id="lcs">Longest Common Subsequence, the 2D template</h2>
 
         <p>
           <strong>LC 1143 · Longest Common Subsequence.</strong>{" "}Given strings <code>A</code> and <code>B</code>,
           return the length of the longest sequence of characters that appears in both, in order, but not
           necessarily contiguously. <code>&quot;ABCBDAB&quot;</code> and <code>&quot;BDCAB&quot;</code> share{" "}
-          <code>&quot;BCAB&quot;</code> and <code>&quot;BDAB&quot;</code>, both length 4 — so the answer is 4.
+          <code>&quot;BCAB&quot;</code> and <code>&quot;BDAB&quot;</code>, both length 4, so the answer is 4.
         </p>
 
         <p>
@@ -411,7 +411,7 @@ answer: dp[m][n]`}</CodeBlock>
           <p>
             <code>dp[i][j]</code> describes prefixes of <em>length</em> <code>i</code> and <code>j</code>, not
             characters at index <code>i, j</code>. So <code>dp[0][*]</code> and <code>dp[*][0]</code> describe an
-            empty prefix on one side — the LCS of anything with an empty string is 0. That&apos;s why we get a
+            empty prefix on one side, the LCS of anything with an empty string is 0. That&apos;s why we get a
             free row and column of zeros to seed the recurrence, and why the comparison reads{" "}
             <code>A[i-1]</code> against <code>B[j-1]</code>.
           </p>
@@ -421,7 +421,7 @@ answer: dp[m][n]`}</CodeBlock>
           </p>
         </Callout>
 
-        <h3>Java — straightforward 2D</h3>
+        <h3>Java, straightforward 2D</h3>
 
         <CodeBlock lang="java">{`public int longestCommonSubsequence(String a, String b) {
     int m = a.length(), n = b.length();
@@ -490,7 +490,7 @@ answer: dp[m][n]`}</CodeBlock>
             (1970) is LCS with weighted match/mismatch costs.
           </li>
           <li>
-            <strong>Spell checkers and autocomplete.</strong>{" "}Edit distance — which we&apos;ll do next — builds
+            <strong>Spell checkers and autocomplete.</strong>{" "}Edit distance, which we&apos;ll do next, builds
             directly on LCS&apos;s skeleton.
           </li>
           <li>
@@ -510,9 +510,9 @@ answer: dp[m][n]`}</CodeBlock>
           kind="LCS check"
           question="LCS of `&quot;ABAZDC&quot;` and `&quot;BACBAD&quot;` is what length?"
           options={[
-            { label: "3.", explanation: "There's a 4-length common subsequence — keep looking." },
+            { label: "3.", explanation: "There's a 4-length common subsequence, keep looking." },
             { label: "4.", correct: true, explanation: "Right. `ABAD` is a common subsequence of length 4 (A(0)B(1)A(2)D(4) in ABAZDC; A(1)B(3)A(4)D(5) in BACBAD). The full table fills to dp[6][6] = 4. If you trace it, you can see the staircase of matches A→A, B→B, A→A, D→D running down the diagonal." },
-            { label: "5.", explanation: "Too high. Try writing out a candidate of length 5 — you'll find it doesn't preserve order in one of the strings." },
+            { label: "5.", explanation: "Too high. Try writing out a candidate of length 5, you'll find it doesn't preserve order in one of the strings." },
             { label: "6.", explanation: "Length 6 would mean one string is a subsequence of the other, which isn't true here." },
           ]}
         />
@@ -521,9 +521,9 @@ answer: dp[m][n]`}</CodeBlock>
           kind="LCS check"
           question="What's the recurrence for LCS when A[i-1] != B[j-1]?"
           options={[
-            { label: "dp[i][j] = dp[i-1][j-1].", explanation: "That ignores both characters and skips work — but the LCS could still extend by dropping just one of them. We need the max of the two single-drop options." },
-            { label: "dp[i][j] = max(dp[i-1][j], dp[i][j-1]).", correct: true, explanation: "Right. Since the last characters don't match, at least one of them isn't in the LCS — drop it. We don't know which, so try both: drop A[i-1] gives dp[i-1][j], drop B[j-1] gives dp[i][j-1]. Take the better." },
-            { label: "dp[i][j] = 1 + max(dp[i-1][j], dp[i][j-1]).", explanation: "The +1 is only for matches. When characters mismatch, no character is added — just transition." },
+            { label: "dp[i][j] = dp[i-1][j-1].", explanation: "That ignores both characters and skips work, but the LCS could still extend by dropping just one of them. We need the max of the two single-drop options." },
+            { label: "dp[i][j] = max(dp[i-1][j], dp[i][j-1]).", correct: true, explanation: "Right. Since the last characters don't match, at least one of them isn't in the LCS, drop it. We don't know which, so try both: drop A[i-1] gives dp[i-1][j], drop B[j-1] gives dp[i][j-1]. Take the better." },
+            { label: "dp[i][j] = 1 + max(dp[i-1][j], dp[i][j-1]).", explanation: "The +1 is only for matches. When characters mismatch, no character is added, just transition." },
             { label: "dp[i][j] = dp[i-1][j] + dp[i][j-1].", explanation: "That's the unique-paths recurrence (count paths). LCS is a max problem, not a count problem." },
           ]}
         />
@@ -533,7 +533,7 @@ answer: dp[m][n]`}</CodeBlock>
       {/* ───────────────── Part 4 · Edit Distance ───────────────── */}
       <Checkpoint moduleSlug="dp-2d" id="edit-distance" title="I can derive the three Edit Distance transitions" xp={30}>
       <section>
-        <h2 id="edit-distance">Edit Distance — the LCS shape with three operations</h2>
+        <h2 id="edit-distance">Edit Distance, the LCS shape with three operations</h2>
 
         <p>
           <strong>LC 72 · Edit Distance (Levenshtein distance).</strong>{" "}Given strings <code>A</code> and{" "}
@@ -545,7 +545,7 @@ answer: dp[m][n]`}</CodeBlock>
         <p>
           State is the same prefix-vs-prefix shape as LCS: <code>dp[i][j]</code> = minimum edits to turn{" "}
           <code>A[0..i)</code> into <code>B[0..j)</code>. The recurrence has a match-or-don&apos;t-match flavor too,
-          but the &quot;don&apos;t match&quot; branch now has three children — one per operation.
+          but the &quot;don&apos;t match&quot; branch now has three children, one per operation.
         </p>
 
         <Mermaid chart={editDistanceShape} />
@@ -577,11 +577,11 @@ answer: dp[m][n]`}</CodeBlock>
           </p>
           <p>
             When you can map your DP transitions onto concrete operations like this, your reasoning is much harder
-            to mess up — the recurrence just <em>has</em>{" "}to be that shape.
+            to mess up, the recurrence just <em>has</em>{" "}to be that shape.
           </p>
         </Callout>
 
-        <h3>Java — clean 2D</h3>
+        <h3>Java, clean 2D</h3>
 
         <CodeBlock lang="java">{`public int minDistance(String a, String b) {
     int m = a.length(), n = b.length();
@@ -648,7 +648,7 @@ answer: dp[m][n]`}</CodeBlock>
           items={[
             { id: "1", label: "dp[i][j] = 1 + dp[i-1][j]", answer: "delete", explanation: "We took dp[i-1][j] edits to turn A[0..i-1) into B[0..j), then deleted A[i-1]. The B-pointer didn't move; the A-pointer did. That's a delete." },
             { id: "2", label: "dp[i][j] = 1 + dp[i][j-1]", answer: "insert", explanation: "We took dp[i][j-1] edits to turn A[0..i) into B[0..j-1), then inserted B[j-1] at the end. The A-pointer didn't move; the B-pointer did. That's an insert." },
-            { id: "3", label: "dp[i][j] = 1 + dp[i-1][j-1] (when A[i-1] != B[j-1])", answer: "replace", explanation: "Both pointers moved by one, but the characters differ — we paid 1 to turn A[i-1] into B[j-1]. That's a replace." },
+            { id: "3", label: "dp[i][j] = 1 + dp[i-1][j-1] (when A[i-1] != B[j-1])", answer: "replace", explanation: "Both pointers moved by one, but the characters differ, we paid 1 to turn A[i-1] into B[j-1]. That's a replace." },
             { id: "4", label: "dp[i][j] = dp[i-1][j-1] (when A[i-1] == B[j-1])", answer: "free", explanation: "Characters already match. Both pointers advance, cost is 0. No edit operation was needed for this character pair." },
           ]}
         />
@@ -656,7 +656,7 @@ answer: dp[m][n]`}</CodeBlock>
         <Callout variant="info" title="Variants you'll meet">
           <p>
             <strong>One Edit Distance (LC 161):</strong> &quot;is the distance exactly 1?&quot; Doesn&apos;t need
-            full DP — a linear scan with a single mismatch is enough. Worth knowing the shortcut.
+            full DP, a linear scan with a single mismatch is enough. Worth knowing the shortcut.
           </p>
           <p>
             <strong>Weighted edit distance:</strong>{" "}change the +1 to operation-specific costs. The DP shape is
@@ -665,7 +665,7 @@ answer: dp[m][n]`}</CodeBlock>
           </p>
           <p>
             <strong>Damerau-Levenshtein:</strong>{" "}add a fourth operation, &quot;swap adjacent characters,&quot; for
-            <code>O(1)</code> cost. The recurrence gets one extra branch reading <code>dp[i-2][j-2]</code> — same
+            <code>O(1)</code> cost. The recurrence gets one extra branch reading <code>dp[i-2][j-2]</code>, same
             shape, longer formula.
           </p>
         </Callout>
@@ -675,7 +675,7 @@ answer: dp[m][n]`}</CodeBlock>
           question="What's the edit distance from `&quot;intention&quot;` to `&quot;execution&quot;`?"
           options={[
             { label: "3.", explanation: "Try the substitutions: i→e, n→x, t→e, n→c, then keep `ution`. That's 4 changes plus a delete-or-insert? Walk the table." },
-            { label: "5.", correct: true, explanation: "Right. The famous textbook example. One canonical sequence: delete `i`, replace `n→e`, replace `t→x`, replace `n→c`, insert `u` — 5 edits. The full DP table confirms it. (`intention` → `ntention` → `etention` → `exention` → `exection` → `execution`.)" },
+            { label: "5.", correct: true, explanation: "Right. The famous textbook example. One canonical sequence: delete `i`, replace `n→e`, replace `t→x`, replace `n→c`, insert `u`, 5 edits. The full DP table confirms it. (`intention` → `ntention` → `etention` → `exention` → `exection` → `execution`.)" },
             { label: "6.", explanation: "Close, but the optimal is 5. There are several length-5 edit scripts; the table just confirms the minimum." },
             { label: "9.", explanation: "That'd be the cost of fully replacing every character. Edit distance always finds a shorter path when characters can be reused." },
           ]}
@@ -685,10 +685,10 @@ answer: dp[m][n]`}</CodeBlock>
           kind="Edit-distance check"
           question="Why don't we need a special case for when A and B have very different lengths?"
           options={[
-            { label: "We do — you have to handle it explicitly.", explanation: "We don't. The base cases dp[i][0] = i and dp[0][j] = j handle arbitrary length differences automatically." },
-            { label: "The base cases dp[i][0] = i and dp[0][j] = j absorb the length difference for free.", correct: true, explanation: "Right. Turning an empty string into B[0..j) takes exactly j inserts. Turning A[0..i) into empty takes i deletes. So the boundary already encodes 'pure inserts' and 'pure deletes' — the recurrence handles the rest. This is why the DP works elegantly for any string lengths." },
+            { label: "We do, you have to handle it explicitly.", explanation: "We don't. The base cases dp[i][0] = i and dp[0][j] = j handle arbitrary length differences automatically." },
+            { label: "The base cases dp[i][0] = i and dp[0][j] = j absorb the length difference for free.", correct: true, explanation: "Right. Turning an empty string into B[0..j) takes exactly j inserts. Turning A[0..i) into empty takes i deletes. So the boundary already encodes 'pure inserts' and 'pure deletes', the recurrence handles the rest. This is why the DP works elegantly for any string lengths." },
             { label: "The recurrence has a special branch for skipped characters.", explanation: "There's no explicit skip branch. Insert and delete already cover the asymmetric cases." },
-            { label: "Java's `String` handles it internally.", explanation: "Standard library types don't change DP correctness — the algorithm itself handles it via the boundary." },
+            { label: "Java's `String` handles it internally.", explanation: "Standard library types don't change DP correctness, the algorithm itself handles it via the boundary." },
           ]}
         />
       </section>
@@ -697,12 +697,12 @@ answer: dp[m][n]`}</CodeBlock>
       {/* ───────────────── Part 5 · 0/1 Knapsack ───────────────── */}
       <Checkpoint moduleSlug="dp-2d" id="knapsack" title="I can solve 0/1 Knapsack and explain the high→low sweep" xp={30}>
       <section>
-        <h2 id="knapsack">0/1 Knapsack — items × capacity</h2>
+        <h2 id="knapsack">0/1 Knapsack, items × capacity</h2>
 
         <p>
           You have <code>N</code> items, each with a weight <code>wt[i]</code> and a value <code>val[i]</code>, and
           a knapsack of capacity <code>W</code>. Pick a subset that maximizes total value without exceeding the
-          weight limit. <strong>0/1</strong>{" "}means each item is either taken or not — no fractional pieces, no
+          weight limit. <strong>0/1</strong>{" "}means each item is either taken or not, no fractional pieces, no
           duplicates.
         </p>
 
@@ -724,7 +724,7 @@ dp[i][w] = max(skip, take)
 base: dp[0][*] = 0  (no items → no value)
 answer: dp[N][W]`}</CodeBlock>
 
-        <h3>Java — straightforward 2D</h3>
+        <h3>Java, straightforward 2D</h3>
 
         <CodeBlock lang="java">{`public int knapsack01(int[] wt, int[] val, int W) {
     int n = wt.length;
@@ -744,12 +744,12 @@ answer: dp[N][W]`}</CodeBlock>
 
         <p>
           Time: <code>O(N·W)</code>. Space: <code>O(N·W)</code>. Note this is{" "}
-          <strong>pseudo-polynomial</strong> — it&apos;s polynomial in <code>N</code> and <code>W</code>, but{" "}
+          <strong>pseudo-polynomial</strong>, it&apos;s polynomial in <code>N</code> and <code>W</code>, but{" "}
           <code>W</code> can be exponential in the bit length of the input. Knapsack is NP-hard in general; this DP
           works because <code>W</code> is given as a small integer in practice.
         </p>
 
-        <h3>Space optimization — collapse to 1D</h3>
+        <h3>Space optimization, collapse to 1D</h3>
 
         <p>
           <code>dp[i][w]</code> only reads from row <code>i-1</code>, so we can keep just one rolling row{" "}
@@ -781,13 +781,13 @@ answer: dp[N][W]`}</CodeBlock>
           <p>
             <strong>0/1 (each item once)</strong> → high to low. Reading{" "}
             <code>dp[w - wt[i]]</code> from <code>w-wt[i] &lt; w</code> means we read a slot we{" "}
-            <em>haven&apos;t touched yet</em>{" "}on this row — the old row&apos;s value, where item <code>i</code> was
+            <em>haven&apos;t touched yet</em>{" "}on this row, the old row&apos;s value, where item <code>i</code> was
             not yet present. Correct.
           </p>
           <p>
-            <strong>Unbounded (each item any number of times — Coin Change shape)</strong> → low to high. Reading{" "}
+            <strong>Unbounded (each item any number of times, Coin Change shape)</strong> → low to high. Reading{" "}
             <code>dp[w - wt[i]]</code> means we read a slot we <em>just updated</em>{" "}with item <code>i</code>{" "}
-            already counted, which is exactly what &quot;take item i again&quot; needs. Also correct — but
+            already counted, which is exactly what &quot;take item i again&quot; needs. Also correct, but
             different problem.
           </p>
           <p>
@@ -799,7 +799,7 @@ answer: dp[N][W]`}</CodeBlock>
         <h3>Sibling: Coin Change as unbounded knapsack</h3>
 
         <p>
-          You saw Coin Change in the 1D module — &quot;minimum coins to make amount A.&quot; Note the shape is
+          You saw Coin Change in the 1D module, &quot;minimum coins to make amount A.&quot; Note the shape is
           identical to 0/1 knapsack, with two differences:
         </p>
 
@@ -809,7 +809,7 @@ answer: dp[N][W]`}</CodeBlock>
         </ul>
 
         <p>
-          Watch what changes — only the sweep direction and the operator:
+          Watch what changes, only the sweep direction and the operator:
         </p>
 
         <CodeBlock lang="java">{`public int coinChange(int[] coins, int amount) {
@@ -828,7 +828,7 @@ answer: dp[N][W]`}</CodeBlock>
         <p>
           Same skeleton as 0/1 knapsack&apos;s 1D form, but two changes: <code>min</code> instead of{" "}
           <code>max</code>, and <code>w</code> sweeps low to high instead of high to low. The whole knapsack
-          family — bounded, 0/1, unbounded, subset-sum, partition-equal-subset, target-sum — is variations on this
+          family, bounded, 0/1, unbounded, subset-sum, partition-equal-subset, target-sum, is variations on this
           one shape with different operators and different sweep directions.
         </p>
 
@@ -854,9 +854,9 @@ answer: dp[N][W]`}</CodeBlock>
           kind="Knapsack check"
           question="In the 1D 0/1 knapsack code, what bug appears if you accidentally sweep w from low to high instead of high to low?"
           options={[
-            { label: "Off-by-one error.", explanation: "It's not an off-by-one — the loop bounds are fine. The bug is semantic: the answer is wrong because items get reused." },
+            { label: "Off-by-one error.", explanation: "It's not an off-by-one, the loop bounds are fine. The bug is semantic: the answer is wrong because items get reused." },
             { label: "Items can be taken more than once, turning it into the unbounded version.", correct: true, explanation: "Right. With low→high, when you read dp[w - wt[i]] you're reading a slot that was already updated with item i, so item i can be 'taken again' from that slot. The DP silently solves unbounded knapsack instead of 0/1. The numerical answer is then wrong (usually too large)." },
-            { label: "ArrayIndexOutOfBoundsException.", explanation: "Indices are still valid — the iteration order doesn't change which array slots exist." },
+            { label: "ArrayIndexOutOfBoundsException.", explanation: "Indices are still valid, the iteration order doesn't change which array slots exist." },
             { label: "Time complexity becomes O(N·W²).", explanation: "Time is unchanged at O(N·W). The bug is correctness, not performance." },
           ]}
         />
@@ -865,8 +865,8 @@ answer: dp[N][W]`}</CodeBlock>
           kind="Knapsack check"
           question="Items with (weight, value) = (2,3), (3,4), (4,5), (5,6); capacity W = 5. What's the optimal value?"
           options={[
-            { label: "5.", explanation: "Just one item — but we can do better by combining." },
-            { label: "6.", explanation: "Take item 4 alone — but two smaller items give more." },
+            { label: "5.", explanation: "Just one item, but we can do better by combining." },
+            { label: "6.", explanation: "Take item 4 alone, but two smaller items give more." },
             { label: "7.", correct: true, explanation: "Right. Take items 1 and 2: weights 2+3=5 (fits exactly), values 3+4=7. No combination of two items fits with higher total value, and no single item beats 6. So 7 is optimal." },
             { label: "9.", explanation: "Items 1 and 3 weigh 2+4=6, which exceeds capacity 5. Items 2 and 3 weigh 3+4=7, also over. 9 isn't achievable." },
           ]}
@@ -877,7 +877,7 @@ answer: dp[N][W]`}</CodeBlock>
       {/* ───────────────── Part 6 · Cheat sheet & recap ───────────────── */}
       <Checkpoint moduleSlug="dp-2d" id="cheatsheet" title="I can recognize which 2D DP shape fits a problem" xp={25}>
       <section>
-        <h2 id="cheatsheet">2D DP — the recognition cheat sheet</h2>
+        <h2 id="cheatsheet">2D DP, the recognition cheat sheet</h2>
 
         <p>
           Now that you&apos;ve seen four canonical 2D DPs (Unique Paths, LCS, Edit Distance, 0/1 Knapsack), the
@@ -922,7 +922,7 @@ answer: dp[N][W]`}</CodeBlock>
           </li>
           <li>
             <strong>&quot;Best answer over the subarray [i..j]&quot;</strong> → Interval family. We&apos;ll cover
-            this in module 29 — these often need a third loop over the &quot;split point&quot; inside the
+            this in module 29, these often need a third loop over the &quot;split point&quot; inside the
             subarray, putting them at <code>O(n³)</code>.
           </li>
         </ul>
@@ -968,14 +968,14 @@ answer: dp[N][W]`}</CodeBlock>
             { id: "interval", label: "Interval (preview)", color: "violet" },
           ]}
           items={[
-            { id: "1", label: "Minimum number of coins to make amount N from a fixed set of denominations.", answer: "knapsack", explanation: "Items × capacity = denominations × target amount. Unbounded variant — sweep low to high in the 1D form. Same shape as knapsack, min instead of max." },
+            { id: "1", label: "Minimum number of coins to make amount N from a fixed set of denominations.", answer: "knapsack", explanation: "Items × capacity = denominations × target amount. Unbounded variant, sweep low to high in the 1D form. Same shape as knapsack, min instead of max." },
             { id: "2", label: "Robot in an m×n grid, each cell has a cost; find minimum-cost path top-left → bottom-right.", answer: "grid", explanation: "Literal grid position. Recurrence: dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]). Same skeleton as Unique Paths with min replacing sum." },
             { id: "3", label: "Shortest common supersequence of two strings.", answer: "two-string", explanation: "Two strings → dp[i][j] over prefixes. Recurrence has a match-or-mismatch shape; closely related to LCS (the SCS length is m + n − LCS length)." },
-            { id: "4", label: "Burst balloons LC 312 — pick burst order to maximize total coins.", answer: "interval", explanation: "Best answer over the subarray [i..j], with a third loop over the 'last balloon to burst.' Classic interval DP — full coverage in dp-advanced." },
-            { id: "5", label: "Partition Equal Subset Sum LC 416 — can we split nums into two equal-sum subsets?", answer: "knapsack", explanation: "Reduces to: 'is there a subset summing to total/2?' That's subset-sum, the boolean variant of 0/1 knapsack." },
+            { id: "4", label: "Burst balloons LC 312, pick burst order to maximize total coins.", answer: "interval", explanation: "Best answer over the subarray [i..j], with a third loop over the 'last balloon to burst.' Classic interval DP, full coverage in dp-advanced." },
+            { id: "5", label: "Partition Equal Subset Sum LC 416, can we split nums into two equal-sum subsets?", answer: "knapsack", explanation: "Reduces to: 'is there a subset summing to total/2?' That's subset-sum, the boolean variant of 0/1 knapsack." },
             { id: "6", label: "Regex matching with `.` and `*` (LC 10).", answer: "two-string", explanation: "String × pattern → dp[i][j] over prefixes. The match-or-don't-match recurrence is more elaborate (`*` can match zero or more), but the skeleton is two-string." },
-            { id: "7", label: "Dungeon game — minimum starting health to walk top-left → bottom-right surviving every cell.", answer: "grid", explanation: "Grid position with allowed moves. The twist: you fill from bottom-right backwards because the constraint is forward-looking. Still grid family." },
-            { id: "8", label: "Matrix chain multiplication — minimum scalar multiplications to multiply a chain of matrices.", answer: "interval", explanation: "dp[i][j] = best cost to multiply matrices i..j, with a third loop over the split point k. Canonical interval DP — coming in dp-advanced." },
+            { id: "7", label: "Dungeon game, minimum starting health to walk top-left → bottom-right surviving every cell.", answer: "grid", explanation: "Grid position with allowed moves. The twist: you fill from bottom-right backwards because the constraint is forward-looking. Still grid family." },
+            { id: "8", label: "Matrix chain multiplication, minimum scalar multiplications to multiply a chain of matrices.", answer: "interval", explanation: "dp[i][j] = best cost to multiply matrices i..j, with a third loop over the split point k. Canonical interval DP, coming in dp-advanced." },
           ]}
         />
 
@@ -990,7 +990,7 @@ answer: dp[N][W]`}</CodeBlock>
           </li>
           <li>
             <strong>Wrong sweep direction in 1D knapsack.</strong> 0/1 = high to low. Unbounded = low to high. Get
-            this wrong and 0/1 silently becomes unbounded — your answer is too large and you may not notice on
+            this wrong and 0/1 silently becomes unbounded, your answer is too large and you may not notice on
             small tests.
           </li>
           <li>
@@ -1011,10 +1011,10 @@ answer: dp[N][W]`}</CodeBlock>
         </ul>
 
         <PartRecap
-          title="2D DP — what to take with you"
+          title="2D DP, what to take with you"
           gist="The state is two-axis. The recurrence reaches into a constant number of neighbors. The same six-step recipe works for all four families."
           points={[
-            { takeaway: "Two-string DP uses dp[i][j] over prefix lengths — and the off-by-one is universal.", detail: "dp[i][j] describes prefixes A[0..i) and B[0..j). The character comparison reads A.charAt(i-1) and B.charAt(j-1). LCS and edit distance share this skeleton — only the recurrence differs (one branch vs three)." },
+            { takeaway: "Two-string DP uses dp[i][j] over prefix lengths, and the off-by-one is universal.", detail: "dp[i][j] describes prefixes A[0..i) and B[0..j). The character comparison reads A.charAt(i-1) and B.charAt(j-1). LCS and edit distance share this skeleton, only the recurrence differs (one branch vs three)." },
             { takeaway: "Grid DP is just the move rule run backwards.", detail: "Whatever moves are allowed (right/down for unique paths, up/down/left/right for some variants), the recurrence is 'dp[i][j] = combine of dp[predecessor cells].' Combine = sum (count), min (cost), max (reward) depending on the question." },
             { takeaway: "Knapsack is items × capacity, with take-or-skip.", detail: "dp[i][w] = best value using first i items and capacity w. 1D collapse is universal but the sweep direction matters: 0/1 is high→low, unbounded is low→high. Same code, opposite semantics." },
             { takeaway: "Edit distance maps three table moves to three real edit operations.", detail: "dp[i-1][j] + 1 = delete; dp[i][j-1] + 1 = insert; dp[i-1][j-1] + 1 = replace; dp[i-1][j-1] (no +1) = free match. When transitions correspond to concrete operations, the recurrence almost has to be the right shape." },
@@ -1024,7 +1024,7 @@ answer: dp[N][W]`}</CodeBlock>
 
         <div className="not-prose mt-12 rounded-2xl border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-pink-50 p-6 dark:border-fuchsia-800/40 dark:from-fuchsia-950/30 dark:to-pink-950/30">
           <h3 className="m-0 text-lg font-bold text-slate-900 dark:text-slate-100">
-            Next up · Module 35 — Advanced DP: intervals, trees, bitmask
+            Next up · Module 35, Advanced DP: intervals, trees, bitmask
           </h3>
           <p className="mt-2 mb-4 text-sm text-slate-700 dark:text-slate-300">
             You&apos;ve handled the four 2D DP shapes that account for most LeetCode DP questions. Module 35 covers
