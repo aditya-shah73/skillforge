@@ -16,10 +16,14 @@ The platform-level home page (`app/page.tsx`) is a course picker that reads from
 
 `lib/modules.ts` is a backwards-compat shim that re-exports from `lib/courses/ai`. New code should import from the per-course module directly (`@/lib/courses/ai` or `@/lib/courses/dsa`), not from `@/lib/modules`.
 
-The active courses today:
+The active courses today (all fully shipped — every module `status: "available"`):
 
-- **`ai`** — *AI Engineering Foundations*, available, 28 modules.
-- **`dsa`** — *Data Structures and Algorithms*, available, 34 modules total (only orientation shipping today; content rolling out one module at a time).
+- **`ai`** — *AI Engineering Foundations*, 33 modules across 6 phases (plus orientation).
+- **`dsa`** — *Data Structures and Algorithms*, 43 modules across 8 phases (plus orientation).
+- **`system-design`** — *System Design*, 50 modules across 8 phases (plus orientation).
+- **`frontend`** — *Frontend Engineering*, 57 modules across 9 phases (plus orientation).
+
+Don't hardcode these counts in app code — derive them from each course's `MODULES`/`PHASES` (see "The syllabus" below). The numbers here are just a snapshot to orient you.
 
 # Course conventions
 
