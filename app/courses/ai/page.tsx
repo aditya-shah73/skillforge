@@ -95,9 +95,7 @@ function ModuleCardContent({ m }: { m: typeof MODULES[number] }) {
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-bold dark:bg-slate-800">
           {m.number}
         </span>
-        {m.status === "available" ? (
-          <span className="text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:text-emerald-400">Ready</span>
-        ) : (
+        {m.status !== "available" && (
           <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Soon</span>
         )}
       </div>
