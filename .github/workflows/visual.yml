@@ -5,7 +5,7 @@
 # What it does:
 #   1. Builds the production bundle (matches what runs in prod)
 #   2. Boots `next start` via Playwright's `webServer` hook
-#   3. Renders 9 routes across 3 viewports → 27 screenshots
+#   3. Renders 10 surfaces (nine routes + command palette) across 3 viewports → 30 screenshots
 #   4. Diffs against committed baselines in tests/visual.spec.ts-snapshots/
 #   5. Fails (and uploads the diff PNGs) if any screenshot drifts >0.5%
 #

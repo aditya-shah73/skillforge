@@ -9,8 +9,9 @@ import { test, expect } from "@playwright/test";
  *   - One module per course exercising tables, code blocks, callouts, quizzes
  *   - One interactive surface (CommandPalette opened via cmd-k)
  *
- * Each test runs once per viewport project (mobile-360, tablet-768,
- * desktop-1280), so a single PR review surface gets 30 screenshots.
+ * The nine routes below plus the interactive command-palette test run once per
+ * viewport project (mobile-360, tablet-768, desktop-1280), so a single PR
+ * review surface gets 30 screenshots (10 surfaces × 3 viewports).
  *
  * Adding more routes is cheap — append a line to ROUTES. Each new route
  * adds three screenshots (one per viewport) and a few seconds to the run.
@@ -28,6 +29,10 @@ const ROUTES: { path: string; name: string }[] = [
   { path: "/courses/ai/modules/security", name: "module-ai-security" },
   { path: "/courses/dsa/modules/big-o", name: "module-dsa-big-o" },
   { path: "/courses/system-design/modules/cap-pacelc", name: "module-sd-cap-pacelc" },
+  // The frontend course shipped after the original sweep — values-references is
+  // a content-rich Phase 1 module (code blocks, callouts, quizzes, checkpoint)
+  // so it exercises the same drift-prone patterns the other module pages do.
+  { path: "/courses/frontend/modules/values-references", name: "module-frontend-values-references" },
 ];
 
 for (const route of ROUTES) {

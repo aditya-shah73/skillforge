@@ -135,7 +135,7 @@ If lint fails, run `npx eslint . --fix` to auto-fix everything mechanical (class
 
 ### Visual regression (`npm run test:visual`)
 
-Playwright renders 9 curated routes at 3 viewports each — 27 screenshots per run — and diffs against committed baselines in `tests/visual.spec.ts-snapshots/`.
+Playwright renders 10 curated surfaces (nine routes plus the command palette) at 3 viewports each — 30 screenshots per run — and diffs against committed baselines in `tests/visual.spec.ts-snapshots/`.
 
 Why: bugs like Tokey mascot overlap, sticky header overflow, and table clipping at 360px shipped because nobody had a fast way to check "does this still look right on phones." The diff is the check.
 

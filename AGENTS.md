@@ -91,7 +91,7 @@ When elevating a new lint rule to `error`, run `--fix` first to see if the viola
 
 ## Visual regression — `npm run test:visual`
 
-Playwright snapshots 9 routes × 3 viewports (mobile-360, tablet-768, desktop-1280). Baselines live in `tests/visual.spec.ts-snapshots/` and ARE committed.
+Playwright snapshots 10 surfaces (nine routes plus the command palette) × 3 viewports (mobile-360, tablet-768, desktop-1280) → 30 screenshots. Baselines live in `tests/visual.spec.ts-snapshots/` and ARE committed.
 
 When you change UI:
 
