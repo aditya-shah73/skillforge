@@ -187,6 +187,15 @@ export default function Home() {
                 <Pill>🎉 Confetti for wins</Pill>
                 <Pill>🐦 Tokey, your guide</Pill>
               </div>
+              <Link
+                href="/achievements"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 transition hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+              >
+                🏆 View your achievements
+                <span aria-hidden className="transition-transform hover:translate-x-0.5">
+                  →
+                </span>
+              </Link>
             </div>
             {/* Preview card: tighter gutters + smaller numbers below sm so the
                 three stat blocks + two dividers fit a 360px viewport without

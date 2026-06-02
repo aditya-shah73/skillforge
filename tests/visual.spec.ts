@@ -1,17 +1,18 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * Visual regression sweep — 10 curated routes covering the patterns that
+ * Visual regression sweep — curated routes covering the patterns that
  * historically broke without us noticing:
  *
  *   - Home page (hero, value props, gamification preview)
  *   - Three course landings (phase header wrap, PhaseProgress badge)
  *   - One module per course exercising tables, code blocks, callouts, quizzes
+ *   - The achievements page (badge grid + stats strip + backup controls)
  *   - One interactive surface (CommandPalette opened via cmd-k)
  *
- * The nine routes below plus the interactive command-palette test run once per
+ * The ten routes below plus the interactive command-palette test run once per
  * viewport project (mobile-360, tablet-768, desktop-1280), so a single PR
- * review surface gets 30 screenshots (10 surfaces × 3 viewports).
+ * review surface gets 33 screenshots (11 surfaces × 3 viewports).
  *
  * Adding more routes is cheap — append a line to ROUTES. Each new route
  * adds three screenshots (one per viewport) and a few seconds to the run.
@@ -33,6 +34,11 @@ const ROUTES: { path: string; name: string }[] = [
   // a content-rich Phase 1 module (code blocks, callouts, quizzes, checkpoint)
   // so it exercises the same drift-prone patterns the other module pages do.
   { path: "/courses/frontend/modules/values-references", name: "module-frontend-values-references" },
+  // Achievements page: badge grid, headline stats strip, and the backup/
+  // restore card. Exercises the gradient badge tiles + the responsive 2/3/4-col
+  // grids. Rendered with empty progress (no localStorage in a fresh context),
+  // so the baseline is the all-locked / zero-stats state.
+  { path: "/achievements", name: "achievements" },
 ];
 
 for (const route of ROUTES) {

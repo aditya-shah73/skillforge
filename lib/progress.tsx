@@ -39,6 +39,13 @@ type ProgressContextType = Progress & {
   isModuleComplete: (courseId: string, moduleSlug: string) => boolean;
   toggleBookmark: (key: string) => void;
   isBookmarked: (key: string) => boolean;
+  /** Serialize the full progress snapshot to a pretty-printed JSON string. */
+  exportProgress: () => string;
+  /**
+   * Replace progress from a previously-exported JSON string. Returns true on a
+   * successful parse+merge, false if the input was malformed (state untouched).
+   */
+  importProgress: (json: string) => boolean;
 };
 
 /** Build the canonical completed-module key for a course/module pair. */
@@ -290,6 +297,36 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return progress.bookmarks.includes(key);
   }, [progress.bookmarks]);
 
+  // --- Backup / restore -----------------------------------------------------
+  // Export and import operate on the *same* shape we persist to localStorage,
+  // so a file exported here round-trips cleanly through the loader on import.
+  // Read from the ref (not the captured `progress`) so the callback identity is
+  // stable and always serializes the latest snapshot.
+  const exportProgress = useCallback(() => {
+    return JSON.stringify(progressRef.current, null, 2);
+  }, []);
+
+  const importProgress = useCallback((json: string) => {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(json);
+    } catch {
+      // Malformed JSON — leave current progress untouched.
+      return false;
+    }
+    // Must be a plain object; reject arrays / primitives / null outright.
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      return false;
+    }
+    const obj = parsed as Partial<Progress>;
+    // Reuse the exact merge the loader uses: start from defaults, overlay the
+    // imported fields, then run the bare-slug → namespaced-key migration so an
+    // older export (or a hand-edited file) lands in the current storage shape.
+    const completedModules = migrateCompletedModules(obj.completedModules);
+    setProgress({ ...defaultProgress, ...obj, completedModules });
+    return true;
+  }, []);
+
   return (
     <ProgressContext.Provider
       value={{
@@ -307,6 +344,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         isModuleComplete,
         toggleBookmark,
         isBookmarked,
+        exportProgress,
+        importProgress,
       }}
     >
       {children}
@@ -333,6 +372,8 @@ export function useProgress() {
       isModuleComplete: () => false,
       toggleBookmark: () => {},
       isBookmarked: () => false,
+      exportProgress: () => JSON.stringify(defaultProgress, null, 2),
+      importProgress: () => false,
     };
   }
   return ctx;

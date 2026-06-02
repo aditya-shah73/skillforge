@@ -6,6 +6,12 @@ import { COURSES } from "@/lib/courses";
 import { getCourseData } from "@/lib/courses/helpers";
 import { useProgress } from "@/lib/progress";
 import { lockBodyScroll } from "@/lib/scroll-lock";
+import searchIndex from "@/lib/search-index.json";
+
+// Static full-text index: "<courseId>/<slug>" -> lowercased body text.
+// Generated at build time by scripts/build-search-index.mjs (wired as
+// `prebuild`). Lets the palette match module *content*, not just titles.
+const SEARCH_INDEX = searchIndex as Record<string, string>;
 
 type Item = {
   /** Stable id for keying / focus tracking */
@@ -18,8 +24,14 @@ type Item = {
   badge: string;
   /** Tailwind gradient classes used to tint the badge */
   badgeColor: string;
-  /** Pre-computed lowercase haystack for matching */
+  /** Pre-computed lowercase haystack for matching (label fields + body text) */
   haystack: string;
+  /**
+   * Label-only haystack (title/subtitle/course/phase/tags). Used to tell
+   * whether a query matched the module's *content* (body text) rather than
+   * its visible label, so we can show a "matched in content" hint.
+   */
+  metaHaystack: string;
   /** Where pressing Enter takes the user */
   href: string;
   /** "module" | "course" | "action" — used for the section header */
@@ -56,32 +68,43 @@ export default function CommandPalette() {
     // Course-level entries first
     for (const c of COURSES) {
       if (c.status !== "available") continue;
+      const meta = `${c.name} ${c.tagline} ${c.shortName}`.toLowerCase();
       out.push({
         id: `course/${c.id}`,
         title: c.name,
         subtitle: c.tagline,
         badge: "Course",
         badgeColor: c.color,
-        haystack: `${c.name} ${c.tagline} ${c.shortName}`.toLowerCase(),
+        haystack: meta,
+        metaHaystack: meta,
         href: `/courses/${c.slug}`,
         kind: "course",
       });
     }
 
-    // Every available module across every course
+    // Every available module across every course. The haystack folds in the
+    // module's full body text (from the static search index) plus its derived
+    // metadata (tags, difficulty) so a query can match content, not just the
+    // visible label. metaHaystack keeps only the label fields so we can detect
+    // body-only matches and flag them in the UI.
     for (const c of COURSES) {
       if (c.status !== "available") continue;
       const data = getCourseData(c.id);
       for (const m of data.MODULES) {
         if (m.status !== "available") continue;
         const key = `${c.id}/${m.slug}`;
+        const tags = (m.tags ?? []).join(" ");
+        const metaHaystack =
+          `${m.title} ${m.subtitle} ${c.name} ${c.shortName} ${m.phase} ${tags} ${m.difficulty ?? ""}`.toLowerCase();
+        const body = SEARCH_INDEX[key] ?? "";
         out.push({
           id: `module/${key}`,
           title: m.title,
           subtitle: m.subtitle,
           badge: `${c.shortName} · M${m.number}`,
           badgeColor: c.color,
-          haystack: `${m.title} ${m.subtitle} ${c.name} ${c.shortName} ${m.phase}`.toLowerCase(),
+          haystack: `${metaHaystack} ${body}`,
+          metaHaystack,
           href: `/courses/${c.slug}/modules/${m.slug}`,
           kind: "module",
           bookmark: bookmarks.includes(key),
@@ -97,7 +120,21 @@ export default function CommandPalette() {
       badge: "Action",
       badgeColor: "from-slate-500 to-slate-400",
       haystack: "home go to home all courses",
+      metaHaystack: "home go to home all courses",
       href: "/",
+      kind: "action",
+    });
+
+    // Jump to the achievements / badges page.
+    out.push({
+      id: "action/achievements",
+      title: "Achievements",
+      subtitle: "Badges, stats & progress backup",
+      badge: "Action",
+      badgeColor: "from-amber-500 to-orange-500",
+      haystack: "achievements badges trophies stats streak xp progress export import backup",
+      metaHaystack: "achievements badges trophies stats streak xp progress export import backup",
+      href: "/achievements",
       kind: "action",
     });
 
@@ -105,20 +142,30 @@ export default function CommandPalette() {
   }, [bookmarks]);
 
   // Filter results. Match every space-delimited token as a substring across
-  // the pre-joined haystack — simple, predictable, no extra deps.
-  const results = useMemo(() => {
+  // the pre-joined haystack — simple, predictable, no extra deps. Each result
+  // carries a `contentMatch` flag: true when the query matched the module's
+  // body text but *not* its visible label, so the UI can flag why it surfaced.
+  const results = useMemo<(Item & { contentMatch: boolean })[]>(() => {
     const q = query.trim().toLowerCase();
     if (!q) {
       // No query: show bookmarks first, then courses, then a slice of modules
       const bookmarked = items.filter((i) => i.bookmark);
       const courses = items.filter((i) => i.kind === "course");
       const modules = items.filter((i) => i.kind === "module" && !i.bookmark);
-      return [...bookmarked, ...courses, ...modules].slice(0, 30);
+      return [...bookmarked, ...courses, ...modules]
+        .slice(0, 30)
+        .map((i) => ({ ...i, contentMatch: false }));
     }
     const tokens = q.split(/\s+/).filter(Boolean);
     return items
       .filter((i) => tokens.every((t) => i.haystack.includes(t)))
-      .slice(0, 30);
+      .slice(0, 30)
+      .map((i) => ({
+        // Flag the result when at least one token only appears in the body —
+        // i.e. it would not have matched on the label alone.
+        ...i,
+        contentMatch: !tokens.every((t) => i.metaHaystack.includes(t)),
+      }));
   }, [items, query]);
 
   // Keep activeIndex in range as results change
@@ -294,8 +341,18 @@ export default function CommandPalette() {
                       <span aria-label="Bookmarked" title="Bookmarked" className="shrink-0 text-amber-500">★</span>
                     )}
                   </span>
-                  <span className="block truncate text-xs text-slate-500 dark:text-slate-400">
-                    {item.subtitle}
+                  <span className="flex items-center gap-1.5">
+                    <span className="block truncate text-xs text-slate-500 dark:text-slate-400">
+                      {item.subtitle}
+                    </span>
+                    {item.contentMatch && (
+                      <span
+                        className="shrink-0 rounded-sm bg-indigo-100 px-1 py-px text-[9px] font-semibold tracking-wide text-indigo-600 uppercase dark:bg-indigo-950/60 dark:text-indigo-300"
+                        title="Matched inside this module's content"
+                      >
+                        in content
+                      </span>
+                    )}
                   </span>
                 </span>
                 <span aria-hidden className="text-xs text-slate-300 dark:text-slate-600">↵</span>
