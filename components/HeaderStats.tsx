@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useProgress } from "@/lib/progress";
 import { useEffect, useState } from "react";
 import Tooltip from "./Tooltip";
@@ -92,6 +93,27 @@ export default function HeaderStats() {
           <span aria-hidden>⚡</span>
           <span>{displayXp}</span>
         </div>
+      </Tooltip>
+      <Tooltip
+        label={
+          <>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">Achievements</span>
+            <span className="mt-1 block">
+              See your badges, day streak, XP, and per-course stats. Also where you can export or import your progress.
+            </span>
+          </>
+        }
+      >
+        {/* The achievements hub is otherwise reachable only from the command
+            palette and the home page, so this header link is the one
+            persistent path into it from inside a course or module. */}
+        <Link
+          href="/achievements"
+          aria-label="View achievements"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-base transition hover:bg-slate-200 dark:hover:bg-slate-800"
+        >
+          🏆
+        </Link>
       </Tooltip>
       <Tooltip
         label={

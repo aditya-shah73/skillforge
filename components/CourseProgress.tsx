@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useProgress } from "@/lib/progress";
 import { coursePercent } from "@/lib/courses/helpers";
@@ -33,10 +34,21 @@ export default function CourseProgress({
 
   return (
     <div className="mb-8">
-      <div className="mb-2 flex items-center justify-between">
-        <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
-          Your progress
-        </span>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+            Your progress
+          </span>
+          {/* Inline entry point to the achievements hub, shown where users
+              already look at their standing. Pairs with the header trophy
+              for a path that reaches them from inside modules too. */}
+          <Link
+            href="/achievements"
+            className="text-[11px] font-semibold text-indigo-600 transition hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+          >
+            🏆 Achievements →
+          </Link>
+        </div>
         <span className="font-mono text-xs text-slate-500 tabular-nums">
           {done} / {total} complete · <span className={showActive ? "font-semibold text-slate-900 dark:text-slate-100" : ""}>{percent}%</span>
         </span>
