@@ -91,7 +91,10 @@ jobs:
         run: npm run build
 
       # Playwright spawns `npm run start` itself via the `webServer` block in
-      # playwright.config.ts and waits for localhost:3000 before running tests.
+      # playwright.config.ts and waits for localhost:3100 (VISUAL_PORT) before
+      # running tests. That port is deliberately not 3000 — see the webServer
+      # comment in playwright.config.ts for why measuring a dev server by
+      # accident corrupts the baselines.
       # If you want to debug a flaky boot, set DEBUG=pw:webserver in env.
       # NODE_ENV is set here (not job-wide) so `next start` serves prod assets
       # without affecting the earlier `npm ci` step (which needs devDeps).
