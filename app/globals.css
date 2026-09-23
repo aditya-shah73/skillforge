@@ -121,6 +121,13 @@ body {
  * they're disorienting, not delightful. We collapse animation duration so the
  * end state still renders (no missing UI), but no motion plays. We also
  * remove the infinite Tokey bounce so it sits still.
+ *
+ * Tailwind's own `animate-bounce` and `animate-pulse` are listed too: they're
+ * `infinite` like our soft bounce, and we use them for Tokey's celebrate and
+ * thinking moods, the header combo chip, and loading skeletons. Leaving them
+ * out meant this block quietened the one bounce we wrote and none of the
+ * borrowed ones. `animate-spin` is deliberately absent — a spinner clamped to
+ * a single iteration is a frozen spinner, which reads as a hung page.
  * ======================================================================= */
 @media (prefers-reduced-motion: reduce) {
   .animate-correct,
@@ -128,7 +135,9 @@ body {
   .animate-slide-up,
   .animate-bounce-soft,
   .animate-token-pop,
-  .animate-confetti {
+  .animate-confetti,
+  .animate-bounce,
+  .animate-pulse {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
   }

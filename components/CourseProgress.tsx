@@ -10,8 +10,13 @@ import type { CourseId } from "@/lib/courses";
  * Per-course progress bar shown on the course landing page (/courses/<slug>).
  * Renders "12 of 19 complete · 63%" plus a thin gradient fill bar.
  *
- * Client-side because it reads localStorage progress. Renders an invisible
- * placeholder on SSR so the page doesn't reflow after hydration.
+ * Client-side because it reads localStorage progress. `total` is known on the
+ * server, so it renders immediately; the two numbers that depend on stored
+ * progress render as blank, width-reserved slots until hydration. They used to
+ * render as a real "0" and "0%", which meant a returning learner watched their
+ * count visibly correct itself from zero a frame after the page appeared.
+ * `ch` units are exact for the reservation here because the row is
+ * `font-mono tabular-nums`.
  */
 export default function CourseProgress({
   courseId,
@@ -28,7 +33,8 @@ export default function CourseProgress({
     setMounted(true);
   }, []);
 
-  // Compute now so totals show even before hydration (with 0 done)
+  // `total` is derived from course data, so it's identical on both passes.
+  // `done`/`percent` are only meaningful once localStorage has been read.
   const { done, total, percent } = coursePercent(courseId, mounted ? completedModules : []);
   const showActive = mounted && done > 0;
 
@@ -50,7 +56,13 @@ export default function CourseProgress({
           </Link>
         </div>
         <span className="font-mono text-xs text-slate-500 tabular-nums">
-          {done} / {total} complete · <span className={showActive ? "font-semibold text-slate-900 dark:text-slate-100" : ""}>{percent}%</span>
+          <span className="inline-block text-right" style={{ minWidth: `${String(total).length}ch` }}>
+            {mounted ? done : ""}
+          </span>{" "}
+          / {total} complete ·{" "}
+          <span className={showActive ? "font-semibold text-slate-900 dark:text-slate-100" : ""}>
+            <span className="inline-block min-w-[3ch] text-right">{mounted ? percent : ""}</span>%
+          </span>
         </span>
       </div>
       <div className="relative h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">

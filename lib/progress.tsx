@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { COURSES, ai, dsa, systemDesign, frontend } from "./courses";
 
 type Progress = {
@@ -327,30 +327,51 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return true;
   }, []);
 
-  return (
-    <ProgressContext.Provider
-      value={{
-        ...progress,
-        addXp,
-        incrementCombo,
-        resetCombo,
-        completeCheckpoint,
-        completeModule,
-        toggleSound,
-        toggleHardcore,
-        unlockEasterEgg,
-        setTheme,
-        isCheckpointComplete,
-        isModuleComplete,
-        toggleBookmark,
-        isBookmarked,
-        exportProgress,
-        importProgress,
-      }}
-    >
-      {children}
-    </ProgressContext.Provider>
+  // Memoized so the context value keeps its identity between provider renders.
+  // A fresh object literal here re-rendered every useProgress() consumer on
+  // every provider render, and churned the identity of every callback those
+  // consumers list in their own dependency arrays — so an unrelated state
+  // change in this provider could restart a consumer's effects.
+  const value = useMemo(
+    () => ({
+      ...progress,
+      addXp,
+      incrementCombo,
+      resetCombo,
+      completeCheckpoint,
+      completeModule,
+      toggleSound,
+      toggleHardcore,
+      unlockEasterEgg,
+      setTheme,
+      isCheckpointComplete,
+      isModuleComplete,
+      toggleBookmark,
+      isBookmarked,
+      exportProgress,
+      importProgress,
+    }),
+    [
+      progress,
+      addXp,
+      incrementCombo,
+      resetCombo,
+      completeCheckpoint,
+      completeModule,
+      toggleSound,
+      toggleHardcore,
+      unlockEasterEgg,
+      setTheme,
+      isCheckpointComplete,
+      isModuleComplete,
+      toggleBookmark,
+      isBookmarked,
+      exportProgress,
+      importProgress,
+    ],
   );
+
+  return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
 export function useProgress() {

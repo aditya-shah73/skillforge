@@ -11,8 +11,13 @@ import type { CourseId } from "@/lib/courses";
  * ML & AI Foundations  [progress]"). Tiny on purpose so it doesn't compete
  * with the phase title.
  *
- * Hidden until mount to keep SSR HTML stable and avoid a "0/N" flash for
- * users with progress.
+ * The counts live in localStorage, so they can't exist until after hydration.
+ * This used to `return null` until mounted, which meant the badge *appeared*
+ * a frame after the rest of the page and shoved the phase header sideways.
+ * Instead we render the badge shell during SSR with its numeric slots blank
+ * but width-reserved (`ch` units, which are exact here because the badge is
+ * `font-mono tabular-nums`), so hydration fills in digits without the box
+ * ever changing size.
  */
 export default function PhaseProgress({
   courseId,
@@ -30,28 +35,45 @@ export default function PhaseProgress({
 
   const { done, total, percent } = phasePercent(courseId, phaseNumber, mounted ? completedModules : []);
 
+  // `total` comes from the course data, not localStorage, so it's the same on
+  // both passes — safe to bail on before hydration.
   if (total === 0) return null;
-  // Don't render anything until hydration so we don't flash "0/N" for a user
-  // who already has progress. Phase header already shows the module count.
-  if (!mounted) return null;
 
-  const isDone = done === total;
+  const isDone = mounted && done === total;
 
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[10px] tabular-nums transition ${
         isDone
           ? "border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300"
-          : done > 0
+          : mounted && done > 0
           ? "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
           : "border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-800 dark:bg-slate-900/60"
       }`}
-      title={`${done} of ${total} modules complete in this phase`}
+      // No tooltip before hydration — "0 of 8" would be a lie, not a placeholder.
+      title={mounted ? `${done} of ${total} modules complete in this phase` : undefined}
     >
-      {isDone && <span aria-hidden>✓</span>}
-      <span>{done}/{total}</span>
+      {/* Always in the layout, only visible once earned. Rendering it
+          conditionally widened the whole badge the instant a completed
+          phase hydrated. */}
+      <span aria-hidden className={isDone ? "" : "invisible"}>
+        ✓
+      </span>
+      <span>
+        <span
+          className="inline-block text-right"
+          // `done` can never have more digits than `total`, and the badge is
+          // font-mono + tabular-nums, so one `ch` is exactly one digit.
+          style={{ minWidth: `${String(total).length}ch` }}
+        >
+          {mounted ? done : ""}
+        </span>
+        /{total}
+      </span>
       <span className="text-slate-300 dark:text-slate-600">·</span>
-      <span>{percent}%</span>
+      <span>
+        <span className="inline-block min-w-[3ch] text-right">{mounted ? percent : ""}</span>%
+      </span>
     </span>
   );
 }

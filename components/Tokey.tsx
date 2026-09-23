@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useCallback, useEffect, useState, useRef } from "react";
+import { createContext, useContext, useCallback, useEffect, useMemo, useState, useRef } from "react";
 
 type Mood = "idle" | "happy" | "sad" | "excited" | "thinking" | "teasing" | "celebrate";
 
@@ -37,82 +37,119 @@ const MOOD_ANIMATION: Record<Mood, string> = {
 };
 
 export function TokeyProvider({ children }: { children: React.ReactNode }) {
+  // `message` is the single source of truth for "Tokey is saying something".
+  // There used to be a separate `visible` flag alongside it, and all three
+  // hide paths cleared only that flag — so `message` stayed set forever and
+  // the mood animation below (an `infinite` keyframe) kept running long after
+  // the bubble was gone. One piece of state, one lifecycle, nothing to drift.
   const [message, setMessage] = useState<TokeyMessage | null>(null);
-  const [visible, setVisible] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const scrollIdleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastInteraction = useRef<number>(Date.now());
+  const hideRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Seeded on mount rather than in the ref initializer: `Date.now()` during
+  // render runs on the server too, and the two clocks don't agree.
+  const lastInteraction = useRef<number>(0);
+
+  // Every hide goes through here, so "stop talking" always means the same
+  // thing — dropping the message, which also stops the mood animation.
+  const scheduleHide = useCallback((ms: number) => {
+    if (hideRef.current) clearTimeout(hideRef.current);
+    hideRef.current = setTimeout(() => setMessage(null), ms);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
-    // Welcome message after 1.5s, then auto-hide 6s after that. Track both
-    // timers in refs so unmount (e.g. during HMR) clears the inner timer too
-    // — without this, the inner setTimeout could call setVisible(false) on a
-    // dead component and leak a closure over stale state.
-    let innerTimer: ReturnType<typeof setTimeout> | null = null;
+    lastInteraction.current = Date.now();
+    // Welcome message after 1.5s, then auto-hide 6s after that. Both timers
+    // are cleared on unmount (e.g. during HMR) so neither fires on a dead
+    // component and leaks a closure over stale state.
     const t = setTimeout(() => {
       setMessage({ mood: "happy", text: "Hey! I'm Tokey. I'll hang out here while you learn. Tap me anytime to hide." });
-      setVisible(true);
-      innerTimer = setTimeout(() => setVisible(false), 6000);
+      scheduleHide(6000);
     }, 1500);
     return () => {
       clearTimeout(t);
-      if (innerTimer) clearTimeout(innerTimer);
+      if (hideRef.current) clearTimeout(hideRef.current);
     };
-  }, []);
+  }, [scheduleHide]);
 
-  // Procrastination detection — if you scroll without engaging for a while.
-  // The auto-hide timer inside the interval is tracked so unmount clears it
-  // (otherwise it could fire after the provider is gone).
+  // Procrastination detection — if you sit on a page without engaging.
+  // Gated on document visibility: a backgrounded tab shouldn't keep a 5s
+  // interval alive, and shouldn't bank idle time it didn't really earn.
   useEffect(() => {
     if (!mounted) return;
-    let hideTimer: ReturnType<typeof setTimeout> | null = null;
-    const onScroll = () => {
+    // Passive: this only records a timestamp, so the browser is free to
+    // scroll without waiting to see whether we call preventDefault.
+    const bump = () => {
       lastInteraction.current = Date.now();
     };
-    const onClick = () => {
-      lastInteraction.current = Date.now();
-    };
-    window.addEventListener("scroll", onScroll);
-    window.addEventListener("click", onClick);
+    window.addEventListener("scroll", bump, { passive: true });
+    window.addEventListener("click", bump);
 
-    const interval = setInterval(() => {
-      const idle = Date.now() - lastInteraction.current;
-      if (idle > 60000 && idle < 65000) {
-        // ~1 min idle
-        setMessage({
-          mood: "teasing",
-          text: "Still there? Don't just scroll, try the quiz. I promise it won't bite.",
-        });
-        setVisible(true);
-        if (hideTimer) clearTimeout(hideTimer);
-        hideTimer = setTimeout(() => setVisible(false), 5000);
+    let interval: ReturnType<typeof setInterval> | null = null;
+    const stop = () => {
+      if (interval) clearInterval(interval);
+      interval = null;
+    };
+    const start = () => {
+      if (interval) return;
+      interval = setInterval(() => {
+        const idle = Date.now() - lastInteraction.current;
+        if (idle > 60000 && idle < 65000) {
+          // ~1 min idle
+          setMessage({
+            mood: "teasing",
+            text: "Still there? Don't just scroll, try the quiz. I promise it won't bite.",
+          });
+          scheduleHide(5000);
+        }
+      }, 5000);
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        stop();
+        return;
       }
-    }, 5000);
+      // Coming back to the tab counts as engagement. Without this the idle
+      // clock would have run past the 60–65s window while we weren't looking
+      // and the nag could never fire again for the life of the page.
+      bump();
+      start();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    if (!document.hidden) start();
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("click", onClick);
-      clearInterval(interval);
-      if (hideTimer) clearTimeout(hideTimer);
+      window.removeEventListener("scroll", bump);
+      window.removeEventListener("click", bump);
+      document.removeEventListener("visibilitychange", onVisibility);
+      stop();
     };
-  }, [mounted]);
+  }, [mounted, scheduleHide]);
 
-  const say = useCallback((msg: TokeyMessage) => {
-    setMessage(msg);
-    setVisible(true);
-    if (scrollIdleRef.current) clearTimeout(scrollIdleRef.current);
-    scrollIdleRef.current = setTimeout(() => {
-      setVisible(false);
-    }, msg.duration || 4000);
-    lastInteraction.current = Date.now();
-  }, []);
+  const say = useCallback(
+    (msg: TokeyMessage) => {
+      setMessage(msg);
+      scheduleHide(msg.duration || 4000);
+      lastInteraction.current = Date.now();
+    },
+    [scheduleHide],
+  );
 
-  if (!mounted) return <TokeyContext.Provider value={{ say }}>{children}</TokeyContext.Provider>;
+  // Memoized so the context value keeps its identity across provider renders.
+  // A fresh object literal here re-rendered every useTokey() consumer on
+  // every Tokey state change, including each auto-hide.
+  const ctxValue = useMemo(() => ({ say }), [say]);
+
+  if (!mounted) return <TokeyContext.Provider value={ctxValue}>{children}</TokeyContext.Provider>;
+
+  // Minimizing is an explicit "be quiet" from the user, so it silences the
+  // mood animation and the face as well as the bubble.
+  const mood = !minimized && message ? message.mood : null;
 
   return (
-    <TokeyContext.Provider value={{ say }}>
+    <TokeyContext.Provider value={ctxValue}>
       {children}
       {/* Live region stays mounted at every viewport size so screen readers
           keep the subscription even when the mascot's visual chrome is hidden
@@ -123,32 +160,36 @@ export function TokeyProvider({ children }: { children: React.ReactNode }) {
         aria-atomic="true"
         className="sr-only"
       >
-        {visible && message ? `Tokey says: ${message.text}` : ""}
+        {message ? `Tokey says: ${message.text}` : ""}
       </div>
+      {/* The bubble is positioned against the viewport in its own right
+          rather than sitting in a flex row with the button. As a flex
+          sibling it resized the row every time it appeared and disappeared,
+          and the browser charged that to the button as layout shift — a
+          measured 0.03 CLS per idle nag, with the user touching nothing.
+          `right-20` = the button's `right-4` + its `w-14` + the old `gap-2`. */}
+      {message && !minimized && (
+        <div
+          className="animate-slide-up fixed right-20 bottom-4 z-50 hidden max-w-xs rounded-2xl rounded-br-sm border-2 border-indigo-300 bg-white px-4 py-3 text-sm shadow-xl sm:block dark:border-indigo-700 dark:bg-slate-800 print:hidden"
+          // aria-hidden because the live region above already announces this
+          // — otherwise screen readers would read it twice.
+          aria-hidden="true"
+        >
+          {message.text}
+        </div>
+      )}
       {/* Hidden below `sm` (640px). The 56×56 button + speech bubble would
           otherwise cover quiz CTAs and checkpoint actions on phones — sighted
           mobile users lose the mascot, screen reader users still hear it. */}
-      <div className="pointer-events-none fixed right-4 bottom-4 z-50 hidden items-end gap-2 sm:flex print:hidden">
-        {visible && message && !minimized && (
-          <div
-            className="animate-slide-up pointer-events-auto max-w-xs rounded-2xl rounded-br-sm border-2 border-indigo-300 bg-white px-4 py-3 text-sm shadow-xl dark:border-indigo-700 dark:bg-slate-800"
-            // aria-hidden because the live region above already announces this
-            // — otherwise screen readers would read it twice.
-            aria-hidden="true"
-          >
-            {message.text}
-          </div>
-        )}
+      <div className="pointer-events-none fixed right-4 bottom-4 z-50 hidden sm:block print:hidden">
         <button
           onClick={() => setMinimized((m) => !m)}
-          className={`pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 text-3xl shadow-lg transition-transform hover:scale-110 ${message ? MOOD_ANIMATION[message.mood] : ""}`}
+          className={`pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 text-3xl shadow-lg transition-transform hover:scale-110 ${mood ? MOOD_ANIMATION[mood] : ""}`}
           title={minimized ? "Show Tokey" : "Hide Tokey"}
           aria-label={minimized ? "Show Tokey mascot" : "Hide Tokey mascot"}
           aria-pressed={minimized}
         >
-          <span aria-hidden="true">
-            {minimized ? "🤖" : message ? MOOD_EMOJI[message.mood] : "🤖"}
-          </span>
+          <span aria-hidden="true">{mood ? MOOD_EMOJI[mood] : "🤖"}</span>
         </button>
       </div>
     </TokeyContext.Provider>

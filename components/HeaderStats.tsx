@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useProgress } from "@/lib/progress";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Tooltip from "./Tooltip";
 
 export default function HeaderStats() {
@@ -14,12 +14,29 @@ export default function HeaderStats() {
     setMounted(true);
   }, []);
 
+  // Mirror of `displayXp` for the interval below to read. The updater passed to
+  // setDisplayXp has to stay pure (StrictMode double-invokes it), so the
+  // "have we arrived?" check can't live inside it — it reads this ref instead.
+  const displayXpRef = useRef(0);
+  useEffect(() => {
+    displayXpRef.current = displayXp;
+  }, [displayXp]);
+
   // Animate XP counter up. Intentionally omit `displayXp` from deps so the
   // interval doesn't reset on every tick — we drive convergence inside the
   // interval using setDisplayXp's functional updater.
   useEffect(() => {
     if (!mounted) return;
     const timer = setInterval(() => {
+      // Stop once we've caught up. Without this the timer kept firing 50×/sec
+      // for the entire life of the page: React bailed out of the re-render
+      // (the updater returned the same value), so it cost wakeups rather than
+      // paints, but it never ended — and it ran on every page, forever, even
+      // for a brand-new profile sitting at 0 XP.
+      if (displayXpRef.current === xp) {
+        clearInterval(timer);
+        return;
+      }
       setDisplayXp((v) => {
         const diff = xp - v;
         if (diff === 0) return v;
