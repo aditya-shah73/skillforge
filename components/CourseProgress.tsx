@@ -17,6 +17,11 @@ import type { CourseId } from "@/lib/courses";
  * count visibly correct itself from zero a frame after the page appeared.
  * `ch` units are exact for the reservation here because the row is
  * `font-mono tabular-nums`.
+ *
+ * The reservations are dropped at hydration, once the digits can size their
+ * own slots. Holding them afterwards kept this row about 3 characters wider
+ * than its contents, and in the `justify-between` flex below that was enough
+ * to wrap the label group at 360px.
  */
 export default function CourseProgress({
   courseId,
@@ -56,12 +61,21 @@ export default function CourseProgress({
           </Link>
         </div>
         <span className="font-mono text-xs text-slate-500 tabular-nums">
-          <span className="inline-block text-right" style={{ minWidth: `${String(total).length}ch` }}>
+          {/* Reserved only while unmounted. Holding the reservation after
+              hydration kept the slots at their widest — 2ch for a 1-digit
+              `done`, 3ch for a 1-digit percent — which made this row about
+              3 characters wider than its content forever. In the
+              `justify-between` flex above, that squeezed the label group at
+              360px until "🏆 Achievements →" wrapped onto a third line. */}
+          <span className="inline-block text-right" style={mounted ? undefined : { minWidth: `${String(total).length}ch` }}>
             {mounted ? done : ""}
           </span>{" "}
           / {total} complete ·{" "}
           <span className={showActive ? "font-semibold text-slate-900 dark:text-slate-100" : ""}>
-            <span className="inline-block min-w-[3ch] text-right">{mounted ? percent : ""}</span>%
+            <span className="inline-block text-right" style={mounted ? undefined : { minWidth: "3ch" }}>
+              {mounted ? percent : ""}
+            </span>
+            %
           </span>
         </span>
       </div>

@@ -16,8 +16,14 @@ import type { CourseId } from "@/lib/courses";
  * a frame after the rest of the page and shoved the phase header sideways.
  * Instead we render the badge shell during SSR with its numeric slots blank
  * but width-reserved (`ch` units, which are exact here because the badge is
- * `font-mono tabular-nums`), so hydration fills in digits without the box
- * ever changing size.
+ * `font-mono tabular-nums`), so the badge occupies its row from the first
+ * paint.
+ *
+ * The reservations are dropped at hydration. They only exist to hold the
+ * shape while the slots are empty; once the digits are in, they size the
+ * slots themselves. Keeping them was worse than not reserving at all — the
+ * badge stayed padded to its widest possible contents forever, and at 360px
+ * that was enough to wrap it onto its own line under the phase header.
  */
 export default function PhaseProgress({
   courseId,
@@ -53,18 +59,24 @@ export default function PhaseProgress({
       // No tooltip before hydration — "0 of 8" would be a lie, not a placeholder.
       title={mounted ? `${done} of ${total} modules complete in this phase` : undefined}
     >
-      {/* Always in the layout, only visible once earned. Rendering it
-          conditionally widened the whole badge the instant a completed
-          phase hydrated. */}
-      <span aria-hidden className={isDone ? "" : "invisible"}>
-        ✓
-      </span>
+      {/* Held in the layout only until hydration, so a phase that turns out
+          to be complete doesn't widen the badge as its check appears. Kept
+          permanently it cost every *unfinished* badge a glyph plus a 6px
+          gap it would never use, which at 360px was enough to push the
+          badge off the phase header row onto a line of its own. */}
+      {(!mounted || isDone) && (
+        <span aria-hidden className={mounted ? "" : "invisible"}>
+          ✓
+        </span>
+      )}
       <span>
         <span
           className="inline-block text-right"
           // `done` can never have more digits than `total`, and the badge is
           // font-mono + tabular-nums, so one `ch` is exactly one digit.
-          style={{ minWidth: `${String(total).length}ch` }}
+          // Dropped once mounted: the digits size the slot themselves from
+          // then on, so the badge is exactly as wide as its contents.
+          style={mounted ? undefined : { minWidth: `${String(total).length}ch` }}
         >
           {mounted ? done : ""}
         </span>
@@ -72,7 +84,10 @@ export default function PhaseProgress({
       </span>
       <span className="text-slate-300 dark:text-slate-600">·</span>
       <span>
-        <span className="inline-block min-w-[3ch] text-right">{mounted ? percent : ""}</span>%
+        <span className="inline-block text-right" style={mounted ? undefined : { minWidth: "3ch" }}>
+          {mounted ? percent : ""}
+        </span>
+        %
       </span>
     </span>
   );
