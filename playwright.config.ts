@@ -28,6 +28,10 @@ import { defineConfig, devices } from "@playwright/test";
  *     antialiasing wobble doesn't fail the run. Anything bigger than a few
  *     pixels' worth of drift is a real change worth reviewing.
  */
+// Deliberately not 3000: that's where `npm run dev` lives, and the suite must
+// never end up measuring it. See the `webServer` note at the bottom.
+const VISUAL_PORT = Number(process.env.VISUAL_PORT ?? 3100);
+
 export default defineConfig({
   testDir: "./tests",
   // Mac M1/M2 and Linux CI render fonts slightly differently — disabling
@@ -48,7 +52,7 @@ export default defineConfig({
   reporter: process.env.CI ? "github" : "list",
 
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: `http://localhost:${VISUAL_PORT}`,
     trace: "retain-on-failure",
     colorScheme: "light",
     reducedMotion: "reduce",
@@ -79,14 +83,26 @@ export default defineConfig({
   ],
 
   // Boot the production server so we test what ships, not the dev overlay.
-  // `reuseExistingServer` lets a dev re-run tests against a running server
-  // without paying the build cost each time.
+  //
+  // This used to run on 3000 with `reuseExistingServer: !process.env.CI`,
+  // which quietly broke the promise in the line above: if you had `npm run
+  // dev` open — and you usually do — Playwright skipped `next start` and
+  // pointed the whole suite at the dev server instead. That matters more than
+  // it sounds. `next dev` builds into `.next/dev/` with its own next/font
+  // output, and it emits a *different* Geist Mono subset than `next build`
+  // does (29,972 bytes vs 23,108, different glyph advances: 8.40px/char
+  // vs the correct 8.64px = 0.6em). Mono text therefore wraps at different
+  // points in dev, so any baseline recorded that way bakes in wrap points
+  // production will never reproduce, and the snapshot fails forever after.
+  //
+  // Own a dedicated port and never reuse, so `npm run verify` measures the
+  // production build every time regardless of what else is running.
   webServer: {
     // `next start` requires a prior `next build`. The README documents the
     // two-step flow; CI runs both in sequence.
-    command: "npm run start",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    command: `npm run start -- --port ${VISUAL_PORT}`,
+    url: `http://localhost:${VISUAL_PORT}`,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });
